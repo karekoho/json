@@ -4,12 +4,15 @@
 #include <ctype.h>
 #include <cstring>
 
+namespace json {
+
+
 /**
  * @brief The json_value class
  */
-class json_value
+class value
 {
-public:
+protected:
 
   /**
    * @brief The type enum
@@ -23,19 +26,21 @@ public:
     null
   };
 
+public:
+
   /** TODO: move to json
    * @brief json_value
    * @param json
-   *
-  json_value (const char *json = 0); */
+   */
+  value (const char *json = 0);
 
   /** TODO: move to json
    * @brief json_value
    * @param readp
    * @param endp
    * @param parent
-   *
-  json_value (const char *readp, const char *endp, json_value *parent = 0); */
+   */
+  value (const char *readp, const char *endp, value *parent = 0);
 
   /**
    * @brief parse
@@ -49,20 +54,20 @@ public:
    * @param key
    * @return
    */
-  virtual json_value & get (const char *key) const = 0;
+  virtual const value & at (const char *key) const = 0;
 
   /**
    * @brief operator []
    * @param key
    * @return
    */
-  inline json_value & operator[] (const char *key) const { return get (key); }
+  inline const value & operator[] (const char *key) const   { return at (key); }
 
   /**
    * @brief type
    * @return
    */
-  virtual json_value::type type () const = 0;
+ virtual type type () const = 0;
 
   /**
    * @brief size
@@ -94,7 +99,7 @@ protected:
     LNULL = 3
   };
 
-  /** TODO: move to json
+  /**
    * @brief _startp
    */
   const char *_startp;
@@ -104,37 +109,52 @@ protected:
    */
   const char *_readp;
 
-  /** TODO: move to json
+  /**
    * @brief _endp
    */
   const char *_endp;
 
-  /** TODO: move to json
+  /**
    * @brief _parent
    */
-  json_value *_parent;
+  value *_parent;
 
   /** TODO: move to json
    * @brief _next_lexeme
-   *
+   */
   inline void
   _look_ahead ()
   {
     while (_readp < _endp && isspace (*_readp))
       _readp++;
-  } */
+  }
 
-  /** TODO: move to json
+  /**
    * @brief _is_literal
    * @return
-   *
-  json_value::literal _is_literal (); */
+   */
+  value::literal _is_literal () const;
 
-  /** TODO: move to json
+  /**
    * @brief _lexeme
    * @return
-   *
-  size_t _lexeme (); */
+   */
+  size_t _lexeme (char & endc);
+
+  /**
+   * @brief is_quoted
+   * @param strlen
+   * @return
+   */
+  bool _is_quoted (const size_t strlen) const;
+
+  /**
+   * @brief is_number
+   * @return
+   */
+  bool _is_number () const;
+
 };
+}
 
 #endif // JSON_VALUE_H

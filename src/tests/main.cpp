@@ -1,11 +1,13 @@
 // #include <QCoreApplication>
 
 #include <unit_test.h>
+#include <json_value_test.h>
 #include <json_test.h>
+#include <json_object_test.h>
 
 #define DBG(...) fprintf (stderr, __VA_ARGS__)
 
-#define TESTC 1  // 1 tests
+#define TESTC 3  // 2 tests
 
 int main(int argc, char *argv[])
 {
@@ -14,11 +16,15 @@ int main(int argc, char *argv[])
     int last_test   = TESTC;  // Don't run async tests
 
     CppUnit::Test *tests[] = {
-      json_test::suite ()                  // 0
+      json_value_test::suite (),        // 0
+      json_test::suite (),              // 1
+      json_object_test::suite ()        // 2
     };
 
     bool tests_added[] = {
-      false  // 0
+      false,  // 0
+      false,
+      false
     };
 
     CppUnit::TextUi::TestRunner runner;

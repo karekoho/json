@@ -8,5 +8,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/Exception.h>
 
+#include "../json/json.h"
+
 #endif // UNIT_TEST
 

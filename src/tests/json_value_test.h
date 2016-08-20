@@ -1,24 +1,25 @@
-#ifndef JSON_VALUE_TEST_H
-#define JSON_VALUE_TEST_H
+#ifndef JSON_INTERFACE_TEST_H
+#define JSON_INTERFACE_TEST_H
 
-#include <unit_test.h>
+#include <json_value_test_interface.h>
 
-class json_value_test : public CppUnit::TestFixture
+class json_value_test : public json_value_test_interface
 {
 public:
+    virtual void test_smoke() {}
+    virtual void test_parse_1(){}
+    virtual void test_size_1(){}
+    virtual void test_get_1(){}
+    virtual void test_value_1(){}
+    virtual void test_debug_1(){}
 
-    json_value_test();
+    void test_lookahead ();
+    void test_lexeme ();
+    void test_is_literal ();
+    void test_is_quoted ();
+    void test_is_number ();
 
-    virtual void test_smoke () = 0;
-    virtual void test_parse_1 () = 0;
-    virtual void test_size_1 () = 0;
-    virtual void test_get_1 () = 0;
-    virtual void test_value_1 () = 0;
-    virtual void test_debug_1 () = 0;
-
-protected:
-
-    static const char *input[];
+    static CppUnit::Test* suite ();
 };
 
-#endif // JSON_VALUE_TEST_H
+#endif // JSON_INTERFACE_TEST_H

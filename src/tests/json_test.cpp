@@ -1,9 +1,5 @@
 #include "json_test.h"
 
-json_test::json_test ()
-{
-}
-
 void
 json_test::test_smoke ()
 {
@@ -33,6 +29,8 @@ void
 json_test::test_debug_1 ()
 {
 }
+
+
 
 CppUnit::Test *
 json_test::suite ()

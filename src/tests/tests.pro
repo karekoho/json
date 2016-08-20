@@ -14,11 +14,25 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES += main.cpp \
+    json_value_test_interface.cpp \
     json_test.cpp \
-    json_value_test.cpp
+    json_object_test.cpp \
+    json_value_test.cpp \
+    ../json/value.cpp \
+    json_value_parse_mock.cpp
 
 HEADERS += \
+    json_value_test_interface.h \
     json_test.h \
     unit_test.h \
-    json_value_test.h
+    json_object_test.h \
+    json_value_test.h \
+    ../json/value.h \
+    ../json/json.h \
+    json_value_parse_mock.h
+
+SUBDIRS += \
+    ../json/json.pro
+
+
 

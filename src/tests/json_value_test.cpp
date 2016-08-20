@@ -1,46 +1,45 @@
 #include "json_value_test.h"
 
-const char *json_value_test::input[] =  {
-    "{\"Image\": {\
-          \"Width\":  800,\
-          \"Height\": 600,\
-          \"Title\":  \"View from 15th Floor\",\
-          \"Thumbnail\": {\
-                \"Url\": \"http://www.example.com/image/481989943\",\
-                \"Height\": 125,\
-                \"Width\":  100},\
-            },\
-          \"Animated\" : false,\
-          \"IDs\": [116, 943, 234, 38793]\
-        }\
-     }",
-
-    "[\
-        {\
-            \"precision\": \"zip\",\
-            \"Latitude\":  37.7668,\
-            \"Longitude\": -122.3959,\
-            \"Address\":   \"\"\,\
-            \"City\":      \"SAN FRANCISCO\",\
-            \"State\":     \"CA\",\
-            \"Zip\":       \"94107\",\
-            \"Country\":   \"US\"\
-        },\
-        {\
-            \"precision\": \"zip\",\
-            \"Latitude\":  37.371991,\
-            \"Longitude\": -122.026020,\
-            \"Address\":   \"\",\
-            \"City\":      \"SUNNYVALE\",\
-            \"State\":     \"CA\",\
-            \"Zip\":       \"94085\",\
-            \"Country\":   \"US\"\
-        }\
-    ]"
-};
-
-json_value_test::json_value_test()
+void
+json_value_test::test_lookahead ()
 {
 
 }
 
+void
+json_value_test::test_lexeme ()
+{
+
+}
+
+void
+json_value_test::test_is_literal ()
+{
+
+}
+
+void
+json_value_test::test_is_quoted ()
+{
+
+}
+
+void
+json_value_test::test_is_number ()
+{
+
+}
+
+CppUnit::Test *
+json_value_test::suite ()
+{
+    CppUnit::TestSuite *s = new CppUnit::TestSuite ("json value test");
+
+    s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lookahead", &json_value_test::test_lookahead));
+    s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lexeme", &json_value_test::test_lexeme));
+    s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_literal", &json_value_test::test_is_literal));
+    s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_quoted", &json_value_test::test_is_quoted));
+    s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_number", &json_value_test::test_is_number));
+
+    return s;
+}
