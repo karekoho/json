@@ -11,11 +11,13 @@ QMAKE_LFLAGS +=  -std=c++11
 TEMPLATE = lib
 
 SOURCES += \
-    value.cpp
+    value.cpp \
+    basic_json.cpp
 
 HEADERS += \
     value.h \
-    json.h
+    json.h \
+    basic_json.h
 
 unix:!symbian {
     maemo5 {

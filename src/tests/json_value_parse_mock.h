@@ -5,14 +5,14 @@
 
 // using namespace json;
 
-class json_value_parse_mock : public json::value
+class json_value_parse_mock : public value
 {
 public:
     json_value_parse_mock (const char *readp, const char *endp, value *parent = 0);
 
     virtual const char *parse (const char *readp);
-    virtual const json::value & at (const char *key) const;
-    virtual json::value::type type () const;
+    virtual const value & at (const char *key) const;
+    virtual value::otype type () const;
     virtual size_t size () const;
 };
 

@@ -1,6 +1,6 @@
 #include "value.h"
 
-using namespace json;
+//using namespace json;
 
 value::value (const char *json)
     : _startp (json),

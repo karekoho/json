@@ -4,9 +4,6 @@
 #include <ctype.h>
 #include <cstring>
 
-namespace json {
-
-
 /**
  * @brief The json_value class
  */
@@ -15,9 +12,9 @@ class value
 protected:
 
   /**
-   * @brief The type enum
+   * @brief The otype enum
    */
-  enum type {
+  enum otype {
     object,
     array,
     string,
@@ -67,7 +64,7 @@ public:
    * @brief type
    * @return
    */
- virtual type type () const = 0;
+ virtual otype type () const = 0;
 
   /**
    * @brief size
@@ -155,6 +152,5 @@ protected:
   bool _is_number () const;
 
 };
-}
 
 #endif // JSON_VALUE_H
