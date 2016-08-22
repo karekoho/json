@@ -8,7 +8,8 @@
 class json_value_parse_mock : public value
 {
 public:
-    json_value_parse_mock (const char *readp, const char *endp, value *parent = 0);
+    json_value_parse_mock (const char *readp, const char *endp, value *parent = 0, size_t lexlen = 0);
+    virtual ~json_value_parse_mock () {}
 
     virtual const char *parse (const char *readp);
     virtual const value & at (const char *key) const;

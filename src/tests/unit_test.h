@@ -7,6 +7,8 @@
 #include <cppunit/ui/text/TextTestRunner.h>
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/Exception.h>
+#include <cstdio>
+#include <ctype.h>
 
 #include "../json/json.h"
 

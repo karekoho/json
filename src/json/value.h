@@ -4,11 +4,17 @@
 #include <ctype.h>
 #include <cstring>
 
+#ifdef UNIT_TEST
+class json_value_test;
+#endif
 /**
  * @brief The json_value class
  */
 class value
 {
+#ifdef UNIT_TEST
+friend class json_value_test;
+#endif
 protected:
 
   /**
@@ -25,26 +31,27 @@ protected:
 
 public:
 
-  /** TODO: move to json
+  /**
    * @brief json_value
    * @param json
    */
   value (const char *json = 0);
 
-  /** TODO: move to json
+  /**
    * @brief json_value
-   * @param readp
+   * @param startp TODO: remove
    * @param endp
    * @param parent
+   * @paran charc
    */
-  value (const char *readp, const char *endp, value *parent = 0);
+  explicit value (const char *startp, const char *endp, value *parent = 0, size_t lexlen = 0);
 
   /**
    * @brief parse
-   * @param readp
+   * @param json
    * @return
    */
-  virtual const char *parse (const char *readp) = 0;
+  virtual const char *parse (const char *json) = 0;
 
   /**
    * @brief get
@@ -75,9 +82,9 @@ public:
 protected:
 
   /**
-   *
+   * @brief The sc_ enum Structural characters.
    */
-  enum {
+  enum sc_ {
     begin_object    = '{',
     end_object      = '}',
     begin_array     = '[',
@@ -87,13 +94,23 @@ protected:
   };
 
   /**
+   * @brief The ws enum White space characters.
+   */
+  enum ws_ {
+    tab   = 9,    /// \t Horizontal tab
+    lf    = 10,   /// \n Line feed or New line
+    cr    = 13,   /// \r Carriage return
+    space = 32    /// Space
+  };
+
+  /**
    * @brief The literal enum
    */
-  enum literal {
-    NONE  = 0,
-    TRUE  = 1,
-    FALSE = 2,
-    LNULL = 3
+  enum literal_ {
+    lnone   = 0,
+    ltrue   = 1,
+    lfalse  = 2,
+    lnull   = 3
   };
 
   /**
@@ -116,34 +133,49 @@ protected:
    */
   value *_parent;
 
-  /** TODO: move to json
-   * @brief _next_lexeme
+  /**
+   * @brief charc
+   */
+  size_t _charc;
+
+  /**
+   * @brief _look_ahead Move read pointer to next non-white space character
    */
   inline void
   _look_ahead ()
   {
-    while (_readp < _endp && isspace (*_readp))
+    while (_readp < _endp && ( *_readp == ws_::tab
+            || *_readp == ws_::lf
+            || *_readp == ws_::cr
+            || *_readp == ws_::space))
       _readp++;
   }
+
+  /**
+   * @brief _string Read in string. Return number of characters read, including quotation marks.
+   * @return
+   */
+  size_t _string ();
+
+  /**
+   * @brief _lexeme Read in next non-white space characters.
+   * @param endc Last character read
+   * @return Count of characters read
+   */
+  size_t _lexeme ();
 
   /**
    * @brief _is_literal
    * @return
    */
-  value::literal _is_literal () const;
-
-  /**
-   * @brief _lexeme
-   * @return
-   */
-  size_t _lexeme (char & endc);
+  value::literal_ _is_literal () const;
 
   /**
    * @brief is_quoted
    * @param strlen
    * @return
    */
-  bool _is_quoted (const size_t strlen) const;
+  // bool _is_quoted (const size_t strlen) const;
 
   /**
    * @brief is_number

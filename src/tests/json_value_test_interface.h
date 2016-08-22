@@ -20,7 +20,7 @@ public:
 
 protected:
 
-    static const char *input[];
+    static const char *_input[];
 };
 
 #endif // JSON_VALUE_TEST_H

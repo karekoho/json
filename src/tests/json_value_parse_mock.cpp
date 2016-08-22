@@ -1,14 +1,16 @@
 #include "json_value_parse_mock.h"
 
-json_value_parse_mock::json_value_parse_mock (const char *readp, const char *endp, value *parent)
-    : value(readp,endp, parent)
+json_value_parse_mock::json_value_parse_mock (const char *readp, const char *endp, value *parent, size_t lexlen)
+    : value (readp,endp, parent, lexlen)
 {
 }
 
 const char *
 json_value_parse_mock::parse (const char *readp)
 {
-    return readp;
+    const char *readp_ = readp == 0 ? _readp : readp;
+
+    return readp_ + _charc;
 }
 
 const value &

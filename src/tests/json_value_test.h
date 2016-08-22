@@ -20,6 +20,10 @@ public:
     void test_is_number ();
 
     static CppUnit::Test* suite ();
+
+protected:
+    // static const char *_lexeme_input[];
+    // static std::vector<const char *>_lexeme_input;
 };
 
 #endif // JSON_INTERFACE_TEST_H

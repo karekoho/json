@@ -1,6 +1,6 @@
 #include "json_value_test_interface.h"
 
-const char *json_value_test_interface::input[] =  {
+const char *json_value_test_interface::_input[] =  {
     "{\"Image\": {\
           \"Width\":  800,\
           \"Height\": 600,\
