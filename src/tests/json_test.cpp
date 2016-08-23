@@ -1,5 +1,5 @@
 #include "json_test.h"
-
+#include <stdio.h>
 void
 json_test::test_smoke ()
 {
@@ -8,6 +8,48 @@ json_test::test_smoke ()
 void
 json_test::test_parse_1 ()
 {
+    size_t charc = 0;
+    size_t errorc = 0;
+    size_t idx = 0;
+
+    json *j;
+
+    // size_t idx = 0;
+
+    const char *startp = 0;
+    const char *readp = 0;
+
+    struct assert {
+        const char *input;
+        size_t move;
+        char endch;
+        value::otype type;
+    };
+
+    std::vector<struct assert > test = {
+        { "{ \"foo\" : true } ", 17 - 2, '}',   value::otype::object },      // 17 - quotes
+        { " { \"bar\" : null } ", 17 - 2, '}',  value::otype::object },     // Space skipped in parse
+        { "[ true ] ", 7, ']',  value::otype::array },
+        { " [ false ] ", 8, ']',  value::otype::array }
+    };
+
+    for (auto it = test.begin (); it != test.end (); it++, idx++) {
+        try {
+            startp = (*it).input;
+            charc = strlen (startp);
+
+            j = new json (startp + charc, 0, (*it).move);
+
+            readp = j->parse (startp);
+
+            CPPUNIT_ASSERT_EQUAL_MESSAGE ("readp", (*it).endch, *readp);
+            CPPUNIT_ASSERT_EQUAL_MESSAGE ("object type", (*it).type, j->type ());
+
+            delete j;
+
+
+        } CATCH_ERROR_PCHAR;
+    }
 }
 
 void

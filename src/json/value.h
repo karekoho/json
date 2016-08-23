@@ -4,6 +4,8 @@
 #include <ctype.h>
 #include <cstring>
 
+// #define UNIT_TEST
+
 #ifdef UNIT_TEST
 class json_value_test;
 #endif
@@ -16,20 +18,20 @@ class value
 friend class json_value_test;
 #endif
 protected:
-
-  /**
-   * @brief The otype enum
-   */
-  enum otype {
-    object,
-    array,
-    string,
-    number,
-    boolean,
-    null
-  };
-
 public:
+
+/**
+ * @brief The otype enum
+ */
+enum otype {
+  undefined,
+  object,
+  array,
+  string,
+  number,
+  boolean,
+  null
+};
 
   /**
    * @brief json_value
@@ -39,17 +41,18 @@ public:
 
   /**
    * @brief json_value
-   * @param startp TODO: remove
    * @param endp
    * @param parent
    * @paran charc
    */
-  explicit value (const char *startp, const char *endp, value *parent = 0, size_t lexlen = 0);
+  explicit value (const char *endp, value *parent, size_t charc);
 
   /**
    * @brief parse
    * @param json
    * @return
+   * @see https://tools.ietf.org/html/rfc7159
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse
    */
   virtual const char *parse (const char *json) = 0;
 
@@ -65,7 +68,7 @@ public:
    * @param key
    * @return
    */
-  inline const value & operator[] (const char *key) const   { return at (key); }
+  inline const value & operator[] (const char *key) const { return at (key); }
 
   /**
    * @brief type
@@ -152,10 +155,14 @@ protected:
   }
 
   /**
-   * @brief _string Read in string. Return number of characters read, including quotation marks.
-   * @return
+   * @brief _string Read in string.
+   * If no opening quote, return 0.
+   * If no closing quote, unicode control charater, return characters read * -1.
+   * Else return number of characters read + 2 (quotes).
+   * @param endc Last character read
+   * @return Number of characters read
    */
-  size_t _string ();
+  long int _string (char &endc) const;
 
   /**
    * @brief _lexeme Read in next non-white space characters.
@@ -181,7 +188,7 @@ protected:
    * @brief is_number
    * @return
    */
-  bool _is_number () const;
+  // bool _is_number () const;
 
 };
 

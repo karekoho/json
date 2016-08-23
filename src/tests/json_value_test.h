@@ -15,8 +15,8 @@ public:
 
     void test_lookahead ();
     void test_lexeme ();
+    void test_string ();
     void test_is_literal ();
-    void test_is_quoted ();
     void test_is_number ();
 
     static CppUnit::Test* suite ();

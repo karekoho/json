@@ -11,12 +11,33 @@ value::value (const char *json)
 {
 }
 
-value::value (const char *startp, const char *endp, value *parent, size_t lexlen)
-    : _startp (startp),
-      _readp (startp),
+value::value (const char *endp, value *parent, size_t charc)
+    : _startp (0),
+      _readp (0),
       _endp (endp),
       _parent (parent),
-      _charc (lexlen)
+      _charc (charc)
 {
+}
+
+long int
+value::_string (char & endc) const
+{
+    const char * const starp = _readp;
+
+    if (*starp != 34) {
+        endc = *starp;
+        return 0;
+    }
+
+    const char * readp = _readp + 1;
+
+    while (readp < _endp && *readp != 34) {
+        readp++;
+    }
+
+    endc = *readp;
+
+    return readp < _endp ? (readp - starp) + 1 : -1 * (readp - starp);
 }
 

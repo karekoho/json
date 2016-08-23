@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
           {
             test_num = atoi (argv[idx]);
 
-            if (test_num >= -1 && test_num < last_test + 4)
+            if (test_num >= -1 && test_num < last_test)
               {
                 runner.addTest (tests[test_num]);
                 tests_added[test_num] = true;

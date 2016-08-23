@@ -12,7 +12,9 @@ TEMPLATE = lib
 
 SOURCES += \
     value.cpp \
-    basic_json.cpp
+    basic_json.cpp \
+    object.cpp \
+    array.cpp
 
 HEADERS += \
     value.h \
