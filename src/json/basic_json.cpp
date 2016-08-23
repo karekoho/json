@@ -1,6 +1,6 @@
 #include "basic_json.h"
 
- json::json(const char *json)
+ json::json (const char *json)
   : value (json),
   __value (0)
 {
@@ -10,6 +10,11 @@
 json::json (const char *endp, value *parent, size_t charc)
   : value (endp, parent, charc),
   __value (0)
+{
+
+}
+
+json::~json()
 {
 
 }
@@ -48,8 +53,9 @@ json::json::parse (const char *readp)
 }
 
 const value &
-json::json::at (const char *key) const
+json::at (const char *key) const
 {
+  return *this;
 }
 
 value::otype
@@ -62,6 +68,7 @@ json::type () const
 size_t
 json::size () const
 {
+  return 0;
 }
 
 

@@ -19,7 +19,10 @@ SOURCES += main.cpp \
     json_object_test.cpp \
     json_value_test.cpp \
     ../json/value.cpp \
-    json_value_parse_mock.cpp
+    json_value_parse_mock.cpp \
+    ../json/object.cpp \
+    ../json/array.cpp \
+    ../json/basic_json.cpp
 
 HEADERS += \
     json_value_test_interface.h \
@@ -29,7 +32,8 @@ HEADERS += \
     json_value_test.h \
     ../json/value.h \
     ../json/json.h \
-    json_value_parse_mock.h
+    json_value_parse_mock.h \
+    ../json/basic_json.h
 
 SUBDIRS += \
     ../json/json.pro

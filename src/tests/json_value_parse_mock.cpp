@@ -1,6 +1,6 @@
 #include "json_value_parse_mock.h"
 
-json_value_parse_mock::json_value_parse_mock (const char *endp, value *parent, size_t charc, otype type)
+json_value_parse_mock::json_value_parse_mock (const char *endp, value *parent, size_t charc, value::otype type)
     : value (endp, parent, charc)
 {
     _type = type;

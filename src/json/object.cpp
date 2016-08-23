@@ -25,8 +25,9 @@ json::object::parse (const char *json)
         _look_ahead ();
 
         if (*_readp == sc_::begin_object) {             // '{'
-            // _pair ();
-            // continue;
+            _readp++;
+            _pair ();
+            continue;
 
         } else if (*_readp == sc_::value_separator) {   // ','
             // if _pairc == 0: error
@@ -48,19 +49,39 @@ json::object::parse (const char *json)
 void
 json::object::_pair ()
 {
-    // _look_ahead ()
-    // if ! _string (): error
+    char endc;
+    long int charc = 0;
+
+    _look_ahead ();
+
+    if ((charc = _string (endc)) == 0) {
+        throw "error";
+      }
+    if (charc < 0) {
+        throw "error";
+      }
+
+
     // expect ':'
-    // _look_ahead ()
+    _look_ahead ();
     // expect value
+
+
+
     // if object | array : _readp = new object | array
     // else if string | number |literal : _readp + charc
+
+    // std::string (_readp + 1, charc - 1);
+
+    _members.emplace (std::string (_readp + 1, charc - 1), this);
+
     // _pairc++
 }
 
 const value &
 json::object::at (const char *key) const
 {
+  return *this;
 }
 
 // value::otype json::object::type () const { }
