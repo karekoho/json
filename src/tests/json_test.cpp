@@ -27,10 +27,10 @@ json_test::test_parse_1 ()
     };
 
     std::vector<struct assert > test = {
-        { "{ \"foo\" : true } ", 17 - 2, '}',   value::otype::object },      // 17 - quotes
-        { " { \"bar\" : null } ", 17 - 2, '}',  value::otype::object },     // Space skipped in parse
-        { "[ true ] ", 7, ']',  value::otype::array },
-        { " [ false ] ", 8, ']',  value::otype::array }
+        { "{ \"foo\" : \"ru\" } ", 17 - 2, '}',   value::otype::object },      // 17 - quotes
+        { " { \"bar\" : \"ul\" } ", 17 - 2, '}',  value::otype::object },     // Space skipped in parse
+        { "[ \"ru\" ] ", 7, ']',  value::otype::array },
+        { " [ \"als\" ] ", 8, ']',  value::otype::array }
     };
 
     for (auto it = test.begin (); it != test.end (); it++, idx++) {
@@ -41,8 +41,8 @@ json_test::test_parse_1 ()
             j = new json (startp + charc, 0, (*it).move);
 
             readp = j->parse (startp);
-
-            CPPUNIT_ASSERT_EQUAL_MESSAGE ("readp", (*it).endch, *readp);
+            // std::cout << readp -1 << std::endl;
+            CPPUNIT_ASSERT_EQUAL_MESSAGE ("readp", (*it).endch, *(readp - 1));
             CPPUNIT_ASSERT_EQUAL_MESSAGE ("object type", (*it).type, j->type ());
 
             delete j;

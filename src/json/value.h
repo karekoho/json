@@ -8,6 +8,7 @@
 
 #ifdef UNIT_TEST
 class json_value_test;
+class json_object_test;
 #endif
 /**
  * @brief The json_value class
@@ -16,6 +17,7 @@ class value
 {
 #ifdef UNIT_TEST
 friend class json_value_test;
+friend class json_object_test;
 #endif
 protected:
 public:
@@ -54,6 +56,7 @@ enum otype {
    * @see https://tools.ietf.org/html/rfc7159
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse
    * @see http://www.ecma-international.org/ecma-262/5.1/#sec-15.12.2
+   * @see https://en.wikipedia.org/wiki/List_of_Unicode_characters
    */
   virtual const char *parse (const char *json) = 0;
 
@@ -94,7 +97,8 @@ protected:
     begin_array     = '[',
     end_array       = ']',
     name_separator  = ':',
-    value_separator = ','
+    value_separator = ',',
+    double_quote    = 34
   };
 
   /**
@@ -145,7 +149,7 @@ protected:
   /**
    * @brief _look_ahead Move read pointer to next non-white space character
    */
-  inline void
+  inline const char *
   _look_ahead ()
   {
     while (_readp < _endp && ( *_readp == ws_::tab
@@ -153,6 +157,8 @@ protected:
             || *_readp == ws_::cr
             || *_readp == ws_::space))
       _readp++;
+
+    return _readp;
   }
 
   /**

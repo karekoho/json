@@ -34,9 +34,11 @@ json::json::parse (const char *readp)
   _look_ahead ();
 
   if (*_readp == sc_::begin_object) {
-     value_ = new json::object (_endp, this, _charc);
+      //_readp++;
+      value_ = new json::object (_endp, this, _charc);
     }
   else if (*_readp == sc_::begin_array) {
+      //_readp++;
      value_ = new json::array (_endp, this, _charc);
     }
 
@@ -53,7 +55,7 @@ json::json::parse (const char *readp)
       throw "syntax error near x";
     }
 
-  _readp = value_->parse (_readp);
+  _readp = value_->parse (_readp + 1);
 
   delete __value;
 
@@ -78,7 +80,7 @@ json::type () const
 size_t
 json::size () const
 {
-  return 0;
+  return __value == 0 ? 0 :__value->size ();
 }
 
 

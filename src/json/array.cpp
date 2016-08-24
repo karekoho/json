@@ -18,7 +18,7 @@ json::array::parse (const char *json) { return json + _charc; }
 const char *
 json::array::parse (const char *json)
 {
-    return json + _charc;
+    return json + _charc;   /// skips over end_array ]
 }
 #endif
 

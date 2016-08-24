@@ -8,11 +8,18 @@
 
 /// TODO: namespace  {
 
+#ifdef UNIT_TEST
+  class json_object_test;
+#endif
+
 /**
  * @brief The json class
  */
 class json : public value
 {
+#ifdef UNIT_TEST
+  friend class json_object_test;
+#endif
 public:
 
   json (const char *json);
@@ -25,11 +32,23 @@ public:
   virtual value::otype type () const;
   virtual size_t size () const;
 
+private:
+  /**
+   * @brief __value
+   */
+  value *__value;
+
+public:
   /**
    * @brief The object class
    */
+
   class object : public value {
-    public:
+#ifdef UNIT_TEST
+  friend class json_object_test;
+#endif
+
+  public:
 
     object (const char *json);
     object (const char *endp, value *parent = 0, size_t charc = 0);
@@ -40,7 +59,7 @@ public:
 
     virtual const value & at (const char *key) const;
     virtual inline otype type () const { return value::otype::object; }
-    virtual inline size_t size () const { return 0; }
+    virtual inline size_t size () const { return _member_list.size (); }
 
     protected:
 
@@ -51,7 +70,9 @@ public:
      */
     std::unordered_map<std::string, value *> _member_list;
 
-    void _pair ();
+    bool _pair ();
+
+    value *_value ();
   };
 
   /**
@@ -173,14 +194,24 @@ public:
    */
   class undefined : public value {
     public:
-    undefined (const char *json);
-    undefined (const char *endp, value *parent = 0, size_t charc = 0);
+    undefined () : value::value (0, 0, 0) {}
+    undefined (const char *json) : value::value (json) {}
+    undefined (const char *endp, value *parent = 0, size_t charc = 0) : value::value (endp, parent,charc) {}
+
+
+    virtual const char *parse (const char *json) { return json; }
+
+    virtual const value & at (const char *key) const { return *this; }
+
+    virtual otype type () const { return value::otype::undefined; }
+
+    virtual size_t size () const { return 0; }
 
     /**
      * @brief value
      * @return
      */
-    inline const char * value () const { return ""; }
+    inline const char * value () const { return "undefined"; }
   };
 
   /**
@@ -211,10 +242,6 @@ public:
      */
     syntax_error (const char * const message) : error (message) {}
   };
-
-private:
-
-  value *__value;
 };
 
 /// }

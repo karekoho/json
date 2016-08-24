@@ -25,14 +25,14 @@ value::_string (char & endc) const
 {
     const char * const starp = _readp;
 
-    if (*starp != 34) {
+    if (*starp != sc_::double_quote) {
         endc = *starp;
         return 0;
     }
 
     const char * readp = _readp + 1;
 
-    while (readp < _endp && *readp != 34) {
+    while (readp < _endp && *readp != sc_::double_quote) {
         readp++;
     }
 
