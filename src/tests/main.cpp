@@ -4,10 +4,11 @@
 #include <json_value_test.h>
 #include <json_test.h>
 #include <json_object_test.h>
+#include <json_string_test.h>
 
 #define DBG(...) fprintf (stderr, __VA_ARGS__)
 
-#define TESTC 3  // 2 tests
+#define TESTC 4  // 4 tests
 
 int main(int argc, char *argv[])
 {
@@ -18,11 +19,14 @@ int main(int argc, char *argv[])
     CppUnit::Test *tests[] = {
       json_value_test::suite (),        // 0
       json_test::suite (),              // 1
-      json_object_test::suite ()        // 2
+      json_object_test::suite (),       // 2
+      json_string_test::suite ()        // 3
+
     };
 
     bool tests_added[] = {
       false,  // 0
+      false,
       false,
       false
     };

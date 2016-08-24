@@ -30,8 +30,8 @@ json_object_test::test_parse_1 ()
     };
 
     std::vector<struct assert > test = {
-        { "{ \"foo\" : true } ", 1, '}' },
-        { " { \"bar\" : null } ", 1, '}' },
+        { "{ \"foo\" : \"bar\" } ", 1, '}' },
+        // { " { \"bar\" : null } ", 1, '}' },
         // { "[ true ] ", 7, ']',  value::otype::array },
         // { " [ false ] ", 8, ']',  value::otype::array }
     };

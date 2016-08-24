@@ -53,6 +53,7 @@ enum otype {
    * @return
    * @see https://tools.ietf.org/html/rfc7159
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse
+   * @see http://www.ecma-international.org/ecma-262/5.1/#sec-15.12.2
    */
   virtual const char *parse (const char *json) = 0;
 

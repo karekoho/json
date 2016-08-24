@@ -39,6 +39,16 @@ json::json::parse (const char *readp)
   else if (*_readp == sc_::begin_array) {
      value_ = new json::array (_endp, this, _charc);
     }
+
+  /**
+    JSON:parse accepts:
+    JSON.parse('{}');              // {}
+    JSON.parse('[]');              // []
+    JSON.parse('true');            // true
+    JSON.parse('"foo"');           // "foo"
+    JSON.parse('null');            // null
+    */
+
   else {
       throw "syntax error near x";
     }

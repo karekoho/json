@@ -8,7 +8,8 @@ json::object::object (const char *json)
 }
 
 json::object::object (const char *endp, value *parent, size_t charc)
-  : value (endp , parent, charc), _pairc (0)
+  : value (endp , parent, charc),
+    _pairc (0)
 {
 
 }
@@ -54,26 +55,34 @@ json::object::_pair ()
 
     _look_ahead ();
 
-    if ((charc = _string (endc)) == 0) {
-        throw "error";
+    // Expect \"key\"
+    if ((charc = _string (endc))  == 0) { // No quote \"
+        throw json::syntax_error ("syntax error: expecting opening '\"'");
       }
-    if (charc < 0) {
-        throw "error";
+    if (charc < 0) {  // No closing \"
+        throw json::syntax_error ("syntax error: expecting closing '\"'");
       }
 
+    std::string key (_readp + 1, charc - 1);
 
-    // expect ':'
+    _readp += charc;
+
     _look_ahead ();
+
+    // Expect ':'
+    if (*_readp != sc_::name_separator) {
+        throw json::syntax_error ("syntax error: expecting ','");
+      }
+
+    _readp++;
+
     // expect value
-
-
+    _look_ahead ();
 
     // if object | array : _readp = new object | array
     // else if string | number |literal : _readp + charc
 
-    // std::string (_readp + 1, charc - 1);
-
-    _members.emplace (std::string (_readp + 1, charc - 1), this);
+    _member_list.emplace (key, this /** TODO: _value () */);
 
     // _pairc++
 }
