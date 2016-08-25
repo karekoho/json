@@ -44,13 +44,14 @@
 #ifndef ASSERT_NO_ERROR
   #define ASSERT_NO_ERROR \
     (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, errorc); \
-    CPPUNIT_ASSERT_MESSAGE (_sz_idx, errorc == 0)
+    CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, 0, errorc)
 #endif
 
 #ifndef ASSERT_ERRORC
   #define ASSERT_ERRORC(__errorc) \
   (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, errorc); \
   CPPUNIT_ASSERT_MESSAGE (_sz_idx, errorc == __errorc)
+  //CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, __errorc, errorc)
 #endif
 
 

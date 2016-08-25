@@ -51,7 +51,41 @@ json_value_test::test_lexeme ()
 void
 json_value_test::test_is_literal ()
 {
+  size_t charc = 0;
+  // size_t idx = 0;
 
+  const char *startp = 0;
+
+  struct assert {
+      const char *input;
+      value::literal_ value_type;
+  };
+
+  std::vector<struct assert > test = {
+    {"", value::literal_::no_value},
+    {"   ", value::literal_::no_value},
+    {"xxx   ", value::literal_::no_value},
+    {"xxxxxx   ", value::literal_::no_value},
+    {"true    ", value::literal_::true_value},
+    {"false    ", value::literal_::false_value},
+    {"null   ", value::literal_::null_value}
+
+  };
+
+  for (auto it = test.begin (); it != test.end (); it++) {
+      startp = (*it).input;
+      charc = strlen (startp);
+
+      json_value_parse_mock *m  = new json_value_parse_mock (startp + charc, 0, 0);
+
+      m->_startp = m->_readp = startp;
+
+      value::literal_ ltr = m->_is_literal ();
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("literal value", (*it).value_type , ltr);
+
+      delete m;
+  }
 }
 
 void
@@ -111,7 +145,7 @@ json_value_test::suite ()
 
     s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lookahead", &json_value_test::test_lookahead));
 //    s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lexeme", &json_value_test::test_lexeme));
-//    s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_literal", &json_value_test::test_is_literal));
+    s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_literal", &json_value_test::test_is_literal));
     s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_quoted", &json_value_test::test_string));
 //    s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_number", &json_value_test::test_is_number));
 

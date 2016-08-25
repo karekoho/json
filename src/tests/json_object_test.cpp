@@ -20,17 +20,21 @@ json_object_test::test_parse_1 ()
     struct assert {
         const char *input;
         size_t size;
+        value::otype type;
     };
 
     std::vector<struct assert > test = {
-        { "{ \"foo\" : \"bar\" } ", 1 },
-        { "{ \"foo\" : \"bar\", \"baz\" : \"quux\" } ", 2 },
-        { "{ \"foo\": \"bar\", \"baz\" : \"quux\",\"k\":\"v\" } ", 3 },
-        { "{ \"foo\": \"bar\" ,\"baz\" : \"quux\", \"k\" :\"v\",\"q\":\"p\" } ", 4 },
-        { "{}", 0 },
+        { "{ \"k\" : \"v\" } ", 1, value::string },
+        { "{ \"k\" : \"v\", \"q\" : \"p\" } ", 2, value::string },
+        { "{ \"k\": \"v\", \"q\" : \"p\",\"K\":\"v\" } ", 3, value::string },
+        { "{ \"k\": \"p\" ,\"q\" : \"p\", \"K\" :\"v\",\"Q\":\"p\" } ", 4, value::string },
+        { "{}", 0, value::undefined },
+        { "{ \"k\" : { } }", 1, value::object },
+        { "{ \"k\" : {\"kk\" : \"v\"}}", 1, value::object },
+        { "{ \"k\" : {\"kk\" : {\"kkk\" : \"v\"}}", 1, value::object },
 
         // errors
-        { "{ , }", 0 }, // syntax error exception
+        { "{ , }", 0, value::undefined }, // syntax error exception
     };
 
     for (auto it = test.begin (); it != test.end (); it++, idx++) {
@@ -40,9 +44,10 @@ json_object_test::test_parse_1 ()
 
             o = new json::object (startp + charc, p);
 
-            readp = o->parse (startp + 1);
+            readp = o->parse (startp);
 
             CPPUNIT_ASSERT_EQUAL_MESSAGE ("value.size", (*it).size, o->size ());
+            CPPUNIT_ASSERT_EQUAL_MESSAGE ("value.type", (*it).type, o->at ("k").type ());
 
             delete o;
 
@@ -128,7 +133,7 @@ json_object_test::suite ()
 //    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_value_1", &json_object_test::test_value_1));
 //    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_debug_1", &json_object_test::test_debug_1));
 
-      s->addTest (new CppUnit::TestCaller<json_object_test> ("test_pair_1", &json_object_test::test__pair));
+     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_pair_1", &json_object_test::test__pair));
  //     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_pair_1", &json_object_test::test__value));
 
     return s;

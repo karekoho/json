@@ -14,7 +14,7 @@ public:
     virtual void test_smoke () = 0;
     virtual void test_parse_1 () = 0;
     virtual void test_size_1 () = 0;
-    virtual void test_get_1 () = 0;
+    virtual void test_at_1 () = 0;
     virtual void test_value_1 () = 0;
     virtual void test_debug_1 () = 0;
 

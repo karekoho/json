@@ -115,10 +115,10 @@ protected:
    * @brief The literal enum
    */
   enum literal_ {
-    lnone   = 0,
-    ltrue   = 1,
-    lfalse  = 2,
-    lnull   = 3
+    no_value    = 0,
+    true_value  = 1,
+    false_value = 2,
+    null_value  = 3
   };
 
   /**
@@ -183,6 +183,8 @@ protected:
    * @return
    */
   value::literal_ _is_literal () const;
+
+  // value *_valuex ();
 
   /**
    * @brief is_quoted

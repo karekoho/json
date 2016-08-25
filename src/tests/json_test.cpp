@@ -58,7 +58,7 @@ json_test::test_size_1 ()
 }
 
 void
-json_test::test_get_1 ()
+json_test::test_at_1 ()
 {
 }
 

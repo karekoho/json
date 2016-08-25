@@ -15,6 +15,7 @@
 /**
  * @brief The json class
  */
+class undefined;
 class json : public value
 {
 #ifdef UNIT_TEST
@@ -27,10 +28,30 @@ public:
 
   virtual ~json ();
 
+  /**
+   * @brief parse
+   * @param readp
+   * @return
+   */
   virtual const char *parse (const char *readp);
+
+  /**
+   * @brief at
+   * @param key
+   * @return
+   */
   virtual const value & at (const char *key) const;
-  virtual value::otype type () const;
-  virtual size_t size () const;
+  /**
+   * @brief type
+   * @return
+   */
+
+  virtual inline value::otype type () const { return __value == 0 ? value::otype::undefined : __value->type (); }
+  /**
+   * @brief size
+   * @return
+   */
+  virtual inline size_t size () const { return  type () == value::undefined ? 0 :__value->size (); }
 
 private:
   /**
@@ -42,6 +63,9 @@ public:
   /**
    * @brief The object class
    */
+  value * v(){
+    return new json::object(0,0);
+  }
 
   class object : public value {
 #ifdef UNIT_TEST
@@ -150,13 +174,51 @@ public:
   class number : public value {
     public:
 
-    number (const char *json);
-    number (const char *endp, value *parent = 0, size_t charc = 0);
+    number (const char *json)
+      : value::value (json),
+        _value (0),
+        _digitp {{0,0,0},{0,0,0}},
+        _exp (0)
+    {
+    }
+
+    number (const char *endp, value *parent = 0, size_t charc = 0)
+      : value::value (endp, parent, charc),
+        _value (0),
+        _digitp {{0,0,0},{0,0,0}},
+        _exp (0)
+    {
+    }
+
+    virtual const char *parse (const char *json) { return json; }
+
+    virtual const value & at (const char *key) const { return *this; }
+
+    virtual inline otype type () const { return value::otype::number; }
+
+    virtual size_t size () const { return _value == 0 ? 0 : 1; }
+
+    double value () const { return 0; }
 
   protected:
+    /**
+     * @brief _value
+     */
     mutable double _value;
+    /**
+     * @brief _digitp
+     */
+    mutable const char *_digitp[2][3];
+
+    /**
+     * @brief _exp Power of 10
+     */
+    unsigned long int _exp;
   };
 
+  /**
+   * @brief The boolean class
+   */
   class boolean : public value {
     public:
 
@@ -198,14 +260,13 @@ public:
     undefined (const char *json) : value::value (json) {}
     undefined (const char *endp, value *parent = 0, size_t charc = 0) : value::value (endp, parent,charc) {}
 
+    virtual const char *parse (const char *json) { return json + _charc; }
 
-    virtual const char *parse (const char *json) { return json; }
+    virtual inline const value & at (const char *key) const { return *this; }
 
-    virtual const value & at (const char *key) const { return *this; }
+    virtual inline otype type () const { return value::otype::undefined; }
 
-    virtual otype type () const { return value::otype::undefined; }
-
-    virtual size_t size () const { return 0; }
+    virtual inline size_t size () const { return 0; }
 
     /**
      * @brief value
@@ -242,6 +303,10 @@ public:
      */
     syntax_error (const char * const message) : error (message) {}
   };
+
+private:
+
+  // static undefined __default;
 };
 
 /// }

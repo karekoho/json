@@ -15,38 +15,14 @@ json::object::object (const char *endp, value *parent, size_t charc)
 const char *
 json::object::parse (const char *json)
 {
-  // return json + _charc;
-  _readp = json;
+  if (_parent == 0) {
+      _readp = json;
 
-
-  /* do {
-      (void) _look_ahead ();
-
-      if (*_readp == sc_::begin_object) {             // '{'
-          _readp++;
-          _pair ();
-
-        } else if (*_readp == sc_::value_separator) {   // ','
-          // if _pairc == 0: error
-          _readp++;
-          _pair ();
-
-        } else if (*_readp == sc_::end_object) {        // '}'
-          return _readp + 1;
-
-          // }  else if (*_readp == '"') { _readp++;
-
-        } else if (_readp == _endp){
-          return _readp;
-
-        } else {
-          throw "syntax error: unexpected character";
-        }
-    } while (_readp < _endp); */
-
-
-  if (_parent == 0 && *(_look_ahead ()) != sc_::begin_object) {
-      throw "syntax error: expecting '{'";
+      if (*(_look_ahead ()) != sc_::begin_object)
+        throw "syntax error: expecting '{'";
+    }
+  else {
+      _readp = json + 1;
     }
 
   while (_readp < _endp) {
@@ -95,7 +71,8 @@ json::object::_pair ()
 
 
   if (*(_look_ahead ()) != sc_::name_separator)   /// Expect ':'
-    throw json::syntax_error ("syntax error: expecting ':'");   /// TODO: throw syntax error: unexpected character '%c'
+
+    throw json::syntax_error ("pair: syntax error: expecting ':'");   /// TODO: throw syntax error: unexpected character '%c'
 
   _readp++;
 
@@ -115,21 +92,23 @@ json::object::_value ()
   char readc = *(_look_ahead ());
 
   if (readc == sc_::double_quote) {
-      if ((charc = _string (endc)) < 0)
+    if ((charc = _string (endc)) < 0)
         throw json::syntax_error ("syntax error: expecting closing '\"'");
 
       value_ = new json::string (_endp, this, charc);
       _readp = value_->parse (_readp);
 
     } else if (readc == sc_::begin_object) {
-      value_ = new json::undefined;
+
+      value_ = new json::object (_endp, this, 0);
       _readp = value_->parse (_readp);
+
 
     } else if (readc == sc_::begin_array) {
       value_ = new json::undefined;
       _readp = value_->parse (_readp);
 
-    } else if (isdigit (readc) || readc == '-') {
+    } else if (isdigit (readc) || readc == '-') { // Number
       ;
 
     } else if (true) {  // Literal
@@ -145,7 +124,16 @@ json::object::_value ()
 const value &
 json::object::at (const char *key) const
 {
-  return *this;
+  if (_member_list.empty ()) {
+      return *(new json::undefined); /// FIXME: leak
+    }
+
+  try {
+    return *(_member_list.at (key));
+
+  } catch (std::out_of_range &e) {
+    return *(new json::undefined);  /// FIXME: leak
+  }
 }
 
 // value::otype json::object::type () const { }

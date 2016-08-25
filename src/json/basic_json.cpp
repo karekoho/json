@@ -1,5 +1,7 @@
 #include "basic_json.h"
 
+// json::undefined __default;
+
  json::json (const char *json)
   : value (json),
   __value (0)
@@ -67,20 +69,9 @@ json::json::parse (const char *readp)
 const value &
 json::at (const char *key) const
 {
-  return *this;
-}
-
-value::otype
-json::type () const
-{
-    // return value::otype::empty;
-    return __value == 0 ? value::otype::undefined : __value->type ();
-}
-
-size_t
-json::size () const
-{
-  return __value == 0 ? 0 :__value->size ();
+  return type () == value::undefined
+      ? *(new json::undefined) // FIXME: leak
+      : __value->at (key);
 }
 
 
