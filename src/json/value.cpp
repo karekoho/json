@@ -1,6 +1,11 @@
 #include "value.h"
 
-//using namespace json;
+const struct value::literal_value value::__ltr_value[3] = {
+  { "true", 4, value::otype::boolean },
+  { "false", 5, value::otype::boolean },
+  { "null", 4, value::otype::null }
+};
+
 #include <stdlib.h>
 
 value::value (const char *json)

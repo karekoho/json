@@ -223,6 +223,11 @@ protected:
    */
   // bool _is_number () const;
 
+   static const struct literal_value {
+     const char * const value;
+     const size_t len;
+     const value::otype type;
+   }  __ltr_value[3];
 };
 
 #endif // JSON_VALUE_H
