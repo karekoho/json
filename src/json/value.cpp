@@ -42,7 +42,7 @@ value::_string (char & endc) const
     return readp < _endp ? (readp - starp) + 1 : -1 * (readp - starp);
 }
 
-value::literal_
+value::_literal
 value::_is_literal () const
 {
   const char *readp = _readp;
@@ -59,24 +59,25 @@ value::_is_literal () const
   size_t charc = readp - startp;
 
   if (charc < 4 || charc > 5) {
-      return literal_::no_value;
+      return _literal::no_value;
     }
 
-  value::literal_ ltr = literal_::no_value;
+  value::_literal ltr = _literal::no_value;
 
-  char *test = new char[charc]();
+  char *test = new char[charc + 1]();
+
   test = strncpy (test, startp, charc);
 
   if (strcmp ("true", test) == 0) {
-      ltr = literal_::true_value;
+      ltr = _literal::true_value;
     }
 
   else if (strcmp ("false", test) == 0) {
-      ltr =  literal_::false_value;
+      ltr =  _literal::false_value;
     }
 
   else if (strcmp ("null", test) == 0) {
-      ltr = literal_::null_value;
+      ltr = _literal::null_value;
     }
 
   delete[] test;

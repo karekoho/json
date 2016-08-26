@@ -42,11 +42,7 @@ json_value_test::test_lookahead ()
     }
 }
 
-void
-json_value_test::test_lexeme ()
-{
-
-}
+// void json_value_test::test_lexeme () {}
 
 void
 json_value_test::test_is_literal ()
@@ -58,17 +54,17 @@ json_value_test::test_is_literal ()
 
   struct assert {
       const char *input;
-      value::literal_ value_type;
+      value::_literal value_type;
   };
 
   std::vector<struct assert > test = {
-    {"", value::literal_::no_value},
-    {"   ", value::literal_::no_value},
-    {"xxx   ", value::literal_::no_value},
-    {"xxxxxx   ", value::literal_::no_value},
-    {"true    ", value::literal_::true_value},
-    {"false    ", value::literal_::false_value},
-    {"null   ", value::literal_::null_value}
+    {"", value::_literal::no_value},
+    {"   ", value::_literal::no_value},
+    {"xxx   ", value::_literal::no_value},
+    {"xxxxxx   ", value::_literal::no_value},
+    {"true    ", value::_literal::true_value},
+    {"false    ", value::_literal::false_value},
+    {"null   ", value::_literal::null_value}
 
   };
 
@@ -80,7 +76,7 @@ json_value_test::test_is_literal ()
 
       m->_startp = m->_readp = startp;
 
-      value::literal_ ltr = m->_is_literal ();
+      value::_literal ltr = m->_is_literal ();
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("literal value", (*it).value_type , ltr);
 
@@ -132,11 +128,7 @@ json_value_test::test_string ()
     }
 }
 
-void
-json_value_test::test_is_number ()
-{
-
-}
+// void json_value_test::test_is_number () { }
 
 CppUnit::Test *
 json_value_test::suite ()

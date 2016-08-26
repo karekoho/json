@@ -1,9 +1,7 @@
 #include "json_test.h"
 #include <stdio.h>
-void
-json_test::test_smoke ()
-{
-}
+
+void json_test::test_smoke () { }
 
 void
 json_test::test_parse_1 ()
@@ -52,27 +50,10 @@ json_test::test_parse_1 ()
     }
 }
 
-void
-json_test::test_size_1 ()
-{
-}
-
-void
-json_test::test_at_1 ()
-{
-}
-
-void
-json_test::test_value_1 ()
-{
-}
-
-void
-json_test::test_debug_1 ()
-{
-}
-
-
+void json_test::test_size_1 () { }
+void json_test::test_at_1 () { }
+void json_test::test_value_1 () { }
+void json_test::test_debug_1 () { }
 
 CppUnit::Test *
 json_test::suite ()

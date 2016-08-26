@@ -86,6 +86,8 @@ json::object::_value ()
 {
   value *value_  = 0;
 
+  value::_literal ltr = value::_literal::no_value;
+
   long int charc = 0;
 
   char endc = 0;
@@ -111,8 +113,12 @@ json::object::_value ()
     } else if (isdigit (readc) || readc == '-') { // Number
       ;
 
-    } else if (true) {  // Literal
-      ;
+    } else if ((ltr = _is_literal ()) != value::_literal::no_value) {  // Literal
+
+      if (ltr = value::_literal::null_value)
+        value_ = new json::null (_endp, this);
+
+      _readp = value_->parse (_readp);
 
     } else {
       throw json::syntax_error ("syntax error: expecting value after ':'");

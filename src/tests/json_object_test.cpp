@@ -32,6 +32,7 @@ json_object_test::test_parse_1 ()
         { "{ \"k\" : { } }", 1, value::object },
         { "{ \"k\" : {\"kk\" : \"v\"}}", 1, value::object },
         { "{ \"k\" : {\"kk\" : {\"kkk\" : \"v\"}}", 1, value::object },
+        { "{ \"k\" : null } ", 1, value::null },  /// FIXME: null} does not work. _is_literal is not ok.
 
         // errors
         { "{ , }", 0, value::undefined }, // syntax error exception
@@ -115,11 +116,7 @@ json_object_test::test__pair ()
     ASSERT_ERRORC (3);
 }
 
-void
-json_object_test::test__value ()
-{
-
-}
+void json_object_test::test__value () {}
 
 CppUnit::Test *
 json_object_test::suite ()

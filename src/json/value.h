@@ -61,7 +61,7 @@ enum otype {
   virtual const char *parse (const char *json) = 0;
 
   /**
-   * @brief get
+   * @brief at If key does not exist, throws json::out_of_range exception
    * @param key
    * @return
    */
@@ -72,7 +72,7 @@ enum otype {
    * @param key
    * @return
    */
-  inline const value & operator[] (const char *key) const { return at (key); }
+  inline const value & operator[] (const char *key) const { return _at (key); }
 
   /**
    * @brief type
@@ -114,7 +114,7 @@ protected:
   /**
    * @brief The literal enum
    */
-  enum literal_ {
+  enum _literal {
     no_value    = 0,
     true_value  = 1,
     false_value = 2,
@@ -182,9 +182,33 @@ protected:
    * @brief _is_literal
    * @return
    */
-  value::literal_ _is_literal () const;
+  value::_literal _is_literal () const;
 
-  // value *_valuex ();
+  /**
+   * @brief _at json::object behavior: if key does not exist, assign key with value of type undefined.
+   * @param key
+   * @return
+   */
+  const value & _at (const char *key) const;
+
+  /**
+   * @brief _at json::array behavior: if key does not exist behaviour is undefined
+   * @param index
+   * @return
+   */
+  const value & _at (size_t *index) const;
+
+  /**
+   * @brief _assign Assing value. Delete existing key.
+   * @param v
+   */
+  /// TODO: virtual void _assign (const value & v); /// TODO = 0
+
+  /**
+   * @brief operator =
+   * @param v
+   */
+  inline void operator =(const value & v) { /* return _assign (v); */ }
 
   /**
    * @brief is_quoted
