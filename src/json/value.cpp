@@ -1,9 +1,9 @@
 #include "value.h"
 
 const struct value::literal_value value::__ltr_value[3] = {
-  { "true", 4, value::otype::boolean },
-  { "false", 5, value::otype::boolean },
-  { "null", 4, value::otype::null }
+  { "true", 4, value::_literal::true_value },
+  { "false", 5, value::_literal::false_value },
+  { "null", 4, value::_literal::null_value }
 };
 
 #include <stdlib.h>
@@ -48,86 +48,20 @@ value::_string (char & endc) const
 }
 
 value::_literal
-value::_is_literal () const
+value::_is_literal (const int _try) const
 {
   const char *readp = _readp;
-  const char * const startp = readp;
 
-  while (readp < _endp
-         && *readp != ws_::tab
-         && *readp != ws_::lf
-         && *readp != ws_::cr
-         && *readp != ws_::space) {
-      readp++;
+  size_t idx = 0;
+
+  while (readp + idx < _endp
+         && idx < __ltr_value[_try].len
+         && *(readp + idx) == *(__ltr_value[_try].str_value + idx)) {
+      idx++;
     }
 
-  size_t charc = readp - startp;
+  if (idx == __ltr_value[_try].len)
+    return __ltr_value[_try].ltr_value;
 
-  if (charc < 4 || charc > 5) {
-      return _literal::no_value;
-    }
-
-  value::_literal ltr = _literal::no_value;
-
-  char *test = new char[charc + 1]();
-
-  test = strncpy (test, startp, charc);
-
-  if (strcmp ("true", test) == 0) {
-      ltr = _literal::true_value;
-    }
-
-  else if (strcmp ("false", test) == 0) {
-      ltr =  _literal::false_value;
-    }
-
-  else if (strcmp ("null", test) == 0) {
-      ltr = _literal::null_value;
-    }
-
-  delete[] test;
-
-  return ltr;
+  return _try < 2 ? _is_literal (_try + 1) :  value::_literal::no_value;
 }
-
-/* value *
-value::_valuex ()
-{
-  value *value_  = 0;
-
-  long int charc = 0;
-
-  char endc = 0;
-  char readc = *(_look_ahead ());
-
-  if (readc == sc_::double_quote) {
-    if ((charc = _string (endc)) < 0)
-        throw json::syntax_error ("syntax error: expecting closing '\"'");
-
-      value_ = new json::string (_endp, this, charc);
-      _readp = value_->parse (_readp);
-
-    } else if (readc == sc_::begin_object) {
-
-      value_ = new json::object (_endp, this, 0);
-      _readp = value_->parse (_readp);
-
-
-    } else if (readc == sc_::begin_array) {
-      value_ = new json::undefined;
-      _readp = value_->parse (_readp);
-
-    } else if (isdigit (readc) || readc == '-') { // Number
-      ;
-
-    } else if (true) {  // Literal
-      ;
-
-    } else {
-      throw json::syntax_error ("syntax error: expecting value after ':'");
-    }
-
-  return value_;
-} */
-
-

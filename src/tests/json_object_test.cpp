@@ -32,7 +32,7 @@ json_object_test::test_parse_1 ()
         { "{ \"k\" : { } }", 1, value::object },
         { "{ \"k\" : {\"kk\" : \"v\"}}", 1, value::object },
         { "{ \"k\" : {\"kk\" : {\"kkk\" : \"v\"}}", 1, value::object },
-        { "{ \"k\" : null } ", 1, value::null },  /// FIXME: null} does not work. _is_literal is not ok.
+        { "{\"k\":null} ", 1, value::null },  /// FIXME: null} does not work. _is_literal is not ok.
 
         // errors
         { "{ , }", 0, value::undefined }, // syntax error exception
@@ -83,12 +83,16 @@ json_object_test::test__pair ()
 
     std::vector<struct assert > test = {
         { " \"foo\" : \"bar\"  ", true },
+        { "\"foo\": \"bar\"  ", true },
+        { "\"foo\":\"bar\"  ", true },
+        { "\"foo\" :\"bar\"  ", true },
         { " }" , false },
 
         // errors
         { " ", false },         // syntax error exception
         { " \"foo  ", false },  // syntax error exception
         { " \"foo\" ", false },  // syntax error exception
+        { " \"foo\" : ", false },  // syntax error exception
     };
 
     for (auto it = test.begin (); it != test.end (); it++, idx++) {
@@ -105,7 +109,6 @@ json_object_test::test__pair ()
 
             delete o;
 
-
         } catch (json::syntax_error & se) {
             errorc++;
             std::cerr << se.what () << std::endl;
@@ -113,7 +116,7 @@ json_object_test::test__pair ()
         } CATCH_ERROR_PCHAR
     }
 
-    ASSERT_ERRORC (3);
+    ASSERT_ERRORC (4);
 }
 
 void json_object_test::test__value () {}

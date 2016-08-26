@@ -180,9 +180,10 @@ protected:
 
   /**
    * @brief _is_literal
+   * @param try_
    * @return
    */
-  value::_literal _is_literal () const;
+  value::_literal _is_literal (const int _try = 0) const;
 
   /**
    * @brief _at json::object behavior: if key does not exist, assign key with value of type undefined.
@@ -224,10 +225,10 @@ protected:
   // bool _is_number () const;
 
    static const struct literal_value {
-     const char * const value;
+     const char * const str_value;
      const size_t len;
-     const value::otype type;
-   }  __ltr_value[3];
+     const value::_literal ltr_value;
+   } __ltr_value[3];
 };
 
 #endif // JSON_VALUE_H

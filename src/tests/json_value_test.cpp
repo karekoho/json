@@ -58,14 +58,17 @@ json_value_test::test_is_literal ()
   };
 
   std::vector<struct assert > test = {
-    {"", value::_literal::no_value},
-    {"   ", value::_literal::no_value},
-    {"xxx   ", value::_literal::no_value},
-    {"xxxxxx   ", value::_literal::no_value},
-    {"true    ", value::_literal::true_value},
-    {"false    ", value::_literal::false_value},
-    {"null   ", value::_literal::null_value}
+    { "", value::_literal::no_value },
+    { "   ", value::_literal::no_value },
+    { "xxx   ", value::_literal::no_value },
+    { "xxxxxx   ", value::_literal::no_value },
+    { "True   ", value::_literal::no_value },
+    { "true    ", value::_literal::true_value },
+    { "false    ", value::_literal::false_value },
+    { "null   ", value::_literal::null_value },
 
+    { "null}   ", value::_literal::null_value },
+    { "true,   ", value::_literal::true_value }
   };
 
   for (auto it = test.begin (); it != test.end (); it++) {
