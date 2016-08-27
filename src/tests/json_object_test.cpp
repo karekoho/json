@@ -1,67 +1,51 @@
 #include "json_object_test.h"
 
-void
+/* void
 json_object_test::test_parse_1 ()
 {
-    size_t charc = 0;
-    size_t errorc = 0;
-    size_t idx = 0;
-
-    json::object *o;
-    json::object *p;
-
-    // size_t idx = 0;
-
-    const char *startp = 0;
-    const char *readp = 0;
-
-    char _sz_idx[300];
+    json::object *o = 0;
+    json::object *p = 0;
 
     struct assert {
+        int assert_status;
         const char *input;
         size_t size;
         value::otype type;
     };
 
     std::vector<struct assert > test = {
-        { "{ \"k\" : \"v\" } ", 1, value::string },
-        { "{ \"k\" : \"v\", \"q\" : \"p\" } ", 2, value::string },
-        { "{ \"k\": \"v\", \"q\" : \"p\",\"K\":\"v\" } ", 3, value::string },
-        { "{ \"k\": \"p\" ,\"q\" : \"p\", \"K\" :\"v\",\"Q\":\"p\" } ", 4, value::string },
-        { "{}", 0, value::undefined },
-        { "{ \"k\" : { } }", 1, value::object },
-        { "{ \"k\" : {\"kk\" : \"v\"}}", 1, value::object },
-        { "{ \"k\" : {\"kk\" : {\"kkk\" : \"v\"}}", 1, value::object },
-        { "{ \"k\" : null } ", 1, value::null },  /// FIXME: null} does not work. _is_literal is not ok.
+        { PASS, "{ \"k\" : \"v\" } ", 1, value::string },
+        { PASS, "{ \"k\" : \"v\", \"q\" : \"p\" } ", 2, value::string },
+        { PASS, "{ \"k\": \"v\", \"q\" : \"p\",\"K\":\"v\" } ", 3, value::string },
+        { PASS, "{ \"k\": \"p\" ,\"q\" : \"p\", \"K\" :\"v\",\"Q\":\"p\" } ", 4, value::string },
+        { PASS, "{}", 0, value::undefined },
+        { PASS, "{ \"k\" : { } }", 1, value::object },
+        { PASS, "{ \"k\" : {\"kk\" : \"v\"}}", 1, value::object },
+        { PASS, "{ \"k\" : {\"kk\" : {\"kkk\" : \"v\"}}", 1, value::object },
+        { PASS,"{ \"k\" : null } ", 1, value::null },
 
         // errors
-        { "{ , }", 0, value::undefined }, // syntax error exception
+        { FAIL, "{ , }", 0, value::undefined },   // json::syntax_error
     };
 
-    for (auto it = test.begin (); it != test.end (); it++, idx++) {
-        try {
-            startp = (*it).input;
-            charc = strlen (startp);
+    TEST_IT_START;
 
-            o = new json::object (startp + charc, p);
+      this->_startp = (*it).input;
+      this->_charc = strlen (this->_startp);
 
-            readp = o->parse (startp);
+      o = new json::object (this->_startp + this->_charc, p);
 
-            CPPUNIT_ASSERT_EQUAL_MESSAGE ("value.size", (*it).size, o->size ());
-            CPPUNIT_ASSERT_EQUAL_MESSAGE ("value.type", (*it).type, o->at ("k").type ());
+      this->_readp = o->parse (this->_startp);
 
-            delete o;
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("value.size", (*it).size, o->size ());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("value.type", (*it).type, o->at ("k").type ());
 
-        } catch (json::syntax_error & se) {
-            errorc++;
-            std::cerr << se.what () << std::endl;
+      delete o;
 
-        } CATCH_ERROR_PCHAR;
-    }
-    ASSERT_ERRORC (1);
-}
+    TEST_IT_END;
+} */
 
-void
+/* void
 json_object_test::test__pair ()
 {
     size_t charc = 0;
@@ -114,11 +98,11 @@ json_object_test::test__pair ()
     }
 
     ASSERT_ERRORC (3);
-}
+} */
 
-void json_object_test::test__value () {}
+// void json_object_test::test__value () {}
 
-CppUnit::Test *
+/*CppUnit::Test *
 json_object_test::suite ()
 {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json object test");
@@ -134,4 +118,4 @@ json_object_test::suite ()
  //     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_pair_1", &json_object_test::test__value));
 
     return s;
-}
+} */

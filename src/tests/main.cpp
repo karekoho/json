@@ -8,27 +8,24 @@
 
 #define DBG(...) fprintf (stderr, __VA_ARGS__)
 
-#define TESTC 4  // 4 tests
+#define TESTC 4   // Test count
 
 int main(int argc, char *argv[])
 {
     int test_num    = 0;
     int first_test  = 0;
-    int last_test   = TESTC;  // Don't run async tests
+    int last_test   = TESTC;
 
-    CppUnit::Test *tests[] = {
-      json_value_test::suite (),        // 0
-      json_test::suite (),              // 1
-      json_object_test::suite (),       // 2
-      json_string_test::suite ()        // 3
+    struct _test {
+      CppUnit::Test *test;
+      bool is_added;
+      _test (CppUnit::Test * _test = 0, bool _is_added = false) : test (_test), is_added(_is_added) {}
 
-    };
-
-    bool tests_added[] = {
-      false,  // 0
-      false,
-      false,
-      false
+    } tests[] = {
+      { json_value_test::suite () },        // 0
+      { json_test::suite () },              // 1
+      { json_object_test::suite () },       // 2
+      { json_string_test::suite () }        // 3
     };
 
     CppUnit::TextUi::TestRunner runner;
@@ -37,8 +34,8 @@ int main(int argc, char *argv[])
       {
         while (first_test < last_test)
           {
-            runner.addTest (tests[first_test]);
-            tests_added[first_test] = true;
+            runner.addTest (tests[first_test].test);
+            tests[first_test].is_added = true;
             first_test++;
           }
       }
@@ -50,9 +47,9 @@ int main(int argc, char *argv[])
 
             if (test_num >= -1 && test_num < last_test)
               {
-                runner.addTest (tests[test_num]);
-                tests_added[test_num] = true;
-                std::cout << tests[test_num]->getName () << std::endl;
+                runner.addTest (tests[test_num].test);
+                tests[test_num].is_added = true;
+                std::cout << tests[test_num].test->getName () << std::endl;
               }
             else
               {
@@ -72,8 +69,8 @@ int main(int argc, char *argv[])
       }
 
     for (int idx = 0; idx < last_test; idx++)
-      if (tests_added[idx] == false)
-        delete tests[idx];
+      if (tests[idx].is_added == false)
+        delete tests[idx].test;
 
     return 0;
 }

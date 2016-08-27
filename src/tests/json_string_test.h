@@ -9,6 +9,9 @@ public:
 
     // json_value_test_interface interface
 public:
+
+    // ~json_string_test () { std::cout << "delete"; }
+
     virtual void test_smoke()
     {
     }

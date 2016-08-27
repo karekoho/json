@@ -47,7 +47,6 @@ json_string_test::test_parse_1 ()
 
             delete s;
 
-
         } CATCH_ERROR_PCHAR;
     }
 }
