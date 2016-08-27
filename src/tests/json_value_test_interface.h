@@ -3,7 +3,9 @@
 
 #include <unit_test.h>
 
-class json_value_test_interface : public CppUnit::TestFixture
+class json_value_test_interface :
+    public unit_test
+    // public CppUnit::TestFixture
 {
 public:
 

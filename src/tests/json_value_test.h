@@ -2,7 +2,9 @@
 #define JSON_INTERFACE_TEST_H
 
 #include <json_value_test_interface.h>
+#include "json_value_parse_mock.h"
 
+/// Test number 0
 class json_value_test : public json_value_test_interface
 {
 public:
@@ -13,17 +15,136 @@ public:
     virtual void test_value_1(){}
     virtual void test_debug_1(){}
 
-    void test_lookahead ();
+    void test_lookahead ()
+    {
+      struct assert {
+          const char *startp;
+          char readp;
+          int assert_status;
+      };
+
+      std::vector<struct assert > test = {
+          { "", 0, PASS},
+          { "   ", 0, PASS },
+          { "x", 'x', PASS },
+          { " \
+              a", 'a', PASS },
+          { "   \"b", '"', PASS },
+          { "   \n\r\tc ", 'c', PASS },
+          { "   5", '5', PASS }
+      };
+
+      TEST_IT_START
+
+        const char *startp = (*it).startp;
+
+        json_value_parse_mock *m  = new json_value_parse_mock (startp + strlen (startp), 0, 0);
+
+        m->_startp = m->_readp = startp;
+
+        m->_look_ahead ();
+
+        ASSERT_EQUAL_IDX ("value.readp", (*it).readp , *(m->_readp));
+
+        delete m;
+
+      TEST_IT_END;
+    }
+
     void test_lexeme ();
-    void test_string ();
-    void test_is_literal ();
+
+    void test_string ()
+    {
+      char endc;
+
+      struct assert {
+          const char *startp;
+          long int charc;
+          int assert_status;
+      };
+
+      std::vector<struct assert > test = {
+          { " ", 0, PASS},
+          { "\"", -1, PASS },
+          { "\" x\"", 4, PASS },
+          { "\" xx", -4, PASS }
+  //        { "\"\
+  //           x\"", 14 },
+  //        { "   \"b", '"' },
+  //        { "   \n\r\tc ", 'c' },
+  //        { "   5", '5' }
+      };
+
+      TEST_IT_START
+
+          const char *startp = (*it).startp;
+          long int charc = strlen (startp);
+
+          json_value_parse_mock *m  = new json_value_parse_mock (startp + charc, 0, 0);
+
+          m->_startp = m->_readp = startp;
+
+          m->_look_ahead ();
+
+          charc = m->_string (endc);
+
+          // CPPUNIT_ASSERT_EQUAL_MESSAGE ("readp", startp , m->_readp); //   FAIL: { "\"", -1 }
+          ASSERT_EQUAL_IDX ("charc", (*it).charc , charc);
+
+          delete m;
+
+      TEST_IT_END;
+    }
+
+    void test_is_literal ()
+    {
+      struct assert {
+          const char *startp;
+          value::_literal value_type;
+          int assert_status;
+      };
+
+      std::vector<struct assert> test = {
+        { "", value::_literal::no_value, PASS },
+        { "   ", value::_literal::no_value, PASS },
+        { "xxx   ", value::_literal::no_value, PASS },
+        { "xxxxxx   ", value::_literal::no_value, PASS },
+        { "true    ", value::_literal::true_value, PASS },
+        { "false    ", value::_literal::false_value, PASS },
+        { "null   ", value::_literal::null_value, PASS }
+      };
+
+      TEST_IT_START
+
+          const char *startp = (*it).startp;
+
+          json_value_parse_mock *m  = new json_value_parse_mock (startp + strlen (startp), 0, 0);
+
+          m->_startp = m->_readp = startp;
+
+          value::_literal ltr = m->_is_literal ();
+
+          ASSERT_EQUAL_IDX ("literal value", (*it).value_type , ltr);
+
+          delete m;
+
+      TEST_IT_END;
+    }
+
     void test_is_number ();
 
-    static CppUnit::Test* suite ();
+    static CppUnit::Test*
+    suite ()
+    {
+      CppUnit::TestSuite *s = new CppUnit::TestSuite ("json value test");
 
-protected:
-    // static const char *_lexeme_input[];
-    // static std::vector<const char *>_lexeme_input;
+      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lookahead", &json_value_test::test_lookahead));
+//    s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lexeme", &json_value_test::test_lexeme));
+      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_literal", &json_value_test::test_is_literal));
+      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_quoted", &json_value_test::test_string));
+//    s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_number", &json_value_test::test_is_number));
+      return s;
+    }
 };
 
 #endif // JSON_INTERFACE_TEST_H

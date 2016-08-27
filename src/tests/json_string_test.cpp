@@ -1,7 +1,7 @@
 #include "json_string_test.h"
 
 
-void
+/* void
 json_string_test::test_parse_1 ()
 {
     size_t charc = 0;
@@ -16,7 +16,7 @@ json_string_test::test_parse_1 ()
     const char *readp = 0;
 
     struct assert {
-        const char *input;
+        const char *startp;
         size_t charc;
     };
 
@@ -28,7 +28,7 @@ json_string_test::test_parse_1 ()
 
     for (auto it = test.begin (); it != test.end (); it++, idx++) {
         try {
-            startp = (*it).input;
+            startp = (*it).startp;
             charc = strlen (startp);
 
             s = new json::string (startp + charc, 0, charc);
@@ -47,7 +47,6 @@ json_string_test::test_parse_1 ()
 
             delete s;
 
-
         } CATCH_ERROR_PCHAR;
     }
 }
@@ -60,5 +59,5 @@ json_string_test::suite ()
      s->addTest (new CppUnit::TestCaller<json_string_test> ("test_parse_1", &json_string_test::test_parse_1));
 
     return s;
-}
+} */
 
