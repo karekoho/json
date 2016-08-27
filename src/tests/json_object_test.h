@@ -16,11 +16,10 @@ public:
   virtual
   void test_parse_1 ()
   {
-    json::object *o = 0;
-    json::object *p = 0;
+    json::object *p = new json::object (0, 0);
 
     struct assert {
-      const char *input;
+      const char *startp;
       size_t size;
       value::otype type;
       int assert_status;
@@ -43,19 +42,20 @@ public:
 
     TEST_IT_START;
 
-    this->_startp = (*it).input;
-    this->_charc = strlen (this->_startp);
+      const char *startp =startp = (*it).startp;
 
-    o = new json::object (this->_startp + this->_charc, p);
+      json::object *o = new json::object (startp + strlen (startp), p);
 
-    this->_readp = o->parse (this->_startp);
+      const char *readp = o->parse (startp);
 
-    ASSERT_EQUAL_IDX ("value.size", (*it).size, o->size ());
-    ASSERT_EQUAL_IDX ("value.type", (*it).type, o->at ("k").type ());
+      ASSERT_EQUAL_IDX ("value.size", (*it).size, o->size ());
+      ASSERT_EQUAL_IDX ("value.type", (*it).type, o->at ("k").type ());
 
-    delete o;
+      delete o;
 
     TEST_IT_END;
+
+    delete p;
   }
 
   virtual void test_size_1() {}
@@ -66,10 +66,10 @@ public:
   void
   test__pair ()
   {
-    json::object *o = 0;
+    json::object *p = new json::object (0, 0);
 
     struct assert {
-      const char *input;
+      const char *startp;
       bool status;
       int assert_status;
     };
@@ -79,25 +79,25 @@ public:
       { " }" , false , PASS },
 
       // errors
-      { " ", false, FAIL },            // json::syntax_error
+      { " ", false, FAIL},           // json::syntax_error
       { " \"foo  ", false, FAIL },    // json::syntax_error
       { " \"foo\" ", false, FAIL },   // json::syntax_error
     };
 
     TEST_IT_START;
 
-    this->_startp = (*it).input;
-    this->_charc = strlen (this->_startp);
+      const char *startp = (*it).startp;
 
-    o = new json::object (this->_startp + this->_charc, 0);
-    o->_readp = this->_startp;
-    bool status = o->_pair ();
-    // readp = o->parse (startp);
+      json::object *o = new json::object (startp + strlen (startp), p);
 
-    // CPPUNIT_ASSERT_EQUAL_MESSAGE ("status", (*it).status, status);
-    ASSERT_EQUAL_IDX ("status", (*it).status, status);
+      o->_readp = startp;
+      bool status = o->_pair ();
 
-    delete o;
+      // readp = o->parse (startp);
+
+      ASSERT_EQUAL_IDX ("status", (*it).status, status);
+
+      delete o;
 
     TEST_IT_END;
   }

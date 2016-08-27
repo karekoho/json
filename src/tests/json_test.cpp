@@ -1,7 +1,7 @@
 #include "json_test.h"
 #include <stdio.h>
 
-void json_test::test_smoke () { }
+/* void json_test::test_smoke () { }
 
 void
 json_test::test_parse_1 ()
@@ -45,7 +45,6 @@ json_test::test_parse_1 ()
 
             delete j;
 
-
         } CATCH_ERROR_PCHAR;
     }
 }
@@ -68,4 +67,4 @@ json_test::suite ()
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_debug_1", &json_test::test_debug_1));
 
     return s;
-}
+} */

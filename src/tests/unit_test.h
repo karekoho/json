@@ -63,7 +63,7 @@
 
 #ifndef ASSERT_EQUAL_IDX
   #define ASSERT_EQUAL_IDX(message, expected, actual)\
-  (void) sprintf (_sz_idx, "%s: idx[0]: %lu: %s", FN, this->_idx[0], message);\
+  (void) sprintf (_sz_idx, "%s: idx[0] = %lu: %s", FN, this->_idx[0], message);\
   CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, expected, actual)
 #endif
 
@@ -92,10 +92,6 @@ class unit_test : public CppUnit::TestFixture
 public:
   unit_test ()
     : CppUnit::TestFixture(),
-      _startp (0),
-      _readp (0),
-      _endp (0),
-      _charc (0),
       _errorc { 0, 0 },
       _idx { 0, 0, 0, 0, 0 }
   {
@@ -106,30 +102,19 @@ public:
   void
   setUp ()
   {
-    _startp = _readp = _endp = 0;
-    _charc = 0;
-
-    _errorc[0] = _errorc[1] = 0;
-    _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0;
+    // _errorc[0] = _errorc[1] = 0;
+    _errorc[0] = _errorc[1] = _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0;
   }
 
   void
   tearDown ()
   {
-    _startp = _readp = _endp = 0;
-    _charc = 0;
-
-    _errorc[0] =_errorc[1] = 0;
-    _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0;
+    // _errorc[0] =_errorc[1] = 0;
+    _errorc[0] =_errorc[1] = _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0;
   }
 
 protected:
 
-  const char * _startp;
-  const char * _readp;
-  const char * _endp;
-
-  size_t _charc;
   size_t _errorc[2];
   size_t _idx[5];
 

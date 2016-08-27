@@ -1,7 +1,7 @@
 #include "json_value_test.h"
 #include "json_value_parse_mock.h"
 
-void
+/* void
 json_value_test::test_lookahead ()
 {
     size_t charc = 0;
@@ -40,11 +40,11 @@ json_value_test::test_lookahead ()
 
         delete m;
     }
-}
+} */
 
 // void json_value_test::test_lexeme () {}
 
-void
+/* void
 json_value_test::test_is_literal ()
 {
   size_t charc = 0;
@@ -53,7 +53,7 @@ json_value_test::test_is_literal ()
   const char *startp = 0;
 
   struct assert {
-      const char *input;
+      const char *startp;
       value::_literal value_type;
   };
 
@@ -69,7 +69,7 @@ json_value_test::test_is_literal ()
   };
 
   for (auto it = test.begin (); it != test.end (); it++) {
-      startp = (*it).input;
+      startp = (*it).startp;
       charc = strlen (startp);
 
       json_value_parse_mock *m  = new json_value_parse_mock (startp + charc, 0, 0);
@@ -82,9 +82,9 @@ json_value_test::test_is_literal ()
 
       delete m;
   }
-}
+} */
 
-void
+/* void
 json_value_test::test_string ()
 {
     long int charc = 0;
@@ -92,7 +92,7 @@ json_value_test::test_string ()
     const char *startp = 0;
 
     struct assert {
-        const char *input;
+        const char *startp;
         long int charc;
     };
 
@@ -110,7 +110,7 @@ json_value_test::test_string ()
 
 
     for (auto it = test.begin (); it != test.end (); it++) {
-        startp = (*it).input;
+        startp = (*it).startp;
         charc = strlen (startp);
 
         json_value_parse_mock *m  = new json_value_parse_mock (startp + charc, 0, 0);
@@ -126,11 +126,11 @@ json_value_test::test_string ()
 
         delete m;
     }
-}
+} */
 
 // void json_value_test::test_is_number () { }
 
-CppUnit::Test *
+/* CppUnit::Test *
 json_value_test::suite ()
 {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json value test");
@@ -142,4 +142,4 @@ json_value_test::suite ()
 //    s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_number", &json_value_test::test_is_number));
 
     return s;
-}
+} */
