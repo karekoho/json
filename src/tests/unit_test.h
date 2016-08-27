@@ -54,6 +54,48 @@
   //CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, __errorc, errorc)
 #endif
 
+class unit_test : public CppUnit::TestFixture
+{
+public:
+
+  bool _is_added;
+
+  unit_test ()
+    : CppUnit::TestFixture(),
+      _is_added (false),
+      _startp (0),
+      _readp (0),
+      _endp (0),
+      _errorc {0,0}
+  {
+  }
+
+  void
+  setUp ()
+  {
+    _startp = _readp = _endp = 0;
+    _errorc[0] = 0;
+    _errorc[1] = 0;
+  }
+  void
+  tearDown()
+  {
+    _startp = _readp = _endp = 0;
+    _errorc[0] = 0;
+    _errorc[1] = 0;
+  }
+
+protected:
+
+  const char * _startp;
+  const char * _readp;
+  const char * _endp;
+
+  size_t _errorc[2];
+
+
+
+};
 
 #endif // UNIT_TEST
 
