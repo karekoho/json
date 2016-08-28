@@ -26,6 +26,8 @@ value::value (const char *endp, value *parent, size_t charc)
 {
 }
 
+// value *value::_make_value() {}
+
 long int
 value::_string (char & endc) const
 {

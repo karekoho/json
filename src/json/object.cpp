@@ -77,6 +77,7 @@ json::object::_pair ()
   _readp++;
 
   _member_list.emplace (std::string (keyp, charc - 2), _value ());
+  // _member_list.emplace (std::string (keyp, charc - 2), json::__make_value (&_readp, _endp));
 
   return true;
 }

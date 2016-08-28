@@ -60,7 +60,7 @@ private:
    */
   value *__value;
 
-  value * __make_value (value *member) const;
+  // value * __make_value (const char **readp, const char *endp);
 
   public:
   /**

@@ -161,6 +161,8 @@ protected:
     return _readp;
   }
 
+  // value * _make_value ();
+
   /**
    * @brief _string Read in string.
    * If no opening quote, return 0.
@@ -209,7 +211,7 @@ protected:
    * @brief operator =
    * @param v
    */
-  inline void operator =(const value & v) { /* return _assign (v); */ }
+  inline void operator =(const value & v) { /* _assign (v); */ }
 
   /**
    * @brief is_quoted

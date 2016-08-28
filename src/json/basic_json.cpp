@@ -74,6 +74,55 @@ json::at (const char *key) const
       : __value->at (key);
 }
 
+/* value *
+json::__make_value (const char **readp, const char *endp)
+{
+  value *value_  = 0;
+  const char *readp_ = *readp;
+
+  value::_literal ltr = value::_literal::no_value;
+
+  long int charc = 0;
+
+  char endc = 0;
+  char readc = *(_look_ahead ());
+
+  if (readc == sc_::double_quote) {
+    if ((charc = _string (endc)) < 0)
+        throw json::syntax_error ("syntax error: expecting closing '\"'");
+
+      value_ = new json::string (endp, this, charc);
+      readp_ = value_->parse (readp_);
+
+    } else if (readc == sc_::begin_object) {
+
+      value_ = new json::object (endp, this, 0);
+      readp_ = value_->parse (readp_);
+
+
+    } else if (readc == sc_::begin_array) {
+      value_ = new json::undefined;
+      readp_ = value_->parse (readp_);
+
+    } else if (isdigit (readc) || readc == '-') { // Number
+      ;
+
+    } else if ((ltr = _is_literal ()) != value::_literal::no_value) {  // Literal
+
+      if (ltr = value::_literal::null_value)
+        value_ = new json::null (endp, this);
+
+      readp_ = value_->parse (readp_);
+
+    } else {
+      throw json::syntax_error ("syntax error: expecting value after ':'");
+    }
+
+  readp = & readp_;
+
+  return value_;
+} */
+
 
 
 
