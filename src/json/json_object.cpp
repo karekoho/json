@@ -1,19 +1,25 @@
-#include "basic_json.h"
+// #include "basic_json.h"
+#include "json_object.h"
+#include "json_string.h"
+#include "json_undefined.h"
+#include "json_null.h"
+#include "json_number.h"
+#include "json_boolean.h"
 
-json::object::object (const char *json)
-  : value (json),
+Object::Object (const char *json)
+  : json::json (json),
     _pairc (0)
 {
 }
 
-json::object::object (const char *endp, value *parent, size_t charc)
-  : value (endp , parent, charc),
+Object::Object (const char *endp, value *parent, size_t charc)
+  : json::json (endp , parent, charc),
     _pairc (0)
 {
 }
 
 const char *
-json::object::parse (const char *json)
+Object::parse (const char *json)
 {
   if (_parent == 0) {
       _readp = json;
@@ -45,7 +51,7 @@ json::object::parse (const char *json)
 }
 
 bool
-json::object::_pair ()
+Object::_pair ()
 {
   char endc = 0;
   // wchar_t endc;
@@ -83,7 +89,7 @@ json::object::_pair ()
 }
 
 value *
-json::object::_value ()
+Object::_value ()
 {
   value *value_  = 0;
 
@@ -98,17 +104,17 @@ json::object::_value ()
     if ((charc = _string (endc)) < 0)
         throw json::syntax_error ("syntax error: expecting closing '\"'");
 
-      value_ = new json::string (_endp, this, charc);
+      value_ = new String (_endp, this, charc);
       _readp = value_->parse (_readp);
 
     } else if (readc == sc_::begin_object) {
 
-      value_ = new json::object (_endp, this, 0);
+      value_ = new Object (_endp, this, 0);
       _readp = value_->parse (_readp);
 
 
     } else if (readc == sc_::begin_array) {
-      value_ = new json::undefined;
+      value_ = new Undefined;
       _readp = value_->parse (_readp);
 
     } else if (isdigit (readc) || readc == '-') { // Number
@@ -116,8 +122,8 @@ json::object::_value ()
 
     } else if ((ltr = _is_literal ()) != value::_literal::no_value) {  // Literal
 
-      if (ltr = value::_literal::null_value)
-        value_ = new json::null (_endp, this);
+      if (ltr == value::_literal::null_value)
+        value_ = new Null (_endp, this);
 
       _readp = value_->parse (_readp);
 
@@ -129,17 +135,17 @@ json::object::_value ()
 }
 
 const value &
-json::object::at (const char *key) const
+Object::at (const char *key) const
 {
   if (_member_list.empty ()) {
-      return *(new json::undefined); /// FIXME: leak
+      return *(new Undefined); /// FIXME: leak
     }
 
   try {
     return *(_member_list.at (key));
 
   } catch (std::out_of_range &e) {
-    return *(new json::undefined);  /// FIXME: leak
+    return *(new Undefined);  /// FIXME: leak
   }
 }
 

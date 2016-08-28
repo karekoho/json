@@ -13,7 +13,7 @@ public:
     {
       size_t charc = 0;
 
-      json::string *s = 0;
+      String *s = 0;
 
       const char *startp = 0;
       const char *readp = 0;
@@ -35,7 +35,7 @@ public:
         startp = (*it).startp;
         charc = strlen (startp);
 
-        s = new json::string (startp + charc, 0, charc);
+        s = new String (startp + charc, 0, charc);
 
         std::string ss = s->value ();
 

@@ -1,7 +1,7 @@
 #ifndef JSON_H
 #define JSON_H
 
-#include "value.h"
+#include "json_value.h"
 
 #include <unordered_map>
 #include <vector>
@@ -15,7 +15,10 @@
 /**
  * @brief The json class
  */
-class undefined;
+// class Object;
+// class Array;
+// class String;
+class Undefined;
 class json : public value
 {
 #ifdef UNIT_TEST
@@ -23,8 +26,8 @@ class json : public value
 #endif
 public:
 
-  json (const char *json);
-  json (const char *endp, value *parent = 0, size_t charc = 0);
+  json (const char *json = 0);
+  json (const char *endp, value *parent, size_t charc = 0);
 
   virtual ~json ();
 
@@ -41,12 +44,13 @@ public:
    * @return
    */
   virtual const value & at (const char *key) const;
+
   /**
    * @brief type
    * @return
    */
-
   virtual inline value::otype type () const { return __value == 0 ? value::otype::undefined : __value->type (); }
+
   /**
    * @brief size
    * @return
@@ -63,9 +67,7 @@ private:
   // value * __make_value (const char **readp, const char *endp);
 
   public:
-  /**
-   * @brief The object class
-   */
+  /*
   class object : public value {
 #ifdef UNIT_TEST
   friend class json_object_test;
@@ -89,19 +91,16 @@ private:
 
     size_t _pairc;
 
-    /**
-     * @brief _member_list
-     */
-    std::unordered_map<std::string, value *> _member_list;
+        std::unordered_map<std::string, value *> _member_list;
 
     bool _pair ();
 
     value *_value ();
-  }; /// class object
+  }; /// class object */
 
-  /**
+  /*
    * @brief The array class
-   */
+   *
   class array : public value {
 #ifdef UNIT_TEST
 //  friend class json_array_test;
@@ -120,19 +119,13 @@ private:
     virtual inline size_t size () const { return 0; }
 
   protected:
-    /**
-     * @brief _element_list
-     */
     std::vector<array *> _element_list;
-    /**
-     * @brief _debug_value
-     */
     std::string _debug_value;
-  }; /// class array
+  }; /// class array */
 
-  /**
+  /*
    * @brief The string class
-   */
+   *
   class string : public value {
 
     public:
@@ -167,15 +160,13 @@ private:
     }
 
   protected:
-    /**
-     * @brief _value
-     */
-    mutable std::string _string_value;
-  }; /// class string
 
-  /**
+    mutable std::string _string_value;
+  }; /// class string  */
+
+  /*
    * @brief The number class
-   */
+   *
   class number : public value {
     public:
 
@@ -209,31 +200,22 @@ private:
     virtual inline otype type () const { return value::otype::number; }
     virtual size_t size () const { return _double_value == 0 ? 0 : 1; }
 
-    /**
-     * @brief value
-     * @return
-     */
+
     double value () const { return _double_value; }
 
   protected:
-    /**
-     * @brief _value
-     */
+
     mutable double _double_value;
-    /**
-     * @brief _digitp
-     */
+
     mutable const char *_digitp[2][3];
 
-    /**
-     * @brief _exp Power of 10
-     */
-    unsigned long int _exp;
-  };
 
-  /**
+    unsigned long int _exp;
+  }; */
+
+  /*
    * @brief The boolean class
-   */
+   *
   class boolean : public value {
     public:
 
@@ -247,22 +229,16 @@ private:
     virtual inline otype type () const { return value::otype::boolean; }
     virtual inline size_t size() const { return 0;}
 
-    /**
-     * @brief value
-     * @return
-     */
     inline bool value () const { return _boolean_value; }
 
   protected:
 
     bool _boolean_value;
+  }; /// class number */
 
-
-  }; /// class number
-
-  /**
+  /*
    * @brief The null class
-   */
+   *
   class null : public value {
     public:
 
@@ -276,16 +252,12 @@ private:
     virtual inline value::otype type() const { return value::otype::null; }
     virtual inline size_t size() const { return 0; }
 
-    /**
-     * @brief value
-     * @return
-     */
     inline const char * value () const { return ""; }
-  }; /// class null
+  }; /// class null */
 
-  /**
+  /*
    * @brief The undefined class
-   */
+   *
   class undefined : public value {
     public:
 
@@ -299,12 +271,8 @@ private:
     virtual inline otype type () const { return value::otype::undefined; }
     virtual inline size_t size () const { return 0; }
 
-    /**
-     * @brief value
-     * @return
-     */
     inline const char * value () const { return "undefined"; }
-  }; /// class undefined
+  }; /// class undefined */
 
   /**
    * @brief The error class

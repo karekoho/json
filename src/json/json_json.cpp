@@ -1,8 +1,11 @@
-#include "basic_json.h"
+#include "json_json.h"
+#include "json_object.h"
+#include "json_array.h"
+#include "json_undefined.h"
 
 // json::undefined __default;
 
- json::json (const char *json)
+json::json (const char *json)
   : value (json),
   __value (0)
 {
@@ -37,11 +40,11 @@ json::json::parse (const char *readp)
 
   if (*_readp == sc_::begin_object) {
       //_readp++;
-      value_ = new json::object (_endp, this, _charc);
+      value_ = new Object (_endp, this, _charc);
     }
   else if (*_readp == sc_::begin_array) {
       //_readp++;
-     value_ = new json::array (_endp, this, _charc);
+     value_ = new  Array (_endp, this, _charc);
     }
 
   /**
@@ -70,7 +73,7 @@ const value &
 json::at (const char *key) const
 {
   return type () == value::undefined
-      ? *(new json::undefined) // FIXME: leak
+      ? *(new Undefined) // FIXME: leak
       : __value->at (key);
 }
 

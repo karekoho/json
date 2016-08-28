@@ -16,7 +16,7 @@ public:
   virtual
   void test_parse_1 ()
   {
-    json::object *p = new json::object (0, 0);
+    Object *p = new Object (0, 0);
 
     struct assert {
       const char *startp;
@@ -44,7 +44,7 @@ public:
 
       const char *startp =startp = (*it).startp;
 
-      json::object *o = new json::object (startp + strlen (startp), p);
+      Object *o = new Object (startp + strlen (startp), p);
 
       const char *readp = o->parse (startp);
 
@@ -66,7 +66,7 @@ public:
   void
   test__pair ()
   {
-    json::object *p = new json::object (0, 0);
+    Object *p = new Object (0, 0);
 
     struct assert {
       const char *startp;
@@ -88,7 +88,7 @@ public:
 
       const char *startp = (*it).startp;
 
-      json::object *o = new json::object (startp + strlen (startp), p);
+      Object *o = new Object (startp + strlen (startp), p);
 
       o->_readp = startp;
       bool status = o->_pair ();
