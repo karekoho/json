@@ -4,8 +4,6 @@
 #include <ctype.h>
 #include <cstring>
 
-// #define UNIT_TEST
-
 #ifdef UNIT_TEST
 class json_value_test;
 class json_object_test;
@@ -16,24 +14,25 @@ class json_object_test;
 class value
 {
 #ifdef UNIT_TEST
+friend class json_test;
 friend class json_value_test;
 friend class json_object_test;
 #endif
-protected:
-public:
 
-/**
- * @brief The otype enum
- */
-enum otype {
-  undefined,
-  object,
-  array,
-  string,
-  number,
-  boolean,
-  null
-};
+  public:
+
+  /**
+   * @brief The otype enum
+   */
+  enum otype {
+    undefined,
+    object,
+    array,
+    string,
+    number,
+    boolean,
+    null
+  };
 
   /**
    * @brief json_value
@@ -148,7 +147,7 @@ protected:
 
   /**
    * @brief _look_ahead Move read pointer to next non-white space character
-   */
+   *
   inline const char *
   _look_ahead ()
   {
@@ -159,9 +158,7 @@ protected:
       _readp++;
 
     return _readp;
-  }
-
-  // value * _make_value ();
+  } */
 
   /**
    * @brief _string Read in string.
@@ -170,22 +167,22 @@ protected:
    * Else return number of characters read + 2 (quotes).
    * @param endc Last character read
    * @return Number of characters read
-   */
+   *
   long int _string (char &endc) const;
 
   /**
    * @brief _lexeme Read in next non-white space characters.
    * @param endc Last character read
    * @return Count of characters read
-   */
+   *
   size_t _lexeme ();
 
   /**
    * @brief _is_literal
    * @param try_
    * @return
-   */
-  value::_literal _is_literal (const int _try = 0) const;
+   *
+  value::_literal _is_literal (const int _try = 0) const; */
 
   /**
    * @brief _at json::object behavior: if key does not exist, assign key with value of type undefined.
@@ -205,7 +202,7 @@ protected:
    * @brief _assign Assing value. Delete existing key.
    * @param v
    */
-  /// TODO: virtual void _assign (const value & v); /// TODO = 0
+  // virtual void _assign (const value & v); /// TODO = 0
 
   /**
    * @brief operator =

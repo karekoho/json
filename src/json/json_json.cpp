@@ -77,6 +77,46 @@ json::at (const char *key) const
       : __value->at (key);
 }
 
+long int
+json::_string (char & endc) const
+{
+    const char * const starp = _readp;
+
+    if (*starp != sc_::double_quote) {
+        endc = *starp;
+        return 0;
+    }
+
+    const char * readp = _readp + 1;
+
+    while (readp < _endp && *readp != sc_::double_quote) {
+        readp++;
+    }
+
+    endc = *readp;
+
+    return readp < _endp ? (readp - starp) + 1 : -1 * (readp - starp);
+}
+
+value::_literal
+json::_is_literal (const int _try) const
+{
+  const char *readp = _readp;
+
+  size_t idx = 0;
+
+  while (readp + idx < _endp
+         && idx < __ltr_value[_try].len
+         && *(readp + idx) == *(__ltr_value[_try].str_value + idx)) {
+      idx++;
+    }
+
+  if (idx == __ltr_value[_try].len)
+    return __ltr_value[_try].ltr_value;
+
+  return _try < 2 ? _is_literal (_try + 1) :  value::_literal::no_value;
+}
+
 /* value *
 json::__make_value (const char **readp, const char *endp)
 {
