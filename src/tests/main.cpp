@@ -5,10 +5,12 @@
 #include <json_test.h>
 #include <json_object_test.h>
 #include <json_string_test.h>
+#include <json_array_test.h>
+#include <json_number_test.h>
 
 #define DBG(...) fprintf (stderr, __VA_ARGS__)
 
-#define TESTC 3   // Test count
+#define TESTC 4   // Test count
 
 int main(int argc, char *argv[])
 {
@@ -22,10 +24,12 @@ int main(int argc, char *argv[])
       _test (CppUnit::Test * _test = 0, bool _is_added = false) : test (_test), is_added(_is_added) {}
 
     } tests[] = {
-      // { json_value_test::suite () },        // 0
-      { json_test::suite () },              // 1
-      { json_object_test::suite () },       // 2
-      { json_string_test::suite () }        // 3
+      // { json_value_test::suite () },
+      { json_test::suite () },              // 0
+      { json_object_test::suite () },       // 1
+      { json_string_test::suite () },       // 2
+      { json_array_test::suite () },        // 3
+      // { json_number_test::suite () }        // 4
     };
 
     CppUnit::TextUi::TestRunner runner;

@@ -1,0 +1,5 @@
+#ifndef JSON_BOOLEAN_TEST
+#define JSON_BOOLEAN_TEST
+
+#endif // JSON_BOOLEAN_TEST
+

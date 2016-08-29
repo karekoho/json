@@ -10,6 +10,7 @@
 #include <cstdio>
 #include <ctype.h>
 #include <vector>
+#include <cstring>
 
 #include "../json/json.h"
 

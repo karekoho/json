@@ -4,7 +4,7 @@
 #include <json_value_test_interface.h>
 
 /**
- * Test number 2
+ * Test number 1
  * @brief The json_object_test class
  */
 class json_object_test : public json_value_test_interface
@@ -22,32 +22,42 @@ public:
       const char *startp;
       size_t size;
       value::otype type;
+      value *parent;
+      size_t moveback;
       int assert_status;
     };
 
     std::vector<struct assert > test = {
-      { "{ \"k\" : \"v\" } ", 1, value::string, PASS },
-      { "{ \"k\" : \"v\", \"q\" : \"p\" } ", 2, value::string, PASS },
-      { "{ \"k\": \"v\", \"q\" : \"p\",\"K\":\"v\" } ", 3, value::string, PASS },
-      { "{ \"k\": \"p\" ,\"q\" : \"p\", \"K\" :\"v\",\"Q\":\"p\" } ", 4, value::string, PASS },
-      { "{}", 0, value::undefined, PASS },
-      { "{ \"k\" : { } }", 1, value::object, PASS },
-      { "{ \"k\" : {\"kk\" : \"v\"}}", 1, value::object, PASS },
-      { "{ \"k\" : {\"kk\" : {\"kkk\" : \"v\"}}", 1, value::object, PASS },
-      { "{ \"k\" : null } ", 1, value::null, PASS },
+      { "{ \"k\" : \"v\" } ", 1, value::string, p, 1, PASS },
+      { "{ \"k\" : \"v\", \"q\" : \"p\" } ", 2, value::string, p, 1, PASS },
+      { "{ \"k\": \"v\", \"q\" : \"p\",\"K\":\"v\" } ", 3, value::string, p, 1, PASS },
+      { "{ \"k\": \"p\" ,\"q\" : \"p\", \"K\" :\"v\",\"Q\":\"p\" } ", 4, value::string, p, 1, PASS },
+      { "{}", 0, value::undefined, p, 0, PASS },
+      { "{ } ", 0, value::undefined, p, 1, PASS },
+      { "{ \"k\" : { } }", 1, value::object, p, 0, PASS },
+      { "{ \"k\" : {\"kk\" : \"v\"}}", 1, value::object, p, 0, PASS },
+      { "{ \"k\" : {\"kk\" : {\"kkk\" : \"v\"}}", 1, value::object, p, 0, PASS },
+      { "{ \"k\" : null } ", 1, value::null, p, 1, PASS },
 
       // errors
-      { "{ , }", 0, value::undefined, FAIL },   // json::syntax_error
-    };
+      { "{ , }", 0, value::undefined, p, 0, FAIL },   // json::syntax_error
+      { "{ : }", 0, value::undefined, p, 0, FAIL },   // json::syntax_error
+
+      { "", 0, value::undefined, 0, 0, FAIL },   // json::syntax_error
+  };
 
     TEST_IT_START;
 
-      const char *startp =startp = (*it).startp;
+      const char *startp = (*it).startp;
 
-      Object *o = new Object (startp + strlen (startp), p);
+      size_t charc = strlen (startp);
+
+      Object *o = new Object (startp + charc, (*it).parent);
 
       const char *readp = o->parse (startp);
 
+      ASSERT_EQUAL_IDX ("value.readp", (startp + charc) - (*it).moveback, readp);
+      ASSERT_EQUAL_IDX ("*(value.readp -1)", '}', *(readp - 1));
       ASSERT_EQUAL_IDX ("value.size", (*it).size, o->size ());
       ASSERT_EQUAL_IDX ("value.type", (*it).type, o->at ("k").type ());
 
@@ -79,9 +89,10 @@ public:
       { " }" , false , PASS },
 
       // errors
-      { " ", false, FAIL},           // json::syntax_error
+      { " ", false, FAIL},            // json::syntax_error
       { " \"foo  ", false, FAIL },    // json::syntax_error
       { " \"foo\" ", false, FAIL },   // json::syntax_error
+      { " \"foo\" : ", false, SKIP }, // FAIL: json::syntax_error
     };
 
     TEST_IT_START;

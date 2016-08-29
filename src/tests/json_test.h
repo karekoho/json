@@ -125,6 +125,10 @@ public:
     TEST_IT_END;
   }
 
+  void test_make_value ()
+  {
+  }
+
   void test_is_literal ()
   {
     struct assert {
@@ -176,6 +180,8 @@ public:
     s->addTest (new CppUnit::TestCaller<json_test> ("test_lookahead", &json_test::test_lookahead)); // Moved from json_value_test
     s->addTest (new CppUnit::TestCaller<json_test> ("test_is_literal", &json_test::test_is_literal)); // Moved from json_value_test
     s->addTest (new CppUnit::TestCaller<json_test> ("test_is_quoted", &json_test::test_string));      // Moved from json_value_test
+
+    s->addTest (new CppUnit::TestCaller<json_test> ("test_make_value", &json_test::test_make_value));
 
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_size_1", &json_test::test_size_1));
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_get_1", &json_test::test_get_1));

@@ -44,19 +44,22 @@ json::json::parse (const char *readp)
   _startp = readp;
   _readp  = readp;
 
-  if (_endp == 0) {     // 1. ctor
-      _endp = readp + strlen (readp);
-  }
+  if (_endp == 0)  // 1. ctor
+    _endp = readp + strlen (readp);
 
   _look_ahead ();
 
-  if (*_readp == sc_::begin_object) {
-      //_readp++;
+  if (*_readp == sc_::begin_object)
+    {
       value_ = new Object (_endp, this, _charc);
     }
-  else if (*_readp == sc_::begin_array) {
-      //_readp++;
-     value_ = new  Array (_endp, this, _charc);
+  else if (*_readp == sc_::begin_array)
+    {
+      value_ = new  Array (_endp, this, _charc);
+    }
+  else
+    {
+      throw "syntax error near x";
     }
 
   /**
@@ -67,10 +70,6 @@ json::json::parse (const char *readp)
     JSON.parse('"foo"');           // "foo"
     JSON.parse('null');            // null
     */
-
-  else {
-      throw "syntax error near x";
-    }
 
   _readp = value_->parse (_readp + 1);
 
@@ -141,35 +140,41 @@ json::_make_value ()
   char endc = 0;
   char readc = *(_look_ahead ());
 
-  if (readc == sc_::double_quote) {
-    if ((charc = _string (endc)) < 0)
+  if (readc == sc_::double_quote) // String
+    {
+      if ((charc = _string (endc)) < 0)
         throw json::syntax_error ("syntax error: expecting closing '\"'");
 
       value_ = new String (_endp, this, charc);
       _readp = value_->parse (_readp);
-
-    } else if (readc == sc_::begin_object) {
-
+    }
+  else if (readc == sc_::begin_object)  // Object
+    {
       value_ = new Object (_endp, this, 0);
       _readp = value_->parse (_readp);
-
-
-    } else if (readc == sc_::begin_array) {
-      value_ = new Undefined;
+    }
+  else if (readc == sc_::begin_array) // Array
+    {
+      value_ = new Array (_endp, this, 0);
       _readp = value_->parse (_readp);
-
-    } else if (isdigit (readc) || readc == '-') { // Number
+    }
+  else if (isdigit (readc) || readc == '-') // Number
+    {
       ;
-
-    } else if ((ltr = _is_literal ()) != value::_literal::no_value) {  // Literal
-
+    }
+  else if ((ltr = _is_literal ()) != value::_literal::no_value) // Literal
+    {
       if (ltr == value::_literal::null_value)
         value_ = new Null (_endp, this);
 
+      /// TODO: else if (boolean)
       _readp = value_->parse (_readp);
+    }
+  else
+    {
+      value_ = new Undefined;
 
-    } else {
-      throw json::syntax_error ("syntax error: expecting value after ':'");
+      // throw json::syntax_error ("syntax error: expecting value after ':'");
     }
 
   return value_;

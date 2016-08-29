@@ -20,6 +20,8 @@ public:
     virtual void test_value_1 () = 0;
     virtual void test_debug_1 () = 0;
 
+    // virtual static CppUnit::Test* suite () = 0;
+
 protected:
 
     static const char *_input[];

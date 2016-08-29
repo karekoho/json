@@ -13,8 +13,8 @@ class Boolean : public json {
   Boolean (const char *endp, value *parent = 0, size_t charc = 0) : json::json (endp, parent, charc), _boolean_value (false) {}
 
   /// value interface
-  virtual inline const char *parse(const char *json) { return json + _charc;}
-  virtual inline const value &at(const char *key) const { return *this; }
+  virtual inline const char *parse (const char *json) { return json + _charc;}
+  virtual inline const value & at(const char *key) const { return *this; }
   virtual inline otype type () const { return value::otype::boolean; }
   virtual inline size_t size() const { return 0;}
 

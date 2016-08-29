@@ -21,15 +21,21 @@ Object::Object (const char *endp, value *parent, size_t charc)
 const char *
 Object::parse (const char *json)
 {
-  if (_parent == 0) {
+  if (json == 0)
+    throw json::error ("error: null string given");
+
+  if (_parent == 0)
+    {
       _readp = json;
+
+      if (_charc == 0)  /// 1. constructor called with null or zero length string
+        _endp = _readp + strlen (json);
 
       if (*(_look_ahead ()) != sc_::begin_object)
         throw "syntax error: expecting '{'";
     }
-  else {
-      _readp = json + 1;
-    }
+  else
+     _readp = json + 1;
 
   while (_readp < _endp) {
       (void) _look_ahead ();
@@ -66,7 +72,10 @@ Object::_pair ()
         throw json::syntax_error ("syntax error: expecting closing '}'");
 
       if (*_readp == sc_::end_object || *(_look_ahead ()) ==  sc_::end_object)  /// Empty object
-        return false;
+        {
+          // _readp++;
+          return false;
+        }
     }
 
   if (charc < 0)   /// No closing "
@@ -77,12 +86,16 @@ Object::_pair ()
 
 
   if (*(_look_ahead ()) != sc_::name_separator)   /// Expect ':'
-
     throw json::syntax_error ("pair: syntax error: expecting ':'");   /// TODO: throw syntax error: unexpected character '%c'
 
   _readp++;
 
-  _member_list.emplace (std::string (keyp, charc - 2), _make_value ());
+  value * v = _make_value ();
+
+  if (v->type () == value::undefined)
+    throw "syntax error: expecting value after ':'";
+
+  _member_list.emplace (std::string (keyp, charc - 2), v /* _make_value () */);
   // _member_list.emplace (std::string (keyp, charc - 2), json::__make_value (&_readp, _endp));
 
   return true;
