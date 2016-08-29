@@ -60,6 +60,32 @@ public:
   virtual inline size_t size () const { return  type () == value::undefined ? 0 :__value->size (); }
 
 protected:
+
+  /**
+   * @brief _startp
+   */
+  const char *_startp;
+
+  /** TODO: move to json
+   * @brief _readp
+   */
+  const char *_readp;
+
+  /**
+   * @brief _endp
+   */
+  const char *_endp;
+
+  /**
+   * @brief _parent
+   */
+  value *_parent;
+
+  /**
+   * @brief charc
+   */
+  size_t _charc;
+
   /**
    * @brief _look_ahead Move read pointer to next non-white space character
    */
@@ -90,7 +116,7 @@ protected:
    * @param endc Last character read
    * @return Count of characters read
    */
-  size_t _lexeme ();
+  // size_t _lexeme ();
 
   /**
    * @brief _is_literal
@@ -98,6 +124,8 @@ protected:
    * @return
    */
   value::_literal _is_literal (const int _try = 0) const;
+
+  value *_make_value ();
 
 private:
 

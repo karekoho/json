@@ -1,27 +1,39 @@
 #include "json_json.h"
 #include "json_object.h"
 #include "json_array.h"
+#include "json_string.h"
+#include "json_null.h"
 #include "json_undefined.h"
 
-// json::undefined __default;
-
 json::json (const char *json)
-  : value (json),
-  __value (0)
+  : value (),
+    _startp (json),
+    _readp (json),
+    _endp (0),
+    _parent (0),
+    _charc (json == 0 ? 0 : strlen (json)),
+    __value (0)
 {
-
+  if (_charc > 0)
+    {
+      _endp = _startp + _charc;
+      (void) parse (json);
+    }
 }
 
 json::json (const char *endp, value *parent, size_t charc)
-  : value (endp, parent, charc),
-  __value (0)
+  : value (),
+    _startp (0),
+    _readp (0),
+    _endp (endp),
+    _parent (parent),
+    _charc (charc),
+    __value (0)
 {
-
 }
 
 json::~json()
 {
-
 }
 
 const char *
@@ -117,11 +129,10 @@ json::_is_literal (const int _try) const
   return _try < 2 ? _is_literal (_try + 1) :  value::_literal::no_value;
 }
 
-/* value *
-json::__make_value (const char **readp, const char *endp)
+value *
+json::_make_value ()
 {
   value *value_  = 0;
-  const char *readp_ = *readp;
 
   value::_literal ltr = value::_literal::no_value;
 
@@ -134,37 +145,35 @@ json::__make_value (const char **readp, const char *endp)
     if ((charc = _string (endc)) < 0)
         throw json::syntax_error ("syntax error: expecting closing '\"'");
 
-      value_ = new json::string (endp, this, charc);
-      readp_ = value_->parse (readp_);
+      value_ = new String (_endp, this, charc);
+      _readp = value_->parse (_readp);
 
     } else if (readc == sc_::begin_object) {
 
-      value_ = new json::object (endp, this, 0);
-      readp_ = value_->parse (readp_);
+      value_ = new Object (_endp, this, 0);
+      _readp = value_->parse (_readp);
 
 
     } else if (readc == sc_::begin_array) {
-      value_ = new json::undefined;
-      readp_ = value_->parse (readp_);
+      value_ = new Undefined;
+      _readp = value_->parse (_readp);
 
     } else if (isdigit (readc) || readc == '-') { // Number
       ;
 
     } else if ((ltr = _is_literal ()) != value::_literal::no_value) {  // Literal
 
-      if (ltr = value::_literal::null_value)
-        value_ = new json::null (endp, this);
+      if (ltr == value::_literal::null_value)
+        value_ = new Null (_endp, this);
 
-      readp_ = value_->parse (readp_);
+      _readp = value_->parse (_readp);
 
     } else {
       throw json::syntax_error ("syntax error: expecting value after ':'");
     }
 
-  readp = & readp_;
-
   return value_;
-} */
+}
 
 
 

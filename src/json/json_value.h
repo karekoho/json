@@ -38,7 +38,7 @@ friend class json_object_test;
    * @brief json_value
    * @param json
    */
-  value (const char *json = 0);
+  // value (const char *json = 0);
 
   /**
    * @brief json_value
@@ -46,7 +46,7 @@ friend class json_object_test;
    * @param parent
    * @paran charc
    */
-  explicit value (const char *endp, value *parent, size_t charc);
+  // explicit value (const char *endp, value *parent, size_t charc);
 
   /**
    * @brief parse
@@ -123,27 +123,27 @@ protected:
   /**
    * @brief _startp
    */
-  const char *_startp;
+  // const char *_startp;
 
   /** TODO: move to json
    * @brief _readp
    */
-  const char *_readp;
+  // const char *_readp;
 
   /**
    * @brief _endp
    */
-  const char *_endp;
+  // const char *_endp;
 
   /**
    * @brief _parent
    */
-  value *_parent;
+  // value *_parent;
 
   /**
    * @brief charc
    */
-  size_t _charc;
+  // size_t _charc;
 
   /**
    * @brief _look_ahead Move read pointer to next non-white space character

@@ -82,13 +82,28 @@ Object::_pair ()
 
   _readp++;
 
-  _member_list.emplace (std::string (keyp, charc - 2), _value ());
+  _member_list.emplace (std::string (keyp, charc - 2), _make_value ());
   // _member_list.emplace (std::string (keyp, charc - 2), json::__make_value (&_readp, _endp));
 
   return true;
 }
 
-value *
+const value &
+Object::at (const char *key) const
+{
+  if (_member_list.empty ()) {
+      return *(new Undefined); /// FIXME: leak
+    }
+
+  try {
+    return *(_member_list.at (key));
+
+  } catch (std::out_of_range &e) {
+    return *(new Undefined);  /// FIXME: leak
+  }
+}
+
+/* value *
 Object::_value ()
 {
   value *value_  = 0;
@@ -132,22 +147,8 @@ Object::_value ()
     }
 
   return value_;
-}
+} */
 
-const value &
-Object::at (const char *key) const
-{
-  if (_member_list.empty ()) {
-      return *(new Undefined); /// FIXME: leak
-    }
-
-  try {
-    return *(_member_list.at (key));
-
-  } catch (std::out_of_range &e) {
-    return *(new Undefined);  /// FIXME: leak
-  }
-}
 
 // value::otype json::object::type () const { }
 // size_t json::object::size () const { }

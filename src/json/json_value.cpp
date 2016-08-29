@@ -7,7 +7,7 @@ const struct value::literal_value value::__ltr_value[3] = {
   { "null", 4, value::_literal::null_value }
 };
 
-value::value (const char *json)
+/* value::value (const char *json)
     : _startp (json),
       _readp (json),
       _endp (json == 0 ? 0 : json + strlen (json)),
@@ -23,4 +23,4 @@ value::value (const char *endp, value *parent, size_t charc)
       _parent (parent),
       _charc (charc)
 {
-}
+} */
