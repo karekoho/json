@@ -58,7 +58,7 @@ protected:
   /**
      * @brief _exp Power of 10
      */
-  unsigned long int _exp;
+  double _exp;
 };
 
 #endif // NUMBER_H
