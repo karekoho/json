@@ -1,15 +1,15 @@
 #ifndef NUMBER_H
 #define NUMBER_H
 
-#include "json_json.h"
+#include "json_value.h"
 
 /**
  * @brief The number class
  */
-class Number : public json {
+class Number : public value {
 
   explicit Number (const double value = 0)
-    : json::json (0),
+    : value::value (0),
       _double_value (value),
       _digitp {{0,0,0},{0,0,0}},
       _exp (0)
@@ -17,7 +17,7 @@ class Number : public json {
   }
 
   Number (const char *json)
-    : json::json (json),
+    : value::value (json),
       _double_value (0),
       _digitp {{0,0,0},{0,0,0}},
       _exp (0)
@@ -25,7 +25,7 @@ class Number : public json {
   }
 
   Number (const char *endp, value *parent = 0, size_t charc = 0)
-    : json::json (endp, parent, charc),
+    : value::value (endp, parent, charc),
       _double_value (0),
       _digitp {{0,0,0},{0,0,0}},
       _exp (0)

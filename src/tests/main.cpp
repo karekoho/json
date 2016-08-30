@@ -10,7 +10,7 @@
 
 #define DBG(...) fprintf (stderr, __VA_ARGS__)
 
-#define TESTC 4   // Test count
+#define TESTC 5   // Test count
 
 int main(int argc, char *argv[])
 {
@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
       _test (CppUnit::Test * _test = 0, bool _is_added = false) : test (_test), is_added(_is_added) {}
 
     } tests[] = {
-      // { json_value_test::suite () },
+       { json_value_test::suite () },
       { json_test::suite () },              // 0
       { json_object_test::suite () },       // 1
       { json_string_test::suite () },       // 2

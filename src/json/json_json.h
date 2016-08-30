@@ -59,70 +59,6 @@ public:
 protected:
 
   /**
-   * @brief _startp
-   */
-  const char *_startp;
-
-  /** TODO: move to json
-   * @brief _readp
-   */
-  const char *_readp;
-
-  /**
-   * @brief _endp
-   */
-  const char *_endp;
-
-  /**
-   * @brief _parent
-   */
-  value *_parent;
-
-  /**
-   * @brief charc
-   */
-  size_t _charc;
-
-  /**
-   * @brief _look_ahead Move read pointer to next non-white space character
-   */
-  inline const char *
-  _look_ahead ()
-  {
-    while (_readp < _endp && ( *_readp == ws_::tab
-            || *_readp == ws_::lf
-            || *_readp == ws_::cr
-            || *_readp == ws_::space))
-      _readp++;
-
-    return _readp;
-  }
-
-  /**
-   * @brief _string Read in string.
-   * If no opening quote, return 0.
-   * If no closing quote, unicode control charater, return characters read * -1.
-   * Else return number of characters read + 2 (quotes).
-   * @param endc Last character read
-   * @return Number of characters read
-   */
-  long int _string (char &endc) const;
-
-  /**
-   * @brief _lexeme Read in next non-white space characters.
-   * @param endc Last character read
-   * @return Count of characters read
-   */
-  // size_t _lexeme ();
-
-  /**
-   * @brief _is_literal
-   * @param try_
-   * @return
-   */
-  value::_literal _is_literal (const int _try = 0) const;
-
-  /**
    * @brief _make_value
    * @return
    */
@@ -135,7 +71,7 @@ private:
    */
   value *__value;
 
-  public:
+public:
 
   /**
    * @brief The error class

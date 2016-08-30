@@ -1,17 +1,17 @@
 #ifndef UNDEFINED_H
 #define UNDEFINED_H
 
-#include "json_json.h"
+#include "json_value.h"
 
 /**
  * @brief The undefined class
  */
-class Undefined : public json {
+class Undefined : public value {
   public:
 
-  Undefined () : json::json (0, 0, 0) {}
-  Undefined (const char *json) : json::json (json) {}
-  Undefined (const char *endp, value *parent = 0, size_t charc = 0) : json::json (endp, parent,charc) {}
+  Undefined () : value::value (0, 0, 0) {}
+  Undefined (const char *json) : value::value (json) {}
+  Undefined (const char *endp, value *parent = 0, size_t charc = 0) : value::value (endp, parent,charc) {}
 
   /// value interface
   virtual const char *parse (const char *json) { return json + _charc; }

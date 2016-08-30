@@ -6,12 +6,12 @@
 #include "json_undefined.h"
 
 json::json (const char *json)
-  : value (),
-    _startp (json),
-    _readp (json),
-    _endp (0),
-    _parent (0),
-    _charc (json == 0 ? 0 : strlen (json)),
+  : value (json),
+//    _startp (json),
+//    _readp (json),
+//    _endp (0),
+//    _parent (0),
+//    _charc (json == 0 ? 0 : strlen (json)),
     __value (0)
 {
   if (_charc > 0)
@@ -22,17 +22,17 @@ json::json (const char *json)
 }
 
 json::json (const char *endp, value *parent, size_t charc)
-  : value (),
-    _startp (0),
-    _readp (0),
-    _endp (endp),
-    _parent (parent),
-    _charc (charc),
+  : value (endp, parent, charc),
+//    _startp (0),
+//    _readp (0),
+//    _endp (endp),
+//    _parent (parent),
+//    _charc (charc),
     __value (0)
 {
 }
 
-json::~json()
+json::~json ()
 {
 }
 
@@ -88,45 +88,45 @@ json::at (const char *key) const
       : __value->at (key);
 }
 
-long int
-json::_string (char & endc) const
-{
-    const char * const starp = _readp;
+//long int
+//json::_string (char & endc) const
+//{
+//    const char * const starp = _readp;
 
-    if (*starp != sc_::double_quote) {
-        endc = *starp;
-        return 0;
-    }
+//    if (*starp != sc_::double_quote) {
+//        endc = *starp;
+//        return 0;
+//    }
 
-    const char * readp = _readp + 1;
+//    const char * readp = _readp + 1;
 
-    while (readp < _endp && *readp != sc_::double_quote) {
-        readp++;
-    }
+//    while (readp < _endp && *readp != sc_::double_quote) {
+//        readp++;
+//    }
 
-    endc = *readp;
+//    endc = *readp;
 
-    return readp < _endp ? (readp - starp) + 1 : -1 * (readp - starp);
-}
+//    return readp < _endp ? (readp - starp) + 1 : -1 * (readp - starp);
+//}
 
-value::_literal
-json::_is_literal (const int _try) const
-{
-  const char *readp = _readp;
+//value::_literal
+//json::_is_literal (const int _try) const
+//{
+//  const char *readp = _readp;
 
-  size_t idx = 0;
+//  size_t idx = 0;
 
-  while (readp + idx < _endp
-         && idx < __ltr_value[_try].len
-         && *(readp + idx) == *(__ltr_value[_try].str_value + idx)) {
-      idx++;
-    }
+//  while (readp + idx < _endp
+//         && idx < __ltr_value[_try].len
+//         && *(readp + idx) == *(__ltr_value[_try].str_value + idx)) {
+//      idx++;
+//    }
 
-  if (idx == __ltr_value[_try].len)
-    return __ltr_value[_try].ltr_value;
+//  if (idx == __ltr_value[_try].len)
+//    return __ltr_value[_try].ltr_value;
 
-  return _try < 2 ? _is_literal (_try + 1) :  value::_literal::no_value;
-}
+//  return _try < 2 ? _is_literal (_try + 1) :  value::_literal::no_value;
+//}
 
 value *
 json::_make_value ()

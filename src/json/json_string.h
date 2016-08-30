@@ -1,17 +1,17 @@
 #ifndef STRING
 #define STRING
 
-#include "json_json.h"
+#include "json_value.h"
 
 /**
  * @brief The string class
  */
-class String : public json {
+class String : public value {
 
   public:
 
-  String (const char *json) : json::json (json) {}
-  String (const char *endp, value *parent = 0, size_t charc = 0) : json::json (endp, parent, charc) {}
+  String (const char *json) : value::value (json) {}
+  String (const char *endp, value *parent = 0, size_t charc = 0) : value::value (endp, parent, charc) {}
 
   virtual const char *
   parse (const char *json)
