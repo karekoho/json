@@ -9,9 +9,9 @@
 class Null : public json {
   public:
 
-  Null () : json::json (0, 0, 0) {}
-  Null (const char *json) : json::json (json) {}
-  Null (const char *endp, value *parent = 0, size_t charc = 0) : json::json (endp, parent, charc) {}
+  Null () : json::json (0, 0, 4) {}
+  Null (const char *json) : json::json (0) {}
+  Null (const char *endp, value *parent = 0, size_t charc = 0) : json::json (endp, parent, 4) {}
 
   /// value interface
   virtual inline const char *parse (const char *json) { return json + 4; }
@@ -20,6 +20,5 @@ class Null : public json {
   virtual inline size_t size() const { return 0; }
 
   inline const char * value () const { return ""; }
-}; /// class null
-
+};
 #endif // NULL_H

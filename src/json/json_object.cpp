@@ -37,7 +37,8 @@ Object::parse (const char *json)
   else
      _readp = json + 1;
 
-  while (_readp < _endp) {
+  while (_readp < _endp)
+    {
       (void) _look_ahead ();
 
       if (*_readp == sc_::value_separator) {   // ','

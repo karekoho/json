@@ -49,19 +49,15 @@ Array::parse (const char *json)
 
       else if (_make_value ()->type () == value::undefined) // No valid value found
         {
-          if (*_readp != value::ws_::space)
+          if (*_readp != value::ws_::space /** TODO: check other ws_ characters */)
               throw "array::parse: unexpected character";
-
           // empty array
         }
       else  // Value found
         _element_list.push_back (_make_value ());
     }
 
-  // if (*_readp != sc_::end_array) throw "syntax error: ...";
-
   return _readp;
-
 }
 
 const value &

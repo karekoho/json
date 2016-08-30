@@ -9,7 +9,6 @@
 class Object : public json {
 #ifdef UNIT_TEST
 friend class json_object_test;
-friend value * __make_value (value *member);
 #endif
 
 public:
@@ -37,7 +36,7 @@ public:
   bool _pair ();
 
   value *_value ();
-}; /// class object
+};
 
 #endif // OBJECT_H
 

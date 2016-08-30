@@ -4,6 +4,7 @@
 #include "json_string.h"
 #include "json_null.h"
 #include "json_undefined.h"
+#include "json_boolean.h"
 
 json::json (const char *json)
   : value (),
@@ -162,20 +163,31 @@ json::_make_value ()
     {
       ;
     }
-  else if ((ltr = _is_literal ()) != value::_literal::no_value) // Literal
+  else // if ((ltr = _is_literal ()) != value::_literal::no_value) // Literal
     {
-      if (ltr == value::_literal::null_value)
-        value_ = new Null (_endp, this);
+      // if (ltr == value::_literal::null_value)
+      //  value_ = new Null (_endp, this);
 
-      /// TODO: else if (boolean)
+      switch (_is_literal ())
+        {
+        case value::_literal::null_value:
+            value_ = new Null (_endp, this);
+          break;
+        case value::_literal::true_value :
+            value_ = new Boolean (true);
+          break;
+        case value::_literal::false_value:
+            value_ = new Boolean (false);
+          break;
+        default:
+          value_ = new Undefined;
+          break;
+        }
+
       _readp = value_->parse (_readp);
     }
-  else
-    {
-      value_ = new Undefined;
 
-      // throw json::syntax_error ("syntax error: expecting value after ':'");
-    }
+  // else value_ = new Undefined;
 
   return value_;
 }
