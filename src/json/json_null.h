@@ -1,17 +1,17 @@
 #ifndef NULL_H
 #define NULL_H
 
-#include "json_json.h"
+#include "json_value.h"
 
 /**
  * @brief The null class
  */
-class Null : public json {
+class Null : public value {
   public:
 
-  Null () : json::json (0, 0, 4) {}
-  Null (const char *json) : json::json (0) {}
-  Null (const char *endp, value *parent = 0, size_t charc = 0) : json::json (endp, parent, 4) {}
+  Null () : value::value (0, 0, 0) {}
+  Null (const char *json) : value::value (json) {}
+  Null (const char *endp, value *parent = 0, size_t charc = 0) : value::value (endp, parent, charc) {}
 
   /// value interface
   virtual inline const char *parse (const char *json) { return json + 4; }

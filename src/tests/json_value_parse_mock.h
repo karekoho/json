@@ -3,15 +3,16 @@
 
 #include "unit_test.h"
 
-class json_value_parse_mock : public json
+class json_value_parse_mock : public value
 {
 public:
 
     value::otype _type;
 
     json_value_parse_mock (const char *endp, value *parent, size_t charc, value::otype type = otype::null)
-      : json (endp, parent, charc),
-       _type (type)
+      // : json (endp, parent, charc),
+      : value (endp, parent, charc),
+        _type (type)
     {
     }
 

@@ -3,6 +3,7 @@
 
 #include <ctype.h>
 #include <cstring>
+#include <string>
 
 #ifdef UNIT_TEST
 class json_value_test;
@@ -38,7 +39,7 @@ friend class json_object_test;
    * @brief json_value
    * @param json
    */
-  // value (const char *json = 0);
+  value (const char *json = 0);
 
   /**
    * @brief json_value
@@ -46,7 +47,7 @@ friend class json_object_test;
    * @param parent
    * @paran charc
    */
-  // explicit value (const char *endp, value *parent, size_t charc);
+  explicit value (const char *endp, value *parent, size_t charc);
 
   /**
    * @brief parse
@@ -72,6 +73,12 @@ friend class json_object_test;
    * @return
    */
   inline const value & operator[] (const char *key) const { return _at (key); }
+
+  /**
+   * @brief operator =
+   * @param v
+   */
+  inline void operator =(const value & v) { _assign (v);  }
 
   /**
    * @brief type
@@ -123,31 +130,31 @@ protected:
   /**
    * @brief _startp
    */
-  // const char *_startp;
+  const char *_startp;
 
   /** TODO: move to json
    * @brief _readp
    */
-  // const char *_readp;
+  const char *_readp;
 
   /**
    * @brief _endp
    */
-  // const char *_endp;
+  const char *_endp;
 
   /**
    * @brief _parent
    */
-  // value *_parent;
+  value *_parent;
 
   /**
    * @brief charc
    */
-  // size_t _charc;
+  size_t _charc;
 
   /**
    * @brief _look_ahead Move read pointer to next non-white space character
-   *
+   */
   inline const char *
   _look_ahead ()
   {
@@ -158,7 +165,7 @@ protected:
       _readp++;
 
     return _readp;
-  } */
+  }
 
   /**
    * @brief _string Read in string.
@@ -167,22 +174,15 @@ protected:
    * Else return number of characters read + 2 (quotes).
    * @param endc Last character read
    * @return Number of characters read
-   *
+   */
   long int _string (char &endc) const;
-
-  /**
-   * @brief _lexeme Read in next non-white space characters.
-   * @param endc Last character read
-   * @return Count of characters read
-   *
-  size_t _lexeme ();
 
   /**
    * @brief _is_literal
    * @param try_
    * @return
-   *
-  value::_literal _is_literal (const int _try = 0) const; */
+   */
+  value::_literal _is_literal (const int _try = 0) const;
 
   /**
    * @brief _at json::object behavior: if key does not exist, assign key with value of type undefined.
@@ -192,36 +192,10 @@ protected:
   const value & _at (const char *key) const;
 
   /**
-   * @brief _at json::array behavior: if key does not exist behaviour is undefined
-   * @param index
-   * @return
-   */
-  const value & _at (size_t *index) const;
-
-  /**
    * @brief _assign Assing value. Delete existing key.
    * @param v
    */
-  // virtual void _assign (const value & v); /// TODO = 0
-
-  /**
-   * @brief operator =
-   * @param v
-   */
-  inline void operator =(const value & v) { /* _assign (v); */ }
-
-  /**
-   * @brief is_quoted
-   * @param strlen
-   * @return
-   */
-  // bool _is_quoted (const size_t strlen) const;
-
-  /**
-   * @brief is_number
-   * @return
-   */
-  // bool _is_number () const;
+  /** virtual */ void _assign (const value & v); /** = 0 */
 
    static const struct literal_value {
      const char * const str_value;
