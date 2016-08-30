@@ -4,7 +4,7 @@
 #include <json_value_test_interface.h>
 
 /**
- * Test number 1
+ * Test number 2
  * @brief The json_object_test class
  */
 class json_object_test : public json_value_test_interface

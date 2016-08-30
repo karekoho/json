@@ -2,6 +2,7 @@
 #include "json_object.h"
 #include "json_array.h"
 #include "json_string.h"
+#include "json_number.h"
 #include "json_null.h"
 #include "json_undefined.h"
 #include "json_boolean.h"
@@ -89,6 +90,53 @@ json::at (const char *key) const
       : __value->at (key);
 }
 
+value *
+json::_make_value ()
+{
+  value *value_  = 0;
+  long int charc = 0;
+
+  char endc = 0;
+  char readc = *(_look_ahead ());
+
+  if (readc == sc_::double_quote)           /// String
+    {
+      if ((charc = _string (endc)) < 0)
+        throw json::syntax_error ("syntax error: expecting closing '\"'");
+
+      value_ = new String (_endp, this, charc);
+    }
+  else if (readc == sc_::begin_object)      /// Object
+    value_ = new Object (_endp, this, 0);
+
+  else if (readc == sc_::begin_array)       /// Array
+    value_ = new Array (_endp, this, 0);
+
+  else if (isdigit (readc) || readc == '-') /// Number
+    value_ = new Number (_endp, this, 0);
+
+  else                                      /// Literal or undefined
+    switch (_is_literal ())
+      {
+      case value::_literal::null_value:
+        value_ = new Null (_endp, this);
+        break;
+      case value::_literal::true_value :
+        value_ = new Boolean (true);
+        break;
+      case value::_literal::false_value:
+        value_ = new Boolean (false);
+        break;
+      default:
+        value_ = new Undefined;
+        break;
+      }
+
+  _readp = value_->parse (_readp);
+
+  return value_;
+}
+
 //long int
 //json::_string (char & endc) const
 //{
@@ -128,70 +176,6 @@ json::at (const char *key) const
 
 //  return _try < 2 ? _is_literal (_try + 1) :  value::_literal::no_value;
 //}
-
-value *
-json::_make_value ()
-{
-  value *value_  = 0;
-
-  value::_literal ltr = value::_literal::no_value;
-
-  long int charc = 0;
-
-  char endc = 0;
-  char readc = *(_look_ahead ());
-
-  if (readc == sc_::double_quote) // String
-    {
-      if ((charc = _string (endc)) < 0)
-        throw json::syntax_error ("syntax error: expecting closing '\"'");
-
-      value_ = new String (_endp, this, charc);
-      _readp = value_->parse (_readp);
-    }
-  else if (readc == sc_::begin_object)  // Object
-    {
-      value_ = new Object (_endp, this, 0);
-      _readp = value_->parse (_readp);
-    }
-  else if (readc == sc_::begin_array) // Array
-    {
-      value_ = new Array (_endp, this, 0);
-      _readp = value_->parse (_readp);
-    }
-  else if (isdigit (readc) || readc == '-') // Number
-    {
-      ;
-    }
-  else // if ((ltr = _is_literal ()) != value::_literal::no_value) // Literal
-    {
-      // if (ltr == value::_literal::null_value)
-      //  value_ = new Null (_endp, this);
-
-      switch (_is_literal ())
-        {
-        case value::_literal::null_value:
-            value_ = new Null (_endp, this);
-          break;
-        case value::_literal::true_value :
-            value_ = new Boolean (true);
-          break;
-        case value::_literal::false_value:
-            value_ = new Boolean (false);
-          break;
-        default:
-          value_ = new Undefined;
-          break;
-        }
-
-      _readp = value_->parse (_readp);
-    }
-
-  // else value_ = new Undefined;
-
-  return value_;
-}
-
 
 
 

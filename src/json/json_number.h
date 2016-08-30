@@ -6,8 +6,9 @@
 /**
  * @brief The number class
  */
-class Number : public value {
-
+class Number : public value
+{
+public:
   explicit Number (const double value = 0)
     : value::value (0),
       _double_value (value),

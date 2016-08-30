@@ -11,85 +11,6 @@ public:
 
   virtual void test_smoke () {}
 
-  void test_lookahead ()
-  {
-    struct assert {
-        const char *startp;
-        char readp;
-        int assert_status;
-    };
-
-    std::vector<struct assert > test = {
-        { "", 0, PASS},
-        { "   ", 0, PASS },
-        { "x", 'x', PASS },
-        { " \
-            a", 'a', PASS },
-        { "   \"b", '"', PASS },
-        { "   \n\r\tc ", 'c', PASS },
-        { "   5", '5', PASS }
-    };
-
-    TEST_IT_START
-
-      const char *startp = (*it).startp;
-
-      json_value_parse_mock *m  = new json_value_parse_mock (startp + strlen (startp), 0, 0);
-
-      m->_startp = m->_readp = startp;
-
-      m->_look_ahead ();
-
-      ASSERT_EQUAL_IDX ("value.readp", (*it).readp , *(m->_readp));
-
-      delete m;
-
-    TEST_IT_END;
-  }
-
-  void test_string () /// value_test has the same
-  {
-    char endc;
-
-    struct assert {
-        const char *startp;
-        long int charc;
-        int assert_status;
-    };
-
-    std::vector<struct assert > test = {
-        { " ", 0, PASS},
-        { "\"", -1, PASS },
-        { "\" x\"", 4, PASS },
-        { "\" xx", -4, PASS }
-//        { "\"\
-//           x\"", 14 },
-//        { "   \"b", '"' },
-//        { "   \n\r\tc ", 'c' },
-//        { "   5", '5' }
-    };
-
-    TEST_IT_START
-
-        const char *startp = (*it).startp;
-        long int charc = strlen (startp);
-
-        json_value_parse_mock *m  = new json_value_parse_mock (startp + charc, 0, 0);
-
-        m->_startp = m->_readp = startp;
-
-        m->_look_ahead ();
-
-        charc = m->_string (endc);
-
-        // CPPUNIT_ASSERT_EQUAL_MESSAGE ("readp", startp , m->_readp); //   FAIL: { "\"", -1 }
-        ASSERT_EQUAL_IDX ("charc", (*it).charc , charc);
-
-        delete m;
-
-    TEST_IT_END;
-  }
-
   virtual void test_parse_1 ()
   {
     struct assert {
@@ -127,39 +48,37 @@ public:
 
   void test_make_value ()
   {
-  }
-
-  void test_is_literal ()   /// value_test has the same
-  {
+    json j;
     struct assert {
-        const char *startp;
-        value::_literal value_type;
+        const char *starp;
+        value::otype type;
+        size_t move;
         int assert_status;
     };
 
-    std::vector<struct assert> test = {
-      { "", value::_literal::no_value, PASS },
-      { "   ", value::_literal::no_value, PASS },
-      { "xxx   ", value::_literal::no_value, PASS },
-      { "xxxxxx   ", value::_literal::no_value, PASS },
-      { "true    ", value::_literal::true_value, PASS },
-      { "false    ", value::_literal::false_value, PASS },
-      { "null   ", value::_literal::null_value, PASS }
+    std::vector<struct assert > test = {
+        { "{} ", value::otype::object, 2, PASS },
+        { "[] ", value::otype::array, 2, PASS },
+        { "\"x\" ", value::otype::string, 3, PASS },
+        { "10 ", value::otype::number, 2, PASS },
+        { "-10 ", value::otype::number, 3, PASS },
+        { "true ", value::otype::boolean, 4, PASS },
+        { "false ", value::otype::boolean, 5, PASS },
+        { "null ", value::otype::null, 4, PASS },
+        { "x ", value::otype::undefined, 1, PASS },
+        { "", value::otype::undefined, 0, PASS },
     };
 
     TEST_IT_START
 
-        const char *startp = (*it).startp;
+        const char *startp = (*it).starp;
 
-        json_value_parse_mock *m  = new json_value_parse_mock (startp + strlen (startp), 0, 0);
+        j._endp = startp + strlen (startp);
+        j._readp = startp;
 
-        m->_startp = m->_readp = startp;
+        value *v = j._make_value ();
 
-        value::_literal ltr = m->_is_literal ();
-
-        ASSERT_EQUAL_IDX ("literal value", (*it).value_type , ltr);
-
-        delete m;
+        ASSERT_EQUAL_IDX ("value type", (*it).type , v->type());
 
     TEST_IT_END;
   }
@@ -191,5 +110,120 @@ public:
     return s;
   }
 };
+
+/* void test_is_literal ()   /// value_test has the same
+{
+  struct assert {
+      const char *startp;
+      value::_literal value_type;
+      int assert_status;
+  };
+
+  std::vector<struct assert> test = {
+    { "", value::_literal::no_value, PASS },
+    { "   ", value::_literal::no_value, PASS },
+    { "xxx   ", value::_literal::no_value, PASS },
+    { "xxxxxx   ", value::_literal::no_value, PASS },
+    { "true    ", value::_literal::true_value, PASS },
+    { "false    ", value::_literal::false_value, PASS },
+    { "null   ", value::_literal::null_value, PASS }
+  };
+
+  TEST_IT_START
+
+      const char *startp = (*it).startp;
+
+      json_value_parse_mock *m  = new json_value_parse_mock (startp + strlen (startp), 0, 0);
+
+      m->_startp = m->_readp = startp;
+
+      value::_literal ltr = m->_is_literal ();
+
+      ASSERT_EQUAL_IDX ("literal value", (*it).value_type , ltr);
+
+      delete m;
+
+  TEST_IT_END;
+} */
+
+/* void test_lookahead ()  /// value_test has the same
+{
+  struct assert {
+      const char *startp;
+      char readp;
+      int assert_status;
+  };
+
+  std::vector<struct assert > test = {
+      { "", 0, PASS},
+      { "   ", 0, PASS },
+      { "x", 'x', PASS },
+      { " \
+          a", 'a', PASS },
+      { "   \"b", '"', PASS },
+      { "   \n\r\tc ", 'c', PASS },
+      { "   5", '5', PASS }
+  };
+
+  TEST_IT_START
+
+    const char *startp = (*it).startp;
+
+    json_value_parse_mock *m  = new json_value_parse_mock (startp + strlen (startp), 0, 0);
+
+    m->_startp = m->_readp = startp;
+
+    m->_look_ahead ();
+
+    ASSERT_EQUAL_IDX ("value.readp", (*it).readp , *(m->_readp));
+
+    delete m;
+
+  TEST_IT_END;
+} */
+
+/* void test_string () /// value_test has the same
+{
+  char endc;
+
+  struct assert {
+      const char *startp;
+      long int charc;
+      int assert_status;
+  };
+
+  std::vector<struct assert > test = {
+      { " ", 0, PASS},
+      { "\"", -1, PASS },
+      { "\" x\"", 4, PASS },
+      { "\" xx", -4, PASS }
+//        { "\"\
+//           x\"", 14 },
+//        { "   \"b", '"' },
+//        { "   \n\r\tc ", 'c' },
+//        { "   5", '5' }
+  };
+
+  TEST_IT_START
+
+      const char *startp = (*it).startp;
+      long int charc = strlen (startp);
+
+      json_value_parse_mock *m  = new json_value_parse_mock (startp + charc, 0, 0);
+
+      m->_startp = m->_readp = startp;
+
+      m->_look_ahead ();
+
+      charc = m->_string (endc);
+
+      // CPPUNIT_ASSERT_EQUAL_MESSAGE ("readp", startp , m->_readp); //   FAIL: { "\"", -1 }
+      ASSERT_EQUAL_IDX ("charc", (*it).charc , charc);
+
+      delete m;
+
+  TEST_IT_END;
+} */
+
 
 #endif // JSON_TEST_H

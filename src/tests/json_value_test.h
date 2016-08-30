@@ -66,6 +66,7 @@ public:
       std::vector<struct assert > test = {
           { " ", 0, PASS},
           { "\"", -1, PASS },
+          { "\"x\"", 3, PASS },
           { "\" x\"", 4, PASS },
           { "\" xx", -4, PASS }
   //        { "\"\
