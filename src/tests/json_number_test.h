@@ -26,11 +26,11 @@ public:
     };
 
     std::vector<struct assert > test = {
-        { "0", 1, 5, PASS },
-        { "5 ", 1, 5, PASS },
-        { "-5]", 2, -5, PASS },
-        { "5.5 }", 3, 5.5, PASS },
-        { "0.5, ", 3, 0.5, PASS },
+        { "0", 1, 0, PASS },
+        { "1 ", 1, 1, PASS },
+        { "-2]", 2, -2, PASS },
+        { "3.3 }", 3, 3.3, PASS },
+        { "0.4, ", 3, 0.4, PASS },
         { "-0.5 ,", 4, -0.5, PASS },
         { "5e2", 3, 500, PASS },
         { "5E2}", 3, 500, PASS },
@@ -38,7 +38,7 @@ public:
         { "5E-2, ", 4, -500, PASS },
 
         { "x", 1, 0, FAIL },
-        { "0", 1, 0, FAIL },
+        { "00", 1, 0, FAIL },
         { "05", 2, 0, FAIL },
         { "+5", 2, 0, FAIL },
     };
@@ -46,6 +46,15 @@ public:
     TEST_IT_START
 
         const char *startp = (*it).starp;
+
+        const char *readp = n.parse (startp);
+
+        // std::cout << n._calculate (n._digitp) << std::endl; // uncaught exception of type std::length_error - basic_string::_M_create
+        // std::cout << n.value () << std::endl; output: 0
+
+        ASSERT_EQUAL_IDX ("readp", startp + (*it).move, readp);
+
+        /// TODO: assert value () = dval
 
     TEST_IT_END;
   }
@@ -66,24 +75,31 @@ public:
     struct assert {
         const char *starp;
         size_t move;
+        int peek;
         int assert_status;
     };
 
     std::vector<struct assert > test = {
-        { "123", 3, PASS },
-        { "123x", 3, PASS },
-        { "0.", 2, PASS },
-        { "123 ", 3, PASS },
+        { "123", 3, 0, PASS },
+        { "123x", 3, 'x', PASS },
+        { "0.", 1, '.', PASS },
+        { "123 ", 3, ' ', PASS },
 
-        { "01 ", 2, FAIL },
-
-        /// TODO: assert digitp[0][0] = startp
-        /// TODO: assert endp = start + move
+        { "", 0, -1, PASS },
+        { "x", 0, -1, PASS },
     };
 
     TEST_IT_START
 
         const char *startp = (*it).starp;
+
+        n._readp = startp;
+        n._endp = startp + strlen (startp);
+
+        int peek  = n._digits ();
+
+        ASSERT_EQUAL_IDX ("readp", startp + (*it).move, n._readp);
+        ASSERT_EQUAL_IDX ("peek", (*it).peek, peek);
 
     TEST_IT_END;
   }
@@ -96,27 +112,36 @@ public:
     struct assert {
         const char *starp;
         size_t move;
+        int peek;
         int assert_status;
     };
 
     std::vector<struct assert > test = {
 
-        { "5.123 ", 4, PASS },
-        { "5.123}", 4, PASS },
-        { "5.123e", 4, PASS },
-        { "5.123E", 4, PASS },
+        { "5.123 ", 5, ' ', PASS },
+        { "5.123}", 5, '}', PASS },
+        // { "5.123e", 5, 'e', PASS },
+        //{ "5.123E", 5, 'E', PASS },
 
+        { "5.", 2, 0, FAIL },
+        { "5.E", 2, 'E', FAIL },
     };
-
-     /// TODO: assert endp = start + move
-     /// TODO: assert digitp[0][1] = endp
 
     TEST_IT_START
 
         const char *startp = (*it).starp;
+        const char *endp = startp + (*it).move;
+
+        n._readp = startp + 1;
+        n._endp = startp + strlen (startp);
+
+        n._frag ();
+
+        ASSERT_EQUAL_IDX ("readp", endp, n._readp);
+        ASSERT_EQUAL_IDX ("peek", (*it).peek, (int)*(n._readp));
+        ASSERT_EQUAL_IDX ("digitp[0][1]", endp, n._digitp[0][1]);
 
     TEST_IT_END;
-
   }
 
   void
@@ -126,29 +151,80 @@ public:
 
     struct assert {
         const char *starp;
-        size_t move;
+        size_t move[2];
+        int peek;
+        long long atoll;
         int assert_status;
     };
 
     std::vector<struct assert > test = {
 
-        { "2e2 ", 1, PASS },
-        { "2E3}", 1, PASS },
-        { "2e+4]", 2, PASS },
-        { "2e-5", 2, PASS },
+        { "2e2 ", { 2, 3 }, ' ', 2, PASS },
+        { "2E3}", { 2, 3 }, '}', 3, PASS },
+        { "2e+4]", { 2, 4 }, ']', 4, PASS },
+        { "2e-5", { 2, 4 }, 0, -5, PASS },
+        { "2e-00005", { 2, 8 }, 0, -5, PASS },
 
-        { "2e-05", 3, FAIL },
-        { "2e-x", 3, FAIL },
+        { "2e", { 0, 0 }, 0, 0, FAIL },
+        { "2e ", { 0, 0 }, 0, 0, FAIL },
+        { "2e.", { 0, 0 }, 0, 0, FAIL },
+        { "2e+", { 0, 0 }, 0, 0, FAIL },
     };
-
-    /// TODO: assert endp = starp + move
-    /// TODO: assert digitp[1][0] = startp
-    /// TODO: assert digitp[1][1] = endp
-    /// TODO: assert exp eNUM
 
     TEST_IT_START
 
         const char *startp = (*it).starp;
+        const char *endp = startp + (*it).move[1];
+
+        n._readp = startp + 1;
+        n._endp = startp + strlen (startp);
+
+        n._exp ();
+
+        ASSERT_EQUAL_IDX ("n._readp", endp, n._readp);
+        ASSERT_EQUAL_IDX ("*(n._readp)", (int) *endp, (*it).peek);
+        ASSERT_EQUAL_IDX ("n._digitp[1][0]", startp + (*it).move[0], n._digitp[1][0]);
+        ASSERT_EQUAL_IDX ("n._digitp[1][1]", startp + (*it).move[1], n._digitp[1][1]);
+
+        std::string s (n._digitp[1][0], n._digitp[1][1]);
+
+        ASSERT_EQUAL_IDX ("n._llexp", (*it).atoll, atoll (s.c_str ()));
+
+    TEST_IT_END;
+  }
+
+  void
+  test_calculate ()
+  {
+    Number n;
+
+    struct assert {
+        const char *starp[2];
+        size_t move[2];
+        double dval;
+        int assert_status;
+    };
+
+    std::vector<struct assert > test = {
+      { { "5", "" }, { 1, 1 }, 5, PASS },
+      { { "5", "0" }, { 1, 1 }, 5, PASS },
+      { { "2", "1" }, { 1, 1 }, 20, PASS },
+      { { "2", "2" }, { 1, 1 }, 200, PASS },
+      { { "2", "-2" }, { 1, 2 }, 0.02, PASS },
+    };
+
+    TEST_IT_START
+
+      const char *digitp[2][2] = {
+        { (*it).starp[0], (*it).starp[0] + (*it).move[0] },
+        { (*it).starp[1], (*it).starp[1] + (*it).move[1] }
+      };
+
+      double d = n._calculate (digitp);
+      // std::cerr << d << " " << *(n._double_valuep) << std::endl;
+
+      ASSERT_EQUAL_IDX ("n._calculate ()", (*it).dval, d);
+      ASSERT_EQUAL_IDX ("n._double_valuep", d, *(n._double_valuep));
 
     TEST_IT_END;
   }
@@ -156,6 +232,8 @@ public:
   void
   test_atof ()
   {
+    Number n;
+
     struct assert {
         const char *starp;
         double dval;
@@ -163,14 +241,27 @@ public:
     };
 
     std::vector<struct assert > test = {
-        { "5.5 ", 5.5, PASS },
+        { "5.5", 5.5, PASS },
         { "55.55", 55.55, PASS },
     };
+
+
+    TEST_IT_START
+
+      const char *digitp[] = { (*it).starp, (*it).starp + strlen ((*it).starp) };
+
+      double d = n._atof (digitp);
+
+      ASSERT_EQUAL_IDX ("n._atof ()", (*it).dval, d);
+
+    TEST_IT_END;
   }
 
   void
   test_atoll ()
   {
+    Number n;
+
     struct assert {
         const char *starp;
         long long llval;
@@ -178,9 +269,19 @@ public:
     };
 
     std::vector<struct assert > test = {
-        { "55 ", 55, PASS },
+        { "55", 55, PASS },
         { "5555", 5555, PASS },
     };
+
+    TEST_IT_START
+
+      const char *digitp[] = { (*it).starp, (*it).starp + strlen ((*it).starp) };
+
+      long long ll = n._atoll (digitp);
+
+      ASSERT_EQUAL_IDX ("n._atoll ()", (*it).llval, ll);
+
+    TEST_IT_END;
   }
 
   static CppUnit::Test *
@@ -188,8 +289,11 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json number test");
 
+ //    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_calculate", &json_number_test::test_calculate));
+
 //    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_smoke", &json_number_test::test_smoke));
       s->addTest (new CppUnit::TestCaller<json_number_test> ("test_parse_1", &json_number_test::test_parse_1));
+      // return s;
 //    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_size_1", &json_number_test::test_size_1));
 //    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_get_1", &json_number_test::test_get_1));
 //    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_value_1", &json_number_test::test_value_1));
