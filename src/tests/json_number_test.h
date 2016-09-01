@@ -21,7 +21,6 @@ public:
         const char *starp;
         size_t move;
         double dval;
-
         int assert_status;
     };
 
@@ -32,15 +31,17 @@ public:
         { "3.3 }", 3, 3.3, PASS },
         { "0.4, ", 3, 0.4, PASS },
         { "-0.5 ,", 4, -0.5, PASS },
-        { "5e2", 3, 500, PASS },
-        { "5E2}", 3, 500, PASS },
-        { "5E+2 ] ", 4, 500, PASS },
-        { "5E-2, ", 4, -500, PASS },
+        { "6e2", 3, 600, PASS },
+        { "7E2}", 3, 700, PASS },
+        { "8E+2 ] ", 4, 800, PASS },
+        { "9E-2, ", 4, 0.09, PASS },
 
         { "x", 1, 0, FAIL },
         { "00", 1, 0, FAIL },
         { "05", 2, 0, FAIL },
         { "+5", 2, 0, FAIL },
+        { "2e", 2, 0, FAIL },
+        { "2eX", 2, 0, FAIL },
     };
 
     TEST_IT_START
@@ -49,12 +50,10 @@ public:
 
         const char *readp = n.parse (startp);
 
-        // std::cout << n._calculate (n._digitp) << std::endl; // uncaught exception of type std::length_error - basic_string::_M_create
-        // std::cout << n.value () << std::endl; output: 0
+        n._double_valuep = 0;
 
-        ASSERT_EQUAL_IDX ("readp", startp + (*it).move, readp);
-
-        /// TODO: assert value () = dval
+        ASSERT_EQUAL_IDX ("n._readp", startp + (*it).move, readp);
+        ASSERT_EQUAL_IDX ("n.value ()", (*it).dval, n.value ());
 
     TEST_IT_END;
   }
@@ -121,7 +120,7 @@ public:
         { "5.123 ", 5, ' ', PASS },
         { "5.123}", 5, '}', PASS },
         // { "5.123e", 5, 'e', PASS },
-        //{ "5.123E", 5, 'E', PASS },
+        // { "5.123E", 5, 'E', PASS },
 
         { "5.", 2, 0, FAIL },
         { "5.E", 2, 'E', FAIL },
@@ -293,7 +292,7 @@ public:
 
 //    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_smoke", &json_number_test::test_smoke));
       s->addTest (new CppUnit::TestCaller<json_number_test> ("test_parse_1", &json_number_test::test_parse_1));
-      // return s;
+//      return s;
 //    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_size_1", &json_number_test::test_size_1));
 //    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_get_1", &json_number_test::test_get_1));
 //    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_value_1", &json_number_test::test_value_1));

@@ -2,9 +2,17 @@
 #define NUMBER_H
 
 #include "json_value.h"
+
+#define FLOAT 0
+#define EXP 1
+
+#define START 0
+#define END 1
+
 #ifdef UNIT_TEST
 class json_number_test;
 #endif
+
 /**
  * @brief The number class
  */
@@ -13,14 +21,14 @@ class Number : public value
 #ifdef UNIT_TEST
 friend class json_number_test;
 #endif
+
 public:
+
   explicit Number (const double value = 0)
     : value::value (0),
       _double_value (value),
       _double_valuep (&_double_value),
-      _digitp {{0,0},{0,0}}
-     // _llong_exp (0),
-     //_llong_expp (0)
+      _digitp {{ 0, 0 },{ 0, 0 }}
   {
   }
 
@@ -28,9 +36,7 @@ public:
     : value::value (json),
       _double_value (0),
       _double_valuep (0),
-      _digitp {{0,0},{0,0}}
-      // _llong_exp (0),
-      //_llong_expp (0)
+      _digitp {{ 0, 0 },{ 0, 0 }}
   {
   }
 
@@ -38,23 +44,43 @@ public:
     : value::value (endp, parent, charc),
       _double_value (0),
       _double_valuep (0),
-      _digitp {{0,0},{0,0}}
-      // _llong_exp (0),
-      //_llong_expp (0)
+      _digitp {{ 0, 0 },{ 0, 0 }}
   {
   }
 
-  /// value interface
-  virtual const char *parse (const char *json); // { return json; }
-  virtual const value & at (const char *key) const { return *this; }
-  virtual inline otype type () const { return value::otype::number; }
-  virtual size_t size () const { return _double_value == 0 ? 0 : 1; }
+  virtual ~Number () {}
 
   /**
-     * @brief value
-     * @return
-     */
-  double value () const { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
+   * @brief parse
+   * @param json
+   * @return
+   */
+  virtual const char *parse (const char *json);
+
+  /**
+   * @brief at
+   * @param key
+   * @return
+   */
+  virtual inline const value & at (const char *key) const { return *this; }
+
+  /**
+   * @brief type
+   * @return
+   */
+  virtual inline otype type () const { return value::otype::number; }
+
+  /**
+   * @brief size
+   * @return
+   */
+  virtual inline size_t size () const { return _double_valuep == 0 ? 0 : 1; }
+
+  /**
+   * @brief value
+   * @return
+   */
+  inline double value () const { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
 
 protected:
 
@@ -72,16 +98,6 @@ protected:
    * @brief _digitp [][3] unused
    */
   mutable const char *_digitp[2][2];
-
-  /**
-   * @brief _exp Power of 10
-   */
-  // long long _llong_exp;
-
-  /**
-   * @brief _llong_expp
-   */
-  // const long long *_llong_expp;
 
   /**
    * @brief _digits If >= 1 digits found, return last character. Else return -1.

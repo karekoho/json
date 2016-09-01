@@ -1,12 +1,37 @@
 #include "json_number.h"
+
 #include <math.h>
+
+/* Number::Number (const double value)
+  : value::value (0),
+    _double_value (value),
+    _double_valuep (&_double_value),
+    _digitp {{ 0, 0 },{ 0, 0 }}
+{
+}
+
+Number::Number (const char *json)
+  : value::value (json),
+    _double_value (0),
+    _double_valuep (0),
+    _digitp {{ 0, 0 },{ 0, 0 }}
+{
+}
+
+Number::Number (const char *endp, value *parent, size_t charc)
+  : value::value (endp, parent, charc),
+    _double_value (0),
+    _double_valuep (0),
+    _digitp {{ 0, 0 },{ 0, 0 }}
+{
+} */
 
 const char *
 Number::parse (const char *json)
 {
   char peek = 0;
+
   if (json == 0)
-    // throw json::error ("error: null string given");
     throw _readp;
 
   if (_parent == 0)
@@ -24,37 +49,38 @@ Number::parse (const char *json)
   if (_readp == _endp)
     throw _readp;
 
-  _digitp[0][0] = _readp;
+  _digitp[FLOAT][START] = _readp;
 
   if (*_readp == '-')
     _readp++;
 
   if (*_readp == 48)    /// Expect 0\0 | 0.digits
     {
-      if (*(_readp + 1) == 0)
+      if (*(_readp + 1) == 0) /// Null terminator, found single zero
           return _readp + 1;
 
-      if (*(_readp + 1) == '.')
+      if (*(_readp + 1) == '.') /// Possible float value
         {
           _readp++;
           return _frag ();
         }
 
-      throw _readp;
+      throw _readp; /// Anything else is no good
     }
 
-  peek = _digits ();
-
-  if (peek == '.')
+  if ((peek = _digits ()) == '.')
     return _frag ();
 
   if (peek == 'e' || peek == 'E')
-    return _exp ();
+    {
+      _digitp[FLOAT][END] = _readp;
+      return _exp ();
+    }
 
   if (peek < 0)
     throw _readp;
 
-  _digitp[0][1] = _readp;
+  _digitp[FLOAT][END] = _readp;
 
   return _readp;
 }
@@ -80,7 +106,7 @@ Number::_frag ()
   if (peek < 0) /// No digits found
     throw _readp;
 
-  _digitp[0][1] = _readp;
+  _digitp[FLOAT][END] = _readp;
 
   return peek == 'e' || peek == 'E' ? _exp () : _readp;
 }
@@ -88,16 +114,15 @@ Number::_frag ()
 const char *
 Number::_exp ()
 {
-  _readp++; /// Skip 'e|E'
+  _digitp[EXP][START] = ++_readp; /// Skip 'e|E'
 
-  _digitp[1][0] =_readp;
-
-  if (*(_readp) == '+' || *(_readp) == '-') _readp++;
+  if (*(_readp) == '+' || *(_readp) == '-')
+    _readp++;
 
   if (_digits () < 0) /// No digits found
     throw _readp;
 
-  _digitp[1][1] = _readp;
+  _digitp[EXP][END] = _readp;
 
   return _readp;
 }
@@ -105,17 +130,17 @@ Number::_exp ()
 double
 Number::_calculate (const char * const digitp[2][2]) const
 {
-  if (digitp[0][0] == 0 || digitp[0][1] == 0)
+  if (digitp[FLOAT][START] == 0 || digitp[FLOAT][END] == 0)
     return 0;
 
   _double_valuep = & _double_value;
 
-  _double_value = _atof (digitp[0]);
+  _double_value = _atof (digitp[FLOAT]);
 
-  if (digitp[1][0] == 0 || digitp[1][1] == 0)
+  if (digitp[EXP][START] == 0 || digitp[EXP][END] == 0)
     return _double_value;
 
-  long long exp = _atoll (digitp[1]);
+  long long exp = _atoll (digitp[EXP]);
 
   if (exp == 0)
     return _double_value;
