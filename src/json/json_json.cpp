@@ -73,7 +73,7 @@ json::json::parse (const char *readp)
     JSON.parse('null');            // null
     */
 
-  _readp = value_->parse (_readp + 1);
+  _readp = value_->parse (_readp);
 
   delete __value;
 

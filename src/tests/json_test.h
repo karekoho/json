@@ -15,31 +15,31 @@ public:
   {
     struct assert {
         const char *starp;
-        size_t move;
-        char endch;
+       // size_t move;
+        char endc;
         value::otype type;
         int assert_status;
     };
 
     std::vector<struct assert > test = {
-        { "{ \"foo\" : \"ru\" } ", 17 - 2, '}',   value::otype::object, PASS },      // 17 - quotes
-        { " { \"bar\" : \"ul\" } ", 17 - 2, '}',  value::otype::object, PASS },     // Space skipped in parse
-        { "[ \"ru\" ] ", 7, ']',  value::otype::array, PASS },
-        { " [ \"als\" ] ", 8, ']',  value::otype::array, PASS }
+        { "{\"k\":\"v\"} ", '}',   value::otype::object, PASS },   /// FAIL
+        { " { \"k\" : \"v\" } ", '}',  value::otype::object, PASS },
+        { "[\"v\"] ", ']',  value::otype::array, PASS },  /// FAIL
+        { " [ \"v\", [\"vv\"] ] ", ']',  value::otype::array, PASS }
     };
 
     TEST_IT_START
 
       const char *startp = (*it).starp;
 
-      json *j = new json (startp + strlen (startp), 0, (*it).move);
+      size_t charc = strlen (startp);
+      json *j = new json (startp + charc, 0);
 
       const char * readp = j->parse (startp);
 
-      // std::cout << readp -1 << std::endl;
-
-      ASSERT_EQUAL_IDX ("readp", (*it).endch, *(readp - 1));
-      ASSERT_EQUAL_IDX ("object type", (*it).type, j->type ());
+      ASSERT_EQUAL_IDX ("json.readp", (*it).starp + (charc - 1), readp);
+      ASSERT_EQUAL_IDX ("*(json.readp)", (*it).endc, *(readp - 1));
+      ASSERT_EQUAL_IDX ("json.type ()", (*it).type, j->type ());
 
       delete j;
 

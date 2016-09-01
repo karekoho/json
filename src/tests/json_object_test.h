@@ -28,6 +28,7 @@ public:
     };
 
     std::vector<struct assert > test = {
+      { "{\"k\":\"v\"} ", 1, value::string, p, 1, PASS },
       { "{ \"k\" : \"v\" } ", 1, value::string, p, 1, PASS },
       { "{ \"k\" : \"v\", \"q\" : \"p\" } ", 2, value::string, p, 1, PASS },
       { "{ \"k\": \"v\", \"q\" : \"p\",\"K\":\"v\" } ", 3, value::string, p, 1, PASS },
