@@ -6,12 +6,12 @@
 /**
  * @brief The string class
  */
-class String : public value {
+class String : public Value {
 
   public:
 
-  String (const char *json) : value::value (json) {}
-  String (const char *endp, value *parent = 0, size_t charc = 0) : value::value (endp, parent, charc) {}
+  String (const char *json) : Value::Value (json) {}
+  String (const char *endp, Value *parent = 0, size_t charc = 0) : Value::Value (endp, parent, charc) {}
 
   virtual const char *
   parse (const char *json)
@@ -23,14 +23,18 @@ class String : public value {
   }
 
   /// value interface
-  virtual inline const value & at (const char *key) const { return *this; }
+  virtual inline const Value & at (const char *key) const { return *this; }
 
-  virtual inline otype type () const { return value::otype::string; }
+  virtual inline object_type type () const { return Value::object_type::string; }
 
   virtual inline size_t size () const { return _string_value.length (); }
 
+protected:
+  virtual const Value &_at(const char *key) const;
+public:
+
   const char *
-  value () const {
+  Value () const {
 
     if (_string_value.empty () && _readp && _charc > 0) {
         _string_value.assign (_readp + 1, _charc - 2);
@@ -44,6 +48,9 @@ protected:
    * @brief _value
    */
   mutable std::string _string_value;
+
+  // Value interface
+
 }; /// class string
 
 #endif // STRING

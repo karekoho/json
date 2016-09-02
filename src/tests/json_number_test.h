@@ -53,7 +53,7 @@ public:
         n._double_valuep = 0;
 
         ASSERT_EQUAL_IDX ("n._readp", startp + (*it).move, readp);
-        ASSERT_EQUAL_IDX ("n.value ()", (*it).dval, n.value ());
+        ASSERT_EQUAL_IDX ("n.value ()", (*it).dval, n.Value ());
 
     TEST_IT_END;
   }

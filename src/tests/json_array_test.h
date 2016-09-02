@@ -19,25 +19,25 @@ public:
       const char *startp;
       // bool status;
       size_t size;
-      value::otype type;
-      value *parent;
+      Value::object_type type;
+      Value *parent;
       int moveback;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { "[]", 0, value::otype::array, p, 0, PASS },
-      { "[ ] ", 0, value::otype::array, p, 1, PASS },
-      { "[\"x\"]", 1, value::otype::array, p, 0, PASS },
-      { "[\"x\",\"x\"] ", 2, value::otype::array, p, 1, PASS },
-      { "[\"x\",\"x\",[\"x\"]] ", 3,  value::otype::array, p, 1, PASS },
+      { "[]", 0, Value::object_type::array, p, 0, PASS },
+      { "[ ] ", 0, Value::object_type::array, p, 1, PASS },
+      { "[\"x\"]", 1, Value::object_type::array, p, 0, PASS },
+      { "[\"x\",\"x\"] ", 2, Value::object_type::array, p, 1, PASS },
+      { "[\"x\",\"x\",[\"x\"]] ", 3,  Value::object_type::array, p, 1, PASS },
 
       // errors
-      { "[ ", 0, value::otype::undefined, p, 0, FAIL },
-      { "[, ", 0, value::otype::undefined, p, 0, FAIL },
-      { "[ x ", 0, value::otype::undefined, p, 0, FAIL },
+      { "[ ", 0, Value::object_type::undefined, p, 0, FAIL },
+      { "[, ", 0, Value::object_type::undefined, p, 0, FAIL },
+      { "[ x ", 0, Value::object_type::undefined, p, 0, FAIL },
 
-      { "", 0, value::otype::undefined, 0, 0, FAIL },
+      { "", 0, Value::object_type::undefined, 0, 0, FAIL },
     };
 
     TEST_IT_START

@@ -7,13 +7,10 @@
 #include "json_undefined.h"
 #include "json_boolean.h"
 
-json::json (const char *json)
-  : value (json),
-//    _startp (json),
-//    _readp (json),
-//    _endp (0),
-//    _parent (0),
-//    _charc (json == 0 ? 0 : strlen (json)),
+// const Undefined * const JSON::_undef_value = new Undefined;
+
+JSON::JSON (const char *json)
+  : Value (json),
     __value (0)
 {
   if (_charc > 0)
@@ -23,93 +20,73 @@ json::json (const char *json)
     }
 }
 
-json::json (const char *endp, value *parent, size_t charc)
-  : value (endp, parent, charc),
-//    _startp (0),
-//    _readp (0),
-//    _endp (endp),
-//    _parent (parent),
-//    _charc (charc),
+JSON::JSON (const char *endp, Value *parent, size_t charc)
+  : Value (endp, parent, charc),
     __value (0)
 {
 }
 
-json::~json ()
+JSON::~JSON ()
 {
+  delete __value;
 }
 
 const char *
-json::json::parse (const char *readp)
+JSON::JSON::parse (const char *readp)
 {
-  value *value_ = 0;
+  if (readp == 0)
+    throw readp;
 
-  _startp = readp;
-  _readp  = readp;
+  _readp = _startp = readp;
 
-  if (_endp == 0)  // 1. ctor
-    _endp = readp + strlen (readp);
+  if (_charc == 0)  /// 1. constructor called with null or zero length string
+    _endp = _readp + strlen (readp);
 
-  _look_ahead ();
+  if (_readp == _endp)
+    throw _readp;
 
-  if (*_readp == sc_::begin_object)
-    {
-      value_ = new Object (_endp, this, _charc);
-    }
-  else if (*_readp == sc_::begin_array)
-    {
-      value_ = new  Array (_endp, this, _charc);
-    }
-  else
-    {
-      throw "syntax error near x";
-    }
+  Value * prev_value_ = __value;
 
-  /**
-    JSON:parse accepts:
-    JSON.parse('{}');              // {}
-    JSON.parse('[]');              // []
-    JSON.parse('true');            // true
-    JSON.parse('"foo"');           // "foo"
-    JSON.parse('null');            // null
-    */
+  __value = _make_value ();
 
-  _readp = value_->parse (_readp);
+  delete prev_value_;
 
-  delete __value;
-
-  __value = value_;
+  if (*(_look_ahead ()) != 0)
+    throw _readp;
 
   return _readp;
 }
 
-const value &
-json::at (const char *key) const
+const Value &
+JSON::at (const char *key) const
 {
-  return type () == value::undefined
-      ? *(new Undefined) // FIXME: leak
-      : __value->at (key);
+  // return type () == Value::undefined
+  //? *(new Undefined)  // FIXME: leak
+  //    : __value->at (key);
+
+  return _at (key);
 }
 
-value *
-json::_make_value ()
+Value *
+JSON::_make_value ()
 {
-  value *value_  = 0;
+  Value *value_  = 0;
   long int charc = 0;
 
   char endc = 0;
   char readc = *(_look_ahead ());
 
-  if (readc == sc_::double_quote)           /// String
+  if (readc == _sc::double_quote)           /// String
     {
       if ((charc = _string (endc)) < 0)
-        throw json::syntax_error ("syntax error: expecting closing '\"'");
+        throw JSON::syntax_error ("syntax error: expecting closing '\"'");
 
       value_ = new String (_endp, this, charc);
     }
-  else if (readc == sc_::begin_object)      /// Object
+  else if (readc == _sc::begin_object)      /// Object
     value_ = new Object (_endp, this, 0);
 
-  else if (readc == sc_::begin_array)       /// Array
+  else if (readc == _sc::begin_array)       /// Array
     value_ = new Array (_endp, this, 0);
 
   else if (isdigit (readc) || readc == '-') /// Number
@@ -118,13 +95,13 @@ json::_make_value ()
   else                                      /// Literal or undefined
     switch (_is_literal ())
       {
-      case value::_literal::null_value:
+      case Value::_literal::null_value:
         value_ = new Null (_endp, this);
         break;
-      case value::_literal::true_value :
+      case Value::_literal::true_value :
         value_ = new Boolean (true);
         break;
-      case value::_literal::false_value:
+      case Value::_literal::false_value:
         value_ = new Boolean (false);
         break;
       default:
@@ -137,46 +114,8 @@ json::_make_value ()
   return value_;
 }
 
-//long int
-//json::_string (char & endc) const
-//{
-//    const char * const starp = _readp;
-
-//    if (*starp != sc_::double_quote) {
-//        endc = *starp;
-//        return 0;
-//    }
-
-//    const char * readp = _readp + 1;
-
-//    while (readp < _endp && *readp != sc_::double_quote) {
-//        readp++;
-//    }
-
-//    endc = *readp;
-
-//    return readp < _endp ? (readp - starp) + 1 : -1 * (readp - starp);
-//}
-
-//value::_literal
-//json::_is_literal (const int _try) const
-//{
-//  const char *readp = _readp;
-
-//  size_t idx = 0;
-
-//  while (readp + idx < _endp
-//         && idx < __ltr_value[_try].len
-//         && *(readp + idx) == *(__ltr_value[_try].str_value + idx)) {
-//      idx++;
-//    }
-
-//  if (idx == __ltr_value[_try].len)
-//    return __ltr_value[_try].ltr_value;
-
-//  return _try < 2 ? _is_literal (_try + 1) :  value::_literal::no_value;
-//}
-
-
-
-
+const Value &
+JSON::_at (const char *key) const
+{
+  return type () == Value::undefined ? _undef_value : __value->at (key);
+}

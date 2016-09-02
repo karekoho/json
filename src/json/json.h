@@ -1,5 +1,5 @@
-#ifndef JSON
-#define JSON
+#ifndef JSON_H
+#define JSON_H
 
 #include "json_value.h"
 #include "json_json.h"
@@ -11,5 +11,5 @@
 #include "json_null.h"
 #include "json_undefined.h"
 
-#endif // JSON
+#endif // JSON_H
 

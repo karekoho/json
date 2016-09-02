@@ -5,28 +5,77 @@
 /**
  * @brief The boolean class
  */
-class Boolean : public value {
+class Boolean : public Value {
   public:
 
-  explicit Boolean (const bool value) : value::value (0, 0, 0), _boolean_value (value) {}
-  Boolean (const char *json) : value::value (json), _boolean_value (false) {}
-  Boolean (const char *endp, value *parent = 0, size_t charc = 0) : value::value (endp, parent, charc), _boolean_value (false) {}
+  /**
+   * @brief Boolean
+   * @param value
+   */
+  explicit Boolean (const bool value) : Value::Value (0, 0, 0), _boolean_value (value) {}
 
-  /// value interface
-  virtual inline const char *parse (const char *json) { return json + _charc;}
-  virtual inline const value & at (const char *key) const { return *this; }
-  virtual inline otype type () const { return value::otype::boolean; }
-  virtual inline size_t size () const { return 0;}
+  /**
+   * @brief Boolean
+   * @param json
+   */
+  Boolean (const char *json = 0) : Value::Value (json), _boolean_value (false) {}
+
+  /**
+   * @brief Boolean
+   * @param endp
+   * @param parent
+   * @param charc
+   */
+  Boolean (const char *endp, Value *parent, size_t charc = 0) : Value::Value (endp, parent, charc), _boolean_value (false) {}
+
+protected:
+  virtual const Value &_at(const char *key) const
+  {
+    return *this;
+  }
+
+public:
+  /**
+   * @brief parse
+   * @param json
+   * @return
+   */
+  virtual inline const char *parse (const char *json) { return json + (_boolean_value == true ? 4 : 5); }
+
+  /**
+   * @brief at
+   * @param key
+   * @return
+   */
+  virtual inline const Value & at (const char *key) const { return *this; }
+
+  /**
+   * @brief type
+   * @return
+   */
+  virtual inline object_type type () const { return Value::object_type::boolean; }
+
+  /**
+   * @brief size
+   * @return
+   */
+  virtual inline size_t size () const { return 1;}
 
   /**
    * @brief value
    * @return
    */
-  inline bool value () const { return _boolean_value; }
+  inline bool Value () const { return _boolean_value; }
 
 protected:
 
+  /**
+   * @brief _boolean_value
+   */
   bool _boolean_value;
+
+  // Value interface
+
 };
 
 #endif // BOOLEAN_H

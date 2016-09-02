@@ -37,12 +37,12 @@ public:
 
         s = new String (startp + charc, 0, charc);
 
-        std::string ss = s->value ();
+        std::string ss = s->Value ();
 
         CPPUNIT_ASSERT_MESSAGE ("empty", ss.empty () );
 
         readp = s->parse (startp);
-        ss = s->value ();
+        ss = s->Value ();
 
         // std::cout << readp << "" << ss.length () << " " << ss << std::endl;
 

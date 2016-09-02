@@ -101,18 +101,18 @@ public:
     {
       struct assert {
           const char *startp;
-          value::_literal value_type;
+          Value::_literal value_type;
           int assert_status;
       };
 
       std::vector<struct assert> test = {
-        { "", value::_literal::no_value, PASS },
-        { "   ", value::_literal::no_value, PASS },
-        { "xxx   ", value::_literal::no_value, PASS },
-        { "xxxxxx   ", value::_literal::no_value, PASS },
-        { "true    ", value::_literal::true_value, PASS },
-        { "false    ", value::_literal::false_value, PASS },
-        { "null   ", value::_literal::null_value, PASS }
+        { "", Value::_literal::no_value, PASS },
+        { "   ", Value::_literal::no_value, PASS },
+        { "xxx   ", Value::_literal::no_value, PASS },
+        { "xxxxxx   ", Value::_literal::no_value, PASS },
+        { "true    ", Value::_literal::true_value, PASS },
+        { "false    ", Value::_literal::false_value, PASS },
+        { "null   ", Value::_literal::null_value, PASS }
       };
 
       TEST_IT_START
@@ -123,7 +123,7 @@ public:
 
           m->_startp = m->_readp = startp;
 
-          value::_literal ltr = m->_is_literal ();
+          Value::_literal ltr = m->_is_literal ();
 
           ASSERT_EQUAL_IDX ("literal value", (*it).value_type , ltr);
 

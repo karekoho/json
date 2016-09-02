@@ -1,7 +1,8 @@
-#ifndef JSON_H
-#define JSON_H
+#ifndef JSON_JSON_H
+#define JSON_JSON_H
 
 #include "json_value.h"
+#include "json_undefined.h"
 
 #include <unordered_map>
 #include <vector>
@@ -17,7 +18,7 @@
  * @brief The json class
  */
 class Undefined;
-class json : public value
+class JSON : public Value
 {
 #ifdef UNIT_TEST
   friend class json_test;
@@ -25,10 +26,23 @@ class json : public value
 #endif
 public:
 
-  json (const char *json = 0);
-  json (const char *endp, value *parent, size_t charc = 0);
+  /**
+   * @brief json
+   * @param json
+   */
+  JSON (const char *JSON = 0);
 
-  virtual ~json ();
+  /**
+   * @brief json
+   * @param endp
+   * @param charc
+   */
+  JSON (const char *endp, Value *parent, size_t charc = 0);
+
+  /**
+   * @brief ~JSON
+   */
+  virtual ~JSON ();
 
   /**
    * @brief parse
@@ -42,34 +56,38 @@ public:
    * @param key
    * @return
    */
-  virtual const value & at (const char *key) const;
+  virtual const Value & at (const char *key) const;
 
   /**
    * @brief type
    * @return
    */
-  virtual inline value::otype type () const { return __value == 0 ? value::otype::undefined : __value->type (); }
+  virtual inline Value::object_type type () const { return __value == 0 ? Value::object_type::undefined : __value->type (); }
 
   /**
    * @brief size
    * @return
    */
-  virtual inline size_t size () const { return  type () == value::undefined ? 0 :__value->size (); }
+  virtual inline size_t size () const { return  type () == Value::undefined ? 0 :__value->size (); }
 
 protected:
+
+  virtual const Value &_at (const char *key) const;
+
+  const Undefined _undef_value;
 
   /**
    * @brief _make_value
    * @return
    */
-  value *_make_value ();
+  Value *_make_value ();
 
 private:
 
   /**
    * @brief __value
    */
-  value *__value;
+  Value *__value;
 
 public:
 
@@ -88,7 +106,7 @@ public:
        * @brief what
        * @return
        */
-      virtual const char * what () { return _message == 0 ? std::exception::what () : _message; }
+      virtual const char * what () { return _message == 0 ? "" : _message; }
 
     protected:
       const char * const _message;
@@ -103,16 +121,25 @@ public:
      * @brief syntax_error
      * @param message
      */
-    syntax_error (const char * const message) : error (message) {}
+    syntax_error (const char * const message = 0) : error (message) {}
   }; /// class syntax_error
 
   /**
    * @brief The out_of_range class
    */
-  class out_of_range : public std::out_of_range {};
+  class out_of_range : public error {
+    public:
+    /**
+     * @brief out_of_range
+     * @param message
+     */
+    out_of_range (const char * const message = 0) : error (message) {}
+  };
   /// class out_of_range
+
+
 
 }; /// class json
 /// } namespace
 
-#endif // JSON_H
+#endif // JSON_JSON_H

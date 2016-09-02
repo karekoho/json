@@ -2,40 +2,90 @@
 #define OBJECT_H
 
 #include "json_json.h"
+#include "json_undefined.h"
 
 /**
  * @brief The object class
  */
-class Object : public json {
+class Object : public JSON {
 #ifdef UNIT_TEST
 friend class json_object_test;
 #endif
 
 public:
 
+/**
+   * @brief Object
+   * @param JSON
+   */
   explicit Object (const char *json = 0);
-  Object (const char *endp, value *parent = 0, size_t charc = 0);
 
-  virtual ~Object (){}
+/**
+   * @brief Object
+   * @param endp
+   * @param parent
+   * @param charc
+   */
+  Object (const char *endp, Value *parent, size_t charc = 0);
 
+  /**
+   * @brief ~Object
+   */
+  virtual ~Object () { std::unordered_map<std::string, Value *>().swap (_member_list); }
+
+  /**
+   * @brief parse
+   * @param JSON
+   * @return
+   */
   virtual const char *parse (const char *json);
 
-  virtual const value & at (const char *key) const;
-  virtual inline otype type () const { return value::otype::object; }
+  /**
+   * @brief at
+   * @param key
+   * @return
+   */
+  virtual const Value & at (const char *key) const;
+
+  /**
+   * @brief type
+   * @return
+   */
+  virtual inline object_type type () const { return Value::object_type::object; }
+
+  /**
+   * @brief size
+   * @return
+   */
   virtual inline size_t size () const { return _member_list.size (); }
 
   protected:
 
-  size_t _pairc;
-
   /**
    * @brief _member_list
    */
-  std::unordered_map<std::string, value *> _member_list;
+  mutable std::unordered_map<std::string, Value *> _member_list;
 
   bool _pair ();
 
-  value *_value ();
+  Value *_value ();
+
+  // Value interface
+protected:
+
+  virtual const Value &_at (const char *key) const
+  {
+    try
+      {
+        return *(_member_list.at (key));
+      }
+    catch (std::out_of_range &e)
+      {
+        Value *v = new Undefined;
+        _member_list.emplace (key, v);
+        return *v;
+      }
+  }
 };
 
 #endif // OBJECT_H

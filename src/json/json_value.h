@@ -12,7 +12,7 @@ class json_object_test;
 /**
  * @brief The json_value class
  */
-class value
+class Value
 {
 #ifdef UNIT_TEST
 friend class json_test;
@@ -25,7 +25,7 @@ friend class json_object_test;
   /**
    * @brief The otype enum
    */
-  enum otype {
+  enum object_type {
     undefined,
     object,
     array,
@@ -39,7 +39,7 @@ friend class json_object_test;
    * @brief json_value
    * @param json
    */
-  value (const char *json = 0);
+  Value (const char *json = 0);
 
   /**
    * @brief json_value
@@ -47,7 +47,9 @@ friend class json_object_test;
    * @param parent
    * @paran charc
    */
-  explicit value (const char *endp, value *parent, size_t charc);
+  explicit Value (const char *endp, Value *parent, size_t charc);
+
+  virtual ~Value () {}
 
   /**
    * @brief parse
@@ -65,26 +67,26 @@ friend class json_object_test;
    * @param key
    * @return
    */
-  virtual const value & at (const char *key) const = 0;
+  virtual const Value & at (const char *key) const = 0;
 
   /**
    * @brief operator []
    * @param key
    * @return
    */
-  inline const value & operator[] (const char *key) const { return _at (key); }
+  inline const Value & operator[] (const char *key) const { return _at (key); }
 
   /**
    * @brief operator =
    * @param v
    */
-  inline void operator =(const value & v) { _assign (v);  }
+  inline void operator =(const Value & v) { _assign (v);  }
 
   /**
    * @brief type
    * @return
    */
- virtual otype type () const = 0;
+ virtual object_type type () const = 0;
 
   /**
    * @brief size
@@ -95,9 +97,9 @@ friend class json_object_test;
 protected:
 
   /**
-   * @brief The sc_ enum Structural characters.
+   * @brief The _sc enum Structural characters.
    */
-  enum sc_ {
+  enum _sc {
     begin_object    = '{',
     end_object      = '}',
     begin_array     = '[',
@@ -108,9 +110,9 @@ protected:
   };
 
   /**
-   * @brief The ws enum White space characters.
+   * @brief The _ws enum White space characters.
    */
-  enum ws_ {
+  enum _ws {
     tab   = 9,    /// \t Horizontal tab
     lf    = 10,   /// \n Line feed or New line
     cr    = 13,   /// \r Carriage return
@@ -145,7 +147,7 @@ protected:
   /**
    * @brief _parent
    */
-  value *_parent;
+  Value *_parent;
 
   /**
    * @brief charc
@@ -158,10 +160,10 @@ protected:
   inline const char *
   _look_ahead ()
   {
-    while (_readp < _endp && ( *_readp == ws_::tab
-            || *_readp == ws_::lf
-            || *_readp == ws_::cr
-            || *_readp == ws_::space))
+    while (_readp < _endp && ( *_readp == _ws::tab
+            || *_readp == _ws::lf
+            || *_readp == _ws::cr
+            || *_readp == _ws::space))
       _readp++;
 
     return _readp;
@@ -182,25 +184,25 @@ protected:
    * @param try_
    * @return
    */
-  value::_literal _is_literal (const int _try = 0) const;
+  Value::_literal _is_literal (const int _try = 0) const;
 
   /**
    * @brief _at json::object behavior: if key does not exist, assign key with value of type undefined.
    * @param key
    * @return
    */
-  const value & _at (const char *key) const;
+  virtual const Value & _at (const char *key) const = 0;
 
   /**
    * @brief _assign Assing value. Delete existing key.
    * @param v
    */
-  /** virtual */ void _assign (const value & v); /** = 0 */
+  /** virtual */ void _assign (const Value & v); /** = 0 */
 
    static const struct literal_value {
      const char * const str_value;
      const size_t len;
-     const value::_literal ltr_value;
+     const Value::_literal ltr_value;
    } __ltr_value[3];
 };
 

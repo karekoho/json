@@ -4,21 +4,68 @@
 #include "json_value.h"
 
 /**
- * @brief The null class
+ * @brief The Null class
  */
-class Null : public value {
+class Null : public Value {
   public:
 
-  Null () : value::value (0, 0, 0) {}
-  Null (const char *json) : value::value (json) {}
-  Null (const char *endp, value *parent = 0, size_t charc = 0) : value::value (endp, parent, charc) {}
+  /**
+   * @brief Null
+   */
+  Null () : Value::Value (0, 0, 0) {}
 
-  /// value interface
+  /**
+   * @brief Null
+   * @param json
+   */
+  Null (const char *json = 0) : Value::Value (json) {}
+
+  /**
+   * @brief Null
+   * @param endp
+   * @param parent
+   * @param charc
+   */
+  Null (const char *endp, Value *parent, size_t charc = 0) : Value::Value (endp, parent, charc) {}
+
+protected:
+
+  virtual const Value &_at (const char *) const { return *this; }
+
+public:
+  /**
+   * @brief parse
+   * @param json
+   * @return
+   */
   virtual inline const char *parse (const char *json) { return json + 4; }
-  virtual inline const value & at (const char *key) const { return *this; }
-  virtual inline value::otype type() const { return value::otype::null; }
-  virtual inline size_t size() const { return 0; }
 
-  inline const char * value () const { return ""; }
+  /**
+   * @brief at
+   * @param key
+   * @return
+   */
+  virtual inline const Value & at (const char *key) const { return *this; }
+
+  /**
+   * @brief type
+   * @return
+   */
+  virtual inline Value::object_type type () const { return Value::object_type::null; }
+
+  /**
+   * @brief size
+   * @return
+   */
+  virtual inline size_t size () const { return 1; }
+
+  /**
+   * @brief Value
+   * @return
+   */
+  inline const char * Value () const { return ""; }
+
+  // Value interface
+
 };
 #endif // NULL_H

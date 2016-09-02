@@ -163,3 +163,8 @@ Number::_atoll (const char * const digitp[2]) const
   std::string s (digitp[0], digitp[1]);
   return atoll (s.c_str ());
 }
+
+
+const Value &Number::_at(const char *key) const
+{
+}

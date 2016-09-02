@@ -16,7 +16,7 @@ class json_number_test;
 /**
  * @brief The number class
  */
-class Number : public value
+class Number : public Value
 {
 #ifdef UNIT_TEST
 friend class json_number_test;
@@ -25,7 +25,7 @@ friend class json_number_test;
 public:
 
   explicit Number (const double value = 0)
-    : value::value (0),
+    : Value::Value (0),
       _double_value (value),
       _double_valuep (&_double_value),
       _digitp {{ 0, 0 },{ 0, 0 }}
@@ -33,15 +33,15 @@ public:
   }
 
   Number (const char *json)
-    : value::value (json),
+    : Value::Value (json),
       _double_value (0),
       _double_valuep (0),
       _digitp {{ 0, 0 },{ 0, 0 }}
   {
   }
 
-  Number (const char *endp, value *parent = 0, size_t charc = 0)
-    : value::value (endp, parent, charc),
+  Number (const char *endp, Value *parent = 0, size_t charc = 0)
+    : Value::Value (endp, parent, charc),
       _double_value (0),
       _double_valuep (0),
       _digitp {{ 0, 0 },{ 0, 0 }}
@@ -62,13 +62,13 @@ public:
    * @param key
    * @return
    */
-  virtual inline const value & at (const char *key) const { return *this; }
+  virtual inline const Value & at (const char *key) const { return *this; }
 
   /**
    * @brief type
    * @return
    */
-  virtual inline otype type () const { return value::otype::number; }
+  virtual inline object_type type () const { return Value::object_type::number; }
 
   /**
    * @brief size
@@ -76,11 +76,16 @@ public:
    */
   virtual inline size_t size () const { return _double_valuep == 0 ? 0 : 1; }
 
+  // Value interface
+protected:
+  virtual const Value &_at(const char *key) const;
+public:
+
   /**
    * @brief value
    * @return
    */
-  inline double value () const { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
+  inline double Value () const { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
 
 protected:
 
@@ -95,7 +100,7 @@ protected:
   mutable double *_double_valuep;
 
   /**
-   * @brief _digitp [][3] unused
+   * @brief _digitp
    */
   mutable const char *_digitp[2][2];
 
@@ -137,6 +142,8 @@ protected:
    * @return
    */
   long long _atoll (const char * const digitp[2]) const;
+
+
 };
 
 #endif // NUMBER_H

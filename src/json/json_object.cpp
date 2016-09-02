@@ -1,4 +1,3 @@
-// #include "basic_json.h"
 #include "json_object.h"
 #include "json_string.h"
 #include "json_undefined.h"
@@ -7,14 +6,12 @@
 #include "json_boolean.h"
 
 Object::Object (const char *json)
-  : json::json (json),
-    _pairc (0)
+  : JSON::JSON (json)
 {
 }
 
-Object::Object (const char *endp, value *parent, size_t charc)
-  : json::json (endp , parent, charc),
-    _pairc (0)
+Object::Object (const char *endp, Value *parent, size_t charc)
+  : JSON::JSON (endp , parent, charc)
 {
 }
 
@@ -22,7 +19,7 @@ const char *
 Object::parse (const char *json)
 {
   if (json == 0)
-    throw json::error ("error: null string given");
+    throw JSON::error ("error: null string given");
 
   if (_parent == 0)
     {
@@ -31,7 +28,7 @@ Object::parse (const char *json)
       if (_charc == 0)  /// 1. constructor called with null or zero length string
         _endp = _readp + strlen (json);
 
-      if (*(_look_ahead ()) != sc_::begin_object)
+      if (*(_look_ahead ()) != _sc::begin_object)
         throw "syntax error: expecting '{'";
     }
   else
@@ -41,13 +38,14 @@ Object::parse (const char *json)
     {
       (void) _look_ahead ();
 
-      if (*_readp == sc_::value_separator) {   // ','
+      if (*_readp == _sc::value_separator)   // ','
+        {
           _readp++;
 
           if (! _pair ())
             throw "syntax error: unexpected ','";
         }
-      else if (*_readp == sc_::end_object)         // '}'
+      else if (*_readp == _sc::end_object)         // '}'
         return _readp + 1;
 
       else
@@ -68,101 +66,45 @@ Object::_pair ()
   (void) _look_ahead ();
 
   /// Expect "key"
-  if ((charc = _string (endc)) == 0) {  /// No quote opening "
+  if ((charc = _string (endc)) == 0)  /// No quote opening "
+    {
       if (*_readp == 0)
-        throw json::syntax_error ("syntax error: expecting closing '}'");
+        throw JSON::syntax_error ("syntax error: expecting closing '}'");
 
-      if (*_readp == sc_::end_object || *(_look_ahead ()) ==  sc_::end_object)  /// Empty object
-        {
-          // _readp++;
-          return false;
-        }
+      if (*_readp == _sc::end_object || *(_look_ahead ()) ==  _sc::end_object)  /// Empty object
+        return false;
     }
 
   if (charc < 0)   /// No closing "
-    throw json::syntax_error ("syntax error: expecting closing '\"'");
+    throw JSON::syntax_error ("syntax error: expecting closing '\"'");
 
   const char *keyp = _readp + 1;
   _readp += charc;
 
-
-  if (*(_look_ahead ()) != sc_::name_separator)   /// Expect ':'
-    throw json::syntax_error ("pair: syntax error: expecting ':'");   /// TODO: throw syntax error: unexpected character '%c'
+  if (*(_look_ahead ()) != _sc::name_separator)   /// Expect ':'
+    throw JSON::syntax_error ("pair: syntax error: expecting ':'");   /// TODO: throw syntax error: unexpected character '%c'
 
   _readp++;
 
-  value * v = _make_value ();
+  Value * v = _make_value ();
 
-  if (v->type () == value::undefined)
+  if (v->type () == Value::undefined)
     throw "syntax error: expecting value after ':'";
 
-  _member_list.emplace (std::string (keyp, charc - 2), v /* _make_value () */);
-  // _member_list.emplace (std::string (keyp, charc - 2), json::__make_value (&_readp, _endp));
+  _member_list.emplace (std::string (keyp, charc - 2), v);
 
   return true;
 }
 
-const value &
+const Value &
 Object::at (const char *key) const
 {
-  if (_member_list.empty ()) {
-      return *(new Undefined); /// FIXME: leak
+  try
+    {
+      return *(_member_list.at (key));
     }
-
-  try {
-    return *(_member_list.at (key));
-
-  } catch (std::out_of_range &e) {
-    return *(new Undefined);  /// FIXME: leak
-  }
+  catch (std::out_of_range &e)
+    {
+      throw JSON::out_of_range (e.what ());
+    }
 }
-
-/* value *
-Object::_value ()
-{
-  value *value_  = 0;
-
-  value::_literal ltr = value::_literal::no_value;
-
-  long int charc = 0;
-
-  char endc = 0;
-  char readc = *(_look_ahead ());
-
-  if (readc == sc_::double_quote) {
-    if ((charc = _string (endc)) < 0)
-        throw json::syntax_error ("syntax error: expecting closing '\"'");
-
-      value_ = new String (_endp, this, charc);
-      _readp = value_->parse (_readp);
-
-    } else if (readc == sc_::begin_object) {
-
-      value_ = new Object (_endp, this, 0);
-      _readp = value_->parse (_readp);
-
-
-    } else if (readc == sc_::begin_array) {
-      value_ = new Undefined;
-      _readp = value_->parse (_readp);
-
-    } else if (isdigit (readc) || readc == '-') { // Number
-      ;
-
-    } else if ((ltr = _is_literal ()) != value::_literal::no_value) {  // Literal
-
-      if (ltr == value::_literal::null_value)
-        value_ = new Null (_endp, this);
-
-      _readp = value_->parse (_readp);
-
-    } else {
-      throw json::syntax_error ("syntax error: expecting value after ':'");
-    }
-
-  return value_;
-} */
-
-
-// value::otype json::object::type () const { }
-// size_t json::object::size () const { }

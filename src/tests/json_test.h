@@ -9,23 +9,48 @@ class json_test : public json_value_test_interface
 {
 public:
 
-  virtual void test_smoke () {}
+  virtual void
+  test_smoke ()
+  {
+    const char * input = "{}";
 
-  virtual void test_parse_1 ()
+    JSON j[] = {
+      JSON (),
+      JSON (input + strlen (input), 0, 0)
+    };
+
+    (void) j[0].parse (input);
+    (void) j[1].parse (input);
+  }
+
+  virtual void
+  test_parse_1 ()
   {
     struct assert {
         const char *starp;
-       // size_t move;
-        char endc;
-        value::otype type;
+        Value::object_type type;
         int assert_status;
     };
 
     std::vector<struct assert > test = {
-        { "{\"k\":\"v\"} ", '}',   value::otype::object, PASS },   /// FAIL
-        { " { \"k\" : \"v\" } ", '}',  value::otype::object, PASS },
-        { "[\"v\"] ", ']',  value::otype::array, PASS },  /// FAIL
-        { " [ \"v\", [\"vv\"] ] ", ']',  value::otype::array, PASS }
+        { " {} ", Value::object_type::object, PASS },
+        { " [] ", Value::object_type::array, PASS },
+        { " \"x\" ", Value::object_type::string, PASS },
+        { " 100 ", Value::object_type::number, PASS },
+        { " null ", Value::object_type::null, PASS },
+        { " true ", Value::object_type::boolean, PASS },
+        { " false ", Value::object_type::boolean, PASS },
+
+        { "{\"k\":\"v\"} ", Value::object_type::object, PASS },
+        { " { \"k\" : \"v\" } ", Value::object_type::object, PASS },
+        { "[\"v\"] ", Value::object_type::array, PASS },
+        { " [ \"v\", [\"vv\"] ] ", Value::object_type::array, PASS },
+
+        /// errors
+        { " x ", Value::object_type::undefined, FAIL },
+        { " {} , ", Value::object_type::undefined, FAIL },
+        { ", {} ", Value::object_type::undefined, FAIL },
+        { " truee ", Value::object_type::undefined, FAIL },
     };
 
     TEST_IT_START
@@ -33,12 +58,12 @@ public:
       const char *startp = (*it).starp;
 
       size_t charc = strlen (startp);
-      json *j = new json (startp + charc, 0);
+      JSON *j = new JSON (startp + charc, 0);
 
       const char * readp = j->parse (startp);
 
-      ASSERT_EQUAL_IDX ("json.readp", (*it).starp + (charc - 1), readp);
-      ASSERT_EQUAL_IDX ("*(json.readp)", (*it).endc, *(readp - 1));
+      ASSERT_EQUAL_IDX ("json.readp", (*it).starp + (charc), readp);
+      ASSERT_EQUAL_IDX ("*(json.readp)", (char) 0, *readp);
       ASSERT_EQUAL_IDX ("json.type ()", (*it).type, j->type ());
 
       delete j;
@@ -48,25 +73,25 @@ public:
 
   void test_make_value ()
   {
-    json j;
+    JSON j;
     struct assert {
         const char *starp;
-        value::otype type;
+        Value::object_type type;
         size_t move;
         int assert_status;
     };
 
     std::vector<struct assert > test = {
-        { "{} ", value::otype::object, 2, PASS },
-        { "[] ", value::otype::array, 2, PASS },
-        { "\"x\" ", value::otype::string, 3, PASS },
-        { "10 ", value::otype::number, 2, PASS },
-        { "-10 ", value::otype::number, 3, PASS },
-        { "true ", value::otype::boolean, 4, PASS },
-        { "false ", value::otype::boolean, 5, PASS },
-        { "null ", value::otype::null, 4, PASS },
-        { "x ", value::otype::undefined, 1, PASS },
-        { "", value::otype::undefined, 0, PASS },
+        { "{} ", Value::object_type::object, 2, PASS },
+        { "[] ", Value::object_type::array, 2, PASS },
+        { "\"x\" ", Value::object_type::string, 3, PASS },
+        { "10 ", Value::object_type::number, 2, PASS },
+        { "-10 ", Value::object_type::number, 3, PASS },
+        { "true ", Value::object_type::boolean, 4, PASS },
+        { "false ", Value::object_type::boolean, 5, PASS },
+        { "null ", Value::object_type::null, 4, PASS },
+        { "x ", Value::object_type::undefined, 0, PASS },
+        { "", Value::object_type::undefined, 0, PASS },
     };
 
     TEST_IT_START
@@ -76,9 +101,10 @@ public:
         j._endp = startp + strlen (startp);
         j._readp = startp;
 
-        value *v = j._make_value ();
+        Value *v = j._make_value ();
 
-        ASSERT_EQUAL_IDX ("value type", (*it).type , v->type());
+        ASSERT_EQUAL_IDX ("json._readp", startp + (*it).move , j._readp);
+        ASSERT_EQUAL_IDX ("value.type ()", (*it).type , v->type ());
 
     TEST_IT_END;
   }
@@ -93,7 +119,7 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json test");
 
-//    s->addTest (new CppUnit::TestCaller<json_test> ("test_smoke", &json_test::test_smoke));
+    s->addTest (new CppUnit::TestCaller<json_test> ("test_smoke", &json_test::test_smoke));
     s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_1", &json_test::test_parse_1));
 
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_lookahead", &json_test::test_lookahead));   // value_test has the same

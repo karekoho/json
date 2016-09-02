@@ -1,12 +1,12 @@
 #include "json_array.h"
 
 Array::Array (const char *json)
-  : json::json (json)
+  : JSON::JSON (json)
 {
 }
 
-Array::Array (const char *endp, value *parent, size_t charc)
-  : json::json (endp, parent, charc)
+Array::Array (const char *endp, Value *parent, size_t charc)
+  : JSON::JSON (endp, parent, charc)
 {
 }
 
@@ -14,7 +14,7 @@ const char *
 Array::parse (const char *json)
 {
   if (json == 0)
-    throw json::error ("error: null string given");
+    throw JSON::error ("error: null string given");
 
   if (_parent == 0)
     {
@@ -23,33 +23,33 @@ Array::parse (const char *json)
       if (_charc == 0) /// 1. constructor called with null or zero length string
         _endp = _readp + strlen (json);
 
-      if (*(_look_ahead ()) != sc_::begin_array)
+      if (*(_look_ahead ()) != _sc::begin_array)
         throw "syntax error: expecting '['";
     }
   else
     _readp = json + 1;
 
-  value *v = 0;
+  Value *v = 0;
 
   while (_readp < _endp)
     {
       (void) _look_ahead ();
 
-      if (*_readp == sc_::value_separator) // ','
+      if (*_readp == _sc::value_separator) // ','
         {
           _readp++;
 
-          if ((v = _make_value ())->type () == value::undefined)
+          if ((v = _make_value ())->type () == Value::undefined)
             throw "syntax error: unexpected ','";
 
           _element_list.push_back (v);
         }
-      else if (*_readp == sc_::end_array)         // ']'
+      else if (*_readp == _sc::end_array)         // ']'
         return _readp + 1;
 
-      else if (_make_value ()->type () == value::undefined) // No valid value found
+      else if (_make_value ()->type () == Value::undefined) // No valid value found
         {
-          if (*_readp != value::ws_::space /** TODO: check other ws_ characters */)
+          if (*_readp != Value::_ws::space /** TODO: check other ws_ characters */)
               throw "array::parse: unexpected character";
           // empty array
         }
@@ -60,7 +60,7 @@ Array::parse (const char *json)
   return _readp;
 }
 
-const value &
+const Value &
 Array::at (const char *key) const
 {
   // size_t index = atoll (key);
@@ -68,3 +68,8 @@ Array::at (const char *key) const
 }
 
 
+
+
+const Value &Array::_at(const char *key) const
+{
+}
