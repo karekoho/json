@@ -10,18 +10,19 @@ class json_number_test : public json_value_test_interface {
 public:
 
   virtual void
-  test_smoke() {}
+  test_ctor_dtor() {}
 
   virtual void
   test_parse_1 ()
   {
     Number n;
 
-    struct assert {
-        const char *starp;
-        size_t move;
-        double dval;
-        int assert_status;
+    struct assert
+    {
+      const char *starp;
+      size_t move;
+      double dval;
+      int assert_status;
     };
 
     std::vector<struct assert > test = {
@@ -45,15 +46,13 @@ public:
     };
 
     TEST_IT_START
+      const char *startp = (*it).starp;
+      const char *readp = n.parse (startp);
 
-        const char *startp = (*it).starp;
+      n._double_valuep = 0;
 
-        const char *readp = n.parse (startp);
-
-        n._double_valuep = 0;
-
-        ASSERT_EQUAL_IDX ("n._readp", startp + (*it).move, readp);
-        ASSERT_EQUAL_IDX ("n.value ()", (*it).dval, n.Value ());
+      ASSERT_EQUAL_IDX ("n._readp", startp + (*it).move, readp);
+      ASSERT_EQUAL_IDX ("n.value ()", (*it).dval, n.value ());
 
     TEST_IT_END;
   }
@@ -71,11 +70,12 @@ public:
   {
     Number n;
 
-    struct assert {
-        const char *starp;
-        size_t move;
-        int peek;
-        int assert_status;
+    struct assert
+    {
+      const char *starp;
+      size_t move;
+      int peek;
+      int assert_status;
     };
 
     std::vector<struct assert > test = {
@@ -108,11 +108,12 @@ public:
   {
     Number n;
 
-    struct assert {
-        const char *starp;
-        size_t move;
-        int peek;
-        int assert_status;
+    struct assert
+    {
+      const char *starp;
+      size_t move;
+      int peek;
+      int assert_status;
     };
 
     std::vector<struct assert > test = {

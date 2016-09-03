@@ -16,7 +16,7 @@ class String : public Value {
   virtual const char *
   parse (const char *json)
   {
-//      if (_parent == 0) { TODO: validate }
+    /// TODO: if (_parent == 0) { // validate }
     _readp = json;
 
     return json + _charc;
@@ -30,20 +30,22 @@ class String : public Value {
   virtual inline size_t size () const { return _string_value.length (); }
 
 protected:
+
   virtual const Value &_at(const char *key) const;
+
 public:
 
   const char *
-  Value () const {
-
-    if (_string_value.empty () && _readp && _charc > 0) {
-        _string_value.assign (_readp + 1, _charc - 2);
-      }
+  value () const
+  {
+    if (_string_value.empty () && _readp && _charc > 0)
+      _string_value.assign (_readp + 1, _charc - 2);
 
     return _string_value.c_str ();
   }
 
 protected:
+
   /**
    * @brief _value
    */

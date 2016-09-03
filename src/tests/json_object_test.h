@@ -11,7 +11,7 @@ class json_object_test : public json_value_test_interface
 {
 public:
 
-  virtual void test_smoke ()
+  virtual void test_ctor_dtor ()
   {
     const char * input = "{}";
 
@@ -71,27 +71,26 @@ public:
     };
 
     TEST_IT_START;
-
       for (int pidx = 0; pidx < 2; pidx++)
         {
-      const char *startp = (*it).startp;
+          const char *startp = (*it).startp;
 
-      size_t charc = strlen (startp);
+          size_t charc = strlen (startp);
 
-      Object *o = new Object (startp + charc, /* (*it).parent */ p[pidx]);
+          Object *o = new Object (startp + charc, /* (*it).parent */ p[pidx]);
 
-      const char *readp = o->parse (startp);
+          const char *readp = o->parse (startp);
 
-      ASSERT_EQUAL_IDX ("value.readp", (startp + charc) - (*it).moveback, readp);
-      ASSERT_EQUAL_IDX ("*(value.readp -1)", '}', *(readp - 1));
-      ASSERT_EQUAL_IDX ("value.size", (*it).size, o->size ());
+          ASSERT_EQUAL_IDX ("value.readp", (startp + charc) - (*it).moveback, readp);
+          ASSERT_EQUAL_IDX ("*(value.readp -1)", '}', *(readp - 1));
+          ASSERT_EQUAL_IDX ("value.size", (*it).size, o->size ());
 
-      if (o->size () > 0)
-        {
-          ASSERT_EQUAL_IDX ("value.type", (*it).type, o->at ("k").type ());
-        }
+          if (o->size () > 0)
+            {
+              ASSERT_EQUAL_IDX ("value.type", (*it).type, o->at ("k").type ());
+            }
 
-      delete o;
+          delete o;
         }
     TEST_IT_END;
 
@@ -204,7 +203,7 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json object test");
 
-     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_smoke", &json_object_test::test_smoke));
+     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_smoke", &json_object_test::test_ctor_dtor));
   //    return s;
       s->addTest (new CppUnit::TestCaller<json_object_test> ("test_parse_1", &json_object_test::test_parse_1));
  //     return s;

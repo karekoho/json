@@ -6,7 +6,8 @@
 /**
  * @brief The Null class
  */
-class Null : public Value {
+class Null : public Value
+{
   public:
 
   /**
@@ -33,6 +34,7 @@ protected:
   virtual const Value &_at (const char *) const { return *this; }
 
 public:
+
   /**
    * @brief parse
    * @param json
@@ -45,7 +47,7 @@ public:
    * @param key
    * @return
    */
-  virtual inline const Value & at (const char *key) const { return *this; }
+  virtual inline const Value & at (const char *) const { return *this; }
 
   /**
    * @brief type
@@ -63,9 +65,6 @@ public:
    * @brief Value
    * @return
    */
-  inline const char * Value () const { return ""; }
-
-  // Value interface
-
+  inline const char * value () const { return ""; }
 };
 #endif // NULL_H

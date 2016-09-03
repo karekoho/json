@@ -10,7 +10,7 @@ class json_test : public json_value_test_interface
 public:
 
   virtual void
-  test_smoke ()
+  test_ctor_dtor ()
   {
     const char * input = "{}";
 
@@ -119,7 +119,7 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json test");
 
-    s->addTest (new CppUnit::TestCaller<json_test> ("test_smoke", &json_test::test_smoke));
+    s->addTest (new CppUnit::TestCaller<json_test> ("test_smoke", &json_test::test_ctor_dtor));
     s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_1", &json_test::test_parse_1));
 
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_lookahead", &json_test::test_lookahead));   // value_test has the same

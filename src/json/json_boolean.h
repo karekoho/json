@@ -5,7 +5,8 @@
 /**
  * @brief The boolean class
  */
-class Boolean : public Value {
+class Boolean : public Value
+{
   public:
 
   /**
@@ -29,12 +30,16 @@ class Boolean : public Value {
   Boolean (const char *endp, Value *parent, size_t charc = 0) : Value::Value (endp, parent, charc), _boolean_value (false) {}
 
 protected:
-  virtual const Value &_at(const char *key) const
-  {
-    return *this;
-  }
+
+  /**
+   * @brief _at
+   * @param key
+   * @return
+   */
+  virtual inline const Value &_at (const char *) const { return *this; }
 
 public:
+
   /**
    * @brief parse
    * @param json
@@ -47,7 +52,7 @@ public:
    * @param key
    * @return
    */
-  virtual inline const Value & at (const char *key) const { return *this; }
+  virtual inline const Value & at (const char *) const { return *this; }
 
   /**
    * @brief type
@@ -73,9 +78,6 @@ protected:
    * @brief _boolean_value
    */
   bool _boolean_value;
-
-  // Value interface
-
 };
 
 #endif // BOOLEAN_H

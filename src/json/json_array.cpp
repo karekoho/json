@@ -25,9 +25,14 @@ Array::parse (const char *json)
 
       if (*(_look_ahead ()) != _sc::begin_array)
         throw "syntax error: expecting '['";
+
+      _readp++;
     }
   else
     _readp = json + 1;
+
+  if (*_readp == 0)
+    throw _readp;
 
   Value *v = 0;
 
@@ -35,7 +40,7 @@ Array::parse (const char *json)
     {
       (void) _look_ahead ();
 
-      if (*_readp == _sc::value_separator) // ','
+      if (*_readp == _sc::value_separator) /// ','
         {
           _readp++;
 
@@ -44,16 +49,17 @@ Array::parse (const char *json)
 
           _element_list.push_back (v);
         }
-      else if (*_readp == _sc::end_array)         // ']'
+      else if (*_readp == _sc::end_array)         /// ']'
         return _readp + 1;
 
       else if (_make_value ()->type () == Value::undefined) // No valid value found
         {
           if (*_readp != Value::_ws::space /** TODO: check other ws_ characters */)
               throw "array::parse: unexpected character";
-          // empty array
+
+          /// empty array
         }
-      else  // Value found
+      else  /// Value found
         _element_list.push_back (_make_value ());
     }
 
@@ -66,9 +72,6 @@ Array::at (const char *key) const
   // size_t index = atoll (key);
   return *(_element_list.at (atoll (key)));
 }
-
-
-
 
 const Value &Array::_at(const char *key) const
 {

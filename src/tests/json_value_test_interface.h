@@ -13,7 +13,7 @@ public:
     void test_lexeme ();
     void test_is_literal ();
 
-    virtual void test_smoke () = 0;
+    virtual void test_ctor_dtor () = 0;
     virtual void test_parse_1 () = 0;
     virtual void test_size_1 () = 0;
     virtual void test_at_1 () = 0;

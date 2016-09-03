@@ -7,51 +7,57 @@
 class json_string_test : public json_value_test_interface
 {
 public:
-    virtual void test_smoke (){}
-
-    virtual void test_parse_1 ()
+    virtual void
+    test_ctor_dtor ()
     {
-      size_t charc = 0;
+    }
 
-      String *s = 0;
+    virtual void
+    test_parse_1 ()
+    {
+      JSON *p[] = { 0, new JSON (0) };
 
-      const char *startp = 0;
-      const char *readp = 0;
-
-      struct assert {
-          const char *startp;
-          size_t charc;
-          int assert_status;
+      struct assert
+      {
+        const char *startp;
+        size_t charc;
+        char endc;
+        int assert_status;
       };
 
       std::vector<struct assert > test = {
-          { "\"\"", 0, PASS},
-          { "\"xxx\"", 3, PASS },
-          { "\" xxx \"", 5, PASS },
+          { "\"\"", 0, (char) 0, PASS },
+          { "\"xxx\"", 3, (char) 0, PASS },
+          { "\" xxx \"", 5, (char) 0, PASS },
+          { "\" xxx \" ", 5, ' ', PASS },
       };
 
       TEST_IT_START
+          for (int pidx = 0; pidx < 2; pidx++)
+            {
+              const char *startp = (*it).startp;
+              size_t move = (*it).charc + 2;
 
-        startp = (*it).startp;
-        charc = strlen (startp);
+              String *s = new String (startp + move, p[pidx], move);
 
-        s = new String (startp + charc, 0, charc);
+              std::string ss = s->value ();
 
-        std::string ss = s->Value ();
+              CPPUNIT_ASSERT_MESSAGE ("string.empty ()", ss.empty () );
 
-        CPPUNIT_ASSERT_MESSAGE ("empty", ss.empty () );
+              const char *readp = s->parse (startp);
+              ss = s->value ();
 
-        readp = s->parse (startp);
-        ss = s->Value ();
+              // std::cout << readp << "" << ss.length () << " " << ss << std::endl;
 
-        // std::cout << readp << "" << ss.length () << " " << ss << std::endl;
+              ASSERT_EQUAL_IDX ("string.readp", readp, startp + move);
+              ASSERT_EQUAL_IDX ("*(string.readp)", (char)* readp, (*it).endc);
+              ASSERT_EQUAL_IDX ("string.length", (*it).charc, ss.length () );
 
-        ASSERT_EQUAL_IDX ("string.readp", *readp, (char) 0);
-        ASSERT_EQUAL_IDX ("string.length", (*it).charc, ss.length () );
-
-        delete s;
-
+              delete s;
+            }
        TEST_IT_END;
+
+       delete p[1];
     }
 
     virtual void test_size_1() {}
@@ -64,7 +70,8 @@ public:
     {
       CppUnit::TestSuite *s = new CppUnit::TestSuite ("json string test");
 
-       s->addTest (new CppUnit::TestCaller<json_string_test> ("test_parse_1", &json_string_test::test_parse_1));
+      // s->addTest (new CppUnit::TestCaller<json_string_test> ("test_smoke", &json_string_test::test_smoke));
+      s->addTest (new CppUnit::TestCaller<json_string_test> ("test_parse_1", &json_string_test::test_parse_1));
 
       return s;
     }

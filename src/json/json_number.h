@@ -78,14 +78,14 @@ public:
 
   // Value interface
 protected:
-  virtual const Value &_at(const char *key) const;
+  virtual inline  const Value &_at (const char *key) const;
 public:
 
   /**
    * @brief value
    * @return
    */
-  inline double Value () const { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
+  inline double value () const { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
 
 protected:
 

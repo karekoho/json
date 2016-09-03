@@ -9,54 +9,76 @@ class json_array_test : public json_value_test_interface {
   // json_value_test_interface interface
 public:
 
-  virtual void test_smoke () {}
-
-  virtual void test_parse_1 ()
+  virtual void
+  test_ctor_dtor ()
   {
-    Array *p = new Array (0);
+    const char * input = "{}";
 
+    JSON *p[] = { 0, new JSON (0) };
+
+    for (size_t pidx = 0; pidx < 2; pidx++)
+      {
+        Array *a[] = {
+          new Array (),
+          new Array (input),
+          new Array (input + 2, p[pidx]),
+        };
+
+        delete a[0];
+        delete a[1];
+        delete a[2];
+      }
+
+    delete p[1];
+  }
+
+  virtual void
+  test_parse_1 ()
+  {
     struct assert {
       const char *startp;
-      // bool status;
       size_t size;
-      Value::object_type type;
-      Value *parent;
+      Value::object_type type; 
       int moveback;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { "[]", 0, Value::object_type::array, p, 0, PASS },
-      { "[ ] ", 0, Value::object_type::array, p, 1, PASS },
-      { "[\"x\"]", 1, Value::object_type::array, p, 0, PASS },
-      { "[\"x\",\"x\"] ", 2, Value::object_type::array, p, 1, PASS },
-      { "[\"x\",\"x\",[\"x\"]] ", 3,  Value::object_type::array, p, 1, PASS },
+      { "[]", 0, Value::object_type::array, 0, PASS },
+      { "[ ] ", 0, Value::object_type::array, 1, PASS },
+      { "[\"x\"]", 1, Value::object_type::array, 0, PASS },
+      { "[\"x\",\"x\"] ", 2, Value::object_type::array, 1, PASS },
+      { "[\"x\",\"x\",[\"x\"]] ", 3,  Value::object_type::array, 1, PASS },
 
       // errors
-      { "[ ", 0, Value::object_type::undefined, p, 0, FAIL },
-      { "[, ", 0, Value::object_type::undefined, p, 0, FAIL },
-      { "[ x ", 0, Value::object_type::undefined, p, 0, FAIL },
-
-      { "", 0, Value::object_type::undefined, 0, 0, FAIL },
+      { "[", 0, Value::object_type::undefined, 0, FAIL },
+      { "[ ", 0, Value::object_type::undefined, 0, FAIL },
+      { "]", 0, Value::object_type::undefined, 0, FAIL },
+      { "[, ", 0, Value::object_type::undefined, 0, FAIL },
+      { "[ x ", 0, Value::object_type::undefined, 0, FAIL },
+      { "", 0, Value::object_type::undefined, 0, FAIL },
+      { " ", 0, Value::object_type::undefined, 0, FAIL },
+      { "x", 0, Value::object_type::undefined, 0, FAIL },
     };
 
+    JSON *p[] = { 0, new JSON (0) };
+
     TEST_IT_START
+      for (size_t pidx = 0; pidx < 2; pidx++)
+        {
+          const char *startp = (*it).startp;
+          size_t charc =strlen (startp);
+          Array *a = new Array (startp + charc, p[pidx]);
 
-        const char *startp = (*it).startp;
-        size_t charc =strlen (startp);
-        Array *a = new Array (startp + charc , (*it).parent);
+          const char *readp = a->parse (startp);
 
-        const char *readp = a->parse (startp);
+          ASSERT_EQUAL_IDX ("array.readp", (startp + charc) - (*it).moveback, readp);
+          ASSERT_EQUAL_IDX ("*(array.readp - 1)", ']', *(readp - 1));
+          ASSERT_EQUAL_IDX ("array.size", (*it).size, a->size ());
 
-        ASSERT_EQUAL_IDX ("array.readp", (startp + charc) - (*it).moveback, readp);
-        ASSERT_EQUAL_IDX ("*(array.readp - 1)", ']', *(readp - 1));
-        ASSERT_EQUAL_IDX ("array.size", (*it).size, a->size ());
-
-        delete a;
-
+          delete a;
+        }
     TEST_IT_END;
-
-    delete p;
   }
 
   virtual void test_size_1 () {}
@@ -68,7 +90,7 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json array test");
 
-//    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_smoke", &json_array_test::test_smoke));
+      s->addTest (new CppUnit::TestCaller<json_array_test> ("test_smoke", &json_array_test::test_ctor_dtor));
       s->addTest (new CppUnit::TestCaller<json_array_test> ("test_parse_1", &json_array_test::test_parse_1));
 //    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_size_1", &json_array_test::test_size_1));
 //    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_get_1", &json_array_test::test_get_1));
