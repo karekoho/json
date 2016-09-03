@@ -7,8 +7,6 @@
 #include "json_undefined.h"
 #include "json_boolean.h"
 
-// const Undefined * const JSON::_undef_value = new Undefined;
-
 JSON::JSON (const char *json)
   : Value (json),
     __value (0)
@@ -36,9 +34,6 @@ JSON::JSON::parse (const char *readp)
 
   _readp = _startp = readp;
 
-  // if (_charc == 0)  /// 1. constructor called with null or zero length string. 2. does not calculate _endp
-  //  _endp = _readp + strlen (readp);
-
   if (*_readp == 0)
     throw _readp;
 
@@ -57,10 +52,6 @@ JSON::JSON::parse (const char *readp)
 const Value &
 JSON::at (const char *key) const
 {
-  // return type () == Value::undefined
-  //? *(new Undefined)  // FIXME: leak
-  //    : __value->at (key);
-
   return _at (key);
 }
 
@@ -78,22 +69,22 @@ JSON::_make_value ()
       if ((charc = _string (endc)) < 0)
         throw JSON::syntax_error ("syntax error: expecting closing '\"'");
 
-      value_ = new String (/* _endp, */ this, charc);
+      value_ = new String (this, charc);
     }
   else if (readc == _sc::begin_object)      /// Object
-    value_ = new Object (/* _endp, */ this, 0);
+    value_ = new Object (this, 0);
 
   else if (readc == _sc::begin_array)       /// Array
-    value_ = new Array (/*_endp, */ this, 0);
+    value_ = new Array (this, 0);
 
   else if (isdigit (readc) || readc == '-') /// Number
-    value_ = new Number (/* _endp, */ this, 0);
+    value_ = new Number (this, 0);
 
   else                                      /// Literal or undefined
     switch (_is_literal ())
       {
       case Value::_literal::null_value:
-        value_ = new Null (/* _endp, */ this);
+        value_ = new Null (this);
         break;
       case Value::_literal::true_value :
         value_ = new Boolean (true);

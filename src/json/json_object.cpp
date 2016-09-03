@@ -25,9 +25,6 @@ Object::parse (const char *json)
     {
       _readp = json;
 
-      // if (_charc == 0)  /// 1. constructor called with null or zero length string
-      //  _endp = _readp + strlen (json);
-
       if (*(_look_ahead ()) != _sc::begin_object)
         throw "syntax error: expecting '{'";
 

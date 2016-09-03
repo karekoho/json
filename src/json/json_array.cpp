@@ -20,9 +20,6 @@ Array::parse (const char *json)
     {
       _readp = json;
 
-      // if (_charc == 0) /// 1. constructor called with null or zero length string
-      //  _endp = _readp + strlen (json);
-
       if (*(_look_ahead ()) != _sc::begin_array)
         throw "syntax error: expecting '['";
 
@@ -69,8 +66,5 @@ Array::parse (const char *json)
 const Value &
 Array::at (const char *key) const
 {
-  // size_t index = atoll (key);
   return *(_element_list.at (atoll (key)));
 }
-
-// const Value &Array::_at(const char *key) const { }
