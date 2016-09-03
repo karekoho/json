@@ -30,9 +30,14 @@ Object::parse (const char *json)
 
       if (*(_look_ahead ()) != _sc::begin_object)
         throw "syntax error: expecting '{'";
+
+      _readp++;
     }
   else
      _readp = json + 1;
+
+  if (*_readp == 0)
+    throw _readp;
 
   while (_readp < _endp)
     {
@@ -66,7 +71,7 @@ Object::_pair ()
   (void) _look_ahead ();
 
   /// Expect "key"
-  if ((charc = _string (endc)) == 0)  /// No quote opening "
+  if ((charc = _string (endc)) == 0)  /// No opening \"
     {
       if (*_readp == 0)
         throw JSON::syntax_error ("syntax error: expecting closing '}'");

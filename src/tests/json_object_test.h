@@ -15,72 +15,70 @@ public:
   {
     const char * input = "{}";
 
-    Object p;
-    Object *po = 0;
+    JSON *p[] = { 0, new JSON (0) };
 
-    Object o[] = {
-      Object (),
-      Object (input + strlen (input), &p, 0)
-    };
-
-    try
+    for (size_t pidx = 0; pidx < 2; pidx++)
       {
-        (void) o[0].parse (input);   /// FIXME: FAIL
-        (void) o[1].parse (input);
+        Object *o[] = {
+          new Object (),
+          new Object (input),
+          new Object (input + 2, p[pidx]),
+        };
 
-        po = new Object (input + strlen (input), &p, 0);
-        po->parse (input);
-      }
-    catch (JSON::error &e)
-      {
-        std::cerr << e.what () << std::endl;
-        throw e;
+        delete o[0];
+        delete o[1];
+        delete o[2];
       }
 
-    delete po;
+    delete p[1];
   }
 
   virtual
   void test_parse_1 ()
   {
-    Object *p = new Object (0, 0);
-
     struct assert {
       const char *startp;
       size_t size;
       Value::object_type type;
-      Value *parent;
       size_t moveback;
       int assert_status;
     };
 
+    JSON *p[] = { 0, new JSON (0) };
+
     std::vector<struct assert > test = {
-      { "{\"k\":\"v\"} ", 1, Value::string, p, 1, PASS },
-      { "{ \"k\" : \"v\" } ", 1, Value::string, p, 1, PASS },
-      { "{ \"k\" : \"v\", \"q\" : \"p\" } ", 2, Value::string, p, 1, PASS },
-      { "{ \"k\": \"v\", \"q\" : \"p\",\"K\":\"v\" } ", 3, Value::string, p, 1, PASS },
-      { "{ \"k\": \"p\" ,\"q\" : \"p\", \"K\" :\"v\",\"Q\":\"p\" } ", 4, Value::string, p, 1, PASS },
-      { "{}", 0, Value::undefined, p, 0, PASS },
-      { "{ } ", 0, Value::undefined, p, 1, PASS },
-      { "{ \"k\" : { } }", 1, Value::object, p, 0, PASS },
-      { "{ \"k\" : {\"kk\" : \"v\"}}", 1, Value::object, p, 0, PASS },
-      { "{ \"k\" : {\"kk\" : {\"kkk\" : \"v\"}}", 1, Value::object, p, 0, PASS },
-      { "{ \"k\" : null } ", 1, Value::null, p, 1, PASS },
+      { "{}", 0, Value::undefined, 0, PASS },
+      { "{ } ", 0, Value::undefined, 1, PASS },
+      { "{\"k\":\"v\"} ", 1, Value::string, 1, PASS },
+      { "{ \"k\" : \"v\" } ", 1, Value::string, 1, PASS },
+      { "{ \"k\" : \"v\", \"q\" : \"p\" } ", 2, Value::string, 1, PASS },
+      { "{ \"k\": \"v\", \"q\" : \"p\",\"K\":\"v\" } ", 3, Value::string, 1, PASS },
+      { "{ \"k\": \"p\" ,\"q\" : \"p\", \"K\" :\"v\",\"Q\":\"p\" } ", 4, Value::string, 1, PASS },
+
+      { "{ \"k\" : { } }", 1, Value::object, 0, PASS },
+      { "{ \"k\" : {\"kk\" : \"v\"}}", 1, Value::object, 0, PASS },
+      { "{ \"k\" : {\"kk\" : {\"kkk\" : \"v\"}}", 1, Value::object, 0, PASS },
+      { "{ \"k\" : null } ", 1, Value::null, 1, PASS },
 
       // errors
-      { "{ , }", 0, Value::undefined, p, 0, FAIL },   // json::syntax_error
-      { "{ : }", 0, Value::undefined, p, 0, FAIL },   // json::syntax_error
-
-      { "", 0, Value::undefined, 0, 0, FAIL },   // json::syntax_error
-  };
+      { "", 0, Value::undefined, 0, FAIL },   // json::syntax_error
+      { " ", 0, Value::undefined, 0, FAIL },   // json::syntax_error
+      { "x", 0, Value::undefined, 0, FAIL },   // json::syntax_error
+      { "{", 0, Value::undefined, 0, FAIL },   // json::syntax_error
+      { "}", 0, Value::undefined, 0, FAIL },   // json::syntax_error
+      { "{ , }", 0, Value::undefined, 0, FAIL },   // json::syntax_error
+      { "{ : }", 0, Value::undefined, 0, FAIL },   // json::syntax_error
+    };
 
     TEST_IT_START;
 
+      for (int pidx = 0; pidx < 2; pidx++)
+        {
       const char *startp = (*it).startp;
 
       size_t charc = strlen (startp);
 
-      Object *o = new Object (startp + charc, (*it).parent);
+      Object *o = new Object (startp + charc, /* (*it).parent */ p[pidx]);
 
       const char *readp = o->parse (startp);
 
@@ -94,10 +92,10 @@ public:
         }
 
       delete o;
-
+        }
     TEST_IT_END;
 
-    delete p;
+    delete p[1];
   }
 
   virtual void test_size_1 () {}
@@ -206,9 +204,10 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json object test");
 
-      s->addTest (new CppUnit::TestCaller<json_object_test> ("test_smoke", &json_object_test::test_smoke));
-      return s;
+     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_smoke", &json_object_test::test_smoke));
+  //    return s;
       s->addTest (new CppUnit::TestCaller<json_object_test> ("test_parse_1", &json_object_test::test_parse_1));
+ //     return s;
 //    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_size_1", &json_object_test::test_size_1));
       s->addTest (new CppUnit::TestCaller<json_object_test> ("test_at_1", &json_object_test::test_at_1));
       s->addTest (new CppUnit::TestCaller<json_object_test> ("test_at_1", &json_object_test::test_at_2));
