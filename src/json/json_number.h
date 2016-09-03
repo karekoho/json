@@ -24,7 +24,7 @@ friend class json_number_test;
 
 public:
 
-  explicit Number (const double value = 0)
+  explicit Number (const double value)
     : Value::Value (0),
       _double_value (value),
       _double_valuep (&_double_value),
@@ -32,7 +32,7 @@ public:
   {
   }
 
-  Number (const char *json)
+  Number (const char *json = 0)
     : Value::Value (json),
       _double_value (0),
       _double_valuep (0),
@@ -40,8 +40,8 @@ public:
   {
   }
 
-  Number (const char *endp, Value *parent = 0, size_t charc = 0)
-    : Value::Value (endp, parent, charc),
+  Number (Value *parent, size_t charc = 0)
+    : Value::Value (parent, charc),
       _double_value (0),
       _double_valuep (0),
       _digitp {{ 0, 0 },{ 0, 0 }}
@@ -62,7 +62,7 @@ public:
    * @param key
    * @return
    */
-  virtual inline const Value & at (const char *key) const { return *this; }
+  virtual inline const Value & at (const char *) const { return *this; }
 
   /**
    * @brief type
@@ -76,16 +76,15 @@ public:
    */
   virtual inline size_t size () const { return _double_valuep == 0 ? 0 : 1; }
 
-  // Value interface
-protected:
-  virtual inline  const Value &_at (const char *key) const;
-public:
-
   /**
    * @brief value
    * @return
    */
   inline double value () const { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
+
+protected:
+
+  virtual inline  const Value &_at (const char *) const { return *this; }
 
 protected:
 

@@ -13,7 +13,7 @@ class Boolean : public Value
    * @brief Boolean
    * @param value
    */
-  explicit Boolean (const bool value) : Value::Value (0, 0, 0), _boolean_value (value) {}
+  explicit Boolean (const bool value) : Value::Value (0, 0), _boolean_value (value) {}
 
   /**
    * @brief Boolean
@@ -27,7 +27,7 @@ class Boolean : public Value
    * @param parent
    * @param charc
    */
-  Boolean (const char *endp, Value *parent, size_t charc = 0) : Value::Value (endp, parent, charc), _boolean_value (false) {}
+  Boolean (Value *parent, size_t charc = 0) : Value::Value (parent, charc), _boolean_value (false) {}
 
 protected:
 

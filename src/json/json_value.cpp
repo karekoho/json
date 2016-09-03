@@ -10,23 +10,18 @@ const struct Value::literal_value Value::__ltr_value[3] = {
 Value::Value (const char *json)
     : _startp (json),
       _readp (json),
-      _endp (0),
+      //_endp (0),
       _parent (0),
       _charc (json == 0 ? 0 : strlen (json))
 {
-//  if (_charc > 0)
-//    {
-//      _endp = _startp + _charc;
-//      (void) parse (json);
-//    }
 }
 
-Value::Value (const char *endp, Value *parent, size_t charc)
+Value::Value (Value *parent, size_t index)
     : _startp (0),
       _readp (0),
-      _endp (endp),
+      // _endp (0),
       _parent (parent),
-      _charc (charc)
+      _charc (index)
 {
 }
 
@@ -42,13 +37,13 @@ Value::_string (char & endc) const
 
     const char * readp = _readp + 1;
 
-    while (readp < _endp && *readp != _sc::double_quote) {
+    while (*readp != 0 && *readp != _sc::double_quote) {
         readp++;
     }
 
     endc = *readp;
 
-    return readp < _endp ? (readp - starp) + 1 : -1 * (readp - starp);
+    return *readp != 0 ? (readp - starp) + 1 : -1 * (readp - starp);
 }
 
 Value::_literal
@@ -58,7 +53,7 @@ Value::_is_literal (const int _try) const
 
   size_t idx = 0;
 
-  while (readp + idx < _endp
+  while (*(readp + idx) != 0
          && idx < __ltr_value[_try].len
          && *(readp + idx) == *(__ltr_value[_try].str_value + idx)) {
       idx++;

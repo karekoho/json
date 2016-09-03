@@ -5,8 +5,8 @@ Array::Array (const char *json)
 {
 }
 
-Array::Array (const char *endp, Value *parent, size_t charc)
-  : JSON::JSON (endp, parent, charc)
+Array::Array (Value *parent, size_t charc)
+  : JSON::JSON (parent, charc)
 {
 }
 
@@ -20,8 +20,8 @@ Array::parse (const char *json)
     {
       _readp = json;
 
-      if (_charc == 0) /// 1. constructor called with null or zero length string
-        _endp = _readp + strlen (json);
+      // if (_charc == 0) /// 1. constructor called with null or zero length string
+      //  _endp = _readp + strlen (json);
 
       if (*(_look_ahead ()) != _sc::begin_array)
         throw "syntax error: expecting '['";
@@ -36,7 +36,7 @@ Array::parse (const char *json)
 
   Value *v = 0;
 
-  while (_readp < _endp)
+  while (*_readp != 0)
     {
       (void) _look_ahead ();
 
@@ -73,6 +73,4 @@ Array::at (const char *key) const
   return *(_element_list.at (atoll (key)));
 }
 
-const Value &Array::_at(const char *key) const
-{
-}
+// const Value &Array::_at(const char *key) const { }

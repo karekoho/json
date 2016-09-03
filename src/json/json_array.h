@@ -21,7 +21,7 @@ class Array : public JSON {
    * @param parent
    * @param charc
    */
-  Array (const char *endp, Value *parent, size_t charc = 0);
+  Array (Value *parent, size_t charc = 0);
 
   /**
    * @brief ~Array
@@ -66,9 +66,13 @@ protected:
    */
   std::string _debug_value;
 
-  // Value interface
 protected:
-  virtual const Value &_at(const char *key) const;
+
+  /**
+   * @brief _at
+   * @return
+   */
+  virtual const Value &_at(const char *) const { return *this; }
 };
 
 #endif // ARRAY

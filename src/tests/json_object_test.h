@@ -15,14 +15,14 @@ public:
   {
     const char * input = "{}";
 
-    JSON *p[] = { 0, new JSON (0) };
+    JSON *p[] = { 0, new JSON (0, 0) };
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
         Object *o[] = {
           new Object (),
           new Object (input),
-          new Object (input + 2, p[pidx]),
+          new Object (p[pidx], 0),
         };
 
         delete o[0];
@@ -44,7 +44,7 @@ public:
       int assert_status;
     };
 
-    JSON *p[] = { 0, new JSON (0) };
+    JSON *p[] = { 0, new JSON (0,0) };
 
     std::vector<struct assert > test = {
       { "{}", 0, Value::undefined, 0, PASS },
@@ -77,7 +77,7 @@ public:
 
           size_t charc = strlen (startp);
 
-          Object *o = new Object (startp + charc, /* (*it).parent */ p[pidx]);
+          Object *o = new Object (/* (*it).parent */ p[pidx], 0);
 
           const char *readp = o->parse (startp);
 
@@ -183,7 +183,7 @@ public:
 
       const char *startp = (*it).startp;
 
-      Object *o = new Object (startp + strlen (startp), p);
+      Object *o = new Object (p,0);
 
       o->_readp = startp;
       bool status = o->_pair ();

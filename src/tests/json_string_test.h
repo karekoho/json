@@ -15,7 +15,7 @@ public:
     virtual void
     test_parse_1 ()
     {
-      JSON *p[] = { 0, new JSON (0) };
+      JSON *p[] = { 0, new JSON (0,0) };
 
       struct assert
       {
@@ -38,7 +38,7 @@ public:
               const char *startp = (*it).startp;
               size_t move = (*it).charc + 2;
 
-              String *s = new String (startp + move, p[pidx], move);
+              String *s = new String (p[pidx], move);
 
               std::string ss = s->value ();
 

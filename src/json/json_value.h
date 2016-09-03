@@ -12,6 +12,7 @@ class json_object_test;
 /**
  * @brief The json_value class
  */
+class JSON;
 class Value
 {
 #ifdef UNIT_TEST
@@ -47,7 +48,7 @@ friend class json_object_test;
    * @param parent
    * @paran charc
    */
-  explicit Value (const char *endp, Value *parent, size_t charc);
+  Value (Value *parent, size_t index);
 
   virtual ~Value () {}
 
@@ -140,11 +141,6 @@ protected:
   const char *_readp;
 
   /**
-   * @brief _endp
-   */
-  const char *_endp;
-
-  /**
    * @brief _parent
    */
   Value *_parent;
@@ -160,7 +156,7 @@ protected:
   inline const char *
   _look_ahead ()
   {
-    while (_readp < _endp && ( *_readp == _ws::tab
+    while (*_readp != 0 && ( *_readp == _ws::tab
             || *_readp == _ws::lf
             || *_readp == _ws::cr
             || *_readp == _ws::space))

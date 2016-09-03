@@ -10,8 +10,8 @@ Object::Object (const char *json)
 {
 }
 
-Object::Object (const char *endp, Value *parent, size_t charc)
-  : JSON::JSON (endp , parent, charc)
+Object::Object (Value *parent, size_t charc)
+  : JSON::JSON (parent, charc)
 {
 }
 
@@ -25,8 +25,8 @@ Object::parse (const char *json)
     {
       _readp = json;
 
-      if (_charc == 0)  /// 1. constructor called with null or zero length string
-        _endp = _readp + strlen (json);
+      // if (_charc == 0)  /// 1. constructor called with null or zero length string
+      //  _endp = _readp + strlen (json);
 
       if (*(_look_ahead ()) != _sc::begin_object)
         throw "syntax error: expecting '{'";
@@ -39,7 +39,7 @@ Object::parse (const char *json)
   if (*_readp == 0)
     throw _readp;
 
-  while (_readp < _endp)
+  while (*_readp != 0)
     {
       (void) _look_ahead ();
 

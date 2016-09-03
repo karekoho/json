@@ -93,7 +93,7 @@ public:
         const char *startp = (*it).starp;
 
         n._readp = startp;
-        n._endp = startp + strlen (startp);
+        // n._endp = startp + strlen (startp);
 
         int peek  = n._digits ();
 
@@ -133,7 +133,7 @@ public:
         const char *endp = startp + (*it).move;
 
         n._readp = startp + 1;
-        n._endp = startp + strlen (startp);
+        // n._endp = startp + strlen (startp);
 
         n._frag ();
 
@@ -177,7 +177,7 @@ public:
         const char *endp = startp + (*it).move[1];
 
         n._readp = startp + 1;
-        n._endp = startp + strlen (startp);
+        // n._endp = startp + strlen (startp);
 
         n._exp ();
 

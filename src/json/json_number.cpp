@@ -38,15 +38,15 @@ Number::parse (const char *json)
     {
       _readp = json;
 
-      if (_charc == 0)  /// 1. constructor called with null or zero length string
-        _endp = _readp + strlen (json);
+      // if (_charc == 0)  /// 1. constructor called with null or zero length string
+      //  _endp = _readp + strlen (json);
 
       _look_ahead ();
     }
   else
      _readp = json;
 
-  if (_readp == _endp)
+  if (*_readp == 0)
     throw _readp;
 
   _digitp[FLOAT][START] = _readp;
@@ -90,7 +90,7 @@ Number::_digits ()
 {
   const char * const startp = _readp;
 
-  while (_readp < _endp && isdigit (*_readp))
+  while (*_readp != 0 && isdigit (*_readp))
     _readp++;
 
   return _readp > startp ? *_readp : -1;
@@ -165,6 +165,4 @@ Number::_atoll (const char * const digitp[2]) const
 }
 
 
-const Value &Number::_at(const char *key) const
-{
-}
+// const Value &Number::_at(const char *key) const { }

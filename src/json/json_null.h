@@ -13,7 +13,7 @@ class Null : public Value
   /**
    * @brief Null
    */
-  Null () : Value::Value (0, 0, 0) {}
+  Null () : Value::Value (0, 0) {}
 
   /**
    * @brief Null
@@ -27,7 +27,7 @@ class Null : public Value
    * @param parent
    * @param charc
    */
-  Null (const char *endp, Value *parent, size_t charc = 0) : Value::Value (endp, parent, charc) {}
+  Null (Value *parent, size_t charc = 0) : Value::Value (parent, charc) {}
 
 protected:
 

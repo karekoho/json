@@ -13,15 +13,12 @@ JSON::JSON (const char *json)
   : Value (json),
     __value (0)
 {
-  if (_charc > 0)
-    {
-      _endp = _startp + _charc;
-      (void) parse (json);
-    }
+  if (_readp)
+    (void) parse (json);
 }
 
-JSON::JSON (const char *endp, Value *parent, size_t charc)
-  : Value (endp, parent, charc),
+JSON::JSON (Value *parent, size_t charc)
+  : Value (parent, charc),
     __value (0)
 {
 }
@@ -39,10 +36,10 @@ JSON::JSON::parse (const char *readp)
 
   _readp = _startp = readp;
 
-  if (_charc == 0)  /// 1. constructor called with null or zero length string
-    _endp = _readp + strlen (readp);
+  // if (_charc == 0)  /// 1. constructor called with null or zero length string. 2. does not calculate _endp
+  //  _endp = _readp + strlen (readp);
 
-  if (_readp == _endp)
+  if (*_readp == 0)
     throw _readp;
 
   Value * prev_value_ = __value;
@@ -81,22 +78,22 @@ JSON::_make_value ()
       if ((charc = _string (endc)) < 0)
         throw JSON::syntax_error ("syntax error: expecting closing '\"'");
 
-      value_ = new String (_endp, this, charc);
+      value_ = new String (/* _endp, */ this, charc);
     }
   else if (readc == _sc::begin_object)      /// Object
-    value_ = new Object (_endp, this, 0);
+    value_ = new Object (/* _endp, */ this, 0);
 
   else if (readc == _sc::begin_array)       /// Array
-    value_ = new Array (_endp, this, 0);
+    value_ = new Array (/*_endp, */ this, 0);
 
   else if (isdigit (readc) || readc == '-') /// Number
-    value_ = new Number (_endp, this, 0);
+    value_ = new Number (/* _endp, */ this, 0);
 
   else                                      /// Literal or undefined
     switch (_is_literal ())
       {
       case Value::_literal::null_value:
-        value_ = new Null (_endp, this);
+        value_ = new Null (/* _endp, */ this);
         break;
       case Value::_literal::true_value :
         value_ = new Boolean (true);
@@ -105,7 +102,7 @@ JSON::_make_value ()
         value_ = new Boolean (false);
         break;
       default:
-        value_ = new Undefined;
+        value_ = new Undefined (this, 0);
         break;
       }
 

@@ -16,7 +16,7 @@ public:
 
     JSON j[] = {
       JSON (),
-      JSON (input + strlen (input), 0, 0)
+      JSON (0, 0)
     };
 
     (void) j[0].parse (input);
@@ -58,7 +58,7 @@ public:
       const char *startp = (*it).starp;
 
       size_t charc = strlen (startp);
-      JSON *j = new JSON (startp + charc, 0);
+      JSON *j = new JSON (0, 0);
 
       const char * readp = j->parse (startp);
 
@@ -98,7 +98,7 @@ public:
 
         const char *startp = (*it).starp;
 
-        j._endp = startp + strlen (startp);
+        //j._endp = startp + strlen (startp);
         j._readp = startp;
 
         Value *v = j._make_value ();

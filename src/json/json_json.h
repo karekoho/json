@@ -30,14 +30,14 @@ public:
    * @brief json
    * @param json
    */
-  JSON (const char *JSON = 0);
+  JSON (const char *json = 0);
 
   /**
    * @brief json
    * @param endp
    * @param charc
    */
-  JSON (const char *endp, Value *parent, size_t charc = 0);
+  JSON (Value *parent, size_t charc = 0);
 
   /**
    * @brief ~JSON

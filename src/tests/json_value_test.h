@@ -38,7 +38,7 @@ public:
 
         const char *startp = (*it).startp;
 
-        json_value_parse_mock *m  = new json_value_parse_mock (startp + strlen (startp), 0, 0);
+        json_value_parse_mock *m  = new json_value_parse_mock (/* startp + strlen (startp),*/ 0, 0);
 
         m->_startp = m->_readp = startp;
 
@@ -69,11 +69,11 @@ public:
           { "\"x\"", 3, PASS },
           { "\" x\"", 4, PASS },
           { "\" xx", -4, PASS }
-  //        { "\"\
-  //           x\"", 14 },
-  //        { "   \"b", '"' },
-  //        { "   \n\r\tc ", 'c' },
-  //        { "   5", '5' }
+          /* { "\"\
+             x\"", 14 },
+          { "   \"b", '"' },
+          { "   \n\r\tc ", 'c' },
+          { "   5", '5' } */
       };
 
       TEST_IT_START
@@ -81,7 +81,7 @@ public:
           const char *startp = (*it).startp;
           long int charc = strlen (startp);
 
-          json_value_parse_mock *m  = new json_value_parse_mock (startp + charc, 0, 0);
+          json_value_parse_mock *m  = new json_value_parse_mock (/* startp + charc,*/ 0, 0);
 
           m->_startp = m->_readp = startp;
 
@@ -119,7 +119,7 @@ public:
 
           const char *startp = (*it).startp;
 
-          json_value_parse_mock *m  = new json_value_parse_mock (startp + strlen (startp), 0, 0);
+          json_value_parse_mock *m  = new json_value_parse_mock (/* startp + strlen (startp),*/ 0, 0);
 
           m->_startp = m->_readp = startp;
 

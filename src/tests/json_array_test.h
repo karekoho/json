@@ -14,14 +14,14 @@ public:
   {
     const char * input = "{}";
 
-    JSON *p[] = { 0, new JSON (0) };
+    JSON *p[] = { 0, new JSON (0,0) };
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
         Array *a[] = {
           new Array (),
           new Array (input),
-          new Array (input + 2, p[pidx]),
+          new Array (p[pidx], 0),
         };
 
         delete a[0];
@@ -61,14 +61,14 @@ public:
       { "x", 0, Value::object_type::undefined, 0, FAIL },
     };
 
-    JSON *p[] = { 0, new JSON (0) };
+    JSON *p[] = { 0, new JSON (0, 0) };
 
     TEST_IT_START
       for (size_t pidx = 0; pidx < 2; pidx++)
         {
           const char *startp = (*it).startp;
           size_t charc =strlen (startp);
-          Array *a = new Array (startp + charc, p[pidx]);
+          Array *a = new Array (p[pidx], 0);
 
           const char *readp = a->parse (startp);
 

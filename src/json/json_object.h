@@ -26,7 +26,7 @@ public:
    * @param parent
    * @param charc
    */
-  Object (const char *endp, Value *parent, size_t charc = 0);
+  Object (Value *parent, size_t charc = 0);
 
   /**
    * @brief ~Object
@@ -73,7 +73,7 @@ public:
   // Value interface
 protected:
 
-  virtual const Value &_at (const char *key) const
+  virtual const Value &_at (const char *key)
   {
     try
       {
@@ -81,7 +81,7 @@ protected:
       }
     catch (std::out_of_range &e)
       {
-        Value *v = new Undefined;
+        Value *v = new Undefined (this);
         _member_list.emplace (key, v);
         return *v;
       }
