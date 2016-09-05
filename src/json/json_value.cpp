@@ -7,30 +7,45 @@ const struct Value::literal_value Value::__ltr_value[3] = {
   { "null", 4, Value::_literal::null_value }
 };
 
+Value::Value ()
+    : _startp (0),
+      _readp (0),
+      //_endp (0),
+      _parent (0),
+      _length (0),
+      _key (0),
+      _index (0)
+{
+}
+
 Value::Value (const char *json)
     : _startp (json),
       _readp (json),
       //_endp (0),
       _parent (0),
-      _charc (json == 0 ? 0 : strlen (json))
+      _length (json == 0 ? 0 : strlen (json)),
+      _key (0),
+      _index (0)
 {
 }
 
-Value::Value (Value *parent, size_t index)
+Value::Value (Value *parent)
     : _startp (0),
       _readp (0),
       // _endp (0),
       _parent (parent),
-      _charc (index)
+      _length (0),
+      _key (0),
+      _index (0)
 {
 }
 
 long int
 Value::_string (char & endc) const
 {
-    const char * const starp = _readp;
+  const char * const starp = _readp;
 
-    if (*starp != _sc::double_quote) {
+  if (*starp != _sc::double_quote) {
         endc = *starp;
         return 0;
     }

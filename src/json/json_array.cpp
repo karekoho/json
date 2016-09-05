@@ -1,12 +1,14 @@
 #include "json_array.h"
 
+Array::Array() : JSON (){}
+
 Array::Array (const char *json)
   : JSON::JSON (json)
 {
 }
 
-Array::Array (Value *parent, size_t charc)
-  : JSON::JSON (parent, charc)
+Array::Array (Value *parent)
+  : JSON::JSON (parent)
 {
 }
 
@@ -45,6 +47,7 @@ Array::parse (const char *json)
             throw "syntax error: unexpected ','";
 
           _element_list.push_back (v);
+          v->setIndex (_element_list.size () - 1);
         }
       else if (*_readp == _sc::end_array)         /// ']'
         return _readp + 1;
@@ -57,7 +60,11 @@ Array::parse (const char *json)
           /// empty array
         }
       else  /// Value found
-        _element_list.push_back (_make_value ());
+        {
+          v = _make_value ();
+          _element_list.push_back (v);
+          v->setIndex (_element_list.size () - 1);
+        }
     }
 
   return _readp;

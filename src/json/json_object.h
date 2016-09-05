@@ -7,18 +7,27 @@
 /**
  * @brief The object class
  */
-class Object : public JSON {
+class Object : public JSON
+{
+  // TODO: friend void Value::setKey (const char *key);
+  // TODO: friend void Value::setIndex (const size_t &index);
+
 #ifdef UNIT_TEST
-friend class json_object_test;
+  friend class json_object_test;
 #endif
 
 public:
+
+  /**
+   * @brief Object
+   */
+  Object ();
 
 /**
    * @brief Object
    * @param JSON
    */
-  explicit Object (const char *json = 0);
+  explicit Object (const char *json);
 
 /**
    * @brief Object
@@ -26,7 +35,7 @@ public:
    * @param parent
    * @param charc
    */
-  Object (Value *parent, size_t charc = 0);
+  Object (Value *parent);
 
   /**
    * @brief ~Object

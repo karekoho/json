@@ -13,21 +13,20 @@ class Boolean : public Value
    * @brief Boolean
    * @param value
    */
-  explicit Boolean (const bool value) : Value::Value (0, 0), _boolean_value (value) {}
+  explicit Boolean (const bool value) : Value::Value (), _boolean_value (value) {}
 
   /**
    * @brief Boolean
    * @param json
    */
-  Boolean (const char *json = 0) : Value::Value (json), _boolean_value (false) {}
+  Boolean (const char *json) : Value::Value (json), _boolean_value (false) {}
 
   /**
    * @brief Boolean
-   * @param endp
    * @param parent
-   * @param charc
+   * @param value
    */
-  Boolean (Value *parent, size_t charc = 0) : Value::Value (parent, charc), _boolean_value (false) {}
+  Boolean (Value *parent, const bool value) : Value::Value (parent), _boolean_value (value) {}
 
 protected:
 

@@ -9,14 +9,14 @@
 class Undefined : public Value {
   public:
 
-  Undefined () : Value::Value (0, 0) {}
+  Undefined () : Value::Value () {}
   Undefined (const char *json) : Value::Value (json) {}
-  Undefined (Value *parent, size_t charc = 0) : Value::Value (parent,charc) {}
+  Undefined (Value *parent) : Value::Value (parent) {}
 
   inline const char * value () const { return "undefined"; }
 
   /// value interface
-  virtual const char *parse (const char *json) { return json + _charc; }
+  virtual const char *parse (const char *json) { return json + _length; }
   virtual inline const Value & at (const char *) const { return *this; }
   virtual inline object_type type () const { return Value::object_type::undefined; }
   virtual inline size_t size () const { return 0; }

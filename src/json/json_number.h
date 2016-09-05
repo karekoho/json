@@ -24,15 +24,23 @@ friend class json_number_test;
 
 public:
 
+  Number ()
+  : Value::Value (),
+    _double_value (0),
+    _double_valuep (&_double_value),
+    _digitp {{ 0, 0 },{ 0, 0 }}
+  {
+  }
+
   explicit Number (const double value)
-    : Value::Value (0),
+    : Value::Value (),
       _double_value (value),
       _double_valuep (&_double_value),
       _digitp {{ 0, 0 },{ 0, 0 }}
   {
   }
 
-  Number (const char *json = 0)
+  Number (const char *json)
     : Value::Value (json),
       _double_value (0),
       _double_valuep (0),
@@ -40,8 +48,8 @@ public:
   {
   }
 
-  Number (Value *parent, size_t charc = 0)
-    : Value::Value (parent, charc),
+  Number (Value *parent)
+    : Value::Value (parent),
       _double_value (0),
       _double_valuep (0),
       _digitp {{ 0, 0 },{ 0, 0 }}

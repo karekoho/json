@@ -27,17 +27,22 @@ class JSON : public Value
 public:
 
   /**
+   * @brief JSON
+   */
+  JSON ();
+
+  /**
    * @brief json
    * @param json
    */
-  JSON (const char *json = 0);
+  JSON (const char *json);
 
   /**
    * @brief json
    * @param endp
    * @param charc
    */
-  JSON (Value *parent, size_t charc = 0);
+  JSON (Value *parent);
 
   /**
    * @brief ~JSON

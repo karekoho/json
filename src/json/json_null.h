@@ -13,13 +13,13 @@ class Null : public Value
   /**
    * @brief Null
    */
-  Null () : Value::Value (0, 0) {}
+  Null () : Value::Value () {}
 
   /**
    * @brief Null
    * @param json
    */
-  Null (const char *json = 0) : Value::Value (json) {}
+  Null (const char *json) : Value::Value (json) {}
 
   /**
    * @brief Null
@@ -27,7 +27,7 @@ class Null : public Value
    * @param parent
    * @param charc
    */
-  Null (Value *parent, size_t charc = 0) : Value::Value (parent, charc) {}
+  Null (Value *parent) : Value::Value (parent) {}
 
 protected:
 

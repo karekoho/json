@@ -13,10 +13,10 @@ public:
   test_ctor_dtor ()
   {
     const char * input = "{}";
-
+    JSON *p = new JSON();
     JSON j[] = {
       JSON (),
-      JSON (0, 0)
+      JSON (p)
     };
 
     (void) j[0].parse (input);
@@ -58,7 +58,7 @@ public:
       const char *startp = (*it).starp;
 
       size_t charc = strlen (startp);
-      JSON *j = new JSON (0, 0);
+      JSON *j = new JSON ();
 
       const char * readp = j->parse (startp);
 

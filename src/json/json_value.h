@@ -37,10 +37,15 @@ friend class json_object_test;
   };
 
   /**
+   * @brief Value
+   */
+  Value ();
+
+  /**
    * @brief json_value
    * @param json
    */
-  Value (const char *json = 0);
+  Value (const char *json);
 
   /**
    * @brief json_value
@@ -48,7 +53,7 @@ friend class json_object_test;
    * @param parent
    * @paran charc
    */
-  Value (Value *parent, size_t index);
+  Value (Value *parent);
 
   virtual ~Value () {}
 
@@ -95,7 +100,18 @@ friend class json_object_test;
    */
   virtual size_t size () const = 0;
 
+
+  inline const char *key () const { return _key; }
+
+  inline size_t index () const { return _index; }
+
+  inline void setKey (const char *key) { _key = key; }
+  inline void setIndex (const size_t & index) { _index = index;}
+
 protected:
+
+  // TODO: inline void setKey (const char *key) { _key = key; }
+  // TODO: inline void setIndex (const size_t & index) { _index = index;}
 
   /**
    * @brief The _sc enum Structural characters.
@@ -148,7 +164,17 @@ protected:
   /**
    * @brief charc
    */
-  size_t _charc;
+  size_t _length;
+
+  /**
+   * @brief _key
+   */
+  const char * _key;
+
+  /**
+   * @brief _index
+   */
+  size_t _index;
 
   /**
    * @brief _look_ahead Move read pointer to next non-white space character

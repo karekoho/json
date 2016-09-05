@@ -7,16 +7,20 @@
 #include "json_undefined.h"
 #include "json_boolean.h"
 
+JSON::JSON () : Value (), __value (0) {}
+
 JSON::JSON (const char *json)
   : Value (json),
     __value (0)
 {
-  if (_readp)
-    (void) parse (json);
+  // if (_readp) (void) parse (json);
+  if (_length == 0)
+    throw JSON::error ("null string");
+    // (void) parse (json);
 }
 
-JSON::JSON (Value *parent, size_t charc)
-  : Value (parent, charc),
+JSON::JSON (Value *parent)
+  : Value (parent),
     __value (0)
 {
 }
@@ -72,13 +76,13 @@ JSON::_make_value ()
       value_ = new String (this, charc);
     }
   else if (readc == _sc::begin_object)      /// Object
-    value_ = new Object (this, 0);
+    value_ = new Object (this);
 
   else if (readc == _sc::begin_array)       /// Array
-    value_ = new Array (this, 0);
+    value_ = new Array (this);
 
   else if (isdigit (readc) || readc == '-') /// Number
-    value_ = new Number (this, 0);
+    value_ = new Number (this);
 
   else                                      /// Literal or undefined
     switch (_is_literal ())
@@ -87,13 +91,13 @@ JSON::_make_value ()
         value_ = new Null (this);
         break;
       case Value::_literal::true_value :
-        value_ = new Boolean (true);
+        value_ = new Boolean (this, true);
         break;
       case Value::_literal::false_value:
-        value_ = new Boolean (false);
+        value_ = new Boolean (this, false);
         break;
       default:
-        value_ = new Undefined (this, 0);
+        value_ = new Undefined (this);
         break;
       }
 

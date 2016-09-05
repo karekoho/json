@@ -11,7 +11,7 @@ public:
 
     json_value_parse_mock (Value *parent, size_t charc, Value::object_type type = object_type::null)
       // : json (endp, parent, charc),
-      : Value (parent, charc),
+      : Value (parent),
         _type (type)
     {
     }

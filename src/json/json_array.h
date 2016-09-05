@@ -6,14 +6,20 @@
 /**
  * @brief The array class
  */
-class Array : public JSON {
+class Array : public JSON
+{
+  // TODO: friend void Value::setKey (const char *key);
+  // TODO: friend void Value::setIndex (const size_t &index);
+
   public:
+
+  Array ();
 
   /**
    * @brief Array
    * @param json
    */
-  Array (const char *json = 0);
+  Array (const char *json);
 
   /**
    * @brief Array
@@ -21,7 +27,7 @@ class Array : public JSON {
    * @param parent
    * @param charc
    */
-  Array (Value *parent, size_t charc = 0);
+  Array (Value *parent);
 
   /**
    * @brief ~Array

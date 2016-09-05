@@ -10,8 +10,15 @@ class String : public Value {
 
   public:
 
-  String (const char *json) : Value::Value (json) {}
-  String (Value *parent = 0, size_t charc = 0) : Value::Value (parent, charc) {}
+  String () : Value (), _charc (0) {}
+
+  String (const char *json) : Value::Value (json), _charc (0) {}
+
+  String (Value *parent, size_t charc)
+    : Value::Value (parent),
+      _charc (charc)
+  {
+  }
 
   virtual const char *
   parse (const char *json)
@@ -45,6 +52,11 @@ public:
   }
 
 protected:
+
+  /**
+   * @brief _charc
+   */
+  size_t _charc;
 
   /**
    * @brief _value

@@ -5,13 +5,15 @@
 #include "json_number.h"
 #include "json_boolean.h"
 
+Object::Object() : JSON (){}
+
 Object::Object (const char *json)
   : JSON::JSON (json)
 {
 }
 
-Object::Object (Value *parent, size_t charc)
-  : JSON::JSON (parent, charc)
+Object::Object (Value *parent)
+  : JSON::JSON (parent)
 {
 }
 
@@ -93,7 +95,11 @@ Object::_pair ()
   if (v->type () == Value::undefined)
     throw "syntax error: expecting value after ':'";
 
-  _member_list.emplace (std::string (keyp, charc - 2), v);
+  std::string k (keyp, charc - 2);
+
+  (void) _member_list.emplace (k, v);
+
+  v->setKey (k.c_str ());
 
   return true;
 }

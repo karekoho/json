@@ -15,7 +15,7 @@ public:
     virtual void
     test_parse_1 ()
     {
-      JSON *p[] = { 0, new JSON (0,0) };
+      JSON *p[] = { 0, new JSON () };
 
       struct assert
       {
