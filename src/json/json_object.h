@@ -13,6 +13,7 @@ class Object : public JSON
   // TODO: friend void Value::setIndex (const size_t &index);
 
 #ifdef UNIT_TEST
+  friend class json_test;
   friend class json_object_test;
 #endif
 
@@ -82,7 +83,7 @@ public:
   // Value interface
 protected:
 
-  virtual const Value &_at (const char *key)
+  virtual Value &_at (const char *key)
   {
     try
       {
@@ -94,6 +95,11 @@ protected:
         _member_list.emplace (key, v);
         return *v;
       }
+  }
+
+  inline virtual void
+  _assign (Value *ov, const Value *nv)
+  {
   }
 };
 

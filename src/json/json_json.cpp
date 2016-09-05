@@ -13,10 +13,10 @@ JSON::JSON (const char *json)
   : Value (json),
     __value (0)
 {
-  // if (_readp) (void) parse (json);
   if (_length == 0)
     throw JSON::error ("null string");
-    // (void) parse (json);
+
+  (void) parse (json);
 }
 
 JSON::JSON (Value *parent)
@@ -105,6 +105,16 @@ JSON::_make_value ()
 
   return value_;
 }
+
+/* void
+JSON::_assign (Value *ov, const Value *nv)
+{
+  Value &p = ov->parent ();
+
+  p.type () == Value::object ? true : true;
+
+    // p._member_list.emplace (std::string ((*it).startp, 2), (*it).value);
+} */
 
 const Value &
 JSON::_at (const char *key) const

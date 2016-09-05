@@ -84,6 +84,11 @@ protected:
    * @return
    */
   virtual const Value &_at(const char *) const { return *this; }
+
+  virtual void
+  _assign (Value *ov, const Value *nv)
+  {
+  }
 };
 
 #endif // ARRAY

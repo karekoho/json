@@ -74,6 +74,7 @@ public:
   void test_make_value ()
   {
     JSON j;
+
     struct assert {
         const char *starp;
         Value::object_type type;
@@ -109,6 +110,54 @@ public:
     TEST_IT_END;
   }
 
+  void
+  test__assign_to_object ()
+  {
+    Object p;
+
+    struct assert {
+        const char *startp;
+        const char *key;
+        Value *value;
+        Value::object_type type;
+        int assert_status;
+    };
+
+    std::vector<struct assert > test = {
+      { "{}", "ok", new Object (&p), Value::object, PASS },
+      { "[]", "ak", new Array (&p), Value::array, PASS },
+      { "\"x\"", "sk", new String (&p, 3), Value::string, PASS },
+      { "100", "dk", new Number (&p), Value::number, PASS },
+      { "", "bk", new Boolean (&p, true), Value::boolean, PASS },
+      { "", "nk", new Null (&p), Value::null, PASS },
+    };
+
+    TEST_IT_START
+
+        // JSON &ov = static_cast<JSON &>(p._at ((*it).key));
+        Value &ov = p._at ((*it).key);
+
+        ASSERT_EQUAL_IDX ("value.type", Value::undefined, ov.type ());
+
+        // p._member_list.emplace (std::string ((*it).startp, 2), (*it).value);
+
+        p._assign (&ov, (*it).value);
+          // ov._assign (&ov, (*it).value);
+        /// TODO: assert v._at(key).type == type
+        /// TODO: assert v._at(key).value == value
+
+        // (*it).value->parse ((*it).startp);
+        // ASSERT_EQUAL_IDX ("x", (*it).type, (*it).value->type ());
+
+    TEST_IT_END;
+  }
+
+  void
+  test__assign_to_array ()
+  {
+
+  }
+
   virtual void test_size_1 () {}
   virtual void test_at_1 () {}
   virtual void test_value_1 () {}
@@ -127,6 +176,10 @@ public:
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_is_quoted", &json_test::test_string));      // value_test has the same
 
     s->addTest (new CppUnit::TestCaller<json_test> ("test_make_value", &json_test::test_make_value));
+
+    s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_to_object", &json_test::test__assign_to_object));
+    s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_to_array", &json_test::test__assign_to_array));
+
 
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_size_1", &json_test::test_size_1));
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_get_1", &json_test::test_get_1));

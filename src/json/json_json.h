@@ -87,6 +87,13 @@ protected:
    */
   Value *_make_value ();
 
+  /**
+   * @brief _assign
+   * @param ov
+   * @param nv
+   */
+  virtual void _assign (Value *, const Value *) {}  // TODO : move to value
+
 private:
 
   /**

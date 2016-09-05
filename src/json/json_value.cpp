@@ -40,6 +40,8 @@ Value::Value (Value *parent)
 {
 }
 
+// const Value & Value::parent() const { return *_parent; }
+
 long int
 Value::_string (char & endc) const
 {
