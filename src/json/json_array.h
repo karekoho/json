@@ -2,12 +2,17 @@
 #define ARRAY
 
 #include "json_json.h"
-
+#ifdef UNIT_TEST
+class json_array_test;
+#endif
 /**
  * @brief The array class
  */
 class Array : public JSON
 {
+#ifdef UNIT_TEST
+friend class json_array_test;
+#endif
   // TODO: friend void Value::setKey (const char *key);
   // TODO: friend void Value::setIndex (const size_t &index);
 

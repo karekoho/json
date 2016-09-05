@@ -88,6 +88,7 @@ public:
           if (o->size () > 0)
             {
               ASSERT_EQUAL_IDX ("value.type", (*it).type, o->at ("k").type ());
+              ASSERT_EQUAL_IDX ("*(value.key)", (char) 'k', *(o->at ("k").key ()));
             }
 
           delete o;
@@ -95,6 +96,45 @@ public:
     TEST_IT_END;
 
     delete p[1];
+  }
+
+  void
+  test_key ()
+  {
+    struct assert {
+      const char *startp;
+      // const char *key;
+      int assert_status;
+    };
+
+    std::vector<struct assert > test = {
+      { "{}", PASS },
+      { "{ } ", PASS },
+      { "{\"key1\":\"v\",\"key2\":\"v\",\"key3\":\"v\"} ", PASS },
+    };
+
+    TEST_IT_START;
+      const char *startp = (*it).startp;
+
+      Object *o = new Object ();
+
+      (void) o->parse (startp);
+
+      if (o->size () > 0)
+        {
+          size_t idx= 0;
+
+          for (auto it = o->_member_list.begin (); it != o->_member_list.end (); ++it, idx++)
+            {
+              const char *k = (*it).first.c_str ();
+
+              ASSERT_EQUAL_IDX ("value.key", 0, strcmp (k, o->at (k).key ()));
+            }
+        }
+
+      delete o;
+
+    TEST_IT_END
   }
 
   virtual void test_size_1 () {}
@@ -205,7 +245,8 @@ public:
 
      s->addTest (new CppUnit::TestCaller<json_object_test> ("test_smoke", &json_object_test::test_ctor_dtor));
   //    return s;
-      s->addTest (new CppUnit::TestCaller<json_object_test> ("test_parse_1", &json_object_test::test_parse_1));
+      s->addTest (new CppUnit::TestCaller<json_object_test> ("test_parse_1", &json_object_test::test_key));
+      s->addTest (new CppUnit::TestCaller<json_object_test> ("test_key", &json_object_test::test_parse_1));
  //     return s;
 //    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_size_1", &json_object_test::test_size_1));
       s->addTest (new CppUnit::TestCaller<json_object_test> ("test_at_1", &json_object_test::test_at_1));

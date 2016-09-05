@@ -95,11 +95,11 @@ Object::_pair ()
   if (v->type () == Value::undefined)
     throw "syntax error: expecting value after ':'";
 
-  std::string k (keyp, charc - 2);
+  // std::string k (keyp, charc - 2);
 
-  (void) _member_list.emplace (k, v);
+  (void) _member_list.emplace (std::string (keyp, charc - 2), v);
 
-  v->setKey (k.c_str ());
+  v->setKey (keyp, charc - 2);
 
   return true;
 }

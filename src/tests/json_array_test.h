@@ -81,6 +81,39 @@ public:
     TEST_IT_END;
   }
 
+  void
+  test_index ()
+  {
+    struct assert {
+      const char *startp;
+      // const char *key;
+      int assert_status;
+    };
+
+    std::vector<struct assert > test = {
+      { "[]", PASS },
+      { "[ ] ", PASS },
+      { "[\"a\",\"b\",\"c\"]", PASS },
+    };
+
+    TEST_IT_START;
+      const char *startp = (*it).startp;
+      Array *a = new Array ();
+
+      (void) a->parse (startp);
+
+      if (a->size () > 0)
+        {
+          for (size_t idx = 0; idx < a->_element_list.size(); idx++)
+            {
+              Value *v = a->_element_list.at(idx);
+              ASSERT_EQUAL_IDX ("value.index", idx, v->index ());
+            }
+        }
+      delete a;
+    TEST_IT_END
+  }
+
   virtual void test_size_1 () {}
   virtual void test_at_1() {}
   virtual void test_value_1() {}
@@ -92,6 +125,7 @@ public:
 
       s->addTest (new CppUnit::TestCaller<json_array_test> ("test_smoke", &json_array_test::test_ctor_dtor));
       s->addTest (new CppUnit::TestCaller<json_array_test> ("test_parse_1", &json_array_test::test_parse_1));
+       s->addTest (new CppUnit::TestCaller<json_array_test> ("test_index", &json_array_test::test_index));
 //    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_size_1", &json_array_test::test_size_1));
 //    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_get_1", &json_array_test::test_get_1));
 //    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_value_1", &json_array_test::test_value_1));

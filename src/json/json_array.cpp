@@ -52,16 +52,15 @@ Array::parse (const char *json)
       else if (*_readp == _sc::end_array)         /// ']'
         return _readp + 1;
 
-      else if (_make_value ()->type () == Value::undefined) // No valid value found
+      else if ((v = _make_value())->type () == Value::undefined)  /// No valid value found
         {
           if (*_readp != Value::_ws::space /** TODO: check other ws_ characters */)
-              throw "array::parse: unexpected character";
+            throw "array::parse: unexpected character";
 
           /// empty array
         }
       else  /// Value found
         {
-          v = _make_value ();
           _element_list.push_back (v);
           v->setIndex (_element_list.size () - 1);
         }

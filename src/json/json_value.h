@@ -55,7 +55,10 @@ friend class json_object_test;
    */
   Value (Value *parent);
 
-  virtual ~Value () {}
+  virtual ~Value ()
+  {
+    delete _key;
+  }
 
   /**
    * @brief parse
@@ -105,7 +108,12 @@ friend class json_object_test;
 
   inline size_t index () const { return _index; }
 
-  inline void setKey (const char *key) { _key = key; }
+  inline void
+  setKey (const char *key, size_t charc)
+  {
+    _key = strndup (key, charc);
+  }
+
   inline void setIndex (const size_t & index) { _index = index;}
 
 protected:
