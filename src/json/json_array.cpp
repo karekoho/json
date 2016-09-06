@@ -69,8 +69,8 @@ Array::parse (const char *json)
   return _readp;
 }
 
-const Value &
-Array::at (const char *key) const
+/* const Value &
+Array::at (size_t index) const
 {
-  return *(_element_list.at (atoll (key)));
-}
+  return *(_element_list.at (atoll (index)));
+} */

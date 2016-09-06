@@ -3,6 +3,7 @@
 
 #include "json_json.h"
 #ifdef UNIT_TEST
+class json_test;
 class json_array_test;
 #endif
 /**
@@ -11,6 +12,7 @@ class json_array_test;
 class Array : public JSON
 {
 #ifdef UNIT_TEST
+  friend class json_test;
 friend class json_array_test;
 #endif
   // TODO: friend void Value::setKey (const char *key);
@@ -51,7 +53,9 @@ friend class json_array_test;
    * @param key
    * @return
    */
-  virtual const Value & at (const char *key) const;
+  virtual inline const Value & at (const char *key) const { return at (atoll (key)); }
+
+  inline const Value & at (size_t index) const { return *(_element_list.at (index)); }
 
   /**
    * @brief type
@@ -63,7 +67,7 @@ friend class json_array_test;
    * @brief size
    * @return
    */
-  virtual inline size_t size () const { return _element_list.size(); }
+  virtual inline size_t size () const { return _element_list.size (); }
 
 protected:
 
@@ -79,16 +83,31 @@ protected:
 
 protected:
 
+
   /**
    * @brief _at
    * @return
    */
-  virtual const Value &_at(const char *) const { return *this; }
+  virtual inline const Value &_at (const char *) const { return *this; }
 
-  virtual void
-  _assign (Value *ov, const Value *nv)
+  Value &_at (size_t index)
   {
-  }
+    try
+      {
+        return *_element_list.at (index);
+      }
+    catch (std::out_of_range &)
+      {
+        Value *v = new Undefined (this);
+
+        _element_list.push_back (v);
+        v->setIndex (_element_list.size () - 1);
+
+        return *v;
+      }
+   }
+
+  virtual inline void _assign (Value *ov, Value *nv) { _element_list[ov->index ()] = nv; }
 };
 
 #endif // ARRAY

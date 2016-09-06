@@ -112,7 +112,7 @@ friend class json_object_test;
 
   inline void setIndex (const size_t & index) { _index = index;}
 
-  inline Value  & parent () const { return *_parent; }
+  // inline Value  & parent () const { return *_parent; }
 
 protected:
 
@@ -225,7 +225,6 @@ protected:
    * @brief _assign Assing value. Delete existing key.
    * @param v
    */
-  /** virtual  void _assign (const Value & v); /** = 0 */
 
    static const struct literal_value {
      const char * const str_value;

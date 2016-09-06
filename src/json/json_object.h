@@ -83,23 +83,30 @@ public:
   // Value interface
 protected:
 
-  virtual Value &_at (const char *key)
+  virtual Value &
+  _at (const char *key)
   {
     try
       {
         return *(_member_list.at (key));
       }
-    catch (std::out_of_range &e)
+    catch (std::out_of_range &)
       {
         Value *v = new Undefined (this);
+
+        v->setKey (key, strlen (key));
         _member_list.emplace (key, v);
+
         return *v;
       }
   }
 
   inline virtual void
-  _assign (Value *ov, const Value *nv)
+  _assign (Value *ov, Value *nv)
   {
+    _member_list[ov->key ()] = nv;
+
+    /// TODO: delete ov;
   }
 };
 

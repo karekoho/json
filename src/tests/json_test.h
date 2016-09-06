@@ -111,51 +111,46 @@ public:
   }
 
   void
-  test__assign_to_object ()
+  test__assign_to_parent ()
   {
-    Object p;
+    Object op;
+    Array ap;
 
     struct assert {
-        const char *startp;
+        // const char *startp;
         const char *key;
-        Value *value;
+        size_t index;
+        Value *value[2];
         Value::object_type type;
         int assert_status;
     };
 
     std::vector<struct assert > test = {
-      { "{}", "ok", new Object (&p), Value::object, PASS },
-      { "[]", "ak", new Array (&p), Value::array, PASS },
-      { "\"x\"", "sk", new String (&p, 3), Value::string, PASS },
-      { "100", "dk", new Number (&p), Value::number, PASS },
-      { "", "bk", new Boolean (&p, true), Value::boolean, PASS },
-      { "", "nk", new Null (&p), Value::null, PASS },
+      { /* "{}" , */ "ok", 0, { new Object (&op), new Object (&ap) }, Value::object, PASS },
+      { /* "[]", */ "ak", 1, { new Array (&op), new Array (&ap) }, Value::array, PASS },
+      { /* "\"x\"", */ "sk", 2, { new String (&op, 3), new String (&ap, 3) }, Value::string, PASS },
+      { /* "100", */ "dk", 3, { new Number (&op), new Number (&ap) }, Value::number, PASS },
+      { /* "", */ "bk", 4, { new Boolean (&op, true), new Boolean (&ap, true) }, Value::boolean, PASS },
+      { /* "", */ "nk", 5, { new Null (&op), new Null (&ap) }, Value::null, PASS },
     };
 
     TEST_IT_START
 
-        // JSON &ov = static_cast<JSON &>(p._at ((*it).key));
-        Value &ov = p._at ((*it).key);
+        Value &oov = op._at ((*it).key);
+        Value &aov = ap._at ((*it).index);
 
-        ASSERT_EQUAL_IDX ("value.type", Value::undefined, ov.type ());
+        ASSERT_EQUAL_IDX ("value.type ()", Value::undefined, oov.type ());
+        ASSERT_EQUAL_IDX ("value.type ()", Value::undefined, aov.type ());
 
-        // p._member_list.emplace (std::string ((*it).startp, 2), (*it).value);
+        op._assign (&oov, (*it).value[0]);
+        ap._assign (&aov, (*it).value[1]);
 
-        p._assign (&ov, (*it).value);
-          // ov._assign (&ov, (*it).value);
-        /// TODO: assert v._at(key).type == type
-        /// TODO: assert v._at(key).value == value
+        ASSERT_EQUAL_IDX ("parent._at (key)", (*it).type, op._at ((*it).key).type ());
+        ASSERT_EQUAL_IDX ("parent._at (index)", (*it).type, ap._at ((*it).index).type ());
 
         // (*it).value->parse ((*it).startp);
-        // ASSERT_EQUAL_IDX ("x", (*it).type, (*it).value->type ());
 
     TEST_IT_END;
-  }
-
-  void
-  test__assign_to_array ()
-  {
-
   }
 
   virtual void test_size_1 () {}
@@ -176,10 +171,7 @@ public:
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_is_quoted", &json_test::test_string));      // value_test has the same
 
     s->addTest (new CppUnit::TestCaller<json_test> ("test_make_value", &json_test::test_make_value));
-
-    s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_to_object", &json_test::test__assign_to_object));
-    s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_to_array", &json_test::test__assign_to_array));
-
+    s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_to_object", &json_test::test__assign_to_parent));
 
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_size_1", &json_test::test_size_1));
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_get_1", &json_test::test_get_1));
@@ -189,120 +181,5 @@ public:
     return s;
   }
 };
-
-/* void test_is_literal ()   /// value_test has the same
-{
-  struct assert {
-      const char *startp;
-      value::_literal value_type;
-      int assert_status;
-  };
-
-  std::vector<struct assert> test = {
-    { "", value::_literal::no_value, PASS },
-    { "   ", value::_literal::no_value, PASS },
-    { "xxx   ", value::_literal::no_value, PASS },
-    { "xxxxxx   ", value::_literal::no_value, PASS },
-    { "true    ", value::_literal::true_value, PASS },
-    { "false    ", value::_literal::false_value, PASS },
-    { "null   ", value::_literal::null_value, PASS }
-  };
-
-  TEST_IT_START
-
-      const char *startp = (*it).startp;
-
-      json_value_parse_mock *m  = new json_value_parse_mock (startp + strlen (startp), 0, 0);
-
-      m->_startp = m->_readp = startp;
-
-      value::_literal ltr = m->_is_literal ();
-
-      ASSERT_EQUAL_IDX ("literal value", (*it).value_type , ltr);
-
-      delete m;
-
-  TEST_IT_END;
-} */
-
-/* void test_lookahead ()  /// value_test has the same
-{
-  struct assert {
-      const char *startp;
-      char readp;
-      int assert_status;
-  };
-
-  std::vector<struct assert > test = {
-      { "", 0, PASS},
-      { "   ", 0, PASS },
-      { "x", 'x', PASS },
-      { " \
-          a", 'a', PASS },
-      { "   \"b", '"', PASS },
-      { "   \n\r\tc ", 'c', PASS },
-      { "   5", '5', PASS }
-  };
-
-  TEST_IT_START
-
-    const char *startp = (*it).startp;
-
-    json_value_parse_mock *m  = new json_value_parse_mock (startp + strlen (startp), 0, 0);
-
-    m->_startp = m->_readp = startp;
-
-    m->_look_ahead ();
-
-    ASSERT_EQUAL_IDX ("value.readp", (*it).readp , *(m->_readp));
-
-    delete m;
-
-  TEST_IT_END;
-} */
-
-/* void test_string () /// value_test has the same
-{
-  char endc;
-
-  struct assert {
-      const char *startp;
-      long int charc;
-      int assert_status;
-  };
-
-  std::vector<struct assert > test = {
-      { " ", 0, PASS},
-      { "\"", -1, PASS },
-      { "\" x\"", 4, PASS },
-      { "\" xx", -4, PASS }
-//        { "\"\
-//           x\"", 14 },
-//        { "   \"b", '"' },
-//        { "   \n\r\tc ", 'c' },
-//        { "   5", '5' }
-  };
-
-  TEST_IT_START
-
-      const char *startp = (*it).startp;
-      long int charc = strlen (startp);
-
-      json_value_parse_mock *m  = new json_value_parse_mock (startp + charc, 0, 0);
-
-      m->_startp = m->_readp = startp;
-
-      m->_look_ahead ();
-
-      charc = m->_string (endc);
-
-      // CPPUNIT_ASSERT_EQUAL_MESSAGE ("readp", startp , m->_readp); //   FAIL: { "\"", -1 }
-      ASSERT_EQUAL_IDX ("charc", (*it).charc , charc);
-
-      delete m;
-
-  TEST_IT_END;
-} */
-
 
 #endif // JSON_TEST_H
