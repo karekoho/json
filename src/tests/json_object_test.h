@@ -238,10 +238,162 @@ public:
   }
 
 
+  virtual void
+  test_assign_all_values ()
+  {
+
+    Object obj_parent;
+    Array arr_parent;
+
+    JSON *parents[] = {
+      &obj_parent,
+      &arr_parent,
+      0
+    };
+
+    Object old_value;
+
+    struct assert {
+      Value *new_value;
+      Value::object_type type;
+      const char *key;
+      size_t keylen;
+      size_t index;
+      size_t count;
+      int assert_status[3];
+    };
+
+    std::vector<struct assert > test = {
+      { new Object ("{\"k\":true}"), Value::object, "o_key",  5, 0, 1,  { PASS, PASS, PASS }},
+//      { new Array (), { FAIL, PASS }, SKIP },
+//      { new String (), { FAIL, PASS }, SKIP },
+//      { new Number (), { FAIL, PASS }, SKIP },
+//      { new Boolean (true), { FAIL, PASS }, SKIP },
+//      { new Null (), { FAIL, PASS }, SKIP },
+//      { new Undefined (), { PASS, PASS }, SKIP },
+    };
+      arr_parent._element_list.reserve (7);
+
+      for (size_t pidx = 0; pidx < 3; pidx++)
+        {
+          old_value._parent = parents[pidx];
+          old_value._member_list.clear ();
+
+          obj_parent._member_list.clear ();
+          arr_parent._element_list.clear ();
+
+          for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++) {\
+            try {\
+                if ((*it).assert_status[pidx] == SKIP) { continue; }\
+                if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
+
+          /// old_value: value from Value[key], any value
+
+          arr_parent._element_list.push_back (new Undefined);
+          old_value.setKey ((*it).key, (*it).keylen);
+
+          (*it).index  = arr_parent._element_list.size () - 1;
+          old_value.setIndex ((*it).index);
+
+          Value *new_value = 0;
+
+          switch ((*it).new_value->type ())
+            {
+            case Value::object:
+              {
+                Object *new_o_value = static_cast<Object *>((*it).new_value);
+                old_value.assign (*new_o_value);
+                new_value = new_o_value;
+                break;
+              }
+            case Value::array:
+              {
+                Array *new_a_value = static_cast<Array *>((*it).new_value);
+//                old_value.assign (*new_a_value);
+                new_value = new_a_value;
+                break;
+              }
+            case Value::string:
+              {
+                String *new_s_value = static_cast<String *>((*it).new_value);
+                // old_value.assign (*new_s_value);
+                new_value = new_s_value;
+                break;
+              }
+            case Value::number:
+              {
+                Number *new_n_value = static_cast<Number *>((*it).new_value);
+                // old_value.assign (*new_n_value);
+                new_value = new_n_value;
+                break;
+              }
+            case Value::boolean:
+              {
+                Boolean *new_b_value = static_cast<Boolean *>((*it).new_value);
+                // old_value.assign (*new_b_value);
+                new_value = new_b_value;
+                break;
+              }
+            case Value::null:
+              {
+                Null *new_nl_value = static_cast<Null *>((*it).new_value);
+                // old_value.assign (*new_nl_value);
+                new_value = new_nl_value;
+                break;
+              }
+            case Value::undefined:
+              {
+                Undefined *new_u_value = static_cast<Undefined *>((*it).new_value);
+                // old_value.assign (*new_u_value);
+                new_value = new_u_value;
+                break;
+              }
+            default:
+              break;
+            }
+
+          JSON *parent = old_value._parent;
+
+          if (parent)
+            {
+              ASSERT_EQUAL_IDX ("old_value.parent.count ()", (size_t) 1, parent->size ());
+
+              if (parent->type () == Value::object)
+                {
+
+                  Value *ov =  obj_parent._member_list.at ((*it).key);
+
+                  ASSERT_EQUAL_IDX ("obj_parent[key].type", ov->type (), (*it).type);
+                  ASSERT_EQUAL_IDX ("obj_parent[key].value", ov, (*it).new_value);
+                }
+              else
+                {
+                  Value *av =  arr_parent._element_list.at ((*it).index);
+                  ASSERT_EQUAL_IDX ("arr_parent[key].type", av->type (), (*it).type);
+                  ASSERT_EQUAL_IDX ("arr_parent[key].value", av, (*it).new_value);
+
+                }
+            }
+          else
+            {
+
+            }
+
+///       TODO: if old_value.parent: assert old_value.parent.count = 1 else: assert old_value.count () == 1
+///       TODO: if old_value.parent && old_value.parent.type == object: assert old_value.parent._at(key) == (*it).new_value
+///       TODO: if old_value.parent && old_value.parent.type == array: assert old_value.parent._at(index) == (*it).new_value
+
+          TEST_IT_END;
+        }
+  }
+
   static CppUnit::Test*
   suite ()
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json object test");
+
+    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_assign_all_values", &json_object_test::test_assign_all_values));
+    //return s;
 
      s->addTest (new CppUnit::TestCaller<json_object_test> ("test_smoke", &json_object_test::test_ctor_dtor));
   //    return s;

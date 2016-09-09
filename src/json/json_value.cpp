@@ -29,7 +29,7 @@ Value::Value (const char *json)
 {
 }
 
-Value::Value (Value *parent)
+Value::Value (JSON *parent)
     : _startp (0),
       _readp (0),
       // _endp (0),

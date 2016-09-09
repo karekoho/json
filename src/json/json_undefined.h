@@ -11,18 +11,19 @@ class Undefined : public Value {
 
   Undefined () : Value::Value () {}
   Undefined (const char *json) : Value::Value (json) {}
-  Undefined (Value *parent) : Value::Value (parent) {}
+  Undefined (JSON *parent) : Value::Value (parent) {}
 
   inline const char * value () const { return "undefined"; }
 
   /// value interface
   virtual const char *parse (const char *json) { return json + _length; }
-  virtual inline const Value & at (const char *) const { return *this; }
+  virtual inline Value & at (const char *)  { return *this; }
+  // virtual inline const Value & at (const char *) const { return *this; }
   virtual inline object_type type () const { return Value::object_type::undefined; }
   virtual inline size_t size () const { return 0; }
 
 protected:
-  virtual const Value &_at(const char *) const { return *this; }
+  virtual Value &_at (const char *) { return *this; }
 public:
 
 

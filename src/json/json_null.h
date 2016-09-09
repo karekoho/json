@@ -27,11 +27,11 @@ class Null : public Value
    * @param parent
    * @param charc
    */
-  Null (Value *parent) : Value::Value (parent) {}
+  Null (JSON *parent) : Value::Value (parent) {}
 
 protected:
 
-  virtual const Value &_at (const char *) const { return *this; }
+  virtual Value &_at (const char *) { return *this; }
 
 public:
 
@@ -47,7 +47,7 @@ public:
    * @param key
    * @return
    */
-  virtual inline const Value & at (const char *) const { return *this; }
+  virtual inline Value & at (const char *) { return *this; }
 
   /**
    * @brief type

@@ -7,7 +7,7 @@ Array::Array (const char *json)
 {
 }
 
-Array::Array (Value *parent)
+Array::Array (JSON *parent)
   : JSON::JSON (parent)
 {
 }

@@ -284,6 +284,11 @@ public:
     TEST_IT_END;
   }
 
+  virtual void
+  test_assign_all_values ()
+  {
+  }
+
   static CppUnit::Test *
   suite ()
   {

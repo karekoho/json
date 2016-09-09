@@ -26,7 +26,7 @@ class Boolean : public Value
    * @param parent
    * @param value
    */
-  Boolean (Value *parent, const bool value) : Value::Value (parent), _boolean_value (value) {}
+  Boolean (JSON *parent, const bool value) : Value::Value (parent), _boolean_value (value) {}
 
 protected:
 
@@ -35,7 +35,7 @@ protected:
    * @param key
    * @return
    */
-  virtual inline const Value &_at (const char *) const { return *this; }
+  virtual inline Value &_at (const char *)  { return *this; }
 
 public:
 
@@ -51,7 +51,7 @@ public:
    * @param key
    * @return
    */
-  virtual inline const Value & at (const char *) const { return *this; }
+  virtual inline Value & at (const char *)  { return *this; }
 
   /**
    * @brief type

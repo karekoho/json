@@ -9,17 +9,18 @@
 
 JSON::JSON () : Value (), __value (0) {}
 
-JSON::JSON (const char *json)
+JSON::JSON (const char *json, const bool _parse)
   : Value (json),
     __value (0)
 {
   if (_length == 0)
     throw JSON::error ("null string");
 
-  (void) parse (json);
+  if (_parse)
+    (void) parse (json);
 }
 
-JSON::JSON (Value *parent)
+JSON::JSON (JSON *parent)
   : Value (parent),
     __value (0)
 {
@@ -53,8 +54,8 @@ JSON::JSON::parse (const char *readp)
   return _readp;
 }
 
-const Value &
-JSON::at (const char *key) const
+Value &
+JSON::at (const char *key)
 {
   return _at (key);
 }
@@ -116,8 +117,8 @@ JSON::_assign (Value *ov, const Value *nv)
     // p._member_list.emplace (std::string ((*it).startp, 2), (*it).value);
 } */
 
-const Value &
+/* const Value &
 JSON::_at (const char *key) const
 {
   return type () == Value::undefined ? _undef_value : __value->at (key);
-}
+} */

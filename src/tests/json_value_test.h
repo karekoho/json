@@ -134,6 +134,11 @@ public:
 
     void test_is_number ();
 
+    virtual void
+    test_assign_all_values ()
+    {
+    }
+
     static CppUnit::Test*
     suite ()
     {

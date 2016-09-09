@@ -3,7 +3,6 @@
 
 #include "json_value.h"
 #include "json_undefined.h"
-
 #include <unordered_map>
 #include <vector>
 
@@ -17,9 +16,12 @@
 /**
  * @brief The json class
  */
+
+//class Object;
 class Undefined;
-class JSON : public Value
-{
+class JSON : public Value {
+ // friend Value & Object::assign (Object &);
+
 #ifdef UNIT_TEST
   friend class json_test;
   friend class json_object_test;
@@ -35,14 +37,14 @@ public:
    * @brief json
    * @param json
    */
-  JSON (const char *json);
+  JSON (const char *json, const bool _parse = true);
 
   /**
    * @brief json
    * @param endp
    * @param charc
    */
-  JSON (Value *parent);
+  JSON (JSON *parent);
 
   /**
    * @brief ~JSON
@@ -61,7 +63,7 @@ public:
    * @param key
    * @return
    */
-  virtual const Value & at (const char *key) const;
+  virtual Value & at (const char *key);
 
   /**
    * @brief type
@@ -77,7 +79,9 @@ public:
 
 protected:
 
-  virtual const Value &_at (const char *key) const;
+  virtual Value &_at (const char *key) {
+    return type () == Value::undefined ? *(new Undefined) : __value->at (key);
+  }
 
   const Undefined _undef_value;
 
@@ -86,13 +90,20 @@ protected:
    * @return
    */
   Value *_make_value ();
-
+public:
   /**
    * @brief _assign
    * @param ov
    * @param nv
    */
-  virtual void _assign (Value *, const Value *) {}  // TODO : move to value
+  virtual void _assign (Value *, Value *) {}  // TODO : move to value
+
+  /* Value & _assign (Value *p, Value *ov, const Value *nv)
+  {
+    JSON *parent = static_cast<JSON *>(p);
+    parent->_assign (ov, nv);
+    return *p;
+  } */
 
 private:
 

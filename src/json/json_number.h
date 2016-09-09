@@ -48,7 +48,7 @@ public:
   {
   }
 
-  Number (Value *parent)
+  Number (JSON *parent)
     : Value::Value (parent),
       _double_value (0),
       _double_valuep (0),
@@ -70,7 +70,7 @@ public:
    * @param key
    * @return
    */
-  virtual inline const Value & at (const char *) const { return *this; }
+  virtual inline Value & at (const char *) { return *this; }
 
   /**
    * @brief type
@@ -92,7 +92,7 @@ public:
 
 protected:
 
-  virtual inline  const Value &_at (const char *) const { return *this; }
+  virtual inline Value &_at (const char *) { return *this; }
 
 protected:
 

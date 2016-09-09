@@ -3,7 +3,8 @@
 
 #include "json_json.h"
 #include "json_undefined.h"
-
+//class Object;
+#include "json_array.h"
 /**
  * @brief The object class
  */
@@ -11,6 +12,9 @@ class Object : public JSON
 {
   // TODO: friend void Value::setKey (const char *key);
   // TODO: friend void Value::setIndex (const size_t &index);
+// friend Value & Object::_assign (Value *ov, Value *nv);
+
+
 
 #ifdef UNIT_TEST
   friend class json_test;
@@ -18,7 +22,7 @@ class Object : public JSON
 #endif
 
 public:
-
+  // friend void JSON::_assign (Value *p, Value *ov, const Value *nv);
   /**
    * @brief Object
    */
@@ -36,7 +40,7 @@ public:
    * @param parent
    * @param charc
    */
-  Object (Value *parent);
+  Object (JSON *parent);
 
   /**
    * @brief ~Object
@@ -55,7 +59,7 @@ public:
    * @param key
    * @return
    */
-  virtual const Value & at (const char *key) const;
+  virtual Value & at (const char *key);
 
   /**
    * @brief type
@@ -68,6 +72,8 @@ public:
    * @return
    */
   virtual inline size_t size () const { return _member_list.size (); }
+
+  Value & assign (Object & nv);
 
   protected:
 

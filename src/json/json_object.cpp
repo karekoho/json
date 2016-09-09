@@ -8,11 +8,16 @@
 Object::Object() : JSON (){}
 
 Object::Object (const char *json)
-  : JSON::JSON (json)
+  : JSON::JSON (json, false)
 {
+  if (_length == 0)
+    throw JSON::error ("null string");
+
+  // if (_parse)
+    (void) parse (json);
 }
 
-Object::Object (Value *parent)
+Object::Object (JSON *parent)
   : JSON::JSON (parent)
 {
 }
@@ -104,8 +109,8 @@ Object::_pair ()
   return true;
 }
 
-const Value &
-Object::at (const char *key) const
+Value &
+Object::at (const char *key)
 {
   try
     {
@@ -114,5 +119,19 @@ Object::at (const char *key) const
   catch (std::out_of_range &e)
     {
       throw JSON::out_of_range (e.what ());
+  }
+}
+
+Value &
+Object::assign (Object &nv)
+{
+  if (_parent)
+    {
+      _parent->_assign (this, &nv);
+      return *_parent;
     }
+
+  _member_list.swap (nv._member_list);
+
+  return *this;
 }

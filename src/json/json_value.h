@@ -13,6 +13,7 @@ class json_object_test;
  * @brief The json_value class
  */
 class JSON;
+ class Object;
 class Value
 {
 #ifdef UNIT_TEST
@@ -53,7 +54,7 @@ friend class json_object_test;
    * @param parent
    * @paran charc
    */
-  Value (Value *parent);
+  Value (JSON *parent);
 
   virtual ~Value ()
   {
@@ -76,14 +77,15 @@ friend class json_object_test;
    * @param key
    * @return
    */
-  virtual const Value & at (const char *key) const = 0;
+  virtual Value & at (const char *key) = 0;
+  // virtual const Value & at (const char *key) const = 0;
 
   /**
    * @brief operator []
    * @param key
    * @return
    */
-  inline const Value & operator[] (const char *key) const { return _at (key); }
+  inline Value & operator[] (const char *key) { return _at (key); }
 
   /**
    * @brief operator =
@@ -110,7 +112,11 @@ friend class json_object_test;
 
   inline void setKey (const char *key, size_t charc) { _key = strndup (key, charc); }
 
-  inline void setIndex (const size_t & index) { _index = index;}
+  inline void setIndex (const size_t &index) { _index = index;}
+
+  virtual Value & assign (Object &) {
+    return *this;
+  }
 
   // inline Value  & parent () const { return *_parent; }
 
@@ -165,7 +171,7 @@ protected:
   /**
    * @brief _parent
    */
-  Value *_parent;
+  JSON *_parent;
 
   /**
    * @brief charc
@@ -219,7 +225,7 @@ protected:
    * @param key
    * @return
    */
-  virtual const Value & _at (const char *key) const = 0;
+  virtual Value & _at (const char *key)  = 0;
 
   /**
    * @brief _assign Assing value. Delete existing key.

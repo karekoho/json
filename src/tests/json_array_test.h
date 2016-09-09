@@ -114,6 +114,11 @@ public:
     TEST_IT_END
   }
 
+  virtual void
+  test_assign_all_values ()
+  {
+  }
+
   virtual void test_size_1 () {}
   virtual void test_at_1() {}
   virtual void test_value_1() {}

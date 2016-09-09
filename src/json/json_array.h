@@ -5,6 +5,7 @@
 #ifdef UNIT_TEST
 class json_test;
 class json_array_test;
+class json_object_test;
 #endif
 /**
  * @brief The array class
@@ -13,7 +14,8 @@ class Array : public JSON
 {
 #ifdef UNIT_TEST
   friend class json_test;
-friend class json_array_test;
+  friend class json_array_test;
+  friend class json_object_test;
 #endif
   // TODO: friend void Value::setKey (const char *key);
   // TODO: friend void Value::setIndex (const size_t &index);
@@ -34,7 +36,7 @@ friend class json_array_test;
    * @param parent
    * @param charc
    */
-  Array (Value *parent);
+  Array (JSON *parent);
 
   /**
    * @brief ~Array
@@ -53,9 +55,11 @@ friend class json_array_test;
    * @param key
    * @return
    */
-  virtual inline const Value & at (const char *key) const { return at (atoll (key)); }
+  virtual inline Value & at (const char *key)  { return at (atoll (key)); }
 
-  inline const Value & at (size_t index) const { return *(_element_list.at (index)); }
+  // virtual inline const Value & at (const char *key) const { return at (atoll (key)); }
+
+  inline Value & at (size_t index)  { return *(_element_list.at (index)); }
 
   /**
    * @brief type
@@ -88,7 +92,7 @@ protected:
    * @brief _at
    * @return
    */
-  virtual inline const Value &_at (const char *) const { return *this; }
+  virtual inline Value &_at (const char *)  { return *this; }
 
   Value &_at (size_t index)
   {
@@ -107,7 +111,11 @@ protected:
       }
    }
 
-  virtual inline void _assign (Value *ov, Value *nv) { _element_list[ov->index ()] = nv; }
+  virtual inline void
+  _assign (Value *ov, Value *nv)
+  {
+    _element_list.at (ov->index ()) = nv;
+  }
 };
 
 #endif // ARRAY

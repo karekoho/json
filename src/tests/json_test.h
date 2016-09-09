@@ -133,7 +133,7 @@ public:
       { /* "", */ "bk", 4, { new Boolean (&op, true), new Boolean (&ap, true) }, Value::boolean, PASS },
       { /* "", */ "nk", 5, { new Null (&op), new Null (&ap) }, Value::null, PASS },
     };
-
+    size_t x =0;
     TEST_IT_START
 
         Value &oov = op._at ((*it).key);
@@ -147,10 +147,15 @@ public:
 
         ASSERT_EQUAL_IDX ("parent._at (key)", (*it).type, op._at ((*it).key).type ());
         ASSERT_EQUAL_IDX ("parent._at (index)", (*it).type, ap._at ((*it).index).type ());
-
+        x++;
         // (*it).value->parse ((*it).startp);
 
     TEST_IT_END;
+  }
+
+  virtual void
+  test_assign_all_values ()
+  {
   }
 
   virtual void test_size_1 () {}
@@ -171,7 +176,7 @@ public:
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_is_quoted", &json_test::test_string));      // value_test has the same
 
     s->addTest (new CppUnit::TestCaller<json_test> ("test_make_value", &json_test::test_make_value));
-    s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_to_object", &json_test::test__assign_to_parent));
+    s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_to_parent", &json_test::test__assign_to_parent));
 
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_size_1", &json_test::test_size_1));
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_get_1", &json_test::test_get_1));

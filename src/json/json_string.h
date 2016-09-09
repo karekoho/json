@@ -14,7 +14,7 @@ class String : public Value {
 
   String (const char *json) : Value::Value (json), _charc (0) {}
 
-  String (Value *parent, size_t charc)
+  String (JSON *parent, size_t charc)
     : Value::Value (parent),
       _charc (charc)
   {
@@ -30,7 +30,7 @@ class String : public Value {
   }
 
   /// value interface
-  virtual inline const Value & at (const char *) const { return *this; }
+  virtual inline Value & at (const char *) { return *this; }
 
   virtual inline object_type type () const { return Value::object_type::string; }
 
@@ -38,7 +38,7 @@ class String : public Value {
 
 protected:
 
-  virtual const Value &_at (const char *) const { return *this; }
+  virtual Value &_at (const char *) { return *this; }
 
 public:
 
