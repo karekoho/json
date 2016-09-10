@@ -269,7 +269,7 @@ public:
       { new Boolean (true), Value::boolean, "key_5",  0, 5, { PASS, PASS, FAIL } },
       { new Null (), Value::null, "key_6",  0, 6, { PASS, PASS, FAIL } }
     };
-      arr_parent._element_list.reserve (7);
+      arr_parent._element_list.reserve (6);
 
       for (size_t pidx = 0; pidx < 3; pidx++)
         {
