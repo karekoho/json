@@ -4,14 +4,20 @@
 #include "json_json.h"
 #include "json_undefined.h"
 //class Object;
-#include "json_array.h"
+// #include "json_array.h"
+class Array;
+class String;
+class Number;
+class Boolean;
+class Null;
+//class Undefined;
 /**
  * @brief The object class
  */
 class Object : public JSON
 {
-  // TODO: friend void Value::setKey (const char *key);
-  // TODO: friend void Value::setIndex (const size_t &index);
+// TODO: friend void Value::setKey (const char *key);
+// TODO: friend void Value::setIndex (const size_t &index);
 // friend Value & Object::_assign (Value *ov, Value *nv);
 
 
@@ -19,6 +25,7 @@ class Object : public JSON
 #ifdef UNIT_TEST
   friend class json_test;
   friend class json_object_test;
+  friend class json_array_test;
 #endif
 
 public:
@@ -74,6 +81,14 @@ public:
   virtual inline size_t size () const { return _member_list.size (); }
 
   Value & assign (Object & nv);
+
+  virtual Value & assign (Value & nv) { return Value::assign (nv); }
+
+//  Value & assign (Array & nv);
+//  Value & assign (String & nv);
+//  Value & assign (Number & nv);
+//  Value & assign (Boolean & nv);
+//  Value & assign (Null & nv);
 
   protected:
 

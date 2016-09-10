@@ -1,4 +1,5 @@
 #include "json_value.h"
+#include "json_json.h"
 #include <stdlib.h>
 
 const struct Value::literal_value Value::__ltr_value[3] = {
@@ -80,4 +81,16 @@ Value::_is_literal (const int _try) const
     return __ltr_value[_try].ltr_value;
 
   return _try < 2 ? _is_literal (_try + 1) :  Value::_literal::no_value;
+}
+
+Value &
+Value::assign (Value &nv)
+{
+  if (_parent)
+    {
+      _parent->_assign (this, &nv);
+      return *_parent;
+    }
+
+  throw JSON::error ("bad assignment");
 }

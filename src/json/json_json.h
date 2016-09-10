@@ -96,14 +96,7 @@ public:
    * @param ov
    * @param nv
    */
-  virtual void _assign (Value *, Value *) {}  // TODO : move to value
 
-  /* Value & _assign (Value *p, Value *ov, const Value *nv)
-  {
-    JSON *parent = static_cast<JSON *>(p);
-    parent->_assign (ov, nv);
-    return *p;
-  } */
 
 private:
 

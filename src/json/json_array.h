@@ -2,11 +2,13 @@
 #define ARRAY
 
 #include "json_json.h"
+
 #ifdef UNIT_TEST
 class json_test;
 class json_array_test;
 class json_object_test;
 #endif
+
 /**
  * @brief The array class
  */
@@ -72,6 +74,10 @@ class Array : public JSON
    * @return
    */
   virtual inline size_t size () const { return _element_list.size (); }
+
+  Value & assign (Array & nv);
+
+  virtual Value & assign (Value & nv) { return Value::assign (nv); }
 
 protected:
 

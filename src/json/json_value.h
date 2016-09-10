@@ -13,7 +13,7 @@ class json_object_test;
  * @brief The json_value class
  */
 class JSON;
- class Object;
+class Object;
 class Value
 {
 #ifdef UNIT_TEST
@@ -105,25 +105,44 @@ friend class json_object_test;
    */
   virtual size_t size () const = 0;
 
-
+  /**
+   * @brief key
+   * @return
+   */
   inline const char *key () const { return _key; }
+
+  /**
+    TODO: protected
+   * @brief setKey
+   * @param key
+   * @param charc
+   */
+  inline void setKey (const char *key, size_t charc) { _key = strndup (key, charc); }
+
 
   inline size_t index () const { return _index; }
 
-  inline void setKey (const char *key, size_t charc) { _key = strndup (key, charc); }
-
+  /**
+    TODO: protected
+   * @brief setIndex
+   * @param index
+   */
   inline void setIndex (const size_t &index) { _index = index;}
 
-  virtual Value & assign (Object &) {
-    return *this;
-  }
+  /**
+   * @brief assign
+   * @param nv
+   * @return
+   */
+  virtual Value & assign (Value & nv);
 
-  // inline Value  & parent () const { return *_parent; }
+  /**
+   * TODO: protected, pure virtual, return Value &
+   * @brief _assign
+   */
+  virtual void _assign (Value *, Value *) {}
 
 protected:
-
-  // TODO: inline void setKey (const char *key) { _key = key; }
-  // TODO: inline void setIndex (const size_t & index) { _index = index;}
 
   /**
    * @brief The _sc enum Structural characters.
@@ -226,6 +245,9 @@ protected:
    * @return
    */
   virtual Value & _at (const char *key)  = 0;
+
+
+
 
   /**
    * @brief _assign Assing value. Delete existing key.

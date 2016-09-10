@@ -3,8 +3,12 @@
 Array::Array() : JSON (){}
 
 Array::Array (const char *json)
-  : JSON::JSON (json)
+  : JSON::JSON (json, false)
 {
+  if (_length == 0)
+    throw JSON::error ("null string");
+
+  (void) parse (json);
 }
 
 Array::Array (JSON *parent)
@@ -69,8 +73,20 @@ Array::parse (const char *json)
   return _readp;
 }
 
-/* const Value &
-Array::at (size_t index) const
+Value &
+Array::assign (Array &nv)
 {
-  return *(_element_list.at (atoll (index)));
-} */
+  if (_parent)
+    {
+      _parent->_assign (this, &nv);
+      return *_parent;
+    }
+
+  if (! _element_list.empty ())
+    (void) _element_list.erase (_element_list.begin (), _element_list.end ());
+
+  if (! nv._element_list.empty ())
+    _element_list.assign (nv._element_list.begin (), nv._element_list.end ());
+
+  return *this;
+}

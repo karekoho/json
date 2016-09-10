@@ -1,4 +1,5 @@
 #include "json_object.h"
+#include "json_array.h"
 #include "json_string.h"
 #include "json_undefined.h"
 #include "json_null.h"
@@ -13,8 +14,7 @@ Object::Object (const char *json)
   if (_length == 0)
     throw JSON::error ("null string");
 
-  // if (_parse)
-    (void) parse (json);
+  (void) parse (json);
 }
 
 Object::Object (JSON *parent)
@@ -131,7 +131,79 @@ Object::assign (Object &nv)
       return *_parent;
     }
 
-  _member_list.swap (nv._member_list);
+  if (! _member_list.empty ())
+    (void) _member_list.erase (_member_list.begin (), _member_list.end ());
+
+  if (! nv._member_list.empty ())
+    _member_list.insert (nv._member_list.begin (), nv._member_list.end ());
 
   return *this;
 }
+
+/* Value &Object::assign (Value &nv)
+{
+  if (_parent)
+    {
+      _parent->_assign (this, &nv);
+      return *_parent;
+    }
+
+  throw JSON::error ("bad assignment");
+} */
+
+/* Value &
+Object::assign (Array &nv)
+{
+  if (_parent)
+    {
+      _parent->_assign (this, &nv);
+      return *_parent;
+    }
+
+  throw JSON::error ("bad assignment");
+}
+
+Value &Object::assign(String &nv)
+{
+  if (_parent)
+    {
+      _parent->_assign (this, &nv);
+      return *_parent;
+    }
+
+  throw JSON::error ("bad assignment");
+}
+
+Value &Object::assign(Number &nv)
+{
+  if (_parent)
+    {
+      _parent->_assign (this, &nv);
+      return *_parent;
+    }
+
+  throw JSON::error ("bad assignment");
+}
+
+Value &Object::assign(Boolean &nv)
+{
+  if (_parent)
+    {
+      _parent->_assign (this, &nv);
+      return *_parent;
+    }
+
+  throw JSON::error ("bad assignment");
+}
+
+Value &Object::assign(Null &nv)
+{
+  if (_parent)
+    {
+      _parent->_assign (this, &nv);
+      return *_parent;
+    }
+
+  throw JSON::error ("bad assignment");
+} */
+
