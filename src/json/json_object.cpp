@@ -131,6 +131,8 @@ Object::assign (Object &nv)
       return *_parent;
     }
 
+  // TODO: _member_list = nv._member_list; return *this;
+
   if (! _member_list.empty ())
     (void) _member_list.erase (_member_list.begin (), _member_list.end ());
 

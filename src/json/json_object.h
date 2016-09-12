@@ -126,8 +126,6 @@ protected:
   _assign (Value *ov, Value *nv)
   {
     _member_list[ov->key ()] = nv;
-
-    /// TODO: delete ov;
   }
 };
 

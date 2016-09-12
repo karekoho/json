@@ -65,6 +65,10 @@ public:
    */
   virtual inline size_t size () const { return 1;}
 
+  virtual Value & assign (Value & nv) { return Value::assign (nv); }
+
+  Value & assign (Boolean & nv);
+
   /**
    * @brief value
    * @return

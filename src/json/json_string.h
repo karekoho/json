@@ -6,8 +6,8 @@
 /**
  * @brief The string class
  */
-class String : public Value {
-
+class String : public Value
+{
   public:
 
   String () : Value (), _charc (0) {}
@@ -36,22 +36,15 @@ class String : public Value {
 
   virtual inline size_t size () const { return _string_value.length (); }
 
+  virtual Value & assign (Value & nv) { return Value::assign (nv); }
+
+  Value & assign (String & nv);
+
+  const char * value () const;
+
 protected:
 
   virtual Value &_at (const char *) { return *this; }
-
-public:
-
-  const char *
-  value () const
-  {
-    if (_string_value.empty () && _readp && _charc > 0)
-      _string_value.assign (_readp + 1, _charc - 2);
-
-    return _string_value.c_str ();
-  }
-
-protected:
 
   /**
    * @brief _charc
@@ -62,10 +55,7 @@ protected:
    * @brief _value
    */
   mutable std::string _string_value;
-
-  // Value interface
-
-}; /// class string
+};
 
 #endif // STRING
 

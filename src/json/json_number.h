@@ -3,7 +3,7 @@
 
 #include "json_value.h"
 
-#define FLOAT 0
+#define DOUBLE 0
 #define EXP 1
 
 #define START 0
@@ -84,6 +84,11 @@ public:
    */
   virtual inline size_t size () const { return _double_valuep == 0 ? 0 : 1; }
 
+
+  virtual Value & assign (Value & nv) { return Value::assign (nv); }
+
+  Value & assign (Number & nv);
+
   /**
    * @brief value
    * @return
@@ -149,8 +154,6 @@ protected:
    * @return
    */
   long long _atoll (const char * const digitp[2]) const;
-
-
 };
 
 #endif // NUMBER_H

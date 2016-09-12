@@ -287,6 +287,23 @@ public:
   virtual void
   test_assign_all_values ()
   {
+
+    /* std::cerr << "std::string " <<  sizeof (std::string) << std::endl;
+    std::cerr << "std::vector " <<  sizeof (std::vector<Value *>) << std::endl;
+    std::cerr << "std::unordered_map " <<  sizeof (std::unordered_map<std::string, Value *>) << std::endl;
+    std::cerr << "Value " <<  sizeof (Value) << std::endl;
+    std::cerr << "Object * " <<  sizeof (Number*) << std::endl;
+    std::cerr << "Object " <<  sizeof (Number) << std::endl;
+    std::cerr << "Array * " <<  sizeof (Array*) << std::endl;
+    std::cerr << "Array " <<  sizeof (Array) << std::endl;
+    std::cerr << "String " <<  sizeof (String) << std::endl;
+    std::cerr << "Number " <<  sizeof (Number) << std::endl;
+    std::cerr << "Boolean " <<  sizeof (Boolean) << std::endl;
+    std::cerr << "Null " <<  sizeof (Null) << std::endl;
+    std::cerr << "Undefined " <<  sizeof (Undefined) << std::endl;
+    std::cerr << "char " <<  sizeof (char) << std::endl;
+    std::cerr << "int " <<  sizeof (int) << std::endl;
+    std::cerr << "double " <<  sizeof (double) << std::endl; */
   }
 
   static CppUnit::Test *
@@ -294,9 +311,9 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json number test");
 
- //    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_calculate", &json_number_test::test_calculate));
+     s->addTest (new CppUnit::TestCaller<json_number_test> ("test_calculate", &json_number_test::test_calculate));
 
-//    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_smoke", &json_number_test::test_smoke));
+      s->addTest (new CppUnit::TestCaller<json_number_test> ("test_ctor_dtor", &json_number_test::test_ctor_dtor));
       s->addTest (new CppUnit::TestCaller<json_number_test> ("test_parse_1", &json_number_test::test_parse_1));
 //      return s;
 //    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_size_1", &json_number_test::test_size_1));
@@ -309,6 +326,8 @@ public:
       s->addTest (new CppUnit::TestCaller<json_number_test> ("test_exp", &json_number_test::test_exp));
       s->addTest (new CppUnit::TestCaller<json_number_test> ("test_atof", &json_number_test::test_atof));
       s->addTest (new CppUnit::TestCaller<json_number_test> ("test_atoll", &json_number_test::test_atoll));
+
+      s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_all_values", &json_number_test::test_assign_all_values));
 
     return s;
   }
