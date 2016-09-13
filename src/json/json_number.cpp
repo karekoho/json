@@ -152,15 +152,15 @@ Number::_calculate (const char * const digitp[2][2])
 }
 
 double
-Number::_atof (const char * const digitp[2])
+Number::_atof (const char * const digitp[2]) const
 {
-  return atof (_digit_string.assign (digitp[0], digitp[1]).c_str ());
+  return atof (std::string (digitp[0], digitp[1]).c_str ());
 }
 
 long long
-Number::_atoll (const char * const digitp[2])
+Number::_atoll (const char * const digitp[2]) const
 {
-  return atoll (_digit_string.assign (digitp[0], digitp[1]).c_str ());
+  return atoll (std::string (digitp[0], digitp[1]).c_str ());
 }
 
 Value &

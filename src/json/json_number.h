@@ -122,11 +122,6 @@ protected:
   const char *_digitp[2][2];
 
   /**
-   * @brief _double_string
-   */
-  std::string _digit_string;
-
-  /**
    * @brief _digits If >= 1 digits found, return last character. Else return -1.
    * @return
    */
@@ -156,14 +151,14 @@ protected:
    * @param digitp
    * @return
    */
-  double _atof (const char * const digitp[2]);
+  double _atof (const char * const digitp[2]) const;
 
   /**
    * @brief _atoll
    * @param digitp
    * @return
    */
-  long long _atoll (const char * const digitp[2]);
+  long long _atoll (const char * const digitp[2]) const;
 };
 
 #endif // NUMBER_H
