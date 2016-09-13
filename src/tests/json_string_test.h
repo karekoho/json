@@ -3,7 +3,7 @@
 
 #include "json_value_test_interface.h"
 
-/// Test number 3
+/// Test number 4
 class json_string_test : public json_value_test_interface
 {
 public:

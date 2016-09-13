@@ -7,6 +7,7 @@
 class json_test;
 class json_array_test;
 class json_object_test;
+class json_number_test;
 #endif
 
 /**
@@ -18,6 +19,7 @@ class Array : public JSON
   friend class json_test;
   friend class json_array_test;
   friend class json_object_test;
+  friend class json_number_test;
 #endif
   // TODO: friend void Value::setKey (const char *key);
   // TODO: friend void Value::setIndex (const size_t &index);
@@ -89,7 +91,7 @@ protected:
   /**
    * @brief _debug_value
    */
-  std::string _debug_value;
+  //std::string _debug_value;
 
 protected:
 

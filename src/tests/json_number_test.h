@@ -10,7 +10,27 @@ class json_number_test : public json_value_test_interface {
 public:
 
   virtual void
-  test_ctor_dtor() {}
+  test_ctor_dtor ()
+  {
+    JSON *p[] = { 0, new JSON () };
+
+    for (size_t pidx = 0; pidx < 2; pidx++)
+      {
+        Number *n[] = {
+          new Number (),
+          new Number (10),
+          new Number ("10"),
+          new Number (p[pidx]),
+        };
+
+        delete n[0];
+        delete n[1];
+        delete n[2];
+        delete n[3];
+      }
+
+    delete p[1];
+  }
 
   virtual void
   test_parse_1 ()
@@ -287,23 +307,101 @@ public:
   virtual void
   test_assign_all_values ()
   {
+    Object obj_parent;
+    Array arr_parent;
 
-    /* std::cerr << "std::string " <<  sizeof (std::string) << std::endl;
-    std::cerr << "std::vector " <<  sizeof (std::vector<Value *>) << std::endl;
-    std::cerr << "std::unordered_map " <<  sizeof (std::unordered_map<std::string, Value *>) << std::endl;
-    std::cerr << "Value " <<  sizeof (Value) << std::endl;
-    std::cerr << "Object * " <<  sizeof (Number*) << std::endl;
-    std::cerr << "Object " <<  sizeof (Number) << std::endl;
-    std::cerr << "Array * " <<  sizeof (Array*) << std::endl;
-    std::cerr << "Array " <<  sizeof (Array) << std::endl;
-    std::cerr << "String " <<  sizeof (String) << std::endl;
-    std::cerr << "Number " <<  sizeof (Number) << std::endl;
-    std::cerr << "Boolean " <<  sizeof (Boolean) << std::endl;
-    std::cerr << "Null " <<  sizeof (Null) << std::endl;
-    std::cerr << "Undefined " <<  sizeof (Undefined) << std::endl;
-    std::cerr << "char " <<  sizeof (char) << std::endl;
-    std::cerr << "int " <<  sizeof (int) << std::endl;
-    std::cerr << "double " <<  sizeof (double) << std::endl; */
+    JSON *parents[] = {
+      &obj_parent,
+      &arr_parent,
+      0
+    };
+
+    Number old_value;
+
+    struct assert {
+      Value *new_value;
+      Value::object_type type;
+      const char *key;
+      size_t index;
+      size_t count;
+      int assert_status[3];
+    };
+
+    std::vector<struct assert > test = {
+      { new Array ("[true,false]"), Value::array, "key_2",  0, 1,  { PASS, PASS, FAIL }  },
+      { new Object ("{\"k1\":true,\"k2\":false}"), Value::object, "key_1",  0, 2,  { PASS, PASS, FAIL }},
+      { new String ("\"x\""), Value::string, "key_3",  0, 3,  { PASS, PASS, FAIL }  },
+      { new Number (10), Value::number, "key_4",  0, 4, { PASS, PASS, PASS } },
+      { new Number ("10"), Value::number, "key_5",  0, 5, { PASS, PASS, PASS } },
+      { new Boolean (true), Value::boolean, "key_6",  0, 6, { PASS, PASS, FAIL } },
+      { new Null, Value::null, "key_7",  0, 7, { PASS, PASS, FAIL } }
+    };
+      arr_parent._element_list.reserve (6);
+
+      for (size_t pidx = 0; pidx < 3; pidx++)
+        {
+          obj_parent._member_list.clear ();
+          arr_parent._element_list.clear ();
+          old_value._parent = parents[pidx];
+
+          for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++) {\
+            try {\
+                if ((*it).assert_status[pidx] == SKIP) { continue; }\
+                if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
+
+          /// old_value: value from Value[key], any value
+
+          arr_parent._element_list.push_back (new Undefined);
+          old_value.setKey ((*it).key, strlen ((*it).key));
+
+          (*it).index  = arr_parent._element_list.size () - 1;
+          old_value.setIndex ((*it).index);
+
+          Value *new_value = 0;
+
+          if ((*it).new_value->type () == Value::number)
+            {
+              Number *new_a_value = static_cast<Number *>((*it).new_value);
+              old_value.assign (*new_a_value);
+              new_value = new_a_value;
+            }
+          else
+            {
+              old_value.assign (*(*it).new_value);
+              new_value = (*it).new_value;
+            }
+
+          JSON *parent = old_value._parent;
+
+          if (parent)
+            {
+              ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->size ());
+
+              if (parent->type () == Value::object)
+                {
+                  Value *ov =  obj_parent._member_list.at ((*it).key);
+
+                  ASSERT_EQUAL_IDX ("obj_parent[key].type", ov->type (), (*it).type);
+                  ASSERT_EQUAL_IDX ("obj_parent[key].value", ov, new_value);
+                }
+              else
+                {
+                  Value *av =  arr_parent._element_list.at ((*it).index);
+
+                  ASSERT_EQUAL_IDX ("arr_parent[key].type", av->type (), (*it).type);
+                  ASSERT_EQUAL_IDX ("arr_parent[key].value", av, new_value);
+                }
+            }
+          else
+            {
+              if (new_value->type () == Value::number)
+                {
+                  ASSERT_EQUAL_IDX ("old_value.value ()", (double) 10, old_value.value ());
+                  // ASSERT_EQUAL_IDX ("old_value.value ()", static_cast<Number *>(new_value)->value (), old_value.value ());
+                }
+            }
+          TEST_IT_END;
+        }
   }
 
   static CppUnit::Test *
@@ -311,23 +409,22 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json number test");
 
-     s->addTest (new CppUnit::TestCaller<json_number_test> ("test_calculate", &json_number_test::test_calculate));
-
-      s->addTest (new CppUnit::TestCaller<json_number_test> ("test_ctor_dtor", &json_number_test::test_ctor_dtor));
-      s->addTest (new CppUnit::TestCaller<json_number_test> ("test_parse_1", &json_number_test::test_parse_1));
-//      return s;
+    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_ctor_dtor", &json_number_test::test_ctor_dtor));
+    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_parse_1", &json_number_test::test_parse_1));
+//
 //    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_size_1", &json_number_test::test_size_1));
 //    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_get_1", &json_number_test::test_get_1));
 //    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_value_1", &json_number_test::test_value_1));
 //    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_debug_1", &json_object_test::test_debug_1));
 
-      s->addTest (new CppUnit::TestCaller<json_number_test> ("test_digits", &json_number_test::test_digits));
-      s->addTest (new CppUnit::TestCaller<json_number_test> ("test_frag", &json_number_test::test_frag));
-      s->addTest (new CppUnit::TestCaller<json_number_test> ("test_exp", &json_number_test::test_exp));
-      s->addTest (new CppUnit::TestCaller<json_number_test> ("test_atof", &json_number_test::test_atof));
-      s->addTest (new CppUnit::TestCaller<json_number_test> ("test_atoll", &json_number_test::test_atoll));
+    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_digits", &json_number_test::test_digits));
+    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_frag", &json_number_test::test_frag));
+    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_exp", &json_number_test::test_exp));
+    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_atof", &json_number_test::test_atof));
+    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_atoll", &json_number_test::test_atoll));
 
-      s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_all_values", &json_number_test::test_assign_all_values));
+    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_calculate", &json_number_test::test_calculate));
+    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_all_values", &json_number_test::test_assign_all_values));
 
     return s;
   }

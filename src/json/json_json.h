@@ -83,7 +83,7 @@ protected:
     return type () == Value::undefined ? *(new Undefined) : __value->at (key);
   }
 
-  const Undefined _undef_value;
+  // const Undefined _undef_value;
 
   /**
    * @brief _make_value

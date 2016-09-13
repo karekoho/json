@@ -129,7 +129,7 @@ Number::_exp ()
 }
 
 double
-Number::_calculate (const char * const digitp[2][2]) const
+Number::_calculate (const char * const digitp[2][2])
 {
   if (digitp[DOUBLE][START] == 0 || digitp[DOUBLE][END] == 0)
     return 0;
@@ -152,17 +152,15 @@ Number::_calculate (const char * const digitp[2][2]) const
 }
 
 double
-Number::_atof (const char * const digitp[2]) const
+Number::_atof (const char * const digitp[2])
 {
-  std::string s (digitp[0], digitp[1]);
-  return atof (s.c_str ());
+  return atof (_digit_string.assign (digitp[0], digitp[1]).c_str ());
 }
 
 long long
-Number::_atoll (const char * const digitp[2]) const
+Number::_atoll (const char * const digitp[2])
 {
-  std::string s (digitp[0], digitp[1]);
-  return atoll (s.c_str ());
+  return atoll (_digit_string.assign (digitp[0], digitp[1]).c_str ());
 }
 
 Value &
@@ -174,12 +172,18 @@ Number::assign (Number &nv)
       return *_parent;
     }
 
-  _digitp[DOUBLE][START] = nv._digitp[DOUBLE][START];
-  _digitp[DOUBLE][END]   = nv._digitp[DOUBLE][END];
-  _digitp[EXP][START]   = nv._digitp[EXP][START];
-  _digitp[EXP][END]     = nv._digitp[EXP][END];
+  _digitp[DOUBLE][START]  = nv._digitp[DOUBLE][START];
+  _digitp[DOUBLE][END]    = nv._digitp[DOUBLE][END];
+  _digitp[EXP][START]     = nv._digitp[EXP][START];
+  _digitp[EXP][END]       = nv._digitp[EXP][END];
 
-  _double_value = _calculate (_digitp);
+  if (nv._double_valuep)
+    {
+      _double_value = nv._double_value;
+      _double_valuep = &_double_value;
+    }
+  else
+    _double_value = _calculate (_digitp);
 
   return *this;
 }

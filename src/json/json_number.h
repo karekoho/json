@@ -2,6 +2,7 @@
 #define NUMBER_H
 
 #include "json_value.h"
+#include "json_json.h"
 
 #define DOUBLE 0
 #define EXP 1
@@ -46,6 +47,10 @@ public:
       _double_valuep (0),
       _digitp {{ 0, 0 },{ 0, 0 }}
   {
+    if (_length == 0)
+      throw JSON::error ("null string");
+
+    (void) parse (json);
   }
 
   Number (JSON *parent)
@@ -93,7 +98,7 @@ public:
    * @brief value
    * @return
    */
-  inline double value () const { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
+  inline double value () { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
 
 protected:
 
@@ -104,17 +109,22 @@ protected:
   /**
    * @brief _value
    */
-  mutable double _double_value;
+  double _double_value;
 
   /**
    * @brief _double_valuep
    */
-  mutable double *_double_valuep;
+  double *_double_valuep;
 
   /**
    * @brief _digitp
    */
-  mutable const char *_digitp[2][2];
+  const char *_digitp[2][2];
+
+  /**
+   * @brief _double_string
+   */
+  std::string _digit_string;
 
   /**
    * @brief _digits If >= 1 digits found, return last character. Else return -1.
@@ -139,21 +149,21 @@ protected:
    * @param digitp
    * @return
    */
-  double _calculate (const char * const digitp[2][2]) const;
+  double _calculate (const char * const digitp[2][2]);
 
   /**
    * @brief _atof
    * @param digitp
    * @return
    */
-  double _atof (const char * const digitp[2]) const;
+  double _atof (const char * const digitp[2]);
 
   /**
    * @brief _atoll
    * @param digitp
    * @return
    */
-  long long _atoll (const char * const digitp[2]) const;
+  long long _atoll (const char * const digitp[2]);
 };
 
 #endif // NUMBER_H
