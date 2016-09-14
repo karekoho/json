@@ -10,7 +10,8 @@ class String;
 class Number;
 class Boolean;
 class Null;
-//class Undefined;
+class Undefined;
+//class json_undefined_test;
 /**
  * @brief The object class
  */
@@ -20,14 +21,14 @@ class Object : public JSON
 // TODO: friend void Value::setIndex (const size_t &index);
 // friend Value & Object::_assign (Value *ov, Value *nv);
 
-
-
 #ifdef UNIT_TEST
   friend class json_test;
   friend class json_object_test;
   friend class json_array_test;
   friend class json_string_test;
   friend class json_number_test;
+  friend class json_null_test;
+  friend class json_undefined_test;
 #endif
 
 public:

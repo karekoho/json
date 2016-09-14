@@ -13,15 +13,13 @@ public:
 
   virtual void test_ctor_dtor ()
   {
-    const char * input = "{}";
-
     JSON *p[] = { 0, new JSON () };
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
         Object *o[] = {
           new Object (),
-          new Object (input),
+          new Object ("{}"),
           new Object (p[pidx]),
         };
 
@@ -140,7 +138,7 @@ public:
   virtual void test_size_1 () {}
 
   virtual void
-  test_at_1 ()
+  test_at ()
   {
     Object o;
 
@@ -167,7 +165,7 @@ public:
   }
 
   virtual void
-  test_at_2 ()
+  test__at ()
   {
     Object o;
 
@@ -352,8 +350,8 @@ public:
       s->addTest (new CppUnit::TestCaller<json_object_test> ("test_key", &json_object_test::test_parse_1));
  //     return s;
 //    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_size_1", &json_object_test::test_size_1));
-      s->addTest (new CppUnit::TestCaller<json_object_test> ("test_at_1", &json_object_test::test_at_1));
-      s->addTest (new CppUnit::TestCaller<json_object_test> ("test_at_1", &json_object_test::test_at_2));
+      s->addTest (new CppUnit::TestCaller<json_object_test> ("test_at_1", &json_object_test::test_at));
+      s->addTest (new CppUnit::TestCaller<json_object_test> ("test_at_1", &json_object_test::test__at));
 
 //    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_value_1", &json_object_test::test_value_1));
 //    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_debug_1", &json_object_test::test_debug_1));

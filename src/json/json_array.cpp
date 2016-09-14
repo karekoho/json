@@ -43,7 +43,7 @@ Array::parse (const char *json)
     {
       (void) _look_ahead ();
 
-      if (*_readp == _sc::value_separator) /// ','
+      if (*_readp == _sc::value_separator) // ','
         {
           _readp++;
 
@@ -53,17 +53,17 @@ Array::parse (const char *json)
           _element_list.push_back (v);
           v->setIndex (_element_list.size () - 1);
         }
-      else if (*_readp == _sc::end_array)         /// ']'
+      else if (*_readp == _sc::end_array)         // ']'
         return _readp + 1;
 
-      else if ((v = _make_value())->type () == Value::undefined)  /// No valid value found
+      else if ((v = _make_value())->type () == Value::undefined)  // No valid value found
         {
-          if (*_readp != Value::_ws::space /** TODO: check other ws_ characters */)
+          if (*_readp != Value::_ws::space /* TODO: check other ws_ characters */)
             throw "array::parse: unexpected character";
 
-          /// empty array
+          // Empty array
         }
-      else  /// Value found
+      else  // Value found
         {
           _element_list.push_back (v);
           v->setIndex (_element_list.size () - 1);
@@ -71,6 +71,19 @@ Array::parse (const char *json)
     }
 
   return _readp;
+}
+
+Value &
+Array::at (size_t index) const
+{
+  try
+    {
+      return *(_element_list.at (index));
+    }
+  catch (std::out_of_range &e)
+    {
+      throw JSON::out_of_range (e.what ());
+    }
 }
 
 Value &

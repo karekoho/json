@@ -9,6 +9,8 @@ class json_array_test;
 class json_object_test;
 class json_string_test;
 class json_number_test;
+class json_null_test;
+class json_undefined_test;
 #endif
 
 /**
@@ -22,6 +24,8 @@ class Array : public JSON
   friend class json_object_test;
   friend class json_string_test;
   friend class json_number_test;
+  friend class json_null_test;
+  friend class json_undefined_test;
 #endif
   // TODO: friend void Value::setKey (const char *key);
   // TODO: friend void Value::setIndex (const size_t &index);
@@ -63,9 +67,8 @@ class Array : public JSON
    */
   virtual inline Value & at (const char *key)  { return at (atoll (key)); }
 
-  // virtual inline const Value & at (const char *key) const { return at (atoll (key)); }
 
-  inline Value & at (size_t index)  { return *(_element_list.at (index)); }
+  inline Value & at (size_t index) const;
 
   /**
    * @brief type

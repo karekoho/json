@@ -16,10 +16,9 @@
 /**
  * @brief The json class
  */
-
-//class Object;
 class Undefined;
-class JSON : public Value {
+class JSON : public Value
+{
  // friend Value & Object::assign (Object &);
 
 #ifdef UNIT_TEST

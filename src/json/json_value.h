@@ -6,20 +6,22 @@
 #include <string>
 
 #ifdef UNIT_TEST
-class json_value_test;
-class json_object_test;
+  class json_value_test;
+  // class json_object_test;
+  class json_undefined_test;
 #endif
 /**
  * @brief The json_value class
  */
 class JSON;
-class Object;
+// class Object;
 class Value
 {
 #ifdef UNIT_TEST
-friend class json_test;
-friend class json_value_test;
-friend class json_object_test;
+  // friend class json_test;
+  friend class json_value_test;
+  // friend class json_object_test;
+  friend class json_undefined_test; // WTF ???
 #endif
 
   public:
@@ -77,8 +79,7 @@ friend class json_object_test;
    * @param key
    * @return
    */
-  virtual Value & at (const char *key) = 0;
-  // virtual const Value & at (const char *key) const = 0;
+  virtual Value & at (const char *key) /* TODO: const */ = 0;
 
   /**
    * @brief operator []
@@ -119,7 +120,10 @@ friend class json_object_test;
    */
   inline void setKey (const char *key, size_t charc) { _key = strndup (key, charc); }
 
-
+  /**
+   * @brief index
+   * @return
+   */
   inline size_t index () const { return _index; }
 
   /**
@@ -161,10 +165,10 @@ protected:
    * @brief The _ws enum White space characters.
    */
   enum _ws {
-    tab   = 9,    /// \t Horizontal tab
-    lf    = 10,   /// \n Line feed or New line
-    cr    = 13,   /// \r Carriage return
-    space = 32    /// Space
+    tab   = 9,    // \t Horizontal tab
+    lf    = 10,   // \n Line feed or New line
+    cr    = 13,   // \r Carriage return
+    space = 32    // Space
   };
 
   /**
@@ -182,7 +186,7 @@ protected:
    */
   const char *_startp;
 
-  /** TODO: move to json
+  /**
    * @brief _readp
    */
   const char *_readp;
@@ -245,9 +249,6 @@ protected:
    * @return
    */
   virtual Value & _at (const char *key)  = 0;
-
-
-
 
   /**
    * @brief _assign Assing value. Delete existing key.

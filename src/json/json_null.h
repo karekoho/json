@@ -67,8 +67,18 @@ public:
    */
   inline const char * value () const { return ""; }
 
+  /**
+   * @brief assign
+   * @param nv
+   * @return
+   */
   virtual Value & assign (Value & nv) { return Value::assign (nv); }
 
+  /**
+   * @brief assign
+   * @param nv
+   * @return
+   */
   Value & assign (Null & nv);
 };
 #endif // NULL_H
