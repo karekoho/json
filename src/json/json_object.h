@@ -26,6 +26,7 @@ class Object : public JSON
   friend class json_test;
   friend class json_object_test;
   friend class json_array_test;
+  friend class json_string_test;
   friend class json_number_test;
 #endif
 

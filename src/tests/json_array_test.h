@@ -12,15 +12,13 @@ public:
   virtual void
   test_ctor_dtor ()
   {
-    const char * input = "[]";
-
     JSON *p[] = { 0, new JSON () };
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
         Array *a[] = {
           new Array (),
-          new Array (input),
+          new Array ("[]"),
           new Array (p[pidx]),
         };
 
