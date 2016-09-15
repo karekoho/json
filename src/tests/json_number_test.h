@@ -12,12 +12,12 @@ public:
   virtual void
   test_ctor_dtor ()
   {
-    JSON *p[] = { 0, new JSON () };
+    JSON *p[] = { 0, new JSON };
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
         Number *n[] = {
-          new Number (),
+          new Number,
           new Number (10),
           new Number ("10"),
           new Number (p[pidx]),

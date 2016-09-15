@@ -8,6 +8,7 @@
 #ifdef UNIT_TEST
   class json_value_test;
   // class json_object_test;
+  class json_null_test;
   class json_undefined_test;
 #endif
 /**
@@ -21,6 +22,7 @@ class Value
   // friend class json_test;
   friend class json_value_test;
   // friend class json_object_test;
+  friend class json_null_test;  // WTF ???
   friend class json_undefined_test; // WTF ???
 #endif
 

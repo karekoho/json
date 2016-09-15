@@ -19,7 +19,7 @@ class Null : public Value
    * @brief Null
    * @param json
    */
-  Null (const char *json) : Value::Value (json) {}
+  // Null (const char *json) : Value::Value (json) {}
 
   /**
    * @brief Null

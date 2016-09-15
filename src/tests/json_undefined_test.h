@@ -11,17 +11,17 @@ public:
 
   virtual void test_ctor_dtor ()
   {
-    JSON *p[] = { 0, new JSON () };
+    JSON *p[] = { 0, new JSON };
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
-        Undefined *n[] = {
-          new Undefined (),
+        Undefined *u[] = {
+          new Undefined,
           new Undefined (p[pidx]),
         };
 
-        delete n[0];
-        delete n[1];
+        delete u[0];
+        delete u[1];
       }
 
     delete p[1];
