@@ -49,7 +49,7 @@ public:
       { "{ } ", 0, Value::undefined, 1, PASS },
       { "{\"k\":\"v\"} ", 1, Value::string, 1, PASS },
       { "{ \"k\" : \"v\" } ", 1, Value::string, 1, PASS },
-      { "{ \"k\" : \"v\", \"q\" : \"p\" } ", 2, Value::string, 1, PASS },
+      { "{\"k\":\"v\",\"q\":\"p\"} ", 2, Value::string, 1, PASS },
       { "{ \"k\": \"v\", \"q\" : \"p\",\"K\":\"v\" } ", 3, Value::string, 1, PASS },
       { "{ \"k\": \"p\" ,\"q\" : \"p\", \"K\" :\"v\",\"Q\":\"p\" } ", 4, Value::string, 1, PASS },
 
@@ -294,12 +294,14 @@ public:
           if ((*it).new_value->type () == Value::object)
             {
               Object *new_o_value = static_cast<Object *>((*it).new_value);
-              old_value.assign (*new_o_value);
+              // old_value._assign (*new_o_value);
+              old_value = *new_o_value;
               new_value = new_o_value;
             }
           else
             {
-              old_value.assign (*(*it).new_value);
+              // old_value._assign (*(*it).new_value);
+              old_value = *(*it).new_value;
               new_value = (*it).new_value;
             }
 
@@ -326,7 +328,7 @@ public:
             }
           else
             {
-              ASSERT_EQUAL_IDX ("old_value.size ()", new_value->size () , old_value.size ());
+              ASSERT_EQUAL_IDX ("old_value.size ()", new_value->size (), old_value.size ());
 
               // Value *ov =  & old_value.at ((*it).key);
               // ASSERT_EQUAL_IDX ("obj_parent[key].type", ov->type (), (*it).type);
@@ -335,6 +337,16 @@ public:
           TEST_IT_END;
         }
   }
+
+  virtual void
+  test_operator_assign ()
+  {
+
+    // TODO: assign key => boolean to object_1: object_1[key] = boolean
+    // TODO: assign object_2 to object_1: object_1 => object_2
+  }
+
+  virtual void test_operator_at () {}
 
   static CppUnit::Test*
   suite ()

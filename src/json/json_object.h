@@ -84,53 +84,60 @@ public:
    */
   virtual inline size_t size () const { return _member_list.size (); }
 
-  Value & assign (Object & nv);
+  /**
+   * @brief operator =
+   * @param o
+   * @return
+   */
+  inline Value & operator =(Object & o) { return _assign (o);  }
 
-  virtual Value & assign (Value & nv) { return Value::assign (nv); }
+  /**
+   * @brief operator =
+   * @param v
+   * @return
+   */
+  inline Value & operator =(Value & v) { return _assign (v); }
 
-//  Value & assign (Array & nv);
-//  Value & assign (String & nv);
-//  Value & assign (Number & nv);
-//  Value & assign (Boolean & nv);
-//  Value & assign (Null & nv);
-
-  protected:
+protected:
 
   /**
    * @brief _member_list
    */
   mutable std::unordered_map<std::string, Value *> _member_list;
 
+  /**
+   * @brief _pair
+   * @return
+   */
   bool _pair ();
 
-  Value *_value ();
+  /**
+   * @brief _assign
+   * @param nv
+   * @return
+   */
+  Value & _assign (Object & nv);
 
-  // Value interface
-protected:
+  /**
+   * @brief _at
+   * @param key
+   * @return
+   */
+  virtual Value & _at (const char *key);
 
-  virtual Value &
-  _at (const char *key)
-  {
-    try
-      {
-        return *(_member_list.at (key));
-      }
-    catch (std::out_of_range &)
-      {
-        Value *v = new Undefined (this);
+  /**
+   * @brief _assign
+   * @param nv
+   * @return
+   */
+  virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
 
-        v->setKey (key, strlen (key));
-        _member_list.emplace (key, v);
-
-        return *v;
-      }
-  }
-
-  inline virtual void
-  _assign (Value *ov, Value *nv)
-  {
-    _member_list[ov->key ()] = nv;
-  }
+  /**
+   * @brief assign
+   * @param ov
+   * @param nv
+   */
+  virtual void assign (Value *ov, Value *nv);
 };
 
 #endif // OBJECT_H

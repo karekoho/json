@@ -21,11 +21,11 @@ String::parse (const char *json)
 }
 
 Value &
-String::assign (String &nv)
+String::_assign (String &nv)
 {
   if (_parent)
     {
-      _parent->_assign (this, &nv);
+      _parent->assign (this, &nv);
       return *_parent;
     }
 

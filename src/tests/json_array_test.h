@@ -169,12 +169,14 @@ public:
           if ((*it).new_value->type () == Value::array)
             {
               Array *new_a_value = static_cast<Array *>((*it).new_value);
-              old_value.assign (*new_a_value);
+              // old_value._assign (*new_a_value);
+              old_value = *new_a_value;
               new_value = new_a_value;
             }
           else
             {
-              old_value.assign (*(*it).new_value);
+              // old_value._assign (*(*it).new_value);
+              old_value = *(*it).new_value;
               new_value = (*it).new_value;
             }
 
@@ -268,6 +270,9 @@ public:
 
     TEST_IT_END;
   }
+
+  virtual void test_operator_assign () {}
+  virtual void test_operator_at () {}
 
   virtual void test_value_1 () {}
   virtual void test_debug_1 () {}

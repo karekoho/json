@@ -89,20 +89,32 @@ public:
    */
   virtual inline size_t size () const { return _double_valuep == 0 ? 0 : 1; }
 
+  /**
+   * @brief _assign
+   * @param nv
+   * @return
+   */
+  virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
 
-  virtual Value & assign (Value & nv) { return Value::assign (nv); }
+  /**
+   * @brief operator =
+   * @param n
+   * @return
+   */
+  inline Value & operator =(Number & n) { return _assign (n);  }
 
-  Value & assign (Number & nv);
+  /**
+   * @brief operator =
+   * @param v
+   * @return
+   */
+  inline Value & operator =(Value & v) { return _assign (v);  }
 
   /**
    * @brief value
    * @return
    */
   inline double value () { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
-
-protected:
-
-  virtual inline Value &_at (const char *) { return *this; }
 
 protected:
 
@@ -159,6 +171,19 @@ protected:
    * @return
    */
   long long _atoll (const char * const digitp[2]) const;
+
+  /**
+   * @brief _at
+   * @return
+   */
+  virtual inline Value &_at (const char *) { return *this; }
+
+  /**
+   * @brief _assign
+   * @param nv
+   * @return
+   */
+  Value & _assign (Number & nv);
 };
 
 #endif // NUMBER_H

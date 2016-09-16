@@ -87,11 +87,11 @@ Array::at (size_t index) const
 }
 
 Value &
-Array::assign (Array &nv)
+Array::_assign (Array &nv)
 {
   if (_parent)
     {
-      _parent->_assign (this, &nv);
+      _parent->assign (this, &nv);
       return *_parent;
     }
 
@@ -102,4 +102,28 @@ Array::assign (Array &nv)
     _element_list.assign (nv._element_list.begin (), nv._element_list.end ());
 
   return *this;
+}
+
+Value &
+Array::_at(size_t index)
+{
+  try
+    {
+      return *_element_list.at (index);
+    }
+  catch (std::out_of_range &)
+    {
+      Value *v = new Undefined (this);
+
+      _element_list.push_back (v);
+      v->setIndex (_element_list.size () - 1);
+
+      return *v;
+  }
+}
+
+void
+Array::assign (Value *ov, Value *nv)
+{
+  _element_list.at (ov->index ()) = nv;
 }

@@ -123,11 +123,11 @@ Object::at (const char *key)
 }
 
 Value &
-Object::assign (Object &nv)
+Object::_assign (Object &nv)
 {
   if (_parent)
     {
-      _parent->_assign (this, &nv);
+      _parent->assign (this, &nv);
       return *_parent;
     }
 
@@ -140,4 +140,28 @@ Object::assign (Object &nv)
     _member_list.insert (nv._member_list.begin (), nv._member_list.end ());
 
   return *this;
+}
+
+Value &
+Object::_at (const char *key)
+{
+  try
+    {
+      return *(_member_list.at (key));
+    }
+  catch (std::out_of_range &)
+    {
+      Value *v = new Undefined (this);
+
+      v->setKey (key, strlen (key));
+      _member_list.emplace (key, v);
+
+      return *v;
+  }
+}
+
+void
+Object::assign (Value *ov, Value *nv)
+{
+   _member_list[ov->key ()] = nv;
 }

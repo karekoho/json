@@ -2,11 +2,11 @@
 #include "json_json.h"
 
 Value &
-Boolean::assign (Boolean &nv)
+Boolean::_assign (Boolean &nv)
 {
   if (_parent)
     {
-      _parent->_assign (this, &nv);
+      _parent->assign (this, &nv);
       return *_parent;
     }
 

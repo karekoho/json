@@ -132,6 +132,9 @@ public:
       TEST_IT_END;
     }
 
+    virtual void test_operator_assign () {}
+    virtual void test_operator_at () {}
+
     void test_is_number ();
 
     virtual void

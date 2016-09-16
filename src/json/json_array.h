@@ -69,8 +69,19 @@ class Array : public JSON
    */
   virtual inline Value & at (const char *key)  { return at (atoll (key)); }
 
-
+  /**
+   * @brief at
+   * @param index
+   * @return
+   */
   inline Value & at (size_t index) const;
+
+  /**
+   * @brief assign
+   * @param ov
+   * @param nv
+   */
+  virtual void assign (Value *ov, Value *nv);
 
   /**
    * @brief type
@@ -84,9 +95,19 @@ class Array : public JSON
    */
   virtual inline size_t size () const { return _element_list.size (); }
 
-  Value & assign (Array & nv);
+  /**
+   * @brief operator =
+   * @param a
+   * @return
+   */
+  inline Value & operator =(Array & a) { return _assign (a); }
 
-  virtual Value & assign (Value & nv) { return Value::assign (nv); }
+  /**
+   * @brief operator =
+   * @param v
+   * @return
+   */
+  inline Value & operator =(Value & v) { return _assign (v); }
 
 protected:
 
@@ -96,41 +117,31 @@ protected:
   std::vector<Value *> _element_list;
 
   /**
-   * @brief _debug_value
-   */
-  //std::string _debug_value;
-
-protected:
-
-
-  /**
    * @brief _at
    * @return
    */
-  virtual inline Value &_at (const char *)  { return *this; }
+  virtual Value &_at (const char *)  { return *this; }
 
-  Value &_at (size_t index)
-  {
-    try
-      {
-        return *_element_list.at (index);
-      }
-    catch (std::out_of_range &)
-      {
-        Value *v = new Undefined (this);
+  /**
+   * @brief _assign
+   * @param nv
+   * @return
+   */
+  Value & _assign (Array & nv);
 
-        _element_list.push_back (v);
-        v->setIndex (_element_list.size () - 1);
+  /**
+   * @brief _assign
+   * @param nv
+   * @return
+   */
+  virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
 
-        return *v;
-      }
-   }
-
-  virtual inline void
-  _assign (Value *ov, Value *nv)
-  {
-    _element_list.at (ov->index ()) = nv;
-  }
+  /**
+   * @brief _at
+   * @param index
+   * @return
+   */
+  Value &_at (size_t index);
 };
 
 #endif // ARRAY

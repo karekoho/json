@@ -164,11 +164,11 @@ Number::_atoll (const char * const digitp[2]) const
 }
 
 Value &
-Number::assign (Number &nv)
+Number::_assign (Number &nv)
 {
   if (_parent)
     {
-      _parent->_assign (this, &nv);
+      _parent->assign (this, &nv);
       return *_parent;
     }
 

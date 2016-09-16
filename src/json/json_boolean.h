@@ -6,6 +6,7 @@
 #ifdef UNIT_TEST
   class json_boolean_test;
 #endif
+
 /**
  * @brief The boolean class
  */
@@ -66,18 +67,25 @@ public:
   virtual inline size_t size () const { return 1;}
 
   /**
-   * @brief assign
-   * @param nv
+   * @brief operator =
+   * @param b
    * @return
    */
-  virtual Value & assign (Value & nv) { return Value::assign (nv); }
+  inline Value & operator =(Boolean & b) { return _assign (b); }
+
+  /**
+   * @brief operator =
+   * @param v
+   * @return
+   */
+  inline Value & operator =(Value & v) { return _assign (v); }
 
   /**
    * @brief assign
    * @param nv
    * @return
    */
-  Value & assign (Boolean & nv);
+  Value & _assign (Boolean & nv);
 
   /**
    * @brief value
@@ -104,6 +112,13 @@ protected:
    * @return
    */
   virtual inline Value &_at (const char *)  { return *this; }
+
+  /**
+   * @brief _assign
+   * @param nv
+   * @return
+   */
+  virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
 };
 
 #endif // BOOLEAN_H

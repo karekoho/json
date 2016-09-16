@@ -3,11 +3,19 @@
 
 #include "json_value.h"
 
+#ifdef UNIT_TEST
+ class json_null_test;
+#endif
+
 /**
  * @brief The Null class
  */
 class Null : public Value
 {
+#ifdef UNIT_TEST
+ friend class json_null_test;
+#endif
+
   public:
 
   /**
@@ -28,10 +36,6 @@ class Null : public Value
    * @param charc
    */
   Null (JSON *parent) : Value::Value (parent) {}
-
-protected:
-
-  virtual Value &_at (const char *) { return *this; }
 
 public:
 
@@ -68,17 +72,39 @@ public:
   inline const char * value () const { return ""; }
 
   /**
-   * @brief assign
+   * @brief operator =
+   * @param n
+   * @return
+   */
+  inline Value & operator =(Null & n) { return _assign (n); }
+
+  /**
+   * @brief operator =
+   * @param v
+   * @return
+   */
+  inline Value & operator =(Value & v) { return _assign (v); }
+
+  protected:
+
+  /**
+   * @brief _at
+   * @return
+   */
+  virtual Value &_at (const char *) { return *this; }
+
+  /**
+   * @brief _assign
    * @param nv
    * @return
    */
-  virtual Value & assign (Value & nv) { return Value::assign (nv); }
+  virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
 
   /**
    * @brief assign
    * @param nv
    * @return
    */
-  Value & assign (Null & nv);
+  Value & _assign (Null & nv);
 };
 #endif // NULL_H

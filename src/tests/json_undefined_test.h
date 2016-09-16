@@ -87,17 +87,9 @@ public:
 
           Value *new_value = 0;
 
-          if ((*it).new_value->type () == Value::string)
-            {
-              String *new_a_value = static_cast<String *>((*it).new_value);
-              old_value.assign (*new_a_value);
-              new_value = new_a_value;
-            }
-          else
-            {
-              old_value.assign (*(*it).new_value);
-              new_value = (*it).new_value;
-            }
+          // old_value._assign (*(*it).new_value);
+          old_value = *(*it).new_value;
+          new_value = (*it).new_value;
 
           JSON *parent = old_value._parent;
 
@@ -124,8 +116,10 @@ public:
         }
   }
 
-  virtual void test_value_1 () {}
+  virtual void test_operator_assign () {}
+  virtual void test_operator_at () {}
 
+  virtual void test_value_1 () {}
   virtual void test_debug_1 () {}
 
   static CppUnit::Test *

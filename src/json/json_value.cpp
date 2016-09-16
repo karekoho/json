@@ -84,11 +84,11 @@ Value::_is_literal (const int _try) const
 }
 
 Value &
-Value::assign (Value &nv)
+Value::_assign (Value &nv)
 {
   if (_parent)
     {
-      _parent->_assign (this, &nv);
+      _parent->assign (this, &nv);
       return *_parent;
     }
 

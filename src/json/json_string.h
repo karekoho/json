@@ -66,18 +66,25 @@ friend class json_string_test;
   virtual inline size_t size () const { return _string_value.length (); }
 
   /**
-   * @brief assign
-   * @param nv
+   * @brief operator =
+   * @param s
    * @return
    */
-  virtual Value & assign (Value & nv) { return Value::assign (nv); }
+  inline Value & operator =(String & s) { return _assign (s); }
+
+  /**
+   * @brief operator =
+   * @param v
+   * @return
+   */
+  inline Value & operator =(Value & v) { return _assign (v); }
 
   /**
    * @brief assign
    * @param nv
    * @return
    */
-  Value & assign (String & nv);
+  Value & _assign (String & nv);
 
   /**
    * @brief value
@@ -102,6 +109,13 @@ protected:
    * @brief _value
    */
   mutable std::string _string_value;
+
+  /**
+   * @brief assign
+   * @param nv
+   * @return
+   */
+  virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
 };
 
 #endif // STRING

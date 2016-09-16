@@ -3,11 +3,19 @@
 
 #include "json_value.h"
 
+#ifdef UNIT_TEST
+  class json_undefined_test;
+#endif
+
 /**
  * @brief The undefined class
  */
 class Undefined : public Value
 {
+#ifdef UNIT_TEST
+  friend class json_undefined_test;
+#endif
+
   public:
 
   Undefined () : Value::Value () {}
@@ -26,24 +34,29 @@ class Undefined : public Value
 
   virtual inline size_t size () const { return 0; }
 
-  /**
-   * @brief assign
-   * @param nv
-   * @return
-   */
-  virtual Value & assign (Value & nv) { return Value::assign (nv); }
-
-  /**
-   * @brief assign
-   * @param nv
-   * @return
-   */
-  Value & assign (Undefined & nv);
+  inline Value & operator =(Value & v) { return _assign (v);  }
 
 protected:
 
+  /**
+   * @brief _at
+   * @return
+   */
   virtual Value &_at (const char *) { return *this; }
 
+  /**
+   * @brief assign
+   * @param nv
+   * @return
+   */
+  // Value & _assign (Undefined & nv);
+
+  /**
+   * @brief assign
+   * @param nv
+   * @return
+   */
+  virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
 };
 
 #endif // UNDEFINED_H

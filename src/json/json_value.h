@@ -14,7 +14,9 @@
 /**
  * @brief The json_value class
  */
+
 class JSON;
+//class Undefined;
 // class Object;
 class Value
 {
@@ -26,6 +28,7 @@ class Value
   friend class json_undefined_test; // WTF ???
 #endif
 
+  //friend void Undefined::_assign (Value *, Value *);
   public:
 
   /**
@@ -94,7 +97,7 @@ class Value
    * @brief operator =
    * @param v
    */
-  // inline void operator =(const Value & v) { _assign (v);  }
+  inline Value & operator =(Value & v) { return _assign (v);  }
 
   /**
    * @brief type
@@ -136,19 +139,29 @@ class Value
   inline void setIndex (const size_t &index) { _index = index;}
 
   /**
+   * TODO: protected
+   *
    * @brief assign
    * @param nv
    * @return
    */
-  virtual Value & assign (Value & nv);
+  //virtual Value & assign (Value & nv);
 
   /**
-   * TODO: protected, pure virtual, return Value &
+   * TODO: pure virtual, return Value &
+   *
    * @brief _assign
    */
-  virtual void _assign (Value *, Value *) {}
+  virtual void assign (Value *, Value *) {}
 
 protected:
+
+  /**
+   * @brief assign
+   * @param nv
+   * @return
+   */
+  virtual Value & _assign (Value & nv);
 
   /**
    * @brief The _sc enum Structural characters.

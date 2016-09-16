@@ -142,8 +142,8 @@ public:
         ASSERT_EQUAL_IDX ("value.type ()", Value::undefined, oov.type ());
         ASSERT_EQUAL_IDX ("value.type ()", Value::undefined, aov.type ());
 
-        op._assign (&oov, (*it).value[0]);
-        ap._assign (&aov, (*it).value[1]);
+        op.assign (&oov, (*it).value[0]);
+        ap.assign (&aov, (*it).value[1]);
 
         ASSERT_EQUAL_IDX ("parent._at (key)", (*it).type, op._at ((*it).key).type ());
         ASSERT_EQUAL_IDX ("parent._at (index)", (*it).type, ap._at ((*it).index).type ());
@@ -157,6 +157,9 @@ public:
   test_assign_all_values ()
   {
   }
+
+  virtual void test_operator_assign () {}
+  virtual void test_operator_at () {}
 
   virtual void test_size_1 () {}
   virtual void test_at () {}
