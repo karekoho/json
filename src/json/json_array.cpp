@@ -1,12 +1,18 @@
 #include "json_array.h"
 
+Array::Array() : JSON (){}
+
 Array::Array (const char *json)
-  : JSON::JSON (json)
+  : JSON::JSON (json, false)
 {
+  if (_length == 0)
+    throw JSON::error ("null string");
+
+  (void) parse (json);
 }
 
-Array::Array (Value *parent, size_t charc)
-  : JSON::JSON (parent, charc)
+Array::Array (JSON *parent)
+  : JSON::JSON (parent)
 {
 }
 
@@ -37,7 +43,7 @@ Array::parse (const char *json)
     {
       (void) _look_ahead ();
 
-      if (*_readp == _sc::value_separator) /// ','
+      if (*_readp == _sc::value_separator) // ','
         {
           _readp++;
 
@@ -45,26 +51,79 @@ Array::parse (const char *json)
             throw "syntax error: unexpected ','";
 
           _element_list.push_back (v);
+          v->setIndex (_element_list.size () - 1);
         }
-      else if (*_readp == _sc::end_array)         /// ']'
+      else if (*_readp == _sc::end_array)         // ']'
         return _readp + 1;
 
-      else if (_make_value ()->type () == Value::undefined) // No valid value found
+      else if ((v = _make_value())->type () == Value::undefined)  // No valid value found
         {
-          if (*_readp != Value::_ws::space /** TODO: check other ws_ characters */)
-              throw "array::parse: unexpected character";
+          if (*_readp != Value::_ws::space /* TODO: check other ws_ characters */)
+            throw "array::parse: unexpected character";
 
-          /// empty array
+          // Empty array
         }
-      else  /// Value found
-        _element_list.push_back (_make_value ());
+      else  // Value found
+        {
+          _element_list.push_back (v);
+          v->setIndex (_element_list.size () - 1);
+        }
     }
 
   return _readp;
 }
 
-const Value &
-Array::at (const char *key) const
+Value &
+Array::at (size_t index) const
 {
-  return *(_element_list.at (atoll (key)));
+  try
+    {
+      return *(_element_list.at (index));
+    }
+  catch (std::out_of_range &e)
+    {
+      throw JSON::out_of_range (e.what ());
+    }
+}
+
+Value &
+Array::_assign (Array &nv)
+{
+  if (_parent)
+    {
+      _parent->assign (this, &nv);
+      return *_parent;
+    }
+
+  if (! _element_list.empty ())
+    (void) _element_list.erase (_element_list.begin (), _element_list.end ());
+
+  if (! nv._element_list.empty ())
+    _element_list.assign (nv._element_list.begin (), nv._element_list.end ());
+
+  return *this;
+}
+
+Value &
+Array::_at(size_t index)
+{
+  try
+    {
+      return *_element_list.at (index);
+    }
+  catch (std::out_of_range &)
+    {
+      Value *v = new Undefined (this);
+
+      _element_list.push_back (v);
+      v->setIndex (_element_list.size () - 1);
+
+      return *v;
+  }
+}
+
+void
+Array::assign (Value *ov, Value *nv)
+{
+  _element_list.at (ov->index ()) = nv;
 }

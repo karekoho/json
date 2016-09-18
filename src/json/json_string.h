@@ -3,57 +3,122 @@
 
 #include "json_value.h"
 
+#ifdef UNIT_TEST
+class json_string_test;
+#endif
+
 /**
  * @brief The string class
  */
-class String : public Value {
+class String : public Value
+{
+#ifdef UNIT_TEST
+friend class json_string_test;
+#endif
 
   public:
 
-  String (const char *json) : Value::Value (json) {}
-  String (Value *parent = 0, size_t charc = 0) : Value::Value (parent, charc) {}
+  /**
+   * @brief String
+   */
+  String () : Value (), _charc (0) {}
 
-  virtual const char *
-  parse (const char *json)
+  /**
+   * @brief String
+   * @param json
+   */
+  String (const char *json)
+    : Value::Value (json),
+      _charc (0)
   {
-    /// TODO: if (_parent == 0) { // validate }
-    _readp = json;
+    if (_length == 0)
+      throw "null string";
 
-    return json + _charc;
+    (void) parse (json);
   }
 
-  /// value interface
-  virtual inline const Value & at (const char *) const { return *this; }
+  /**
+   * @brief String
+   * @param parent
+   * @param charc
+   */
+  String (JSON *parent, size_t charc)
+    : Value::Value (parent),
+      _charc (charc)
+  {
+  }
+
+  /**
+   * @brief parse
+   * @param json
+   * @return
+   */
+  virtual const char * parse (const char *json);
+
+  /**
+   * @brief at
+   * @return
+   */
+  virtual inline Value & at (const char *) { return *this; }
+
+  virtual Value & at (size_t) { return *this; }
 
   virtual inline object_type type () const { return Value::object_type::string; }
 
   virtual inline size_t size () const { return _string_value.length (); }
 
+  /**
+   * @brief operator =
+   * @param s
+   * @return
+   */
+  inline Value & operator =(String & s) { return _assign (s); }
+
+  /**
+   * @brief operator =
+   * @param v
+   * @return
+   */
+  inline Value & operator =(Value & v) { return _assign (v); }
+
+  /**
+   * @brief assign
+   * @param nv
+   * @return
+   */
+  Value & _assign (String & nv);
+
+  /**
+   * @brief value
+   * @return
+   */
+  const char * value () const;
+
 protected:
 
-  virtual const Value &_at (const char *) const { return *this; }
+  /**
+   * @brief _at
+   * @return
+   */
+  virtual Value &_at (const char *) { return *this; }
 
-public:
-
-  const char *
-  value () const
-  {
-    if (_string_value.empty () && _readp && _charc > 0)
-      _string_value.assign (_readp + 1, _charc - 2);
-
-    return _string_value.c_str ();
-  }
-
-protected:
+  /**
+   * @brief _charc
+   */
+  size_t _charc;
 
   /**
    * @brief _value
    */
   mutable std::string _string_value;
 
-  // Value interface
-
-}; /// class string
+  /**
+   * @brief assign
+   * @param nv
+   * @return
+   */
+  virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
+};
 
 #endif // STRING
 

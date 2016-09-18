@@ -2,8 +2,9 @@
 #define NUMBER_H
 
 #include "json_value.h"
+#include "json_json.h"
 
-#define FLOAT 0
+#define DOUBLE 0
 #define EXP 1
 
 #define START 0
@@ -24,24 +25,36 @@ friend class json_number_test;
 
 public:
 
+  Number ()
+  : Value::Value (),
+    _double_value (0),
+    _double_valuep (&_double_value),
+    _digitp {{ 0, 0 },{ 0, 0 }}
+  {
+  }
+
   explicit Number (const double value)
-    : Value::Value (0),
+    : Value::Value (),
       _double_value (value),
       _double_valuep (&_double_value),
       _digitp {{ 0, 0 },{ 0, 0 }}
   {
   }
 
-  Number (const char *json = 0)
+  Number (const char *json)
     : Value::Value (json),
       _double_value (0),
       _double_valuep (0),
       _digitp {{ 0, 0 },{ 0, 0 }}
   {
+    if (_length == 0)
+      throw JSON::error ("null string");
+
+    (void) parse (json);
   }
 
-  Number (Value *parent, size_t charc = 0)
-    : Value::Value (parent, charc),
+  Number (JSON *parent)
+    : Value::Value (parent),
       _double_value (0),
       _double_valuep (0),
       _digitp {{ 0, 0 },{ 0, 0 }}
@@ -62,7 +75,9 @@ public:
    * @param key
    * @return
    */
-  virtual inline const Value & at (const char *) const { return *this; }
+  virtual inline Value & at (const char *) { return *this; }
+
+  virtual Value & at (size_t) { return *this; }
 
   /**
    * @brief type
@@ -77,31 +92,48 @@ public:
   virtual inline size_t size () const { return _double_valuep == 0 ? 0 : 1; }
 
   /**
+   * @brief _assign
+   * @param nv
+   * @return
+   */
+  virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
+
+  /**
+   * @brief operator =
+   * @param n
+   * @return
+   */
+  inline Value & operator =(Number & n) { return _assign (n);  }
+
+  /**
+   * @brief operator =
+   * @param v
+   * @return
+   */
+  inline Value & operator =(Value & v) { return _assign (v);  }
+
+  /**
    * @brief value
    * @return
    */
-  inline double value () const { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
-
-protected:
-
-  virtual inline  const Value &_at (const char *) const { return *this; }
+  inline double value () { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
 
 protected:
 
   /**
    * @brief _value
    */
-  mutable double _double_value;
+  double _double_value;
 
   /**
    * @brief _double_valuep
    */
-  mutable double *_double_valuep;
+  double *_double_valuep;
 
   /**
    * @brief _digitp
    */
-  mutable const char *_digitp[2][2];
+  const char *_digitp[2][2];
 
   /**
    * @brief _digits If >= 1 digits found, return last character. Else return -1.
@@ -126,7 +158,7 @@ protected:
    * @param digitp
    * @return
    */
-  double _calculate (const char * const digitp[2][2]) const;
+  double _calculate (const char * const digitp[2][2]);
 
   /**
    * @brief _atof
@@ -142,7 +174,18 @@ protected:
    */
   long long _atoll (const char * const digitp[2]) const;
 
+  /**
+   * @brief _at
+   * @return
+   */
+  virtual inline Value &_at (const char *) { return *this; }
 
+  /**
+   * @brief _assign
+   * @param nv
+   * @return
+   */
+  Value & _assign (Number & nv);
 };
 
 #endif // NUMBER_H

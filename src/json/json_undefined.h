@@ -3,31 +3,64 @@
 
 #include "json_value.h"
 
+#ifdef UNIT_TEST
+  class json_undefined_test;
+#endif
+
 /**
  * @brief The undefined class
  */
-class Undefined : public Value {
+class Undefined : public Value
+{
+#ifdef UNIT_TEST
+  friend class json_undefined_test;
+#endif
+
   public:
 
-  Undefined () : Value::Value (0, 0) {}
-  Undefined (const char *json) : Value::Value (json) {}
-  Undefined (Value *parent, size_t charc = 0) : Value::Value (parent,charc) {}
+  Undefined () : Value::Value () {}
+
+  // Undefined (const char *json) : Value::Value (json) {}  // Not needed
+
+  Undefined (JSON *parent) : Value::Value (parent) {}
 
   inline const char * value () const { return "undefined"; }
 
-  /// value interface
-  virtual const char *parse (const char *json) { return json + _charc; }
-  virtual inline const Value & at (const char *) const { return *this; }
+  virtual const char *parse (const char *json) { return json; }
+
+  virtual Value & at (const char *)  { return *this; }
+
+  virtual Value & at (size_t) { return *this; }
+
   virtual inline object_type type () const { return Value::object_type::undefined; }
+
   virtual inline size_t size () const { return 0; }
 
+  inline Value & operator =(Value & v) { return _assign (v);  }
+
 protected:
-  virtual const Value &_at(const char *) const { return *this; }
-public:
+
+  /**
+   * @brief _at
+   * @return
+   */
+  virtual Value &_at (const char *) { return *this; }
+
+  /**
+   * @brief assign
+   * @param nv
+   * @return
+   */
+  // Value & _assign (Undefined & nv);
+
+  /**
+   * @brief assign
+   * @param nv
+   * @return
+   */
+  virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
 
 
-
-  // Value interface
 
 };
 

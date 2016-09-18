@@ -6,21 +6,29 @@
 #include <string>
 
 #ifdef UNIT_TEST
-class json_value_test;
-class json_object_test;
+  class json_value_test;
+  // class json_object_test;
+  class json_null_test;
+  class json_undefined_test;
 #endif
 /**
  * @brief The json_value class
  */
+
 class JSON;
+//class Undefined;
+// class Object;
 class Value
 {
 #ifdef UNIT_TEST
-friend class json_test;
-friend class json_value_test;
-friend class json_object_test;
+  // friend class json_test;
+  friend class json_value_test;
+  // friend class json_object_test;
+  friend class json_null_test;  // WTF ???
+  friend class json_undefined_test; // WTF ???
 #endif
 
+  //friend void Undefined::_assign (Value *, Value *);
   public:
 
   /**
@@ -37,10 +45,15 @@ friend class json_object_test;
   };
 
   /**
+   * @brief Value
+   */
+  Value ();
+
+  /**
    * @brief json_value
    * @param json
    */
-  Value (const char *json = 0);
+  Value (const char *json);
 
   /**
    * @brief json_value
@@ -48,9 +61,12 @@ friend class json_object_test;
    * @param parent
    * @paran charc
    */
-  Value (Value *parent, size_t index);
+  Value (JSON *parent);
 
-  virtual ~Value () {}
+  virtual ~Value ()
+  {
+    delete _key;
+  }
 
   /**
    * @brief parse
@@ -68,20 +84,27 @@ friend class json_object_test;
    * @param key
    * @return
    */
-  virtual const Value & at (const char *key) const = 0;
+  virtual Value & at (const char *key) /* TODO: const */ = 0;
+
+  /**
+   * @brief at
+   * @param index
+   * @return
+   */
+  virtual Value & at (size_t index) /* TODO: const */ = 0;
 
   /**
    * @brief operator []
    * @param key
    * @return
    */
-  inline const Value & operator[] (const char *key) const { return _at (key); }
+  inline Value & operator[] (const char *key) { return _at (key); }
 
   /**
    * @brief operator =
    * @param v
    */
-  inline void operator =(const Value & v) { _assign (v);  }
+  inline Value & operator =(Value & v) { return _assign (v);  }
 
   /**
    * @brief type
@@ -95,7 +118,57 @@ friend class json_object_test;
    */
   virtual size_t size () const = 0;
 
+  /**
+   * @brief key
+   * @return
+   */
+  inline const char *key () const { return _key; }
+
+  /**
+    TODO: protected
+   * @brief setKey
+   * @param key
+   * @param charc
+   */
+  inline void setKey (const char *key, size_t charc) { _key = strndup (key, charc); }
+
+  /**
+   * @brief index
+   * @return
+   */
+  inline size_t index () const { return _index; }
+
+  /**
+    TODO: protected
+   * @brief setIndex
+   * @param index
+   */
+  inline void setIndex (const size_t &index) { _index = index;}
+
+  /**
+   * TODO: protected
+   *
+   * @brief assign
+   * @param nv
+   * @return
+   */
+  //virtual Value & assign (Value & nv);
+
+  /**
+   * TODO: pure virtual, return Value &
+   *
+   * @brief _assign
+   */
+  virtual void assign (Value *, Value *) {}
+
 protected:
+
+  /**
+   * @brief assign
+   * @param nv
+   * @return
+   */
+  virtual Value & _assign (Value & nv);
 
   /**
    * @brief The _sc enum Structural characters.
@@ -114,10 +187,10 @@ protected:
    * @brief The _ws enum White space characters.
    */
   enum _ws {
-    tab   = 9,    /// \t Horizontal tab
-    lf    = 10,   /// \n Line feed or New line
-    cr    = 13,   /// \r Carriage return
-    space = 32    /// Space
+    tab   = 9,    // \t Horizontal tab
+    lf    = 10,   // \n Line feed or New line
+    cr    = 13,   // \r Carriage return
+    space = 32    // Space
   };
 
   /**
@@ -135,7 +208,7 @@ protected:
    */
   const char *_startp;
 
-  /** TODO: move to json
+  /**
    * @brief _readp
    */
   const char *_readp;
@@ -143,12 +216,22 @@ protected:
   /**
    * @brief _parent
    */
-  Value *_parent;
+  JSON *_parent;
 
   /**
    * @brief charc
    */
-  size_t _charc;
+  size_t _length;
+
+  /**
+   * @brief _key
+   */
+  const char * _key;
+
+  /**
+   * @brief _index
+   */
+  size_t _index;
 
   /**
    * @brief _look_ahead Move read pointer to next non-white space character
@@ -187,13 +270,12 @@ protected:
    * @param key
    * @return
    */
-  virtual const Value & _at (const char *key) const = 0;
+  virtual Value & _at (const char *key)  = 0;
 
   /**
    * @brief _assign Assing value. Delete existing key.
    * @param v
    */
-  /** virtual */ void _assign (const Value & v); /** = 0 */
 
    static const struct literal_value {
      const char * const str_value;

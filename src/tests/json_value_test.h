@@ -11,7 +11,7 @@ public:
     virtual void test_ctor_dtor() {}
     virtual void test_parse_1(){}
     virtual void test_size_1(){}
-    virtual void test_at_1(){}
+    virtual void test_at(){}
     virtual void test_value_1(){}
     virtual void test_debug_1(){}
 
@@ -132,7 +132,15 @@ public:
       TEST_IT_END;
     }
 
+    virtual void test_operator_assign () {}
+    virtual void test_operator_at () {}
+
     void test_is_number ();
+
+    virtual void
+    test_assign_all_values ()
+    {
+    }
 
     static CppUnit::Test*
     suite ()

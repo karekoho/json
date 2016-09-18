@@ -3,23 +3,31 @@
 
 #include "json_value.h"
 
+#ifdef UNIT_TEST
+ class json_null_test;
+#endif
+
 /**
  * @brief The Null class
  */
 class Null : public Value
 {
+#ifdef UNIT_TEST
+ friend class json_null_test;
+#endif
+
   public:
 
   /**
    * @brief Null
    */
-  Null () : Value::Value (0, 0) {}
+  Null () : Value::Value () {}
 
   /**
    * @brief Null
    * @param json
    */
-  Null (const char *json = 0) : Value::Value (json) {}
+  // Null (const char *json) : Value::Value (json) {}
 
   /**
    * @brief Null
@@ -27,11 +35,7 @@ class Null : public Value
    * @param parent
    * @param charc
    */
-  Null (Value *parent, size_t charc = 0) : Value::Value (parent, charc) {}
-
-protected:
-
-  virtual const Value &_at (const char *) const { return *this; }
+  Null (JSON *parent) : Value::Value (parent) {}
 
 public:
 
@@ -47,7 +51,13 @@ public:
    * @param key
    * @return
    */
-  virtual inline const Value & at (const char *) const { return *this; }
+  virtual inline Value & at (const char *) { return *this; }
+
+  /**
+   * @brief at
+   * @return
+   */
+  virtual Value & at (size_t) { return *this; }
 
   /**
    * @brief type
@@ -66,5 +76,41 @@ public:
    * @return
    */
   inline const char * value () const { return ""; }
+
+  /**
+   * @brief operator =
+   * @param n
+   * @return
+   */
+  inline Value & operator =(Null & n) { return _assign (n); }
+
+  /**
+   * @brief operator =
+   * @param v
+   * @return
+   */
+  inline Value & operator =(Value & v) { return _assign (v); }
+
+  protected:
+
+  /**
+   * @brief _at
+   * @return
+   */
+  virtual Value &_at (const char *) { return *this; }
+
+  /**
+   * @brief _assign
+   * @param nv
+   * @return
+   */
+  virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
+
+  /**
+   * @brief assign
+   * @param nv
+   * @return
+   */
+  Value & _assign (Null & nv);
 };
 #endif // NULL_H

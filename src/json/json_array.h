@@ -3,17 +3,44 @@
 
 #include "json_json.h"
 
+#ifdef UNIT_TEST
+class json_test;
+class json_array_test;
+class json_object_test;
+class json_string_test;
+class json_number_test;
+class json_boolean_test;
+class json_null_test;
+class json_undefined_test;
+#endif
+
 /**
  * @brief The array class
  */
-class Array : public JSON {
+class Array : public JSON
+{
+#ifdef UNIT_TEST
+  friend class json_test;
+  friend class json_array_test;
+  friend class json_object_test;
+  friend class json_string_test;
+  friend class json_number_test;
+  friend class json_boolean_test;
+  friend class json_null_test;
+  friend class json_undefined_test;
+#endif
+  // TODO: friend void Value::setKey (const char *key);
+  // TODO: friend void Value::setIndex (const size_t &index);
+
   public:
+
+  Array ();
 
   /**
    * @brief Array
    * @param json
    */
-  Array (const char *json = 0);
+  Array (const char *json);
 
   /**
    * @brief Array
@@ -21,7 +48,7 @@ class Array : public JSON {
    * @param parent
    * @param charc
    */
-  Array (Value *parent, size_t charc = 0);
+  Array (JSON *parent);
 
   /**
    * @brief ~Array
@@ -40,7 +67,21 @@ class Array : public JSON {
    * @param key
    * @return
    */
-  virtual const Value & at (const char *key) const;
+  virtual inline Value & at (const char *key)  { return at (atoll (key)); }
+
+  /**
+   * @brief at
+   * @param index
+   * @return
+   */
+  inline Value & at (size_t index) const;
+
+  /**
+   * @brief assign
+   * @param ov
+   * @param nv
+   */
+  virtual void assign (Value *ov, Value *nv);
 
   /**
    * @brief type
@@ -52,7 +93,21 @@ class Array : public JSON {
    * @brief size
    * @return
    */
-  virtual inline size_t size () const { return _element_list.size(); }
+  virtual inline size_t size () const { return _element_list.size (); }
+
+  /**
+   * @brief operator =
+   * @param a
+   * @return
+   */
+  inline Value & operator =(Array & a) { return _assign (a); }
+
+  /**
+   * @brief operator =
+   * @param v
+   * @return
+   */
+  inline Value & operator =(Value & v) { return _assign (v); }
 
 protected:
 
@@ -62,17 +117,31 @@ protected:
   std::vector<Value *> _element_list;
 
   /**
-   * @brief _debug_value
-   */
-  std::string _debug_value;
-
-protected:
-
-  /**
    * @brief _at
    * @return
    */
-  virtual const Value &_at(const char *) const { return *this; }
+  virtual Value &_at (const char *)  { return *this; }
+
+  /**
+   * @brief _assign
+   * @param nv
+   * @return
+   */
+  Value & _assign (Array & nv);
+
+  /**
+   * @brief _assign
+   * @param nv
+   * @return
+   */
+  virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
+
+  /**
+   * @brief _at
+   * @param index
+   * @return
+   */
+  Value &_at (size_t index);
 };
 
 #endif // ARRAY

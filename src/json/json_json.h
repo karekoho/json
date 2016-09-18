@@ -3,7 +3,6 @@
 
 #include "json_value.h"
 #include "json_undefined.h"
-
 #include <unordered_map>
 #include <vector>
 
@@ -20,6 +19,8 @@
 class Undefined;
 class JSON : public Value
 {
+ // friend Value & Object::assign (Object &);
+
 #ifdef UNIT_TEST
   friend class json_test;
   friend class json_object_test;
@@ -27,17 +28,22 @@ class JSON : public Value
 public:
 
   /**
+   * @brief JSON
+   */
+  JSON ();
+
+  /**
    * @brief json
    * @param json
    */
-  JSON (const char *json = 0);
+  JSON (const char *json, const bool _parse = true);
 
   /**
    * @brief json
    * @param endp
    * @param charc
    */
-  JSON (Value *parent, size_t charc = 0);
+  JSON (JSON *parent);
 
   /**
    * @brief ~JSON
@@ -56,7 +62,14 @@ public:
    * @param key
    * @return
    */
-  virtual const Value & at (const char *key) const;
+  virtual Value & at (const char *key) { return type () == Value::undefined ? *(new Undefined) : __value->at (key); }
+
+  /**
+   * @brief at
+   * @param index
+   * @return
+   */
+  virtual Value & at (size_t index) { return type () == Value::undefined ? *(new Undefined) : __value->at (index); }
 
   /**
    * @brief type
@@ -70,11 +83,42 @@ public:
    */
   virtual inline size_t size () const { return  type () == Value::undefined ? 0 :__value->size (); }
 
+  /**
+   * @brief _assign
+   * @param j
+   * @return
+   */
+  virtual Value & _assign (JSON & j);
+
+  /**
+   * @brief operator =
+   * @param j
+   * @return
+   */
+  inline Value & operator =(JSON & j) { return _assign (j); }
+
+  /**
+   * @brief _assign
+   * @param nv
+   * @return
+   */
+  virtual Value & _assign (Value & v) override;
+
+  /**
+   * @brief operator =
+   * @param v
+   * @return
+   */
+  inline Value & operator =(Value & v) { return _assign (v); }
+
 protected:
 
-  virtual const Value &_at (const char *key) const;
-
-  const Undefined _undef_value;
+  /**
+   * @brief _at
+   * @param key
+   * @return
+   */
+  virtual Value &_at (const char *key);
 
   /**
    * @brief _make_value
@@ -136,8 +180,6 @@ public:
     out_of_range (const char * const message = 0) : error (message) {}
   };
   /// class out_of_range
-
-
 
 }; /// class json
 /// } namespace

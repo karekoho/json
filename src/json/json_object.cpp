@@ -1,17 +1,24 @@
 #include "json_object.h"
+#include "json_array.h"
 #include "json_string.h"
 #include "json_undefined.h"
 #include "json_null.h"
 #include "json_number.h"
 #include "json_boolean.h"
 
+Object::Object() : JSON (){}
+
 Object::Object (const char *json)
-  : JSON::JSON (json)
+  : JSON::JSON (json, false)
 {
+  if (_length == 0)
+    throw JSON::error ("null string");
+
+  (void) parse (json);
 }
 
-Object::Object (Value *parent, size_t charc)
-  : JSON::JSON (parent, charc)
+Object::Object (JSON *parent)
+  : JSON::JSON (parent)
 {
 }
 
@@ -93,13 +100,17 @@ Object::_pair ()
   if (v->type () == Value::undefined)
     throw "syntax error: expecting value after ':'";
 
-  _member_list.emplace (std::string (keyp, charc - 2), v);
+  // std::string k (keyp, charc - 2);
+
+  (void) _member_list.emplace (std::string (keyp, charc - 2), v);
+
+  v->setKey (keyp, charc - 2);
 
   return true;
 }
 
-const Value &
-Object::at (const char *key) const
+Value &
+Object::at (const char *key)
 {
   try
     {
@@ -108,5 +119,49 @@ Object::at (const char *key) const
   catch (std::out_of_range &e)
     {
       throw JSON::out_of_range (e.what ());
+  }
+}
+
+Value &
+Object::_assign (Object &nv)
+{
+  if (_parent)
+    {
+      _parent->assign (this, &nv);
+      return *_parent;
     }
+
+  // TODO: _member_list = nv._member_list; return *this;
+
+  if (! _member_list.empty ())
+    (void) _member_list.erase (_member_list.begin (), _member_list.end ());
+
+  if (! nv._member_list.empty ())
+    _member_list.insert (nv._member_list.begin (), nv._member_list.end ());
+
+  return *this;
+}
+
+Value &
+Object::_at (const char *key)
+{
+  try
+    {
+      return *(_member_list.at (key));
+    }
+  catch (std::out_of_range &)
+    {
+      Value *v = new Undefined (this);
+
+      v->setKey (key, strlen (key));
+      _member_list.emplace (key, v);
+
+      return *v;
+  }
+}
+
+void
+Object::assign (Value *ov, Value *nv)
+{
+   _member_list[ov->key ()] = nv;
 }

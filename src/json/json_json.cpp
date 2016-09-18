@@ -7,16 +7,21 @@
 #include "json_undefined.h"
 #include "json_boolean.h"
 
-JSON::JSON (const char *json)
+JSON::JSON () : Value (), __value (0) {}
+
+JSON::JSON (const char *json, const bool _parse)
   : Value (json),
     __value (0)
 {
-  if (_readp)
+  if (_length == 0)
+    throw JSON::error ("null string");
+
+  if (_parse)
     (void) parse (json);
 }
 
-JSON::JSON (Value *parent, size_t charc)
-  : Value (parent, charc),
+JSON::JSON (JSON *parent)
+  : Value (parent),
     __value (0)
 {
 }
@@ -49,10 +54,37 @@ JSON::JSON::parse (const char *readp)
   return _readp;
 }
 
-const Value &
-JSON::at (const char *key) const
+Value &
+JSON::_assign (JSON &j)
 {
-  return _at (key);
+  delete __value;
+
+  __value = j.__value;
+
+  return *this;
+}
+
+Value &
+JSON::_assign (Value &v)
+{
+  delete __value;
+
+  __value = & v;
+
+  return *this;
+}
+
+Value &
+JSON::_at (const char *key)
+{
+  try
+    {
+      return type () == Value::undefined ? *(new Undefined) : __value->at (key);
+    }
+  catch (JSON::out_of_range &)
+    {
+      return *(new Undefined);
+    }
 }
 
 Value *
@@ -72,13 +104,13 @@ JSON::_make_value ()
       value_ = new String (this, charc);
     }
   else if (readc == _sc::begin_object)      /// Object
-    value_ = new Object (this, 0);
+    value_ = new Object (this);
 
   else if (readc == _sc::begin_array)       /// Array
-    value_ = new Array (this, 0);
+    value_ = new Array (this);
 
   else if (isdigit (readc) || readc == '-') /// Number
-    value_ = new Number (this, 0);
+    value_ = new Number (this);
 
   else                                      /// Literal or undefined
     switch (_is_literal ())
@@ -87,23 +119,17 @@ JSON::_make_value ()
         value_ = new Null (this);
         break;
       case Value::_literal::true_value :
-        value_ = new Boolean (true);
+        value_ = new Boolean (this, true);
         break;
       case Value::_literal::false_value:
-        value_ = new Boolean (false);
+        value_ = new Boolean (this, false);
         break;
       default:
-        value_ = new Undefined (this, 0);
+        value_ = new Undefined (this);
         break;
       }
 
   _readp = value_->parse (_readp);
 
   return value_;
-}
-
-const Value &
-JSON::_at (const char *key) const
-{
-  return type () == Value::undefined ? _undef_value : __value->at (key);
 }
