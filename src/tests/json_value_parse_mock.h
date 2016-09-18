@@ -20,6 +20,7 @@ public:
 
     virtual const char *parse (const char *readp) { return readp; }
     virtual Value & at (const char *) { return *this; }
+    virtual Value & at (size_t) { return *this; }
     virtual Value::object_type type () const { return _type;}
     virtual size_t size () const { return 0;}
 

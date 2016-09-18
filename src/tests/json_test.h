@@ -133,17 +133,19 @@ public:
       { /* "", */ "bk", 4, { new Boolean (&op, true), new Boolean (&ap, true) }, Value::boolean, PASS },
       { /* "", */ "nk", 5, { new Null (&op), new Null (&ap) }, Value::null, PASS },
     };
+
     size_t x =0;
+
     TEST_IT_START
 
-        Value &oov = op._at ((*it).key);
-        Value &aov = ap._at ((*it).index);
+        Value & oov = op._at ((*it).key);
+        Value & aov = ap._at ((*it).index);
 
         ASSERT_EQUAL_IDX ("value.type ()", Value::undefined, oov.type ());
         ASSERT_EQUAL_IDX ("value.type ()", Value::undefined, aov.type ());
 
-        op.assign (&oov, (*it).value[0]);
-        ap.assign (&aov, (*it).value[1]);
+        op.assign (& oov, (*it).value[0]);
+        ap.assign (& aov, (*it).value[1]);
 
         ASSERT_EQUAL_IDX ("parent._at (key)", (*it).type, op._at ((*it).key).type ());
         ASSERT_EQUAL_IDX ("parent._at (index)", (*it).type, ap._at ((*it).index).type ());
@@ -156,6 +158,32 @@ public:
   virtual void
   test_assign_all_values ()
   {
+    JSON j;
+    struct assert
+    {
+        Value *value;
+        Value::object_type type;
+        int assert_status;
+    };
+
+    std::vector<struct assert > test = {
+      { new JSON, Value::undefined, PASS },
+      { new Object, Value::object, PASS },
+      { new Array, Value::array, PASS },
+      { new String, Value::string, PASS },
+      { new Number, Value::number, PASS },
+      { new Boolean, Value::boolean, PASS },
+      { new Null, Value::null, PASS },
+    };
+
+    TEST_IT_START
+
+        // j._assign (*(*it).value);
+        j = *(*it).value;
+
+        ASSERT_EQUAL_IDX ("type", (*it).type, j.__value->type ());
+
+    TEST_IT_END;
   }
 
   virtual void test_operator_assign () {}
@@ -180,6 +208,7 @@ public:
 
     s->addTest (new CppUnit::TestCaller<json_test> ("test_make_value", &json_test::test_make_value));
     s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_to_parent", &json_test::test__assign_to_parent));
+    s->addTest (new CppUnit::TestCaller<json_test> ("test_assign_all_values", &json_test::test_assign_all_values));
 
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_size_1", &json_test::test_size_1));
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_get_1", &json_test::test_get_1));

@@ -54,6 +54,12 @@ public:
   virtual inline Value & at (const char *) { return *this; }
 
   /**
+   * @brief at
+   * @return
+   */
+  virtual Value & at (size_t) { return *this; }
+
+  /**
    * @brief type
    * @return
    */

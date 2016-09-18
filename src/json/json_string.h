@@ -61,6 +61,8 @@ friend class json_string_test;
    */
   virtual inline Value & at (const char *) { return *this; }
 
+  virtual Value & at (size_t) { return *this; }
+
   virtual inline object_type type () const { return Value::object_type::string; }
 
   virtual inline size_t size () const { return _string_value.length (); }

@@ -87,6 +87,13 @@ class Value
   virtual Value & at (const char *key) /* TODO: const */ = 0;
 
   /**
+   * @brief at
+   * @param index
+   * @return
+   */
+  virtual Value & at (size_t index) /* TODO: const */ = 0;
+
+  /**
    * @brief operator []
    * @param key
    * @return

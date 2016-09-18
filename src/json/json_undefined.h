@@ -28,7 +28,9 @@ class Undefined : public Value
 
   virtual const char *parse (const char *json) { return json; }
 
-  virtual inline Value & at (const char *)  { return *this; }
+  virtual Value & at (const char *)  { return *this; }
+
+  virtual Value & at (size_t) { return *this; }
 
   virtual inline object_type type () const { return Value::object_type::undefined; }
 
@@ -57,6 +59,9 @@ protected:
    * @return
    */
   virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
+
+
+
 };
 
 #endif // UNDEFINED_H

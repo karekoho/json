@@ -55,9 +55,36 @@ JSON::JSON::parse (const char *readp)
 }
 
 Value &
-JSON::at (const char *key)
+JSON::_assign (JSON &j)
 {
-  return _at (key);
+  delete __value;
+
+  __value = j.__value;
+
+  return *this;
+}
+
+Value &
+JSON::_assign (Value &v)
+{
+  delete __value;
+
+  __value = & v;
+
+  return *this;
+}
+
+Value &
+JSON::_at (const char *key)
+{
+  try
+    {
+      return type () == Value::undefined ? *(new Undefined) : __value->at (key);
+    }
+  catch (JSON::out_of_range &)
+    {
+      return *(new Undefined);
+    }
 }
 
 Value *
@@ -106,19 +133,3 @@ JSON::_make_value ()
 
   return value_;
 }
-
-/* void
-JSON::_assign (Value *ov, const Value *nv)
-{
-  Value &p = ov->parent ();
-
-  p.type () == Value::object ? true : true;
-
-    // p._member_list.emplace (std::string ((*it).startp, 2), (*it).value);
-} */
-
-/* const Value &
-JSON::_at (const char *key) const
-{
-  return type () == Value::undefined ? _undef_value : __value->at (key);
-} */

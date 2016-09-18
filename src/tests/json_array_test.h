@@ -101,9 +101,9 @@ public:
 
       if (a->size () > 0)
         {
-          for (size_t idx = 0; idx < a->_element_list.size(); idx++)
+          for (size_t idx = 0; idx < a->_element_list.size (); idx++)
             {
-              Value *v = a->_element_list.at(idx);
+              Value *v = a->_element_list.at (idx);
               ASSERT_EQUAL_IDX ("value.index", idx, v->index ());
             }
         }
