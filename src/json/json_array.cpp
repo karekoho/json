@@ -22,6 +22,9 @@ Array::~Array()
   //_element_list.erase (_element_list.begin (), _element_list.end ());
 
   // for (auto it = _element_list.begin (); it != _element_list.end (); ++it) delete *it; // FIXME: crash
+
+  // std::vector<Value *>().swap (_element_list);
+  // _element_list.shrink_to_fit ();
 }
 
 const char *

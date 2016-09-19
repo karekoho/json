@@ -28,6 +28,8 @@ Object::~Object()
 
   // for (auto it = _member_list.begin (); it != _member_list.end (); it = _member_list.erase (it))
   //  delete static_cast<std::pair<std::string, Value *>>(*it).second; // FIXME: crash
+
+  // std::unordered_map<std::string, Value *>().swap (_member_list);
 }
 
 // Object::Object (const Object &other) { _member_list = other._member_list; }
