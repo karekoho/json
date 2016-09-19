@@ -14,15 +14,15 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES += main.cpp \
-    json_value_test_interface.cpp \
-    json_test.cpp \
-    json_object_test.cpp \
-    json_value_test.cpp \
-    ../json/value.cpp \
-    json_value_parse_mock.cpp \
-    ../json/object.cpp \
-    ../json/array.cpp \
-    ../json/basic_json.cpp
+    ../json/json_value.cpp \
+    ../json/json_undefined.cpp \
+    ../json/json_string.cpp \
+    ../json/json_object.cpp \
+    ../json/json_number.cpp \
+    ../json/json_null.cpp \
+    ../json/json_json.cpp \
+    ../json/json_boolean.cpp \
+    ../json/json_array.cpp
 
 HEADERS += \
     json_value_test_interface.h \
@@ -30,10 +30,23 @@ HEADERS += \
     unit_test.h \
     json_object_test.h \
     json_value_test.h \
-    ../json/value.h \
-    ../json/json.h \
     json_value_parse_mock.h \
-    ../json/basic_json.h
+    json_undefined_test.h \
+    json_string_test.h \
+    json_number_test.h \
+    json_null_test.h \
+    json_boolean_test.h \
+    json_array_test.h \
+    ../json/json.h \
+    ../json/json_value.h \
+    ../json/json_undefined.h \
+    ../json/json_string.h \
+    ../json/json_object.h \
+    ../json/json_number.h \
+    ../json/json_null.h \
+    ../json/json_json.h \
+    ../json/json_boolean.h \
+    ../json/json_array.h
 
 SUBDIRS += \
     ../json/json.pro
