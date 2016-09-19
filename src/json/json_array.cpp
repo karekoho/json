@@ -9,6 +9,7 @@ Array::Array (const char *json)
     throw JSON::error ("null string");
 
   (void) parse (json);
+
 }
 
 Array::Array (JSON *parent)
@@ -95,11 +96,12 @@ Array::_assign (Array &nv)
       return *_parent;
     }
 
-  if (! _element_list.empty ())
-    (void) _element_list.erase (_element_list.begin (), _element_list.end ());
+//  if (! _element_list.empty ())
+//    (void) _element_list.erase (_element_list.begin (), _element_list.end ());
+//  if (! nv._element_list.empty ())
+//    _element_list.assign (nv._element_list.begin (), nv._element_list.end ());
 
-  if (! nv._element_list.empty ())
-    _element_list.assign (nv._element_list.begin (), nv._element_list.end ());
+  _element_list = nv._element_list;
 
   return *this;
 }
@@ -119,7 +121,7 @@ Array::_at(size_t index)
       v->setIndex (_element_list.size () - 1);
 
       return *v;
-  }
+    }
 }
 
 void
