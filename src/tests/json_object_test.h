@@ -11,24 +11,26 @@ class json_object_test : public json_value_test_interface
 {
 public:
 
-  virtual void test_ctor_dtor ()
+  virtual void
+  test_ctor_dtor ()
   {
     JSON *p[] = { 0, new JSON () };
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
-        Object *o[] = {
-          new Object (),
-          new Object ("{}"),
-          new Object (p[pidx]),
+        Object o[] = {
+          Object (),
+          Object ("{}"),
+          Object (p[pidx]),
         };
-
-        delete o[0];
-        delete o[1];
-        delete o[2];
       }
 
     delete p[1];
+
+    Object src  = "{\"key\":true}";
+    Object copy = src;
+
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("object._member_list.size ()", (size_t) 1, copy._member_list.size ());
   }
 
   virtual

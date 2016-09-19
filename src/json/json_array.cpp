@@ -17,6 +17,13 @@ Array::Array (JSON *parent)
 {
 }
 
+Array::~Array()
+{
+  //_element_list.erase (_element_list.begin (), _element_list.end ());
+
+  // for (auto it = _element_list.begin (); it != _element_list.end (); ++it) delete *it; // FIXME: crash
+}
+
 const char *
 Array::parse (const char *json)
 {

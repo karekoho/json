@@ -43,7 +43,7 @@ public:
    * @brief Object
    * @param JSON
    */
-  explicit Object (const char *json);
+  Object (const char *json);
 
 /**
    * @brief Object
@@ -54,9 +54,15 @@ public:
   Object (JSON *parent);
 
   /**
+   * @brief Object
+   * @param other
+   */
+  Object (const Object &other) = default;
+
+  /**
    * @brief ~Object
    */
-  virtual ~Object () { std::unordered_map<std::string, Value *>().swap (_member_list); }
+  virtual ~Object (); // { std::unordered_map<std::string, Value *>().swap (_member_list); }
 
   /**
    * @brief parse

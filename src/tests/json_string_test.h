@@ -113,7 +113,6 @@ public:
         { new Boolean (true), Value::boolean, "key_6",  0, 5, { PASS, PASS, FAIL } },
         { new Null, Value::null, "key_7",  0, 6, { PASS, PASS, FAIL } }
       };
-        arr_parent._element_list.reserve (6);
 
       for (size_t pidx = 0; pidx < 3; pidx++)
         {
@@ -180,6 +179,11 @@ public:
               }
             TEST_IT_END;
           }
+
+        // test.erase (test.begin (), test.end ());
+
+        for (auto it = test.begin (); it != test.end (); ++it)
+          delete (*it).new_value;
     }
 
     virtual void test_operator_assign () {}
