@@ -26,6 +26,12 @@ public:
       }
 
     delete p[1];
+
+    String src = "\"xxx\"";
+    String copy = src;
+
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("src._string_value.empty ()", true, src._string_value.empty () );
+    CPPUNIT_ASSERT_MESSAGE ("copy.value ()", strcmp ("xxx", copy.value ()) == 0);
   }
 
   virtual void

@@ -3,29 +3,50 @@
 
 #include <math.h>
 
-/* Number::Number (const double value)
-  : value::value (0),
+Number::Number ()
+  : Value (),
+    _double_value (0),
+    _double_valuep (&_double_value),
+    _digitp {{ 0, 0 }, { 0, 0 }}
+{
+}
+
+Number::Number (const double value)
+  : Value (),
     _double_value (value),
     _double_valuep (&_double_value),
-    _digitp {{ 0, 0 },{ 0, 0 }}
+    _digitp {{ 0, 0 }, { 0, 0 }}
 {
 }
 
 Number::Number (const char *json)
-  : value::value (json),
+  : Value (json),
     _double_value (0),
     _double_valuep (0),
-    _digitp {{ 0, 0 },{ 0, 0 }}
+    _digitp {{ 0, 0 }, { 0, 0 }}
+{
+  if (_length == 0)
+    throw JSON::error ("null string");
+
+  (void) parse (json);
+}
+
+Number::Number (JSON *parent)
+  : Value (parent),
+    _double_value (0),
+    _double_valuep (0),
+    _digitp {{ 0, 0 }, { 0, 0 }}
 {
 }
 
-Number::Number (const char *endp, value *parent, size_t charc)
-  : value::value (endp, parent, charc),
-    _double_value (0),
-    _double_valuep (0),
-    _digitp {{ 0, 0 },{ 0, 0 }}
+Number::Number (const Number &other)
+ : Value (other),
+   _double_value (0),
+   _double_valuep (0),
+   _digitp {{ 0, 0 }, { 0, 0 }}
 {
-} */
+  _copy (other);
+}
 
 const char *
 Number::parse (const char *json)
@@ -172,18 +193,24 @@ Number::_assign (Number &nv)
       return *_parent;
     }
 
-  _digitp[DOUBLE][START]  = nv._digitp[DOUBLE][START];
-  _digitp[DOUBLE][END]    = nv._digitp[DOUBLE][END];
-  _digitp[EXP][START]     = nv._digitp[EXP][START];
-  _digitp[EXP][END]       = nv._digitp[EXP][END];
+  _copy (nv);
 
+  return *this;
+}
+
+void
+Number::_copy (const Number &nv)
+{
   if (nv._double_valuep)
     {
       _double_value = nv._double_value;
       _double_valuep = &_double_value;
     }
   else
-    _double_value = _calculate (_digitp);
-
-  return *this;
+    {
+      _digitp[DOUBLE][START]  = nv._digitp[DOUBLE][START];
+      _digitp[DOUBLE][END]    = nv._digitp[DOUBLE][END];
+      _digitp[EXP][START]     = nv._digitp[EXP][START];
+      _digitp[EXP][END]       = nv._digitp[EXP][END];
+    }
 }

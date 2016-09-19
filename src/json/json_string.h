@@ -21,32 +21,26 @@ friend class json_string_test;
   /**
    * @brief String
    */
-  String () : Value (), _charc (0) {}
+  String ();
 
   /**
    * @brief String
    * @param json
    */
-  String (const char *json)
-    : Value::Value (json),
-      _charc (0)
-  {
-    if (_length == 0)
-      throw "null string";
-
-    (void) parse (json);
-  }
+  String (const char *json);
 
   /**
    * @brief String
    * @param parent
    * @param charc
    */
-  String (JSON *parent, size_t charc)
-    : Value::Value (parent),
-      _charc (charc)
-  {
-  }
+  String (JSON *parent, size_t charc);
+
+  /**
+   * @brief String
+   * @param other
+   */
+  String (const String & other);
 
   /**
    * @brief parse
@@ -118,6 +112,12 @@ protected:
    * @return
    */
   virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
+
+  /**
+   * @brief _copy
+   * @param nv
+   */
+  void _copy (const String &nv);
 };
 
 #endif // STRING

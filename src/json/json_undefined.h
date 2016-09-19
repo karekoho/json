@@ -20,9 +20,17 @@ class Undefined : public Value
 
   Undefined () : Value::Value () {}
 
-  // Undefined (const char *json) : Value::Value (json) {}  // Not needed
-
+  /**
+   * @brief Undefined
+   * @param parent
+   */
   Undefined (JSON *parent) : Value::Value (parent) {}
+
+  /**
+   * @brief Undefined
+   * @param other
+   */
+  Undefined (const Undefined &other) = default;
 
   inline const char * value () const { return "undefined"; }
 

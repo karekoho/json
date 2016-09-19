@@ -37,7 +37,11 @@ class Null : public Value
    */
   Null (JSON *parent) : Value::Value (parent) {}
 
-public:
+  /**
+   * @brief Null
+   * @param other
+   */
+  Null (const Null &other) = default;
 
   /**
    * @brief parse

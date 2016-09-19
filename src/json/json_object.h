@@ -72,6 +72,10 @@ public:
    */
   virtual Value & at (const char *key);
 
+  /**
+   * @brief at
+   * @return
+   */
   virtual Value & at (size_t) { return *this; }
 
   /**

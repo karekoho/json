@@ -28,6 +28,11 @@ public:
       }
 
     delete p[1];
+
+    Boolean src = true;
+    Boolean copy = src;
+
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.value ()", true, copy.value ());
   }
 
   virtual void test_parse_1 () {}
