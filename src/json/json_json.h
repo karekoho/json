@@ -16,6 +16,13 @@
 /**
  * @brief The json class
  */
+
+//class Object;
+//class Array;
+//class String;
+//class Number;
+//class Boolean;
+//class Null;
 class Undefined;
 class JSON : public Value
 {
@@ -44,6 +51,12 @@ public:
    * @param charc
    */
   JSON (JSON *parent);
+
+  /**
+   * @brief JSON
+   * @param other
+   */
+  JSON (const JSON &other);
 
   /**
    * @brief ~JSON
@@ -125,6 +138,13 @@ protected:
    * @return
    */
   Value *_make_value ();
+
+  /**
+   * @brief _copy_value
+   * @param other
+   * @return
+   */
+  Value * _copy_value (Value *other);
 
 private:
 
