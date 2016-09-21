@@ -12,15 +12,18 @@ public:
   virtual void
   test_ctor_dtor ()
   {
-    const char * input = "{}";
-    JSON *p = new JSON();
+    JSON p;
+
     JSON j[] = {
       JSON (),
+      JSON ("{\"key\":true}"),
       JSON (p)
     };
 
-    (void) j[0].parse (input);
-    (void) j[1].parse (input);
+    JSON copy = j[1];
+
+    CPPUNIT_ASSERT_MESSAGE ("json", & copy != & j[1]);
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("json.size ()", (size_t) 1, copy.size ());
   }
 
   virtual void
@@ -159,6 +162,7 @@ public:
   test_assign_all_values ()
   {
     JSON j;
+
     struct assert
     {
         Value *value;
@@ -181,7 +185,7 @@ public:
         // j._assign (*(*it).value);
         j = *(*it).value;
 
-        ASSERT_EQUAL_IDX ("type", (*it).type, j.__value->type ());
+        ASSERT_EQUAL_IDX ("json.__value->type ()", (*it).type, j.__value->type ());
 
     TEST_IT_END;
   }

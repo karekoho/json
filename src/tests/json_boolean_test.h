@@ -32,6 +32,7 @@ public:
     Boolean src = true;
     Boolean copy = src;
 
+    CPPUNIT_ASSERT_MESSAGE ("boolean", & src != & copy);
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.value ()", true, copy.value ());
   }
 

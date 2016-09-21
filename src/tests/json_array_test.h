@@ -31,6 +31,7 @@ public:
     Array src = "[true]";
     Array copy = src;
 
+    CPPUNIT_ASSERT_MESSAGE ("array", & copy != & src);
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("array._element_list.size ()", (size_t) 1, copy._element_list.size ());
   }
 

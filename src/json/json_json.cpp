@@ -65,7 +65,6 @@ JSON::_assign (JSON &j)
 {
   delete __value;
 
-  // __value = j.__value;
   __value = _copy_value (j.__value);
 
   return *this;
@@ -76,7 +75,6 @@ JSON::_assign (Value &v)
 {
   delete __value;
 
-  //  __value = & v;
   __value = _copy_value (&v);
 
   return *this;
@@ -143,32 +141,32 @@ JSON::_make_value ()
 }
 
 Value *
-JSON::_copy_value (Value *other)
+JSON::_copy_value (const Value *other)
 {
   switch (other->type ())
     {
     case Value::object_type::object:
-      return new Object (*(static_cast<Object *>(other)));
+      return new Object (*(static_cast<Object const *>(other)));
       break;
 
     case Value::object_type::array:
-      return new Array (*(static_cast<Array *>(other)));
+      return new Array (*(static_cast<Array const *>(other)));
       break;
 
     case Value::object_type::string:
-      return new String (*(static_cast<String *>(other)));
+      return new String (*(static_cast<String const *>(other)));
       break;
 
     case Value::object_type::number:
-      return new Number (*(static_cast<Number *>(other)));
+      return new Number (*(static_cast<Number const *>(other)));
       break;
 
     case Value::object_type::boolean:
-      return new Boolean (*(static_cast<Boolean *>(other)));
+      return new Boolean (*(static_cast<Boolean const *>(other)));
       break;
 
     case Value::object_type::null:
-      return new Null (*(static_cast<Null *>(other)));
+      return new Null (*(static_cast<Null const *>(other)));
       break;
 
     default:

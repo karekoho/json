@@ -30,6 +30,7 @@ public:
     Object src  = "{\"key\":true}";
     Object copy = src;
 
+    CPPUNIT_ASSERT_MESSAGE ("object", & copy != & src);
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("object._member_list.size ()", (size_t) 1, copy._member_list.size ());
   }
 

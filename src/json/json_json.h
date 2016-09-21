@@ -144,7 +144,7 @@ protected:
    * @param other
    * @return
    */
-  Value * _copy_value (Value *other);
+  Value * _copy_value (const Value *other);
 
 private:
 

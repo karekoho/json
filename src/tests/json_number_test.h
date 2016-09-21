@@ -43,6 +43,8 @@ public:
 
     // double d[] = { copy[0].value (), copy[1].value () };
 
+    CPPUNIT_ASSERT_MESSAGE ("number", & copy[0] != & src[0]);
+
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("src[1]._double_value", (double) 0, src[1]._double_value);
 
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[0].value ()", (double) 10, copy[0].value ());

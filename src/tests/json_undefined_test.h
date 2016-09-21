@@ -25,6 +25,11 @@ public:
       }
 
     delete p[1];
+
+    Undefined src;
+    Undefined copy = src;
+
+    CPPUNIT_ASSERT_MESSAGE ("undefined", & copy != & src);
   }
 
   virtual void test_parse_1 () {}
