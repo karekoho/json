@@ -63,9 +63,18 @@ class Value
    */
   Value (JSON *parent);
 
+  /**
+   * @brief Value
+   * @param other
+   */
+  Value (const Value &other) = default;
+
+  /**
+   * @brief ~Value
+   */
   virtual ~Value ()
   {
-    delete _key;
+    free ((char *)_key);
   }
 
   /**

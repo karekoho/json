@@ -1,6 +1,31 @@
 #include "json_string.h"
 #include "json_json.h"
 
+String::String() : Value (), _charc (0) {}
+
+String::String (const char *json)
+  : Value::Value (json),
+    _charc (0)
+{
+  if (_length == 0)
+    throw "null string";
+
+  (void) parse (json);
+}
+
+String::String (JSON *parent, size_t charc)
+  : Value::Value (parent),
+    _charc (charc)
+{
+}
+
+String::String (const String &other)
+  : Value (other),
+    _charc (other._charc)
+{
+  _copy (other);
+}
+
 const char *
 String::parse (const char *json)
 {
@@ -30,11 +55,7 @@ String::_assign (String &nv)
     }
 
   _charc = nv._charc;
-
-  if (nv._startp && _charc > 0)
-    _string_value.assign (nv._startp + 1, _charc - 2);
-
-  _startp = _string_value.c_str ();
+  _copy (nv);
 
   return *this;
 }
@@ -46,4 +67,13 @@ String::value () const
     _string_value.assign (_startp + 1, _charc - 2);
 
   return _string_value.c_str ();
+}
+
+void
+String::_copy (const String &nv)
+{
+  if (nv._startp && _charc > 0)
+    _string_value.assign (nv._startp + 1, _charc - 2);
+
+  _startp = _string_value.c_str ();
 }

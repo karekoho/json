@@ -22,6 +22,18 @@ Object::Object (JSON *parent)
 {
 }
 
+Object::~Object()
+{
+  // _member_list.erase (_member_list.begin (), _member_list.end ());
+
+  // for (auto it = _member_list.begin (); it != _member_list.end (); it = _member_list.erase (it))
+  //  delete static_cast<std::pair<std::string, Value *>>(*it).second; // FIXME: crash
+
+  // std::unordered_map<std::string, Value *>().swap (_member_list);
+}
+
+// Object::Object (const Object &other) { _member_list = other._member_list; }
+
 const char *
 Object::parse (const char *json)
 {
@@ -131,13 +143,13 @@ Object::_assign (Object &nv)
       return *_parent;
     }
 
-  // TODO: _member_list = nv._member_list; return *this;
+  _member_list = nv._member_list;
 
-  if (! _member_list.empty ())
-    (void) _member_list.erase (_member_list.begin (), _member_list.end ());
+//  if (! _member_list.empty ())
+//    (void) _member_list.erase (_member_list.begin (), _member_list.end ());
 
-  if (! nv._member_list.empty ())
-    _member_list.insert (nv._member_list.begin (), nv._member_list.end ());
+//  if (! nv._member_list.empty ())
+//    _member_list.insert (nv._member_list.begin (), nv._member_list.end ());
 
   return *this;
 }

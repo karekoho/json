@@ -38,6 +38,11 @@ class Boolean : public Value
    */
   Boolean (JSON *parent, const bool value) : Value::Value (parent), _boolean_value (value) {}
 
+  /**
+   *
+   */
+  Boolean (const Boolean &) = default;
+
 public:
 
   /**
@@ -54,6 +59,10 @@ public:
    */
   virtual inline Value & at (const char *)  { return *this; }
 
+  /**
+   * @brief at
+   * @return
+   */
   virtual Value & at (size_t) { return *this; }
 
   /**

@@ -30,6 +30,26 @@ public:
       }
 
     delete p[1];
+
+    Number src[] = {
+      Number (10),
+      Number ("100")
+    };
+
+    Number copy[] = {
+        Number (src[0]),
+        Number (src[1])
+    };
+
+    // double d[] = { copy[0].value (), copy[1].value () };
+
+    CPPUNIT_ASSERT_MESSAGE ("number", & copy[0] != & src[0]);
+
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("src[1]._double_value", (double) 0, src[1]._double_value);
+
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[0].value ()", (double) 10, copy[0].value ());
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[1].value ()", (double) 100, copy[1].value ());
+
   }
 
   virtual void

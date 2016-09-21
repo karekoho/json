@@ -51,9 +51,15 @@ class Array : public JSON
   Array (JSON *parent);
 
   /**
+   * @brief Array
+   * @param other
+   */
+  Array (const Array &other) = default;
+
+  /**
    * @brief ~Array
    */
-  virtual ~Array () { std::vector<Value *>().swap (_element_list); }
+  virtual ~Array (); // { std::vector<Value *>().swap (_element_list); }
 
   /**
    * @brief parse

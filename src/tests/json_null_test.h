@@ -26,6 +26,12 @@ public:
       }
 
     delete p[1];
+
+    Null src;
+    Null copy = src;
+
+    CPPUNIT_ASSERT_MESSAGE ("null", & copy != & src);
+
   }
 
   virtual void test_parse_1 () {}

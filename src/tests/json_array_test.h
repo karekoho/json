@@ -27,6 +27,12 @@ public:
       }
 
     delete p[1];
+
+    Array src = "[true]";
+    Array copy = src;
+
+    CPPUNIT_ASSERT_MESSAGE ("array", & copy != & src);
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("array._element_list.size ()", (size_t) 1, copy._element_list.size ());
   }
 
   virtual void
@@ -197,17 +203,13 @@ public:
                 {
                   Value *av =  arr_parent._element_list.at ((*it).index);
 
-                  ASSERT_EQUAL_IDX ("arr_parent[key].type", av->type (), (*it).type);
-                  ASSERT_EQUAL_IDX ("arr_parent[key].value", av, new_value);
+                  ASSERT_EQUAL_IDX ("arr_parent[index].type", av->type (), (*it).type);
+                  ASSERT_EQUAL_IDX ("arr_parent[index].value", av, new_value);
                 }
             }
           else
             {
-              ASSERT_EQUAL_IDX ("old_value.size ()", new_value->size () , old_value.size ());
-
-              // Value *ov =  & old_value.at ((*it).key);
-              // ASSERT_EQUAL_IDX ("obj_parent[key].type", ov->type (), (*it).type);
-              // ASSERT_EQUAL_IDX ("obj_parent[key].value", ov, new_value);
+              ASSERT_EQUAL_IDX ("old_value.size ()", /* new_value->size () */ (size_t) 2, old_value.size ());
             }
           TEST_IT_END;
         }

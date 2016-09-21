@@ -25,42 +25,38 @@ friend class json_number_test;
 
 public:
 
-  Number ()
-  : Value::Value (),
-    _double_value (0),
-    _double_valuep (&_double_value),
-    _digitp {{ 0, 0 },{ 0, 0 }}
-  {
-  }
+  /**
+   * @brief Number
+   */
+  Number ();
 
-  explicit Number (const double value)
-    : Value::Value (),
-      _double_value (value),
-      _double_valuep (&_double_value),
-      _digitp {{ 0, 0 },{ 0, 0 }}
-  {
-  }
+  /**
+   * @brief Number
+   * @param value
+   */
+  explicit Number (const double value);
 
-  Number (const char *json)
-    : Value::Value (json),
-      _double_value (0),
-      _double_valuep (0),
-      _digitp {{ 0, 0 },{ 0, 0 }}
-  {
-    if (_length == 0)
-      throw JSON::error ("null string");
+  /**
+   * @brief Number
+   * @param json
+   */
+  Number (const char *json);
 
-    (void) parse (json);
-  }
+  /**
+   * @brief Number
+   * @param parent
+   */
+  Number (JSON *parent);
 
-  Number (JSON *parent)
-    : Value::Value (parent),
-      _double_value (0),
-      _double_valuep (0),
-      _digitp {{ 0, 0 },{ 0, 0 }}
-  {
-  }
+  /**
+   * @brief Number
+   * @param other
+   */
+  Number (const Number &other);
 
+  /**
+   * @brief ~Number
+   */
   virtual ~Number () {}
 
   /**
@@ -75,21 +71,25 @@ public:
    * @param key
    * @return
    */
-  virtual inline Value & at (const char *) { return *this; }
+  virtual Value & at (const char *) { return *this; }
 
+  /**
+   * @brief at
+   * @return
+   */
   virtual Value & at (size_t) { return *this; }
 
   /**
    * @brief type
    * @return
    */
-  virtual inline object_type type () const { return Value::object_type::number; }
+  virtual object_type type () const { return Value::object_type::number; }
 
   /**
    * @brief size
    * @return
    */
-  virtual inline size_t size () const { return _double_valuep == 0 ? 0 : 1; }
+  virtual size_t size () const { return _double_valuep == 0 ? 0 : 1; }
 
   /**
    * @brief _assign
@@ -186,6 +186,12 @@ protected:
    * @return
    */
   Value & _assign (Number & nv);
+
+  /**
+   * @brief _copy
+   * @param nv
+   */
+  void _copy (const Number &nv);
 };
 
 #endif // NUMBER_H
