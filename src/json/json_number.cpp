@@ -60,9 +60,6 @@ Number::parse (const char *json)
     {
       _readp = json;
 
-      // if (_charc == 0)  /// 1. constructor called with null or zero length string
-      //  _endp = _readp + strlen (json);
-
       _look_ahead ();
     }
   else
@@ -71,23 +68,26 @@ Number::parse (const char *json)
   if (*_readp == 0)
     throw _readp;
 
+  if (_double_valuep)
+    _clear ();
+
   _digitp[DOUBLE][START] = _readp;
 
   if (*_readp == '-')
     _readp++;
 
-  if (*_readp == 48)    /// Expect 0\0 | 0.digits
+  if (*_readp == 48)    // Expect 0\0 | 0.digits
     {
-      if (*(_readp + 1) == 0) /// Null terminator, found single zero
+      if (*(_readp + 1) == 0) // Null terminator, found single zero
           return _readp + 1;
 
-      if (*(_readp + 1) == '.') /// Possible float value
+      if (*(_readp + 1) == '.') // Possible float value
         {
           _readp++;
           return _frag ();
         }
 
-      throw _readp; /// Anything else is no good
+      throw _readp; // Anything else is no good
     }
 
   if ((peek = _digits ()) == '.')
@@ -121,11 +121,11 @@ Number::_digits ()
 const char *
 Number::_frag ()
 {
-  _readp++; /// Skip '.'
+  _readp++; // Skip '.'
 
   int peek = _digits ();
 
-  if (peek < 0) /// No digits found
+  if (peek < 0) // No digits found
     throw _readp;
 
   _digitp[DOUBLE][END] = _readp;
@@ -136,12 +136,12 @@ Number::_frag ()
 const char *
 Number::_exp ()
 {
-  _digitp[EXP][START] = ++_readp; /// Skip 'e|E'
+  _digitp[EXP][START] = ++_readp; // Skip 'e|E'
 
   if (*(_readp) == '+' || *(_readp) == '-')
     _readp++;
 
-  if (_digits () < 0) /// No digits found
+  if (_digits () < 0) // No digits found
     throw _readp;
 
   _digitp[EXP][END] = _readp;
@@ -213,4 +213,16 @@ Number::_copy (const Number &nv)
       _digitp[EXP][START]     = nv._digitp[EXP][START];
       _digitp[EXP][END]       = nv._digitp[EXP][END];
     }
+}
+
+void
+Number::_clear ()
+{
+  _double_value   = 0;
+  _double_valuep  = 0;
+
+  _digitp[DOUBLE][START]  = 0;
+  _digitp[DOUBLE][END]    = 0;
+  _digitp[EXP][START]     = 0;
+  _digitp[EXP][END]       = 0;
 }

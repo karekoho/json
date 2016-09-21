@@ -139,7 +139,11 @@ class Value
    * @param key
    * @param charc
    */
-  inline void setKey (const char *key, size_t charc) { _key = strndup (key, charc); }
+  inline void setKey (const char *key, size_t charc)
+  {
+    free ((char *)_key);
+    _key = strndup (key, charc);
+  }
 
   /**
    * @brief index

@@ -54,12 +54,12 @@ class Array : public JSON
    * @brief Array
    * @param other
    */
-  Array (const Array &other) = default;
+  Array (const Array &other);
 
   /**
    * @brief ~Array
    */
-  virtual ~Array (); // { std::vector<Value *>().swap (_element_list); }
+  virtual ~Array ();
 
   /**
    * @brief parse
@@ -73,14 +73,14 @@ class Array : public JSON
    * @param key
    * @return
    */
-  virtual inline Value & at (const char *key)  { return at (atoll (key)); }
+  virtual Value & at (const char *key)  { return at (atoll (key)); }
 
   /**
    * @brief at
    * @param index
    * @return
    */
-  inline Value & at (size_t index) const;
+  Value & at (size_t index) const;
 
   /**
    * @brief assign
@@ -93,13 +93,13 @@ class Array : public JSON
    * @brief type
    * @return
    */
-  virtual inline object_type type () const { return Value::object_type::array; }
+  virtual object_type type () const { return Value::object_type::array; }
 
   /**
    * @brief size
    * @return
    */
-  virtual inline size_t size () const { return _element_list.size (); }
+  virtual size_t size () const { return _element_list.size (); }
 
   /**
    * @brief operator =
@@ -149,11 +149,10 @@ protected:
    */
   Value &_at (size_t index);
 
-  // Value interface
-protected:
-  virtual void _clear() override
-  {
-  }
+  /**
+   * @brief _clear
+   */
+  virtual void _clear ();
 };
 
 #endif // ARRAY

@@ -147,31 +147,24 @@ JSON::_copy_value (const Value *other)
     {
     case Value::object_type::object:
       return new Object (*(static_cast<Object const *>(other)));
-      break;
 
     case Value::object_type::array:
       return new Array (*(static_cast<Array const *>(other)));
-      break;
 
     case Value::object_type::string:
       return new String (*(static_cast<String const *>(other)));
-      break;
 
     case Value::object_type::number:
       return new Number (*(static_cast<Number const *>(other)));
-      break;
 
     case Value::object_type::boolean:
       return new Boolean (*(static_cast<Boolean const *>(other)));
-      break;
 
     case Value::object_type::null:
       return new Null (*(static_cast<Null const *>(other)));
-      break;
 
     default:
       return new Undefined;
-      break;
     }
 }
 

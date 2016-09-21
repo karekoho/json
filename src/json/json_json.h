@@ -146,10 +146,10 @@ protected:
    */
   Value * _copy_value (const Value *other);
 
-protected:
-  virtual void _clear() override
-  {
-  }
+  /**
+   * @brief _clear
+   */
+  virtual void _clear () {}
 
 private:
 

@@ -59,20 +59,12 @@ protected:
    * @param nv
    * @return
    */
-  // Value & _assign (Undefined & nv);
-
-  /**
-   * @brief assign
-   * @param nv
-   * @return
-   */
   virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
 
-protected:
-  virtual void _clear() override
-  {
-  }
-
+  /**
+   * @brief _clear
+   */
+  virtual void _clear () {}
 };
 
 #endif // UNDEFINED_H

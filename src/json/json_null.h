@@ -25,12 +25,6 @@ class Null : public Value
 
   /**
    * @brief Null
-   * @param json
-   */
-  // Null (const char *json) : Value::Value (json) {}
-
-  /**
-   * @brief Null
    * @param endp
    * @param parent
    * @param charc
@@ -117,9 +111,9 @@ class Null : public Value
    */
   Value & _assign (Null & nv);
 
-protected:
-  virtual void _clear() override
-  {
-  }
+  /**
+   * @brief _clear
+   */
+  virtual void _clear () {}
 };
 #endif // NULL_H

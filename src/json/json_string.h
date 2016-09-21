@@ -119,10 +119,10 @@ protected:
    */
   void _copy (const String &nv);
 
-protected:
-  virtual void _clear() override
-  {
-  }
+  /**
+   * @brief _clear
+   */
+  virtual void _clear () {}
 };
 
 #endif // STRING

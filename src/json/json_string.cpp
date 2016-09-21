@@ -34,6 +34,8 @@ String::parse (const char *json)
 
   _startp =_readp = json;
 
+  _string_value.clear ();
+
   if (_parent == 0)   // 2. ctor
     {
       if ((charc = _string (endc)) <= 0 )
