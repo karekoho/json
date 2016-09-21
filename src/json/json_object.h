@@ -57,12 +57,12 @@ public:
    * @brief Object
    * @param other
    */
-  Object (const Object &other) = default;
+  Object (const Object &other);
 
   /**
    * @brief ~Object
    */
-  virtual ~Object (); // { std::unordered_map<std::string, Value *>().swap (_member_list); }
+  virtual ~Object ();
 
   /**
    * @brief parse
@@ -150,6 +150,11 @@ protected:
    * @param nv
    */
   virtual void assign (Value *ov, Value *nv);
+
+  /**
+   * @brief _clear
+   */
+  virtual void _clear ();
 };
 
 #endif // OBJECT_H

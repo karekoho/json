@@ -28,6 +28,7 @@ public:
      * @brief test_operator_assign
      */
     virtual void test_operator_assign () = 0;   // =
+    virtual void test__clear () = 0;
 
     /**
      * Test with existing and missing node value (2 assertions).

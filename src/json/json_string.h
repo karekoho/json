@@ -118,6 +118,11 @@ protected:
    * @param nv
    */
   void _copy (const String &nv);
+
+  /**
+   * @brief _clear
+   */
+  virtual void _clear () {}
 };
 
 #endif // STRING

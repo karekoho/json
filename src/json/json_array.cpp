@@ -9,7 +9,6 @@ Array::Array (const char *json)
     throw JSON::error ("null string");
 
   (void) parse (json);
-
 }
 
 Array::Array (JSON *parent)
@@ -17,14 +16,34 @@ Array::Array (JSON *parent)
 {
 }
 
-Array::~Array()
+Array::Array (const Array &other)
+  : JSON (other)
 {
-  //_element_list.erase (_element_list.begin (), _element_list.end ());
+  // TODO:
+  //    class cloneFunctor {
+  //    public:
+  //        T* operator() (T* a) {
+  //            return a->clone();
+  //        }
+  //    }
 
-  // for (auto it = _element_list.begin (); it != _element_list.end (); ++it) delete *it; // FIXME: crash
+  //    void  StateInit(vector<CButton*> listBtn)
+  //    {
+  //       transform(listBtn.begin(), listBtn.end(), back_inserter(_m_pListBtn), cloneFunctor());
+  //     };
 
-  // std::vector<Value *>().swap (_element_list);
-  // _element_list.shrink_to_fit ();
+  if (! other._element_list.empty ())
+    {
+      _element_list.reserve (other._element_list.size ());
+
+      for (auto it = other._element_list.begin (); it != other._element_list.end (); ++it)
+        _element_list.push_back (_copy_value (*it));
+    }
+}
+
+Array::~Array ()
+{
+  _clear ();
 }
 
 const char *
@@ -48,6 +67,9 @@ Array::parse (const char *json)
   if (*_readp == 0)
     throw _readp;
 
+  if (! _element_list.empty ())
+    _clear ();
+
   Value *v = 0;
 
   while (*_readp != 0)
@@ -67,7 +89,7 @@ Array::parse (const char *json)
       else if (*_readp == _sc::end_array)         // ']'
         return _readp + 1;
 
-      else if ((v = _make_value())->type () == Value::undefined)  // No valid value found
+      else if ((v = _make_value ())->type () == Value::undefined)  // No valid value found
         {
           if (*_readp != Value::_ws::space /* TODO: check other ws_ characters */)
             throw "array::parse: unexpected character";
@@ -106,11 +128,6 @@ Array::_assign (Array &nv)
       return *_parent;
     }
 
-//  if (! _element_list.empty ())
-//    (void) _element_list.erase (_element_list.begin (), _element_list.end ());
-//  if (! nv._element_list.empty ())
-//    _element_list.assign (nv._element_list.begin (), nv._element_list.end ());
-
   _element_list = nv._element_list;
 
   return *this;
@@ -131,11 +148,18 @@ Array::_at(size_t index)
       v->setIndex (_element_list.size () - 1);
 
       return *v;
-    }
+  }
 }
 
 void
 Array::assign (Value *ov, Value *nv)
 {
   _element_list.at (ov->index ()) = nv;
+}
+
+void
+Array::_clear ()
+{
+  for (auto it = _element_list.begin (); it != _element_list.end (); it = _element_list.erase (it))
+    delete *it;
 }

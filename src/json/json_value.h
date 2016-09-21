@@ -139,7 +139,11 @@ class Value
    * @param key
    * @param charc
    */
-  inline void setKey (const char *key, size_t charc) { _key = strndup (key, charc); }
+  inline void setKey (const char *key, size_t charc)
+  {
+    free ((char *)_key);
+    _key = strndup (key, charc);
+  }
 
   /**
    * @brief index
@@ -280,6 +284,11 @@ protected:
    * @return
    */
   virtual Value & _at (const char *key)  = 0;
+
+  /**
+   * @brief _clear
+   */
+  virtual void _clear () = 0;
 
   /**
    * @brief _assign Assing value. Delete existing key.

@@ -22,17 +22,28 @@ Object::Object (JSON *parent)
 {
 }
 
-Object::~Object()
+Object::Object(const Object &other)
+  : JSON(other)
 {
-  // _member_list.erase (_member_list.begin (), _member_list.end ());
+  // _member_list = other._member_list; return;
 
-  // for (auto it = _member_list.begin (); it != _member_list.end (); it = _member_list.erase (it))
-  //  delete static_cast<std::pair<std::string, Value *>>(*it).second; // FIXME: crash
+  if (! other._member_list.empty ())
+    {
+      _member_list.reserve (other._member_list.size ());
 
-  // std::unordered_map<std::string, Value *>().swap (_member_list);
+      for (auto it = other._member_list.begin (); it != other._member_list.end (); ++it)
+        {
+          std::pair<std::string, Value *> p = *it;
+          _member_list.emplace (p.first, _copy_value (p.second));
+        }
+    }
 }
 
-// Object::Object (const Object &other) { _member_list = other._member_list; }
+Object::~Object()
+{
+ // FIXME:
+ // _clear (); // Segmentation fault: json_objec_test, line 341
+}
 
 const char *
 Object::parse (const char *json)
@@ -54,6 +65,8 @@ Object::parse (const char *json)
 
   if (*_readp == 0)
     throw _readp;
+
+  if (! _member_list.empty ()) _clear ();
 
   while (*_readp != 0)
     {
@@ -145,12 +158,6 @@ Object::_assign (Object &nv)
 
   _member_list = nv._member_list;
 
-//  if (! _member_list.empty ())
-//    (void) _member_list.erase (_member_list.begin (), _member_list.end ());
-
-//  if (! nv._member_list.empty ())
-//    _member_list.insert (nv._member_list.begin (), nv._member_list.end ());
-
   return *this;
 }
 
@@ -175,5 +182,12 @@ Object::_at (const char *key)
 void
 Object::assign (Value *ov, Value *nv)
 {
-   _member_list[ov->key ()] = nv;
+  _member_list[ov->key ()] = nv;
+}
+
+void
+Object::_clear ()
+{
+  for (auto it = _member_list.begin (); it != _member_list.end (); it = _member_list.erase (it))
+    delete static_cast <std::pair<std::string, Value *>>(*it).second;
 }

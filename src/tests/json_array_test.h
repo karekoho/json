@@ -32,6 +32,7 @@ public:
     Array copy = src;
 
     CPPUNIT_ASSERT_MESSAGE ("array", & copy != & src);
+    CPPUNIT_ASSERT_MESSAGE ("array", & copy._element_list.at (0) != & src._element_list.at (0));
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("array._element_list.size ()", (size_t) 1, copy._element_list.size ());
   }
 
@@ -273,6 +274,15 @@ public:
     TEST_IT_END;
   }
 
+  virtual void
+  test__clear ()
+  {
+    Array a = "[true, false]";
+    a._clear ();
+
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("array._element_list.size ()", (size_t) 0, a._element_list.size ());
+  }
+
   virtual void test_operator_assign () {}
   virtual void test_operator_at () {}
 
@@ -283,7 +293,6 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json array test");
 
-
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test_smoke", &json_array_test::test_ctor_dtor));
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test_parse_1", &json_array_test::test_parse_1));
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test_index", &json_array_test::test_index));
@@ -292,6 +301,7 @@ public:
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test_at", &json_array_test::test__at));
 
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test_assign_all_values", &json_array_test::test_assign_all_values));
+    s->addTest (new CppUnit::TestCaller<json_array_test> ("test__clear", &json_array_test::test__clear));
 
 //    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_size_1", &json_array_test::test_size_1));
 //    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_get_1", &json_array_test::test_get_1));

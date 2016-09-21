@@ -246,8 +246,8 @@ public:
     Array arr_parent;
 
     JSON *parents[] = {
-      &obj_parent,
-      &arr_parent,
+      & obj_parent,
+      & arr_parent,
       0
     };
 
@@ -270,10 +270,11 @@ public:
       { new Boolean (true), Value::boolean, "key_5",  0, 5, { PASS, PASS, FAIL } },
       { new Null (), Value::null, "key_6",  0, 6, { PASS, PASS, FAIL } }
     };
-      arr_parent._element_list.reserve (6);
 
-      for (size_t pidx = 0; pidx < 3; pidx++)
-        {
+    arr_parent._element_list.reserve (6);
+
+    for (size_t pidx = 0; pidx < 3; pidx++)
+      {
           obj_parent._member_list.clear ();
           arr_parent._element_list.clear ();
           old_value._parent = parents[pidx];
@@ -287,7 +288,7 @@ public:
 
           old_value._member_list.clear ();
           arr_parent._element_list.push_back (new Undefined);
-          old_value.setKey ((*it).key, strlen ((*it).key) /* (*it).keylen */);
+          old_value.setKey ((*it).key, strlen ((*it).key));
 
           (*it).index  = arr_parent._element_list.size () - 1;
           old_value.setIndex ((*it).index);
@@ -344,9 +345,18 @@ public:
   virtual void
   test_operator_assign ()
   {
-
     // TODO: assign key => boolean to object_1: object_1[key] = boolean
     // TODO: assign object_2 to object_1: object_1 => object_2
+  }
+
+  virtual void
+  test__clear ()
+  {
+
+    Object o = "{\"a\":true,\"b\":false}";
+    o._clear ();
+
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("object._member_list.size ()", (size_t) 0, o._member_list.size ());
   }
 
   virtual void test_operator_at () {}
@@ -356,27 +366,25 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json object test");
 
+    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_smoke", &json_object_test::test_ctor_dtor));
     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_assign_all_values", &json_object_test::test_assign_all_values));
-    //return s;
 
-     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_smoke", &json_object_test::test_ctor_dtor));
-  //    return s;
-      s->addTest (new CppUnit::TestCaller<json_object_test> ("test_parse_1", &json_object_test::test_key));
-      s->addTest (new CppUnit::TestCaller<json_object_test> ("test_key", &json_object_test::test_parse_1));
- //     return s;
+    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_parse_1", &json_object_test::test_key));
+    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_key", &json_object_test::test_parse_1));
+
 //    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_size_1", &json_object_test::test_size_1));
-      s->addTest (new CppUnit::TestCaller<json_object_test> ("test_at_1", &json_object_test::test_at));
-      s->addTest (new CppUnit::TestCaller<json_object_test> ("test_at_1", &json_object_test::test__at));
+    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_at_1", &json_object_test::test_at));
+    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_at_1", &json_object_test::test__at));
 
 //    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_value_1", &json_object_test::test_value_1));
 //    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_debug_1", &json_object_test::test_debug_1));
 
-     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_pair_1", &json_object_test::test__pair));
+    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_pair_1", &json_object_test::test__pair));
+    s->addTest (new CppUnit::TestCaller<json_object_test> ("test__clear", &json_object_test::test__clear));
 //     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_pair_1", &json_object_test::test__value));
 
      return s;
   }
-
 };
 
 #endif // JSON_OBJECT_TEST_H

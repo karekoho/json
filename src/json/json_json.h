@@ -146,6 +146,11 @@ protected:
    */
   Value * _copy_value (const Value *other);
 
+  /**
+   * @brief _clear
+   */
+  virtual void _clear () {}
+
 private:
 
   /**

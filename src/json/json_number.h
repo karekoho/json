@@ -192,6 +192,11 @@ protected:
    * @param nv
    */
   void _copy (const Number &nv);
+
+  /**
+   * @brief _clear
+   */
+  virtual void _clear ();
 };
 
 #endif // NUMBER_H

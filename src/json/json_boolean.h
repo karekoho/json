@@ -27,21 +27,16 @@ class Boolean : public Value
 
   /**
    * @brief Boolean
-   * @param json
-   */
-  // Boolean (const char *json) : Value::Value (json), _boolean_value (false) {}
-
-  /**
-   * @brief Boolean
    * @param parent
    * @param value
    */
   Boolean (JSON *parent, const bool value) : Value::Value (parent), _boolean_value (value) {}
 
   /**
-   *
+   * @brief Boolean
+   * @param other
    */
-  Boolean (const Boolean &) = default;
+  Boolean (const Boolean &other) = default;
 
 public:
 
@@ -50,7 +45,7 @@ public:
    * @param json
    * @return
    */
-  virtual inline const char *parse (const char *json) { return json + (_boolean_value == true ? 4 : 5); }
+  virtual const char *parse (const char *json) { return json + (_boolean_value == true ? 4 : 5); }
 
   /**
    * @brief at
@@ -130,6 +125,11 @@ protected:
    * @return
    */
   virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
+
+  /**
+   * @brief _clear
+   */
+  virtual void _clear () {}
 };
 
 #endif // BOOLEAN_H
