@@ -53,6 +53,13 @@ public:
   JSON (JSON *parent);
 
   /**
+   * @brief clone
+   * @param other
+   * @return
+   */
+  virtual Value *clone (const Value &other) { return new JSON (static_cast<const JSON &>(other)); }
+
+  /**
    * @brief JSON
    * @param other
    */
@@ -205,6 +212,10 @@ public:
     out_of_range (const char * const message = 0) : error (message) {}
   };
   /// class out_of_range
+
+
+  // Value interface
+public:
 
 }; /// class json
 /// } namespace

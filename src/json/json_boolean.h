@@ -38,6 +38,13 @@ class Boolean : public Value
    */
   Boolean (const Boolean &other) = default;
 
+  /**
+   * @brief clone
+   * @param other
+   * @return
+   */
+  virtual Value * clone (const Value &other) { return new Boolean (static_cast<const Boolean &> (other)); }
+
 public:
 
   /**

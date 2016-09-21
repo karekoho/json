@@ -32,6 +32,13 @@ class Undefined : public Value
    */
   Undefined (const Undefined &other) = default;
 
+  /**
+   * @brief clone
+   * @param other
+   * @return
+   */
+  virtual Value * clone (const Value &other) { return new Undefined (static_cast<const Undefined &> (other)); }
+
   inline const char * value () const { return "undefined"; }
 
   virtual const char *parse (const char *json) { return json; }

@@ -57,6 +57,13 @@ class Array : public JSON
   Array (const Array &other);
 
   /**
+   * @brief clone
+   * @param other
+   * @return
+   */
+  virtual Value * clone (const Value &other) { return new Array (*this /* static_cast<const Array &> (other) */); }
+
+  /**
    * @brief ~Array
    */
   virtual ~Array ();

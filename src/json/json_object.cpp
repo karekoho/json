@@ -25,7 +25,18 @@ Object::Object (JSON *parent)
 Object::Object(const Object &other)
   : JSON(other)
 {
-  // _member_list = other._member_list; return;
+  // TODO:
+  //    class cloneFunctor {
+  //    public:
+  //        T* operator() (T* a) {
+  //            return a->clone();
+  //        }
+  //    }
+
+  //    void  StateInit(vector<CButton*> listBtn)
+  //    {
+  //       transform(listBtn.begin(), listBtn.end(), back_inserter(_m_pListBtn), cloneFunctor());
+  //     };
 
   if (! other._member_list.empty ())
     {
@@ -34,7 +45,7 @@ Object::Object(const Object &other)
       for (auto it = other._member_list.begin (); it != other._member_list.end (); ++it)
         {
           std::pair<std::string, Value *> p = *it;
-          _member_list.emplace (p.first, _copy_value (p.second));
+          _member_list.emplace (p.first, /* _copy_value (p.second) */ p.second->clone (*p.second));
         }
     }
 }

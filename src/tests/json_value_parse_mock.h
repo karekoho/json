@@ -16,6 +16,8 @@ public:
     {
     }
 
+
+
     virtual ~json_value_parse_mock () {}
 
     virtual const char *parse (const char *readp) { return readp; }
@@ -31,6 +33,13 @@ protected:
   virtual void _clear() override
   {
   }
+
+    // Value interface
+public:
+    virtual Value *clone (const Value &other) override
+    {
+
+    }
 };
 
 #endif // JSON_VALUE_PARSE_MOCK_H

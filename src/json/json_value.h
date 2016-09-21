@@ -70,6 +70,13 @@ class Value
   Value (const Value &other) = default;
 
   /**
+   * @brief clone
+   * @param other
+   * @return
+   */
+  virtual Value * clone (const Value &other) = 0;
+
+  /**
    * @brief ~Value
    */
   virtual ~Value ()

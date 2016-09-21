@@ -38,6 +38,13 @@ class Null : public Value
   Null (const Null &other) = default;
 
   /**
+   * @brief clone
+   * @param other
+   * @return
+   */
+  virtual Value * clone (const Value &other) { return new Null (static_cast<const Null &> (other)); }
+
+  /**
    * @brief parse
    * @param json
    * @return

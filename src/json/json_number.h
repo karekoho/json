@@ -55,9 +55,11 @@ public:
   Number (const Number &other);
 
   /**
-   * @brief ~Number
+   * @brief clone
+   * @param other
+   * @return
    */
-  virtual ~Number () {}
+  virtual Value * clone (const Value &other) { return new Number (static_cast<const Number &> (other)); }
 
   /**
    * @brief parse

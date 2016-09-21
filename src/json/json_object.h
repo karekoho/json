@@ -60,6 +60,13 @@ public:
   Object (const Object &other);
 
   /**
+   * @brief clone
+   * @param other
+   * @return
+   */
+  virtual Value * clone (const Value &other) { return new Object (static_cast<const Object &> (other)); }
+
+  /**
    * @brief ~Object
    */
   virtual ~Object ();

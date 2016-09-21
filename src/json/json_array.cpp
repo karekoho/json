@@ -37,7 +37,11 @@ Array::Array (const Array &other)
       _element_list.reserve (other._element_list.size ());
 
       for (auto it = other._element_list.begin (); it != other._element_list.end (); ++it)
-        _element_list.push_back (_copy_value (*it));
+        {
+          // _element_list.push_back (_copy_value (*it));
+          Value *v = static_cast<Value *>(*it);
+          _element_list.push_back (v->clone (*v));
+        }
     }
 }
 

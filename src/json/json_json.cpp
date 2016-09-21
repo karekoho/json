@@ -28,7 +28,7 @@ JSON::JSON (JSON *parent)
 
 JSON::JSON (const JSON &other)
   : Value (other),
-   __value (other.__value ? _copy_value (other.__value) : 0)
+   __value (other.__value ? /* _copy_value (other.__value) */ other.__value->clone (*other.__value) : 0)
 {
 }
 
@@ -65,7 +65,8 @@ JSON::_assign (JSON &j)
 {
   delete __value;
 
-  __value = _copy_value (j.__value);
+  // __value = _copy_value (j.__value);
+  __value = j.clone (*(j.__value));
 
   return *this;
 }
@@ -75,7 +76,8 @@ JSON::_assign (Value &v)
 {
   delete __value;
 
-  __value = _copy_value (&v);
+  // __value = _copy_value (&v);
+  __value = v.clone (v);
 
   return *this;
 }
@@ -140,7 +142,7 @@ JSON::_make_value ()
   return value_;
 }
 
-Value *
+/* Value *
 JSON::_copy_value (const Value *other)
 {
   switch (other->type ())
@@ -166,6 +168,6 @@ JSON::_copy_value (const Value *other)
     default:
       return new Undefined;
     }
-}
+} */
 
 

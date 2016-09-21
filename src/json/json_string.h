@@ -43,6 +43,13 @@ friend class json_string_test;
   String (const String & other);
 
   /**
+   * @brief clone
+   * @param other
+   * @return
+   */
+  virtual Value * clone (const Value &other) { return new String (static_cast<const String &> (other)); }
+
+  /**
    * @brief parse
    * @param json
    * @return
