@@ -190,6 +190,8 @@ public:
     TEST_IT_END;
   }
 
+  virtual void test__clear() {}
+
   virtual void test_operator_assign () {}
   virtual void test_operator_at () {}
 

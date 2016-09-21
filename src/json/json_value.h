@@ -282,6 +282,11 @@ protected:
   virtual Value & _at (const char *key)  = 0;
 
   /**
+   * @brief _clear
+   */
+  virtual void _clear () = 0;
+
+  /**
    * @brief _assign Assing value. Delete existing key.
    * @param v
    */

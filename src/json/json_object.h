@@ -150,6 +150,11 @@ protected:
    * @param nv
    */
   virtual void assign (Value *ov, Value *nv);
+
+  /**
+   * @brief _clear
+   */
+  virtual void _clear ();
 };
 
 #endif // OBJECT_H

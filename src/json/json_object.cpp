@@ -24,12 +24,9 @@ Object::Object (JSON *parent)
 
 Object::~Object()
 {
-  // _member_list.erase (_member_list.begin (), _member_list.end ());
-
-  // for (auto it = _member_list.begin (); it != _member_list.end (); it = _member_list.erase (it))
-  //  delete static_cast<std::pair<std::string, Value *>>(*it).second; // FIXME: crash
-
-  // std::unordered_map<std::string, Value *>().swap (_member_list);
+  #ifdef UNIT_TEST
+    _clear ();
+  #endif
 }
 
 // Object::Object (const Object &other) { _member_list = other._member_list; }
@@ -175,5 +172,12 @@ Object::_at (const char *key)
 void
 Object::assign (Value *ov, Value *nv)
 {
-   _member_list[ov->key ()] = nv;
+  _member_list[ov->key ()] = nv;
+}
+
+void
+Object::_clear ()
+{
+  for (auto it = _member_list.begin (); it != _member_list.end (); it = _member_list.erase (it))
+    delete static_cast <std::pair<std::string, Value *>>(*it).second;
 }

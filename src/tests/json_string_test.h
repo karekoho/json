@@ -187,6 +187,8 @@ public:
           delete (*it).new_value;
     }
 
+    virtual void test__clear() {}
+
     virtual void test_operator_assign () {}
     virtual void test_operator_at () {}
 

@@ -192,6 +192,11 @@ protected:
    * @param nv
    */
   void _copy (const Number &nv);
+
+protected:
+  virtual void _clear() override
+  {
+  }
 };
 
 #endif // NUMBER_H

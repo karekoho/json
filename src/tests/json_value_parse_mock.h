@@ -27,6 +27,10 @@ public:
     // Value interface
 protected:
     virtual  Value &_at(const char *) { return *this; }
+protected:
+  virtual void _clear() override
+  {
+  }
 };
 
 #endif // JSON_VALUE_PARSE_MOCK_H

@@ -116,5 +116,10 @@ class Null : public Value
    * @return
    */
   Value & _assign (Null & nv);
+
+protected:
+  virtual void _clear() override
+  {
+  }
 };
 #endif // NULL_H

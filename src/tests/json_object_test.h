@@ -344,9 +344,18 @@ public:
   virtual void
   test_operator_assign ()
   {
-
     // TODO: assign key => boolean to object_1: object_1[key] = boolean
     // TODO: assign object_2 to object_1: object_1 => object_2
+  }
+
+  virtual void
+  test__clear ()
+  {
+
+    Object o = "{\"a\":true,\"b\":false}";
+    o._clear ();
+
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("object._member_list.size ()", (size_t) 0, o._member_list.size ());
   }
 
   virtual void test_operator_at () {}
@@ -355,6 +364,9 @@ public:
   suite ()
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json object test");
+
+     s->addTest (new CppUnit::TestCaller<json_object_test> ("test__clear", &json_object_test::test__clear));
+    // return s;
 
     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_assign_all_values", &json_object_test::test_assign_all_values));
     //return s;

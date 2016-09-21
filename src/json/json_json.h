@@ -146,6 +146,11 @@ protected:
    */
   Value * _copy_value (const Value *other);
 
+protected:
+  virtual void _clear() override
+  {
+  }
+
 private:
 
   /**

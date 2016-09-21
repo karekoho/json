@@ -142,6 +142,8 @@ public:
     {
     }
 
+    virtual void test__clear() {}
+
     static CppUnit::Test*
     suite ()
     {

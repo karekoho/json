@@ -148,6 +148,12 @@ protected:
    * @return
    */
   Value &_at (size_t index);
+
+  // Value interface
+protected:
+  virtual void _clear() override
+  {
+  }
 };
 
 #endif // ARRAY

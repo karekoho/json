@@ -130,6 +130,11 @@ protected:
    * @return
    */
   virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
+
+protected:
+  virtual void _clear () override
+  {
+  }
 };
 
 #endif // BOOLEAN_H
