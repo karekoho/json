@@ -83,13 +83,13 @@ public:
    * @param key
    * @return
    */
-  virtual Value & at (const char *key);
+  virtual Value & at (const char *key) const;
 
   /**
    * @brief at
    * @return
    */
-  virtual Value & at (size_t) { return *this; }
+  virtual Value & at (size_t)  { return *this; }
 
   /**
    * @brief type
@@ -163,10 +163,11 @@ protected:
    */
   virtual void _clear ();
 
-  virtual Value *_clone(const Value &other) override
-  {
-    return this;
-  }
+  /**
+   * @brief _clone
+   * @return
+   */
+  virtual Value *_clone (const Value &) override { return this; }
 };
 
 #endif // OBJECT_H

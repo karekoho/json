@@ -100,14 +100,14 @@ class Value
    * @param key
    * @return
    */
-  virtual Value & at (const char *key) /* TODO: const */ = 0;
+  virtual Value & at (const char *key) const  = 0;
 
   /**
    * @brief at
    * @param index
    * @return
    */
-  virtual Value & at (size_t index) /* TODO: const */ = 0;
+  virtual Value & at (size_t index) const = 0;
 
   /**
    * @brief operator []

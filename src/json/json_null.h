@@ -2,6 +2,7 @@
 #define NULL_H
 
 #include "json_value.h"
+#include "json_undefined.h"
 
 #ifdef UNIT_TEST
  class json_null_test;
@@ -10,6 +11,7 @@
 /**
  * @brief The Null class
  */
+// class Undefined;
 class Null : public Value
 {
 #ifdef UNIT_TEST
@@ -56,13 +58,13 @@ class Null : public Value
    * @param key
    * @return
    */
-  virtual inline Value & at (const char *) { return *this; }
+   virtual inline Value & at (const char *) const { return *(new Undefined); }
 
   /**
    * @brief at
    * @return
    */
-  virtual Value & at (size_t) { return *this; }
+  virtual Value & at (size_t) const { return *(new Undefined); }
 
   /**
    * @brief type
@@ -123,9 +125,10 @@ class Null : public Value
    */
   virtual void _clear () {}
 
-  virtual Value *_clone(const Value &other) override
-  {
-    return this;
-  }
+  /**
+   * @brief _clone
+   * @return
+   */
+  virtual Value *_clone (const Value &) override { return this; }
 };
 #endif // NULL_H

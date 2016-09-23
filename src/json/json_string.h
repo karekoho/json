@@ -2,6 +2,7 @@
 #define STRING
 
 #include "json_value.h"
+#include "json_undefined.h"
 
 #ifdef UNIT_TEST
 class json_string_test;
@@ -10,6 +11,7 @@ class json_string_test;
 /**
  * @brief The string class
  */
+//class Undefined;
 class String : public Value
 {
 #ifdef UNIT_TEST
@@ -60,9 +62,9 @@ friend class json_string_test;
    * @brief at
    * @return
    */
-  virtual inline Value & at (const char *) { return *this; }
+  virtual inline Value & at (const char *) const { return *(new Undefined); }
 
-  virtual Value & at (size_t) { return *this; }
+  virtual Value & at (size_t) const { return *(new Undefined); }
 
   virtual inline object_type type () const { return Value::object_type::string; }
 
@@ -131,10 +133,7 @@ protected:
    */
   virtual void _clear () {}
 
-  virtual Value *_clone(const Value &other) override
-  {
-    return this;
-  }
+  virtual Value *_clone (const Value &) override { return this; }
 };
 
 #endif // STRING

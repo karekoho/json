@@ -21,8 +21,8 @@ public:
     virtual ~json_value_parse_mock () {}
 
     virtual const char *parse (const char *readp) { return readp; }
-    virtual Value & at (const char *) { return *this; }
-    virtual Value & at (size_t) { return *this; }
+    virtual Value & at (const char *) const { return *(new Undefined);}
+    virtual Value & at (size_t) const { return *(new Undefined); }
     virtual Value::object_type type () const { return _type;}
     virtual size_t size () const { return 0;}
 
@@ -34,7 +34,7 @@ protected:
   {
   }
 
-    virtual Value *_clone(const Value &other) override
+    virtual Value *_clone(const Value &) override
     {
       return this;
     }
@@ -43,10 +43,8 @@ protected:
 public:
     virtual Value *_clone () override
     {
-
+      return 0;
     }
-
-
 };
 
 #endif // JSON_VALUE_PARSE_MOCK_H

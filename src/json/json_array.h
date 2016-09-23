@@ -81,7 +81,7 @@ class Array : public JSON
    * @param key
    * @return
    */
-  virtual Value & at (const char *key)  { return at (atoll (key)); }
+  virtual Value & at (const char *key) const { return at (atoll (key)); }
 
   /**
    * @brief at

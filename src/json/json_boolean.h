@@ -2,6 +2,7 @@
 #define BOOLEAN_H
 
 #include "json_value.h"
+#include "json_undefined.h"
 
 #ifdef UNIT_TEST
   class json_boolean_test;
@@ -10,6 +11,7 @@
 /**
  * @brief The boolean class
  */
+//class Undefined;
 class Boolean : public Value
 {
 #ifdef UNIT_TEST
@@ -59,13 +61,13 @@ public:
    * @param key
    * @return
    */
-  virtual inline Value & at (const char *)  { return *this; }
+  virtual inline Value & at (const char *) const  { return *(new Undefined); }
 
   /**
    * @brief at
    * @return
    */
-  virtual Value & at (size_t) { return *this; }
+  virtual Value & at (size_t) const { return *(new Undefined); }
 
   /**
    * @brief type
@@ -138,10 +140,11 @@ protected:
    */
   virtual void _clear () {}
 
-  virtual Value *_clone (const Value &other) override
-  {
-    return this;
-  }
+  /**
+   * @brief _clone
+   * @return
+   */
+  virtual Value *_clone (const Value &) override { return this; }
 };
 
 #endif // BOOLEAN_H

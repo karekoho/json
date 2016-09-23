@@ -82,7 +82,7 @@ Value::_is_literal (const int _try) const
 }
 
 Value *
-Value::_clone (const Value &other)
+Value::_clone (const Value &)
 {
   return this;
 }

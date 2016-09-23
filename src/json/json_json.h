@@ -82,14 +82,14 @@ public:
    * @param key
    * @return
    */
-  virtual Value & at (const char *key) { return type () == Value::undefined ? *(new Undefined) : __value->at (key); }
+  virtual Value & at (const char *key) const { return type () == Value::undefined ? *(new Undefined) : __value->at (key); }
 
   /**
    * @brief at
    * @param index
    * @return
    */
-  virtual Value & at (size_t index) { return type () == Value::undefined ? *(new Undefined) : __value->at (index); }
+  virtual Value & at (size_t index) const { return type () == Value::undefined ? *(new Undefined) : __value->at (index); }
 
   /**
    * @brief type

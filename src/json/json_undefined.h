@@ -43,9 +43,9 @@ class Undefined : public Value
 
   virtual const char *parse (const char *json) { return json; }
 
-  virtual Value & at (const char *)  { return *this; }
+  virtual Value & at (const char *) const { return *(new Undefined); }
 
-  virtual Value & at (size_t) { return *this; }
+  virtual Value & at (size_t) const { return *(new Undefined); }
 
   virtual inline object_type type () const { return Value::object_type::undefined; }
 
@@ -73,10 +73,7 @@ protected:
    */
   virtual void _clear () {}
 
-  virtual Value *_clone(const Value &other) override
-  {
-    return this;
-  }
+  virtual Value *_clone(const Value &) override { return this; }
 };
 
 #endif // UNDEFINED_H

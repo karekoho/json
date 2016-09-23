@@ -146,7 +146,7 @@ Object::_pair ()
 }
 
 Value &
-Object::at (const char *key)
+Object::at (const char *key) const
 {
   try
     {
