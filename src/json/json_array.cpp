@@ -147,7 +147,7 @@ Array::_clone (const Value &other)
 
   // if (nv._element_list.empty ()) return this;
 
-  // TODO: assure that this._element_list is empty if other._element_list is.
+  // TODO: assure that this._element_list is empty when other._element_list is empty.
   _element_list.reserve (nv._element_list.size ());
 
   std::transform (nv._element_list.begin (), nv._element_list.end (), std::back_inserter (_element_list), _clone_cb);

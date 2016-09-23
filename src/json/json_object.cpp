@@ -204,7 +204,7 @@ Object::_clone (const Value &other)
 
   // if (nv._member_list.empty ()) return this;
 
-  // TODO: assure that this._member_list is empty if other._member_list is.
+  // TODO: assure that this._member_list is empty when other._member_list is empty.
   _member_list.reserve (nv._member_list.size ());
 
   for (auto it = nv._member_list.begin (); it != nv._member_list.end (); ++it)
