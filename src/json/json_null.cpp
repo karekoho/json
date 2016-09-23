@@ -4,11 +4,5 @@
 Value &
 Null::_assign (Null &nv)
 {
-  if (_parent)
-    {
-      _parent->assign (this, &nv);
-      return *_parent;
-    }
-
-  return *this;
+  return _parent ? _parent->assign (this, &nv) : *this;
 }

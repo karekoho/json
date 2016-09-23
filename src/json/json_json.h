@@ -131,6 +131,12 @@ public:
    */
   inline Value & operator =(Value & v) { return _assign (v); }
 
+  /**
+   * @brief assign
+   * @return
+   */
+  virtual Value &assign (Value *, Value *) override { return *this; }
+
 protected:
 
   /**
@@ -147,21 +153,15 @@ protected:
   Value *_make_value ();
 
   /**
-   * @brief _copy_value
-   * @param other
-   * @return
-   */
-  Value * _copy_value (const Value *other);
-
-  /**
    * @brief _clear
    */
   virtual void _clear () {}
 
-  virtual Value *_clone (const Value &) override
-  {
-    return this;
-  }
+  /**
+   * @brief _clone
+   * @return
+   */
+  virtual Value *_clone (const Value &) override { return this; }
 
 private:
 
@@ -217,10 +217,6 @@ public:
     out_of_range (const char * const message = 0) : error (message) {}
   };
   /// class out_of_range
-
-
-  // Value interface
-public:
 
 }; /// class json
 /// } namespace

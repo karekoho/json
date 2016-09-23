@@ -4,13 +4,12 @@
 Value &
 Boolean::_assign (Boolean &nv)
 {
-  if (_parent)
-    {
-      _parent->assign (this, &nv);
-      return *_parent;
-    }
+  return _parent ? _parent->assign (this, &nv) : *(_clone (nv));
+}
 
-  _boolean_value = nv._boolean_value;
-
-  return *this;
+Value *
+Boolean::_clone (const Value &other)
+{
+  _boolean_value = static_cast<const Boolean &>(other)._boolean_value;
+  return this;
 }

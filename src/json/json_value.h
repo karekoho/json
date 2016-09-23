@@ -8,8 +8,8 @@
 #ifdef UNIT_TEST
   class json_value_test;
   // class json_object_test;
-  class json_null_test;
-  class json_undefined_test;
+  // class json_null_test;
+  // class json_undefined_test;
 #endif
 /**
  * @brief The json_value class
@@ -24,8 +24,8 @@ class Value
   // friend class json_test;
   friend class json_value_test;
   // friend class json_object_test;
-  friend class json_null_test;  // WTF ???
-  friend class json_undefined_test; // WTF ???
+  //friend class json_null_test;  // WTF ???
+  //friend class json_undefined_test; // WTF ???
 #endif
 
   //friend void Undefined::_assign (Value *, Value *);
@@ -166,21 +166,12 @@ class Value
   inline void setIndex (const size_t &index) { _index = index;}
 
   /**
-   * TODO: protected
-   *
-   * @brief assign
-   * @param nv
-   * @return
-   */
-  //virtual Value & assign (Value & nv);
-
-  /**
    * TODO: pure virtual, return Value &
    *
    * @brief _assign
    */
 
-  virtual void assign (Value *, Value *) {}
+  virtual Value & assign (Value *, Value *) = 0;
 
 protected:
 
@@ -317,7 +308,8 @@ protected:
    * @param v
    */
 
-   static const struct literal_value {
+   static const struct literal_value
+   {
      const char * const str_value;
      const size_t len;
      const Value::_literal ltr_value;

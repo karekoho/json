@@ -114,6 +114,12 @@ public:
    */
   void setValue (bool value) { _boolean_value = value; }
 
+  /**
+   * @brief assign
+   * @return
+   */
+  virtual Value & assign (Value *, Value *) override { return *this; }
+
 protected:
 
   /**
@@ -144,7 +150,7 @@ protected:
    * @brief _clone
    * @return
    */
-  virtual Value *_clone (const Value &) override { return this; }
+  virtual Value *_clone (const Value &other) override;
 };
 
 #endif // BOOLEAN_H

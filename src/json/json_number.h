@@ -17,6 +17,7 @@ class json_number_test;
 /**
  * @brief The number class
  */
+class Undefined;
 class Number : public Value
 {
 #ifdef UNIT_TEST
@@ -73,13 +74,13 @@ public:
    * @param key
    * @return
    */
-  virtual Value & at (const char *) { return *this; }
+  virtual Value & at (const char *) const { return *(new Undefined); }
 
   /**
    * @brief at
    * @return
    */
-  virtual Value & at (size_t) { return *this; }
+  virtual Value & at (size_t) const { return *(new Undefined); }
 
   /**
    * @brief type
@@ -200,9 +201,17 @@ protected:
    */
   virtual void _clear ();
 
-  virtual Value *_clone(const Value &other) override
+  /**
+   * @brief _clone
+   * @return
+   */
+  virtual Value *_clone (const Value &other); // override { return this; }
+
+  // Value interface
+public:
+  virtual Value &assign(Value *, Value *) override
   {
-    return this;
+    return *this;
   }
 };
 

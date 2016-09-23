@@ -53,6 +53,8 @@ class Undefined : public Value
 
   inline Value & operator =(Value & v) { return _assign (v);  }
 
+  virtual Value &assign (Value *, Value *) override { return *this; }
+
 protected:
 
   /**
@@ -73,7 +75,11 @@ protected:
    */
   virtual void _clear () {}
 
-  virtual Value *_clone(const Value &) override { return this; }
+  /**
+   * @brief _clone
+   * @return
+   */
+  virtual Value *_clone (const Value &) override { return this; }
 };
 
 #endif // UNDEFINED_H

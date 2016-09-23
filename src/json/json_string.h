@@ -97,6 +97,12 @@ friend class json_string_test;
    */
   const char * value () const;
 
+  /**
+   * @brief assign
+   * @return
+   */
+  virtual Value &assign (Value *, Value *) override { return *this; }
+
 protected:
 
   /**
@@ -133,6 +139,10 @@ protected:
    */
   virtual void _clear () {}
 
+  /**
+   * @brief _clone
+   * @return
+   */
   virtual Value *_clone (const Value &) override { return this; }
 };
 

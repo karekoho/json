@@ -38,16 +38,17 @@ Object::Object(const Object &other)
   //       transform(listBtn.begin(), listBtn.end(), back_inserter(_m_pListBtn), cloneFunctor());
   //     };
 
-  if (! other._member_list.empty ())
-    {
-      _member_list.reserve (other._member_list.size ());
+//  if (! other._member_list.empty ())
+//    {
+//      _member_list.reserve (other._member_list.size ());
 
-      for (auto it = other._member_list.begin (); it != other._member_list.end (); ++it)
-        {
-          std::pair<std::string, Value *> p = *it;
-          _member_list.emplace (p.first, /* _copy_value (p.second) */ p.second->_clone ());
-        }
-    }
+//      for (auto it = other._member_list.begin (); it != other._member_list.end (); ++it)
+//        {
+//          std::pair<std::string, Value *> p = *it;
+//          _member_list.emplace (p.first, /* _copy_value (p.second) */ p.second->_clone ());
+//        }
+//    }
+  (void) _clone (other);
 }
 
 Object::~Object()
@@ -161,15 +162,7 @@ Object::at (const char *key) const
 Value &
 Object::_assign (Object &nv)
 {
-  if (_parent)
-    {
-      _parent->assign (this, &nv);
-      return *_parent;
-    }
-
-  _member_list = nv._member_list;
-
-  return *this;
+  return _parent ? _parent->assign (this, &nv) : *(_clone (nv));
 }
 
 Value &
@@ -190,10 +183,11 @@ Object::_at (const char *key)
   }
 }
 
-void
+Value &
 Object::assign (Value *ov, Value *nv)
 {
   _member_list[ov->key ()] = nv;
+  return *this;
 }
 
 void
@@ -201,4 +195,23 @@ Object::_clear ()
 {
   for (auto it = _member_list.begin (); it != _member_list.end (); it = _member_list.erase (it))
     delete static_cast <std::pair<std::string, Value *>>(*it).second;
+}
+
+Value *
+Object::_clone (const Value &other)
+{
+  const Object &nv = static_cast<const Object &>(other);
+
+  // if (nv._member_list.empty ()) return this;
+
+  // TODO: assure that this._member_list is empty if other._member_list is.
+  _member_list.reserve (nv._member_list.size ());
+
+  for (auto it = nv._member_list.begin (); it != nv._member_list.end (); ++it)
+    {
+      std::pair<std::string, Value *> p = *it;
+      _member_list.emplace (p.first, p.second->_clone ());
+    }
+
+  return this;
 }

@@ -130,5 +130,12 @@ class Null : public Value
    * @return
    */
   virtual Value *_clone (const Value &) override { return this; }
+
+  // Value interface
+public:
+  virtual Value &assign(Value *, Value *) override
+  {
+    return *this;
+  }
 };
 #endif // NULL_H

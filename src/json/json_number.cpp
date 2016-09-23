@@ -45,7 +45,7 @@ Number::Number (const Number &other)
    _double_valuep (0),
    _digitp {{ 0, 0 }, { 0, 0 }}
 {
-  _copy (other);
+  (void) _clone (other);
 }
 
 const char *
@@ -187,32 +187,7 @@ Number::_atoll (const char * const digitp[2]) const
 Value &
 Number::_assign (Number &nv)
 {
-  if (_parent)
-    {
-      _parent->assign (this, &nv);
-      return *_parent;
-    }
-
-  _copy (nv);
-
-  return *this;
-}
-
-void
-Number::_copy (const Number &nv)
-{
-  if (nv._double_valuep)
-    {
-      _double_value = nv._double_value;
-      _double_valuep = &_double_value;
-    }
-  else
-    {
-      _digitp[DOUBLE][START]  = nv._digitp[DOUBLE][START];
-      _digitp[DOUBLE][END]    = nv._digitp[DOUBLE][END];
-      _digitp[EXP][START]     = nv._digitp[EXP][START];
-      _digitp[EXP][END]       = nv._digitp[EXP][END];
-    }
+  return _parent  ? _parent->assign (this, &nv) : *(_clone (nv));
 }
 
 void
@@ -225,4 +200,25 @@ Number::_clear ()
   _digitp[DOUBLE][END]    = 0;
   _digitp[EXP][START]     = 0;
   _digitp[EXP][END]       = 0;
+}
+
+Value *
+Number::_clone (const Value &other)
+{
+  const Number & nv = static_cast<const Number &>(other);
+
+  if (nv._double_valuep)
+    {
+      _double_value = nv._double_value;
+      _double_valuep = &_double_value;
+    }
+  else
+    {
+      _digitp[DOUBLE][START]  = nv._digitp[DOUBLE][START];
+      _digitp[DOUBLE][END]    = nv._digitp[DOUBLE][END];
+      _digitp[EXP][START]     = nv._digitp[EXP][START];
+      _digitp[EXP][END]       = nv._digitp[EXP][END];
+    }
+
+  return this;
 }

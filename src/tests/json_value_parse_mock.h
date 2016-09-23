@@ -45,6 +45,13 @@ public:
     {
       return 0;
     }
+
+    // Value interface
+public:
+    virtual Value &assign(Value *, Value *) override
+    {
+      return *this;
+    }
 };
 
 #endif // JSON_VALUE_PARSE_MOCK_H

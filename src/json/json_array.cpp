@@ -104,16 +104,7 @@ Array::at (size_t index) const
 Value &
 Array::_assign (Array &nv)
 {
-  if (_parent)
-    {
-      _parent->assign (this, &nv);
-      return *_parent;
-    }
-
-  // _element_list = nv._element_list;
-  // return *this;
-
-  return *(_clone (nv));
+  return _parent ? _parent->assign (this, &nv) : *(_clone (nv));
 }
 
 Value &
@@ -134,10 +125,12 @@ Array::_at (size_t index)
   }
 }
 
-void
+Value &
 Array::assign (Value *ov, Value *nv)
 {
   _element_list.at (ov->index ()) = nv;
+
+  return *this;
 }
 
 void
@@ -150,9 +143,14 @@ Array::_clear ()
 Value *
 Array::_clone (const Value &other)
 {
-  const Array *a = static_cast<const Array *> (&other);
+  const Array &nv = static_cast<const Array &> (other);
 
-  std::transform (a->_element_list.begin (), a->_element_list.end (), std::back_inserter (_element_list), _clone_cb);
+  // if (nv._element_list.empty ()) return this;
+
+  // TODO: assure that this._element_list is empty if other._element_list is.
+  _element_list.reserve (nv._element_list.size ());
+
+  std::transform (nv._element_list.begin (), nv._element_list.end (), std::back_inserter (_element_list), _clone_cb);
 
   return this;
 }

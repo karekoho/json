@@ -95,7 +95,7 @@ class Array : public JSON
    * @param ov
    * @param nv
    */
-  virtual void assign (Value *ov, Value *nv);
+  virtual Value & assign (Value *ov, Value *nv);
 
   /**
    * @brief type

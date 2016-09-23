@@ -156,7 +156,7 @@ protected:
    * @param ov
    * @param nv
    */
-  virtual void assign (Value *ov, Value *nv);
+  virtual Value & assign (Value *ov, Value *nv);
 
   /**
    * @brief _clear
@@ -167,7 +167,7 @@ protected:
    * @brief _clone
    * @return
    */
-  virtual Value *_clone (const Value &) override { return this; }
+  virtual Value *_clone (const Value &other); // override { return this; }
 };
 
 #endif // OBJECT_H
