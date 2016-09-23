@@ -57,7 +57,7 @@ public:
    * @param other
    * @return
    */
-  virtual Value *clone (const Value &other) { return new JSON (static_cast<const JSON &>(other)); }
+  virtual Value *_clone () { return new JSON (*this); }
 
   /**
    * @brief JSON
@@ -157,6 +157,11 @@ protected:
    * @brief _clear
    */
   virtual void _clear () {}
+
+  virtual Value *_clone (const Value &) override
+  {
+    return this;
+  }
 
 private:
 

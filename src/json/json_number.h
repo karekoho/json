@@ -59,7 +59,7 @@ public:
    * @param other
    * @return
    */
-  virtual Value * clone (const Value &other) { return new Number (static_cast<const Number &> (other)); }
+  virtual Value * _clone () { return new Number (*this); }
 
   /**
    * @brief parse
@@ -199,6 +199,11 @@ protected:
    * @brief _clear
    */
   virtual void _clear ();
+
+  virtual Value *_clone(const Value &other) override
+  {
+    return this;
+  }
 };
 
 #endif // NUMBER_H

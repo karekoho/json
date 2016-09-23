@@ -3,6 +3,7 @@
 
 #include "json_json.h"
 
+
 #ifdef UNIT_TEST
 class json_test;
 class json_array_test;
@@ -61,7 +62,7 @@ class Array : public JSON
    * @param other
    * @return
    */
-  virtual Value * clone (const Value &other) { return new Array (*this /* static_cast<const Array &> (other) */); }
+  virtual Value * _clone () { return new Array (*this /* static_cast<const Array &> (other) */); }
 
   /**
    * @brief ~Array
@@ -160,6 +161,13 @@ protected:
    * @brief _clear
    */
   virtual void _clear ();
+
+  /**
+   * @brief _clone
+   * @param other
+   * @return
+   */
+  virtual Value *_clone (const Value &other) override;
 };
 
 #endif // ARRAY

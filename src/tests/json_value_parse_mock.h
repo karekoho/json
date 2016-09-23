@@ -34,12 +34,19 @@ protected:
   {
   }
 
+    virtual Value *_clone(const Value &other) override
+    {
+      return this;
+    }
+
     // Value interface
 public:
-    virtual Value *clone (const Value &other) override
+    virtual Value *_clone () override
     {
 
     }
+
+
 };
 
 #endif // JSON_VALUE_PARSE_MOCK_H

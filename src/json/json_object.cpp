@@ -45,7 +45,7 @@ Object::Object(const Object &other)
       for (auto it = other._member_list.begin (); it != other._member_list.end (); ++it)
         {
           std::pair<std::string, Value *> p = *it;
-          _member_list.emplace (p.first, /* _copy_value (p.second) */ p.second->clone (*p.second));
+          _member_list.emplace (p.first, /* _copy_value (p.second) */ p.second->_clone ());
         }
     }
 }

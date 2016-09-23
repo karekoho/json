@@ -1,4 +1,5 @@
 #include "json_array.h"
+#include <algorithm>
 
 Array::Array() : JSON (){}
 
@@ -19,30 +20,7 @@ Array::Array (JSON *parent)
 Array::Array (const Array &other)
   : JSON (other)
 {
-  // TODO:
-  //    class cloneFunctor {
-  //    public:
-  //        T* operator() (T* a) {
-  //            return a->clone();
-  //        }
-  //    }
-
-  //    void  StateInit(vector<CButton*> listBtn)
-  //    {
-  //       transform(listBtn.begin(), listBtn.end(), back_inserter(_m_pListBtn), cloneFunctor());
-  //     };
-
-  if (! other._element_list.empty ())
-    {
-      _element_list.reserve (other._element_list.size ());
-
-      for (auto it = other._element_list.begin (); it != other._element_list.end (); ++it)
-        {
-          // _element_list.push_back (_copy_value (*it));
-          Value *v = static_cast<Value *>(*it);
-          _element_list.push_back (v->clone (*v));
-        }
-    }
+  (void) _clone (other);
 }
 
 Array::~Array ()
@@ -132,13 +110,14 @@ Array::_assign (Array &nv)
       return *_parent;
     }
 
-  _element_list = nv._element_list;
+  // _element_list = nv._element_list;
+  // return *this;
 
-  return *this;
+  return *(_clone (nv));
 }
 
 Value &
-Array::_at(size_t index)
+Array::_at (size_t index)
 {
   try
     {
@@ -166,4 +145,14 @@ Array::_clear ()
 {
   for (auto it = _element_list.begin (); it != _element_list.end (); it = _element_list.erase (it))
     delete *it;
+}
+
+Value *
+Array::_clone (const Value &other)
+{
+  const Array *a = static_cast<const Array *> (&other);
+
+  std::transform (a->_element_list.begin (), a->_element_list.end (), std::back_inserter (_element_list), _clone_cb);
+
+  return this;
 }

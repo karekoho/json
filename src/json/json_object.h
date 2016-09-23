@@ -64,7 +64,7 @@ public:
    * @param other
    * @return
    */
-  virtual Value * clone (const Value &other) { return new Object (static_cast<const Object &> (other)); }
+  virtual Value * _clone () { return new Object (*this); }
 
   /**
    * @brief ~Object
@@ -162,6 +162,11 @@ protected:
    * @brief _clear
    */
   virtual void _clear ();
+
+  virtual Value *_clone(const Value &other) override
+  {
+    return this;
+  }
 };
 
 #endif // OBJECT_H

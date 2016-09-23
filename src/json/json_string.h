@@ -47,7 +47,7 @@ friend class json_string_test;
    * @param other
    * @return
    */
-  virtual Value * clone (const Value &other) { return new String (static_cast<const String &> (other)); }
+  virtual Value * _clone () { return new String (*this); }
 
   /**
    * @brief parse
@@ -130,6 +130,11 @@ protected:
    * @brief _clear
    */
   virtual void _clear () {}
+
+  virtual Value *_clone(const Value &other) override
+  {
+    return this;
+  }
 };
 
 #endif // STRING

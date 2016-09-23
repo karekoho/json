@@ -74,7 +74,7 @@ class Value
    * @param other
    * @return
    */
-  virtual Value * clone (const Value &other) = 0;
+  virtual Value * _clone () = 0;
 
   /**
    * @brief ~Value
@@ -179,6 +179,7 @@ class Value
    *
    * @brief _assign
    */
+
   virtual void assign (Value *, Value *) {}
 
 protected:
@@ -296,6 +297,20 @@ protected:
    * @brief _clear
    */
   virtual void _clear () = 0;
+
+  /**
+   * @brief _clone
+   * @param other
+   * @return
+   */
+  virtual Value * _clone (const Value &other) = 0;
+
+  /**
+   * @brief _clone
+   * @param v
+   * @return
+   */
+  static inline Value * _clone_cb (Value *v) { return v->_clone (); }
 
   /**
    * @brief _assign Assing value. Delete existing key.

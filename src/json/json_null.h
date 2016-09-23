@@ -42,7 +42,7 @@ class Null : public Value
    * @param other
    * @return
    */
-  virtual Value * clone (const Value &other) { return new Null (static_cast<const Null &> (other)); }
+  virtual Value * _clone () { return new Null (*this); }
 
   /**
    * @brief parse
@@ -122,5 +122,10 @@ class Null : public Value
    * @brief _clear
    */
   virtual void _clear () {}
+
+  virtual Value *_clone(const Value &other) override
+  {
+    return this;
+  }
 };
 #endif // NULL_H

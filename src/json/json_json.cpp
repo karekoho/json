@@ -28,7 +28,7 @@ JSON::JSON (JSON *parent)
 
 JSON::JSON (const JSON &other)
   : Value (other),
-   __value (other.__value ? /* _copy_value (other.__value) */ other.__value->clone (*other.__value) : 0)
+   __value (other.__value ? other.__value->_clone () : 0)
 {
 }
 
@@ -65,8 +65,7 @@ JSON::_assign (JSON &j)
 {
   delete __value;
 
-  // __value = _copy_value (j.__value);
-  __value = j.clone (*(j.__value));
+  __value = j._clone ();
 
   return *this;
 }
@@ -76,8 +75,7 @@ JSON::_assign (Value &v)
 {
   delete __value;
 
-  // __value = _copy_value (&v);
-  __value = v.clone (v);
+  __value = v._clone ();
 
   return *this;
 }
@@ -141,33 +139,5 @@ JSON::_make_value ()
 
   return value_;
 }
-
-/* Value *
-JSON::_copy_value (const Value *other)
-{
-  switch (other->type ())
-    {
-    case Value::object_type::object:
-      return new Object (*(static_cast<Object const *>(other)));
-
-    case Value::object_type::array:
-      return new Array (*(static_cast<Array const *>(other)));
-
-    case Value::object_type::string:
-      return new String (*(static_cast<String const *>(other)));
-
-    case Value::object_type::number:
-      return new Number (*(static_cast<Number const *>(other)));
-
-    case Value::object_type::boolean:
-      return new Boolean (*(static_cast<Boolean const *>(other)));
-
-    case Value::object_type::null:
-      return new Null (*(static_cast<Null const *>(other)));
-
-    default:
-      return new Undefined;
-    }
-} */
 
 

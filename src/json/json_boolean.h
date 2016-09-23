@@ -43,7 +43,7 @@ class Boolean : public Value
    * @param other
    * @return
    */
-  virtual Value * clone (const Value &other) { return new Boolean (static_cast<const Boolean &> (other)); }
+  virtual Value * _clone () { return new Boolean (*this); }
 
 public:
 
@@ -137,6 +137,11 @@ protected:
    * @brief _clear
    */
   virtual void _clear () {}
+
+  virtual Value *_clone (const Value &other) override
+  {
+    return this;
+  }
 };
 
 #endif // BOOLEAN_H

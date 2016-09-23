@@ -41,8 +41,6 @@ Value::Value (JSON *parent)
 {
 }
 
-// const Value & Value::parent() const { return *_parent; }
-
 long int
 Value::_string (char & endc) const
 {
@@ -81,6 +79,12 @@ Value::_is_literal (const int _try) const
     return __ltr_value[_try].ltr_value;
 
   return _try < 2 ? _is_literal (_try + 1) :  Value::_literal::no_value;
+}
+
+Value *
+Value::_clone (const Value &other)
+{
+  return this;
 }
 
 Value &

@@ -37,7 +37,7 @@ class Undefined : public Value
    * @param other
    * @return
    */
-  virtual Value * clone (const Value &other) { return new Undefined (static_cast<const Undefined &> (other)); }
+  virtual Value * _clone () { return new Undefined (*this); }
 
   inline const char * value () const { return "undefined"; }
 
@@ -72,6 +72,11 @@ protected:
    * @brief _clear
    */
   virtual void _clear () {}
+
+  virtual Value *_clone(const Value &other) override
+  {
+    return this;
+  }
 };
 
 #endif // UNDEFINED_H
