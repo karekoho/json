@@ -132,7 +132,7 @@ class Value
    * @brief size
    * @return
    */
-  virtual size_t size () const = 0;
+  virtual size_t count () const = 0;
 
   /**
    * @brief key

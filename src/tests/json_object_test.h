@@ -84,9 +84,9 @@ public:
 
           ASSERT_EQUAL_IDX ("value.readp", (startp + charc) - (*it).moveback, readp);
           ASSERT_EQUAL_IDX ("*(value.readp -1)", '}', *(readp - 1));
-          ASSERT_EQUAL_IDX ("value.size", (*it).size, o->size ());
+          ASSERT_EQUAL_IDX ("value.size", (*it).size, o->count ());
 
-          if (o->size () > 0)
+          if (o->count () > 0)
             {
               ASSERT_EQUAL_IDX ("value.type", (*it).type, o->at ("k").type ());
               ASSERT_EQUAL_IDX ("*(value.key)", (char) 'k', *(o->at ("k").key ()));
@@ -121,7 +121,7 @@ public:
 
       (void) o->parse (startp);
 
-      if (o->size () > 0)
+      if (o->count () > 0)
         {
           size_t idx= 0;
 
@@ -313,7 +313,7 @@ public:
 
           if (parent)
             {
-              ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->size ());
+              ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
 
               if (parent->type () == Value::object)
                 {
@@ -332,7 +332,7 @@ public:
             }
           else
             {
-              ASSERT_EQUAL_IDX ("old_value.size ()", new_value->size (), old_value.size ());
+              ASSERT_EQUAL_IDX ("old_value.size ()", new_value->count (), old_value.count ());
 
               // Value *ov =  & old_value.at ((*it).key);
               // ASSERT_EQUAL_IDX ("obj_parent[key].type", ov->type (), (*it).type);

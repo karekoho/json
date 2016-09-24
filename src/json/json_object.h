@@ -101,7 +101,7 @@ public:
    * @brief size
    * @return
    */
-  virtual inline size_t size () const { return _member_list.size (); }
+  virtual inline size_t count () const { return _member_list.size (); }
 
   /**
    * @brief operator =

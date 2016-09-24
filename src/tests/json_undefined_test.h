@@ -100,7 +100,7 @@ public:
 
           if (parent)
             {
-              ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->size ());
+              ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
 
               if (parent->type () == Value::object)
                 {

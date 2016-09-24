@@ -78,7 +78,7 @@ public:
 
           ASSERT_EQUAL_IDX ("array.readp", (startp + charc) - (*it).moveback, readp);
           ASSERT_EQUAL_IDX ("*(array.readp - 1)", ']', *(readp - 1));
-          ASSERT_EQUAL_IDX ("array.size", (*it).size, a->size ());
+          ASSERT_EQUAL_IDX ("array.size", (*it).size, a->count ());
 
           delete a;
         }
@@ -106,7 +106,7 @@ public:
 
       (void) a->parse (startp);
 
-      if (a->size () > 0)
+      if (a->count () > 0)
         {
           for (size_t idx = 0; idx < a->_element_list.size (); idx++)
             {
@@ -191,7 +191,7 @@ public:
 
           if (parent)
             {
-              ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->size ());
+              ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
 
               if (parent->type () == Value::object)
                 {
@@ -210,7 +210,7 @@ public:
             }
           else
             {
-              ASSERT_EQUAL_IDX ("old_value.size ()", /* new_value->size () */ (size_t) 2, old_value.size ());
+              ASSERT_EQUAL_IDX ("old_value.size ()", /* new_value->size () */ (size_t) 2, old_value.count ());
             }
           TEST_IT_END;
         }

@@ -101,7 +101,7 @@ public:
    * @brief size
    * @return
    */
-  virtual inline size_t size () const { return  type () == Value::undefined ? 0 :__value->size (); }
+  virtual inline size_t count () const { return  type () == Value::undefined ? 0 :__value->count (); }
 
   /**
    * @brief _assign

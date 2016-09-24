@@ -65,7 +65,7 @@ public:
    * @brief size
    * @return
    */
-  virtual size_t size () const final override { return 0; }
+  virtual size_t count () const final override { return 0; }
 
   /**
    * @brief assign

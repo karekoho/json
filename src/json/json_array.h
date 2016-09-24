@@ -110,7 +110,7 @@ class Array : public JSON
    * @brief size
    * @return
    */
-  virtual size_t size () const { return _element_list.size (); }
+  virtual size_t count () const { return _element_list.size (); }
 
   /**
    * @brief operator =

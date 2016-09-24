@@ -23,7 +23,7 @@ public:
     JSON copy = j[1];
 
     CPPUNIT_ASSERT_MESSAGE ("json", & copy != & j[1]);
-    CPPUNIT_ASSERT_EQUAL_MESSAGE ("json.size ()", (size_t) 1, copy.size ());
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("json.size ()", (size_t) 1, copy.count ());
   }
 
   virtual void

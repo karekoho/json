@@ -13,7 +13,7 @@ public:
     virtual Value & at (const char *) const { return *(new Undefined); }
     virtual Value & at (size_t) const { return *(new Undefined); }
     virtual Value::object_type type () const { return Value::object_type::undefined; }
-    virtual size_t size () const { return 0; }
+    virtual size_t count () const { return 0; }
     virtual Value *_clone () override { return 0; }
     virtual Value &assign (Value *, Value *) override { return *this; }
 
