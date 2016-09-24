@@ -1,8 +1,7 @@
 #ifndef BOOLEAN_H
 #define BOOLEAN_H
 
-#include "json_value.h"
-#include "json_undefined.h"
+#include "json_leaf.h"
 
 #ifdef UNIT_TEST
   class json_boolean_test;
@@ -11,7 +10,7 @@
 /**
  * @brief The boolean class
  */
-class Boolean : public Value
+class Boolean : public Leaf
 {
 #ifdef UNIT_TEST
   friend class json_boolean_test;
@@ -22,20 +21,20 @@ class Boolean : public Value
   /**
    * @brief Boolean
    */
-  Boolean () : Value::Value (), _boolean_value (false) {}
+  Boolean () : Leaf (), _boolean_value (false) {}
 
   /**
    * @brief Boolean
    * @param value
    */
-  Boolean (const bool value) : Value::Value (), _boolean_value (value) {}
+  Boolean (const bool value) : Leaf (), _boolean_value (value) {}
 
   /**
    * @brief Boolean
    * @param parent
    * @param value
    */
-  Boolean (JSON *parent, const bool value) : Value::Value (parent), _boolean_value (value) {}
+  Boolean (JSON *parent, const bool value) : Leaf (parent), _boolean_value (value) {}
 
   /**
    * @brief Boolean
@@ -60,29 +59,10 @@ public:
   virtual const char *parse (const char *json) { return json + (_boolean_value == true ? 4 : 5); }
 
   /**
-   * @brief at
-   * @param key
-   * @return
-   */
-  virtual inline Value & at (const char *) const  { return *(new Undefined); }
-
-  /**
-   * @brief at
-   * @return
-   */
-  virtual Value & at (size_t) const { return *(new Undefined); }
-
-  /**
    * @brief type
    * @return
    */
   virtual inline object_type type () const { return Value::object_type::boolean; }
-
-  /**
-   * @brief size
-   * @return
-   */
-  virtual inline size_t size () const { return 1;}
 
   /**
    * @brief operator =
@@ -117,25 +97,12 @@ public:
    */
   void setValue (bool value) { _boolean_value = value; }
 
-  /**
-   * @brief assign
-   * @return
-   */
-  virtual Value & assign (Value *, Value *) override { return *this; }
-
 protected:
 
   /**
    * @brief _boolean_value
    */
   bool _boolean_value;
-
-  /**
-   * @brief _at
-   * @param key
-   * @return
-   */
-  virtual inline Value &_at (const char *)  { return *this; }
 
   /**
    * @brief _assign

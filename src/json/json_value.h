@@ -126,7 +126,7 @@ class Value
    * @brief type
    * @return
    */
- virtual object_type type () const = 0;
+ virtual object_type type () const /* TODO: noexcept */ = 0;
 
   /**
    * @brief size
@@ -138,7 +138,7 @@ class Value
    * @brief key
    * @return
    */
-  inline const char *key () const { return _key; }
+  inline const char *key () const noexcept { return _key; }
 
   /**
     TODO: protected
@@ -146,7 +146,7 @@ class Value
    * @param key
    * @param charc
    */
-  inline void setKey (const char *key, size_t charc)
+  inline void setKey (const char *key, size_t charc) noexcept
   {
     free ((char *)_key);
     _key = strndup (key, charc);
@@ -156,22 +156,34 @@ class Value
    * @brief index
    * @return
    */
-  inline size_t index () const { return _index; }
+  inline size_t index () const noexcept { return _index; }
 
   /**
     TODO: protected
    * @brief setIndex
    * @param index
    */
-  inline void setIndex (const size_t &index) { _index = index;}
+  inline void setIndex (const size_t &index) noexcept { _index = index;}
 
   /**
-   * TODO: pure virtual, return Value &
-   *
    * @brief _assign
+   * @param Old value
+   * @param New value
+   * @return
    */
-
   virtual Value & assign (Value *, Value *) = 0;
+
+  /**
+   * @brief isLeaf
+   * @return
+   */
+  virtual bool isLeaf () const noexcept { return false; }
+
+  /**
+   * @brief isNode
+   * @return
+   */
+  inline bool isNode () const noexcept { return ! isLeaf (); }
 
 protected:
 
@@ -249,9 +261,9 @@ protected:
    * @brief _look_ahead Move read pointer to next non-white space character
    */
   inline const char *
-  _look_ahead ()
+  _look_ahead () noexcept
   {
-    while (*_readp != 0 && ( *_readp == _ws::tab
+    while (*_readp != 0 && (*_readp == _ws::tab
             || *_readp == _ws::lf
             || *_readp == _ws::cr
             || *_readp == _ws::space))
@@ -268,14 +280,14 @@ protected:
    * @param endc Last character read
    * @return Number of characters read
    */
-  long int _string (char &endc) const;
+  long int _string (char &endc) const noexcept;
 
   /**
    * @brief _is_literal
    * @param try_
    * @return
    */
-  Value::_literal _is_literal (const int _try = 0) const;
+  Value::_literal _is_literal (const int _try = 0) const noexcept;
 
   /**
    * @brief _at json::object behavior: if key does not exist, assign key with value of type undefined.

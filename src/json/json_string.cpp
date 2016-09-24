@@ -1,10 +1,10 @@
 #include "json_string.h"
 #include "json_json.h"
 
-String::String() : Value (), _charc (0) {}
+String::String() : Leaf (), _charc (0) {}
 
 String::String (const char *json)
-  : Value::Value (json),
+  : Leaf (json),
     _charc (0)
 {
   if (_length == 0)
@@ -14,13 +14,13 @@ String::String (const char *json)
 }
 
 String::String (JSON *parent, size_t charc)
-  : Value::Value (parent),
+  : Leaf (parent),
     _charc (charc)
 {
 }
 
 String::String (const String &other)
-  : Value (other),
+  : Leaf (other),
     _charc (other._charc)
 {
   _copy (other);

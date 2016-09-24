@@ -1,21 +1,19 @@
 #ifndef STRING
 #define STRING
 
-#include "json_value.h"
-#include "json_undefined.h"
+#include "json_leaf.h"
 
 #ifdef UNIT_TEST
-class json_string_test;
+  class json_string_test;
 #endif
 
 /**
  * @brief The string class
  */
-//class Undefined;
-class String : public Value
+class String : public Leaf
 {
 #ifdef UNIT_TEST
-friend class json_string_test;
+  friend class json_string_test;
 #endif
 
   public:
@@ -59,16 +57,10 @@ friend class json_string_test;
   virtual const char * parse (const char *json);
 
   /**
-   * @brief at
+   * @brief type
    * @return
    */
-  virtual inline Value & at (const char *) const { return *(new Undefined); }
-
-  virtual Value & at (size_t) const { return *(new Undefined); }
-
   virtual inline object_type type () const { return Value::object_type::string; }
-
-  virtual inline size_t size () const { return _string_value.length (); }
 
   /**
    * @brief operator =
@@ -97,19 +89,7 @@ friend class json_string_test;
    */
   const char * value () const;
 
-  /**
-   * @brief assign
-   * @return
-   */
-  virtual Value &assign (Value *, Value *) override { return *this; }
-
 protected:
-
-  /**
-   * @brief _at
-   * @return
-   */
-  virtual Value &_at (const char *) { return *this; }
 
   /**
    * @brief _charc

@@ -1,8 +1,7 @@
 #ifndef NUMBER_H
 #define NUMBER_H
 
-#include "json_value.h"
-#include "json_json.h"
+#include "json_leaf.h"
 
 #define DOUBLE 0
 #define EXP 1
@@ -11,17 +10,16 @@
 #define END 1
 
 #ifdef UNIT_TEST
-class json_number_test;
+  class json_number_test;
 #endif
 
 /**
  * @brief The number class
  */
-class Undefined;
-class Number : public Value
+class Number : public Leaf
 {
 #ifdef UNIT_TEST
-friend class json_number_test;
+  friend class json_number_test;
 #endif
 
 public:
@@ -70,29 +68,10 @@ public:
   virtual const char *parse (const char *json);
 
   /**
-   * @brief at
-   * @param key
-   * @return
-   */
-  virtual Value & at (const char *) const { return *(new Undefined); }
-
-  /**
-   * @brief at
-   * @return
-   */
-  virtual Value & at (size_t) const { return *(new Undefined); }
-
-  /**
    * @brief type
    * @return
    */
   virtual object_type type () const { return Value::object_type::number; }
-
-  /**
-   * @brief size
-   * @return
-   */
-  virtual size_t size () const { return _double_valuep == 0 ? 0 : 1; }
 
   /**
    * @brief _assign
@@ -178,12 +157,6 @@ protected:
   long long _atoll (const char * const digitp[2]) const;
 
   /**
-   * @brief _at
-   * @return
-   */
-  virtual inline Value &_at (const char *) { return *this; }
-
-  /**
    * @brief _assign
    * @param nv
    * @return
@@ -205,14 +178,7 @@ protected:
    * @brief _clone
    * @return
    */
-  virtual Value *_clone (const Value &other); // override { return this; }
-
-  // Value interface
-public:
-  virtual Value &assign(Value *, Value *) override
-  {
-    return *this;
-  }
+  virtual Value *_clone (const Value &other);
 };
 
 #endif // NUMBER_H

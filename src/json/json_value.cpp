@@ -11,7 +11,6 @@ const struct Value::literal_value Value::__ltr_value[3] = {
 Value::Value ()
     : _startp (0),
       _readp (0),
-      //_endp (0),
       _parent (0),
       _length (0),
       _key (0),
@@ -22,7 +21,6 @@ Value::Value ()
 Value::Value (const char *json)
     : _startp (json),
       _readp (json),
-      //_endp (0),
       _parent (0),
       _length (json == 0 ? 0 : strlen (json)),
       _key (0),
@@ -33,7 +31,6 @@ Value::Value (const char *json)
 Value::Value (JSON *parent)
     : _startp (0),
       _readp (0),
-      // _endp (0),
       _parent (parent),
       _length (0),
       _key (0),
@@ -42,7 +39,7 @@ Value::Value (JSON *parent)
 }
 
 long int
-Value::_string (char & endc) const
+Value::_string (char & endc) const noexcept
 {
   const char * const starp = _readp;
 
@@ -63,7 +60,7 @@ Value::_string (char & endc) const
 }
 
 Value::_literal
-Value::_is_literal (const int _try) const
+Value::_is_literal (const int _try) const noexcept
 {
   const char *readp = _readp;
 

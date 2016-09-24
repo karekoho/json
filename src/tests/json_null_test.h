@@ -31,7 +31,6 @@ public:
     Null copy = src;
 
     CPPUNIT_ASSERT_MESSAGE ("null", & copy != & src);
-
   }
 
   virtual void test_parse_1 () {}

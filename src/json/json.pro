@@ -1,8 +1,8 @@
 CONFIG += staticlib
 CONFIG -= qt
 
-QMAKE_CXXFLAGS+= -std=c++11
-QMAKE_LFLAGS +=  -std=c++11
+QMAKE_CXXFLAGS+= -std=c++14
+QMAKE_LFLAGS +=  -std=c++14
 
 #TARGET = json
 #CONFIG += console
@@ -19,7 +19,8 @@ SOURCES += \
     json_null.cpp \
     json_json.cpp \
     json_boolean.cpp \
-    json_array.cpp
+    json_array.cpp \
+    #json_leaf.cpp
 
 HEADERS += \
     json.h \
@@ -31,7 +32,8 @@ HEADERS += \
     json_null.h \
     json_json.h \
     json_boolean.h \
-    json_array.h
+    json_array.h \
+    json_leaf.h
 
 unix:!symbian {
     maemo5 {

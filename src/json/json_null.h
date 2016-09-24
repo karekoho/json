@@ -1,8 +1,7 @@
 #ifndef NULL_H
 #define NULL_H
 
-#include "json_value.h"
-#include "json_undefined.h"
+#include "json_leaf.h"
 
 #ifdef UNIT_TEST
  class json_null_test;
@@ -11,8 +10,7 @@
 /**
  * @brief The Null class
  */
-// class Undefined;
-class Null : public Value
+class Null : public Leaf
 {
 #ifdef UNIT_TEST
  friend class json_null_test;
@@ -23,7 +21,7 @@ class Null : public Value
   /**
    * @brief Null
    */
-  Null () : Value::Value () {}
+  Null () : Leaf () {}
 
   /**
    * @brief Null
@@ -31,7 +29,7 @@ class Null : public Value
    * @param parent
    * @param charc
    */
-  Null (JSON *parent) : Value::Value (parent) {}
+  Null (JSON *parent) : Leaf (parent) {}
 
   /**
    * @brief Null
@@ -54,29 +52,10 @@ class Null : public Value
   virtual inline const char *parse (const char *json) { return json + 4; }
 
   /**
-   * @brief at
-   * @param key
-   * @return
-   */
-   virtual inline Value & at (const char *) const { return *(new Undefined); }
-
-  /**
-   * @brief at
-   * @return
-   */
-  virtual Value & at (size_t) const { return *(new Undefined); }
-
-  /**
    * @brief type
    * @return
    */
   virtual inline Value::object_type type () const { return Value::object_type::null; }
-
-  /**
-   * @brief size
-   * @return
-   */
-  virtual inline size_t size () const { return 1; }
 
   /**
    * @brief Value
@@ -98,13 +77,7 @@ class Null : public Value
    */
   inline Value & operator =(Value & v) { return _assign (v); }
 
-  protected:
-
-  /**
-   * @brief _at
-   * @return
-   */
-  virtual Value &_at (const char *) { return *this; }
+protected:
 
   /**
    * @brief _assign
@@ -130,12 +103,5 @@ class Null : public Value
    * @return
    */
   virtual Value *_clone (const Value &) override { return this; }
-
-  // Value interface
-public:
-  virtual Value &assign(Value *, Value *) override
-  {
-    return *this;
-  }
 };
 #endif // NULL_H

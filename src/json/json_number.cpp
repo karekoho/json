@@ -4,7 +4,7 @@
 #include <math.h>
 
 Number::Number ()
-  : Value (),
+  : Leaf (),
     _double_value (0),
     _double_valuep (&_double_value),
     _digitp {{ 0, 0 }, { 0, 0 }}
@@ -12,7 +12,7 @@ Number::Number ()
 }
 
 Number::Number (const double value)
-  : Value (),
+  : Leaf (),
     _double_value (value),
     _double_valuep (&_double_value),
     _digitp {{ 0, 0 }, { 0, 0 }}
@@ -20,7 +20,7 @@ Number::Number (const double value)
 }
 
 Number::Number (const char *json)
-  : Value (json),
+  : Leaf (json),
     _double_value (0),
     _double_valuep (0),
     _digitp {{ 0, 0 }, { 0, 0 }}
@@ -32,7 +32,7 @@ Number::Number (const char *json)
 }
 
 Number::Number (JSON *parent)
-  : Value (parent),
+  : Leaf (parent),
     _double_value (0),
     _double_valuep (0),
     _digitp {{ 0, 0 }, { 0, 0 }}
@@ -40,7 +40,7 @@ Number::Number (JSON *parent)
 }
 
 Number::Number (const Number &other)
- : Value (other),
+ : Leaf (other),
    _double_value (0),
    _double_valuep (0),
    _digitp {{ 0, 0 }, { 0, 0 }}

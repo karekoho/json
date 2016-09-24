@@ -1,7 +1,7 @@
 #ifndef UNDEFINED_H
 #define UNDEFINED_H
 
-#include "json_value.h"
+#include "json_leaf.h"
 
 #ifdef UNIT_TEST
   class json_undefined_test;
@@ -10,7 +10,7 @@
 /**
  * @brief The undefined class
  */
-class Undefined : public Value
+class Undefined : public Leaf
 {
 #ifdef UNIT_TEST
   friend class json_undefined_test;
@@ -18,13 +18,13 @@ class Undefined : public Value
 
   public:
 
-  Undefined () : Value::Value () {}
+  Undefined () : Leaf () {}
 
   /**
    * @brief Undefined
    * @param parent
    */
-  Undefined (JSON *parent) : Value::Value (parent) {}
+  Undefined (JSON *parent) : Leaf (parent) {}
 
   /**
    * @brief Undefined
@@ -39,29 +39,33 @@ class Undefined : public Value
    */
   virtual Value * _clone () { return new Undefined (*this); }
 
-  inline const char * value () const { return "undefined"; }
-
-  virtual const char *parse (const char *json) { return json; }
-
-  virtual Value & at (const char *) const { return *(new Undefined); }
-
-  virtual Value & at (size_t) const { return *(new Undefined); }
-
-  virtual inline object_type type () const { return Value::object_type::undefined; }
-
-  virtual inline size_t size () const { return 0; }
-
-  inline Value & operator =(Value & v) { return _assign (v);  }
-
-  virtual Value &assign (Value *, Value *) override { return *this; }
-
-protected:
-
   /**
-   * @brief _at
+   * @brief value
    * @return
    */
-  virtual Value &_at (const char *) { return *this; }
+  inline const char * value () const { return "undefined"; }
+
+  /**
+   * @brief parse
+   * @param json
+   * @return
+   */
+  virtual const char * parse (const char *json) { return json; }
+
+  /**
+   * @brief type
+   * @return
+   */
+  virtual inline object_type type () const { return Value::object_type::undefined; }
+
+  /**
+   * @brief operator =
+   * @param v
+   * @return
+   */
+  inline Value & operator =(Value & v) { return _assign (v);  }
+
+protected:
 
   /**
    * @brief assign
