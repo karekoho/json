@@ -3,6 +3,7 @@
 
 #include "unit_test.h"
 
+// Test number 10
 class json_array_iterator_test : public unit_test
 {
 public:
@@ -10,6 +11,27 @@ public:
   void
   test_1 ()
   {
+    std::vector<Value *> x;
+
+    struct assert {
+      std::vector<Value *> *vector;
+      int assert_status;
+    };
+
+    std::vector<struct assert> test = {
+      { new std::vector<Value *>({new Null, new Boolean (true), new Number (100)}), PASS },
+      { new std::vector<Value *>(), PASS }
+    };
+
+    TEST_IT_START
+
+        x = *(*it).vector;
+
+        std::cout << x.size () << std::endl;
+
+        delete (*it).vector;
+
+    TEST_IT_END;
   }
 
   static CppUnit::Test *
