@@ -51,7 +51,10 @@ HEADERS += \
     ../json/json_json.h \
     ../json/json_boolean.h \
     ../json/json_array.h \
-    ../json/json_leaf.h
+    ../json/json_leaf.h \
+    json_object_iterator_test.h \
+    json_array_iterator_test.h \
+    json_leaf_iterator_test.h
 
 SUBDIRS += \
     ../json/json.pro
