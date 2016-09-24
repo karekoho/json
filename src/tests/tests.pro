@@ -4,8 +4,11 @@ QT -= gui
 LIBS += -lcppunit
 # LIBS += -lutil -L/usr/local/lib
 
-QMAKE_CXXFLAGS+= -std=c++11
-QMAKE_LFLAGS +=  -std=c++11
+#QMAKE_CXXFLAGS+= -std=c++11
+#QMAKE_LFLAGS +=  -std=c++11
+
+QMAKE_CXXFLAGS+= -std=c++14
+QMAKE_LFLAGS +=  -std=c++14
 
 TARGET = tests
 CONFIG += console

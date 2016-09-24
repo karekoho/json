@@ -35,6 +35,9 @@ class Array : public JSON
 
   public:
 
+  /**
+   * @brief Array
+   */
   Array ();
 
   /**
@@ -62,7 +65,7 @@ class Array : public JSON
    * @param other
    * @return
    */
-  virtual Value * _clone () { return new Array (*this /* static_cast<const Array &> (other) */); }
+  virtual Value * _clone () { return new Array (*this); }
 
   /**
    * @brief ~Array

@@ -145,9 +145,11 @@ Array::_clone (const Value &other)
 {
   const Array &nv = static_cast<const Array &> (other);
 
-  // if (nv._element_list.empty ()) return this;
+  _clear ();
 
-  // TODO: assure that this._element_list is empty when other._element_list is empty.
+  if (nv._element_list.empty ())
+    return this;
+
   _element_list.reserve (nv._element_list.size ());
 
   std::transform (nv._element_list.begin (), nv._element_list.end (), std::back_inserter (_element_list), _clone_cb);

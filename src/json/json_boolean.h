@@ -11,14 +11,17 @@
 /**
  * @brief The boolean class
  */
-//class Undefined;
 class Boolean : public Value
 {
 #ifdef UNIT_TEST
   friend class json_boolean_test;
 #endif
+
   public:
 
+  /**
+   * @brief Boolean
+   */
   Boolean () : Value::Value (), _boolean_value (false) {}
 
   /**
