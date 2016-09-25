@@ -11,25 +11,39 @@ public:
   void
   test_1 ()
   {
-    std::vector<Value *> x;
+    std::vector<Value *> vector;
 
     struct assert {
       std::vector<Value *> *vector;
+      size_t vecc;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { new std::vector<Value *>({new Null, new Boolean (true), new Number (100)}), PASS },
-      { new std::vector<Value *>(), PASS }
+      { new std::vector<Value *>({new Number (1), new Number (2), new Number (3)}), 3, PASS },
+      { new std::vector<Value *>(), 0, PASS }
     };
 
     TEST_IT_START
 
-        x = *(*it).vector;
+        vector = *(*it).vector;
 
-        std::cout << x.size () << std::endl;
+        Iterator *vit = new Array_Iterator (vector);
+
+        size_t vecc = 0;
+
+        while (vit->hasNext ())
+          {
+            (void) vit->next ();
+            vecc++;
+          }
+
+        ASSERT_EQUAL_IDX ("vecc", (*it).vecc, vecc);
+
+        (void) element_list_clear (vector);
 
         delete (*it).vector;
+        delete vit;
 
     TEST_IT_END;
   }

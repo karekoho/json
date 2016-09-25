@@ -39,7 +39,7 @@ public:
 
         ASSERT_EQUAL_IDX ("mapc", (*it).mapc, mapc);
 
-        member_list_clear (map);
+        (void) member_list_clear (map);
 
         delete (*it).map;
         delete oit;

@@ -12,6 +12,8 @@
 #include "json_undefined.h"
 #include "json_iterator.h"
 #include "json_object_iterator.h"
+#include "json_array_iterator.h"
+#include "json_leaf_iterator.h"
 
 #endif // JSON_H
 
