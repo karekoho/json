@@ -11,25 +11,36 @@ public:
   void
   test_1 ()
   {
-    std::unordered_map<std::string, Value *> x;
+    std::unordered_map<std::string, Value *> map;
 
     struct assert {
       std::unordered_map<std::string, Value *> *map;
+      size_t mapc;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-    { new std::unordered_map<std::string, Value *>({{"key_1", new Null },{"key_2", new Boolean (true)},{"key_3", new Number (100)}}), PASS },
-      { new std::unordered_map<std::string, Value *>(), PASS }
+      { new std::unordered_map<std::string, Value *>({{"key_1", new Number(1) },{"key_2", new Number (2)},{"key_3", new Number (3)}}), 3, PASS },
+      { new std::unordered_map<std::string, Value *>(), 0, PASS }
     };
 
     TEST_IT_START
 
-        x = *(*it).map;
+        map = *(*it).map;
 
-        std::cout << x.size () << std::endl;
+        Iterator *oit = new Object_Iterator (map);
+        size_t mapc = 0;
+
+        while (oit->hasNext ())
+          {
+            (void) oit->next ();
+            mapc++;
+          }
+
+        ASSERT_EQUAL_IDX ("mapc", (*it).mapc, mapc);
 
         delete (*it).map;
+        delete oit;
 
     TEST_IT_END;
   }

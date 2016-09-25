@@ -20,6 +20,7 @@ SOURCES += \
     json_json.cpp \
     json_boolean.cpp \
     json_array.cpp \
+    json_object_iterator.cpp
     #json_leaf.cpp
 
 HEADERS += \
@@ -33,7 +34,9 @@ HEADERS += \
     json_json.h \
     json_boolean.h \
     json_array.h \
-    json_leaf.h
+    json_leaf.h \
+    json_iterator.h \
+    json_object_iterator.h
 
 unix:!symbian {
     maemo5 {

@@ -26,7 +26,8 @@ SOURCES += main.cpp \
     ../json/json_json.cpp \
     ../json/json_boolean.cpp \
     ../json/json_array.cpp \
-    ../json/json_leaf.cpp
+    ../json/json_leaf.cpp \
+    ../json/json_object_iterator.cpp
 
 HEADERS += \
     json_value_test_interface.h \
@@ -54,7 +55,9 @@ HEADERS += \
     ../json/json_leaf.h \
     json_object_iterator_test.h \
     json_array_iterator_test.h \
-    json_leaf_iterator_test.h
+    json_leaf_iterator_test.h \
+    ../json/json_object_iterator.h \
+    ../json/json_iterator.h
 
 SUBDIRS += \
     ../json/json.pro
