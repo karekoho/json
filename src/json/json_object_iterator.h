@@ -2,6 +2,7 @@
 #define OBJECT_ITERATOR_H
 
 #include "json_iterator.h"
+#include "json_object.h"
 
 #include <unordered_map>
 
@@ -16,7 +17,7 @@ public:
    * @brief Object_Iterator
    * @param umap
    */
-  Object_Iterator (const std::unordered_map<std::string, Value *> & umap);
+  Object_Iterator (const Object::member_list & list);
 
   /**
    * @brief next

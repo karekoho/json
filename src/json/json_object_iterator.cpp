@@ -1,8 +1,8 @@
 #include "json_object_iterator.h"
 
-Object_Iterator::Object_Iterator (const std::unordered_map<std::string, Value *> & umap)
-  : _begin (umap.begin ()),
-    _end (umap.end ())
+Object_Iterator::Object_Iterator (const Object::member_list &list)
+  : _begin (list.begin ()),
+    _end (list.end ())
 {
 }
 

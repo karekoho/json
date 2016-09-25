@@ -9,7 +9,7 @@ class json_array_iterator_test : public unit_test
 public:
 
   void
-  test_1 ()
+  test_hasNext ()
   {
     std::vector<Value *> vector;
 
@@ -53,7 +53,7 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json array iterator test");
 
-     s->addTest (new CppUnit::TestCaller<json_array_iterator_test> ("test_1", &json_array_iterator_test::test_1));
+     s->addTest (new CppUnit::TestCaller<json_array_iterator_test> ("test_hasNext", &json_array_iterator_test::test_hasNext));
 
     return s;
   }

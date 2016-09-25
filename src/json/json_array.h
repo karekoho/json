@@ -35,6 +35,8 @@ class Array : public JSON
 
   public:
 
+  typedef std::vector<Value *> element_list;
+
   /**
    * @brief Array
    */
@@ -131,7 +133,7 @@ protected:
   /**
    * @brief _element_list
    */
-  std::vector<Value *> _element_list;
+   element_list _element_list;
 
   /**
    * @brief _at

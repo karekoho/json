@@ -9,7 +9,7 @@ class json_object_iterator_test : public unit_test
 public:
 
   void
-  test_1 ()
+  test_hasNext ()
   {
     std::unordered_map<std::string, Value *> map;
 
@@ -52,7 +52,7 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json object iterator test");
 
-     s->addTest (new CppUnit::TestCaller<json_object_iterator_test> ("test_1", &json_object_iterator_test::test_1));
+     s->addTest (new CppUnit::TestCaller<json_object_iterator_test> ("test_hasNext", &json_object_iterator_test::test_hasNext));
 
     return s;
   }

@@ -2,6 +2,8 @@
 #define ARRAY_ITERATOR_H
 
 #include "json_iterator.h"
+#include "json_array.h"
+
 #include <vector>
 
 /**
@@ -15,7 +17,7 @@ public:
    * @brief Array_Iterator
    * @param vec
    */
-  Array_Iterator (const std::vector<Value *> & vec);
+  Array_Iterator (const Array::element_list & list);
 
   /**
    * @brief next

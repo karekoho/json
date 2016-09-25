@@ -33,6 +33,9 @@ class Object : public JSON
 #endif
 
 public:
+
+  typedef std::unordered_map<std::string, Value *> member_list;
+
   // friend void JSON::_assign (Value *p, Value *ov, const Value *nv);
   /**
    * @brief Object
@@ -122,7 +125,7 @@ protected:
   /**
    * @brief _member_list
    */
-  mutable std::unordered_map<std::string, Value *> _member_list;
+  mutable member_list _member_list;
 
   /**
    * @brief _pair
