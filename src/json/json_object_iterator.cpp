@@ -9,7 +9,6 @@ Object_Iterator::Object_Iterator (const std::unordered_map<std::string, Value *>
 Value &
 Object_Iterator::next ()
 {
-  // Value *v = (*_begin).second; ++_begin; return *v;
   return *(*_begin++).second;
 }
 

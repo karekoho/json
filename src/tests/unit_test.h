@@ -114,6 +114,13 @@ public:
     _errorc[0] =_errorc[1] = _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0;
   }
 
+  void
+  member_list_clear (std::unordered_map<std::string, Value *> & map)
+  {
+    for (auto it = map.begin (); it != map.end (); it = map.erase (it))
+      delete static_cast <std::pair<std::string, Value *>>(*it).second;
+  }
+
 protected:
 
   size_t _errorc[2];

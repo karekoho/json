@@ -9,6 +9,12 @@
 class Iterator
 {
 public:
+
+  /**
+   * @brief ~Iterator
+   */
+  virtual ~Iterator () = default;
+
   /**
    * @brief next
    * @return
