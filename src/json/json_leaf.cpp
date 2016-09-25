@@ -1,4 +1,5 @@
 #include "json_leaf.h"
+#include "json_leaf_iterator.h"
 #include "json_undefined.h"
 
 Value &
@@ -17,4 +18,10 @@ Value &
 Leaf::_at (const char *)
 {
   return *(new Undefined);
+}
+
+Iterator *
+Leaf::iterator () const
+{
+  return new Leaf_Iterator (this);
 }

@@ -29,7 +29,7 @@ public:
    * @brief hasNext
    * @return
    */
-  virtual bool hasNext () override;
+  virtual bool hasNext () const noexcept override;
 
 protected:
 

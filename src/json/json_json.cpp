@@ -6,6 +6,7 @@
 #include "json_null.h"
 #include "json_undefined.h"
 #include "json_boolean.h"
+#include "json_leaf_iterator.h"
 
 JSON::JSON () : Value (), __value (0) {}
 
@@ -140,4 +141,8 @@ JSON::_make_value ()
   return value_;
 }
 
-
+Iterator *
+JSON::iterator () const
+{
+  return __value ? __value->iterator () : 0; // TODO: new Leaf_Iterator (new Undefined);  // FIXME: leak
+}

@@ -13,7 +13,7 @@ Array_Iterator::next ()
 }
 
 bool
-Array_Iterator::hasNext ()
+Array_Iterator::hasNext () const noexcept
 {
   return _begin != _end;
 }

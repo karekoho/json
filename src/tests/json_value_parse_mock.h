@@ -22,6 +22,13 @@ protected:
     virtual  Value &_at (const char *) { return *this; }
     virtual void _clear() override {}
     virtual Value *_clone(const Value &) override { return this; }
+
+    // Value interface
+public:
+    virtual Iterator *iterator() const override
+    {
+      return new Leaf_Iterator (this);
+    }
 };
 
 #endif // JSON_VALUE_PARSE_MOCK_H

@@ -14,26 +14,26 @@ public:
    * @brief Leaf_Iterator
    * @param v
    */
-  Leaf_Iterator (Value &v);
+  Leaf_Iterator (const Value *v);
 
   /**
    * @brief next
    * @return
    */
-  virtual Value & next () final override;
+  virtual const Value & next () final override;
 
   /**
    * @brief hasNext
    * @return
    */
-  virtual bool hasNext () final override;
+  virtual bool hasNext () const noexcept final override;
 
 protected:
 
   /**
    * @brief _value
    */
-  Value * _value;
+  const Value * _value;
 
   /**
    * @brief _hasNext

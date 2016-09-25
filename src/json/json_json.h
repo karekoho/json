@@ -137,6 +137,12 @@ public:
    */
   virtual Value &assign (Value *, Value *) override { return *this; }
 
+  /**
+   * @brief iterator
+   * @return
+   */
+  virtual Iterator *iterator () const override;
+
 protected:
 
   /**
@@ -217,6 +223,10 @@ public:
     out_of_range (const char * const message = 0) : error (message) {}
   };
   /// class out_of_range
+
+
+  // Value interface
+public:
 
 }; /// class json
 /// } namespace

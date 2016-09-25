@@ -128,6 +128,12 @@ class Array : public JSON
    */
   inline Value & operator =(Value & v) { return _assign (v); }
 
+  /**
+   * @brief iterator
+   * @return
+   */
+  virtual Iterator *iterator () const override;
+
 protected:
 
   /**

@@ -13,7 +13,7 @@ Object_Iterator::next ()
 }
 
 bool
-Object_Iterator::hasNext ()
+Object_Iterator::hasNext () const noexcept
 {
   return _begin != _end;
 }

@@ -16,8 +16,7 @@
  */
 
 class JSON;
-//class Undefined;
-// class Object;
+class Iterator;
 class Value
 {
 #ifdef UNIT_TEST
@@ -172,6 +171,12 @@ class Value
    * @return
    */
   virtual Value & assign (Value *, Value *) = 0;
+
+  /**
+   * @brief iterator
+   * @return
+   */
+  virtual Iterator *iterator () const = 0;
 
   /**
    * @brief isLeaf

@@ -79,6 +79,12 @@ public:
    */
   virtual bool isLeaf () const noexcept final override  { return true; }
 
+  /**
+   * @brief iterator
+   * @return
+   */
+  virtual Iterator *iterator () const final override;
+
 protected:
 
   /**

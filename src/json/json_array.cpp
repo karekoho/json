@@ -1,4 +1,5 @@
 #include "json_array.h"
+#include "json_array_iterator.h"
 #include <algorithm>
 
 Array::Array() : JSON (){}
@@ -155,4 +156,11 @@ Array::_clone (const Value &other)
   std::transform (nv._element_list.begin (), nv._element_list.end (), std::back_inserter (_element_list), _clone_cb);
 
   return this;
+}
+
+
+Iterator *
+Array::iterator () const
+{
+  return new Array_Iterator (_element_list);
 }

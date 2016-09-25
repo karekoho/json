@@ -1,12 +1,12 @@
 #include "json_leaf_iterator.h"
 
-Leaf_Iterator::Leaf_Iterator (Value &v)
-  : _value (&v),
+Leaf_Iterator::Leaf_Iterator (const Value *v)
+  : _value (v),
     _hasNext (true)
 {
 }
 
-Value &
+const Value &
 Leaf_Iterator::next ()
 {
   _hasNext = false;
@@ -14,7 +14,7 @@ Leaf_Iterator::next ()
 }
 
 bool
-Leaf_Iterator::hasNext ()
+Leaf_Iterator::hasNext () const noexcept
 {
   return _hasNext;
 }

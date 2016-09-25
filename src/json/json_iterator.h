@@ -19,13 +19,13 @@ public:
    * @brief next
    * @return
    */
-  virtual Value & next () = 0;
+  virtual const Value & next () = 0;
 
   /**
    * @brief hasNext
    * @return
    */
-  virtual bool hasNext () = 0;
+  virtual bool hasNext () const noexcept = 0;
 };
 
 #endif // ITERATOR

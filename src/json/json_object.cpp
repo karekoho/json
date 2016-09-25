@@ -5,6 +5,7 @@
 #include "json_null.h"
 #include "json_number.h"
 #include "json_boolean.h"
+#include "json_object_iterator.h"
 
 Object::Object() : JSON (){}
 
@@ -157,6 +158,12 @@ Object::at (const char *key) const
     {
       throw JSON::out_of_range (e.what ());
   }
+}
+
+Iterator *
+Object::iterator () const
+{
+  return new Object_Iterator (_member_list);
 }
 
 Value &
