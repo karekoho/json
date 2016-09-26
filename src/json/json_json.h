@@ -3,6 +3,7 @@
 
 #include "json_value.h"
 #include "json_undefined.h"
+
 #include <unordered_map>
 #include <vector>
 
@@ -18,10 +19,10 @@
 class Undefined;
 class JSON : public Value
 {
-
 #ifdef UNIT_TEST
   friend class json_test;
 #endif
+
 public:
 
   /**

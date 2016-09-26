@@ -8,10 +8,10 @@
 #ifdef UNIT_TEST
   class json_value_test;
 #endif
+
 /**
  * @brief The json_value class
  */
-
 class JSON;
 class Iterator;
 class Value

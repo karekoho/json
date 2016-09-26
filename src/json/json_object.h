@@ -3,24 +3,18 @@
 
 #include "json_json.h"
 #include "json_undefined.h"
-//class Object;
-// #include "json_array.h"
-class Array;
-class String;
-class Number;
-class Boolean;
-class Null;
-class Undefined;
-//class json_undefined_test;
+
 /**
  * @brief The object class
  */
+//class Array;
+//class String;
+//class Number;
+//class Boolean;
+//class Null;
+//class Undefined;
 class Object : public JSON
 {
-// TODO: friend void Value::setKey (const char *key);
-// TODO: friend void Value::setIndex (const size_t &index);
-// friend Value & Object::_assign (Value *ov, Value *nv);
-
 #ifdef UNIT_TEST
   friend class json_test;
   friend class json_object_test;
@@ -36,7 +30,6 @@ public:
 
   typedef std::unordered_map<std::string, Value *> member_list;
 
-  // friend void JSON::_assign (Value *p, Value *ov, const Value *nv);
   /**
    * @brief Object
    */
