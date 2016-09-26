@@ -31,6 +31,11 @@ public:
   Leaf (const Leaf &other) = default;
 
   /**
+   * @brief ~Leaf
+   */
+  virtual ~Leaf () = default;
+
+  /**
    * @brief _clone
    * @return
    */

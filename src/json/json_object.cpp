@@ -26,36 +26,12 @@ Object::Object (JSON *parent)
 Object::Object(const Object &other)
   : JSON(other)
 {
-  // TODO:
-  //    class cloneFunctor {
-  //    public:
-  //        T* operator() (T* a) {
-  //            return a->clone();
-  //        }
-  //    }
-
-  //    void  StateInit(vector<CButton*> listBtn)
-  //    {
-  //       transform(listBtn.begin(), listBtn.end(), back_inserter(_m_pListBtn), cloneFunctor());
-  //     };
-
-//  if (! other._member_list.empty ())
-//    {
-//      _member_list.reserve (other._member_list.size ());
-
-//      for (auto it = other._member_list.begin (); it != other._member_list.end (); ++it)
-//        {
-//          std::pair<std::string, Value *> p = *it;
-//          _member_list.emplace (p.first, /* _copy_value (p.second) */ p.second->_clone ());
-//        }
-//    }
   (void) _clone (other);
 }
 
 Object::~Object()
 {
- // FIXME:
- // _clear (); // Segmentation fault: json_objec_test, line 341
+ _clear ();
 }
 
 const char *
@@ -112,24 +88,24 @@ Object::_pair ()
 
   (void) _look_ahead ();
 
-  /// Expect "key"
-  if ((charc = _string (endc)) == 0)  /// No opening \"
+  // Expect "key"
+  if ((charc = _string (endc)) == 0)  // No opening \"
     {
       if (*_readp == 0)
         throw JSON::syntax_error ("syntax error: expecting closing '}'");
 
-      if (*_readp == _sc::end_object || *(_look_ahead ()) ==  _sc::end_object)  /// Empty object
+      if (*_readp == _sc::end_object || *(_look_ahead ()) ==  _sc::end_object)  // Empty object
         return false;
     }
 
-  if (charc < 0)   /// No closing "
+  if (charc < 0)   // No closing "
     throw JSON::syntax_error ("syntax error: expecting closing '\"'");
 
   const char *keyp = _readp + 1;
   _readp += charc;
 
-  if (*(_look_ahead ()) != _sc::name_separator)   /// Expect ':'
-    throw JSON::syntax_error ("pair: syntax error: expecting ':'");   /// TODO: throw syntax error: unexpected character '%c'
+  if (*(_look_ahead ()) != _sc::name_separator)   // Expect ':'
+    throw JSON::syntax_error ("pair: syntax error: expecting ':'");   // TODO: throw syntax error: unexpected character '%c'
 
   _readp++;
 
@@ -137,8 +113,6 @@ Object::_pair ()
 
   if (v->type () == Value::undefined)
     throw "syntax error: expecting value after ':'";
-
-  // std::string k (keyp, charc - 2);
 
   (void) _member_list.emplace (std::string (keyp, charc - 2), v);
 

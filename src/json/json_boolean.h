@@ -43,6 +43,11 @@ class Boolean : public Leaf
   Boolean (const Boolean &other) = default;
 
   /**
+   * @brief ~Boolean
+   */
+  virtual ~Boolean () = default;
+
+  /**
    * @brief clone
    * @param other
    * @return

@@ -38,6 +38,25 @@ Value::Value (JSON *parent)
 {
 }
 
+Value::Value (const Value &other)
+  : _startp (other._startp),
+    _readp (other._readp),
+    _parent ( /* FIXME (crash): static_cast<JSON *>(other._parent->_clone ()) */ other._parent),
+    _length (other._length),
+    _key (other._key ? strdup (other._key) : 0),
+    _index (other._index)
+{
+}
+
+Value::~Value ()
+{
+  if (_key)
+    {
+      free ((char *)_key);
+      _key = 0;
+    }
+}
+
 long int
 Value::_string (char & endc) const noexcept
 {

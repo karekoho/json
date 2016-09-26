@@ -7,9 +7,6 @@
 
 #ifdef UNIT_TEST
   class json_value_test;
-  // class json_object_test;
-  // class json_null_test;
-  // class json_undefined_test;
 #endif
 /**
  * @brief The json_value class
@@ -20,14 +17,9 @@ class Iterator;
 class Value
 {
 #ifdef UNIT_TEST
-  // friend class json_test;
   friend class json_value_test;
-  // friend class json_object_test;
-  //friend class json_null_test;  // WTF ???
-  //friend class json_undefined_test; // WTF ???
 #endif
 
-  //friend void Undefined::_assign (Value *, Value *);
   public:
 
   /**
@@ -66,7 +58,7 @@ class Value
    * @brief Value
    * @param other
    */
-  Value (const Value &other) = default;
+  Value (const Value &other);
 
   /**
    * @brief clone
@@ -78,10 +70,7 @@ class Value
   /**
    * @brief ~Value
    */
-  virtual ~Value ()
-  {
-    free ((char *)_key);
-  }
+  virtual ~Value ();
 
   /**
    * @brief parse
@@ -145,7 +134,8 @@ class Value
    * @param key
    * @param charc
    */
-  inline void setKey (const char *key, size_t charc) noexcept
+  inline void
+  setKey (const char *key, size_t charc) noexcept
   {
     free ((char *)_key);
     _key = strndup (key, charc);
@@ -320,17 +310,12 @@ protected:
    */
   static inline Value * _clone_cb (Value *v) { return v->_clone (); }
 
-  /**
-   * @brief _assign Assing value. Delete existing key.
-   * @param v
-   */
-
-   static const struct literal_value
-   {
-     const char * const str_value;
-     const size_t len;
-     const Value::_literal ltr_value;
-   } __ltr_value[3];
+  static const struct literal_value
+  {
+    const char * const str_value;
+    const size_t len;
+    const Value::_literal ltr_value;
+  } __ltr_value[3];
 };
 
 #endif // JSON_VALUE_H

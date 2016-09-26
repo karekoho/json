@@ -14,18 +14,18 @@ public:
   virtual void
   test_ctor_dtor ()
   {
-    JSON *p[] = { 0, new JSON () };
+//    JSON *p[] = { 0, new JSON () };
 
-    for (size_t pidx = 0; pidx < 2; pidx++)
-      {
-        Object o[] = {
-          Object (),
-          Object ("{}"),
-          Object (p[pidx]),
-        };
-      }
+//    for (size_t pidx = 0; pidx < 2; pidx++)
+//      {
+//        Object o[] = {
+//          Object (),
+//          Object ("{}"),
+//          Object (p[pidx]),
+//        };
+//      }
 
-    delete p[1];
+//    delete p[1];
 
     Object src  = "{\"key\":true}";
     Object copy = src;
@@ -78,7 +78,7 @@ public:
 
           size_t charc = strlen (startp);
 
-          Object *o = new Object (/* (*it).parent */ p[pidx]);
+          Object *o = new Object (p[pidx]);
 
           const char *readp = o->parse (startp);
 
@@ -333,10 +333,6 @@ public:
           else
             {
               ASSERT_EQUAL_IDX ("old_value.size ()", new_value->count (), old_value.count ());
-
-              // Value *ov =  & old_value.at ((*it).key);
-              // ASSERT_EQUAL_IDX ("obj_parent[key].type", ov->type (), (*it).type);
-              // ASSERT_EQUAL_IDX ("obj_parent[key].value", ov, new_value);
             }
           TEST_IT_END;
         }
@@ -368,6 +364,7 @@ public:
 
     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_smoke", &json_object_test::test_ctor_dtor));
     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_assign_all_values", &json_object_test::test_assign_all_values));
+    // return s;
 
     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_parse_1", &json_object_test::test_key));
     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_key", &json_object_test::test_parse_1));

@@ -10,27 +10,17 @@
 
 #ifdef UNIT_TEST
   class json_test;
-  class json_object_test;
 #endif
 
 /**
  * @brief The json class
  */
-
-//class Object;
-//class Array;
-//class String;
-//class Number;
-//class Boolean;
-//class Null;
 class Undefined;
 class JSON : public Value
 {
- // friend Value & Object::assign (Object &);
 
 #ifdef UNIT_TEST
   friend class json_test;
-  friend class json_object_test;
 #endif
 public:
 
@@ -223,10 +213,6 @@ public:
     out_of_range (const char * const message = 0) : error (message) {}
   };
   /// class out_of_range
-
-
-  // Value interface
-public:
 
 }; /// class json
 /// } namespace
