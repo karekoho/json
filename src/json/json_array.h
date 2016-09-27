@@ -134,6 +134,18 @@ class Array : public JSON
    */
   virtual Iterator *iterator () const override;
 
+  /**
+   * @brief stringify
+   * @return
+   */
+  virtual const char *stringify () const noexcept override;
+
+  /**
+   * @brief strLength
+   * @return
+   */
+  virtual size_t strLength () const noexcept override;
+
 protected:
 
   /**

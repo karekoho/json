@@ -119,6 +119,9 @@ public:
    */
   virtual Iterator * iterator () const override;
 
+  virtual const char *stringify () const noexcept override;
+  virtual size_t strLength () const noexcept override;
+
 protected:
 
   /**

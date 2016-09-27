@@ -164,3 +164,16 @@ Array::iterator () const
 {
   return new Array_Iterator (_element_list);
 }
+
+
+const char *
+Array::stringify () const  noexcept
+{
+  return "";
+}
+
+size_t
+Array::strLength () const  noexcept
+{
+  return 0;
+}

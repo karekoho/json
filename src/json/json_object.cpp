@@ -198,3 +198,15 @@ Object::_clone (const Value &other)
 
   return this;
 }
+
+const char *
+Object::stringify () const noexcept
+{
+  return "";
+}
+
+size_t
+Object::strLength () const noexcept
+{
+  return 0;
+}

@@ -124,6 +124,11 @@ protected:
    * @return
    */
   virtual Value *_clone (const Value &) override { return this; }
+
+  // Value interface
+public:
+  virtual const char *stringify() const noexcept override;
+  virtual size_t strLength() const noexcept override;
 };
 
 #endif // STRING

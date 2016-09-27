@@ -160,6 +160,10 @@ protected:
    */
   virtual Value *_clone (const Value &) override { return this; }
 
+  virtual const char *stringify () const noexcept override;
+
+  virtual size_t strLength () const noexcept override;
+
 private:
 
   /**

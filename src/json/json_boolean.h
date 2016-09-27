@@ -54,6 +54,12 @@ class Boolean : public Leaf
    */
   virtual Value * _clone () { return new Boolean (*this); }
 
+  virtual const char *stringify () const noexcept override;
+
+  virtual size_t strLength () const noexcept override;
+
+  virtual const char *strValue () const override;
+
 public:
 
   /**
@@ -127,5 +133,7 @@ protected:
    */
   virtual Value *_clone (const Value &other) override;
 };
+
+
 
 #endif // BOOLEAN_H

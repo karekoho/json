@@ -180,6 +180,24 @@ class Value
    */
   inline bool isNode () const noexcept { return ! isLeaf (); }
 
+  /**
+   * @brief stringify
+   * @return
+   */
+  virtual const char * stringify () const noexcept = 0;
+
+  /**
+   * @brief strLength
+   * @return
+   */
+  virtual size_t strLength () const noexcept = 0;
+
+  /**
+   * @brief strValue
+   * @return
+   */
+  virtual const char * strValue () const /* TODO: = 0 */ { return _str_value[1]; }
+
 protected:
 
   /**
@@ -251,6 +269,8 @@ protected:
    * @brief _index
    */
   size_t _index;
+
+  char *_str_value[2];
 
   /**
    * @brief _look_ahead Move read pointer to next non-white space character

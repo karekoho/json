@@ -79,3 +79,15 @@ String::_copy (const String &nv)
 
   _startp = _string_value.c_str ();
 }
+
+const char *
+String::stringify () const noexcept
+{
+  return "";
+}
+
+size_t
+String::strLength () const noexcept
+{
+  return 0;
+}

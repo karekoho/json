@@ -14,7 +14,8 @@ Value::Value ()
       _parent (0),
       _length (0),
       _key (0),
-      _index (0)
+      _index (0),
+      _str_value {0,0}
 {
 }
 
@@ -25,6 +26,8 @@ Value::Value (const char *json)
       _length (json == 0 ? 0 : strlen (json)),
       _key (0),
       _index (0)
+    ,
+          _str_value {0,0}
 {
 }
 
@@ -35,6 +38,8 @@ Value::Value (JSON *parent)
       _length (0),
       _key (0),
       _index (0)
+    ,
+          _str_value {0,0}
 {
 }
 
@@ -45,6 +50,8 @@ Value::Value (const Value &other)
     _length (other._length),
     _key (other._key ? strdup (other._key) : 0),
     _index (other._index)
+  ,
+        _str_value {0,0}
 {
 }
 

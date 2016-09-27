@@ -29,6 +29,12 @@ public:
     {
       return new Leaf_Iterator (this);
     }
+
+    // Value interface
+public:
+    virtual const char *stringify() const noexcept override { return ""; }
+    virtual size_t strLength() const noexcept override { return 0; }
 };
+
 
 #endif // JSON_VALUE_PARSE_MOCK_H

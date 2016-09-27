@@ -146,3 +146,15 @@ JSON::iterator () const
 {
   return __value ? __value->iterator () : 0; // TODO: new Leaf_Iterator (new Undefined);  // FIXME: leak
 }
+
+const char *
+JSON::stringify () const  noexcept
+{
+  return "";
+}
+
+size_t
+JSON::strLength () const  noexcept
+{
+  return 0;
+}

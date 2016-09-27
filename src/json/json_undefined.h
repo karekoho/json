@@ -84,6 +84,17 @@ protected:
    * @return
    */
   virtual Value *_clone (const Value &) override { return this; }
+
+  // Value interface
+public:
+  virtual const char *stringify() const noexcept override
+  {
+    return "";
+  }
+  virtual size_t strLength() const noexcept override
+  {
+    return 0;
+  }
 };
 
 #endif // UNDEFINED_H

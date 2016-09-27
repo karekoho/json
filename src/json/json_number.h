@@ -100,6 +100,18 @@ public:
    */
   inline double value () { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
 
+  /**
+   * @brief stringify
+   * @return
+   */
+  virtual const char *stringify () const noexcept override;
+
+  /**
+   * @brief strLength
+   * @return
+   */
+  virtual size_t strLength () const noexcept override;
+
 protected:
 
   /**

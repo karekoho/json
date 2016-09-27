@@ -222,3 +222,15 @@ Number::_clone (const Value &other)
 
   return this;
 }
+
+const char *
+Number::stringify () const noexcept
+{
+  return "";
+}
+
+size_t
+Number::strLength () const noexcept
+{
+  return 0;
+}
