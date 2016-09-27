@@ -268,6 +268,19 @@ protected:
   }
 
   /**
+   * @brief _str_append
+   * @param dst
+   * @param src
+   * @param charc
+   * @return
+   */
+  static inline char *
+  _str_append (char *dst, const char *src, size_t charc) noexcept
+  {
+    return strncpy (dst, src, charc) + charc;
+  }
+
+  /**
    * @brief _string Read in string.
    * If no opening quote, return 0.
    * If no closing quote, unicode control charater, return characters read * -1.

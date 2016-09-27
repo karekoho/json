@@ -132,6 +132,38 @@ public:
       TEST_IT_END;
     }
 
+    void
+    test__str_append ()
+    {
+      char *dst = new char[8 + 1]();
+      char *start = dst;
+
+      struct assert {
+          const char *src;
+          size_t charc[2];
+          int assert_status;
+      };
+
+      std::vector<struct assert> test = {
+        { "",  { 0, 0 }, PASS },
+        { "a",  { 1, 1 }, PASS },
+        { "bb",  { 2, 3 }, PASS },
+        { "\"ccc\"",  { 5, 8 }, PASS },
+      };
+
+      TEST_IT_START
+
+          dst = Value::_str_append (dst, (*it).src, (*it).charc[0]);
+
+          ASSERT_EQUAL_IDX ("dst", start + (*it).charc[1], dst);
+
+      TEST_IT_END;
+
+      CPPUNIT_ASSERT_MESSAGE ("dst", strcmp ("abb\"ccc\"", start) == 0);
+
+      delete[] start;
+    }
+
     virtual void test_operator_assign () {}
     virtual void test_operator_at () {}
     virtual void test_assign_all_values (){}
@@ -142,10 +174,11 @@ public:
     {
       CppUnit::TestSuite *s = new CppUnit::TestSuite ("json value test");
 
-      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lookahead", &json_value_test::test_lookahead));
-      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_literal", &json_value_test::test_is_literal));
-      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_quoted", &json_value_test::test_string));
+//      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lookahead", &json_value_test::test_lookahead));
+//      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_literal", &json_value_test::test_is_literal));
+//      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_quoted", &json_value_test::test_string));
 
+      s->addTest (new CppUnit::TestCaller<json_value_test> ("test__str_append", &json_value_test::test__str_append));
       return s;
     }
 };
