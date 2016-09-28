@@ -187,7 +187,7 @@ class Value
    * @brief stringify
    * @return
    */
-  virtual const char * stringify () const noexcept = 0;
+  virtual const char * stringify () noexcept = 0;
 
   /**
    * @brief strLength
@@ -199,9 +199,7 @@ class Value
    * @brief strValue
    * @return
    */
-  virtual const char * strValue () const /* TODO: = 0 */ { return _str_value[1]; }
-
-  // mutable char *_str_value[2];
+  virtual const char * strValue () const = 0;
 
 protected:
 
@@ -274,11 +272,6 @@ protected:
    * @brief _index
    */
   size_t _index;
-
-  /**
-   * @brief _str_value
-   */
-  mutable char *_str_value[2];
 
   /**
    * @brief _look_ahead Move read pointer to next non-white space character

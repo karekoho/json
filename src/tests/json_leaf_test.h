@@ -30,7 +30,7 @@ public:
 
     std::vector<struct assert > test = {
       { new String ("\"x\""), { 3, 4 }, { "\"x\"", "x\"x\"" }, PASS },
-      // { new Number (100), { 3, 4 }, { "\"x\"", "x\"x\"" }, PASS },
+      { new Number (100), { 10, 11 }, { "100.000000", "x100.000000" }, PASS },
       { new Boolean (), { 5, 6 }, { "false", "xfalse" }, PASS },
       { new Null (), { 4, 5 }, { "null", "xnull" }, PASS },
     };
@@ -50,7 +50,7 @@ public:
                 }
               else
                 {
-                  p->_str_value[0] = new char[6 + 1]();
+                  p->_str_value[0] = new char[20 + 1]();
 
                   p->_str_value[1] = p->_str_value[0];
 

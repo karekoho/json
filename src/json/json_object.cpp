@@ -200,7 +200,7 @@ Object::_clone (const Value &other)
 }
 
 const char *
-Object::stringify () const noexcept
+Object::stringify () noexcept
 {
   return "";
 }

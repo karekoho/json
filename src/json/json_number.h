@@ -106,7 +106,11 @@ public:
    */
   virtual size_t strLength () const noexcept override;
 
-  virtual const char *strValue() const;
+  /**
+   * @brief strValue
+   * @return
+   */
+  virtual const char *strValue () const;
 
 protected:
 
@@ -126,9 +130,14 @@ protected:
   const char *_digitp[2][2];
 
   /**
+   * @brief _double_str
+   */
+  mutable std::string _double_str;
+
+  /**
    * @brief _e
    */
-  char _e;
+  // char _e;
 
   /**
    * @brief _digits If >= 1 digits found, return last character. Else return -1.

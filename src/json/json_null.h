@@ -58,6 +58,7 @@ class Null : public Leaf
   virtual inline Value::object_type type () const { return Value::object_type::null; }
 
   /**
+   * TODO: return nullptr
    * @brief Value
    * @return
    */

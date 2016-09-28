@@ -111,7 +111,7 @@ protected:
   /**
    * @brief _value
    */
-  mutable std::string _string_value;
+  mutable std::string _string_value[2];
 
   /**
    * @brief assign

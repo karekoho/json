@@ -7,8 +7,8 @@ Number::Number ()
   : Leaf (),
     _double_value (0),
     _double_valuep (&_double_value),
-    _digitp {{ 0, 0 }, { 0, 0 }},
-    _e (0)
+    _digitp {{ 0, 0 }, { 0, 0 }}
+    //_e (0)
 {
 }
 
@@ -16,8 +16,8 @@ Number::Number (const double value)
   : Leaf (),
     _double_value (value),
     _double_valuep (&_double_value),
-    _digitp {{ 0, 0 }, { 0, 0 }},
-    _e (0)
+    _digitp {{ 0, 0 }, { 0, 0 }}
+    //_e (0)
 {
 }
 
@@ -25,8 +25,8 @@ Number::Number (const char *json)
   : Leaf (json),
     _double_value (0),
     _double_valuep (0),
-    _digitp {{ 0, 0 }, { 0, 0 }},
-    _e (0)
+    _digitp {{ 0, 0 }, { 0, 0 }}
+    //_e (0)
 {
   if (_length == 0)
     throw JSON::error ("null string");
@@ -38,8 +38,8 @@ Number::Number (JSON *parent)
   : Leaf (parent),
     _double_value (0),
     _double_valuep (0),
-    _digitp {{ 0, 0 }, { 0, 0 }},
-    _e (0)
+    _digitp {{ 0, 0 }, { 0, 0 }}
+    //_e (0)
 
 {
 }
@@ -48,8 +48,8 @@ Number::Number (const Number &other)
  : Leaf (other),
    _double_value (0),
    _double_valuep (0),
-   _digitp {{ 0, 0 }, { 0, 0 }},
-   _e (0)
+   _digitp {{ 0, 0 }, { 0, 0 }}
+   //_e (0)
 {
   (void) _clone (other);
 }
@@ -234,29 +234,17 @@ Number::_clone (const Value &other)
 size_t
 Number::strLength () const noexcept
 {
-//  size_t double_len = 0;
+  if (_double_str.empty ())
+    _double_str = std::to_string (_double_value);
 
-//  if (_digitp[DOUBLE][START] == 0 || _digitp[DOUBLE][END] == 0)
-//    return 0;
-
-//  double_len = _digitp[DOUBLE][END] - _digitp[DOUBLE][START];
-
-//  if (_digitp[EXP][START] == 0 || _digitp[EXP][END] == 0)
-//    return double_len;
-
-//  return double_len + (_digitp[EXP][END] - _digitp[EXP][START]  + 1);
-  return 0;
+  return _double_str.length ();
 }
 
 const char *
 Number::strValue () const
 {
-//  size_t len = 0;
+  if (_double_str.empty ())
+    _double_str = std::to_string (_double_value);
 
-//  if ((len = strLength ()) == 0);
-//    return "";
-
-//  _str_value[0] = new char[len + 1]();
-//  _str_value[1] = _str_value[0];
-  return "";
+  return _double_str.c_str ();
 }

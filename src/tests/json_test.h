@@ -185,7 +185,7 @@ public:
         // j._assign (*(*it).value);
         j = *(*it).value;
 
-        ASSERT_EQUAL_IDX ("json.__value->type ()", (*it).type, j.__value->type ());
+        ASSERT_EQUAL_IDX ("json.__value->type ()", (*it).type, j.__root->type ());
 
     TEST_IT_END;
   }

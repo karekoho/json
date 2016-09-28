@@ -26,7 +26,7 @@ class JSON : public Value
   friend class json_leaf_test;
 #endif
 
-  friend const char * Leaf::stringify () const;
+  friend const char * Leaf::stringify ();
 
 public:
 
@@ -78,26 +78,26 @@ public:
    * @param key
    * @return
    */
-  virtual Value & at (const char *key) const { return type () == Value::undefined ? *(new Undefined) : __value->at (key); }
+  virtual Value & at (const char *key) const { return type () == Value::undefined ? *(new Undefined) : __root->at (key); }
 
   /**
    * @brief at
    * @param index
    * @return
    */
-  virtual Value & at (size_t index) const { return type () == Value::undefined ? *(new Undefined) : __value->at (index); }
+  virtual Value & at (size_t index) const { return type () == Value::undefined ? *(new Undefined) : __root->at (index); }
 
   /**
    * @brief type
    * @return
    */
-  virtual inline Value::object_type type () const { return __value == 0 ? Value::object_type::undefined : __value->type (); }
+  virtual inline Value::object_type type () const { return __root == 0 ? Value::object_type::undefined : __root->type (); }
 
   /**
    * @brief size
    * @return
    */
-  virtual inline size_t count () const { return  type () == Value::undefined ? 0 :__value->count (); }
+  virtual inline size_t count () const { return  type () == Value::undefined ? 0 :__root->count (); }
 
   /**
    * @brief _assign
@@ -139,9 +139,11 @@ public:
    */
   virtual Iterator *iterator () const override;
 
-  virtual const char *stringify () const noexcept override;
+  virtual const char *stringify () noexcept override;
 
   virtual size_t strLength () const noexcept override;
+
+  virtual const char * strValue () const { return ""; }
 
 protected:
 
@@ -169,14 +171,17 @@ protected:
    */
   virtual Value *_clone (const Value &) override { return this; }
 
-
+  /**
+   * @brief _str_value
+   */
+  mutable char *_str_value[2];
 
 private:
 
   /**
    * @brief __value
    */
-  Value *__value;
+  Value *__root;
 
 public:
 

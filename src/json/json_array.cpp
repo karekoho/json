@@ -167,7 +167,7 @@ Array::iterator () const
 
 
 const char *
-Array::stringify () const  noexcept
+Array::stringify ()  noexcept
 {
   return "";
 }

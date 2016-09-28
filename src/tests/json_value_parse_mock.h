@@ -32,8 +32,9 @@ public:
 
     // Value interface
 public:
-    virtual const char *stringify() const noexcept override { return ""; }
+    virtual const char *stringify() noexcept override { return ""; }
     virtual size_t strLength() const noexcept override { return 0; }
+    virtual const char * strValue () const { return ""; }
 };
 
 

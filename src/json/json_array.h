@@ -138,7 +138,7 @@ class Array : public JSON
    * @brief stringify
    * @return
    */
-  virtual const char *stringify () const noexcept override;
+  virtual const char *stringify () noexcept override;
 
   /**
    * @brief strLength

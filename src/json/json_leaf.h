@@ -94,7 +94,7 @@ public:
    * @brief stringify
    * @return
    */
-  virtual const char *stringify () const noexcept final override;
+  virtual const char *stringify () noexcept final override;
 
 protected:
 

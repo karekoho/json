@@ -34,7 +34,7 @@ String::parse (const char *json)
 
   _startp =_readp = json;
 
-  _string_value.clear ();
+  _string_value[0].clear ();
 
   if (_parent == 0)   // 2. ctor
     {
@@ -65,10 +65,10 @@ String::_assign (String &nv)
 const char *
 String::value () const
 {
-  if (_string_value.empty () && _startp && _charc > 0)
-    _string_value.assign (_startp + 1, _charc - 2);
+  if (_string_value[0].empty () && _startp && _charc > 0)
+    _string_value[0].assign (_startp + 1, _charc - 2);
 
-  return _string_value.c_str ();
+  return _string_value[0].c_str ();
 }
 
 const char *
@@ -77,17 +77,17 @@ String::strValue () const
   if (_startp == 0 || _charc == 0)
     return "";
 
-  _str_value[0] = new char[_charc + 1]();
-  _str_value[1] = _str_value[0];
+  if (_string_value[1].empty ())
+    _string_value[1].assign (_startp, _charc);
 
-  return strncpy (_str_value[0], _startp, _charc);
+  return _string_value[1].c_str ();
 }
 
 void
 String::_copy (const String &nv)
 {
   if (nv._startp && _charc > 0)
-    _string_value.assign (nv._startp + 1, _charc - 2);
+    _string_value[0].assign (nv._startp + 1, _charc - 2);
 
-  _startp = _string_value.c_str ();
+  _startp = _string_value[0].c_str ();
 }

@@ -40,6 +40,7 @@ class Undefined : public Leaf
   virtual Value * _clone () { return new Undefined (*this); }
 
   /**
+   * TODO: return nullptr
    * @brief value
    * @return
    */
@@ -66,16 +67,16 @@ class Undefined : public Leaf
   inline Value & operator =(Value & v) { return _assign (v);  }
 
   /**
-   * @brief stringify
-   * @return
-   */
-  // virtual const char *stringify () const noexcept override { return ""; }
-
-  /**
    * @brief strLength
    * @return
    */
   virtual size_t strLength () const noexcept override { return 0; }
+
+  /**
+   * @brief strValue
+   * @return
+   */
+  virtual const char * strValue () const { return ""; }
 
 protected:
 
