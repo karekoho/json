@@ -14,18 +14,21 @@ Boolean::_clone (const Value &other)
   return this;
 }
 
-const char *
+/* const char *
 Boolean::stringify () const noexcept
 {
   char *s = 0;
 
-  if (_parent && (s = (char *)_parent->strValue ()) != 0)
+  if (_parent && (s = (char *)_parent->_str_value[0]) != 0)
     {
-      return Value::_str_append (s, strValue (), strLength ());
+      // return Value::_str_append (s, strValue (), strLength ());
+      s= Value::_str_append (s, strValue(), strLength ());
+
+      return s;
     }
 
   return strValue ();
-}
+} */
 
 size_t
 Boolean::strLength () const noexcept

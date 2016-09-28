@@ -61,7 +61,8 @@ HEADERS += \
     ../json/json_object_iterator.h \
     ../json/json_iterator.h \
     ../json/json_leaf_iterator.h \
-    ../json/json_array_iterator.h
+    ../json/json_array_iterator.h \
+    json_leaf_test.h
 
 SUBDIRS += \
     ../json/json.pro

@@ -101,16 +101,12 @@ public:
   inline double value () { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
 
   /**
-   * @brief stringify
-   * @return
-   */
-  virtual const char *stringify () const noexcept override;
-
-  /**
    * @brief strLength
    * @return
    */
   virtual size_t strLength () const noexcept override;
+
+  virtual const char *strValue() const;
 
 protected:
 
@@ -130,10 +126,15 @@ protected:
   const char *_digitp[2][2];
 
   /**
+   * @brief _e
+   */
+  char _e;
+
+  /**
    * @brief _digits If >= 1 digits found, return last character. Else return -1.
    * @return
    */
-  int _digits ();
+  int _digits () noexcept;
 
   /**
    * @brief _frag

@@ -71,6 +71,18 @@ String::value () const
   return _string_value.c_str ();
 }
 
+const char *
+String::strValue () const
+{
+  if (_startp == 0 || _charc == 0)
+    return "";
+
+  _str_value[0] = new char[_charc + 1]();
+  _str_value[1] = _str_value[0];
+
+  return strncpy (_str_value[0], _startp, _charc);
+}
+
 void
 String::_copy (const String &nv)
 {
@@ -78,16 +90,4 @@ String::_copy (const String &nv)
     _string_value.assign (nv._startp + 1, _charc - 2);
 
   _startp = _string_value.c_str ();
-}
-
-const char *
-String::stringify () const noexcept
-{
-  return "";
-}
-
-size_t
-String::strLength () const noexcept
-{
-  return 0;
 }

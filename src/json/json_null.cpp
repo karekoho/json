@@ -8,14 +8,14 @@ Null::_assign (Null &nv)
 }
 
 
-const char *
-Null::stringify () const  noexcept
-{
-  return "";
-}
+//const char *
+//Null::stringify () const  noexcept
+//{
+//  return "";
+//}
 
-size_t
-Null::strLength () const  noexcept
-{
-  return 0;
-}
+//size_t
+//Null::strLength () const  noexcept
+//{
+//  return 0;
+//}

@@ -8,13 +8,14 @@
 #include <json_boolean_test.h>
 #include <json_null_test.h>
 #include <json_undefined_test.h>
+#include <json_leaf_test.h>
 #include <json_object_iterator_test.h>
 #include <json_array_iterator_test.h>
 #include <json_leaf_iterator_test.h>
 
 #define DBG(...) fprintf (stderr, __VA_ARGS__)
 
-#define TESTC 12   // Test count
+#define TESTC 13   // Test count
 
 int main(int argc, char *argv[])
 {
@@ -39,7 +40,8 @@ int main(int argc, char *argv[])
       { json_undefined_test::suite () },          // 8
       { json_object_iterator_test::suite () },    // 9
       { json_array_iterator_test::suite () },     // 10
-      { json_leaf_iterator_test::suite () }       // 11
+      { json_leaf_iterator_test::suite () },      // 11
+      { json_leaf_test::suite () }                // 12
     };
 
     CppUnit::TextUi::TestRunner runner;

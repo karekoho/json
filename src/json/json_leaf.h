@@ -90,6 +90,12 @@ public:
    */
   virtual Iterator *iterator () const final override;
 
+  /**
+   * @brief stringify
+   * @return
+   */
+  virtual const char *stringify () const noexcept final override;
+
 protected:
 
   /**

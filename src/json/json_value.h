@@ -7,6 +7,7 @@
 
 #ifdef UNIT_TEST
   class json_value_test;
+  class json_leaf_test;
 #endif
 
 /**
@@ -18,6 +19,7 @@ class Value
 {
 #ifdef UNIT_TEST
   friend class json_value_test;
+  friend class json_leaf_test;
 #endif
 
   public:
@@ -80,6 +82,7 @@ class Value
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse
    * @see http://www.ecma-international.org/ecma-262/5.1/#sec-15.12.2
    * @see https://en.wikipedia.org/wiki/List_of_Unicode_characters
+   * @see http://en.cppreference.com/w/cpp/language/types
    */
   virtual const char *parse (const char *json) = 0;
 
@@ -198,6 +201,8 @@ class Value
    */
   virtual const char * strValue () const /* TODO: = 0 */ { return _str_value[1]; }
 
+  // mutable char *_str_value[2];
+
 protected:
 
   /**
@@ -270,7 +275,10 @@ protected:
    */
   size_t _index;
 
-  char *_str_value[2];
+  /**
+   * @brief _str_value
+   */
+  mutable char *_str_value[2];
 
   /**
    * @brief _look_ahead Move read pointer to next non-white space character

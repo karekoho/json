@@ -54,7 +54,7 @@ class Boolean : public Leaf
    */
   virtual Value * _clone () { return new Boolean (*this); }
 
-  virtual const char *stringify () const noexcept override;
+  // virtual const char *stringify () const noexcept override;
 
   virtual size_t strLength () const noexcept override;
 

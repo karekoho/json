@@ -456,7 +456,13 @@ public:
 
     return s;
   }
-};
+
+  // json_value_test_interface interface
+  public:
+  virtual void test_stringify() override
+  {
+  }
+        };
 
 #endif // json_number_test
 

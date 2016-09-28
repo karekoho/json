@@ -2,6 +2,7 @@
 #define JSON_JSON_H
 
 #include "json_value.h"
+#include "json_leaf.h"
 #include "json_undefined.h"
 
 #include <unordered_map>
@@ -11,6 +12,7 @@
 
 #ifdef UNIT_TEST
   class json_test;
+  class json_leaf_test;
 #endif
 
 /**
@@ -21,7 +23,10 @@ class JSON : public Value
 {
 #ifdef UNIT_TEST
   friend class json_test;
+  friend class json_leaf_test;
 #endif
+
+  friend const char * Leaf::stringify () const;
 
 public:
 
@@ -134,6 +139,10 @@ public:
    */
   virtual Iterator *iterator () const override;
 
+  virtual const char *stringify () const noexcept override;
+
+  virtual size_t strLength () const noexcept override;
+
 protected:
 
   /**
@@ -160,9 +169,7 @@ protected:
    */
   virtual Value *_clone (const Value &) override { return this; }
 
-  virtual const char *stringify () const noexcept override;
 
-  virtual size_t strLength () const noexcept override;
 
 private:
 

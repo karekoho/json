@@ -77,6 +77,18 @@ class Null : public Leaf
    */
   inline Value & operator =(Value & v) { return _assign (v); }
 
+  /**
+   * @brief strValue
+   * @return
+   */
+  virtual const char * strValue () const noexcept override { return "null"; }
+
+  /**
+   * @brief strLength
+   * @return
+   */
+  virtual size_t strLength () const noexcept override { return 4; }
+
 protected:
 
   /**
@@ -103,10 +115,5 @@ protected:
    * @return
    */
   virtual Value *_clone (const Value &) override { return this; }
-
-  // Value interface
-public:
-  virtual const char *stringify() const noexcept override;
-  virtual size_t strLength() const noexcept override;
 };
 #endif // NULL_H

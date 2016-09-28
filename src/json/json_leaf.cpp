@@ -1,4 +1,5 @@
 #include "json_leaf.h"
+#include "json_json.h"
 #include "json_leaf_iterator.h"
 #include "json_undefined.h"
 
@@ -24,4 +25,21 @@ Iterator *
 Leaf::iterator () const
 {
   return new Leaf_Iterator (this);
+}
+
+
+const char *
+Leaf::stringify () const noexcept
+{
+  char *dstp = 0;
+
+  if (_parent && (dstp = (char *)_parent->_str_value[0]) != 0)
+    {
+      // return Value::_str_append (s, strValue (), strLength ());
+      dstp = Value::_str_append (dstp, strValue (), strLength ());
+
+      return dstp;
+    }
+
+  return strValue ();
 }

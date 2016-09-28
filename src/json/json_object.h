@@ -7,12 +7,6 @@
 /**
  * @brief The object class
  */
-//class Array;
-//class String;
-//class Number;
-//class Boolean;
-//class Null;
-//class Undefined;
 class Object : public JSON
 {
 #ifdef UNIT_TEST
@@ -119,7 +113,16 @@ public:
    */
   virtual Iterator * iterator () const override;
 
+  /**
+   * @brief stringify
+   * @return
+   */
   virtual const char *stringify () const noexcept override;
+
+  /**
+   * @brief strLength
+   * @return
+   */
   virtual size_t strLength () const noexcept override;
 
 protected:

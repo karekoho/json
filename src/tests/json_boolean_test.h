@@ -145,6 +145,12 @@ public:
         }
   }
 
+  virtual void
+  test_stringify () override
+  {
+
+  }
+
   virtual void test__clear() {}
 
   virtual void test_operator_assign () {}
@@ -163,7 +169,8 @@ public:
 
     return s;
   }
-};
+
+  };
 
 #endif // JSON_BOOLEAN_TEST
 
