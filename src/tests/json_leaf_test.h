@@ -90,7 +90,13 @@ public:
 
     return s;
   }
+
+  // json_value_test_interface interface
+public:
+  virtual void test_strLength() override {}
+  virtual void test_strValue() override {}
 };
+
 
 #endif // JSON_LEAF_TEST
 

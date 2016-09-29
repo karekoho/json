@@ -8,7 +8,10 @@
 #include <unordered_map>
 #include <vector>
 
-/// TODO: namespace  {
+#define CURSOR  0
+#define BEGIN  1
+
+// TODO: namespace JSON {
 
 #ifdef UNIT_TEST
   class json_test;
@@ -18,7 +21,8 @@
 /**
  * @brief The json class
  */
-class Undefined;
+class Object;
+class Array;
 class JSON : public Value
 {
 #ifdef UNIT_TEST
@@ -27,6 +31,8 @@ class JSON : public Value
 #endif
 
   friend const char * Leaf::stringify ();
+  friend class Object;  // For stringify { _parent->_str_value }
+  friend class Array;   // For stringify { _parent->_str_value }
 
 public:
 
@@ -78,26 +84,26 @@ public:
    * @param key
    * @return
    */
-  virtual Value & at (const char *key) const { return type () == Value::undefined ? *(new Undefined) : __root->at (key); }
+  virtual Value & at (const char *key) const { return __hasRoot () ? __root->at (key) : *(new Undefined); }
 
   /**
    * @brief at
    * @param index
    * @return
    */
-  virtual Value & at (size_t index) const { return type () == Value::undefined ? *(new Undefined) : __root->at (index); }
+  virtual Value & at (size_t index) const { return __hasRoot () ? __root->at (index) : *(new Undefined); }
 
   /**
    * @brief type
    * @return
    */
-  virtual inline Value::object_type type () const { return __root == 0 ? Value::object_type::undefined : __root->type (); }
+  virtual inline Value::object_type type () const { return __hasRoot () ?  __root->type () : Value::object_type::undefined; }
 
   /**
    * @brief size
    * @return
    */
-  virtual inline size_t count () const { return  type () == Value::undefined ? 0 :__root->count (); }
+  virtual inline size_t count () const { return __hasRoot () ? __root->count () : 0; }
 
   /**
    * @brief _assign
@@ -183,6 +189,12 @@ private:
    */
   Value *__root;
 
+  /**
+   * @brief __hasRoot
+   * @return
+   */
+  inline bool __hasRoot () const noexcept { return ! __root == 0; }
+
 public:
 
   /**
@@ -204,7 +216,7 @@ public:
 
     protected:
       const char * const _message;
-  }; /// class error
+  }; // class error
 
   /**
    * @brief The syntax_error class
@@ -216,7 +228,7 @@ public:
      * @param message
      */
     syntax_error (const char * const message = 0) : error (message) {}
-  }; /// class syntax_error
+  }; // class syntax_error
 
   /**
    * @brief The out_of_range class
@@ -229,9 +241,10 @@ public:
      */
     out_of_range (const char * const message = 0) : error (message) {}
   };
-  /// class out_of_range
+  // class out_of_range
 
-}; /// class json
-/// } namespace
+}; // class json
+
+// } namespace
 
 #endif // JSON_JSON_H

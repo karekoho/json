@@ -283,6 +283,53 @@ public:
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("array._element_list.size ()", (size_t) 0, a._element_list.size ());
   }
 
+  virtual void
+  test_stringify () override
+  {
+    // parents: 0, array
+    // []
+    // [\"x\",100,true,null]
+  }
+
+  virtual void test_strLength () override {}
+
+  virtual void
+  test_strValue () override
+  {
+    Array a;
+    Array p;
+
+    JSON *parent[] = {
+      0, &p
+    };
+
+    struct assert
+    {
+      const char *input;
+      const char *output[2];
+
+      int assert_status;
+    };
+
+    std::vector<struct assert> test = {
+      { "[]", { "[]", "[\"x\",[]" }, PASS },
+      { "[\"x\",1,true,null]", { "[\"x\",1.000000,true,null]", "[\"x\",[\"x\",1.000000,true,null]]" }, PASS },
+      { "[true,[null],false]", { "[true,[null],false]", "[\"x\",[true,[null],false]]" }, PASS },
+    };
+
+    TEST_IT_START
+
+        for (size_t pidx = 0; pidx < 1; pidx++)
+          {
+            a.parse ((*it).input);
+            const char *output = a.stringify ();
+            std::cout << output << std::endl;
+          }
+
+    TEST_IT_END;
+
+  }
+
   virtual void test_operator_assign () {}
   virtual void test_operator_at () {}
 
@@ -293,7 +340,10 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json array test");
 
-    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_smoke", &json_array_test::test_ctor_dtor));
+    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test_strValue));
+    return s;
+
+    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_ctor_dtor", &json_array_test::test_ctor_dtor));
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test_parse_1", &json_array_test::test_parse_1));
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test_index", &json_array_test::test_index));
 
@@ -310,13 +360,7 @@ public:
 
     return s;
   }
-
-  // json_value_test_interface interface
-  public:
-  virtual void test_stringify() override
-  {
-  }
-        };
+};
 
 #endif // JSON_ARRAY_TEST
 

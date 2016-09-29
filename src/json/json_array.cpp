@@ -158,22 +158,61 @@ Array::_clone (const Value &other)
   return this;
 }
 
-
 Iterator *
 Array::iterator () const
 {
   return new Array_Iterator (_element_list);
 }
 
-
 const char *
-Array::stringify ()  noexcept
+Array::stringify () noexcept
 {
-  return "";
+  char *dstp = _parent ? _parent->_str_value[CURSOR] : 0;
+
+  return dstp ? Value::_str_append (dstp, strValue (), strLength ())
+              : strValue ();
 }
 
 size_t
-Array::strLength () const  noexcept
+Array::strLength () const noexcept
 {
-  return 0;
+  if (_element_list.empty ())
+    return 2;
+
+  size_t len = 1;   // [
+
+  for (auto it = _element_list.cbegin (); it != _element_list.cend (); ++it)
+    len += ((*it)->strLength () + 1);   // , or ]
+
+  return len;
+}
+
+const char *
+Array::strValue () const
+{
+  if (_parent && _parent->_str_value[CURSOR])
+    _str_value[CURSOR] = _parent->_str_value[CURSOR];
+
+  else
+    {
+      size_t len = strLength ();
+      _str_value[CURSOR] = new char[len + 1] ();
+    }
+
+  _str_value[BEGIN] = _str_value[CURSOR];
+
+  *(_str_value[CURSOR]++) = _sc::begin_array;
+
+  for (auto it = _element_list.cbegin (); it != _element_list.cend (); ++it)
+    {
+      // Value *v = *it;
+      _str_value[CURSOR] = (char *) (*it)->stringify ();
+
+      if ((it + 1) != _element_list.cend ())
+        *(_str_value[CURSOR]++) = ',';
+    }
+
+  *(_str_value[CURSOR]++) = _sc::end_array;
+
+  return _str_value[BEGIN];
 }

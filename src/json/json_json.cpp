@@ -53,11 +53,11 @@ JSON::JSON::parse (const char *readp)
   if (*_readp == 0)
     throw _readp;
 
-  Value * prev_value_ = __root;
+  Value * old_root = __root;
 
   __root = _make_value ();
 
-  delete prev_value_;
+  delete old_root;
 
   if (*(_look_ahead ()) != 0)
     throw _readp;
@@ -152,9 +152,12 @@ JSON::iterator () const
 }
 
 const char *
-JSON::stringify ()  noexcept
+JSON::stringify () noexcept
 {
-  return "";
+//  char *dstp = _parent ? _parent->_str_value[0] : 0;
+//  return dstp ? Value::_str_append (dstp, strValue (), strLength ()) : strValue ();
+
+  return __hasRoot () ? __root->stringify () : "";
 }
 
 size_t

@@ -190,6 +190,11 @@ public:
     TEST_IT_END;
   }
 
+  virtual void test_stringify() override {}
+
+  virtual void test_strLength() override {}
+  virtual void test_strValue() override  {}
+
   virtual void test__clear() {}
 
   virtual void test_operator_assign () {}
@@ -222,12 +227,6 @@ public:
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_debug_1", &json_test::test_debug_1));
 
     return s;
-  }
-
-  // json_value_test_interface interface
-public:
-  virtual void test_stringify() override
-  {
   }
 };
 

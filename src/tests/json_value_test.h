@@ -164,6 +164,10 @@ public:
       delete[] startp;
     }
 
+    virtual void test_stringify() override {}
+    virtual void test_strLength() override {}
+    virtual void test_strValue() override {}
+
     virtual void test_operator_assign () {}
     virtual void test_operator_at () {}
     virtual void test_assign_all_values (){}
@@ -180,12 +184,6 @@ public:
 
       s->addTest (new CppUnit::TestCaller<json_value_test> ("test__str_append", &json_value_test::test__str_append));
       return s;
-    }
-
-    // json_value_test_interface interface
-public:
-    virtual void test_stringify() override
-    {
     }
 };
 

@@ -426,6 +426,11 @@ public:
         }
   }
 
+  virtual void test_stringify() override {}
+
+  virtual void test_strLength() override {}
+  virtual void test_strValue() override {}
+
   virtual void test__clear() {}
 
   virtual void test_operator_assign () {}
@@ -456,13 +461,7 @@ public:
 
     return s;
   }
-
-  // json_value_test_interface interface
-  public:
-  virtual void test_stringify() override
-  {
-  }
-        };
+};
 
 #endif // json_number_test
 
