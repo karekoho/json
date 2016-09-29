@@ -296,7 +296,6 @@ public:
   virtual void
   test_strValue () override
   {
-    Array a;
     Array p;
 
     JSON *parent[] = {
@@ -307,23 +306,53 @@ public:
     {
       const char *input;
       const char *output[2];
-
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { "[]", { "[]", "[\"x\",[]" }, PASS },
-      { "[\"x\",1,true,null]", { "[\"x\",1.000000,true,null]", "[\"x\",[\"x\",1.000000,true,null]]" }, PASS },
-      { "[true,[null],false]", { "[true,[null],false]", "[\"x\",[true,[null],false]]" }, PASS },
+      { "[]", { "[]", "[\"x\",[]" }, PASS },  // <-- last closing ] intentionally missing
+      { "[false,[true]]", { "[false,[true]]", "[\"x\",[false,[true]]" }, PASS },  // <-- last closing ] intentionally missing
     };
 
     TEST_IT_START
 
-        for (size_t pidx = 0; pidx < 1; pidx++)
+        for (size_t pidx = 0; pidx < 2; pidx++)
           {
-            a.parse ((*it).input);
-            const char *output = a.stringify ();
-            std::cout << output << std::endl;
+            char *str_value = 0;
+
+            size_t len = strlen ((*it).output[pidx]);
+
+            Array a;
+
+            a._parent = parent[pidx];
+
+            if (a._parent)
+              {
+                str_value = new char[len +1 ] ();
+                str_value = strncpy (str_value,  "[\"x\",", 5);
+
+                p._str_value[BEGIN]   = str_value;
+                p._str_value[CURSOR]  = str_value + 5;
+              }
+
+            (void) a.parse ((*it).input);
+
+            const char *output = a.strValue ();
+
+            if (a._parent == 0)
+              {
+                ASSERT_EQUAL_IDX ("strlen (output)", len, strlen (output));
+                CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[0])", strcmp (output, (*it).output[0]) == 0);
+              }
+            else
+              {
+                ASSERT_EQUAL_IDX ("strlen (p._str_value[BEGIN])", len, strlen (p._str_value[BEGIN]));
+                CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[1])", strcmp (p._str_value[BEGIN], (*it).output[1]) == 0);
+              }
+
+            // std::cout << p._str_value[BEGIN]  << output  << std::endl;
+
+            delete[] str_value;
           }
 
     TEST_IT_END;
@@ -341,7 +370,7 @@ public:
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json array test");
 
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test_strValue));
-    return s;
+    // return s;
 
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test_ctor_dtor", &json_array_test::test_ctor_dtor));
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test_parse_1", &json_array_test::test_parse_1));

@@ -205,7 +205,6 @@ Array::strValue () const
 
   for (auto it = _element_list.cbegin (); it != _element_list.cend (); ++it)
     {
-      // Value *v = *it;
       _str_value[CURSOR] = (char *) (*it)->stringify ();
 
       if ((it + 1) != _element_list.cend ())
