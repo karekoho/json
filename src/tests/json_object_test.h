@@ -14,18 +14,18 @@ public:
   virtual void
   test_ctor_dtor ()
   {
-//    JSON *p[] = { 0, new JSON () };
+    JSON *p[] = { 0, new JSON () };
 
-//    for (size_t pidx = 0; pidx < 2; pidx++)
-//      {
-//        Object o[] = {
-//          Object (),
-//          Object ("{}"),
-//          Object (p[pidx]),
-//        };
-//      }
+    for (size_t pidx = 0; pidx < 2; pidx++)
+      {
+        Object o[] = {
+          Object (),
+          Object ("{}"),
+          Object (p[pidx]),
+        };
+      }
 
-//    delete p[1];
+    delete p[1];
 
     Object src  = "{\"key\":true}";
     Object copy = src;

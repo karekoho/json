@@ -289,16 +289,22 @@ protected:
   }
 
   /**
-   * @brief _str_append
-   * @param dst
-   * @param src
-   * @param charc
+   * @brief _str_append Copy src to dst.
+   * Move dst right after the last copied character.
+   * @param dst Destination string
+   * @param src Source string
+   * @param charc Number of characters to copy
    * @return
    */
   static inline char *
   _str_append (char *dst, const char *src, size_t charc) noexcept
   {
-    return strncpy (dst, src, charc) + charc;
+    const char * const endp = dst + charc;
+
+    while (dst < endp)
+      *(dst++) = *(src++);
+
+    return dst;
   }
 
   /**
@@ -312,7 +318,7 @@ protected:
   long int _string (char &endc) const noexcept;
 
   /**
-   * @brief _is_literal
+   * @brief _is_literal Detect if _readp points to "true", "false" or "null".
    * @param try_
    * @return
    */

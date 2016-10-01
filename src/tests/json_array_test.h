@@ -291,7 +291,14 @@ public:
     // [\"x\",100,true,null]
   }
 
-  virtual void test_strLength () override {}
+  virtual void
+  test_strLength () override
+  {
+    // assert: [] = 2,
+    // assert: [null] = 2 + 4 = 6,
+    // assert: [null,null] = 2 + 4 + 1 + 4 = 11
+    // assert: [null,[]] = 2 + 4 + 1 + 2 = 7
+  }
 
   virtual void
   test_strValue () override
@@ -370,7 +377,7 @@ public:
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json array test");
 
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test_strValue));
-    // return s;
+    return s;
 
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test_ctor_dtor", &json_array_test::test_ctor_dtor));
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test_parse_1", &json_array_test::test_parse_1));

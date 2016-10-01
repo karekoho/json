@@ -30,14 +30,14 @@ Boolean::stringify () const noexcept
   return strValue ();
 } */
 
-size_t
-Boolean::strLength () const noexcept
-{
-  return _boolean_value == true ? 4 : 5;
-}
+//size_t
+//Boolean::strLength () const noexcept
+//{
+//  return _boolean_value == true ? 4 : 5;
+//}
 
-const char *
-Boolean::strValue () const
-{
-  return _boolean_value == true ? "true" : "false";
-}
+//const char *
+//Boolean::strValue () const
+//{
+//  return _boolean_value == true ? "true" : "false";
+//}
