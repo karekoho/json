@@ -90,7 +90,7 @@ JSON::_at (const char *key)
 {
   try
     {
-      return type () == Value::undefined ? *(new Undefined) : __root->at (key);
+      return __hasRoot () ? __root->at (key) : *(new Undefined);
     }
   catch (JSON::out_of_range &)
     {
