@@ -1,14 +1,13 @@
 #include "json_number.h"
 #include "json_json.h"
 
-#include <math.h>
+
 
 Number::Number ()
   : Leaf (),
     _double_value (0),
     _double_valuep (&_double_value),
     _digitp {{ 0, 0 }, { 0, 0 }}
-    //_e (0)
 {
 }
 
@@ -17,7 +16,6 @@ Number::Number (const double value)
     _double_value (value),
     _double_valuep (&_double_value),
     _digitp {{ 0, 0 }, { 0, 0 }}
-    //_e (0)
 {
 }
 
@@ -26,7 +24,6 @@ Number::Number (const char *json)
     _double_value (0),
     _double_valuep (0),
     _digitp {{ 0, 0 }, { 0, 0 }}
-    //_e (0)
 {
   if (_length == 0)
     throw JSON::error ("null string");
@@ -39,8 +36,6 @@ Number::Number (JSON *parent)
     _double_value (0),
     _double_valuep (0),
     _digitp {{ 0, 0 }, { 0, 0 }}
-    //_e (0)
-
 {
 }
 
@@ -49,7 +44,6 @@ Number::Number (const Number &other)
    _double_value (0),
    _double_valuep (0),
    _digitp {{ 0, 0 }, { 0, 0 }}
-   //_e (0)
 {
   (void) _clone (other);
 }
@@ -136,14 +130,15 @@ Number::_frag ()
 
   _digitp[DOUBLE][END] = _readp;
 
+  // TODO: assign struct _value.is_double = true
+  // TODO: assign struct _value.double_value
+
   return peek == 'e' || peek == 'E' ? _exp () : _readp;
 }
 
 const char *
 Number::_exp ()
 {
-  //_e = *_readp;
-
   _digitp[EXP][START] = ++_readp; // Skip 'e|E'
 
   if (*(_readp) == '+' || *(_readp) == '-')
@@ -160,17 +155,19 @@ Number::_exp ()
 double
 Number::_calculate (const char * const digitp[2][2])
 {
-  if (digitp[DOUBLE][START] == 0 || digitp[DOUBLE][END] == 0)
-    return 0;
-
   _double_valuep = & _double_value;
 
-  _double_value = _atof (digitp[DOUBLE]);
+  if (digitp[DOUBLE][START] == 0 || digitp[DOUBLE][END] == 0)
+    {
+      return (_double_value = 0);
+    }
+
+  _double_value =  _atof (digitp[DOUBLE]);
 
   if (digitp[EXP][START] == 0 || digitp[EXP][END] == 0)
     return _double_value;
 
-  long long exp = _atoll (digitp[EXP]);
+  long long exp =  _atoll (digitp[EXP]);
 
   if (exp == 0)
     return _double_value;
@@ -178,24 +175,6 @@ Number::_calculate (const char * const digitp[2][2])
   return _double_value = (exp < 0)
         ? _double_value / pow (10, -1 * exp)
         : _double_value * pow (10, exp);
-}
-
-double
-Number::_atof (const char * const digitp[2]) const
-{
-  return atof (std::string (digitp[0], digitp[1]).c_str ());
-}
-
-long long
-Number::_atoll (const char * const digitp[2]) const
-{
-  return atoll (std::string (digitp[0], digitp[1]).c_str ());
-}
-
-Value &
-Number::_assign (Number &nv)
-{
-  return _parent  ? _parent->assign (this, &nv) : *(_clone (nv));
 }
 
 void

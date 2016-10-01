@@ -246,6 +246,8 @@ public:
     };
 
     std::vector<struct assert > test = {
+      { { 0, 0 }, { 0, 0 }, 0, PASS },
+      { { "", "" }, { 0, 0 }, 0, PASS },
       { { "5", "" }, { 1, 1 }, 5, PASS },
       { { "5", "0" }, { 1, 1 }, 5, PASS },
       { { "2", "1" }, { 1, 1 }, 20, PASS },
@@ -428,8 +430,38 @@ public:
 
   virtual void test_stringify() override {}
 
-  virtual void test_strLength() override {}
-  virtual void test_strValue() override {}
+  virtual void test_strLength () override {}
+  virtual void
+  test_strValue () override
+  {
+
+    struct assert
+    {
+      double df;
+      long li;
+      const char *output[2];
+      int assert_status;
+    };
+
+    std::vector<struct assert > test = {
+      { 100, 100, { "100.000000", "100.000000" }, PASS }
+    };
+
+    TEST_IT_START
+
+      Number n[2] = {
+        Number ((*it).df),
+        Number ((*it).li),
+      };
+
+      CPPUNIT_ASSERT_MESSAGE ("n[0].strValue ()", strcmp((*it).output[0], n[0].strValue ()) == 0);
+      CPPUNIT_ASSERT_MESSAGE ("n[1].strValue ()", strcmp((*it).output[1], n[1].strValue ()) == 0);
+
+      // std::cout << n[0].strValue () << std::endl;
+      // std::cout << n[1].strValue () << std::endl;
+
+    TEST_IT_END;
+  }
 
   virtual void test__clear() {}
 
@@ -437,10 +469,14 @@ public:
   virtual void test_operator_at () {}
 
 
+  /// Test number 5
   static CppUnit::Test *
   suite ()
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json number test");
+
+     s->addTest (new CppUnit::TestCaller<json_number_test> ("test_strValue", &json_number_test::test_strValue));
+     // return s;
 
     s->addTest (new CppUnit::TestCaller<json_number_test> ("test_ctor_dtor", &json_number_test::test_ctor_dtor));
     s->addTest (new CppUnit::TestCaller<json_number_test> ("test_parse_1", &json_number_test::test_parse_1));

@@ -2,6 +2,9 @@
 #define NUMBER_H
 
 #include "json_leaf.h"
+#include "json_json.h"
+
+#include <cmath>
 
 #define DOUBLE 0
 #define EXP 1
@@ -58,7 +61,9 @@ public:
    * @param other
    * @return
    */
-  virtual Value * _clone () { return new Number (*this); }
+  virtual Value *
+  _clone ()
+  { return new Number (*this); }
 
   /**
    * @brief parse
@@ -71,34 +76,44 @@ public:
    * @brief type
    * @return
    */
-  virtual object_type type () const { return Value::object_type::number; }
+  virtual object_type
+  type () const
+  { return Value::object_type::number; }
 
   /**
    * @brief _assign
    * @param nv
    * @return
    */
-  virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
+  virtual Value &
+  _assign (Value & nv)
+  { return Value::_assign (nv); }
 
   /**
    * @brief operator =
    * @param n
    * @return
    */
-  inline Value & operator =(Number & n) { return _assign (n);  }
+  inline Value &
+  operator =(Number & n)
+  { return _assign (n);  }
 
   /**
    * @brief operator =
    * @param v
    * @return
    */
-  inline Value & operator =(Value & v) { return _assign (v);  }
+  inline Value &
+  operator =(Value & v)
+  { return _assign (v);  }
 
   /**
    * @brief value
    * @return
    */
-  inline double value () { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
+  inline double
+  value ()
+  { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
 
   /**
    * @brief strLength
@@ -135,11 +150,6 @@ protected:
   mutable std::string _double_str;
 
   /**
-   * @brief _e
-   */
-  // char _e;
-
-  /**
    * @brief _digits If >= 1 digits found, return last character. Else return -1.
    * @return
    */
@@ -169,27 +179,27 @@ protected:
    * @param digitp
    * @return
    */
-  double _atof (const char * const digitp[2]) const;
+  inline double
+  _atof (const char * const digitp[2]) const
+  { return std::atof (std::string (digitp[0], digitp[1]).c_str ()); }
 
   /**
    * @brief _atoll
    * @param digitp
    * @return
    */
-  long long _atoll (const char * const digitp[2]) const;
+  inline long long
+  _atoll (const char * const digitp[2]) const
+  { return std::atoll (std::string (digitp[0], digitp[1]).c_str ()); }
 
   /**
    * @brief _assign
    * @param nv
    * @return
    */
-  Value & _assign (Number & nv);
-
-  /**
-   * @brief _copy
-   * @param nv
-   */
-  void _copy (const Number &nv);
+  Value &
+  _assign (Number & nv)
+  { return _parent  ? _parent->assign (this, &nv) : *(_clone (nv)); }
 
   /**
    * @brief _clear
