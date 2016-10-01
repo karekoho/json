@@ -2,6 +2,7 @@
 #define NULL_H
 
 #include "json_leaf.h"
+#include "json_json.h"
 
 #ifdef UNIT_TEST
  class json_null_test;
@@ -21,7 +22,8 @@ class Null : public Leaf
   /**
    * @brief Null
    */
-  Null () : Leaf () {}
+  Null () : Leaf ()
+  {}
 
   /**
    * @brief Null
@@ -29,7 +31,8 @@ class Null : public Leaf
    * @param parent
    * @param charc
    */
-  Null (JSON *parent) : Leaf (parent) {}
+  Null (JSON *parent) : Leaf (parent)
+  {}
 
   /**
    * @brief Null
@@ -42,53 +45,69 @@ class Null : public Leaf
    * @param other
    * @return
    */
-  virtual Value * _clone () { return new Null (*this); }
+  virtual Value *
+  _clone ()
+  { return new Null (*this); }
 
   /**
    * @brief parse
    * @param json
    * @return
    */
-  virtual inline const char *parse (const char *json) { return json + 4; }
+  virtual inline const char *
+  parse (const char *json)
+  { return json + 4; }
 
   /**
    * @brief type
    * @return
    */
-  virtual inline Value::object_type type () const { return Value::object_type::null; }
+  virtual inline Value::object_type
+  type () const
+  { return Value::object_type::null; }
 
   /**
    * TODO: return nullptr
    * @brief Value
    * @return
    */
-  inline const char * value () const { return ""; }
+  inline const char *
+  value () const
+  { return ""; }
 
   /**
    * @brief operator =
    * @param n
    * @return
    */
-  inline Value & operator =(Null & n) { return _assign (n); }
+  inline Value &
+  operator =(Null & n)
+  { return _assign (n); }
 
   /**
    * @brief operator =
    * @param v
    * @return
    */
-  inline Value & operator =(Value & v) { return _assign (v); }
+  inline Value &
+  operator =(Value & v)
+  { return _assign (v); }
 
   /**
    * @brief strValue
    * @return
    */
-  virtual const char * strValue () const noexcept override { return "null"; }
+  virtual const char *
+  strValue () const noexcept override
+  { return "null"; }
 
   /**
    * @brief strLength
    * @return
    */
-  virtual size_t strLength () const noexcept override { return 4; }
+  virtual size_t
+  strLength () const noexcept override
+  { return 4; }
 
 protected:
 
@@ -97,24 +116,32 @@ protected:
    * @param nv
    * @return
    */
-  virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
+  virtual Value &
+  _assign (Value & nv)
+  { return Value::_assign (nv); }
 
   /**
    * @brief assign
    * @param nv
    * @return
    */
-  Value & _assign (Null & nv);
+  Value &
+  _assign (Null & nv)
+  { return _parent ? _parent->assign (this, &nv) : *this; }
 
   /**
    * @brief _clear
    */
-  virtual void _clear () {}
+  virtual void
+  _clear ()
+  {}
 
   /**
    * @brief _clone
    * @return
    */
-  virtual Value *_clone (const Value &) override { return this; }
+  virtual Value *
+  _clone (const Value &) override
+  { return this; }
 };
 #endif // NULL_H
