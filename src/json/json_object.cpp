@@ -55,7 +55,8 @@ Object::parse (const char *json)
   if (*_readp == 0)
     throw _readp;
 
-  if (! _member_list.empty ()) _clear ();
+  if (! _member_list.empty ())
+    _clear ();
 
   while (*_readp != 0)
     {
@@ -202,12 +203,6 @@ Object::_clone (const Value &other)
   return this;
 }
 
-const char *
-Object::stringify () noexcept
-{
-  return "";
-}
-
 size_t
 Object::strLength () const noexcept
 {
@@ -226,4 +221,35 @@ Object::strLength () const noexcept
     }
 
   return len;
+}
+
+const char *
+Object::strValue () const
+{
+  _str_value[CURSOR] = _parent && _parent->_str_value[CURSOR]
+      ? _parent->_str_value[CURSOR]
+      : new char[strLength () + 1] ();
+
+  _str_value[BEGIN] = _str_value[CURSOR];
+
+  *(_str_value[CURSOR]++) = _sc::begin_object;
+
+  auto end = _member_list.cend ();
+  auto cur = _member_list.cbegin ();
+
+  while (cur != end)
+    {
+      std::pair<std::string, Value *> p = *cur;
+
+      _str_value[CURSOR] = _str_append (_str_append (_str_value[CURSOR], "\"", 1), p.first.c_str (), p.first.size ());
+      _str_value[CURSOR] = _str_append (_str_value[CURSOR], "\":", 2);
+      _str_value[CURSOR] = _str_append (_str_value[CURSOR] /*_str_append (_str_value[CURSOR], "\":", 2)*/, p.second->strValue (), p.second->strLength ());
+
+      if (++cur != end)
+        *(_str_value[CURSOR]++) = _sc::value_separator;
+    }
+
+  *(_str_value[CURSOR]++) = _sc::end_object;
+
+  return _str_value[BEGIN];
 }

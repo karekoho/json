@@ -1,5 +1,6 @@
 #include "json_array.h"
 #include "json_array_iterator.h"
+
 #include <algorithm>
 
 Array::Array() : JSON (){}
@@ -164,15 +165,6 @@ Array::iterator () const
   return new Array_Iterator (_element_list);
 }
 
-const char *
-Array::stringify () noexcept
-{
-//  char *dstp = _parent ? _parent->_str_value[CURSOR] : 0;
-//  return dstp ? Value::_str_append (dstp, strValue (), strLength ())
-//              : strValue ();
-  return strValue ();
-}
-
 size_t
 Array::strLength () const noexcept
 {
@@ -202,12 +194,14 @@ Array::strValue () const
   *(_str_value[CURSOR]++) = _sc::begin_array;
 
   auto end = _element_list.cend ();
+  auto cur = _element_list.cbegin ();
 
-  for (auto cur = _element_list.cbegin (); cur != end; ++cur)
+  while (cur != end)
     {
-      _str_value[CURSOR] = Value::_str_append (_str_value[CURSOR], (*cur)->strValue (), (*cur)->strLength ());
+      Value *v = *cur;
+      _str_value[CURSOR] = _str_append (_str_value[CURSOR], v->strValue (), v->strLength ());
 
-      if ((cur + 1) != _element_list.cend ())
+      if (++cur != end)
         *(_str_value[CURSOR]++) = _sc::value_separator;
     }
 

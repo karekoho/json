@@ -67,7 +67,9 @@ class Array : public JSON
    * @param other
    * @return
    */
-  virtual Value * _clone () { return new Array (*this); }
+  virtual Value *
+  _clone ()
+  { return new Array (*this); }
 
   /**
    * @brief ~Array
@@ -86,7 +88,9 @@ class Array : public JSON
    * @param key
    * @return
    */
-  virtual Value & at (const char *key) const { return at (atoll (key)); }
+  virtual Value &
+  at (const char *key) const
+  { return at (atoll (key)); }
 
   /**
    * @brief at
@@ -106,27 +110,35 @@ class Array : public JSON
    * @brief type
    * @return
    */
-  virtual object_type type () const { return Value::object_type::array; }
+  virtual object_type
+  type () const
+  { return Value::object_type::array; }
 
   /**
    * @brief size
    * @return
    */
-  virtual size_t count () const { return _element_list.size (); }
+  virtual size_t
+  count () const
+  { return _element_list.size (); }
 
   /**
    * @brief operator =
    * @param a
    * @return
    */
-  inline Value & operator =(Array & a) { return _assign (a); }
+  inline Value &
+  operator =(Array & a)
+  { return _assign (a); }
 
   /**
    * @brief operator =
    * @param v
    * @return
    */
-  inline Value & operator =(Value & v) { return _assign (v); }
+  inline Value &
+  operator =(Value & v)
+  { return _assign (v); }
 
   /**
    * @brief iterator
@@ -146,7 +158,13 @@ class Array : public JSON
    */
   virtual const char * strValue () const;
 
-  virtual const char * stringify () noexcept;
+  /**
+   * @brief stringify
+   * @return
+   */
+  virtual const char *
+  stringify () noexcept
+  { return strValue (); }
 
 protected:
 
@@ -159,7 +177,9 @@ protected:
    * @brief _at
    * @return
    */
-  virtual Value &_at (const char *)  { return *this; }
+  virtual Value &
+   _at (const char *)
+   { return *this; }
 
   /**
    * @brief _assign
@@ -173,7 +193,9 @@ protected:
    * @param nv
    * @return
    */
-  virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
+  virtual Value &
+  _assign (Value & nv)
+  { return Value::_assign (nv); }
 
   /**
    * @brief _at

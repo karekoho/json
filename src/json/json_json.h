@@ -59,7 +59,9 @@ public:
    * @param other
    * @return
    */
-  virtual Value *_clone () { return new JSON (*this); }
+  virtual Value *
+  _clone ()
+  { return new JSON (*this); }
 
   /**
    * @brief JSON
@@ -84,26 +86,34 @@ public:
    * @param key
    * @return
    */
-  virtual Value & at (const char *key) const { return __hasRoot () ? __root->at (key) : *(new Undefined); }
+  virtual Value &
+  at (const char *key) const
+  { return __hasRoot () ? __root->at (key) : *(new Undefined); }
 
   /**
    * @brief at
    * @param index
    * @return
    */
-  virtual Value & at (size_t index) const { return __hasRoot () ? __root->at (index) : *(new Undefined); }
+  virtual Value &
+  at (size_t index) const
+  { return __hasRoot () ? __root->at (index) : *(new Undefined); }
 
   /**
    * @brief type
    * @return
    */
-  virtual inline Value::object_type type () const { return __hasRoot () ?  __root->type () : Value::object_type::undefined; }
+  virtual inline Value::object_type
+  type () const
+  { return __hasRoot () ?  __root->type () : Value::object_type::undefined; }
 
   /**
    * @brief size
    * @return
    */
-  virtual inline size_t count () const { return __hasRoot () ? __root->count () : 0; }
+  virtual inline size_t
+  count () const
+  { return __hasRoot () ? __root->count () : 0; }
 
   /**
    * @brief _assign
@@ -117,7 +127,9 @@ public:
    * @param j
    * @return
    */
-  inline Value & operator =(JSON & j) { return _assign (j); }
+  inline Value &
+  operator =(JSON & j)
+  { return _assign (j); }
 
   /**
    * @brief _assign
@@ -131,25 +143,49 @@ public:
    * @param v
    * @return
    */
-  inline Value & operator =(Value & v) { return _assign (v); }
+  inline Value &
+  operator =(Value & v)
+  { return _assign (v); }
 
   /**
    * @brief assign
    * @return
    */
-  virtual Value &assign (Value *, Value *) override { return *this; }
+  virtual Value &
+  assign (Value *, Value *) override
+  { return *this; }
 
   /**
    * @brief iterator
    * @return
    */
-  virtual Iterator *iterator () const override;
+  virtual Iterator *
+  iterator () const override
+  { return __root ? __root->iterator () : 0; /* TODO: new Leaf_Iterator (new Undefined);  // FIXME: leak */ }
 
-  virtual const char *stringify () noexcept override;
+  /**
+   * @brief stringify
+   * @return
+   */
+  virtual const char *
+  stringify () noexcept override
+  { return strValue (); }
 
-  virtual size_t strLength () const noexcept override;
+  /**
+   * @brief strLength
+   * @return
+   */
+  virtual size_t
+  strLength () const noexcept override
+  { return __hasRoot () ? __root->strLength () : 0; }
 
-  virtual const char * strValue () const { return ""; }
+  /**
+   * @brief strValue
+   * @return
+   */
+  virtual const char *
+  strValue () const
+  { return __hasRoot () ? __root->strValue () : ""; }
 
 protected:
 
@@ -164,18 +200,22 @@ protected:
    * @brief _make_value
    * @return
    */
-  Value *_make_value ();
+  Value * _make_value ();
 
   /**
    * @brief _clear
    */
-  virtual void _clear () {}
+  virtual void
+  _clear ()
+  {}
 
   /**
    * @brief _clone
    * @return
    */
-  virtual Value *_clone (const Value &) override { return this; }
+  virtual Value *
+  _clone (const Value &) override
+  { return this; }
 
   /**
    * @brief _str_value
@@ -193,7 +233,9 @@ private:
    * @brief __hasRoot
    * @return
    */
-  inline bool __hasRoot () const noexcept { return ! __root == 0; }
+  inline bool
+  __hasRoot () const noexcept
+  { return ! __root == 0; }
 
 public:
 
@@ -212,7 +254,9 @@ public:
        * @brief what
        * @return
        */
-      virtual const char * what () { return _message == 0 ? "" : _message; }
+      virtual const char *
+      what ()
+      { return _message == 0 ? "" : _message; }
 
     protected:
       const char * const _message;

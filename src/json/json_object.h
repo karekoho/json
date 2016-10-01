@@ -54,7 +54,9 @@ public:
    * @param other
    * @return
    */
-  virtual Value * _clone () { return new Object (*this); }
+  virtual Value *
+  _clone ()
+  { return new Object (*this); }
 
   /**
    * @brief ~Object
@@ -79,33 +81,43 @@ public:
    * @brief at
    * @return
    */
-  virtual Value & at (size_t)  { return *this; }
+  virtual Value &
+  at (size_t)
+  { return *this; }
 
   /**
    * @brief type
    * @return
    */
-  virtual inline object_type type () const { return Value::object_type::object; }
+  virtual inline object_type
+  type () const
+  { return Value::object_type::object; }
 
   /**
    * @brief size
    * @return
    */
-  virtual inline size_t count () const { return _member_list.size (); }
+  virtual inline size_t
+  count () const
+  { return _member_list.size (); }
 
   /**
    * @brief operator =
    * @param o
    * @return
    */
-  inline Value & operator =(Object & o) { return _assign (o);  }
+  inline Value &
+  operator =(Object & o)
+  { return _assign (o);  }
 
   /**
    * @brief operator =
    * @param v
    * @return
    */
-  inline Value & operator =(Value & v) { return _assign (v); }
+  inline Value &
+  operator =(Value & v)
+  { return _assign (v); }
 
   /**
    * @brief iterator
@@ -117,13 +129,17 @@ public:
    * @brief stringify
    * @return
    */
-  virtual const char *stringify () noexcept override;
+  virtual const char *
+  stringify () noexcept override
+  { return strValue (); }
 
   /**
    * @brief strLength
    * @return
    */
   virtual size_t strLength () const noexcept override;
+
+  virtual const char * strValue() const;
 
 protected:
 

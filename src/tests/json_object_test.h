@@ -378,11 +378,13 @@ public:
       { "{}", 2, PASS },
       { "{\"a\":null}", 10, PASS },
       { "{\"a\":null,\"b\":null}", 19, PASS },
-      { "{\"a\":null,\"b\":{}}", 17, PASS }, // FIXME: pair: syntax error: expecting ':'
+      { "{\"a\":null,\"b\":{}}", 17, PASS }
     };
 
     TEST_IT_START
+
         Object o = (*it).input;
+
         ASSERT_EQUAL_IDX ("o.strLength ()", (*it).length, o.strLength ());
 
     TEST_IT_END;
@@ -391,7 +393,7 @@ public:
   virtual void
   test_strValue () override
   {
-            return;
+    // return;
     Object p;
 
     JSON *parent[] = {
@@ -405,12 +407,12 @@ public:
       int assert_status;
     };
 
-    //{ "[]", { "[]", "[\"x\",[]" }, PASS },  // <-- last closing ] intentionally missing
-    //{ "[false,[true]]", { "[false,[true]]", "[\"x\",[false,[true]]" }, PASS },  // <-- last closing ] intentionally missing
-
     std::vector<struct assert> test = {
-      { "{}", { "{}", "{\"key\":\"x\",{}" }, PASS },  // <-- last closing } intentionally missing
-      { "{\"key\":false,{\"key\":true}}", { "{\"key\":false,{\"key\":true}}", "{\"key\":true,{\"key\":false,{\"key\":true}}" }, PASS },  // <-- last closing ] intentionally missing
+      { "{}", { "{}", "{\"a\":null,\"b\":{}" }, PASS },  // <-- last closing } intentionally missing
+
+      /// !!! UNORDERED MAP HAS KEYS ARE IN DIFFERENT ORDER !!!:
+      /// {"c":null,"d":{}} --> {"d":{},"c":null}
+      { "{\"c\":null,\"d\":{}}", { "{\"d\":{},\"c\":null}", "{\"a\":null,\"b\":{\"d\":{},\"c\":null}" }, PASS },  // <-- last closing ] intentionally missing
     };
 
     TEST_IT_START
@@ -428,29 +430,28 @@ public:
           if (o._parent)
             {
               str_value = new char[len +1 ] ();
-              str_value = strncpy (str_value,  "[\"x\",", 5);
+              str_value = strncpy (str_value,  "{\"a\":null,\"b\":", 14);
 
               p._str_value[BEGIN]   = str_value;
-              p._str_value[CURSOR]  = str_value + 5;
+              p._str_value[CURSOR]  = str_value + 14;
             }
 
           (void) o.parse ((*it).input);
 
           const char *output = o.strValue ();
 
-
           if (o._parent == 0)
             {
-              // ASSERT_EQUAL_IDX ("strlen (output)", len, strlen (output));
-              // CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[0])", strcmp (output, (*it).output[0]) == 0);
+              // std::cout  << output  << std::endl;
+              ASSERT_EQUAL_IDX ("strlen (output)", len, strlen (output));
+              CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[0])", strcmp (output, (*it).output[0]) == 0);
             }
           else
             {
-              // ASSERT_EQUAL_IDX ("strlen (p._str_value[BEGIN])", len, strlen (p._str_value[BEGIN]));
-              // CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[1])", strcmp (p._str_value[BEGIN], (*it).output[1]) == 0);
+              // std::cout << p._str_value[BEGIN]  << std::endl;
+              ASSERT_EQUAL_IDX ("strlen (p._str_value[BEGIN])", len, strlen (p._str_value[BEGIN]));
+              CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[1])", strcmp (p._str_value[BEGIN], (*it).output[1]) == 0);
             }
-
-            // std::cout << p._str_value[BEGIN]  << output  << std::endl;
 
             delete[] str_value;
       }

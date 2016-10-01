@@ -10,19 +10,22 @@ public:
   /**
    * @brief Leaf
    */
-  Leaf () : Value () {}
+  Leaf () : Value ()
+  {}
 
   /**
    * @brief Leaf
    * @param json
    */
-  Leaf (const char *json): Value (json) {}
+  Leaf (const char *json) : Value (json)
+  {}
 
   /**
    * @brief Leaf
    * @param parent
    */
-  Leaf (JSON *parent) : Value (parent) {}
+  Leaf (JSON *parent) : Value (parent)
+  {}
 
   /**
    * @brief Leaf
@@ -70,19 +73,25 @@ public:
    * @brief size
    * @return
    */
-  virtual size_t count () const final override { return 0; }
+  virtual size_t
+  count () const final override
+  { return 0; }
 
   /**
    * @brief assign
    * @return
    */
-  virtual Value & assign (Value *, Value *) final override { return *this; }
+  virtual Value &
+  assign (Value *, Value *) final override
+  { return *this; }
 
   /**
    * @brief isLeaf
    * @return
    */
-  virtual bool isLeaf () const noexcept final override  { return true; }
+  virtual bool
+  isLeaf () const noexcept final override
+  { return true; }
 
   /**
    * @brief iterator
@@ -94,7 +103,9 @@ public:
    * @brief stringify
    * @return
    */
-  virtual const char *stringify () noexcept final override;
+  virtual const char *
+  stringify () noexcept final override
+  { return strValue (); }
 
 protected:
 

@@ -145,23 +145,20 @@ JSON::_make_value ()
   return value_;
 }
 
-Iterator *
-JSON::iterator () const
-{
-  return __root ? __root->iterator () : 0; // TODO: new Leaf_Iterator (new Undefined);  // FIXME: leak
-}
+//Iterator *
+//JSON::iterator () const
+//{
+//  return __root ? __root->iterator () : 0; // TODO: new Leaf_Iterator (new Undefined);  // FIXME: leak
+//}
 
-const char *
-JSON::stringify () noexcept
-{
-//  char *dstp = _parent ? _parent->_str_value[0] : 0;
-//  return dstp ? Value::_str_append (dstp, strValue (), strLength ()) : strValue ();
+//const char *
+//JSON::stringify () noexcept
+//{
+//  return __hasRoot () ? __root->stringify () : "";
+//}
 
-  return __hasRoot () ? __root->stringify () : "";
-}
-
-size_t
-JSON::strLength () const  noexcept
-{
-  return 0;
-}
+//size_t
+//JSON::strLength () const  noexcept
+//{
+//  return 0;
+//}
