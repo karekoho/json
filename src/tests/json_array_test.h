@@ -296,8 +296,30 @@ public:
   {
     // assert: [] = 2,
     // assert: [null] = 2 + 4 = 6,
-    // assert: [null,null] = 2 + 4 + 1 + 4 = 11
-    // assert: [null,[]] = 2 + 4 + 1 + 2 = 7
+    // assert: [null,null] = 2 + (2 * 4) + 1 = 11;
+    // assert: [null,[]] = 2 + 4 + 1 + 2 = 9
+
+    struct assert
+    {
+      const char *input;
+      size_t length;
+      int assert_status;
+    };
+
+    std::vector<struct assert> test = {
+      { "[]", 2, PASS },
+      { "[null]", 6, PASS },
+      { "[null,null]", 11, PASS },
+      { "[null,[]]", 9, PASS },
+    };
+
+    TEST_IT_START
+
+        Array a = (*it).input;
+
+        ASSERT_EQUAL_IDX ("a.strLength ()", (*it).length, a.strLength ());
+
+    TEST_IT_END;
   }
 
   virtual void
@@ -377,7 +399,8 @@ public:
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json array test");
 
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test_strValue));
-    return s;
+    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test_strLength));
+    // return s;
 
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test_ctor_dtor", &json_array_test::test_ctor_dtor));
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test_parse_1", &json_array_test::test_parse_1));

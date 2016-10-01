@@ -167,10 +167,10 @@ Array::iterator () const
 const char *
 Array::stringify () noexcept
 {
-  char *dstp = _parent ? _parent->_str_value[CURSOR] : 0;
-
-  return dstp ? Value::_str_append (dstp, strValue (), strLength ())
-              : strValue ();
+//  char *dstp = _parent ? _parent->_str_value[CURSOR] : 0;
+//  return dstp ? Value::_str_append (dstp, strValue (), strLength ())
+//              : strValue ();
+  return strValue ();
 }
 
 size_t
@@ -181,8 +181,11 @@ Array::strLength () const noexcept
 
   size_t len = 1;   // [
 
-  for (auto it = _element_list.cbegin (); it != _element_list.cend (); ++it)
-    len += ((*it)->strLength () + 1);   // , or ]
+  auto end = _element_list.cend ();
+  auto cur = _element_list.cbegin ();
+
+  while (cur != end)
+    len += ((*cur++)->strLength () + 1);   // , or ]
 
   return len;
 }
@@ -190,25 +193,22 @@ Array::strLength () const noexcept
 const char *
 Array::strValue () const
 {
-  if (_parent && _parent->_str_value[CURSOR])
-    _str_value[CURSOR] = _parent->_str_value[CURSOR];
-
-  else
-    {
-      size_t len = strLength ();
-      _str_value[CURSOR] = new char[len + 1] ();
-    }
+  _str_value[CURSOR] = _parent && _parent->_str_value[CURSOR]
+      ? _parent->_str_value[CURSOR]
+      : new char[strLength () + 1] ();
 
   _str_value[BEGIN] = _str_value[CURSOR];
 
   *(_str_value[CURSOR]++) = _sc::begin_array;
 
-  for (auto it = _element_list.cbegin (); it != _element_list.cend (); ++it)
-    {
-      _str_value[CURSOR] = (char *) (*it)->stringify ();
+  auto end = _element_list.cend ();
 
-      if ((it + 1) != _element_list.cend ())
-        *(_str_value[CURSOR]++) = ',';
+  for (auto cur = _element_list.cbegin (); cur != end; ++cur)
+    {
+      _str_value[CURSOR] = Value::_str_append (_str_value[CURSOR], (*cur)->strValue (), (*cur)->strLength ());
+
+      if ((cur + 1) != _element_list.cend ())
+        *(_str_value[CURSOR]++) = _sc::value_separator;
     }
 
   *(_str_value[CURSOR]++) = _sc::end_array;

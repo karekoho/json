@@ -190,9 +190,12 @@ Object::_clone (const Value &other)
 
   _member_list.reserve (nv._member_list.size ());
 
-  for (auto it = nv._member_list.begin (); it != nv._member_list.end (); ++it)
+  auto end = nv._member_list.cend ();
+  auto cur = nv._member_list.cbegin ();
+
+  while (cur != end)
     {
-      std::pair<std::string, Value *> p = *it;
+      std::pair<std::string, Value *> p = *cur++;
       _member_list.emplace (p.first, p.second->_clone ());
     }
 
@@ -208,5 +211,19 @@ Object::stringify () noexcept
 size_t
 Object::strLength () const noexcept
 {
-  return 0;
+  if (_member_list.empty ())
+    return 2;
+
+  size_t len = 1;   // {
+
+  auto end = _member_list.cend ();
+  auto cur = _member_list.cbegin ();
+
+  while (cur != end)
+    {
+      std::pair<std::string, Value *> p = *cur++;
+      len += p.first.size () + dynamic_cast<Value *>(p.second)->strLength () + 4;   // " + key + " + : +  value + , or }
+    }
+
+  return len;
 }

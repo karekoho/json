@@ -359,8 +359,104 @@ public:
 
   virtual void test_stringify () override {}
 
-  virtual void test_strLength () override {}
-  virtual void test_strValue () override {}
+  virtual void
+  test_strLength () override
+  {
+    // assert: {} = 2,
+    // assert: {\"a\":null} = 2 + 3 + 1 + 4 = 10,
+    // assert: {\"a\":null,\"b\":null} =  2 + 2 * (3 + 1 + 4) + 1  = 19
+    // assert: {\"a\":null,\"b\":{}} = 2 + 3 + 1 + 4 + 1 + 3 + 1 + 2 = 17
+
+    struct assert
+    {
+      const char *input;
+      size_t length;
+      int assert_status;
+    };
+
+    std::vector<struct assert> test = {
+      { "{}", 2, PASS },
+      { "{\"a\":null}", 10, PASS },
+      { "{\"a\":null,\"b\":null}", 19, PASS },
+      { "{\"a\":null,\"b\":{}}", 17, PASS }, // FIXME: pair: syntax error: expecting ':'
+    };
+
+    TEST_IT_START
+        Object o = (*it).input;
+        ASSERT_EQUAL_IDX ("o.strLength ()", (*it).length, o.strLength ());
+
+    TEST_IT_END;
+  }
+
+  virtual void
+  test_strValue () override
+  {
+            return;
+    Object p;
+
+    JSON *parent[] = {
+      0, &p
+    };
+
+    struct assert
+    {
+      const char *input;
+      const char *output[2];
+      int assert_status;
+    };
+
+    //{ "[]", { "[]", "[\"x\",[]" }, PASS },  // <-- last closing ] intentionally missing
+    //{ "[false,[true]]", { "[false,[true]]", "[\"x\",[false,[true]]" }, PASS },  // <-- last closing ] intentionally missing
+
+    std::vector<struct assert> test = {
+      { "{}", { "{}", "{\"key\":\"x\",{}" }, PASS },  // <-- last closing } intentionally missing
+      { "{\"key\":false,{\"key\":true}}", { "{\"key\":false,{\"key\":true}}", "{\"key\":true,{\"key\":false,{\"key\":true}}" }, PASS },  // <-- last closing ] intentionally missing
+    };
+
+    TEST_IT_START
+
+      for (size_t pidx = 0; pidx < 2; pidx++)
+        {
+          char *str_value = 0;
+
+          size_t len = strlen ((*it).output[pidx]);
+
+          Object o;
+
+          o._parent = parent[pidx];
+
+          if (o._parent)
+            {
+              str_value = new char[len +1 ] ();
+              str_value = strncpy (str_value,  "[\"x\",", 5);
+
+              p._str_value[BEGIN]   = str_value;
+              p._str_value[CURSOR]  = str_value + 5;
+            }
+
+          (void) o.parse ((*it).input);
+
+          const char *output = o.strValue ();
+
+
+          if (o._parent == 0)
+            {
+              // ASSERT_EQUAL_IDX ("strlen (output)", len, strlen (output));
+              // CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[0])", strcmp (output, (*it).output[0]) == 0);
+            }
+          else
+            {
+              // ASSERT_EQUAL_IDX ("strlen (p._str_value[BEGIN])", len, strlen (p._str_value[BEGIN]));
+              // CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[1])", strcmp (p._str_value[BEGIN], (*it).output[1]) == 0);
+            }
+
+            // std::cout << p._str_value[BEGIN]  << output  << std::endl;
+
+            delete[] str_value;
+      }
+
+    TEST_IT_END;
+  }
 
   static CppUnit::Test*
   suite ()
@@ -383,6 +479,9 @@ public:
 
     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_pair_1", &json_object_test::test__pair));
     s->addTest (new CppUnit::TestCaller<json_object_test> ("test__clear", &json_object_test::test__clear));
+
+    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strLength", &json_object_test::test_strLength));
+    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strvalue", &json_object_test::test_strValue));
 //     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_pair_1", &json_object_test::test__value));
 
      return s;
