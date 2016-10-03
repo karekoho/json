@@ -158,6 +158,8 @@ class Value
   inline void setIndex (const size_t &index) noexcept { _index = index;}
 
   /**
+   * TODO: protected
+   *
    * @brief _assign
    * @param Old value
    * @param New value
@@ -204,6 +206,8 @@ class Value
 protected:
 
   /**
+   * TODO: public
+   *
    * @brief assign
    * @param nv
    * @return
