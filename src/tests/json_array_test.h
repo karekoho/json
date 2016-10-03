@@ -388,13 +388,54 @@ public:
 
   }
 
+  virtual void
+  test_erase () override
+  {
+    Array a;
+
+    Value *v[3]= {
+      new Boolean (),
+      new Boolean (),
+      new Boolean ()
+    };
+
+    v[0]->setIndex (0);
+    v[1]->setIndex (1);
+    v[2]->setIndex (2);
+
+    a._element_list = { v[0], v[1] };
+
+    struct assert
+    {
+      Value *value;
+      size_t size;
+      int assert_status;
+    };
+
+     std::vector<struct assert> test = {
+        { v[2], 2, PASS },
+        { v[1], 1, PASS },
+        { v[0], 0, PASS },
+     };
+
+     TEST_IT_START
+
+         (void) a.erase (*(*it).value);
+         size_t size = a.count ();
+
+         ASSERT_EQUAL_IDX ("a.count ()", (*it).size, size);
+
+     TEST_IT_END;
+  }
+
   virtual void test_operator_assign () {}
   virtual void test_operator_at () {}
 
   virtual void test_value_1 () {}
   virtual void test_debug_1 () {}
 
-  static CppUnit::Test *suite()
+  static CppUnit::Test *
+  suite ()
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json array test");
 
@@ -412,6 +453,8 @@ public:
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test_assign_all_values", &json_array_test::test_assign_all_values));
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test__clear", &json_array_test::test__clear));
 
+    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_erase", &json_array_test::test_erase));
+
 //    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_size_1", &json_array_test::test_size_1));
 //    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_get_1", &json_array_test::test_get_1));
 //    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_value_1", &json_array_test::test_value_1));
@@ -419,6 +462,9 @@ public:
 
     return s;
   }
+
+
+
 };
 
 #endif // JSON_ARRAY_TEST

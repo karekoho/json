@@ -107,6 +107,10 @@ public:
   stringify () noexcept final override
   { return strValue (); }
 
+  virtual Value &
+  erase (const Value &) final override
+  { return *this; }
+
 protected:
 
   /**

@@ -98,6 +98,12 @@ public:
 public:
   virtual void test_strLength() override {}
   virtual void test_strValue() override {}
+
+  // json_value_test_interface interface
+public:
+  virtual void test_erase() override
+  {
+  }
 };
 
 

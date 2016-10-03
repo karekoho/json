@@ -166,6 +166,8 @@ class Array : public JSON
   stringify () noexcept
   { return strValue (); }
 
+  virtual Value & erase (const Value &v) override;
+
 protected:
 
   /**
@@ -215,8 +217,6 @@ protected:
    * @return
    */
   virtual Value *_clone (const Value &other) override;
-
-  // const char *_stringify () const noexcept;
 };
 
 #endif // ARRAY

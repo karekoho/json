@@ -487,6 +487,12 @@ public:
 
      return s;
   }
-};
+
+  // json_value_test_interface interface
+  public:
+  virtual void test_erase() override
+  {
+  }
+      };
 
 #endif // JSON_OBJECT_TEST_H

@@ -97,6 +97,12 @@ Value::_is_literal (const int _try) const noexcept
   return _try < 2 ? _is_literal (_try + 1) :  Value::_literal::no_value;
 }
 
+void Value::_erase()
+{
+  if (_parent)
+        (void) _parent->erase (*this);
+}
+
 Value *
 Value::_clone (const Value &)
 {

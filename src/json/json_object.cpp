@@ -253,3 +253,9 @@ Object::strValue () const
 
   return _str_value[BEGIN];
 }
+
+Value &
+Object::erase (const Value &v)
+{
+  return *this;
+}

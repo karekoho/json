@@ -139,7 +139,18 @@ public:
    */
   virtual size_t strLength () const noexcept override;
 
-  virtual const char * strValue() const;
+  /**
+   * @brief strValue
+   * @return
+   */
+  virtual const char * strValue () const;
+
+  /**
+   * @brief erase
+   * @param v
+   * @return
+   */
+  virtual Value & erase (const Value &v) override;
 
 protected:
 

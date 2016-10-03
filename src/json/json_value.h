@@ -203,6 +203,15 @@ class Value
    */
   virtual const char * strValue () const = 0;
 
+  /**
+   * @brief erase
+   * @param v
+   * @return
+   */
+  virtual Value &
+  erase (const Value &v) = 0;
+  // { return v; }
+
 protected:
 
   /**
@@ -353,6 +362,13 @@ protected:
    * @return
    */
   static inline Value * _clone_cb (Value *v) { return v->_clone (); }
+
+  void
+  _erase ();
+//  {
+//    if (_parent)
+//      (void) _parent->erase (*this);
+//  }
 
   static const struct literal_value
   {

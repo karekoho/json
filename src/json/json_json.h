@@ -189,6 +189,10 @@ public:
   strValue () const
   { return __hasRoot () ? __root->strValue () : ""; }
 
+  virtual Value &
+  erase (const Value &v) override
+  { return __hasRoot() ? __root->erase (v) : *this; }
+
 protected:
 
   /**
@@ -210,6 +214,7 @@ protected:
   virtual void
   _clear ()
   {}
+
 
   /**
    * @brief _clone
@@ -288,6 +293,9 @@ public:
     out_of_range (const char * const message = 0) : error (message) {}
   };
   // class out_of_range
+
+
+  // Value interface
 
 }; // class json
 

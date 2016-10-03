@@ -209,3 +209,22 @@ Array::strValue () const
 
   return _str_value[BEGIN];
 }
+
+Value &
+Array::erase (const Value &v)
+{
+  try
+    {
+      size_t index = v.index ();
+
+      if (index == _element_list.size ())
+        return *this;
+
+      (void) _element_list.erase (_element_list.cbegin () + index);
+    }
+  catch (std::exception &)
+    {
+    }
+
+  return *this;
+}

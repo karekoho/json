@@ -42,6 +42,8 @@ public:
     virtual void test_strValue () = 0;
     virtual void test_stringify ()  = 0;
 
+    virtual void test_erase () = 0;
+
     /// TODO: test_assign
     virtual void test_value_1 () = 0; /// TODO: remove
     virtual void test_debug_1 () = 0;
