@@ -190,7 +190,7 @@ public:
   { return __hasRoot () ? __root->strValue () : ""; }
 
   virtual Value &
-  erase (const Value &v) override
+  erase (const Value &v) noexcept override
   { return __hasRoot() ? __root->erase (v) : *this; }
 
 protected:

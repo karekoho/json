@@ -49,7 +49,8 @@ public:
    * @param json
    * @return
    */
-  virtual const char * parse (const char *json) = 0;
+  virtual const char *
+  parse (const char *json) = 0;
 
   /**
    * @brief at
@@ -108,7 +109,7 @@ public:
   { return strValue (); }
 
   virtual Value &
-  erase (const Value &) final override
+  erase (const Value &) noexcept final override
   { return *this; }
 
 protected:

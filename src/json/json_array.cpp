@@ -211,7 +211,7 @@ Array::strValue () const
 }
 
 Value &
-Array::erase (const Value &v)
+Array::erase (const Value &v) noexcept
 {
   size_t index = v.index ();
 

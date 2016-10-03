@@ -255,7 +255,7 @@ Object::strValue () const
 }
 
 Value &
-Object::erase (const Value &v)
+Object::erase (const Value &v) noexcept
 {
   auto it = _member_list.find (v.key ());
 

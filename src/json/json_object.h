@@ -150,7 +150,7 @@ public:
    * @param v
    * @return
    */
-  virtual Value & erase (const Value &v) override;
+  virtual Value & erase (const Value &v) noexcept override;
 
 protected:
 
