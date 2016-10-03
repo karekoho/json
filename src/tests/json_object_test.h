@@ -511,7 +511,7 @@ public:
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json object test");
 
     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_erase", &json_object_test::test_erase));
-    return s;
+    // return s;
 
     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_smoke", &json_object_test::test_ctor_dtor));
     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_assign_all_values", &json_object_test::test_assign_all_values));

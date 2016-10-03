@@ -257,5 +257,12 @@ Object::strValue () const
 Value &
 Object::erase (const Value &v)
 {
+  auto it = _member_list.find (v.key ());
+
+  if (it == _member_list.end ())
+    return *this;
+
+  (void) _member_list.erase (it);
+
   return *this;
 }

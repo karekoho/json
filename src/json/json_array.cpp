@@ -213,18 +213,12 @@ Array::strValue () const
 Value &
 Array::erase (const Value &v)
 {
-  try
-    {
-      size_t index = v.index ();
+  size_t index = v.index ();
 
-      if (index == _element_list.size ())
-        return *this;
+  if (index == _element_list.size ())
+    return *this;
 
-      (void) _element_list.erase (_element_list.cbegin () + index);
-    }
-  catch (std::exception &)
-    {
-    }
+  (void) _element_list.erase (_element_list.cbegin () + index);
 
   return *this;
 }
