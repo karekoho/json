@@ -459,10 +459,59 @@ public:
     TEST_IT_END;
   }
 
+  virtual void
+  test_erase () override
+  {
+    Object o;
+
+    Value *v[3]= {
+      new Boolean (),
+      new Boolean (),
+      new Boolean ()
+    };
+
+    v[0]->setKey ("key_1", 5);
+    v[1]->setKey ("key_2", 5);
+    v[2]->setKey ("key_3", 5);
+
+    o._member_list = { { v[0]->key (), v[0] }, { v[1]->key (), v[1] } };
+
+    struct assert
+    {
+      Value *value;
+      size_t size;
+      int assert_status;
+    };
+
+    std::vector<struct assert> test = {
+      { v[2], 2, PASS },
+      { v[1], 1, PASS },
+      { v[0], 0, PASS },
+    };
+
+    TEST_IT_START
+
+      (void) o.erase (*(*it).value);
+      size_t size = o.count ();
+
+      ASSERT_EQUAL_IDX ("o.count ()", (*it).size, size);
+
+    TEST_IT_END;
+  }
+
+  /**
+   * Test number 2
+   *
+   * @brief suite
+   * @return
+   */
   static CppUnit::Test*
   suite ()
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json object test");
+
+    s->addTest (new CppUnit::TestCaller<json_object_test> ("test_erase", &json_object_test::test_erase));
+    return s;
 
     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_smoke", &json_object_test::test_ctor_dtor));
     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_assign_all_values", &json_object_test::test_assign_all_values));
@@ -487,12 +536,6 @@ public:
 
      return s;
   }
-
-  // json_value_test_interface interface
-  public:
-  virtual void test_erase() override
-  {
-  }
-      };
+};
 
 #endif // JSON_OBJECT_TEST_H
