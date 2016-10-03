@@ -98,7 +98,7 @@ Value::_is_literal (const int _try) const noexcept
 }
 
 void
-Value::_erase ()
+Value::_erase () noexcept
 {
   if (_parent)
     (void) _parent->erase (*this);

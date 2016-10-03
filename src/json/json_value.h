@@ -404,7 +404,11 @@ protected:
    * @brief _erase
    */
   void
-  _erase ();
+  _erase () noexcept;
+//  {
+//    if (_parent)
+//      (void) _parent->erase (*this);
+//  }
 
   /**
    * @brief _literal_value
@@ -414,6 +418,7 @@ protected:
     const char * const str_value;
     const size_t len;
     const Value::_literal ltr_value;
+
   } __ltr_value[3];
 };
 

@@ -164,23 +164,58 @@ public:
       delete[] startp;
     }
 
-    virtual void test_stringify() override {}
-    virtual void test_strLength() override {}
-    virtual void test_strValue() override {}
+    void
+    test_assign_undefined ()
+    {
+      Boolean b;
+
+      Array a = "[true]";
+
+      struct assert
+      {
+        Value *value;
+        size_t size;    // Array::_element_list.size ()
+        int assert_status;
+      };
+
+      size_t index = 0;
+
+      std::vector<struct assert> test = {
+        { & b, 1, PASS }, // No parent
+        { & (a.at (index)), 0, PASS }  // Has parent
+      };
+
+      TEST_IT_START
+
+          Undefined u;
+
+          // (*it).value->_assign (u);   // Crash at Array::_clear ()
+
+          ASSERT_EQUAL_IDX ("a.count ()", (*it).size, a.count ());
+
+      TEST_IT_END;
+    }
+
+    virtual void test_stringify () override {}
+    virtual void test_strLength () override {}
+    virtual void test_strValue () override {}
 
     virtual void test_operator_assign () {}
     virtual void test_operator_at () {}
     virtual void test_assign_all_values (){}
-    virtual void test__clear() {}
+    virtual void test__clear () {}
 
     static CppUnit::Test*
     suite ()
     {
       CppUnit::TestSuite *s = new CppUnit::TestSuite ("json value test");
 
-//      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lookahead", &json_value_test::test_lookahead));
-//      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_literal", &json_value_test::test_is_literal));
-//      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_quoted", &json_value_test::test_string));
+      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_undefined", &json_value_test::test_assign_undefined));
+      return s;
+
+      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lookahead", &json_value_test::test_lookahead));
+      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_literal", &json_value_test::test_is_literal));
+      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_quoted", &json_value_test::test_string));
 
       s->addTest (new CppUnit::TestCaller<json_value_test> ("test__str_append", &json_value_test::test__str_append));
       return s;
