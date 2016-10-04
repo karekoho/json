@@ -168,8 +168,9 @@ Object::_at (const char *key)
 Value &
 Object::assign (Value *ov, Value *nv)
 {
-  _member_list[ov->key ()] = nv;
-  return *this;
+   _member_list[ov->key ()] = nv;
+
+   return *this;
 }
 
 void

@@ -38,7 +38,7 @@ public:
 
     // Value interface
 public:
-    virtual Value &erase(const Value &v) noexcept override
+    virtual Value &erase(const Value &) noexcept override
     {
       return *this;
     }

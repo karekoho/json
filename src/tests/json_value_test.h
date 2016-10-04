@@ -187,9 +187,7 @@ public:
 
       TEST_IT_START
 
-          Undefined u;
-
-          // (*it).value->_assign (u);   // Crash at Array::_clear ()
+          (*it).value->_assign (Undefined ());
 
           ASSERT_EQUAL_IDX ("a.count ()", (*it).size, a.count ());
 
@@ -211,7 +209,7 @@ public:
       CppUnit::TestSuite *s = new CppUnit::TestSuite ("json value test");
 
       s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_undefined", &json_value_test::test_assign_undefined));
-      return s;
+      // return s;
 
       s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lookahead", &json_value_test::test_lookahead));
       s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_literal", &json_value_test::test_is_literal));

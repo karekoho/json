@@ -15,6 +15,7 @@
  */
 class JSON;
 class Iterator;
+class Undefined;
 class Value
 {
 #ifdef UNIT_TEST
@@ -249,6 +250,18 @@ protected:
    */
   virtual Value &
   _assign (Value & nv);
+
+  /**
+   * @brief _assign
+   * @param u
+   * @return
+   */
+  Value &
+  _assign (const Undefined &)
+  {
+    _erase ();
+    return *this;
+  }
 
   /**
    * @brief The _sc enum Structural characters.

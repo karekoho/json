@@ -199,7 +199,7 @@ protected:
    */
   Value &
   _assign (Number & nv)
-  { return _parent  ? _parent->assign (this, &nv) : *(_clone (nv)); }
+  { return _parent  ? _parent->assign (this, /* TODO: new Number (nv.setPrev (this)) */ &nv ) : *(_clone (nv)); }
 
   /**
    * @brief _clear

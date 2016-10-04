@@ -192,7 +192,7 @@ Number::_clear ()
 Value *
 Number::_clone (const Value &other)
 {
-  const Number & nv = static_cast<const Number &>(other);
+  const Number & nv = dynamic_cast<const Number &>(other);
 
   if (nv._double_valuep)
     {

@@ -104,12 +104,6 @@ Value::_erase () noexcept
     (void) _parent->erase (*this);
 }
 
-//Value *
-//Value::_clone (const Value &)
-//{
-//  return this;
-//}
-
 Value &
 Value::_assign (Value &nv)
 {
