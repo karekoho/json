@@ -120,7 +120,7 @@ public:
    */
   Value &
   _assign (Boolean & nv)
-  { return _parent ? _parent->assign (this, new Boolean (this)) : *(_clone (nv)); }
+  { return _parent ? _parent->assign (this, new Boolean (nv)) : *(_clone (nv)); }
 
   /**
    * @brief value

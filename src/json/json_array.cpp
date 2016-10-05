@@ -106,7 +106,7 @@ Array::at (size_t index) const
 Value &
 Array::_assign (Array &nv)
 {
-  return _parent ? _parent->assign (this,  new Array (this) /* &nv */) : *(_clone (nv));
+  return _parent ? _parent->assign (this,  new Array (nv)) : *(_clone (nv));
 }
 
 Value &
