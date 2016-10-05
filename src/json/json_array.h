@@ -3,7 +3,6 @@
 
 #include "json_json.h"
 
-
 #ifdef UNIT_TEST
 class json_test;
 class json_array_test;
@@ -30,6 +29,7 @@ class Array : public JSON
   friend class json_null_test;
   friend class json_undefined_test;
 #endif
+
   // TODO: friend void Value::setKey (const char *key);
   // TODO: friend void Value::setIndex (const size_t &index);
 
@@ -81,7 +81,8 @@ class Array : public JSON
    * @param json
    * @return
    */
-  virtual const char *parse ( const char *json);
+  virtual const char *
+  parse ( const char *json);
 
   /**
    * @brief at
@@ -97,14 +98,16 @@ class Array : public JSON
    * @param index
    * @return
    */
-  Value & at (size_t index) const;
+  Value &
+  at (size_t index) const;
 
   /**
    * @brief assign
    * @param ov
    * @param nv
    */
-  virtual Value & assign (Value *ov, Value *nv);
+  virtual Value &
+  assign (Value *ov, Value *nv);
 
   /**
    * @brief type
@@ -144,19 +147,22 @@ class Array : public JSON
    * @brief iterator
    * @return
    */
-  virtual Iterator *iterator () const override;
+  virtual Iterator *
+  iterator () const override;
 
   /**
    * @brief strLength
    * @return
    */
-  virtual size_t strLength () const noexcept override;
+  virtual size_t
+  strLength () const noexcept override;
 
   /**
    * @brief strValue
    * @return
    */
-  virtual const char * strValue () const;
+  virtual const char *
+  strValue () const;
 
   /**
    * @brief stringify
@@ -166,7 +172,13 @@ class Array : public JSON
   stringify () noexcept
   { return strValue (); }
 
-  virtual Value & erase (const Value &v) noexcept  override;
+  /**
+   * @brief erase
+   * @param v
+   * @return
+   */
+  virtual Value &
+  erase (const Value &v) noexcept  override;
 
 protected:
 
@@ -188,7 +200,8 @@ protected:
    * @param nv
    * @return
    */
-  Value & _assign (Array & nv);
+  Value &
+  _assign (Array & nv);
 
   /**
    * @brief _assign
@@ -204,19 +217,22 @@ protected:
    * @param index
    * @return
    */
-  Value &_at (size_t index);
+  Value &
+  _at (size_t index);
 
   /**
    * @brief _clear
    */
-  virtual void _clear ();
+  virtual void
+  _clear ();
 
   /**
    * @brief _clone
    * @param other
    * @return
    */
-  virtual Value *_clone (const Value &other) override;
+  virtual Value *
+  _clone (const Value &other) override;
 };
 
 #endif // ARRAY

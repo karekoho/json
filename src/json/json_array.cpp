@@ -106,7 +106,7 @@ Array::at (size_t index) const
 Value &
 Array::_assign (Array &nv)
 {
-  return _parent ? _parent->assign (this, &nv) : *(_clone (nv));
+  return _parent ? _parent->assign (this,  new Array (this) /* &nv */) : *(_clone (nv));
 }
 
 Value &
@@ -145,7 +145,7 @@ Array::_clear ()
 Value *
 Array::_clone (const Value &other)
 {
-  const Array &nv = static_cast<const Array &> (other);
+  const Array &nv = dynamic_cast<const Array &> (other);
 
   _clear ();
 
