@@ -36,6 +36,15 @@ public:
   Leaf (const Leaf &other) = default;
 
   /**
+   * @brief Leaf
+   * @param ov
+   * @param nv
+   */
+  Leaf (Value *ov, const Leaf &nv)
+    : Value (ov, nv)
+  {}
+
+  /**
    * @brief ~Leaf
    */
   virtual ~Leaf () = default;
@@ -44,7 +53,8 @@ public:
    * @brief _clone
    * @return
    */
-  virtual Value * _clone  () override = 0;
+  virtual Value *
+  clone  () override = 0;
 
   /**
    * @brief parse
@@ -58,19 +68,22 @@ public:
    * @brief at
    * @return
    */
-  virtual  Value & at (const char *) const final override;
+  virtual  Value &
+  at (const char *) const final override;
 
   /**
    * @brief at
    * @return
    */
-  virtual Value & at (size_t) const final override;
+  virtual Value &
+  at (size_t) const final override;
 
   /**
    * @brief type
    * @return
    */
-  virtual object_type type () const = 0;
+  virtual object_type
+  type () const = 0;
 
   /**
    * @brief size
@@ -100,7 +113,8 @@ public:
    * @brief iterator
    * @return
    */
-  virtual Iterator *iterator () const final override;
+  virtual Iterator *
+  iterator () const final override;
 
   /**
    * @brief stringify
@@ -120,18 +134,21 @@ protected:
    * @brief _at
    * @return
    */
-  virtual Value &_at (const char *) final override;
+  virtual Value &
+  _at (const char *) final override;
 
   /**
    * @brief _clear
    */
-  virtual void _clear () = 0;
+  virtual void
+  _clear () = 0;
 
   /**
    * @brief _clone
    * @return
    */
-  virtual Value *_clone (const Value &) = 0;
+  virtual Value *
+  clone (const Value &) = 0;
 };
 
 #endif // LEAF_H

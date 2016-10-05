@@ -19,7 +19,13 @@ Array::Array (JSON *parent)
 Array::Array (const Array &other)
   : JSON (other)
 {
-  (void) _clone (other);
+  (void) clone (other);
+}
+
+Array::Array (Value *ov, const Array &nv)
+  : JSON (ov, nv)
+{
+  (void) clone (nv);
 }
 
 Array::~Array ()
@@ -106,7 +112,7 @@ Array::at (size_t index) const
 Value &
 Array::_assign (Array &nv)
 {
-  return _parent ? _parent->assign (this,  new Array (nv)) : *(_clone (nv));
+  return _parent ? _parent->assign (this,  new Array (nv)) : *(clone (nv));
 }
 
 Value &
@@ -143,7 +149,7 @@ Array::_clear ()
 }
 
 Value *
-Array::_clone (const Value &other)
+Array::clone (const Value &other)
 {
   const Array &nv = dynamic_cast<const Array &> (other);
 

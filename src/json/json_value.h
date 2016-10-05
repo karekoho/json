@@ -65,12 +65,27 @@ class Value
   Value (const Value &other);
 
   /**
+   * @brief Value
+   * @param ov
+   * @param nv
+   */
+  Value (Value *ov, const Value &nv);
+
+  /**
    * @brief clone
    * @param other
    * @return
    */
   virtual Value *
-  _clone () = 0;
+  clone () = 0;
+
+  /**
+   * @brief clone
+   * @param old
+   * @return
+   */
+  virtual Value *
+  clone (Value *ov) = 0;
 
   /**
    * @brief ~Value
@@ -128,7 +143,7 @@ class Value
    * @brief type
    * @return
    */
- virtual object_type
+  virtual object_type
   type () const /* TODO: noexcept */ = 0;
 
   /**
@@ -174,7 +189,7 @@ class Value
    */
   inline void
   setIndex (const size_t &index) noexcept
-  { _index = index;}
+  { _index = index; }
 
   /**
    * TODO: protected
@@ -330,6 +345,11 @@ protected:
   size_t _index;
 
   /**
+   * @brief _old
+   */
+  Value *_old;
+
+  /**
    * @brief _look_ahead Move read pointer to next non-white space character
    */
   inline const char *
@@ -397,12 +417,13 @@ protected:
   _clear () = 0;
 
   /**
+   * TODO: rename to *** _clone ***
    * @brief _clone
    * @param other
    * @return
    */
   virtual Value *
-  _clone (const Value &other) = 0;
+  clone (const Value &other) = 0;
 
   /**
    * @brief _clone
@@ -411,17 +432,13 @@ protected:
    */
   static inline Value *
   _clone_cb (Value *v)
-  { return v->_clone (); }
+  { return v->clone (); }
 
   /**
    * @brief _erase
    */
   void
   _erase () noexcept;
-//  {
-//    if (_parent)
-//      (void) _parent->erase (*this);
-//  }
 
   /**
    * @brief _literal_value

@@ -63,13 +63,29 @@ class Array : public JSON
   Array (const Array &other);
 
   /**
+   * @brief Array
+   * @param ov
+   * @param nv
+   */
+  Array (Value *ov, const Array &nv);
+
+  /**
    * @brief clone
    * @param other
    * @return
    */
   virtual Value *
-  _clone ()
+  clone ()
   { return new Array (*this); }
+
+  /**
+   * @brief clone
+   * @param ov
+   * @return
+   */
+  virtual Value *
+  clone (Value *ov) override
+  { return new Array (ov, *this); }
 
   /**
    * @brief ~Array
@@ -232,7 +248,11 @@ protected:
    * @return
    */
   virtual Value *
-  _clone (const Value &other) override;
+  clone (const Value &other) override;
+
+  // Value interface
+public:
+
 };
 
 #endif // ARRAY

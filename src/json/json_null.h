@@ -22,7 +22,8 @@ class Null : public Leaf
   /**
    * @brief Null
    */
-  Null () : Leaf ()
+  Null ()
+    : Leaf ()
   {}
 
   /**
@@ -31,7 +32,8 @@ class Null : public Leaf
    * @param parent
    * @param charc
    */
-  Null (JSON *parent) : Leaf (parent)
+  Null (JSON *parent)
+    : Leaf (parent)
   {}
 
   /**
@@ -41,13 +43,31 @@ class Null : public Leaf
   Null (const Null &other) = default;
 
   /**
+   * @brief Null
+   * @param ov
+   * @param nv
+   */
+  Null (Value *ov, const Null &nv)
+    : Leaf (ov, nv)
+  {}
+
+  /**
    * @brief clone
    * @param other
    * @return
    */
   virtual Value *
-  _clone ()
+  clone ()
   { return new Null (*this); }
+
+  /**
+   * @brief clone
+   * @param ov
+   * @return
+   */
+  virtual Value *
+  clone (Value *ov) override
+  { return new Null (ov, *this); }
 
   /**
    * @brief parse
@@ -141,7 +161,8 @@ protected:
    * @return
    */
   virtual Value *
-  _clone (const Value &) override
+  clone (const Value &) override
   { return this; }
+
 };
 #endif // NULL_H

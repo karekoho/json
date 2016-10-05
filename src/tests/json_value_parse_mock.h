@@ -14,14 +14,14 @@ public:
     virtual Value & at (size_t) const { return *(new Undefined); }
     virtual Value::object_type type () const { return Value::object_type::undefined; }
     virtual size_t count () const { return 0; }
-    virtual Value *_clone () override { return 0; }
+    virtual Value *clone () override { return 0; }
     virtual Value &assign (Value *, Value *) override { return *this; }
 
 protected:
 
     virtual  Value &_at (const char *) { return *this; }
     virtual void _clear() override {}
-    virtual Value *_clone(const Value &) override { return this; }
+    virtual Value *clone(const Value &) override { return this; }
 
     // Value interface
 public:
@@ -41,6 +41,13 @@ public:
     virtual Value &erase(const Value &) noexcept override
     {
       return *this;
+    }
+
+    // Value interface
+public:
+    virtual Value *clone(Value *old) override
+    {
+      return old;
     }
 };
 

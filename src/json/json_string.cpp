@@ -23,7 +23,14 @@ String::String (const String &other)
   : Leaf (other),
     _charc (other._charc)
 {
-  _clone (other);
+  clone (other);
+}
+
+String::String (Value *ov, const String &nv)
+  : Leaf (ov, nv),
+    _charc (nv._charc)
+{
+  clone (nv);
 }
 
 const char *
@@ -50,7 +57,7 @@ String::parse (const char *json)
 Value &
 String::_assign (String &nv)
 {
-  return _parent ? _parent->assign (this, new String (nv)) : *(_clone (nv));
+  return _parent ? _parent->assign (this, new String (nv)) : *(clone (nv));
 }
 
 const char *
@@ -75,7 +82,7 @@ String::strValue () const
 }
 
 Value *
-String::_clone (const Value &nv)
+String::clone (const Value &nv)
 {
   const String & s = dynamic_cast<const String &>(nv);
 

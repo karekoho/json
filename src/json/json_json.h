@@ -60,7 +60,7 @@ public:
    * @return
    */
   virtual Value *
-  _clone ()
+  clone ()
   { return new JSON (*this); }
 
   /**
@@ -68,6 +68,13 @@ public:
    * @param other
    */
   JSON (const JSON &other);
+
+  /**
+   * @brief JSON
+   * @param ov
+   * @param nv
+   */
+  JSON (Value *ov, const JSON &nv);
 
   /**
    * @brief ~JSON
@@ -193,6 +200,15 @@ public:
   erase (const Value &v) noexcept override
   { return __hasRoot() ? __root->erase (v) : *this; }
 
+  /**
+   * @brief clone
+   * @param old
+   * @return
+   */
+  virtual Value *
+  clone (Value *) override
+  { return this; }
+
 protected:
 
   /**
@@ -200,13 +216,15 @@ protected:
    * @param key
    * @return
    */
-  virtual Value &_at (const char *key);
+  virtual Value &
+  _at (const char *key);
 
   /**
    * @brief _make_value
    * @return
    */
-  Value * _make_value ();
+  Value *
+  _make_value ();
 
   /**
    * @brief _clear
@@ -215,13 +233,12 @@ protected:
   _clear ()
   {}
 
-
   /**
    * @brief _clone
    * @return
    */
   virtual Value *
-  _clone (const Value &) override
+  clone (const Value &) override
   { return this; }
 
   /**
@@ -293,10 +310,6 @@ public:
     out_of_range (const char * const message = 0) : error (message) {}
   };
   // class out_of_range
-
-
-  // Value interface
-
 }; // class json
 
 // } namespace

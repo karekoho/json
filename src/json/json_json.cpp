@@ -34,7 +34,14 @@ JSON::JSON (JSON *parent)
 JSON::JSON (const JSON &other)
   : Value (other),
     _str_value { 0, 0 },
-   __root (other.__root ? other.__root->_clone () : 0)
+   __root (other.__root ? other.__root->clone () : 0)
+{
+}
+
+JSON::JSON (Value *ov, const JSON &nv)
+  : Value (ov, nv),
+    _str_value { 0, 0 },
+   __root (nv.__root ? nv.__root->clone () : 0)
 {
 }
 
@@ -70,7 +77,7 @@ JSON::_assign (JSON &j)
 {
   delete __root;
 
-  __root = j._clone ();
+  __root = j.clone ();
 
   return *this;
 }
@@ -80,7 +87,7 @@ JSON::_assign (Value &v)
 {
   delete __root;
 
-  __root = v._clone ();
+  __root = v.clone ();
 
   return *this;
 }

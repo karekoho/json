@@ -49,14 +49,21 @@ public:
    */
   Object (const Object &other);
 
+  Object (Value *ov, const Object &nv);
+
+
   /**
    * @brief clone
    * @param other
    * @return
    */
   virtual Value *
-  _clone ()
+  clone ()
   { return new Object (*this); }
+
+  virtual Value *
+  clone (Value *ov) override
+  { return new Object (ov, *this); }
 
   /**
    * @brief ~Object
@@ -216,7 +223,11 @@ protected:
    * @return
    */
   virtual Value *
-  _clone (const Value &other); // override { return this; }
+  clone (const Value &other); // override { return this; }
+
+  // Value interface
+public:
+
 };
 
 #endif // OBJECT_H

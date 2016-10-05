@@ -14,7 +14,8 @@ Value::Value ()
       _parent (0),
      // _length (0),
       _key (0),
-      _index (0)
+      _index (0),
+      _old (0)
 {
 }
 
@@ -24,7 +25,8 @@ Value::Value (const char *)
       _parent (0),
      // _length (1 /* json == 0 ? 0 : strlen (json) */),
       _key (0),
-      _index (0)
+      _index (0),
+      _old (0)
 {
 }
 
@@ -34,7 +36,8 @@ Value::Value (JSON *parent)
       _parent (parent),
      // _length (0),
       _key (0),
-      _index (0)
+      _index (0),
+      _old (0)
 {
 }
 
@@ -44,17 +47,25 @@ Value::Value (const Value &other)
     _parent (0),
     // _length (other._length),
     _key (other._key ? strdup (other._key) : 0),
-    _index (other._index)
+    _index (other._index),
+    _old (0)
+{
+}
+
+Value::Value (Value *ov, const Value &nv)
+  : _startp (nv._startp),
+    _readp (nv._readp),
+    _parent (0),
+    _key (nv._key ? strdup (nv._key) : 0),
+    _index (nv._index),
+    _old (ov)
 {
 }
 
 Value::~Value ()
 {
-  if (_key)
-    {
-      free ((char *)_key);
-      _key = 0;
-    }
+  free ((char *)_key);
+  delete _old;
 }
 
 long int
@@ -107,11 +118,15 @@ Value::_erase () noexcept
 Value &
 Value::_assign (Value &nv)
 {
-  if (_parent)
-    {
-      _parent->assign (this, &nv);
-      return *_parent;
-    }
+  if (_parent == 0)
+    throw JSON::error ("bad assignment");
 
-  throw JSON::error ("bad assignment");
+  return _parent->assign (this, /*& nv */ nv.clone (this));
+
+//  if (_parent)
+//    {
+//      _parent->assign (this, & nv);
+//     return *_parent;
+//    }
+//  throw JSON::error ("bad assignment");
 }

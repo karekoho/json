@@ -22,14 +22,16 @@ class Boolean : public Leaf
   /**
    * @brief Boolean
    */
-  Boolean () : Leaf (), _boolean_value (false)
+  Boolean ()
+    : Leaf (), _boolean_value (false)
   {}
 
   /**
    * @brief Boolean
    * @param value
    */
-  Boolean (const bool value) : Leaf (), _boolean_value (value)
+  Boolean (const bool value)
+    : Leaf (), _boolean_value (value)
   {}
 
   /**
@@ -37,7 +39,8 @@ class Boolean : public Leaf
    * @param parent
    * @param value
    */
-  Boolean (JSON *parent, const bool value) : Leaf (parent), _boolean_value (value)
+  Boolean (JSON *parent, const bool value)
+    : Leaf (parent), _boolean_value (value)
   {}
 
   /**
@@ -45,6 +48,15 @@ class Boolean : public Leaf
    * @param other
    */
   Boolean (const Boolean &other) = default;
+
+  /**
+   * @brief Boolean
+   * @param ov
+   * @param nv
+   */
+  Boolean (Value *ov, const Boolean &nv)
+    : Leaf (ov, nv), _boolean_value (nv._boolean_value)
+  {}
 
   /**
    * @brief ~Boolean
@@ -57,8 +69,17 @@ class Boolean : public Leaf
    * @return
    */
   virtual Value *
-  _clone ()
+  clone ()
   { return new Boolean (*this); }
+
+  /**
+   * @brief clone
+   * @param ov
+   * @return
+   */
+  virtual Value *
+  clone (Value *ov) override
+  { return new Boolean (ov, *this); }
 
   /**
    * @brief strLength
@@ -120,7 +141,7 @@ public:
    */
   Value &
   _assign (Boolean & nv)
-  { return _parent ? _parent->assign (this, new Boolean (nv)) : *(_clone (nv)); }
+  { return _parent ? _parent->assign (this, new Boolean (nv)) : *(clone (nv)); }
 
   /**
    * @brief value
@@ -164,7 +185,7 @@ protected:
    * @return
    */
   virtual Value *
-  _clone (const Value &other) override
+  clone (const Value &other) override
   {
     _boolean_value = dynamic_cast<const Boolean &>(other)._boolean_value;
     return this;

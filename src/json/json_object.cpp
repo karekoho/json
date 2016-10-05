@@ -20,10 +20,16 @@ Object::Object (JSON *parent)
 {
 }
 
-Object::Object(const Object &other)
+Object::Object (const Object &other)
   : JSON(other)
 {
-  (void) _clone (other);
+  (void) clone (other);
+}
+
+Object::Object (Value *ov, const Object &nv)
+  : JSON (ov, nv)
+{
+  (void) clone (nv);
 }
 
 Object::~Object()
@@ -144,7 +150,7 @@ Object::iterator () const
 Value &
 Object::_assign (Object &nv)
 {
-  return _parent ? _parent->assign (this, new Object (nv)) : *(_clone (nv));
+  return _parent ? _parent->assign (this, new Object (nv)) : *(clone (nv));
 }
 
 Value &
@@ -181,7 +187,7 @@ Object::_clear ()
 }
 
 Value *
-Object::_clone (const Value &other)
+Object::clone (const Value &other)
 {
   const Object &nv = static_cast<const Object &>(other);
 
@@ -198,7 +204,7 @@ Object::_clone (const Value &other)
   while (cur != end)
     {
       std::pair<std::string, Value *> p = *cur++;
-      _member_list.emplace (p.first, p.second->_clone ());
+      _member_list.emplace (p.first, p.second->clone ());
     }
 
   return this;

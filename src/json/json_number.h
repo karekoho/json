@@ -57,13 +57,29 @@ public:
   Number (const Number &other);
 
   /**
+   * @brief Number
+   * @param ov
+   * @param nv
+   */
+  Number (Value *ov, const Number &nv);
+
+  /**
    * @brief clone
    * @param other
    * @return
    */
   virtual Value *
-  _clone ()
+  clone ()
   { return new Number (*this); }
+
+  /**
+   * @brief clone
+   * @param ov
+   * @return
+   */
+  virtual Value *
+  clone (Value *ov) override
+  { return new Number (ov, *this); }
 
   /**
    * @brief parse
@@ -199,7 +215,7 @@ protected:
    */
   Value &
   _assign (Number & nv)
-  { return _parent  ? _parent->assign (this, new Number (nv)) : *(_clone (nv)); }
+  { return _parent  ? _parent->assign (this, new Number (nv)) : *(clone (nv)); }
 
   /**
    * @brief _clear
@@ -210,7 +226,7 @@ protected:
    * @brief _clone
    * @return
    */
-  virtual Value *_clone (const Value &other);
+  virtual Value *clone (const Value &other);
 };
 
 #endif // NUMBER_H

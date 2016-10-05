@@ -18,13 +18,17 @@ class Undefined : public Leaf
 
   public:
 
-  Undefined () : Leaf () {}
+  Undefined ()
+    : Leaf ()
+  {}
 
   /**
    * @brief Undefined
    * @param parent
    */
-  Undefined (JSON *parent) : Leaf (parent) {}
+  Undefined (JSON *parent)
+    : Leaf (parent)
+  {}
 
   /**
    * @brief Undefined
@@ -33,13 +37,31 @@ class Undefined : public Leaf
   Undefined (const Undefined &other) = default;
 
   /**
+   * @brief Undefined
+   * @param ov
+   * @param nv
+   */
+  Undefined (Value *ov, const Undefined &nv)
+    : Leaf (ov, nv)
+  {}
+
+  /**
    * @brief clone
    * @param other
    * @return
    */
   virtual Value *
-  _clone ()
+  clone ()
   { return new Undefined (*this); }
+
+  /**
+   * @brief clone
+   * @param ov
+   * @return
+   */
+  virtual Value *
+  clone (Value *ov) override
+  { return new Undefined (ov, *this); }
 
   /**
    * TODO: return nullptr
@@ -115,7 +137,7 @@ protected:
    * @return
    */
   virtual Value *
-  _clone (const Value &) override
+  clone (const Value &) override
   { return new Undefined (*this); }
 };
 

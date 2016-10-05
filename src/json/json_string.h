@@ -43,13 +43,29 @@ class String : public Leaf
   String (const String & other);
 
   /**
+   * @brief String
+   * @param ov
+   * @param nv
+   */
+  String (Value *ov, const String & nv);
+
+  /**
    * @brief clone
    * @param other
    * @return
    */
   virtual Value *
-  _clone ()
+  clone ()
   { return new String (*this); }
+
+  /**
+   * @brief clone
+   * @param ov
+   * @return
+   */
+  virtual Value *
+  clone (Value *ov) override
+  { return new String (ov, *this);}
 
   /**
    * @brief parse
@@ -154,7 +170,7 @@ protected:
    * @return
    */
   virtual Value *
-  _clone (const Value &nv) override;
+  clone (const Value &nv) override;
 };
 
 #endif // STRING

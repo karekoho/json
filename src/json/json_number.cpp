@@ -45,7 +45,16 @@ Number::Number (const Number &other)
    _double_valuep (0),
    _digitp {{ 0, 0 }, { 0, 0 }}
 {
-  (void) _clone (other);
+  (void) clone (other);
+}
+
+Number::Number(Value *ov, const Number &nv)
+: Leaf (ov, nv),
+  _double_value (0),
+  _double_valuep (0),
+  _digitp {{ 0, 0 }, { 0, 0 }}
+{
+  (void) clone (nv);
 }
 
 const char *
@@ -190,7 +199,7 @@ Number::_clear ()
 }
 
 Value *
-Number::_clone (const Value &other)
+Number::clone (const Value &other)
 {
   const Number & nv = dynamic_cast<const Number &>(other);
 
