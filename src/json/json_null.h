@@ -126,8 +126,8 @@ protected:
    * @return
    */
   Value &
-  _assign (Null & nv)
-  { return _parent ? _parent->assign (this, &nv) : *this; }
+  _assign (Null &)
+  { return _parent ? _parent->assign (this, new Null (*this)) : *this; }
 
   /**
    * @brief _clear

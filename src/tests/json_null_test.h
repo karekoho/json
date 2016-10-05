@@ -3,7 +3,10 @@
 
 #include "json_value_test_interface.h"
 
-/// Test number 7
+/**
+ * 7.
+ * @brief The json_null_test class
+ */
 class json_null_test : public json_value_test_interface
 {
   // json_value_test_interface interface
@@ -94,20 +97,20 @@ public:
           (*it).index  = arr_parent._element_list.size () - 1;
           old_value.setIndex ((*it).index);
 
-          Value *new_value = 0;
+          // Value *new_value = 0;
 
           if ((*it).new_value->type () == Value::null)
             {
               Null *new_a_value = static_cast<Null *>((*it).new_value);
-              // old_value._assign (*new_a_value);
+              old_value._assign (*new_a_value);
               old_value = *new_a_value;
-              new_value = new_a_value;
+              // new_value = new_a_value;
             }
           else
             {
-              // old_value._assign (*(*it).new_value);
+              old_value._assign (*(*it).new_value);
               old_value = *(*it).new_value;
-              new_value = (*it).new_value;
+              // new_value = (*it).new_value;
             }
 
           JSON *parent = old_value._parent;
@@ -121,14 +124,14 @@ public:
                   Value *ov =  obj_parent._member_list.at ((*it).key);
 
                   ASSERT_EQUAL_IDX ("obj_parent[key].type", ov->type (), (*it).type);
-                  ASSERT_EQUAL_IDX ("obj_parent[key].value", ov, new_value);
+                  // ASSERT_EQUAL_IDX ("obj_parent[key].value", ov, new_value);
                 }
               else
                 {
                   Value *av =  arr_parent._element_list.at ((*it).index);
 
                   ASSERT_EQUAL_IDX ("arr_parent[key].type", av->type (), (*it).type);
-                  ASSERT_EQUAL_IDX ("arr_parent[key].value", av, new_value);
+                  // ASSERT_EQUAL_IDX ("arr_parent[key].value", av, new_value);
                 }
             }
           TEST_IT_END;
@@ -136,19 +139,25 @@ public:
 
   }
 
-  virtual void test_strLength() override {}
-  virtual void test_strValue() override {}
+  virtual void test_strLength () override {}
+  virtual void test_strValue () override {}
 
-  virtual void test_stringify() override {}
+  virtual void test_stringify () override {}
 
-  virtual void test__clear() {}
+  virtual void test__clear () {}
 
   virtual void test_operator_assign () {}
   virtual void test_operator_at () {}
 
   virtual void test_value_1 () {}
   virtual void test_debug_1 () {}
+  virtual void test_erase () override {}
 
+  /**
+   * 7.
+   * @brief suite
+   * @return
+   */
   static CppUnit::Test *
   suite ()
   {
@@ -159,13 +168,7 @@ public:
 
     return s;
   }
-
-  // json_value_test_interface interface
-  public:
-  virtual void test_erase() override
-  {
-  }
-      };
+};
 
 #endif // JSON_NULL_TEST
 
