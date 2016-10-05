@@ -23,7 +23,7 @@ String::String (const String &other)
   : Leaf (other),
     _charc (other._charc)
 {
-  _copy (other);
+  _clone (other);
 }
 
 const char *
@@ -50,16 +50,7 @@ String::parse (const char *json)
 Value &
 String::_assign (String &nv)
 {
-  if (_parent)
-    {
-      _parent->assign (this, &nv);
-      return *_parent;
-    }
-
-  _charc = nv._charc;
-  _copy (nv);
-
-  return *this;
+  return _parent ? _parent->assign (this, new String (*this)) : *(_clone (nv));
 }
 
 const char *
@@ -83,11 +74,25 @@ String::strValue () const
   return _string_value[1].c_str ();
 }
 
-void
-String::_copy (const String &nv)
+Value *
+String::_clone (const Value &nv)
 {
-  if (nv._startp && _charc > 0)
-    _string_value[0].assign (nv._startp + 1, _charc - 2);
+  const String & s = dynamic_cast<const String &>(nv);
+
+  if (s._startp && s._charc > 0)
+    _string_value[0].assign (s._startp + 1, s._charc - 2);
 
   _startp = _string_value[0].c_str ();
+
+  return this;
 }
+
+//void
+//String::_copy (const String &nv)
+//{
+//  if (nv._startp && _charc > 0)
+//    _string_value[0].assign (nv._startp + 1, _charc - 2);
+
+//  _startp = _string_value[0].c_str ();
+//}
+

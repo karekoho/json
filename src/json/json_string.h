@@ -47,59 +47,73 @@ class String : public Leaf
    * @param other
    * @return
    */
-  virtual Value * _clone () { return new String (*this); }
+  virtual Value *
+  _clone ()
+  { return new String (*this); }
 
   /**
    * @brief parse
    * @param json
    * @return
    */
-  virtual const char * parse (const char *json);
+  virtual const char *
+  parse (const char *json);
 
   /**
    * @brief type
    * @return
    */
-  virtual inline object_type type () const { return Value::object_type::string; }
+  virtual inline object_type
+  type () const
+  { return Value::object_type::string; }
 
   /**
    * @brief operator =
    * @param s
    * @return
    */
-  inline Value & operator =(String & s) { return _assign (s); }
+  inline Value &
+  operator =(String & s)
+  { return _assign (s); }
 
   /**
    * @brief operator =
    * @param v
    * @return
    */
-  inline Value & operator =(Value & v) { return _assign (v); }
+  inline Value &
+  operator =(Value & v)
+  { return _assign (v); }
 
   /**
    * @brief assign
    * @param nv
    * @return
    */
-  Value & _assign (String & nv);
+  Value &
+  _assign (String & nv);
 
   /**
    * @brief value
    * @return
    */
-  const char * value () const;
+  const char *
+  value () const;
 
   /**
    * @brief strLength
    * @return
    */
-  virtual size_t strLength () const noexcept override { return _charc; }
+  virtual size_t
+  strLength () const noexcept override
+  { return _charc; }
 
   /**
    * @brief strValue
    * @return
    */
-  virtual const char * strValue () const;
+  virtual const char *
+  strValue () const;
 
 protected:
 
@@ -118,24 +132,29 @@ protected:
    * @param nv
    * @return
    */
-  virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
+  virtual Value &
+  _assign (Value & nv)
+  { return Value::_assign (nv); }
 
   /**
    * @brief _copy
    * @param nv
+   * void _copy (const String &nv);
    */
-  void _copy (const String &nv);
 
   /**
    * @brief _clear
    */
-  virtual void _clear () {}
+  virtual void
+  _clear ()
+  {}
 
   /**
    * @brief _clone
    * @return
    */
-  virtual Value *_clone (const Value &) override { return this; }
+  virtual Value *
+  _clone (const Value &nv) override;
 };
 
 #endif // STRING

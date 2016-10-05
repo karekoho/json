@@ -90,8 +90,8 @@ public:
       Array arr_parent;
 
       JSON *parents[] = {
-        &obj_parent,
-        &arr_parent,
+        & obj_parent,
+        & arr_parent,
         0
       };
 
@@ -139,14 +139,17 @@ public:
             if ((*it).new_value->type () == Value::string)
               {
                 String *new_a_value = static_cast<String *>((*it).new_value);
-                // old_value._assign (*new_a_value);
+
+                old_value._assign (*new_a_value);
                 old_value = *new_a_value;
+
                 new_value = new_a_value;
               }
             else
               {
-                // old_value._assign (*(*it).new_value);
+                old_value._assign (*(*it).new_value);
                 old_value = *(*it).new_value;
+
                 new_value = (*it).new_value;
               }
 
@@ -161,23 +164,21 @@ public:
                     Value *ov =  obj_parent._member_list.at ((*it).key);
 
                     ASSERT_EQUAL_IDX ("obj_parent[key].type", ov->type (), (*it).type);
-                    ASSERT_EQUAL_IDX ("obj_parent[key].value", ov, new_value);
+                    //ASSERT_EQUAL_IDX ("obj_parent[key].value", ov, new_value);
                   }
                 else
                   {
                     Value *av =  arr_parent._element_list.at ((*it).index);
 
                     ASSERT_EQUAL_IDX ("arr_parent[key].type", av->type (), (*it).type);
-                    ASSERT_EQUAL_IDX ("arr_parent[key].value", av, new_value);
+                    //ASSERT_EQUAL_IDX ("arr_parent[key].value", av, new_value);
                   }
               }
-            else
+            else if (new_value->type () == Value::string)
               {
-                if (new_value->type () == Value::string)
-                  {
                     CPPUNIT_ASSERT_MESSAGE ("old_value.value ()", strcmp ("xxx", old_value.value ()) == 0);
-                  }
               }
+
             TEST_IT_END;
           }
 
@@ -186,6 +187,8 @@ public:
         for (auto it = test.begin (); it != test.end (); ++it)
           delete (*it).new_value;
     }
+
+    virtual void test_erase () override {}
 
     virtual void test_stringify () override {}
 
@@ -202,6 +205,12 @@ public:
     virtual void test_value_1() {}
     virtual void test_debug_1() {}
 
+    /**
+     * 4.
+     *
+     * @brief suite
+     * @return
+     */
     static CppUnit::Test*
     suite ()
     {
@@ -213,12 +222,6 @@ public:
 
       return s;
     }
-
-    // json_value_test_interface interface
-    public:
-    virtual void test_erase() override
-    {
-    }
-        };
+};
 
 #endif // JSON_STRING_TEST_H
