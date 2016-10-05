@@ -18,7 +18,9 @@ public:
    * @param json
    */
   Leaf (const char *json) : Value (json)
-  {}
+  {
+    _startp = json;
+  }
 
   /**
    * @brief Leaf

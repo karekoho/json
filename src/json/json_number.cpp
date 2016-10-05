@@ -25,7 +25,7 @@ Number::Number (const char *json)
     _double_valuep (0),
     _digitp {{ 0, 0 }, { 0, 0 }}
 {
-  if (_length == 0)
+  if (json == 0)
     throw JSON::error ("null string");
 
   (void) parse (json);
@@ -54,16 +54,16 @@ Number::parse (const char *json)
   char peek = 0;
 
   if (json == 0)
-    throw _readp;
+    throw json;
+
+  _readp = json;
 
   if (_parent == 0)
     {
-      _readp = json;
-
       _look_ahead ();
     }
   else
-     _readp = json;
+    _startp = json;
 
   if (*_readp == 0)
     throw _readp;

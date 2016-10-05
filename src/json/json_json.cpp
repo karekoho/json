@@ -14,10 +14,11 @@ JSON::JSON (const char *json, const bool _parse)
   : Value (json),
     _str_value { 0, 0 },
     __root (0)
-
 {
-  if (_length == 0)
+  if (json == 0)
     throw JSON::error ("null string");
+
+  _startp = json;
 
   if (_parse)
     (void) parse (json);
@@ -45,13 +46,12 @@ JSON::~JSON ()
 const char *
 JSON::JSON::parse (const char *readp)
 {
-  if (readp == 0)
+  if (readp == 0 || *readp == 0)
     throw readp;
 
-  _readp = _startp = readp;
+  _readp = readp;
 
-  if (*_readp == 0)
-    throw _readp;
+  // if (*_readp == 0) throw _readp;
 
   Value * old_root = __root;
 

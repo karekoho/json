@@ -12,17 +12,17 @@ Value::Value ()
     : _startp (0),
       _readp (0),
       _parent (0),
-      _length (0),
+     // _length (0),
       _key (0),
       _index (0)
 {
 }
 
-Value::Value (const char *json)
-    : _startp (json),
-      _readp (json),
+Value::Value (const char *)
+    : _startp (0),
+      _readp (0),
       _parent (0),
-      _length (json == 0 ? 0 : strlen (json)),
+     // _length (1 /* json == 0 ? 0 : strlen (json) */),
       _key (0),
       _index (0)
 {
@@ -32,7 +32,7 @@ Value::Value (JSON *parent)
     : _startp (0),
       _readp (0),
       _parent (parent),
-      _length (0),
+     // _length (0),
       _key (0),
       _index (0)
 {
@@ -41,8 +41,8 @@ Value::Value (JSON *parent)
 Value::Value (const Value &other)
   : _startp (other._startp),
     _readp (other._readp),
-    _parent ( /* FIXME (crash): static_cast<JSON *>(other._parent->_clone ()) */ other._parent),
-    _length (other._length),
+    _parent (0),
+    // _length (other._length),
     _key (other._key ? strdup (other._key) : 0),
     _index (other._index)
 {

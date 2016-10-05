@@ -48,7 +48,7 @@ class Value
    * @brief json_value
    * @param json
    */
-  Value (const char *json);
+  Value (const char *);
 
   /**
    * @brief json_value
@@ -316,8 +316,8 @@ protected:
 
   /**
    * @brief charc
+   * size_t _length;
    */
-  size_t _length;
 
   /**
    * @brief _key

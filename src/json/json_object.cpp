@@ -7,14 +7,11 @@
 #include "json_boolean.h"
 #include "json_object_iterator.h"
 
-Object::Object() : JSON (){}
+Object::Object () : JSON () {}
 
 Object::Object (const char *json)
-  : JSON::JSON (json, false)
+  : JSON (json, false)
 {
-  if (_length == 0)
-    throw JSON::error ("null string");
-
   (void) parse (json);
 }
 
@@ -40,7 +37,7 @@ Object::parse (const char *json)
   if (json == 0)
     throw JSON::error ("error: null string given");
 
-  if (_parent == 0)
+  if (_parent == 0)   // 1. Object (), 2. Object (const char *json)
     {
       _readp = json;
 
@@ -50,7 +47,10 @@ Object::parse (const char *json)
       _readp++;
     }
   else
-     _readp = json + 1;
+    {
+      _startp = json;
+      _readp = json + 1;
+    }
 
   if (*_readp == 0)
     throw _readp;

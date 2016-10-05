@@ -3,19 +3,16 @@
 
 #include <algorithm>
 
-Array::Array() : JSON (){}
+Array::Array () : JSON () {}
 
 Array::Array (const char *json)
-  : JSON::JSON (json, false)
+  : JSON (json, false)
 {
-  if (_length == 0)
-    throw JSON::error ("null string");
-
   (void) parse (json);
 }
 
 Array::Array (JSON *parent)
-  : JSON::JSON (parent)
+  : JSON (parent)
 {
 }
 
@@ -36,7 +33,7 @@ Array::parse (const char *json)
   if (json == 0)
     throw JSON::error ("error: null string given");
 
-  if (_parent == 0)
+  if (_parent == 0)   // 1. Array (), 2. Array (const char *json)
     {
       _readp = json;
 
@@ -46,7 +43,10 @@ Array::parse (const char *json)
       _readp++;
     }
   else
-    _readp = json + 1;
+    {
+      _startp = json;
+      _readp  = json + 1;
+    }
 
   if (*_readp == 0)
     throw _readp;

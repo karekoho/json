@@ -7,7 +7,7 @@ String::String (const char *json)
   : Leaf (json),
     _charc (0)
 {
-  if (_length == 0)
+  if (json == 0)
     throw "null string";
 
   (void) parse (json);
