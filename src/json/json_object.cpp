@@ -144,7 +144,7 @@ Object::iterator () const
 Value &
 Object::_assign (Object &nv)
 {
-  return _parent ? _parent->assign (this, &nv) : *(_clone (nv));
+  return _parent ? _parent->assign (this, new Object (this)) : *(_clone (nv));
 }
 
 Value &

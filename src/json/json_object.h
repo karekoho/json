@@ -68,14 +68,16 @@ public:
    * @param JSON
    * @return
    */
-  virtual const char *parse (const char *json);
+  virtual const char *
+  parse (const char *json);
 
   /**
    * @brief at
    * @param key
    * @return
    */
-  virtual Value & at (const char *key) const;
+  virtual Value &
+  at (const char *key) const;
 
   /**
    * @brief at
@@ -123,7 +125,8 @@ public:
    * @brief iterator
    * @return
    */
-  virtual Iterator * iterator () const override;
+  virtual Iterator *
+  iterator () const override;
 
   /**
    * @brief stringify
@@ -137,20 +140,23 @@ public:
    * @brief strLength
    * @return
    */
-  virtual size_t strLength () const noexcept override;
+  virtual size_t
+  strLength () const noexcept override;
 
   /**
    * @brief strValue
    * @return
    */
-  virtual const char * strValue () const;
+  virtual const char *
+  strValue () const;
 
   /**
    * @brief erase
    * @param v
    * @return
    */
-  virtual Value & erase (const Value &v) noexcept override;
+  virtual Value &
+  erase (const Value &v) noexcept override;
 
 protected:
 
@@ -163,46 +169,54 @@ protected:
    * @brief _pair
    * @return
    */
-  bool _pair ();
+  bool
+  _pair ();
 
   /**
    * @brief _assign
    * @param nv
    * @return
    */
-  Value & _assign (Object & nv);
+  Value &
+  _assign (Object & nv);
 
   /**
    * @brief _at
    * @param key
    * @return
    */
-  virtual Value & _at (const char *key);
+  virtual Value &
+  _at (const char *key);
 
   /**
    * @brief _assign
    * @param nv
    * @return
    */
-  virtual Value & _assign (Value & nv) { return Value::_assign (nv); }
+  virtual Value &
+  _assign (Value & nv)
+  { return Value::_assign (nv); }
 
   /**
    * @brief assign
    * @param ov
    * @param nv
    */
-  virtual Value & assign (Value *ov, Value *nv);
+  virtual Value &
+  assign (Value *ov, Value *nv);
 
   /**
    * @brief _clear
    */
-  virtual void _clear ();
+  virtual void
+  _clear ();
 
   /**
    * @brief _clone
    * @return
    */
-  virtual Value *_clone (const Value &other); // override { return this; }
+  virtual Value *
+  _clone (const Value &other); // override { return this; }
 };
 
 #endif // OBJECT_H
