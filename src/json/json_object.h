@@ -29,7 +29,7 @@ public:
    */
   Object ();
 
-/**
+  /**
    * @brief Object
    * @param JSON
    */
@@ -49,8 +49,12 @@ public:
    */
   Object (const Object &other);
 
+  /**
+   * @brief Object
+   * @param ov
+   * @param nv
+   */
   Object (Value *ov, const Object &nv);
-
 
   /**
    * @brief clone
@@ -61,6 +65,11 @@ public:
   clone ()
   { return new Object (*this); }
 
+  /**
+   * @brief clone
+   * @param ov
+   * @return
+   */
   virtual Value *
   clone (Value *ov) override
   { return new Object (ov, *this); }
@@ -223,11 +232,7 @@ protected:
    * @return
    */
   virtual Value *
-  clone (const Value &other); // override { return this; }
-
-  // Value interface
-public:
-
+  clone (const Value &other);
 };
 
 #endif // OBJECT_H

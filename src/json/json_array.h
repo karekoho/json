@@ -249,10 +249,6 @@ protected:
    */
   virtual Value *
   clone (const Value &other) override;
-
-  // Value interface
-public:
-
 };
 
 #endif // ARRAY

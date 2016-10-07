@@ -86,7 +86,8 @@ public:
    * @param readp
    * @return
    */
-  virtual const char *parse (const char *readp);
+  virtual const char *
+  parse (const char *readp);
 
   /**
    * @brief at
@@ -127,7 +128,8 @@ public:
    * @param j
    * @return
    */
-  virtual Value & _assign (JSON & j);
+  virtual Value
+  & _assign (JSON & j);
 
   /**
    * @brief operator =
@@ -143,7 +145,8 @@ public:
    * @param nv
    * @return
    */
-  virtual Value & _assign (Value & v) override;
+  virtual Value &
+  _assign (Value & v) override;
 
   /**
    * @brief operator =
@@ -196,6 +199,11 @@ public:
   strValue () const
   { return __hasRoot () ? __root->strValue () : ""; }
 
+  /**
+   * @brief erase
+   * @param v
+   * @return
+   */
   virtual Value &
   erase (const Value &v) noexcept override
   { return __hasRoot() ? __root->erase (v) : *this; }
@@ -308,9 +316,8 @@ public:
      * @param message
      */
     out_of_range (const char * const message = 0) : error (message) {}
-  };
-  // class out_of_range
-}; // class json
+  };  // class out_of_range
+};  // class json
 
 // } namespace
 

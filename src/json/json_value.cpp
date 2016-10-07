@@ -58,14 +58,17 @@ Value::Value (Value *ov, const Value &nv)
     _parent (0),
     _key (nv._key ? strdup (nv._key) : 0),
     _index (nv._index),
-    _old (ov)
+    _old (0)
 {
+  nv._old = ov;
 }
 
 Value::~Value ()
 {
   free ((char *)_key);
+
   delete _old;
+  _old = 0;
 }
 
 long int
@@ -121,12 +124,5 @@ Value::_assign (Value &nv)
   if (_parent == 0)
     throw JSON::error ("bad assignment");
 
-  return _parent->assign (this, /*& nv */ nv.clone (this));
-
-//  if (_parent)
-//    {
-//      _parent->assign (this, & nv);
-//     return *_parent;
-//    }
-//  throw JSON::error ("bad assignment");
+  return _parent->assign (this, nv.clone (this));
 }

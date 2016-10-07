@@ -3,7 +3,10 @@
 
 #include "json_value_test_interface.h"
 
-/// Test number 6
+/**
+ * 6.
+ * @brief The json_boolean_test class
+ */
 class json_boolean_test : public json_value_test_interface
 {
   // json_value_test_interface interface
@@ -36,11 +39,7 @@ public:
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.value ()", true, copy.value ());
   }
 
-  virtual void test_parse_1 () {}
 
-  virtual void test_size_1 () {}
-
-  virtual void test_at () {}
 
   virtual void
   test_assign_all_values ()
@@ -49,12 +48,12 @@ public:
     Array arr_parent;
 
     JSON *parents[] = {
-      &obj_parent,
-      &arr_parent,
+      & obj_parent,
+      & arr_parent,
       0
     };
 
-    Boolean old_value;
+    // Boolean old_value;
 
     struct assert {
       Value *new_value;
@@ -80,7 +79,7 @@ public:
           obj_parent._member_list.clear ();
           arr_parent._element_list.clear ();
 
-          old_value._parent = parents[pidx];
+          // old_value._parent = parents[pidx];
 
           for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++) {\
             try {\
@@ -89,31 +88,38 @@ public:
 
           /// old_value: value from Value[key], any value
 
+          Boolean *old_value = new Boolean;
+
+          old_value->_parent = parents[pidx];
+
           arr_parent._element_list.push_back (new Undefined);
 
-          old_value._boolean_value = false;
-          old_value.setKey ((*it).key, strlen ((*it).key));
+          old_value->_boolean_value = false;
+          old_value->setKey ((*it).key, strlen ((*it).key));
 
           (*it).index  = arr_parent._element_list.size () - 1;
-          old_value.setIndex ((*it).index);
+          old_value->setIndex ((*it).index);
 
           Value *new_value = 0;
 
           if ((*it).new_value->type () == Value::boolean)
             {
-              Boolean *new_a_value = static_cast<Boolean *>((*it).new_value);
-              // old_value._assign (*new_a_value);
-              old_value = *new_a_value;
-              new_value = new_a_value;
+              Boolean *new_boolean_value = static_cast<Boolean *>((*it).new_value);
+
+              old_value->_assign (*new_boolean_value);
+              *old_value = *new_boolean_value;
+
+              new_value = new_boolean_value;
             }
           else
             {
-              // old_value._assign (*(*it).new_value);
-              old_value = *(*it).new_value;
+              old_value->_assign (*(*it).new_value);
+              *old_value = *(*it).new_value;
+
               new_value = (*it).new_value;
             }
 
-          JSON *parent = old_value._parent;
+          JSON *parent = old_value->_parent;
 
           if (parent)
             {
@@ -138,30 +144,21 @@ public:
             {
               if (new_value->type () == Value::boolean)
                 {
-                  ASSERT_EQUAL_IDX ("old_value.value ()", (bool) true, old_value.value ());
+                  ASSERT_EQUAL_IDX ("old_value.value ()", (bool) true, old_value->value ());
                 }
             }
           TEST_IT_END;
         }
+
+    for (auto it = test.begin (); it != test.end (); ++it)
+      delete (*it).new_value;
   }
 
-  virtual void
-  test_stringify () override
-  {
-
-  }
-
-  virtual void test_strLength() override {}
-  virtual void test_strValue() override {}
-
-  virtual void test__clear() {}
-
-  virtual void test_operator_assign () {}
-  virtual void test_operator_at () {}
-
-  virtual void test_value_1 () {}
-  virtual void test_debug_1 () {}
-
+  /**
+   * 6.
+   * @brief suite
+   * @return
+   */
   static CppUnit::Test *
   suite ()
   {
@@ -173,12 +170,19 @@ public:
     return s;
   }
 
-  // json_value_test_interface interface
-  public:
-  virtual void test_erase() override
-  {
-  }
-        };
+  virtual void test_parse_1 () {}
+  virtual void test_size_1 () {}
+  virtual void test_at () {}
+  virtual void test_stringify () override {}
+  virtual void test_strLength () override {}
+  virtual void test_strValue () override {}
+  virtual void test__clear () {}
+  virtual void test_operator_assign () {}
+  virtual void test_operator_at () {}
+  virtual void test_value_1 () {}
+  virtual void test_debug_1 () {}
+  virtual void test_erase () override {}
+};
 
 #endif // JSON_BOOLEAN_TEST
 

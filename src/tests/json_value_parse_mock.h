@@ -32,20 +32,20 @@ public:
 
     // Value interface
 public:
-    virtual const char *stringify() noexcept override { return ""; }
-    virtual size_t strLength() const noexcept override { return 0; }
+    virtual const char *stringify () noexcept override { return ""; }
+    virtual size_t strLength () const noexcept override { return 0; }
     virtual const char * strValue () const { return ""; }
 
     // Value interface
 public:
-    virtual Value &erase(const Value &) noexcept override
+    virtual Value & erase (const Value &) noexcept override
     {
       return *this;
     }
 
     // Value interface
 public:
-    virtual Value *clone(Value *old) override
+    virtual Value *clone (Value *old) override
     {
       return old;
     }

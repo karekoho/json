@@ -130,7 +130,7 @@ public:
       0
     };
 
-    Array old_value;
+    // Array old_value;
 
     struct assert {
       Value *new_value;
@@ -142,9 +142,9 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { new Array ("[true,false]"), Value::array, "key_2",  0, 1,  { PASS, PASS, PASS }  },
-      { new Object ("{\"k1\":true,\"k2\":false}"), Value::object, "key_1",  0, 2,  { PASS, PASS, FAIL }},
-      { new String ("\"x\""), Value::string, "key_3",  0, 3,  { PASS, PASS, FAIL }  },
+      { new Array ("[true,false]"), Value::array, "key_2",  0, 1,  { PASS, PASS, PASS } },
+      { new Object ("{\"k1\":true,\"k2\":false}"), Value::object, "key_1",  0, 2,  { PASS, PASS, FAIL } },
+      { new String ("\"x\""), Value::string, "key_3",  0, 3,  { PASS, PASS, FAIL } },
       { new Number (), Value::number, "key_4",  0, 4, { PASS, PASS, FAIL } },
       { new Boolean (true), Value::boolean, "key_5",  0, 5, { PASS, PASS, FAIL } },
       { new Null (), Value::null, "key_6",  0, 6, { PASS, PASS, FAIL } }
@@ -155,7 +155,7 @@ public:
         {
           obj_parent._member_list.clear ();
           arr_parent._element_list.clear ();
-          old_value._parent = parents[pidx];
+          // old_value._parent = parents[pidx];
 
           for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++) {\
             try {\
@@ -164,30 +164,36 @@ public:
 
           /// old_value: value from Value[key], any value
 
-          old_value._element_list.clear ();
+          Array *old_value = new Array;
+          old_value->_parent = parents[pidx];
+
+          old_value->_element_list.clear ();
           arr_parent._element_list.push_back (new Undefined);
-          old_value.setKey ((*it).key, strlen ((*it).key) /* (*it).keylen */);
+          old_value->setKey ((*it).key, strlen ((*it).key) /* (*it).keylen */);
 
           (*it).index  = arr_parent._element_list.size () - 1;
-          old_value.setIndex ((*it).index);
+          old_value->setIndex ((*it).index);
 
           // Value *new_value = 0;
 
           if ((*it).new_value->type () == Value::array)
             {
               Array *new_a_value = static_cast<Array *>((*it).new_value);
-              // old_value._assign (*new_a_value);
-              old_value = *new_a_value;
+
+              old_value->_assign (*new_a_value);
+              *old_value = *new_a_value;
+
               // new_value = new_a_value;
             }
           else
             {
-              // old_value._assign (*(*it).new_value);
-              old_value = *(*it).new_value;
+              old_value->_assign (*(*it).new_value);
+              *old_value = *(*it).new_value;
+
               // new_value = (*it).new_value;
             }
 
-          JSON *parent = old_value._parent;
+          JSON *parent = old_value->_parent;
 
           if (parent)
             {
@@ -210,8 +216,12 @@ public:
             }
           else
             {
-              ASSERT_EQUAL_IDX ("old_value.size ()", (size_t) 2, old_value.count ());
+              ASSERT_EQUAL_IDX ("old_value.size ()", (size_t) 2, old_value->count ());
             }
+
+          delete old_value;
+          old_value = 0;
+
           TEST_IT_END;
         }
   }

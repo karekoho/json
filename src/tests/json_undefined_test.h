@@ -3,7 +3,10 @@
 
 #include "json_value_test_interface.h"
 
-/// Test number 8
+/**
+ * 8.
+ * @brief The json_undefined_test class
+ */
 class json_undefined_test : public json_value_test_interface
 {
   // json_value_test_interface interface
@@ -33,9 +36,7 @@ public:
   }
 
   virtual void test_parse_1 () {}
-
   virtual void test_size_1 () {}
-
   virtual void test_at () {}
 
   virtual void
@@ -45,12 +46,12 @@ public:
     Array arr_parent;
 
     JSON *parents[] = {
-      &obj_parent,
-      &arr_parent,
+      & obj_parent,
+      & arr_parent,
       0
     };
 
-    Undefined old_value;
+    // Undefined old_value;
 
     struct assert {
       Value *new_value;
@@ -62,20 +63,22 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { new Array ("[true,false]"), Value::array, "key_2",  0, 1,  { PASS, PASS, FAIL }  },
-      { new Object ("{\"k1\":true,\"k2\":false}"), Value::object, "key_1",  0, 2,  { PASS, PASS, FAIL }},
-      { new String ("\"xxx\""), Value::string, "key_3",  0, 3,  { PASS, PASS, FAIL }  },
+      { new Array ("[true,false]"), Value::array, "key_1",  0, 1,  { PASS, PASS, FAIL } },
+      { new Object ("{\"k1\":true,\"k2\":false}"), Value::object, "key_2",  0, 2, { PASS, PASS, FAIL } },
+      { new String ("\"xxx\""), Value::string, "key_3",  0, 3,  { PASS, PASS, FAIL } },
       { new Number (10), Value::number, "key_4",  0, 4, { PASS, PASS, FAIL } },
       { new Boolean (true), Value::boolean, "key_6",  0, 5, { PASS, PASS, FAIL } },
       { new Null, Value::null, "key_7",  0, 6, { PASS, PASS, FAIL } }
     };
-      arr_parent._element_list.reserve (6);
+
+    // arr_parent._element_list.reserve (6);
 
     for (size_t pidx = 0; pidx < 3; pidx++)
       {
           obj_parent._member_list.clear ();
           arr_parent._element_list.clear ();
-          old_value._parent = parents[pidx];
+
+          // old_value._parent = parents[pidx];
 
           for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++) {\
             try {\
@@ -84,23 +87,27 @@ public:
 
           /// old_value: value from Value[key], any value
 
+          Undefined *old_value = new Undefined;
+          old_value->_parent = parents[pidx];
+
           arr_parent._element_list.push_back (new Undefined);
-          old_value.setKey ((*it).key, strlen ((*it).key));
+          old_value->setKey ((*it).key, strlen ((*it).key));
 
           (*it).index  = arr_parent._element_list.size () - 1;
-          old_value.setIndex ((*it).index);
+          old_value->setIndex ((*it).index);
 
-          Value *new_value = 0;
+          // Value *new_value = 0;
 
-          // old_value._assign (*(*it).new_value);
-          old_value = *(*it).new_value;
-          new_value = (*it).new_value;
+          old_value->_assign (*(*it).new_value);
+          *old_value = *(*it).new_value;
+          // new_value = (*it).new_value;
 
-          JSON *parent = old_value._parent;
+          JSON *parent = old_value->_parent;
 
           if (parent)
             {
               ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
+              // ASSERT_EQUAL_IDX ("(*it).new_value->_old->type ()", Value::object_type::undefined, (*it).new_value->_old->type ());
 
               if (parent->type () == Value::object)
                 {
@@ -117,24 +124,30 @@ public:
                   // ASSERT_EQUAL_IDX ("arr_parent[key].value", av, new_value);
                 }
             }
+
+          delete old_value;
+          old_value = 0;
+
           TEST_IT_END;
         }
   }
 
 
   virtual void test_stringify () override {}
-
   virtual void test_strLength () override {}
   virtual void test_strValue () override  {}
-
   virtual void test__clear() {}
-
   virtual void test_operator_assign () {}
   virtual void test_operator_at () {}
-
   virtual void test_value_1 () {}
   virtual void test_debug_1 () {}
+  virtual void test_erase () override {}
 
+  /**
+   * 8.
+   * @brief suite
+   * @return
+   */
   static CppUnit::Test *
   suite ()
   {
@@ -145,13 +158,7 @@ public:
 
     return s;
   }
-
-  // json_value_test_interface interface
-  public:
-  virtual void test_erase() override
-  {
-  }
-      };
+};
 
 #endif // JSON_UNDEFINED_TEST
 

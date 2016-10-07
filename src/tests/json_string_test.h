@@ -95,8 +95,6 @@ public:
         0
       };
 
-      String old_value;
-
       struct assert {
         Value *new_value;
         Value::object_type type;
@@ -107,9 +105,9 @@ public:
       };
 
       std::vector<struct assert > test = {
-        { new Array ("[true,false]"), Value::array, "key_2",  0, 1,  { PASS, PASS, FAIL }  },
-        { new Object ("{\"k1\":true,\"k2\":false}"), Value::object, "key_1",  0, 2,  { PASS, PASS, FAIL }},
-        { new String ("\"xxx\""), Value::string, "key_3",  0, 3,  { PASS, PASS, PASS }  },
+        { new Array ("[true,false]"), Value::array, "key_1",  0, 1,  { PASS, PASS, FAIL } },
+        { new Object ("{\"k1\":true,\"k2\":false}"), Value::object, "key_2",  0, 2,  { PASS, PASS, FAIL } },
+        { new String ("\"xxx\""), Value::string, "key_3",  0, 3,  { PASS, PASS, PASS } },
         { new Number (10), Value::number, "key_4",  0, 4, { PASS, PASS, FAIL } },
         { new Boolean (true), Value::boolean, "key_6",  0, 5, { PASS, PASS, FAIL } },
         { new Null, Value::null, "key_7",  0, 6, { PASS, PASS, FAIL } }
@@ -119,7 +117,6 @@ public:
         {
             obj_parent._member_list.clear ();
             arr_parent._element_list.clear ();
-            old_value._parent = parents[pidx];
 
             for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++) {\
               try {\
@@ -128,11 +125,14 @@ public:
 
             /// old_value: value from Value[key], any value
 
+            String *old_value = new String ();
+            old_value->_parent = parents[pidx];
+
             arr_parent._element_list.push_back (new Undefined);
-            old_value.setKey ((*it).key, strlen ((*it).key));
+            old_value->setKey ((*it).key, strlen ((*it).key));
 
             (*it).index  = arr_parent._element_list.size () - 1;
-            old_value.setIndex ((*it).index);
+            old_value->setIndex ((*it).index);
 
             Value *new_value = 0;
 
@@ -140,20 +140,20 @@ public:
               {
                 String *new_a_value = static_cast<String *>((*it).new_value);
 
-                old_value._assign (*new_a_value);
-                old_value = *new_a_value;
+                old_value->_assign (*new_a_value);
+                *old_value = *new_a_value;
 
                 new_value = new_a_value;
               }
             else
               {
-                old_value._assign (*(*it).new_value);
-                old_value = *(*it).new_value;
+                old_value->_assign (*(*it).new_value);
+                *old_value = *(*it).new_value;
 
                 new_value = (*it).new_value;
               }
 
-            JSON *parent = old_value._parent;
+            JSON *parent = old_value->_parent;
 
             if (parent)
               {
@@ -176,13 +176,13 @@ public:
               }
             else if (new_value->type () == Value::string)
               {
-                    CPPUNIT_ASSERT_MESSAGE ("old_value.value ()", strcmp ("xxx", old_value.value ()) == 0);
+                CPPUNIT_ASSERT_MESSAGE ("old_value.value ()", strcmp ("xxx", old_value->value ()) == 0);
               }
+
+            // delete old_value; old_value = 0; // FIXME: segmantation fault
 
             TEST_IT_END;
           }
-
-        // test.erase (test.begin (), test.end ());
 
         for (auto it = test.begin (); it != test.end (); ++it)
           delete (*it).new_value;

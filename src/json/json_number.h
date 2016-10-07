@@ -86,7 +86,8 @@ public:
    * @param json
    * @return
    */
-  virtual const char *parse (const char *json);
+  virtual const char *
+  parse (const char *json);
 
   /**
    * @brief type
@@ -129,19 +130,22 @@ public:
    */
   inline double
   value ()
-  { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
+  {
+    return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
 
   /**
    * @brief strLength
    * @return
    */
-  virtual size_t strLength () const noexcept override;
+  virtual size_t
+  strLength () const noexcept override;
 
   /**
    * @brief strValue
    * @return
    */
-  virtual const char *strValue () const;
+  virtual const char *
+  strValue () const;
 
 protected:
 
@@ -169,26 +173,30 @@ protected:
    * @brief _digits If >= 1 digits found, return last character. Else return -1.
    * @return
    */
-  int _digits () noexcept;
+  int
+  _digits () noexcept;
 
   /**
    * @brief _frag
    * @return
    */
-  const char * _frag ();
+  const char *
+  _frag ();
 
   /**
    * @brief _exp_
    * @return
    */
-  const char * _exp ();
+  const char *
+  _exp ();
 
   /**
    * @brief _calculate
    * @param digitp
    * @return
    */
-  double _calculate (const char * const digitp[2][2]);
+  double
+  _calculate (const char * const digitp[2][2]);
 
   /**
    * @brief _atof
@@ -215,18 +223,20 @@ protected:
    */
   Value &
   _assign (Number & nv)
-  { return _parent  ? _parent->assign (this, new Number (nv)) : *(clone (nv)); }
+  { return _parent  ? _parent->assign (this, new Number (this, nv)) : *(clone (nv)); }
 
   /**
    * @brief _clear
    */
-  virtual void _clear ();
+  virtual void
+  _clear ();
 
   /**
    * @brief _clone
    * @return
    */
-  virtual Value *clone (const Value &other);
+  virtual Value *
+  clone (const Value &other);
 };
 
 #endif // NUMBER_H

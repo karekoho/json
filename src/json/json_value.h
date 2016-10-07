@@ -347,7 +347,7 @@ protected:
   /**
    * @brief _old
    */
-  Value *_old;
+  mutable Value *_old;
 
   /**
    * @brief _look_ahead Move read pointer to next non-white space character
