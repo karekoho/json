@@ -194,6 +194,8 @@ public:
       TEST_IT_END;
     }
 
+
+
     virtual void test_stringify () override {}
     virtual void test_strLength () override {}
     virtual void test_strValue () override {}
@@ -202,6 +204,8 @@ public:
     virtual void test_operator_at () {}
     virtual void test_assign_all_values (){}
     virtual void test__clear () {}
+
+    virtual void test_erase () override {}
 
     static CppUnit::Test*
     suite ()
@@ -216,13 +220,10 @@ public:
       s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_quoted", &json_value_test::test_string));
 
       s->addTest (new CppUnit::TestCaller<json_value_test> ("test__str_append", &json_value_test::test__str_append));
-      return s;
-    }
 
-    // json_value_test_interface interface
-public:
-    virtual void test_erase() override
-    {
+
+
+      return s;
     }
 };
 

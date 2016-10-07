@@ -4,7 +4,10 @@
 #include <json_value_test_interface.h>
 #include "json_value_parse_mock.h"
 
-/// Test number 1
+/**
+ * 1.
+ * @brief The json_test class
+ */
 class json_test : public json_value_test_interface
 {
 public:
@@ -190,6 +193,39 @@ public:
     TEST_IT_END;
   }
 
+  void
+  test_assign_copy ()
+  {
+    JSON json;
+    json.__root = new Array;
+
+    struct assert
+    {
+      Value *value;
+      // size_t size;    // Array::_element_list.size ()
+      int assert_status;
+    };
+
+    std::vector<struct assert> test = {};
+
+    // TEST_IT_START
+
+       Value & v = json["key"];
+
+       // FIXME: json["key"] = *(new Number (100)); // uncaught exception of type JSON::error - std::exception
+
+       // FIXME: v = *(new Number (100)); // uncaught exception of type JSON::error - std::exception
+
+       // v.assign (*(new Number (100))); // Won't compile: /home/kare/devel/json/src/tests/json_test.h:219:
+       // error: no matching function for call to 'Value::assign(Number&)'
+
+       Value::object_type type = v.type ();
+
+       std::cout << (int) type << std::endl;
+
+    // TEST_IT_END;
+  }
+
   virtual void test_stringify () override {}
 
   virtual void test_strLength () override {}
@@ -207,10 +243,18 @@ public:
 
   virtual void test_erase () override {}
 
+  /**
+   * 1.
+   * @brief suite
+   * @return
+   */
   static CppUnit::Test*
   suite ()
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json test");
+
+    s->addTest (new CppUnit::TestCaller<json_test> ("test_assign_copy", &json_test::test_assign_copy));
+    return s;
 
     s->addTest (new CppUnit::TestCaller<json_test> ("test_smoke", &json_test::test_ctor_dtor));
     s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_1", &json_test::test_parse_1));
@@ -222,6 +266,7 @@ public:
     s->addTest (new CppUnit::TestCaller<json_test> ("test_make_value", &json_test::test_make_value));
     s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_to_parent", &json_test::test__assign_to_parent));
     s->addTest (new CppUnit::TestCaller<json_test> ("test_assign_all_values", &json_test::test_assign_all_values));
+
 
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_size_1", &json_test::test_size_1));
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_get_1", &json_test::test_get_1));
