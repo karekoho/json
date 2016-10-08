@@ -176,6 +176,9 @@ Object::assign (Value *ov, Value *nv)
 {
    _member_list[ov->key ()] = nv;
 
+   nv->setKey (ov->key (), strlen (ov->key ()));
+   nv->setParent (this);
+
    return *this;
 }
 

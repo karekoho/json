@@ -95,14 +95,19 @@ JSON::_assign (Value &v)
 Value &
 JSON::_at (const char *key)
 {
-  try
-    {
-      return __hasRoot () ? __root->at (key) : *(new Undefined);
-    }
-  catch (JSON::out_of_range &)
-    {
-      return *(new Undefined);
-    }
+//  try
+//    {
+//      return __hasRoot () ? __root->at (key) : *(new Undefined);
+//    }
+//  catch (JSON::out_of_range &)
+//    {
+//      return *(new Undefined);
+//    }
+
+  if (! __hasRoot ())
+    throw JSON::out_of_range ();
+
+  return (*__root)[key];
 }
 
 Value *

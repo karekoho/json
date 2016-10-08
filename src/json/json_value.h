@@ -128,8 +128,18 @@ class Value
    * @return
    */
   inline Value &
-  operator[] (const char *key)
+  operator [](const char *key)
   { return _at (key); }
+
+  /**
+   * TODO:
+   * @brief operator []
+   * @param index
+   * @return
+   */
+  inline Value &
+  operator [](size_t index)
+  { return _at (index); }
 
   /**
    * @brief operator =
@@ -253,6 +263,10 @@ class Value
    */
   virtual Value &
   erase (const Value &v) noexcept = 0;
+
+  void
+  setParent (JSON *parent)
+  { _parent = parent; }
 
 protected:
 
@@ -409,6 +423,15 @@ protected:
    */
   virtual Value &
   _at (const char *key)  = 0;
+
+  /**
+   * TODO:
+   * @brief _at
+   * @param index
+   * @return
+   */
+  /* virtual */ Value &
+  _at (size_t index) /* = 0 */;
 
   /**
    * @brief _clear

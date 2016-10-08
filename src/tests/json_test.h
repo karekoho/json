@@ -164,7 +164,7 @@ public:
   virtual void
   test_assign_all_values ()
   {
-    JSON j;
+    JSON json;
 
     struct assert
     {
@@ -185,46 +185,15 @@ public:
 
     TEST_IT_START
 
-        j._assign (*(*it).value);
-        j = *(*it).value;
+        json._assign (*(*it).value);
+        json = *(*it).value;
 
-        ASSERT_EQUAL_IDX ("json.__value->type ()", (*it).type, j.__root->type ());
+        ASSERT_EQUAL_IDX ("json.__value->type ()", (*it).type, json.__root->type ());
 
     TEST_IT_END;
   }
 
-  void
-  test_assign_copy ()
-  {
-    JSON json;
-    json.__root = new Array;
 
-    struct assert
-    {
-      Value *value;
-      // size_t size;    // Array::_element_list.size ()
-      int assert_status;
-    };
-
-    std::vector<struct assert> test = {};
-
-    // TEST_IT_START
-
-       Value & v = json["key"];
-
-       // FIXME: json["key"] = *(new Number (100)); // uncaught exception of type JSON::error - std::exception
-
-       // FIXME: v = *(new Number (100)); // uncaught exception of type JSON::error - std::exception
-
-       // v.assign (*(new Number (100))); // Won't compile: /home/kare/devel/json/src/tests/json_test.h:219:
-       // error: no matching function for call to 'Value::assign(Number&)'
-
-       Value::object_type type = v.type ();
-
-       std::cout << (int) type << std::endl;
-
-    // TEST_IT_END;
-  }
 
   virtual void test_stringify () override {}
 
@@ -253,8 +222,7 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json test");
 
-    s->addTest (new CppUnit::TestCaller<json_test> ("test_assign_copy", &json_test::test_assign_copy));
-    return s;
+
 
     s->addTest (new CppUnit::TestCaller<json_test> ("test_smoke", &json_test::test_ctor_dtor));
     s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_1", &json_test::test_parse_1));

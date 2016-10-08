@@ -101,7 +101,7 @@ public:
    */
   virtual Value &
   at (size_t)
-  { return *this; }
+  { /* return *this; */ throw JSON::out_of_range (); }
 
   /**
    * @brief type

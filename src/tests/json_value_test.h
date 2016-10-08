@@ -38,7 +38,7 @@ public:
 
         const char *startp = (*it).startp;
 
-        json_value_parse_mock *m  = new json_value_parse_mock;
+        json_value_mock *m  = new json_value_mock;
 
         m->_startp = m->_readp = startp;
 
@@ -81,7 +81,7 @@ public:
           const char *startp = (*it).startp;
           long int charc = strlen (startp);
 
-          json_value_parse_mock *m  = new json_value_parse_mock;
+          json_value_mock *m  = new json_value_mock;
 
           m->_startp = m->_readp = startp;
 
@@ -119,7 +119,7 @@ public:
 
           const char *startp = (*it).startp;
 
-          json_value_parse_mock *m  = new json_value_parse_mock;
+          json_value_mock *m  = new json_value_mock;
 
           m->_startp = m->_readp = startp;
 
@@ -194,6 +194,49 @@ public:
       TEST_IT_END;
     }
 
+    void
+    test_assign_copy ()
+    {
+      // JSON json = Object (); // FIXME: uncaught exception of type JSON::out_of_range
+      JSON json;
+
+       Object o;
+      // Array a;
+
+      JSON parent[2] = {
+        Object (), Array ()
+      };
+
+      json =  o;  //parent[0];
+
+      struct assert
+      {
+        Value *value;
+        Value::object_type type[2]; // old, current
+        int assert_status;
+      };
+
+      std::vector<struct assert> test = {
+        { new Object, { Value::undefined, Value::object }, PASS },
+        { new Array, { Value::object, Value::array }, PASS },
+        { new String, { Value::array, Value::string }, PASS },
+        { new Number, { Value::string, Value::number }, PASS },
+        { new Boolean, { Value::number, Value::boolean }, PASS },
+        { new Null, { Value::boolean, Value::null }, PASS },
+        // { new Undefined, { Value::null, Value::undefined }, PASS }
+      };
+
+      TEST_IT_START
+
+          json["key"] = *(*it).value;
+
+          Value & v = json["key"];
+
+          std::cout << (int) v.type () << std::endl;
+
+      TEST_IT_END;
+
+    }
 
 
     virtual void test_stringify () override {}
@@ -211,6 +254,9 @@ public:
     suite ()
     {
       CppUnit::TestSuite *s = new CppUnit::TestSuite ("json value test");
+
+      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_copy", &json_value_test::test_assign_copy));
+      return s;
 
       s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_undefined", &json_value_test::test_assign_undefined));
       // return s;

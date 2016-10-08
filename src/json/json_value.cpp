@@ -118,6 +118,8 @@ Value::_erase () noexcept
     (void) _parent->erase (*this);
 }
 
+// Value &Value::_root__at (const char *key, JSON *root) { return root->_at (key); }
+
 Value &
 Value::_assign (Value &nv)
 {

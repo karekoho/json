@@ -33,7 +33,9 @@ class Array : public JSON
   // TODO: friend void Value::setKey (const char *key);
   // TODO: friend void Value::setIndex (const size_t &index);
 
-  public:
+  // friend Value & Value::_root__at (const char *key, JSON *root);
+
+public:
 
   typedef std::vector<Value *> element_list;
 
