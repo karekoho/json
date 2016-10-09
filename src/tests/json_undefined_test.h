@@ -51,8 +51,6 @@ public:
       0
     };
 
-    // Undefined old_value;
-
     struct assert {
       Value *new_value;
       Value::object_type type;
@@ -71,14 +69,10 @@ public:
       { new Null, Value::null, "key_7",  0, 6, { PASS, PASS, FAIL } }
     };
 
-    // arr_parent._element_list.reserve (6);
-
     for (size_t pidx = 0; pidx < 3; pidx++)
       {
           obj_parent._member_list.clear ();
           arr_parent._element_list.clear ();
-
-          // old_value._parent = parents[pidx];
 
           for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++) {\
             try {\
@@ -96,11 +90,8 @@ public:
           (*it).index  = arr_parent._element_list.size () - 1;
           old_value->setIndex ((*it).index);
 
-          // Value *new_value = 0;
-
-          old_value->_assign (*(*it).new_value);
+          // old_value->_assign (*(*it).new_value);   // Can't do. old_value will be free'd by new_value
           *old_value = *(*it).new_value;
-          // new_value = (*it).new_value;
 
           JSON *parent = old_value->_parent;
 
@@ -125,11 +116,11 @@ public:
                 }
             }
 
-          delete old_value;
-          old_value = 0;
-
           TEST_IT_END;
         }
+
+        for (auto it = test.begin (); it != test.end (); ++it)
+          delete (*it).new_value;
   }
 
 

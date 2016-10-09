@@ -210,8 +210,8 @@ protected:
    * @return
    */
   virtual Value &
-   _at (const char *)
-   { return *this; }
+   _at (const char *key)
+   { return _at (atoll (key)); }
 
   /**
    * @brief _assign

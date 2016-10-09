@@ -136,7 +136,12 @@ Array::_at (size_t index)
 Value &
 Array::assign (Value *ov, Value *nv)
 {
-  _element_list.at (ov->index ()) = nv;
+  size_t index = ov->index ();
+
+  _element_list.at (index) = nv;
+
+  nv->setIndex (index);
+  nv->setParent (this);
 
   return *this;
 }

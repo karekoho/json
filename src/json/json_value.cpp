@@ -15,7 +15,7 @@ Value::Value ()
      // _length (0),
       _key (0),
       _index (0),
-      _old (0)
+      _old_value (0)
 {
 }
 
@@ -26,7 +26,7 @@ Value::Value (const char *)
      // _length (1 /* json == 0 ? 0 : strlen (json) */),
       _key (0),
       _index (0),
-      _old (0)
+      _old_value (0)
 {
 }
 
@@ -37,7 +37,7 @@ Value::Value (JSON *parent)
      // _length (0),
       _key (0),
       _index (0),
-      _old (0)
+      _old_value (0)
 {
 }
 
@@ -48,7 +48,7 @@ Value::Value (const Value &other)
     // _length (other._length),
     _key (other._key ? strdup (other._key) : 0),
     _index (other._index),
-    _old (0)
+    _old_value (0)
 {
 }
 
@@ -58,17 +58,18 @@ Value::Value (Value *ov, const Value &nv)
     _parent (0),
     _key (nv._key ? strdup (nv._key) : 0),
     _index (nv._index),
-    _old (0)
+    _old_value (0)
 {
-  nv._old = ov;
+  delete nv._old_value;
+  nv._old_value = ov;
 }
 
 Value::~Value ()
 {
   free ((char *)_key);
 
-  delete _old;
-  _old = 0;
+  delete _old_value;
+  _old_value = 0;
 }
 
 long int

@@ -61,7 +61,7 @@ public:
    */
   virtual Value *
   clone ()
-  { return new JSON (*this); }
+  { return new JSON (*this);  }
 
   /**
    * @brief JSON

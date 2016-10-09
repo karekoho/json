@@ -140,20 +140,20 @@ public:
               {
                 String *new_a_value = static_cast<String *>((*it).new_value);
 
-                old_value->_assign (*new_a_value);
+                // old_value->_assign (*new_a_value);
                 *old_value = *new_a_value;
 
                 new_value = new_a_value;
               }
             else
               {
-                old_value->_assign (*(*it).new_value);
+                // old_value->_assign (*(*it).new_value);
                 *old_value = *(*it).new_value;
 
                 new_value = (*it).new_value;
               }
 
-            JSON *parent = old_value->_parent;
+            JSON *parent = parents[pidx];   //  old_value->_parent;
 
             if (parent)
               {
@@ -178,8 +178,6 @@ public:
               {
                 CPPUNIT_ASSERT_MESSAGE ("old_value.value ()", strcmp ("xxx", old_value->value ()) == 0);
               }
-
-            // delete old_value; old_value = 0; // FIXME: segmantation fault
 
             TEST_IT_END;
           }

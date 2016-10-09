@@ -106,14 +106,14 @@ public:
             {
               Boolean *new_boolean_value = static_cast<Boolean *>((*it).new_value);
 
-              old_value->_assign (*new_boolean_value);
+              // old_value->_assign (*new_boolean_value);
               *old_value = *new_boolean_value;
 
               new_value = new_boolean_value;
             }
           else
             {
-              old_value->_assign (*(*it).new_value);
+              // old_value->_assign (*(*it).new_value);
               *old_value = *(*it).new_value;
 
               new_value = (*it).new_value;

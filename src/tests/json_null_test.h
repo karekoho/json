@@ -101,23 +101,17 @@ public:
           (*it).index  = arr_parent._element_list.size () - 1;
           old_value->setIndex ((*it).index);
 
-          // Value *new_value = 0;
-
           if ((*it).new_value->type () == Value::null)
             {
               Null *new_null_value = dynamic_cast<Null *>((*it).new_value);
 
-              old_value->_assign (*new_null_value);
+              //old_value->_assign (*new_null_value);
               *old_value = *new_null_value;
-
-              // new_value = new_a_value;
             }
           else
             {
-              old_value->_assign (*(*it).new_value);
+              //old_value->_assign (*(*it).new_value);
               *old_value = *(*it).new_value;
-
-              // new_value = (*it).new_value;
             }
 
           JSON *parent = old_value->_parent;
@@ -141,8 +135,6 @@ public:
                   // ASSERT_EQUAL_IDX ("arr_parent[key].value", av, new_value);
                 }
             }
-
-          // delete old_value; old_value = 0; // FIXME: segmentation fault
 
           TEST_IT_END;
         }

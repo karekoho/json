@@ -290,28 +290,32 @@ public:
 
           old_value->_member_list.clear ();
           arr_parent._element_list.push_back (new Undefined);
+
           old_value->setKey ((*it).key, strlen ((*it).key));
 
           (*it).index  = arr_parent._element_list.size () - 1;
           old_value->setIndex ((*it).index);
 
-          // Value *new_value = 0;
+          Value *new_value = 0;
 
           if ((*it).new_value->type () == Value::object)
             {
               Object *new_o_value = static_cast<Object *>((*it).new_value);
-              old_value->_assign (*new_o_value);
+
+              // old_value->_assign (*new_o_value); // Can't do. *old_value is free'd
               *old_value = *new_o_value;
-              // new_value = new_o_value;
+
+              new_value = new_o_value;
             }
           else
             {
-              old_value->_assign (*(*it).new_value);
+              // old_value->_assign (*(*it).new_value); // Can't do. *old_value is free'd
               *old_value = *(*it).new_value;
-              // new_value = (*it).new_value;
+
+              new_value = (*it).new_value;
             }
 
-          JSON *parent = old_value->_parent;
+          JSON *parent = parents[pidx];
 
           if (parent)
             {
@@ -334,14 +338,14 @@ public:
             }
           else
             {
-              ASSERT_EQUAL_IDX ("old_value.size ()", /* new_value->count () */ (size_t) 2, old_value->count ());
+              ASSERT_EQUAL_IDX ("old_value.size ()", (size_t) 2, old_value->count ());
             }
-
-          delete old_value;
-          old_value = 0;
 
           TEST_IT_END;
         }
+
+        for (auto it = test.begin (); it != test.end (); ++it)
+          delete (*it).new_value;
   }
 
   virtual void

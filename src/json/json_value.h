@@ -72,7 +72,7 @@ class Value
   Value (Value *ov, const Value &nv);
 
   /**
-   * @brief clone
+   * @brief clone Call object copy constructor from Value interface: Value *v->clone ()
    * @param other
    * @return
    */
@@ -80,8 +80,9 @@ class Value
   clone () = 0;
 
   /**
-   * @brief clone
-   * @param old
+   * @brief clone Call object copy constructor from Value interface: Value *v->clone ().
+   * Store previous key|index=>value for deletion.
+   * @param ov  previous key|index=>value
    * @return
    */
   virtual Value *
@@ -162,6 +163,14 @@ class Value
    */
   virtual size_t
   count () const = 0;
+
+  /**
+   * @brief setParent
+   * @param parent
+   */
+  inline void
+  setParent (JSON *parent)
+  { _parent = parent; }
 
   /**
    * @brief key
@@ -264,10 +273,6 @@ class Value
   virtual Value &
   erase (const Value &v) noexcept = 0;
 
-  void
-  setParent (JSON *parent)
-  { _parent = parent; }
-
 protected:
 
   /**
@@ -361,7 +366,7 @@ protected:
   /**
    * @brief _old
    */
-  mutable Value *_old;
+  mutable Value *_old_value;
 
   /**
    * @brief _look_ahead Move read pointer to next non-white space character
@@ -441,7 +446,7 @@ protected:
 
   /**
    * TODO: rename to *** _clone ***
-   * @brief _clone
+   * @brief _clone  Called by copy constructor
    * @param other
    * @return
    */

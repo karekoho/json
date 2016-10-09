@@ -180,20 +180,20 @@ public:
             {
               Array *new_a_value = static_cast<Array *>((*it).new_value);
 
-              old_value->_assign (*new_a_value);
+              // old_value->_assign (*new_a_value);
               *old_value = *new_a_value;
 
               // new_value = new_a_value;
             }
           else
             {
-              old_value->_assign (*(*it).new_value);
+              // old_value->_assign (*(*it).new_value);
               *old_value = *(*it).new_value;
 
               // new_value = (*it).new_value;
             }
 
-          JSON *parent = old_value->_parent;
+          JSON *parent = parents[pidx]; // old_value->_parent;
 
           if (parent)
             {
@@ -219,11 +219,11 @@ public:
               ASSERT_EQUAL_IDX ("old_value.size ()", (size_t) 2, old_value->count ());
             }
 
-          delete old_value;
-          old_value = 0;
-
           TEST_IT_END;
         }
+
+        for (auto it = test.begin (); it != test.end (); ++it)
+          delete (*it).new_value;
   }
 
   virtual void test_size_1 () {}

@@ -338,8 +338,6 @@ public:
       0
     };
 
-    // Number old_value;
-
     struct assert {
       Value *new_value;
       Value::object_type type;
@@ -389,14 +387,14 @@ public:
             {
               Number *new_number_value = dynamic_cast<Number *>((*it).new_value);
 
-              old_value->_assign (*new_number_value);
+              // old_value->_assign (*new_number_value);  // Can't do. old_value will be free'd by new_value
               *old_value = *new_number_value;
 
               new_value = new_number_value;
             }
           else
             {
-              old_value->_assign (*(*it).new_value);
+              // old_value->_assign (*(*it).new_value); // Can't do. old_value will be free'd by new_value
               *old_value = *(*it).new_value;
 
               new_value = (*it).new_value;
@@ -429,14 +427,11 @@ public:
               // ASSERT_EQUAL_IDX ("old_value.value ()", static_cast<Number *>(new_value)->value (), old_value.value ());
             }
 
-          delete old_value;
-          old_value = 0;
-
           TEST_IT_END;
         }
 
-    //for (auto it = test.begin (); it != test.end (); ++it) delete (*it).new_value;
-    //element_list_clear (arr_parent._element_list);
+    for (auto it = test.begin (); it != test.end (); ++it)
+      delete (*it).new_value;
   }
 
   virtual void test_stringify () override {}

@@ -174,12 +174,14 @@ Object::_at (const char *key)
 Value &
 Object::assign (Value *ov, Value *nv)
 {
-   _member_list[ov->key ()] = nv;
+  const char *key = ov->key ();
 
-   nv->setKey (ov->key (), strlen (ov->key ()));
-   nv->setParent (this);
+  _member_list[key] = nv;
 
-   return *this;
+  nv->setKey (key, strlen (key));
+  nv->setParent (this);
+
+  return *this;
 }
 
 void

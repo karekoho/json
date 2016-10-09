@@ -4,7 +4,10 @@
 #include <json_value_test_interface.h>
 #include "json_value_parse_mock.h"
 
-/// Test number 0
+/**
+ * 0.
+ * @brief The json_value_test class
+ */
 class json_value_test : public json_value_test_interface
 {
 public:
@@ -197,45 +200,48 @@ public:
     void
     test_assign_copy ()
     {
-      // JSON json = Object (); // FIXME: uncaught exception of type JSON::out_of_range
-      JSON json;
-
-       Object o;
-      // Array a;
-
-      JSON parent[2] = {
-        Object (), Array ()
+      JSON json[] = {
+        "{}",
+        "[]"
       };
-
-      json =  o;  //parent[0];
 
       struct assert
       {
         Value *value;
-        Value::object_type type[2]; // old, current
+        Value::object_type type;  // old, current
         int assert_status;
       };
 
       std::vector<struct assert> test = {
-        { new Object, { Value::undefined, Value::object }, PASS },
-        { new Array, { Value::object, Value::array }, PASS },
-        { new String, { Value::array, Value::string }, PASS },
-        { new Number, { Value::string, Value::number }, PASS },
-        { new Boolean, { Value::number, Value::boolean }, PASS },
-        { new Null, { Value::boolean, Value::null }, PASS },
-        // { new Undefined, { Value::null, Value::undefined }, PASS }
+        { new Object, Value::object, PASS },
+        { new Array, Value::array, PASS },
+        { new String, Value::string, PASS },
+        { new Number, Value::number, PASS },
+        { new Boolean, Value::boolean, PASS },
+        { new Null, Value::null, PASS },
+        { new Undefined, Value::undefined, PASS }
       };
+
+      for (size_t hdx = 0; hdx < 2; hdx++)
+        {
+          _idx[0] = 0;
 
       TEST_IT_START
 
-          json["key"] = *(*it).value;
+          for (size_t jdx = 0; jdx < 2; jdx++)
+            {
+              json[hdx]["0"] = *(*it).value;   // Undefined <-- Object, Object <-- Array, ...
 
-          Value & v = json["key"];
+              Value & v = json[hdx]["0"];
 
-          std::cout << (int) v.type () << std::endl;
+              ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v.type ());
+            }
 
       TEST_IT_END;
+        }
 
+      for (auto it = test.begin (); it != test.end (); ++it)
+        delete (*it).value;
     }
 
 
@@ -250,13 +256,18 @@ public:
 
     virtual void test_erase () override {}
 
-    static CppUnit::Test*
+    /**
+     * 0.
+     * @brief suite
+     * @return
+     */
+    static CppUnit::Test *
     suite ()
     {
       CppUnit::TestSuite *s = new CppUnit::TestSuite ("json value test");
 
       s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_copy", &json_value_test::test_assign_copy));
-      return s;
+      // return s;
 
       s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_undefined", &json_value_test::test_assign_undefined));
       // return s;
@@ -266,8 +277,6 @@ public:
       s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_quoted", &json_value_test::test_string));
 
       s->addTest (new CppUnit::TestCaller<json_value_test> ("test__str_append", &json_value_test::test__str_append));
-
-
 
       return s;
     }

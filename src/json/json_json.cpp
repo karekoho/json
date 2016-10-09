@@ -75,9 +75,12 @@ JSON::JSON::parse (const char *readp)
 Value &
 JSON::_assign (JSON &j)
 {
-  delete __root;
+  if (j.__hasRoot ())
+    {
+      delete __root;
 
-  __root = j.clone ();
+      __root = j.__root->clone ();
+    }
 
   return *this;
 }
@@ -95,15 +98,6 @@ JSON::_assign (Value &v)
 Value &
 JSON::_at (const char *key)
 {
-//  try
-//    {
-//      return __hasRoot () ? __root->at (key) : *(new Undefined);
-//    }
-//  catch (JSON::out_of_range &)
-//    {
-//      return *(new Undefined);
-//    }
-
   if (! __hasRoot ())
     throw JSON::out_of_range ();
 
