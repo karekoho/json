@@ -26,7 +26,7 @@ Object::Object (const Object &other)
   (void) clone (other);
 }
 
-Object::Object (Value *ov, const Object &nv)
+Object::Object (const Value *ov, const Object &nv)
   : JSON (ov, nv)
 {
   (void) clone (nv);
@@ -148,7 +148,7 @@ Object::iterator () const
 }
 
 Value &
-Object::_assign (Object &nv)
+Object::_assign (const Object &nv)
 {
   return _parent ? _parent->assign (this, new Object (this, nv)) : *(clone (nv));
 }

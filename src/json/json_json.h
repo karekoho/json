@@ -60,7 +60,7 @@ public:
    * @return
    */
   virtual Value *
-  clone ()
+  clone () const
   { return new JSON (*this);  }
 
   /**
@@ -74,7 +74,7 @@ public:
    * @param ov
    * @param nv
    */
-  JSON (Value *ov, const JSON &nv);
+  JSON (const Value *ov, const JSON &nv);
 
   /**
    * @brief ~JSON
@@ -129,7 +129,7 @@ public:
    * @return
    */
   virtual Value
-  & _assign (JSON & j);
+  & _assign (const JSON & j);
 
   /**
    * @brief operator =
@@ -137,7 +137,7 @@ public:
    * @return
    */
   inline Value &
-  operator =(JSON & j)
+  operator =(const JSON & j)
   { return _assign (j); }
 
   /**
@@ -146,7 +146,7 @@ public:
    * @return
    */
   virtual Value &
-  _assign (Value & v) override;
+  _assign (const Value & v) override;
 
   /**
    * @brief operator =
@@ -154,7 +154,7 @@ public:
    * @return
    */
   inline Value &
-  operator =(Value & v)
+  operator =(const Value & v)
   { return _assign (v); }
 
   /**
@@ -214,8 +214,8 @@ public:
    * @return
    */
   virtual Value *
-  clone (Value *) override
-  { return this; }
+  clone (const Value *) const override
+  { return new JSON (*this); }
 
 protected:
 

@@ -52,7 +52,7 @@ Value::Value (const Value &other)
 {
 }
 
-Value::Value (Value *ov, const Value &nv)
+Value::Value (const Value *ov, const Value &nv)
   : _startp (nv._startp),
     _readp (nv._readp),
     _parent (0),
@@ -122,10 +122,12 @@ Value::_erase () noexcept
 // Value &Value::_root__at (const char *key, JSON *root) { return root->_at (key); }
 
 Value &
-Value::_assign (Value &nv)
+Value::_assign (const Value &nv)
 {
   if (_parent == 0)
     throw JSON::error ("bad assignment");
 
-  return _parent->assign (this, nv.clone (this));
+  Value *v = nv.clone (this);
+
+  return _parent->assign (this, v);
 }

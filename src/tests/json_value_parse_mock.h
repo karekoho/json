@@ -33,7 +33,7 @@ public:
     { return 0; }
 
     virtual Value *
-    clone () override
+    clone () const override
     { return 0; }
 
     virtual Value &
@@ -57,8 +57,8 @@ public:
     { return *this; }
 
     virtual Value *
-    clone (Value *old) override
-    { return old; }
+    clone (const Value *) const override
+    { return new json_value_mock (*this); }
 
 protected:
 

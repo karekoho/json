@@ -22,7 +22,7 @@ Array::Array (const Array &other)
   (void) clone (other);
 }
 
-Array::Array (Value *ov, const Array &nv)
+Array::Array (const Value *ov, const Array &nv)
   : JSON (ov, nv)
 {
   (void) clone (nv);
@@ -110,7 +110,7 @@ Array::at (size_t index) const
 }
 
 Value &
-Array::_assign (Array &nv)
+Array::_assign (const Array &nv)
 {
   return _parent ? _parent->assign (this, new Array (this, nv)) : *(clone (nv));
 }

@@ -47,7 +47,7 @@ class String : public Leaf
    * @param ov
    * @param nv
    */
-  String (Value *ov, const String & nv);
+  String (const Value *ov, const String & nv);
 
   /**
    * @brief clone
@@ -55,7 +55,7 @@ class String : public Leaf
    * @return
    */
   virtual Value *
-  clone ()
+  clone () const
   { return new String (*this); }
 
   /**
@@ -64,7 +64,7 @@ class String : public Leaf
    * @return
    */
   virtual Value *
-  clone (Value *ov) override
+  clone (const Value *ov) const override
   { return new String (ov, *this);}
 
   /**
@@ -89,7 +89,7 @@ class String : public Leaf
    * @return
    */
   inline Value &
-  operator =(String & s)
+  operator =(const String & s)
   { return _assign (s); }
 
   /**
@@ -98,7 +98,7 @@ class String : public Leaf
    * @return
    */
   inline Value &
-  operator =(Value & v)
+  operator =(const Value & v)
   { return _assign (v); }
 
   /**
@@ -107,7 +107,7 @@ class String : public Leaf
    * @return
    */
   Value &
-  _assign (String & nv);
+  _assign (const String & nv);
 
   /**
    * @brief value
@@ -149,7 +149,7 @@ protected:
    * @return
    */
   virtual Value &
-  _assign (Value & nv)
+  _assign (const Value & nv)
   { return Value::_assign (nv); }
 
   /**

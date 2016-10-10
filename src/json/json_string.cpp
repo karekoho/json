@@ -26,7 +26,7 @@ String::String (const String &other)
   clone (other);
 }
 
-String::String (Value *ov, const String &nv)
+String::String (const Value *ov, const String &nv)
   : Leaf (ov, nv),
     _charc (nv._charc)
 {
@@ -55,7 +55,7 @@ String::parse (const char *json)
 }
 
 Value &
-String::_assign (String &nv)
+String::_assign (const String &nv)
 {
   return _parent ? _parent->assign (this, new String (this, nv)) : *(clone (nv));
 }

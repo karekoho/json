@@ -26,7 +26,7 @@ public:
     JSON copy = j[1];
 
     CPPUNIT_ASSERT_MESSAGE ("json", & copy != & j[1]);
-    CPPUNIT_ASSERT_EQUAL_MESSAGE ("json.size ()", (size_t) 1, copy.count ());
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("json.count ()", (size_t) 1, copy.count ());
   }
 
   virtual void
@@ -225,6 +225,7 @@ public:
 
 
     s->addTest (new CppUnit::TestCaller<json_test> ("test_smoke", &json_test::test_ctor_dtor));
+    //return s;
     s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_1", &json_test::test_parse_1));
 
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_lookahead", &json_test::test_lookahead));   // value_test has the same

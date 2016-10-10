@@ -48,7 +48,7 @@ Number::Number (const Number &other)
   (void) clone (other);
 }
 
-Number::Number (Value *ov, const Number &nv)
+Number::Number (const Value *ov, const Number &nv)
 : Leaf (ov, nv),
   _double_value (0),
   _double_valuep (0),

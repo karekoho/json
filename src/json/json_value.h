@@ -69,7 +69,7 @@ class Value
    * @param ov
    * @param nv
    */
-  Value (Value *ov, const Value &nv);
+  Value (const Value *ov, const Value &nv);
 
   /**
    * @brief clone Call object copy constructor from Value interface: Value *v->clone ()
@@ -77,7 +77,7 @@ class Value
    * @return
    */
   virtual Value *
-  clone () = 0;
+  clone () const = 0;
 
   /**
    * @brief clone Call object copy constructor from Value interface: Value *v->clone ().
@@ -86,7 +86,7 @@ class Value
    * @return
    */
   virtual Value *
-  clone (Value *ov) = 0;
+  clone (const Value *ov) const = 0;
 
   /**
    * @brief ~Value
@@ -147,7 +147,7 @@ class Value
    * @param v
    */
   inline Value &
-  operator =(Value & v)
+  operator =(const Value & v)
   { return _assign (v);  }
 
   /**
@@ -283,7 +283,7 @@ protected:
    * @return
    */
   virtual Value &
-  _assign (Value & nv);
+  _assign (const Value & nv);
 
   /**
    * @brief _assign
@@ -366,7 +366,7 @@ protected:
   /**
    * @brief _old
    */
-  mutable Value *_old_value;
+  mutable const Value *_old_value;
 
   /**
    * @brief _look_ahead Move read pointer to next non-white space character

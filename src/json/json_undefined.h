@@ -41,7 +41,7 @@ class Undefined : public Leaf
    * @param ov
    * @param nv
    */
-  Undefined (Value *ov, const Undefined &nv)
+  Undefined (const Value *ov, const Undefined &nv)
     : Leaf (ov, nv)
   {}
 
@@ -51,7 +51,7 @@ class Undefined : public Leaf
    * @return
    */
   virtual Value *
-  clone ()
+  clone () const
   { return new Undefined (*this); }
 
   /**
@@ -60,7 +60,7 @@ class Undefined : public Leaf
    * @return
    */
   virtual Value *
-  clone (Value *ov) override
+  clone (const Value *ov) const override
   { return new Undefined (ov, *this); }
 
   /**

@@ -69,7 +69,7 @@ public:
    * @param ov
    * @param nv
    */
-  Array (Value *ov, const Array &nv);
+  Array (const Value *ov, const Array &nv);
 
   /**
    * @brief clone
@@ -77,7 +77,7 @@ public:
    * @return
    */
   virtual Value *
-  clone ()
+  clone () const
   { return new Array (*this); }
 
   /**
@@ -86,7 +86,7 @@ public:
    * @return
    */
   virtual Value *
-  clone (Value *ov) override
+  clone (const Value *ov) const override
   { return new Array (ov, *this); }
 
   /**
@@ -149,7 +149,7 @@ public:
    * @return
    */
   inline Value &
-  operator =(Array & a)
+  operator =(const Array & a)
   { return _assign (a); }
 
   /**
@@ -158,7 +158,7 @@ public:
    * @return
    */
   inline Value &
-  operator =(Value & v)
+  operator =(const Value & v)
   { return _assign (v); }
 
   /**
@@ -219,7 +219,7 @@ protected:
    * @return
    */
   Value &
-  _assign (Array & nv);
+  _assign (const Array & nv);
 
   /**
    * @brief _assign
@@ -227,7 +227,7 @@ protected:
    * @return
    */
   virtual Value &
-  _assign (Value & nv)
+  _assign (const Value & nv)
   { return Value::_assign (nv); }
 
   /**

@@ -38,10 +38,10 @@ JSON::JSON (const JSON &other)
 {
 }
 
-JSON::JSON (Value *ov, const JSON &nv)
+JSON::JSON (const Value *ov, const JSON &nv)
   : Value (ov, nv),
     _str_value { 0, 0 },
-   __root (nv.__root ? nv.__root->clone () : 0)
+   __root (nv.__hasRoot () ? nv.__root->clone () : 0)
 {
 }
 
@@ -73,7 +73,7 @@ JSON::JSON::parse (const char *readp)
 }
 
 Value &
-JSON::_assign (JSON &j)
+JSON::_assign (const JSON &j)
 {
   if (j.__hasRoot ())
     {
@@ -86,7 +86,7 @@ JSON::_assign (JSON &j)
 }
 
 Value &
-JSON::_assign (Value &v)
+JSON::_assign (const Value &v)
 {
   delete __root;
 

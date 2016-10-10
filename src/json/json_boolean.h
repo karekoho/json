@@ -54,7 +54,7 @@ class Boolean : public Leaf
    * @param ov
    * @param nv
    */
-  Boolean (Value *ov, const Boolean &nv)
+  Boolean (const Value *ov, const Boolean &nv)
     : Leaf (ov, nv), _boolean_value (nv._boolean_value)
   {}
 
@@ -69,7 +69,7 @@ class Boolean : public Leaf
    * @return
    */
   virtual Value *
-  clone ()
+  clone () const
   { return new Boolean (*this); }
 
   /**
@@ -78,7 +78,7 @@ class Boolean : public Leaf
    * @return
    */
   virtual Value *
-  clone (Value *ov) override
+  clone (const Value *ov) const override
   { return new Boolean (ov, *this); }
 
   /**
@@ -131,7 +131,7 @@ public:
    * @return
    */
   inline Value &
-  operator =(Value & v)
+  operator =(const Value & v)
   { return _assign (v); }
 
   /**
@@ -140,7 +140,7 @@ public:
    * @return
    */
   Value &
-  _assign (Boolean & nv)
+  _assign (const Boolean & nv)
   { return _parent ? _parent->assign (this, new Boolean (nv)) : *(clone (nv)); }
 
   /**
@@ -170,7 +170,7 @@ protected:
    * @return
    */
   virtual Value &
-  _assign (Value & nv)
+  _assign (const Value & nv)
   { return Value::_assign (nv); }
 
   /**

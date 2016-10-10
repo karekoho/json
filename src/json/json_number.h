@@ -61,7 +61,7 @@ public:
    * @param ov
    * @param nv
    */
-  Number (Value *ov, const Number &nv);
+  Number (const Value *ov, const Number &nv);
 
   /**
    * @brief clone
@@ -69,7 +69,7 @@ public:
    * @return
    */
   virtual Value *
-  clone ()
+  clone () const
   { return new Number (*this); }
 
   /**
@@ -78,7 +78,7 @@ public:
    * @return
    */
   virtual Value *
-  clone (Value *ov) override
+  clone (const Value *ov) const override
   { return new Number (ov, *this); }
 
   /**

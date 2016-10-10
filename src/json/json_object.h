@@ -54,7 +54,7 @@ public:
    * @param ov
    * @param nv
    */
-  Object (Value *ov, const Object &nv);
+  Object (const Value *ov, const Object &nv);
 
   /**
    * @brief clone
@@ -62,7 +62,7 @@ public:
    * @return
    */
   virtual Value *
-  clone ()
+  clone () const
   { return new Object (*this); }
 
   /**
@@ -71,7 +71,7 @@ public:
    * @return
    */
   virtual Value *
-  clone (Value *ov) override
+  clone (const Value *ov) const override
   { return new Object (ov, *this); }
 
   /**
@@ -125,7 +125,7 @@ public:
    * @return
    */
   inline Value &
-  operator =(Object & o)
+  operator =(const Object & o)
   { return _assign (o);  }
 
   /**
@@ -134,7 +134,7 @@ public:
    * @return
    */
   inline Value &
-  operator =(Value & v)
+  operator =(const Value & v)
   { return _assign (v); }
 
   /**
@@ -194,7 +194,7 @@ protected:
    * @return
    */
   Value &
-  _assign (Object & nv);
+  _assign (const Object & nv);
 
   /**
    * @brief _at
@@ -210,7 +210,7 @@ protected:
    * @return
    */
   virtual Value &
-  _assign (Value & nv)
+  _assign (const Value & nv)
   { return Value::_assign (nv); }
 
   /**

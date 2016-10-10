@@ -40,7 +40,7 @@ public:
    * @param ov
    * @param nv
    */
-  Leaf (Value *ov, const Leaf &nv)
+  Leaf (const Value *ov, const Leaf &nv)
     : Value (ov, nv)
   {}
 
@@ -54,7 +54,7 @@ public:
    * @return
    */
   virtual Value *
-  clone  () override = 0;
+  clone  () const override = 0;
 
   /**
    * @brief parse

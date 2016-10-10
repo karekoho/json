@@ -47,7 +47,7 @@ class Null : public Leaf
    * @param ov
    * @param nv
    */
-  Null (Value *ov, const Null &nv)
+  Null (const Value *ov, const Null &nv)
     : Leaf (ov, nv)
   {}
 
@@ -57,7 +57,7 @@ class Null : public Leaf
    * @return
    */
   virtual Value *
-  clone ()
+  clone () const
   { return new Null (*this); }
 
   /**
@@ -66,7 +66,7 @@ class Null : public Leaf
    * @return
    */
   virtual Value *
-  clone (Value *ov) override
+  clone (const Value *ov) const override
   { return new Null (ov, *this); }
 
   /**
@@ -137,7 +137,7 @@ protected:
    * @return
    */
   virtual Value &
-  _assign (Value & nv)
+  _assign (const Value & nv)
   { return Value::_assign (nv); }
 
   /**
@@ -146,7 +146,7 @@ protected:
    * @return
    */
   Value &
-  _assign (Null &)
+  _assign (const Null &)
   { return _parent ? _parent->assign (this, new Null (this, *this)) : *this; }
 
   /**
