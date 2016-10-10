@@ -102,9 +102,9 @@ public:
    * @param nv
    * @return
    */
-  virtual Value &
-  _assign (Value & nv)
-  { return Value::_assign (nv); }
+//  virtual Value &
+//  _assign (Value & nv)
+//  { return Value::_assign (nv); }
 
   /**
    * @brief operator =
@@ -112,7 +112,7 @@ public:
    * @return
    */
   inline Value &
-  operator =(Number & n)
+  operator =(const Number & n)
   { return _assign (n);  }
 
   /**
@@ -121,8 +121,8 @@ public:
    * @return
    */
   inline Value &
-  operator =(Value & v)
-  { return _assign (v);  }
+  operator =(const Value & v)
+  { return Value::_assign (v);  }
 
   /**
    * @brief value
@@ -222,7 +222,7 @@ protected:
    * @return
    */
   Value &
-  _assign (Number & nv)
+  _assign (const Number & nv)
   { return _parent  ? _parent->assign (this, new Number (this, nv)) : *(clone (nv)); }
 
   /**

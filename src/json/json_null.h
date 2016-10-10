@@ -111,7 +111,7 @@ class Null : public Leaf
    */
   inline Value &
   operator =(const Value & v)
-  { return _assign (v); }
+  { return Value::_assign (v); }
 
   /**
    * @brief strValue
@@ -136,9 +136,9 @@ protected:
    * @param nv
    * @return
    */
-  virtual Value &
-  _assign (const Value & nv)
-  { return Value::_assign (nv); }
+//  virtual Value &
+//  _assign (const Value & nv)
+//  { return Value::_assign (nv); }
 
   /**
    * @brief assign

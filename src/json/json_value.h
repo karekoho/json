@@ -273,6 +273,14 @@ class Value
   virtual Value &
   erase (const Value &v) noexcept = 0;
 
+  /**
+   * @brief value
+   * @return
+   */
+  inline const char *
+  value () const
+  { return strValue (); }
+
 protected:
 
   /**

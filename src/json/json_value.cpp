@@ -119,15 +119,11 @@ Value::_erase () noexcept
     (void) _parent->erase (*this);
 }
 
-// Value &Value::_root__at (const char *key, JSON *root) { return root->_at (key); }
-
 Value &
 Value::_assign (const Value &nv)
 {
   if (_parent == 0)
     throw JSON::error ("bad assignment");
 
-  Value *v = nv.clone (this);
-
-  return _parent->assign (this, v);
+  return _parent->assign (this, nv.clone (this));
 }
