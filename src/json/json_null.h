@@ -91,9 +91,9 @@ class Null : public Leaf
    * @brief Value
    * @return
    */
-  inline const char *
+  inline std::nullptr_t
   value () const
-  { return ""; }
+  { return nullptr; }
 
   /**
    * @brief operator =
@@ -101,7 +101,7 @@ class Null : public Leaf
    * @return
    */
   inline Value &
-  operator =(Null & n)
+  operator =(const Null & n)
   { return _assign (n); }
 
   /**
@@ -110,7 +110,7 @@ class Null : public Leaf
    * @return
    */
   inline Value &
-  operator =(Value & v)
+  operator =(const Value & v)
   { return _assign (v); }
 
   /**

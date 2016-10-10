@@ -68,9 +68,9 @@ class Undefined : public Leaf
    * @brief value
    * @return
    */
-  inline const char *
+  inline std::nullptr_t
   value () const
-  { return "undefined"; }
+  { return nullptr; }
 
   /**
    * @brief parse
@@ -95,7 +95,7 @@ class Undefined : public Leaf
    * @return
    */
   inline Value &
-  operator =(Value & v)
+  operator =(const Value & v)
   { return _assign (v);  }
 
   /**
@@ -122,7 +122,7 @@ protected:
    * @return
    */
   virtual Value &
-  _assign (Value & nv)
+  _assign (const Value & nv)
   { return Value::_assign (nv); }
 
   /**
