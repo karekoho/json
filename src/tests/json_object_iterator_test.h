@@ -55,6 +55,12 @@ public:
   void
   test_dereference ()
   {
+    Object::member_list list = { { "key_1", new Number } };
+    Object::Iterator it (list.begin ());
+
+    Value & v = *it;
+
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("v.type ()", Value::object_type::number, v.type ());
   }
 
   void

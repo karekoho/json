@@ -174,6 +174,49 @@ public:
   virtual Value &
   erase (const Value &v) noexcept override;
 
+  /**
+   * @brief The Iterator class
+   */
+  class Iterator : public std::iterator<
+        std::input_iterator_tag,
+        std::pair<std::string, Value *>,  // Type
+        std::pair<std::string, Value *>,  // Distance
+        Value *,
+        Value &>
+  {
+  public:
+
+    Iterator ()
+    {
+      // _it = Object ()._member_list.end ();
+    }
+
+    Iterator (member_list::iterator it)
+    {
+      _it = it;
+    }
+
+    Iterator (const Iterator & other)
+    {
+      _it = other._it;
+    }
+
+    Iterator &
+    operator ++()
+    {
+      ++_it;
+      return *this;
+    }
+
+    reference
+    operator *()
+    { return *(*_it).second; }
+
+  protected:
+
+      member_list::iterator _it;
+  }; // Iterator
+
 protected:
 
   /**
@@ -234,13 +277,7 @@ protected:
   virtual Value *
   clone (const Value &other);
 
-  /**
-   * @brief The Iterator class
-   */
-  class Iterator : public std::iterator<std::input_iterator_tag, std::pair<std::string, Value *>>
-  {
 
-  };
 };
 
 #endif // OBJECT_H
