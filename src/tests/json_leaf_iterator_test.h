@@ -14,7 +14,7 @@ public:
     size_t c = 0;
     Null n;
 
-    Iterator *iit = new Leaf_Iterator (&n);
+    JSON_Iterator *iit = new Leaf_Iterator (&n);
 
     while (iit->hasNext ())
       {

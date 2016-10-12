@@ -9,7 +9,7 @@
 /**
  * @brief The Object_Iterator class
  */
-class Object_Iterator : public Iterator
+class Object_Iterator : public JSON_Iterator
 {
 public:
 

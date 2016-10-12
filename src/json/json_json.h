@@ -171,7 +171,7 @@ public:
    * @brief iterator
    * @return
    */
-  virtual Iterator *
+  virtual JSON_Iterator *
   iterator () const override
   { return __root ? __root->iterator () : 0; /* TODO: new Leaf_Iterator (new Undefined);  // FIXME: leak */ }
 

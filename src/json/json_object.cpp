@@ -141,7 +141,7 @@ Object::at (const char *key) const
   }
 }
 
-Iterator *
+JSON_Iterator *
 Object::iterator () const
 {
   return new Object_Iterator (_member_list);

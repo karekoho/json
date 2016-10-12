@@ -113,7 +113,7 @@ public:
    * @brief iterator
    * @return
    */
-  virtual Iterator *
+  virtual JSON_Iterator *
   iterator () const final override;
 
   /**
@@ -149,6 +149,14 @@ protected:
    */
   virtual Value *
   clone (const Value &) = 0;
+
+  /**
+   * @brief The Iterator class
+   */
+  class Iterator : public std::iterator<std::input_iterator_tag, std::string, Value *>
+  {
+
+  };
 };
 
 #endif // LEAF_H

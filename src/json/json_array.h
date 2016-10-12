@@ -165,7 +165,7 @@ public:
    * @brief iterator
    * @return
    */
-  virtual Iterator *
+  virtual JSON_Iterator *
   iterator () const override;
 
   /**
@@ -251,6 +251,14 @@ protected:
    */
   virtual Value *
   clone (const Value &other) override;
+
+  /**
+   * @brief The Iterator class
+   */
+  class Iterator : public std::iterator<std::input_iterator_tag, Value *>
+  {
+
+  };
 };
 
 #endif // ARRAY

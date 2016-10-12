@@ -9,7 +9,7 @@
 /**
  * @brief The Array_Iterator class
  */
-class Array_Iterator : public Iterator
+class Array_Iterator : public JSON_Iterator
 {
 public:
 

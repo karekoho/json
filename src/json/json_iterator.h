@@ -6,14 +6,14 @@
 /**
  * @brief The Iterator class
  */
-class Iterator
+class JSON_Iterator
 {
 public:
 
   /**
    * @brief ~Iterator
    */
-  virtual ~Iterator () = default;
+  virtual ~JSON_Iterator () = default;
 
   /**
    * @brief next

@@ -40,7 +40,7 @@ public:
     assign (Value *, Value *) override
     { return *this; }
 
-    virtual Iterator *
+    virtual JSON_Iterator *
     iterator () const override
     { return new Leaf_Iterator (this); }
 

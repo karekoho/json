@@ -170,7 +170,7 @@ Array::clone (const Value &other)
   return this;
 }
 
-Iterator *
+JSON_Iterator *
 Array::iterator () const
 {
   return new Array_Iterator (_element_list);

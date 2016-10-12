@@ -28,7 +28,7 @@ public:
 
         map = *(*it).map;
 
-        Iterator *oit = new Object_Iterator (map);
+        JSON_Iterator *oit = new Object_Iterator (map);
         size_t mapc = 0;
 
         while (oit->hasNext ())

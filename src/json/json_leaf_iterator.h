@@ -6,7 +6,7 @@
 /**
  * @brief The Leaf_Iterator class
  */
-class Leaf_Iterator : public Iterator
+class Leaf_Iterator : public JSON_Iterator
 {
 public:
 

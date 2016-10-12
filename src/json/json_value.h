@@ -14,7 +14,7 @@
  * @brief The json_value class
  */
 class JSON;
-class Iterator;
+class JSON_Iterator;
 class Undefined;
 class Value
 {
@@ -225,7 +225,7 @@ class Value
    * @brief iterator
    * @return
    */
-  virtual Iterator *
+  virtual JSON_Iterator *
   iterator () const = 0;
 
   /**

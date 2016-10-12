@@ -21,7 +21,7 @@ Leaf::_at (const char *)
   return *(new Undefined);
 }
 
-Iterator *
+JSON_Iterator *
 Leaf::iterator () const
 {
   return new Leaf_Iterator (this);
