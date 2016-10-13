@@ -12,6 +12,7 @@ class Object : public JSON
 #ifdef UNIT_TEST
   friend class json_test;
   friend class json_object_test;
+  friend class json_object_iterator_test;
   friend class json_array_test;
   friend class json_string_test;
   friend class json_number_test;
@@ -186,21 +187,36 @@ public:
   {
   public:
 
-    Iterator ()
-    {
-      // _it = Object ()._member_list.end ();
-    }
+    /**
+     * @brief Iterator
+     */
+    Iterator () {}
 
+    /**
+     * @brief Iterator
+     * @param it
+     */
     Iterator (member_list::iterator it)
-    {
-      _it = it;
-    }
+     : _it (it)
+    {}
 
+    /**
+     * @brief Iterator
+     * @param other
+     */
     Iterator (const Iterator & other)
-    {
-      _it = other._it;
-    }
+      : _it (other._it)
+    {}
 
+    /**
+     * @brief ~Iterator
+     */
+    virtual ~Iterator () = default;
+
+    /**
+     * @brief operator ++
+     * @return
+     */
     Iterator &
     operator ++()
     {
@@ -208,14 +224,68 @@ public:
       return *this;
     }
 
+    /**
+     * @brief operator ++
+     * @return
+     */
+    Iterator
+    operator ++(int)
+    {
+      Iterator it (*this);
+      ++(*this);
+      return it;
+    }
+
+    /**
+     * @brief operator ==
+     * @param rhs
+     * @return
+     */
+    inline bool
+    operator ==(const Iterator &rhs)
+    { return _it == rhs._it; }
+
+    /**
+     * @brief operator !=
+     * @param rhs
+     * @return
+     */
+    inline bool
+    operator !=(const Iterator &rhs)
+    { return ! operator ==(rhs); }
+
+    /**
+     * @brief operator *
+     * @return
+     */
     reference
     operator *()
     { return *(*_it).second; }
 
   protected:
 
+      /**
+       * @brief _it
+       */
       member_list::iterator _it;
+
   }; // Iterator
+
+  /**
+   * @brief begin
+   * @return
+   */
+  Iterator
+  begin () const
+  { return Iterator (_member_list.begin ()); }
+
+  /**
+   * @brief end
+   * @return
+   */
+  Iterator
+  end () const
+  { return Iterator (_member_list.end ()); }
 
 protected:
 
@@ -276,8 +346,6 @@ protected:
    */
   virtual Value *
   clone (const Value &other);
-
-
 };
 
 #endif // OBJECT_H
