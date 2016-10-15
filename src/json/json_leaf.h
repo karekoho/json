@@ -128,6 +128,81 @@ public:
   erase (const Value &) noexcept final override
   { return *this; }
 
+  /**
+   * @brief The Iterator class
+   */
+  class Iterator : public std::iterator<
+      std::input_iterator_tag,
+      Value *,        // Type
+      Value *,        // Distance
+      Value *,
+      Value &
+      >
+  {
+  public:
+
+    Iterator (Leaf *value = 0)
+      : _value (value)
+    {
+    }
+
+    ~Iterator () = default;
+
+    /**
+     * @brief operator ++
+     * @return
+     */
+    Iterator &
+    operator ++()
+    {
+      _value++;
+      return *this;
+    }
+
+    /**
+     * @brief operator ++
+     * @return
+     */
+    Iterator
+    operator ++(int)
+    {
+      Iterator it (*this);
+      ++(*this);
+      return it;
+    }
+
+    /**
+     * @brief operator ==
+     * @param rhs
+     * @return
+     */
+    inline bool
+    operator ==(const Iterator &rhs)
+    { return _value == rhs._value; }
+
+    /**
+     * @brief operator !=
+     * @param rhs
+     * @return
+     */
+    inline bool
+    operator !=(const Iterator &rhs)
+    { return ! operator ==(rhs); }
+
+    /**
+     * @brief operator *
+     * @return
+     */
+    reference
+    operator *()
+    { return *_value; }
+
+  protected:
+
+    Leaf *_value;
+
+  }; // Iterator
+
 protected:
 
   /**
@@ -149,14 +224,6 @@ protected:
    */
   virtual Value *
   clone (const Value &) = 0;
-
-  /**
-   * @brief The Iterator class
-   */
-  class Iterator : public std::iterator<std::input_iterator_tag, std::string, Value *>
-  {
-
-  };
 };
 
 #endif // LEAF_H
