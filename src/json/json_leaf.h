@@ -2,6 +2,7 @@
 #define LEAF_H
 
 #include "json_value.h"
+// #include "json_undefined.h"
 
 class Leaf : public Value
 {
@@ -124,6 +125,10 @@ public:
   stringify () noexcept final override
   { return strValue (); }
 
+  /**
+   * @brief erase
+   * @return
+   */
   virtual Value &
   erase (const Value &) noexcept final override
   { return *this; }
@@ -141,11 +146,23 @@ public:
   {
   public:
 
+    /**
+     * @brief Iterator
+     * @param value
+     */
     Iterator (Leaf *value = 0)
       : _value (value)
-    {
-    }
+    {}
 
+    /**
+     * @brief Iterator
+     * @param other
+     */
+    Iterator (const Iterator &other) = default;
+
+    /**
+      * @brief ~Iterator
+      */
     ~Iterator () = default;
 
     /**
@@ -195,13 +212,37 @@ public:
      */
     reference
     operator *()
-    { return *_value; }
+    {
+      if (_value == 0)
+        throw "iterator not derefenceable";   // TODO: throw out_of_range
+
+      return *_value;
+    }
 
   protected:
 
+    /**
+     * @brief _value
+     */
     Leaf *_value;
 
   }; // Iterator
+
+  /**
+   * @brief begin
+   * @return
+   */
+  Iterator
+  begin ()
+  { return Iterator (this); }
+
+  /**
+   * @brief end
+   * @return
+   */
+  Iterator
+  end ()
+  { return Iterator (this + 1); }
 
 protected:
 

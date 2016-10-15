@@ -276,7 +276,7 @@ public:
    * @return
    */
   Iterator
-  begin () const
+  begin ()
   { return Iterator (_member_list.begin ()); }
 
   /**
@@ -284,7 +284,7 @@ public:
    * @return
    */
   Iterator
-  end () const
+  end ()
   { return Iterator (_member_list.end ()); }
 
 protected:
