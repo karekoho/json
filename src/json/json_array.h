@@ -198,6 +198,101 @@ public:
   virtual Value &
   erase (const Value &v) noexcept  override;
 
+  /**
+   * @brief The Iterator class
+   */
+  class Iterator : public std::iterator<
+      std::input_iterator_tag,
+      Value *,  // Type
+      Value *,  // Distance
+      Value *,
+      Value &>
+  {
+    public:
+
+    /**
+     * @brief Iterator
+     */
+    Iterator () {}
+
+    /**
+     * @brief Iterator
+     * @param it
+     */
+    Iterator (element_list::iterator it)
+     : _it (it)
+    {}
+
+    /**
+     * @brief Iterator
+     * @param other
+     */
+    Iterator (const Iterator & other)
+      : _it (other._it)
+    {}
+
+    /**
+     * @brief ~Iterator
+     */
+    virtual ~Iterator () = default;
+
+    /**
+     * @brief operator ++
+     * @return
+     */
+    Iterator &
+    operator ++()
+    {
+      ++_it;
+      return *this;
+    }
+
+    /**
+     * @brief operator ++
+     * @return
+     */
+    Iterator
+    operator ++(int)
+    {
+      Iterator it (*this);
+      ++(*this);
+      return it;
+    }
+
+    /**
+     * @brief operator ==
+     * @param rhs
+     * @return
+     */
+    inline bool
+    operator ==(const Iterator &rhs)
+    { return _it == rhs._it; }
+
+    /**
+     * @brief operator !=
+     * @param rhs
+     * @return
+     */
+    inline bool
+    operator !=(const Iterator &rhs)
+    { return ! operator ==(rhs); }
+
+    /**
+     * @brief operator *
+     * @return
+     */
+    reference
+    operator *()
+    { return **_it; }
+
+    protected:
+
+      /**
+       * @brief _it
+       */
+      element_list::iterator _it;
+  }; // Iterator
+
 protected:
 
   /**
@@ -251,14 +346,6 @@ protected:
    */
   virtual Value *
   clone (const Value &other) override;
-
-  /**
-   * @brief The Iterator class
-   */
-  class Iterator : public std::iterator<std::input_iterator_tag, Value *>
-  {
-
-  };
 };
 
 #endif // ARRAY
