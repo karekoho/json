@@ -15,6 +15,11 @@ Object::Object (const char *json)
   (void) parse (json);
 }
 
+Object::Object(std::initializer_list<std::pair<std::string, Value *>> il)
+  : JSON(), _member_list (il.begin (), il.end ())
+{
+}
+
 Object::Object (JSON *parent)
   : JSON::JSON (parent)
 {

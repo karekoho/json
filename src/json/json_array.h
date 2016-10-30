@@ -52,6 +52,12 @@ public:
 
   /**
    * @brief Array
+   * @param l elements
+   */
+  Array (std::initializer_list<Value *> il);
+
+  /**
+   * @brief Array
    * @param endp
    * @param parent
    * @param charc

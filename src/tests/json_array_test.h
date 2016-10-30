@@ -15,15 +15,12 @@ public:
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
-        Array *a[] = {
-          new Array,
-          new Array ("[]"),
-          new Array (p[pidx]),
+        Array a[] = {
+          Array (),
+          Array ("[]"),
+          Array (p[pidx]),
+          Array ({new Number (1), new Number (2)}),
         };
-
-        delete a[0];
-        delete a[1];
-        delete a[2];
       }
 
     delete p[1];

@@ -11,6 +11,11 @@ Array::Array (const char *json)
   (void) parse (json);
 }
 
+Array::Array(std::initializer_list<Value *> il)
+  : JSON (), _element_list (il)
+{
+}
+
 Array::Array (JSON *parent)
   : JSON (parent)
 {

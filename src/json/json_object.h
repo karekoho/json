@@ -36,6 +36,12 @@ public:
    */
   Object (const char *json);
 
+  /**
+   * @brief Object
+   * @param il
+   */
+  Object (std::initializer_list<std::pair<std::string, Value *>> il);
+
 /**
    * @brief Object
    * @param endp

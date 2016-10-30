@@ -7,6 +7,7 @@
 
 #include <unordered_map>
 #include <vector>
+#include <initializer_list>
 
 #define CURSOR  0
 #define BEGIN  1

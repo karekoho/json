@@ -22,6 +22,7 @@ public:
           Object (),
           Object ("{}"),
           Object (p[pidx]),
+          Object ({{"1", new Number (1)}, {"2", new Number (2)}})
         };
       }
 
