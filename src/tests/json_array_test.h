@@ -19,7 +19,7 @@ public:
           Array (),
           Array ("[]"),
           Array (p[pidx]),
-          Array ({new Number (1), new Number (2)}),
+          Array {new Number (1)},
         };
       }
 
