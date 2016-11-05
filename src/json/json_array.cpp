@@ -5,7 +5,7 @@
 
 Array::Array () : JSON () {}
 
-Array::Array (const char *json)
+Array::Array (const wchar_t *json)
   : JSON (json, false)
 {
   (void) parse (json);
@@ -38,8 +38,7 @@ Array::~Array ()
   _clear ();
 }
 
-const char *
-Array::parse (const char *json)
+const wchar_t *Array::parse(const wchar_t *json)
 {
   if (json == 0)
     throw JSON::error ("error: null string given");
@@ -198,12 +197,12 @@ Array::strLength () const noexcept
   return len;
 }
 
-const char *
+const wchar_t *
 Array::strValue () const
 {
   _str_value[CURSOR] = _parent && _parent->_str_value[CURSOR]
       ? _parent->_str_value[CURSOR]
-      : new char[strLength () + 1] ();
+      : new wchar_t[strLength () + 1] ();
 
   _str_value[BEGIN] = _str_value[CURSOR];
 

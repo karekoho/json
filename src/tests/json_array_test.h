@@ -17,7 +17,7 @@ public:
       {
         Array a[] = {
           Array (),
-          Array ("[]"),
+          Array (L"[]"),
           Array (p[pidx]),
           Array {new Number (1)},
         };
@@ -25,7 +25,7 @@ public:
 
     delete p[1];
 
-    Array src = "[true]";
+    Array src = L"[true]";
     Array copy = src;
 
     CPPUNIT_ASSERT_MESSAGE ("array", & copy != & src);
@@ -37,7 +37,7 @@ public:
   test_parse_1 ()
   {
     struct assert {
-      const char *startp;
+      const wchar_t *startp;
       size_t size;
       Value::object_type type; 
       int moveback;
@@ -45,21 +45,21 @@ public:
     };
 
     std::vector<struct assert> test = {
-      { "[]", 0, Value::object_type::array, 0, PASS },
-      { "[ ] ", 0, Value::object_type::array, 1, PASS },
-      { "[\"x\"]", 1, Value::object_type::array, 0, PASS },
-      { "[\"x\",\"x\"] ", 2, Value::object_type::array, 1, PASS },
-      { "[\"x\",\"x\",[\"x\"]] ", 3,  Value::object_type::array, 1, PASS },
+      { L"[]", 0, Value::object_type::array, 0, PASS },
+      { L"[ ] ", 0, Value::object_type::array, 1, PASS },
+      { L"[\"x\"]", 1, Value::object_type::array, 0, PASS },
+      { L"[\"x\",\"x\"] ", 2, Value::object_type::array, 1, PASS },
+      { L"[\"x\",\"x\",[\"x\"]] ", 3,  Value::object_type::array, 1, PASS },
 
       // errors
-      { "[", 0, Value::object_type::undefined, 0, FAIL },
-      { "[ ", 0, Value::object_type::undefined, 0, FAIL },
-      { "]", 0, Value::object_type::undefined, 0, FAIL },
-      { "[, ", 0, Value::object_type::undefined, 0, FAIL },
-      { "[ x ", 0, Value::object_type::undefined, 0, FAIL },
-      { "", 0, Value::object_type::undefined, 0, FAIL },
-      { " ", 0, Value::object_type::undefined, 0, FAIL },
-      { "x", 0, Value::object_type::undefined, 0, FAIL },
+      { L"[", 0, Value::object_type::undefined, 0, FAIL },
+      { L"[ ", 0, Value::object_type::undefined, 0, FAIL },
+      { L"]", 0, Value::object_type::undefined, 0, FAIL },
+      { L"[, ", 0, Value::object_type::undefined, 0, FAIL },
+      { L"[ x ", 0, Value::object_type::undefined, 0, FAIL },
+      { L"", 0, Value::object_type::undefined, 0, FAIL },
+      { L" ", 0, Value::object_type::undefined, 0, FAIL },
+      { L"x", 0, Value::object_type::undefined, 0, FAIL },
     };
 
     JSON *p[] = { 0, new JSON () };
@@ -67,14 +67,14 @@ public:
     TEST_IT_START
       for (size_t pidx = 0; pidx < 2; pidx++)
         {
-          const char *startp = (*it).startp;
-          size_t charc =strlen (startp);
+          const wchar_t *startp = (*it).startp;
+          size_t charc = wcslen (startp);
           Array *a = new Array (p[pidx]);
 
-          const char *readp = a->parse (startp);
+          const wchar_t *readp = a->parse (startp);
 
           ASSERT_EQUAL_IDX ("array.readp", (startp + charc) - (*it).moveback, readp);
-          ASSERT_EQUAL_IDX ("*(array.readp - 1)", ']', *(readp - 1));
+          ASSERT_EQUAL_IDX ("*(array.readp - 1)", L']', *(readp - 1));
           ASSERT_EQUAL_IDX ("array.size", (*it).size, a->count ());
 
           delete a;
@@ -86,19 +86,19 @@ public:
   test_index ()
   {
     struct assert {
-      const char *startp;
+      const wchar_t *startp;
       // const char *key;
       int assert_status;
     };
 
     std::vector<struct assert > test = {
-      { "[]", PASS },
-      { "[ ] ", PASS },
-      { "[\"a\",\"b\",\"c\"]", PASS },
+      { L"[]", PASS },
+      { L"[ ] ", PASS },
+      { L"[\"a\",\"b\",\"c\"]", PASS },
     };
 
     TEST_IT_START;
-      const char *startp = (*it).startp;
+      const wchar_t *startp = (*it).startp;
       Array *a = new Array ();
 
       (void) a->parse (startp);
@@ -132,19 +132,19 @@ public:
     struct assert {
       Value *new_value;
       Value::object_type type;
-      const char *key;
+      const wchar_t *key;
       size_t index;
       size_t count;
       int assert_status[3];
     };
 
     std::vector<struct assert > test = {
-      { new Array ("[true,false]"), Value::array, "key_2",  0, 1,  { PASS, PASS, PASS } },
-      { new Object ("{\"k1\":true,\"k2\":false}"), Value::object, "key_1",  0, 2,  { PASS, PASS, FAIL } },
-      { new String ("\"x\""), Value::string, "key_3",  0, 3,  { PASS, PASS, FAIL } },
-      { new Number (), Value::number, "key_4",  0, 4, { PASS, PASS, FAIL } },
-      { new Boolean (true), Value::boolean, "key_5",  0, 5, { PASS, PASS, FAIL } },
-      { new Null (), Value::null, "key_6",  0, 6, { PASS, PASS, FAIL } }
+      { new Array (L"[true,false]"), Value::array, L"key_2",  0, 1,  { PASS, PASS, PASS } },
+      { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object, L"key_1",  0, 2,  { PASS, PASS, FAIL } },
+      { new String (L"\"x\""), Value::string, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
+      { new Number (), Value::number, L"key_4",  0, 4, { PASS, PASS, FAIL } },
+      { new Boolean (true), Value::boolean, L"key_5",  0, 5, { PASS, PASS, FAIL } },
+      { new Null (), Value::null, L"key_6",  0, 6, { PASS, PASS, FAIL } }
     };
       arr_parent._element_list.reserve (6);
 
@@ -166,7 +166,7 @@ public:
 
           old_value->_element_list.clear ();
           arr_parent._element_list.push_back (new Undefined);
-          old_value->setKey ((*it).key, strlen ((*it).key) /* (*it).keylen */);
+          old_value->setKey ((*it).key, wcslen ((*it).key) /* (*it).keylen */);
 
           (*it).index  = arr_parent._element_list.size () - 1;
           old_value->setIndex ((*it).index);
@@ -284,7 +284,7 @@ public:
   virtual void
   test__clear ()
   {
-    Array a = "[true, false]";
+    Array a = L"[true, false]";
     a._clear ();
 
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("array._element_list.size ()", (size_t) 0, a._element_list.size ());
@@ -308,16 +308,16 @@ public:
 
     struct assert
     {
-      const char *input;
+      const wchar_t *input;
       size_t length;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { "[]", 2, PASS },
-      { "[null]", 6, PASS },
-      { "[null,null]", 11, PASS },
-      { "[null,[]]", 9, PASS },
+      { L"[]", 2, PASS },
+      { L"[null]", 6, PASS },
+      { L"[null,null]", 11, PASS },
+      { L"[null,[]]", 9, PASS },
     };
 
     TEST_IT_START
@@ -340,23 +340,23 @@ public:
 
     struct assert
     {
-      const char *input;
-      const char *output[2];
+      const wchar_t *input;
+      const wchar_t *output[2];
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { "[]", { "[]", "[\"x\",[]" }, PASS },  // <-- last closing ] intentionally missing
-      { "[false,[true]]", { "[false,[true]]", "[\"x\",[false,[true]]" }, PASS },  // <-- last closing ] intentionally missing
+      { L"[]", { L"[]", L"[\"x\",[]" }, PASS },  // <-- last closing ] intentionally missing
+      { L"[false,[true]]", { L"[false,[true]]", L"[\"x\",[false,[true]]" }, PASS },  // <-- last closing ] intentionally missing
     };
 
     TEST_IT_START
 
         for (size_t pidx = 0; pidx < 2; pidx++)
           {
-            char *str_value = 0;
+            wchar_t *str_value = 0;
 
-            size_t len = strlen ((*it).output[pidx]);
+            size_t len = wcslen ((*it).output[pidx]);
 
             Array a;
 
@@ -364,8 +364,8 @@ public:
 
             if (a._parent)
               {
-                str_value = new char[len +1 ] ();
-                str_value = strncpy (str_value,  "[\"x\",", 5);
+                str_value = new wchar_t[len +1 ] ();
+                str_value = wcsncpy (str_value,  L"[\"x\",", 5);
 
                 p._str_value[BEGIN]   = str_value;
                 p._str_value[CURSOR]  = str_value + 5;
@@ -373,17 +373,17 @@ public:
 
             (void) a.parse ((*it).input);
 
-            const char *output = a.strValue ();
+            const wchar_t *output = a.strValue ();
 
             if (a._parent == 0)
               {
-                ASSERT_EQUAL_IDX ("strlen (output)", len, strlen (output));
-                CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[0])", strcmp (output, (*it).output[0]) == 0);
+                ASSERT_EQUAL_IDX ("strlen (output)", len, wcslen (output));
+                CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[0])", wcscmp (output, (*it).output[0]) == 0);
               }
             else
               {
-                ASSERT_EQUAL_IDX ("strlen (p._str_value[BEGIN])", len, strlen (p._str_value[BEGIN]));
-                CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[1])", strcmp (p._str_value[BEGIN], (*it).output[1]) == 0);
+                ASSERT_EQUAL_IDX ("strlen (p._str_value[BEGIN])", len, wcslen (p._str_value[BEGIN]));
+                CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[1])", wcscmp (p._str_value[BEGIN], (*it).output[1]) == 0);
               }
 
             // std::cout << p._str_value[BEGIN]  << output  << std::endl;

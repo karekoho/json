@@ -19,7 +19,7 @@ Number::Number (const double value)
 {
 }
 
-Number::Number (const char *json)
+Number::Number (const wchar_t *json)
   : Leaf (json),
     _double_value (0),
     _double_valuep (0),
@@ -57,10 +57,10 @@ Number::Number (const Value *ov, const Number &nv)
   (void) clone (nv);
 }
 
-const char *
-Number::parse (const char *json)
+const wchar_t *
+Number::parse (const wchar_t *json)
 {
-  char peek = 0;
+  wchar_t peek = 0;
 
   if (json == 0)
     throw json;
@@ -119,7 +119,7 @@ Number::parse (const char *json)
 int
 Number::_digits () noexcept
 {
-  const char * const startp = _readp;
+  const wchar_t * const startp = _readp;
 
   while (*_readp != 0 && isdigit (*_readp))
     _readp++;
@@ -127,7 +127,7 @@ Number::_digits () noexcept
   return _readp > startp ? *_readp : -1;
 }
 
-const char *
+const wchar_t *
 Number::_frag ()
 {
   _readp++; // Skip '.'
@@ -145,8 +145,7 @@ Number::_frag ()
   return peek == 'e' || peek == 'E' ? _exp () : _readp;
 }
 
-const char *
-Number::_exp ()
+const wchar_t *Number::_exp()
 {
   _digitp[EXP][START] = ++_readp; // Skip 'e|E'
 
@@ -162,7 +161,7 @@ Number::_exp ()
 }
 
 double
-Number::_calculate (const char * const digitp[2][2])
+Number::_calculate (const wchar_t * const digitp[2][2])
 {
   _double_valuep = & _double_value;
 
@@ -223,16 +222,15 @@ size_t
 Number::strLength () const noexcept
 {
   if (_double_str.empty ())
-    _double_str = std::to_string (_double_value);
+    _double_str = std::to_wstring (_double_value);
 
   return _double_str.length ();
 }
 
-const char *
-Number::strValue () const
+const wchar_t *Number::strValue() const
 {
   if (_double_str.empty ())
-    _double_str = std::to_string (_double_value);
+    _double_str = std::to_wstring (_double_value);
 
   return _double_str.c_str ();
 }

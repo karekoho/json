@@ -42,7 +42,7 @@ public:
    * @brief Number
    * @param json
    */
-  Number (const char *json);
+  Number (const wchar_t *json);
 
   /**
    * @brief Number
@@ -86,8 +86,8 @@ public:
    * @param json
    * @return
    */
-  virtual const char *
-  parse (const char *json);
+  virtual const wchar_t *
+  parse (const wchar_t *json);
 
   /**
    * @brief type
@@ -144,7 +144,7 @@ public:
    * @brief strValue
    * @return
    */
-  virtual const char *
+  virtual const wchar_t *
   strValue () const;
 
 protected:
@@ -162,12 +162,12 @@ protected:
   /**
    * @brief _digitp
    */
-  const char *_digitp[2][2];
+  const wchar_t *_digitp[2][2];
 
   /**
    * @brief _double_str
    */
-  mutable std::string _double_str;
+  mutable std::wstring _double_str;
 
   /**
    * @brief _digits If >= 1 digits found, return last character. Else return -1.
@@ -180,14 +180,14 @@ protected:
    * @brief _frag
    * @return
    */
-  const char *
+  const wchar_t *
   _frag ();
 
   /**
    * @brief _exp_
    * @return
    */
-  const char *
+  const wchar_t *
   _exp ();
 
   /**
@@ -196,7 +196,7 @@ protected:
    * @return
    */
   double
-  _calculate (const char * const digitp[2][2]);
+  _calculate (const wchar_t * const digitp[2][2]);
 
   /**
    * @brief _atof
@@ -204,7 +204,7 @@ protected:
    * @return
    */
   inline double
-  _atof (const char * const digitp[2]) const
+  _atof (const wchar_t * const digitp[2]) const
   { return std::atof (std::string (digitp[0], digitp[1]).c_str ()); }
 
   /**
@@ -213,7 +213,7 @@ protected:
    * @return
    */
   inline long long
-  _atoll (const char * const digitp[2]) const
+  _atoll (const wchar_t * const digitp[2]) const
   { return std::atoll (std::string (digitp[0], digitp[1]).c_str ()); }
 
   /**

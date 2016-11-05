@@ -23,7 +23,7 @@ public:
     };
 
     std::vector<struct assert> test = {
-      { new Object::member_list ({ { "1", new Number(1) }, { "2", new Number (2) }, { "3", new Number (3) } }), 3, PASS },
+      { new Object::member_list ({ { L"1", new Number(1) }, { L"2", new Number (2) }, { L"3", new Number (3) } }), 3, PASS },
       { new Object::member_list (), 0, PASS }
     };
 
@@ -53,7 +53,7 @@ public:
   void
   test_construct_assign_destruct ()
   {
-    Object::member_list list = { { "1", new Boolean } };
+    Object::member_list list = { { L"1", new Boolean } };
 
     Object::Iterator *it[] = {
       new Object::Iterator,
@@ -73,7 +73,7 @@ public:
   void
   test_dereference ()
   {
-    Object::member_list list = { { "1", new Boolean } };
+    Object::member_list list = { { L"1", new Boolean } };
 
     Object::Iterator it (list.begin ());
     Object::Iterator copy = Object::Iterator (it);
@@ -103,7 +103,7 @@ public:
   void
   test_pre_increment ()
   {
-    Object::member_list list = { { "1", new Boolean }, { "2", new Boolean } };
+    Object::member_list list = { { L"1", new Boolean }, { L"2", new Boolean } };
 
     Object::Iterator begin (list.begin ());
     Object::Iterator end (list.end ());
@@ -121,7 +121,7 @@ public:
   void
   test_post_increment ()
   {
-    Object::member_list list = { { "1", new Boolean } };
+    Object::member_list list = { { L"1", new Boolean } };
 
     Object::Iterator begin (list.begin ());
     Object::Iterator current = begin;
@@ -135,7 +135,7 @@ public:
   void
   test_begin_end ()
   {
-    Object o = "{\"1\":true,\"2\":false}";
+    Object o = L"{\"1\":true,\"2\":false}";
 
     Object::Iterator begin (o._member_list.begin ());
     Object::Iterator end (o._member_list.end ());

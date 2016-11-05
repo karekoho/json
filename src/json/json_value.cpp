@@ -3,9 +3,9 @@
 #include <stdlib.h>
 
 const struct Value::literal_value Value::__ltr_value[3] = {
-  { "true", 4, Value::_literal::true_value },
-  { "false", 5, Value::_literal::false_value },
-  { "null", 4, Value::_literal::null_value }
+  { L"true", 4, Value::_literal::true_value },
+  { L"false", 5, Value::_literal::false_value },
+  { L"null", 4, Value::_literal::null_value }
 };
 
 Value::Value ()
@@ -19,7 +19,7 @@ Value::Value ()
 {
 }
 
-Value::Value (const char *)
+Value::Value (const wchar_t *)
     : _startp (0),
       _readp (0),
       _parent (0),
@@ -46,7 +46,7 @@ Value::Value (const Value &other)
     _readp (other._readp),
     _parent (0),
     // _length (other._length),
-    _key (other._key ? strdup (other._key) : 0),
+    _key (other._key ? wcsdup (other._key) : 0),
     _index (other._index),
     _old_value (0)
 {
@@ -56,7 +56,7 @@ Value::Value (const Value *ov, const Value &nv)
   : _startp (nv._startp),
     _readp (nv._readp),
     _parent (0),
-    _key (nv._key ? strdup (nv._key) : 0),
+    _key (nv._key ? wcsdup (nv._key) : 0),
     _index (nv._index),
     _old_value (0)
 {
@@ -66,23 +66,23 @@ Value::Value (const Value *ov, const Value &nv)
 
 Value::~Value ()
 {
-  free ((char *)_key);
+  free ((wchar_t *)_key);
 
   delete _old_value;
   _old_value = 0;
 }
 
 long int
-Value::_string (char & endc) const noexcept
+Value::_string (wchar_t &endc) const noexcept
 {
-  const char * const starp = _readp;
+  const wchar_t * const starp = _readp;
 
   if (*starp != _sc::double_quote) {
         endc = *starp;
         return 0;
     }
 
-    const char * readp = _readp + 1;
+    const wchar_t * readp = _readp + 1;
 
     while (*readp != 0 && *readp != _sc::double_quote) {
         readp++;
@@ -96,7 +96,7 @@ Value::_string (char & endc) const noexcept
 Value::_literal
 Value::_is_literal (const int _try) const noexcept
 {
-  const char *readp = _readp;
+  const wchar_t *readp = _readp;
 
   size_t idx = 0;
 

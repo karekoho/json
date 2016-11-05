@@ -3,7 +3,7 @@
 
 String::String() : Leaf (), _charc (0) {}
 
-String::String (const char *json)
+String::String (const wchar_t *json)
   : Leaf (json),
     _charc (0)
 {
@@ -33,10 +33,9 @@ String::String (const Value *ov, const String &nv)
   clone (nv);
 }
 
-const char *
-String::parse (const char *json)
+const wchar_t *String::parse(const wchar_t *json)
 {
-  char endc   = 0;
+  wchar_t endc   = 0;
   long charc  = 0;
 
   _startp =_readp = json;
@@ -60,7 +59,7 @@ String::_assign (const String &nv)
   return _parent ? _parent->assign (this, new String (this, nv)) : *(clone (nv));
 }
 
-const char *
+const wchar_t *
 String::value () const
 {
   if (_string_value[0].empty () && _startp && _charc > 0)
@@ -69,11 +68,11 @@ String::value () const
   return _string_value[0].c_str ();
 }
 
-const char *
-String::strValue () const
+const wchar_t *
+String::strValue() const
 {
   if (_startp == 0 || _charc == 0)
-    return "";
+    return L"";
 
   if (_string_value[1].empty ())
     _string_value[1].assign (_startp, _charc);

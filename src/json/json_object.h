@@ -23,7 +23,7 @@ class Object : public JSON
 
 public:
 
-  typedef std::unordered_map<std::string, Value *> member_list;
+  typedef std::unordered_map<std::wstring, Value *> member_list;
 
   /**
    * @brief Object
@@ -34,13 +34,13 @@ public:
    * @brief Object
    * @param JSON
    */
-  Object (const char *json);
+  Object (const wchar_t *json);
 
   /**
    * @brief Object
    * @param il
    */
-  Object (std::initializer_list<std::pair<std::string, Value *>> il);
+  Object (std::initializer_list<std::pair<std::wstring, Value *>> il);
 
 /**
    * @brief Object
@@ -91,8 +91,8 @@ public:
    * @param JSON
    * @return
    */
-  virtual const char *
-  parse (const char *json);
+  virtual const wchar_t *
+  parse (const wchar_t *json);
 
   /**
    * @brief at
@@ -100,7 +100,7 @@ public:
    * @return
    */
   virtual Value &
-  at (const char *key) const;
+  at (const wchar_t *key) const;
 
   /**
    * @brief at
@@ -155,7 +155,7 @@ public:
    * @brief stringify
    * @return
    */
-  virtual const char *
+  virtual const wchar_t *
   stringify () noexcept override
   { return strValue (); }
 
@@ -170,7 +170,7 @@ public:
    * @brief strValue
    * @return
    */
-  virtual const char *
+  virtual const wchar_t *
   strValue () const;
 
   /**
@@ -321,7 +321,7 @@ protected:
    * @return
    */
   virtual Value &
-  _at (const char *key);
+  _at (const wchar_t *key);
 
   /**
    * @brief _assign

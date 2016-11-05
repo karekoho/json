@@ -36,12 +36,12 @@ protected:
   /**
    * @brief _begin
    */
-  std::unordered_map<std::string, Value *>::const_iterator _begin;
+  std::unordered_map<std::wstring, Value *>::const_iterator _begin;
 
   /**
    * @brief _begin
    */
-  std::unordered_map<std::string, Value *>::const_iterator _end;
+  std::unordered_map<std::wstring, Value *>::const_iterator _end;
 };
 
 #endif // OBJECT_ITERATOR_H

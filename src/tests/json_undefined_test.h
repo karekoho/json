@@ -54,19 +54,19 @@ public:
     struct assert {
       Value *new_value;
       Value::object_type type;
-      const char *key;
+      const wchar_t *key;
       size_t index;
       size_t count;
       int assert_status[3];
     };
 
     std::vector<struct assert > test = {
-      { new Array ("[true,false]"), Value::array, "key_1",  0, 1,  { PASS, PASS, FAIL } },
-      { new Object ("{\"k1\":true,\"k2\":false}"), Value::object, "key_2",  0, 2, { PASS, PASS, FAIL } },
-      { new String ("\"xxx\""), Value::string, "key_3",  0, 3,  { PASS, PASS, FAIL } },
-      { new Number (10), Value::number, "key_4",  0, 4, { PASS, PASS, FAIL } },
-      { new Boolean (true), Value::boolean, "key_6",  0, 5, { PASS, PASS, FAIL } },
-      { new Null, Value::null, "key_7",  0, 6, { PASS, PASS, FAIL } }
+      { new Array (L"[true,false]"), Value::array, L"key_1",  0, 1,  { PASS, PASS, FAIL } },
+      { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object, L"key_2",  0, 2, { PASS, PASS, FAIL } },
+      { new String (L"\"xxx\""), Value::string, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
+      { new Number (10), Value::number, L"key_4",  0, 4, { PASS, PASS, FAIL } },
+      { new Boolean (true), Value::boolean, L"key_6",  0, 5, { PASS, PASS, FAIL } },
+      { new Null, Value::null, L"key_7",  0, 6, { PASS, PASS, FAIL } }
     };
 
     for (size_t pidx = 0; pidx < 3; pidx++)
@@ -85,7 +85,7 @@ public:
           old_value->_parent = parents[pidx];
 
           arr_parent._element_list.push_back (new Undefined);
-          old_value->setKey ((*it).key, strlen ((*it).key));
+          old_value->setKey ((*it).key, wcslen ((*it).key));
 
           (*it).index  = arr_parent._element_list.size () - 1;
           old_value->setIndex ((*it).index);

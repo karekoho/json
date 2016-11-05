@@ -16,7 +16,7 @@ public:
       {
         String *a[] = {
           new String (),
-          new String ("\"x\""),
+          new String (L"\"x\""),
           new String (p[pidx], 1),
         };
 
@@ -27,12 +27,12 @@ public:
 
     delete p[1];
 
-    String src = "\"xxx\"";
+    String src = L"\"xxx\"";
     String copy = src;
 
     CPPUNIT_ASSERT_MESSAGE ("string", & copy != & src);
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("src._string_value.empty ()", true, src._string_value[0].empty () );
-    CPPUNIT_ASSERT_MESSAGE ("copy.value ()", strcmp ("xxx", copy.value ()) == 0);
+    CPPUNIT_ASSERT_MESSAGE ("copy.value ()", wcscmp (L"xxx", copy.value ()) == 0);
   }
 
   virtual void
@@ -42,38 +42,38 @@ public:
 
       struct assert
       {
-        const char *startp;
+        const wchar_t *startp;
         size_t charc;
-        char endc;
+        wchar_t endc;
         int assert_status;
       };
 
       std::vector<struct assert > test = {
-          { "\"\"", 0, (char) 0, PASS },
-          { "\"xxx\"", 3, (char) 0, PASS },
-          { "\" xxx \"", 5, (char) 0, PASS },
-          { "\" xxx \" ", 5, ' ', PASS },
+          { L"\"\"", 0, (wchar_t) 0, PASS },
+          { L"\"xxx\"", 3, (wchar_t) 0, PASS },
+          { L"\" xxx \"", 5, (wchar_t) 0, PASS },
+          { L"\" xxx \" ", 5, L' ', PASS },
       };
 
       TEST_IT_START
           for (int pidx = 0; pidx < 2; pidx++)
             {
-              const char *startp = (*it).startp;
+              const wchar_t *startp = (*it).startp;
               size_t move = (*it).charc + 2;
 
               String *s = new String (p[pidx], move);
 
-              std::string ss = s->value ();
+              std::wstring ss = s->value ();
 
               CPPUNIT_ASSERT_MESSAGE ("string.empty ()", ss.empty () );
 
-              const char *readp = s->parse (startp);
+              const wchar_t *readp = s->parse (startp);
               ss = s->value ();
 
               // std::cout << readp << "" << ss.length () << " " << ss << std::endl;
 
               ASSERT_EQUAL_IDX ("string.readp", readp, startp + move);
-              ASSERT_EQUAL_IDX ("*(string.readp)", (char)* readp, (*it).endc);
+              ASSERT_EQUAL_IDX ("*(string.readp)", (wchar_t)* readp, (*it).endc);
               ASSERT_EQUAL_IDX ("string.length", (*it).charc, ss.length () );
 
               delete s;
@@ -98,19 +98,19 @@ public:
       struct assert {
         Value *new_value;
         Value::object_type type;
-        const char *key;
+        const wchar_t *key;
         size_t index;
         size_t count;
         int assert_status[3];
       };
 
       std::vector<struct assert > test = {
-        { new Array ("[true,false]"), Value::array, "key_1",  0, 1,  { PASS, PASS, FAIL } },
-        { new Object ("{\"k1\":true,\"k2\":false}"), Value::object, "key_2",  0, 2,  { PASS, PASS, FAIL } },
-        { new String ("\"xxx\""), Value::string, "key_3",  0, 3,  { PASS, PASS, PASS } },
-        { new Number (10), Value::number, "key_4",  0, 4, { PASS, PASS, FAIL } },
-        { new Boolean (true), Value::boolean, "key_6",  0, 5, { PASS, PASS, FAIL } },
-        { new Null, Value::null, "key_7",  0, 6, { PASS, PASS, FAIL } }
+        { new Array (L"[true,false]"), Value::array, L"key_1",  0, 1,  { PASS, PASS, FAIL } },
+        { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object, L"key_2",  0, 2,  { PASS, PASS, FAIL } },
+        { new String (L"\"xxx\""), Value::string, L"key_3",  0, 3,  { PASS, PASS, PASS } },
+        { new Number (10), Value::number, L"key_4",  0, 4, { PASS, PASS, FAIL } },
+        { new Boolean (true), Value::boolean, L"key_6",  0, 5, { PASS, PASS, FAIL } },
+        { new Null, Value::null, L"key_7",  0, 6, { PASS, PASS, FAIL } }
       };
 
       for (size_t pidx = 0; pidx < 3; pidx++)
@@ -129,7 +129,7 @@ public:
             old_value->_parent = parents[pidx];
 
             arr_parent._element_list.push_back (new Undefined);
-            old_value->setKey ((*it).key, strlen ((*it).key));
+            old_value->setKey ((*it).key, wcslen ((*it).key));
 
             (*it).index  = arr_parent._element_list.size () - 1;
             old_value->setIndex ((*it).index);
@@ -176,7 +176,7 @@ public:
               }
             else if (new_value->type () == Value::string)
               {
-                CPPUNIT_ASSERT_MESSAGE ("old_value.value ()", strcmp ("xxx", old_value->value ()) == 0);
+                CPPUNIT_ASSERT_MESSAGE ("old_value.value ()", wcscmp (L"xxx", old_value->value ()) == 0);
               }
 
             TEST_IT_END;

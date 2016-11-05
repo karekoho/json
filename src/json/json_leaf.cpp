@@ -4,7 +4,7 @@
 #include "json_undefined.h"
 
 Value &
-Leaf::at (const char *) const
+Leaf::at (const wchar_t *) const
 {
   return *(new Undefined);
 }
@@ -16,7 +16,7 @@ Leaf::at (size_t) const
 }
 
 Value &
-Leaf::_at (const char *)
+Leaf::_at (const wchar_t *)
 {
   return *(new Undefined);
 }

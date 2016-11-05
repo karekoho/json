@@ -10,7 +10,7 @@
 
 JSON::JSON () : Value (), __root (0) {}
 
-JSON::JSON (const char *json, const bool _parse)
+JSON::JSON (const wchar_t *json, const bool _parse)
   : Value (json),
     _str_value { 0, 0 },
     __root (0)
@@ -50,8 +50,8 @@ JSON::~JSON ()
   delete __root;
 }
 
-const char *
-JSON::JSON::parse (const char *readp)
+const wchar_t *
+JSON::JSON::parse (const wchar_t *readp)
 {
   if (readp == 0 || *readp == 0)
     throw readp;
@@ -96,7 +96,7 @@ JSON::_assign (const Value &v)
 }
 
 Value &
-JSON::_at (const char *key)
+JSON::_at (const wchar_t *key)
 {
   if (! __hasRoot ())
     throw JSON::out_of_range ();
@@ -110,8 +110,8 @@ JSON::_make_value ()
   Value *value_  = 0;
   long int charc = 0;
 
-  char endc = 0;
-  char readc = *(_look_ahead ());
+  wchar_t endc = 0;
+  wchar_t readc = *(_look_ahead ());
 
   if (readc == _sc::double_quote)           // String
     {

@@ -19,7 +19,7 @@ public:
         Number *n[] = {
           new Number,
           new Number (10),
-          new Number ("10"),
+          new Number (L"10"),
           new Number (p[pidx]),
         };
 
@@ -33,7 +33,7 @@ public:
 
     Number src[] = {
       Number (10),
-      Number ("100")
+      Number (L"100")
     };
 
     Number copy[] = {
@@ -59,35 +59,35 @@ public:
 
     struct assert
     {
-      const char *starp;
+      const wchar_t *starp;
       size_t move;
       double dval;
       int assert_status;
     };
 
     std::vector<struct assert > test = {
-        { "0", 1, 0, PASS },
-        { "1 ", 1, 1, PASS },
-        { "-2]", 2, -2, PASS },
-        { "3.3 }", 3, 3.3, PASS },
-        { "0.4, ", 3, 0.4, PASS },
-        { "-0.5 ,", 4, -0.5, PASS },
-        { "6e2", 3, 600, PASS },
-        { "7E2}", 3, 700, PASS },
-        { "8E+2 ] ", 4, 800, PASS },
-        { "9E-2, ", 4, 0.09, PASS },
+        { L"0", 1, 0, PASS },
+        { L"1 ", 1, 1, PASS },
+        { L"-2]", 2, -2, PASS },
+        { L"3.3 }", 3, 3.3, PASS },
+        { L"0.4, ", 3, 0.4, PASS },
+        { L"-0.5 ,", 4, -0.5, PASS },
+        { L"6e2", 3, 600, PASS },
+        { L"7E2}", 3, 700, PASS },
+        { L"8E+2 ] ", 4, 800, PASS },
+        { L"9E-2, ", 4, 0.09, PASS },
 
-        { "x", 1, 0, FAIL },
-        { "00", 1, 0, FAIL },
-        { "05", 2, 0, FAIL },
-        { "+5", 2, 0, FAIL },
-        { "2e", 2, 0, FAIL },
-        { "2eX", 2, 0, FAIL },
+        { L"x", 1, 0, FAIL },
+        { L"00", 1, 0, FAIL },
+        { L"05", 2, 0, FAIL },
+        { L"+5", 2, 0, FAIL },
+        { L"2e", 2, 0, FAIL },
+        { L"2eX", 2, 0, FAIL },
     };
 
     TEST_IT_START
-      const char *startp = (*it).starp;
-      const char *readp = n.parse (startp);
+      const wchar_t *startp = (*it).starp;
+      const wchar_t *readp = n.parse (startp);
 
       n._double_valuep = 0;
 
@@ -112,25 +112,25 @@ public:
 
     struct assert
     {
-      const char *starp;
+      const wchar_t *starp;
       size_t move;
       int peek;
       int assert_status;
     };
 
     std::vector<struct assert > test = {
-        { "123", 3, 0, PASS },
-        { "123x", 3, 'x', PASS },
-        { "0.", 1, '.', PASS },
-        { "123 ", 3, ' ', PASS },
+        { L"123", 3, 0, PASS },
+        { L"123x", 3, L'x', PASS },
+        { L"0.", 1, L'.', PASS },
+        { L"123 ", 3, L' ', PASS },
 
-        { "", 0, -1, PASS },
-        { "x", 0, -1, PASS },
+        { L"", 0, -1, PASS },
+        { L"x", 0, -1, PASS },
     };
 
     TEST_IT_START
 
-        const char *startp = (*it).starp;
+        const wchar_t *startp = (*it).starp;
 
         n._readp = startp;
         // n._endp = startp + strlen (startp);
@@ -150,7 +150,7 @@ public:
 
     struct assert
     {
-      const char *starp;
+      const wchar_t *starp;
       size_t move;
       int peek;
       int assert_status;
@@ -158,19 +158,19 @@ public:
 
     std::vector<struct assert > test = {
 
-        { "5.123 ", 5, ' ', PASS },
-        { "5.123}", 5, '}', PASS },
+        { L"5.123 ", 5, L' ', PASS },
+        { L"5.123}", 5, L'}', PASS },
         // { "5.123e", 5, 'e', PASS },
         // { "5.123E", 5, 'E', PASS },
 
-        { "5.", 2, 0, FAIL },
-        { "5.E", 2, 'E', FAIL },
+        { L"5.", 2, 0, FAIL },
+        { L"5.E", 2, L'E', FAIL },
     };
 
     TEST_IT_START
 
-        const char *startp = (*it).starp;
-        const char *endp = startp + (*it).move;
+        const wchar_t *startp = (*it).starp;
+        const wchar_t *endp = startp + (*it).move;
 
         n._readp = startp + 1;
         // n._endp = startp + strlen (startp);
@@ -190,7 +190,7 @@ public:
     Number n;
 
     struct assert {
-        const char *starp;
+        const wchar_t *starp;
         size_t move[2];
         int peek;
         long long atoll;
@@ -199,22 +199,22 @@ public:
 
     std::vector<struct assert > test = {
 
-        { "2e2 ", { 2, 3 }, ' ', 2, PASS },
-        { "2E3}", { 2, 3 }, '}', 3, PASS },
-        { "2e+4]", { 2, 4 }, ']', 4, PASS },
-        { "2e-5", { 2, 4 }, 0, -5, PASS },
-        { "2e-00005", { 2, 8 }, 0, -5, PASS },
+        { L"2e2 ", { 2, 3 }, L' ', 2, PASS },
+        { L"2E3}", { 2, 3 }, L'}', 3, PASS },
+        { L"2e+4]", { 2, 4 }, L']', 4, PASS },
+        { L"2e-5", { 2, 4 }, 0, -5, PASS },
+        { L"2e-00005", { 2, 8 }, 0, -5, PASS },
 
-        { "2e", { 0, 0 }, 0, 0, FAIL },
-        { "2e ", { 0, 0 }, 0, 0, FAIL },
-        { "2e.", { 0, 0 }, 0, 0, FAIL },
-        { "2e+", { 0, 0 }, 0, 0, FAIL },
+        { L"2e", { 0, 0 }, 0, 0, FAIL },
+        { L"2e ", { 0, 0 }, 0, 0, FAIL },
+        { L"2e.", { 0, 0 }, 0, 0, FAIL },
+        { L"2e+", { 0, 0 }, 0, 0, FAIL },
     };
 
     TEST_IT_START
 
-        const char *startp = (*it).starp;
-        const char *endp = startp + (*it).move[1];
+        const wchar_t *startp = (*it).starp;
+        const wchar_t *endp = startp + (*it).move[1];
 
         n._readp = startp + 1;
         // n._endp = startp + strlen (startp);
@@ -239,7 +239,7 @@ public:
     Number n;
 
     struct assert {
-        const char *starp[2];
+        const wchar_t *starp[2];
         size_t move[2];
         double dval;
         int assert_status;
@@ -247,17 +247,17 @@ public:
 
     std::vector<struct assert > test = {
       { { 0, 0 }, { 0, 0 }, 0, PASS },
-      { { "", "" }, { 0, 0 }, 0, PASS },
-      { { "5", "" }, { 1, 1 }, 5, PASS },
-      { { "5", "0" }, { 1, 1 }, 5, PASS },
-      { { "2", "1" }, { 1, 1 }, 20, PASS },
-      { { "2", "2" }, { 1, 1 }, 200, PASS },
-      { { "2", "-2" }, { 1, 2 }, 0.02, PASS },
+      { { L"", L"" }, { 0, 0 }, 0, PASS },
+      { { L"5", L"" }, { 1, 1 }, 5, PASS },
+      { { L"5", L"0" }, { 1, 1 }, 5, PASS },
+      { { L"2", L"1" }, { 1, 1 }, 20, PASS },
+      { { L"2", L"2" }, { 1, 1 }, 200, PASS },
+      { { L"2", L"-2" }, { 1, 2 }, 0.02, PASS },
     };
 
     TEST_IT_START
 
-      const char *digitp[2][2] = {
+      const wchar_t *digitp[2][2] = {
         { (*it).starp[0], (*it).starp[0] + (*it).move[0] },
         { (*it).starp[1], (*it).starp[1] + (*it).move[1] }
       };
@@ -277,20 +277,20 @@ public:
     Number n;
 
     struct assert {
-        const char *starp;
+        const wchar_t *starp;
         double dval;
         int assert_status;
     };
 
     std::vector<struct assert > test = {
-        { "5.5", 5.5, PASS },
-        { "55.55", 55.55, PASS },
+        { L"5.5", 5.5, PASS },
+        { L"55.55", 55.55, PASS },
     };
 
 
     TEST_IT_START
 
-      const char *digitp[] = { (*it).starp, (*it).starp + strlen ((*it).starp) };
+      const wchar_t *digitp[] = { (*it).starp, (*it).starp + wcslen ((*it).starp) };
 
       double d = n._atof (digitp);
 
@@ -305,19 +305,19 @@ public:
     Number n;
 
     struct assert {
-        const char *starp;
+        const wchar_t *starp;
         long long llval;
         int assert_status;
     };
 
     std::vector<struct assert > test = {
-        { "55", 55, PASS },
-        { "5555", 5555, PASS },
+        { L"55", 55, PASS },
+        { L"5555", 5555, PASS },
     };
 
     TEST_IT_START
 
-      const char *digitp[] = { (*it).starp, (*it).starp + strlen ((*it).starp) };
+      const wchar_t *digitp[] = { (*it).starp, (*it).starp + wcslen ((*it).starp) };
 
       long long ll = n._atoll (digitp);
 
@@ -341,20 +341,20 @@ public:
     struct assert {
       Value *new_value;
       Value::object_type type;
-      const char *key;
+      const wchar_t *key;
       size_t index;
       size_t count;
       int assert_status[3];
     };
 
     std::vector<struct assert > test = {
-      { new Array ("[true,false]"), Value::array, "key_2",  0, 1,  { PASS, PASS, FAIL } },
-      { new Object ("{\"k1\":true,\"k2\":false}"), Value::object, "key_1",  0, 2,  { PASS, PASS, FAIL } },
-      { new String ("\"x\""), Value::string, "key_3",  0, 3,  { PASS, PASS, FAIL } },
-      { new Number (10), Value::number, "key_4",  0, 4, { PASS, PASS, PASS } },
-      { new Number ("10"), Value::number, "key_5",  0, 5, { PASS, PASS, PASS } },
-      { new Boolean (true), Value::boolean, "key_6",  0, 6, { PASS, PASS, FAIL } },
-      { new Null, Value::null, "key_7",  0, 7, { PASS, PASS, FAIL } }
+      { new Array (L"[true,false]"), Value::array, L"key_2",  0, 1,  { PASS, PASS, FAIL } },
+      { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object, L"key_1",  0, 2,  { PASS, PASS, FAIL } },
+      { new String (L"\"x\""), Value::string, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
+      { new Number (10), Value::number, L"key_4",  0, 4, { PASS, PASS, PASS } },
+      { new Number (L"10"), Value::number, L"key_5",  0, 5, { PASS, PASS, PASS } },
+      { new Boolean (true), Value::boolean, L"key_6",  0, 6, { PASS, PASS, FAIL } },
+      { new Null, Value::null, L"key_7",  0, 7, { PASS, PASS, FAIL } }
     };
 
       for (size_t pidx = 0; pidx < 3; pidx++)
@@ -376,7 +376,7 @@ public:
           old_value->_parent = parents[pidx];
 
           arr_parent._element_list.push_back (new Undefined);
-          old_value->setKey ((*it).key, strlen ((*it).key));
+          old_value->setKey ((*it).key, wcslen ((*it).key));
 
           (*it).index  = arr_parent._element_list.size () - 1;
           old_value->setIndex ((*it).index);
@@ -445,12 +445,12 @@ public:
     {
       double df;
       long li;
-      const char *output[2];
+      const wchar_t *output[2];
       int assert_status;
     };
 
     std::vector<struct assert > test = {
-      { 100, 100, { "100.000000", "100.000000" }, PASS }
+      { 100, 100, { L"100.000000", L"100.000000" }, PASS }
     };
 
     TEST_IT_START
@@ -460,8 +460,8 @@ public:
         Number ((*it).li),
       };
 
-      CPPUNIT_ASSERT_MESSAGE ("n[0].strValue ()", strcmp((*it).output[0], n[0].strValue ()) == 0);
-      CPPUNIT_ASSERT_MESSAGE ("n[1].strValue ()", strcmp((*it).output[1], n[1].strValue ()) == 0);
+      CPPUNIT_ASSERT_MESSAGE ("n[0].strValue ()", wcscmp((*it).output[0], n[0].strValue ()) == 0);
+      CPPUNIT_ASSERT_MESSAGE ("n[1].strValue ()", wcscmp((*it).output[1], n[1].strValue ()) == 0);
 
       // std::cout << n[0].strValue () << std::endl;
       // std::cout << n[1].strValue () << std::endl;

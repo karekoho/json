@@ -48,7 +48,7 @@ public:
    * @brief Array
    * @param json
    */
-  Array (const char *json);
+  Array (const wchar_t *json);
 
   /**
    * @brief Array
@@ -105,8 +105,8 @@ public:
    * @param json
    * @return
    */
-  virtual const char *
-  parse ( const char *json);
+  virtual const wchar_t *
+  parse ( const wchar_t *json);
 
   /**
    * @brief at
@@ -185,14 +185,14 @@ public:
    * @brief strValue
    * @return
    */
-  virtual const char *
+  virtual const wchar_t *
   strValue () const;
 
   /**
    * @brief stringify
    * @return
    */
-  virtual const char *
+  virtual const wchar_t *
   stringify () noexcept
   { return strValue (); }
 

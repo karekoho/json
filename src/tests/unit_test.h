@@ -11,6 +11,7 @@
 #include <ctype.h>
 #include <vector>
 #include <cstring>
+#include <wchar.h>
 
 #include "../json/json.h"
 
@@ -114,11 +115,11 @@ public:
     _errorc[0] =_errorc[1] = _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0;
   }
 
-  std::unordered_map<std::string, Value *> &
-  member_list_clear (std::unordered_map<std::string, Value *> & m)
+  std::unordered_map<std::wstring, Value *> &
+  member_list_clear (std::unordered_map<std::wstring, Value *> & m)
   {
     for (auto it = m.begin (); it != m.end (); it = m.erase (it))
-      delete static_cast <std::pair<std::string, Value *>>(*it).second;
+      delete static_cast <std::pair<std::wstring, Value *>>(*it).second;
 
     return m;
   }

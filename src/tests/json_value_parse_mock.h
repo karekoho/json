@@ -12,12 +12,12 @@ public:
 
     virtual ~json_value_mock () {}
 
-    virtual const char *
-    parse (const char *readp)
+    virtual const wchar_t *
+    parse (const wchar_t *readp)
     { return readp; }
 
     virtual Value &
-    at (const char *) const
+    at (const wchar_t *) const
     { return *(new Undefined); }
 
     virtual Value &
@@ -44,14 +44,14 @@ public:
     iterator () const override
     { return new Leaf_Iterator (this); }
 
-    virtual const char *stringify () noexcept override
-    { return ""; }
+    virtual const wchar_t *stringify () noexcept override
+    { return L""; }
 
     virtual size_t strLength () const noexcept override
     { return 0; }
 
-    virtual const char * strValue () const
-    { return ""; }
+    virtual const wchar_t * strValue () const
+    { return L""; }
 
     virtual Value & erase (const Value &) noexcept override
     { return *this; }
@@ -63,7 +63,7 @@ public:
 protected:
 
     virtual  Value &
-    _at (const char *)
+    _at (const wchar_t *)
     { return *this; }
 
     virtual void _clear () override

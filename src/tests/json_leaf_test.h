@@ -27,15 +27,15 @@ public:
     {
       Leaf *value;
       size_t output_len[2];
-      const char *output[2];
+      const wchar_t *output[2];
       int assert_status;
     };
 
     std::vector<struct assert > test = {
-      { new String ("\"x\""), { 3, 4 }, { "\"x\"", "x\"x\"" }, PASS },
-      { new Number (100), { 10, 11 }, { "100.000000", "x100.000000" }, PASS },
-      { new Boolean (), { 5, 6 }, { "false", "xfalse" }, PASS },
-      { new Null (), { 4, 5 }, { "null", "xnull" }, PASS },
+      { new String (L"\"x\""), { 3, 4 }, { L"\"x\"", L"x\"x\"" }, PASS },
+      { new Number (100), { 10, 11 }, { L"100.000000", L"x100.000000" }, PASS },
+      { new Boolean (), { 5, 6 }, { L"false", L"xfalse" }, PASS },
+      { new Null (), { 4, 5 }, { L"null", L"xnull" }, PASS },
     };
 
     for (size_t pidx = 0; pidx < 1; pidx++)
@@ -46,25 +46,25 @@ public:
 
               if (p == 0)   // No parent
                 {
-                  const char *output = (*it).value->stringify ();
+                  const wchar_t *output = (*it).value->stringify ();
 
-                  ASSERT_EQUAL_IDX ("output length", (*it).output_len[0], strlen (output));
-                  CPPUNIT_ASSERT_MESSAGE ("output", strcmp ((*it).output[0], output) == 0);
+                  ASSERT_EQUAL_IDX ("output length", (*it).output_len[0], wcslen (output));
+                  CPPUNIT_ASSERT_MESSAGE ("output", wcscmp ((*it).output[0], output) == 0);
                 }
               else
                 {
-                  p->_str_value[0] = new char[20 + 1]();
+                  p->_str_value[0] = new wchar_t[20 + 1]();
 
                   p->_str_value[1] = p->_str_value[0];
 
-                  *(p->_str_value[0]++) =  'x';
+                  *(p->_str_value[0]++) =  L'x';
 
                   (*it).value->_parent = p;
 
                   (void) (*it).value->stringify ();
 
-                  ASSERT_EQUAL_IDX ("output length", (*it).output_len[1], strlen (p->_str_value[1]));
-                  CPPUNIT_ASSERT_MESSAGE ("output", strcmp ((*it).output[1], p->_str_value[1]) == 0);
+                  ASSERT_EQUAL_IDX ("output length", (*it).output_len[1], wcslen (p->_str_value[1]));
+                  CPPUNIT_ASSERT_MESSAGE ("output", wcscmp ((*it).output[1], p->_str_value[1]) == 0);
 
                   delete[]  p->_str_value[1];
                 }

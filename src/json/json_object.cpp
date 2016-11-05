@@ -9,13 +9,13 @@
 
 Object::Object () : JSON () {}
 
-Object::Object (const char *json)
+Object::Object (const wchar_t *json)
   : JSON (json, false)
 {
   (void) parse (json);
 }
 
-Object::Object(std::initializer_list<std::pair<std::string, Value *>> il)
+Object::Object(std::initializer_list<std::pair<std::__cxx11::wstring, Value *> > il)
   : JSON(), _member_list (il.begin (), il.end ())
 {
 }
@@ -42,8 +42,7 @@ Object::~Object()
  _clear ();
 }
 
-const char *
-Object::parse (const char *json)
+const wchar_t *Object::parse(const wchar_t *json)
 {
   if (json == 0)
     throw JSON::error ("error: null string given");
@@ -93,7 +92,7 @@ Object::parse (const char *json)
 bool
 Object::_pair ()
 {
-  char endc = 0;
+  wchar_t endc = 0;
   // wchar_t endc;
 
   long int charc = 0;
@@ -113,7 +112,7 @@ Object::_pair ()
   if (charc < 0)   // No closing "
     throw JSON::syntax_error ("syntax error: expecting closing '\"'");
 
-  const char *keyp = _readp + 1;
+  const wchar_t *keyp = _readp + 1;
   _readp += charc;
 
   if (*(_look_ahead ()) != _sc::name_separator)   // Expect ':'
@@ -126,7 +125,7 @@ Object::_pair ()
   if (v->type () == Value::undefined)
     throw "syntax error: expecting value after ':'";
 
-  (void) _member_list.emplace (std::string (keyp, charc - 2), v);
+  (void) _member_list.emplace (std::wstring (keyp, charc - 2), v);
 
   v->setKey (keyp, charc - 2);
 
@@ -134,7 +133,7 @@ Object::_pair ()
 }
 
 Value &
-Object::at (const char *key) const
+Object::at (const wchar_t *key) const
 {
   try
     {
@@ -159,7 +158,7 @@ Object::_assign (const Object &nv)
 }
 
 Value &
-Object::_at (const char *key)
+Object::_at (const wchar_t *key)
 {
   try
     {
@@ -169,7 +168,7 @@ Object::_at (const char *key)
     {
       Value *v = new Undefined (this);
 
-      v->setKey (key, strlen (key));
+      v->setKey (key, wcslen (key));
       _member_list.emplace (key, v);
 
       return *v;
@@ -179,11 +178,11 @@ Object::_at (const char *key)
 Value &
 Object::assign (Value *ov, Value *nv)
 {
-  const char *key = ov->key ();
+  const wchar_t *key = ov->key ();
 
   _member_list[key] = nv;
 
-  nv->setKey (key, strlen (key));
+  nv->setKey (key, wcslen (key));
   nv->setParent (this);
 
   return *this;
@@ -193,7 +192,7 @@ void
 Object::_clear ()
 {
   for (auto it = _member_list.begin (); it != _member_list.end (); it = _member_list.erase (it))
-    delete static_cast <std::pair<std::string, Value *>>(*it).second;
+    delete static_cast <std::pair<std::wstring, Value *>>(*it).second;
 }
 
 Value *
@@ -213,7 +212,7 @@ Object::clone (const Value &other)
 
   while (cur != end)
     {
-      std::pair<std::string, Value *> p = *cur++;
+      std::pair<std::wstring, Value *> p = *cur++;
       _member_list.emplace (p.first, p.second->clone ());
     }
 
@@ -233,19 +232,18 @@ Object::strLength () const noexcept
 
   while (cur != end)
     {
-      std::pair<std::string, Value *> p = *cur++;
+      std::pair<std::wstring, Value *> p = *cur++;
       len += p.first.size () + dynamic_cast<Value *>(p.second)->strLength () + 4;   // " + key + " + : +  value + , or }
     }
 
   return len;
 }
 
-const char *
-Object::strValue () const
+const wchar_t *Object::strValue() const
 {
   _str_value[CURSOR] = _parent && _parent->_str_value[CURSOR]
       ? _parent->_str_value[CURSOR]
-      : new char[strLength () + 1] ();
+      : new wchar_t[strLength () + 1] ();
 
   _str_value[BEGIN] = _str_value[CURSOR];
 
@@ -256,10 +254,10 @@ Object::strValue () const
 
   while (cur != end)
     {
-      std::pair<std::string, Value *> p = *cur;
+      std::pair<std::wstring, Value *> p = *cur;
 
-      _str_value[CURSOR] = _str_append (_str_append (_str_value[CURSOR], "\"", 1), p.first.c_str (), p.first.size ());
-      _str_value[CURSOR] = _str_append (_str_value[CURSOR], "\":", 2);
+      _str_value[CURSOR] = _str_append (_str_append (_str_value[CURSOR], L"\"", 1), p.first.c_str (), p.first.size ());
+      _str_value[CURSOR] = _str_append (_str_value[CURSOR], L"\":", 2);
       _str_value[CURSOR] = _str_append (_str_value[CURSOR] /*_str_append (_str_value[CURSOR], "\":", 2)*/, p.second->strValue (), p.second->strLength ());
 
       if (++cur != end)

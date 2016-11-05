@@ -27,7 +27,7 @@ class String : public Leaf
    * @brief String
    * @param json
    */
-  String (const char *json);
+  String (const wchar_t *json);
 
   /**
    * @brief String
@@ -72,8 +72,8 @@ class String : public Leaf
    * @param json
    * @return
    */
-  virtual const char *
-  parse (const char *json);
+  virtual const wchar_t *
+  parse (const wchar_t *json);
 
   /**
    * @brief type
@@ -113,8 +113,8 @@ class String : public Leaf
    * @brief value
    * @return
    */
-  const char *
-  value () const;
+  const wchar_t *
+  value() const;
 
   /**
    * @brief strLength
@@ -128,7 +128,7 @@ class String : public Leaf
    * @brief strValue
    * @return
    */
-  virtual const char *
+  virtual const wchar_t *
   strValue () const;
 
 protected:
@@ -141,7 +141,7 @@ protected:
   /**
    * @brief _value
    */
-  mutable std::string _string_value[2];
+  mutable std::wstring _string_value[2];
 
   /**
    * @brief assign

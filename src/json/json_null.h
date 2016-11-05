@@ -74,8 +74,8 @@ class Null : public Leaf
    * @param json
    * @return
    */
-  virtual inline const char *
-  parse (const char *json)
+  virtual inline const wchar_t *
+  parse (const wchar_t *json)
   { return json + 4; }
 
   /**
@@ -117,9 +117,9 @@ class Null : public Leaf
    * @brief strValue
    * @return
    */
-  virtual const char *
+  virtual const wchar_t *
   strValue () const noexcept override
-  { return "null"; }
+  { return L"null"; }
 
   /**
    * @brief strLength

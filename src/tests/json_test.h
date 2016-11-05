@@ -19,7 +19,7 @@ public:
 
     JSON j[] = {
       JSON (),
-      JSON ("{\"key\":true}"),
+      JSON (L"{\"key\":true}"),
       JSON (p)
     };
 
@@ -33,43 +33,43 @@ public:
   test_parse_1 ()
   {
     struct assert {
-        const char *starp;
+        const wchar_t *starp;
         Value::object_type type;
         int assert_status;
     };
 
     std::vector<struct assert > test = {
-        { " {} ", Value::object_type::object, PASS },
-        { " [] ", Value::object_type::array, PASS },
-        { " \"x\" ", Value::object_type::string, PASS },
-        { " 100 ", Value::object_type::number, PASS },
-        { " null ", Value::object_type::null, PASS },
-        { " true ", Value::object_type::boolean, PASS },
-        { " false ", Value::object_type::boolean, PASS },
+        { L" {} ", Value::object_type::object, PASS },
+        { L" [] ", Value::object_type::array, PASS },
+        { L" \"x\" ", Value::object_type::string, PASS },
+        { L" 100 ", Value::object_type::number, PASS },
+        { L" null ", Value::object_type::null, PASS },
+        { L" true ", Value::object_type::boolean, PASS },
+        { L" false ", Value::object_type::boolean, PASS },
 
-        { "{\"k\":\"v\"} ", Value::object_type::object, PASS },
-        { " { \"k\" : \"v\" } ", Value::object_type::object, PASS },
-        { "[\"v\"] ", Value::object_type::array, PASS },
-        { " [ \"v\", [\"vv\"] ] ", Value::object_type::array, PASS },
+        { L"{\"k\":\"v\"} ", Value::object_type::object, PASS },
+        { L" { \"k\" : \"v\" } ", Value::object_type::object, PASS },
+        { L"[\"v\"] ", Value::object_type::array, PASS },
+        { L" [ \"v\", [\"vv\"] ] ", Value::object_type::array, PASS },
 
         /// errors
-        { " x ", Value::object_type::undefined, FAIL },
-        { " {} , ", Value::object_type::undefined, FAIL },
-        { ", {} ", Value::object_type::undefined, FAIL },
-        { " truee ", Value::object_type::undefined, FAIL },
+        { L" x ", Value::object_type::undefined, FAIL },
+        { L" {} , ", Value::object_type::undefined, FAIL },
+        { L", {} ", Value::object_type::undefined, FAIL },
+        { L" truee ", Value::object_type::undefined, FAIL },
     };
 
     TEST_IT_START
 
-      const char *startp = (*it).starp;
+      const wchar_t *startp = (*it).starp;
 
-      size_t charc = strlen (startp);
+      size_t charc = wcslen (startp);
       JSON *j = new JSON ();
 
-      const char * readp = j->parse (startp);
+      const wchar_t * readp = j->parse (startp);
 
       ASSERT_EQUAL_IDX ("json.readp", (*it).starp + (charc), readp);
-      ASSERT_EQUAL_IDX ("*(json.readp)", (char) 0, *readp);
+      ASSERT_EQUAL_IDX ("*(json.readp)", (wchar_t) 0, *readp);
       ASSERT_EQUAL_IDX ("json.type ()", (*it).type, j->type ());
 
       delete j;
@@ -82,28 +82,28 @@ public:
     JSON j;
 
     struct assert {
-        const char *starp;
+        const wchar_t *starp;
         Value::object_type type;
         size_t move;
         int assert_status;
     };
 
     std::vector<struct assert > test = {
-        { "{} ", Value::object_type::object, 2, PASS },
-        { "[] ", Value::object_type::array, 2, PASS },
-        { "\"x\" ", Value::object_type::string, 3, PASS },
-        { "10 ", Value::object_type::number, 2, PASS },
-        { "-10 ", Value::object_type::number, 3, PASS },
-        { "true ", Value::object_type::boolean, 4, PASS },
-        { "false ", Value::object_type::boolean, 5, PASS },
-        { "null ", Value::object_type::null, 4, PASS },
-        { "x ", Value::object_type::undefined, 0, PASS },
-        { "", Value::object_type::undefined, 0, PASS },
+        { L"{} ", Value::object_type::object, 2, PASS },
+        { L"[] ", Value::object_type::array, 2, PASS },
+        { L"\"x\" ", Value::object_type::string, 3, PASS },
+        { L"10 ", Value::object_type::number, 2, PASS },
+        { L"-10 ", Value::object_type::number, 3, PASS },
+        { L"true ", Value::object_type::boolean, 4, PASS },
+        { L"false ", Value::object_type::boolean, 5, PASS },
+        { L"null ", Value::object_type::null, 4, PASS },
+        { L"x ", Value::object_type::undefined, 0, PASS },
+        { L"", Value::object_type::undefined, 0, PASS },
     };
 
     TEST_IT_START
 
-        const char *startp = (*it).starp;
+        const wchar_t *startp = (*it).starp;
 
         //j._endp = startp + strlen (startp);
         j._readp = startp;
@@ -124,7 +124,7 @@ public:
 
     struct assert {
         // const char *startp;
-        const char *key;
+        const wchar_t *key;
         size_t index;
         Value *value[2];
         Value::object_type type;
@@ -132,12 +132,12 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { /* "{}" , */ "ok", 0, { new Object (&op), new Object (&ap) }, Value::object, PASS },
-      { /* "[]", */ "ak", 1, { new Array (&op), new Array (&ap) }, Value::array, PASS },
-      { /* "\"x\"", */ "sk", 2, { new String (&op, 3), new String (&ap, 3) }, Value::string, PASS },
-      { /* "100", */ "dk", 3, { new Number (&op), new Number (&ap) }, Value::number, PASS },
-      { /* "", */ "bk", 4, { new Boolean (&op, true), new Boolean (&ap, true) }, Value::boolean, PASS },
-      { /* "", */ "nk", 5, { new Null (&op), new Null (&ap) }, Value::null, PASS },
+      { /* "{}" , */ L"ok", 0, { new Object (&op), new Object (&ap) }, Value::object, PASS },
+      { /* "[]", */ L"ak", 1, { new Array (&op), new Array (&ap) }, Value::array, PASS },
+      { /* "\"x\"", */ L"sk", 2, { new String (&op, 3), new String (&ap, 3) }, Value::string, PASS },
+      { /* "100", */ L"dk", 3, { new Number (&op), new Number (&ap) }, Value::number, PASS },
+      { /* "", */ L"bk", 4, { new Boolean (&op, true), new Boolean (&ap, true) }, Value::boolean, PASS },
+      { /* "", */ L"nk", 5, { new Null (&op), new Null (&ap) }, Value::null, PASS },
     };
 
     size_t x =0;

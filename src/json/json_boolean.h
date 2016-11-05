@@ -93,9 +93,9 @@ class Boolean : public Leaf
    * @brief strValue
    * @return
    */
-  virtual const char *
+  virtual const wchar_t *
   strValue () const override
-  { return _boolean_value == true ? "true" : "false"; }
+  { return _boolean_value == true ? L"true" : L"false"; }
 
 public:
 
@@ -104,8 +104,8 @@ public:
    * @param json
    * @return
    */
-  virtual const char *
-  parse (const char *json)
+  virtual const wchar_t *
+  parse (const wchar_t *json)
   { return json + (_boolean_value == true ? 4 : 5); }
 
   /**

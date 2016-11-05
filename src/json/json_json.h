@@ -31,7 +31,7 @@ class JSON : public Value
   friend class json_leaf_test;
 #endif
 
-  friend const char * Leaf::stringify ();
+  friend const wchar_t * Leaf::stringify ();
   friend class Object;  // For stringify { _parent->_str_value }
   friend class Array;   // For stringify { _parent->_str_value }
 
@@ -46,7 +46,7 @@ public:
    * @brief json
    * @param json
    */
-  JSON (const char *json, const bool _parse = true);
+  JSON (const wchar_t *json, const bool _parse = true);
 
   /**
    * @brief json
@@ -87,8 +87,8 @@ public:
    * @param readp
    * @return
    */
-  virtual const char *
-  parse (const char *readp);
+  virtual const wchar_t *
+  parse (const wchar_t *readp);
 
   /**
    * @brief at
@@ -96,7 +96,7 @@ public:
    * @return
    */
   virtual Value &
-  at (const char *key) const
+  at (const wchar_t *key) const
   { return __hasRoot () ? __root->at (key) : *(new Undefined); }
 
   /**
@@ -180,7 +180,7 @@ public:
    * @brief stringify
    * @return
    */
-  virtual const char *
+  virtual const wchar_t *
   stringify () noexcept override
   { return strValue (); }
 
@@ -196,9 +196,9 @@ public:
    * @brief strValue
    * @return
    */
-  virtual const char *
+  virtual const wchar_t *
   strValue () const
-  { return __hasRoot () ? __root->strValue () : ""; }
+  { return __hasRoot () ? __root->strValue () : L""; }
 
   /**
    * @brief erase
@@ -226,7 +226,7 @@ protected:
    * @return
    */
   virtual Value &
-  _at (const char *key);
+  _at (const wchar_t *key);
 
   /**
    * @brief _make_value
@@ -253,7 +253,7 @@ protected:
   /**
    * @brief _str_value
    */
-  mutable char *_str_value[2];
+  mutable wchar_t *_str_value[2];
 
 private:
 

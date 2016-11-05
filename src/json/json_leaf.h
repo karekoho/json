@@ -18,7 +18,7 @@ public:
    * @brief Leaf
    * @param json
    */
-  Leaf (const char *json) : Value (json)
+  Leaf (const wchar_t *json) : Value (json)
   {
     _startp = json;
   }
@@ -62,15 +62,15 @@ public:
    * @param json
    * @return
    */
-  virtual const char *
-  parse (const char *json) = 0;
+  virtual const wchar_t *
+  parse (const wchar_t *json) = 0;
 
   /**
    * @brief at
    * @return
    */
   virtual  Value &
-  at (const char *) const final override;
+  at (const wchar_t *) const final override;
 
   /**
    * @brief at
@@ -121,7 +121,7 @@ public:
    * @brief stringify
    * @return
    */
-  virtual const char *
+  virtual const wchar_t *
   stringify () noexcept final override
   { return strValue (); }
 
@@ -251,7 +251,7 @@ protected:
    * @return
    */
   virtual Value &
-  _at (const char *) final override;
+  _at (const wchar_t *) final override;
 
   /**
    * @brief _clear

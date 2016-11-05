@@ -21,25 +21,25 @@ public:
     void test_lookahead ()
     {
       struct assert {
-          const char *startp;
-          char readp;
+          const wchar_t *startp;
+          wchar_t readp;
           int assert_status;
       };
 
       std::vector<struct assert > test = {
-          { "", 0, PASS},
-          { "   ", 0, PASS },
-          { "x", 'x', PASS },
-          { " \
+          { L"", 0, PASS},
+          { L"   ", 0, PASS },
+          { L"x", 'x', PASS },
+          { L" \
               a", 'a', PASS },
-          { "   \"b", '"', PASS },
-          { "   \n\r\tc ", 'c', PASS },
-          { "   5", '5', PASS }
+          { L"   \"b", '"', PASS },
+          { L"   \n\r\tc ", 'c', PASS },
+          { L"   5", '5', PASS }
       };
 
       TEST_IT_START
 
-        const char *startp = (*it).startp;
+        const wchar_t *startp = (*it).startp;
 
         json_value_mock *m  = new json_value_mock;
 
@@ -58,20 +58,20 @@ public:
 
     void test_string () // Moved to json_test
     {
-      char endc;
+      wchar_t endc;
 
       struct assert {
-          const char *startp;
+          const wchar_t *startp;
           long int charc;
           int assert_status;
       };
 
       std::vector<struct assert > test = {
-          { " ", 0, PASS},
-          { "\"", -1, PASS },
-          { "\"x\"", 3, PASS },
-          { "\" x\"", 4, PASS },
-          { "\" xx", -4, PASS }
+          { L" ", 0, PASS},
+          { L"\"", -1, PASS },
+          { L"\"x\"", 3, PASS },
+          { L"\" x\"", 4, PASS },
+          { L"\" xx", -4, PASS }
           /* { "\"\
              x\"", 14 },
           { "   \"b", '"' },
@@ -81,8 +81,8 @@ public:
 
       TEST_IT_START
 
-          const char *startp = (*it).startp;
-          long int charc = strlen (startp);
+          const wchar_t *startp = (*it).startp;
+          long int charc = wcslen (startp);
 
           json_value_mock *m  = new json_value_mock;
 
@@ -103,24 +103,24 @@ public:
     void test_is_literal ()
     {
       struct assert {
-          const char *startp;
+          const wchar_t *startp;
           Value::_literal value_type;
           int assert_status;
       };
 
       std::vector<struct assert> test = {
-        { "", Value::_literal::no_value, PASS },
-        { "   ", Value::_literal::no_value, PASS },
-        { "xxx   ", Value::_literal::no_value, PASS },
-        { "xxxxxx   ", Value::_literal::no_value, PASS },
-        { "true    ", Value::_literal::true_value, PASS },
-        { "false    ", Value::_literal::false_value, PASS },
-        { "null   ", Value::_literal::null_value, PASS }
+        { L"", Value::_literal::no_value, PASS },
+        { L"   ", Value::_literal::no_value, PASS },
+        { L"xxx   ", Value::_literal::no_value, PASS },
+        { L"xxxxxx   ", Value::_literal::no_value, PASS },
+        { L"true    ", Value::_literal::true_value, PASS },
+        { L"false    ", Value::_literal::false_value, PASS },
+        { L"null   ", Value::_literal::null_value, PASS }
       };
 
       TEST_IT_START
 
-          const char *startp = (*it).startp;
+          const wchar_t *startp = (*it).startp;
 
           json_value_mock *m  = new json_value_mock;
 
@@ -138,20 +138,20 @@ public:
     void
     test__str_append ()
     {
-      char *dst = new char[8 + 1]();
-      char *startp = dst;
+      wchar_t *dst = new wchar_t[8 + 1]();
+      wchar_t *startp = dst;
 
       struct assert {
-          const char *src;
+          const wchar_t *src;
           size_t charc[2];
           int assert_status;
       };
 
       std::vector<struct assert> test = {
-        { "",  { 0, 0 }, PASS },
-        { "a",  { 1, 1 }, PASS },
-        { "bb",  { 2, 3 }, PASS },
-        { "\"ccc\"",  { 5, 8 }, PASS },
+        { L"",  { 0, 0 }, PASS },
+        { L"a",  { 1, 1 }, PASS },
+        { L"bb",  { 2, 3 }, PASS },
+        { L"\"ccc\"",  { 5, 8 }, PASS },
       };
 
       TEST_IT_START
@@ -162,7 +162,7 @@ public:
 
       TEST_IT_END;
 
-      CPPUNIT_ASSERT_MESSAGE ("starp", strcmp ("abb\"ccc\"", startp) == 0);
+      CPPUNIT_ASSERT_MESSAGE ("starp", wcscmp (L"abb\"ccc\"", startp) == 0);
 
       delete[] startp;
     }
@@ -172,7 +172,7 @@ public:
     {
       Boolean b;
 
-      Array a = "[true]";
+      Array a = L"[true]";
 
       struct assert
       {
@@ -201,8 +201,8 @@ public:
     test_assign_copy ()
     {
       JSON json[] = {
-        "{}",
-        "[]"
+        L"{}",
+        L"[]"
       };
 
       struct assert
@@ -230,9 +230,9 @@ public:
 
           for (size_t jdx = 0; jdx < 2; jdx++)
             {
-              json[hdx]["0"] = *(*it).value;   // Undefined <-- Object, Object <-- Array, ...
+              json[hdx][L"0"] = *(*it).value;   // Undefined <-- Object, Object <-- Array, ...
 
-              Value & v = json[hdx]["0"];
+              Value & v = json[hdx][L"0"];
 
               ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v.type ());
             }

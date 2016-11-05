@@ -48,7 +48,7 @@ class Value
    * @brief json_value
    * @param json
    */
-  Value (const char *);
+  Value (const wchar_t *);
 
   /**
    * @brief json_value
@@ -104,8 +104,8 @@ class Value
    * @see https://en.wikipedia.org/wiki/List_of_Unicode_characters
    * @see http://en.cppreference.com/w/cpp/language/types
    */
-  virtual const char *
-  parse (const char *json) = 0;
+  virtual const wchar_t *
+  parse (const wchar_t *json) = 0;
 
   /**
    * @brief at If key does not exist, throws json::out_of_range exception
@@ -113,7 +113,7 @@ class Value
    * @return
    */
   virtual Value &
-  at (const char *key) const  = 0;
+  at (const wchar_t *key) const  = 0;
 
   /**
    * @brief at
@@ -129,7 +129,7 @@ class Value
    * @return
    */
   inline Value &
-  operator [](const char *key)
+  operator [](const wchar_t *key)
   { return _at (key); }
 
   /**
@@ -176,7 +176,7 @@ class Value
    * @brief key
    * @return
    */
-  inline const char *
+  inline const wchar_t *
   key () const noexcept
   { return _key; }
 
@@ -187,10 +187,12 @@ class Value
    * @param charc
    */
   inline void
-  setKey (const char *key, size_t charc) noexcept
+  setKey (const wchar_t *key, size_t charc) noexcept
   {
-    free ((char *)_key);
-    _key = strndup (key, charc);
+    free ((wchar_t *)_key);
+    // TODO: _key = strndup (key, charc);
+    _key = (const wchar_t *) malloc (charc + 1);
+    _key = wcsncpy ((wchar_t*)_key, key, charc);
   }
 
   /**
@@ -248,7 +250,7 @@ class Value
    * @brief stringify
    * @return
    */
-  virtual const char *
+  virtual const wchar_t *
   stringify () /* TODO: noexcept */ noexcept = 0;
 
   /**
@@ -262,7 +264,7 @@ class Value
    * @brief strValue
    * @return
    */
-  virtual const char *
+  virtual const wchar_t *
   strValue () /* TODO: noexcept */ const = 0;
 
   /**
@@ -277,7 +279,7 @@ class Value
    * @brief value
    * @return
    */
-  inline const char *
+  inline const wchar_t *
   value () const
   { return strValue (); }
 
@@ -344,12 +346,12 @@ protected:
   /**
    * @brief _startp
    */
-  const char *_startp;
+  const wchar_t *_startp;
 
   /**
    * @brief _readp
    */
-  const char *_readp;
+  const wchar_t *_readp;
 
   /**
    * @brief _parent
@@ -364,7 +366,7 @@ protected:
   /**
    * @brief _key
    */
-  const char * _key;
+  const wchar_t * _key;
 
   /**
    * @brief _index
@@ -379,7 +381,7 @@ protected:
   /**
    * @brief _look_ahead Move read pointer to next non-white space character
    */
-  inline const char *
+  inline const wchar_t *
   _look_ahead () noexcept
   {
     while (*_readp != 0 && (*_readp == _ws::tab
@@ -399,10 +401,10 @@ protected:
    * @param charc Number of characters to copy
    * @return
    */
-  static inline char *
-  _str_append (char *dst, const char *src, size_t charc) noexcept
+  static inline wchar_t *
+  _str_append (wchar_t *dst, const wchar_t *src, size_t charc) noexcept
   {
-    const char * const endp = dst + charc;
+    const wchar_t * const endp = dst + charc;
 
     while (dst < endp)
       *(dst++) = *(src++);
@@ -419,7 +421,7 @@ protected:
    * @return Number of characters read
    */
   long int
-  _string (char &endc) const noexcept;
+  _string (wchar_t &endc) const noexcept;
 
   /**
    * @brief _is_literal Detect if _readp points to "true", "false" or "null".
@@ -435,7 +437,7 @@ protected:
    * @return
    */
   virtual Value &
-  _at (const char *key)  = 0;
+  _at (const wchar_t *key)  = 0;
 
   /**
    * TODO:
@@ -481,7 +483,7 @@ protected:
    */
   static const struct literal_value
   {
-    const char * const str_value;
+    const wchar_t * const str_value;
     const size_t len;
     const Value::_literal ltr_value;
 

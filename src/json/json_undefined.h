@@ -77,8 +77,8 @@ class Undefined : public Leaf
    * @param json
    * @return
    */
-  virtual const char *
-  parse (const char *json)
+  virtual const wchar_t *
+  parse (const wchar_t *json)
   { return json; }
 
   /**
@@ -110,9 +110,9 @@ class Undefined : public Leaf
    * @brief strValue
    * @return
    */
-  virtual const char *
+  virtual const wchar_t *
   strValue () const
-  { return ""; }
+  { return L""; }
 
 protected:
 
