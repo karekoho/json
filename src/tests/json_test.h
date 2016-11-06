@@ -32,7 +32,8 @@ public:
   virtual void
   test_parse_1 ()
   {
-    struct assert {
+    struct assert
+    {
         const wchar_t *starp;
         Value::object_type type;
         int assert_status;
@@ -122,8 +123,8 @@ public:
     Object op;
     Array ap;
 
-    struct assert {
-        // const char *startp;
+    struct assert
+    {
         const wchar_t *key;
         size_t index;
         Value *value[2];
@@ -132,12 +133,12 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { /* "{}" , */ L"ok", 0, { new Object (&op), new Object (&ap) }, Value::object, PASS },
-      { /* "[]", */ L"ak", 1, { new Array (&op), new Array (&ap) }, Value::array, PASS },
-      { /* "\"x\"", */ L"sk", 2, { new String (&op, 3), new String (&ap, 3) }, Value::string, PASS },
-      { /* "100", */ L"dk", 3, { new Number (&op), new Number (&ap) }, Value::number, PASS },
-      { /* "", */ L"bk", 4, { new Boolean (&op, true), new Boolean (&ap, true) }, Value::boolean, PASS },
-      { /* "", */ L"nk", 5, { new Null (&op), new Null (&ap) }, Value::null, PASS },
+      { L"ok", 0, { new Object (&op), new Object (&ap) }, Value::object, PASS },
+      { L"ak", 1, { new Array (&op), new Array (&ap) }, Value::array, PASS },
+      { L"sk", 2, { new String (&op, 3), new String (&ap, 3) }, Value::string, PASS },
+      { L"dk", 3, { new Number (&op), new Number (&ap) }, Value::number, PASS },
+      { L"bk", 4, { new Boolean (&op, true), new Boolean (&ap, true) }, Value::boolean, PASS },
+      { L"nk", 5, { new Null (&op), new Null (&ap) }, Value::null, PASS },
     };
 
     size_t x =0;
@@ -155,6 +156,7 @@ public:
 
         ASSERT_EQUAL_IDX ("parent._at (key)", (*it).type, op._at ((*it).key).type ());
         ASSERT_EQUAL_IDX ("parent._at (index)", (*it).type, ap._at ((*it).index).type ());
+
         x++;
         // (*it).value->parse ((*it).startp);
 

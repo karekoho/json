@@ -189,10 +189,9 @@ class Value
   inline void
   setKey (const wchar_t *key, size_t charc) noexcept
   {
-    free ((wchar_t *)_key);
-    // TODO: _key = strndup (key, charc);
-    _key = (const wchar_t *) malloc (charc + 1);
-    _key = wcsncpy ((wchar_t*)_key, key, charc);
+     delete[] _key;
+     wchar_t *dest_ = new wchar_t[charc + 1] ();
+     _key = wcsncpy (dest_, key, charc);
   }
 
   /**

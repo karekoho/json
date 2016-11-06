@@ -84,7 +84,8 @@
 } catch (JSON::syntax_error & se) { this->_errorc[ACTUAL]++; std::cerr << se.what () << std::endl; }\
   catch (JSON::out_of_range & oor) { this->_errorc[ACTUAL]++; std::cerr << oor.what () << std::endl; }\
   catch (JSON::error & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
-  catch (const char *error) { this->_errorc[ACTUAL]++; std::cerr << error << std::endl; } }\
+  catch (const char *error) { this->_errorc[ACTUAL]++; std::cerr << error << std::endl; } \
+  catch (const wchar_t *error) { this->_errorc[ACTUAL]++; std::cerr << error << std::endl; } }\
 (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]); \
 CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
 #endif

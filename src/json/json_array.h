@@ -114,8 +114,13 @@ public:
    * @return
    */
   virtual Value &
-  at (const char *key) const
-  { return at (atoll (key)); }
+  at (const wchar_t *key) const
+ // { return at (atoll (key)); }
+  {
+    wchar_t *end = 0;
+    return at (std::wcstoll (key, & end, 10));
+  }
+
 
   /**
    * @brief at
@@ -311,8 +316,12 @@ protected:
    * @return
    */
   virtual Value &
-   _at (const char *key)
-   { return _at (atoll (key)); }
+   _at (const wchar_t *key)
+   // { return _at (atoll (key)); }
+   {
+     wchar_t *end = 0;
+     return _at (std::wcstoll (key, & end, 10));
+   }
 
   /**
    * @brief _assign
