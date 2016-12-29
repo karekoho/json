@@ -77,20 +77,25 @@ Value::_string (wchar_t &endc) const noexcept
 {
   const wchar_t * const starp = _readp;
 
-  if (*starp != _sc::double_quote) {
-        endc = *starp;
-        return 0;
+  if (*starp != _sc::double_quote)
+    {
+      endc = *starp;
+      return 0;
     }
 
     const wchar_t * readp = _readp + 1;
 
-    while (*readp != 0 && *readp != _sc::double_quote) {
-        readp++;
-    }
+    while (*readp > 31 && *readp != _sc::double_quote)
+      readp++;
 
     endc = *readp;
 
-    return *readp != 0 ? (readp - starp) + 1 : -1 * (readp - starp);
+    // return *readp != 0 ? (readp - starp) + 1 : -1 * (readp - starp);
+
+    if (*readp > 31) return (readp - starp) + 1;
+    if (*readp == 0) return  -1 * (readp - starp);
+
+    throw "unexpected character";
 }
 
 Value::_literal
@@ -102,9 +107,8 @@ Value::_is_literal (const int _try) const noexcept
 
   while (*(readp + idx) != 0
          && idx < __ltr_value[_try].len
-         && *(readp + idx) == *(__ltr_value[_try].str_value + idx)) {
-      idx++;
-    }
+         && *(readp + idx) == *(__ltr_value[_try].str_value + idx))
+    idx++;
 
   if (idx == __ltr_value[_try].len)
     return __ltr_value[_try].ltr_value;

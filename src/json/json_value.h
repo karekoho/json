@@ -414,7 +414,7 @@ protected:
   /**
    * @brief _string Read in string.
    * If no opening quote, return 0.
-   * If no closing quote, unicode control charater, return characters read * -1.
+   * If no closing quote, unicode control charater, return number characters read as a negative value.
    * Else return number of characters read + 2 (quotes).
    * @param endc Last character read
    * @return Number of characters read
