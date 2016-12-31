@@ -75,27 +75,24 @@ Value::~Value ()
 long int
 Value::_string (wchar_t &endc) const noexcept
 {
-  const wchar_t * const starp = _readp;
+  const wchar_t * const startp = _readp;
 
-  if (*starp != _sc::double_quote)
+  if (*startp != _sc::double_quote)
     {
-      endc = *starp;
+      endc = *startp;
       return 0;
     }
 
-    const wchar_t * readp = _readp + 1;
+  const wchar_t * readp = _readp + 1;
 
-    while (*readp > 31 && *readp != _sc::double_quote)
-      readp++;
+  while (*readp > 31 && *readp != _sc::double_quote)
+    readp++;
 
-    endc = *readp;
+  endc = *readp;
 
-    // return *readp != 0 ? (readp - starp) + 1 : -1 * (readp - starp);
-
-    if (*readp > 31) return (readp - starp) + 1;
-    if (*readp == 0) return  -1 * (readp - starp);
-
-    throw "unexpected character";
+  return *readp == _sc::double_quote
+    ? (readp - startp) + 1
+    : -1 * (readp - startp);
 }
 
 Value::_literal

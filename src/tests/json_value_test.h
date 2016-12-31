@@ -71,12 +71,10 @@ public:
           { L"\"", -1, PASS },
           { L"\"x\"", 3, PASS },
           { L"\" x\"", 4, PASS },
-          { L"\" xx", -4, PASS }
-          /* { "\"\
-             x\"", 14 },
-          { "   \"b", '"' },
-          { "   \n\r\tc ", 'c' },
-          { "   5", '5' } */
+          { L"\" xx", -4, PASS },
+
+          { L"\"\u001F\"", -1, PASS },
+          { L"\"xx\u001F\"", -3, PASS }
       };
 
       TEST_IT_START
@@ -92,7 +90,6 @@ public:
 
           charc = m->_string (endc);
 
-          // CPPUNIT_ASSERT_EQUAL_MESSAGE ("readp", startp , m->_readp); //   FAIL: { "\"", -1 }
           ASSERT_EQUAL_IDX ("charc", (*it).charc , charc);
 
           delete m;
@@ -267,10 +264,7 @@ public:
       CppUnit::TestSuite *s = new CppUnit::TestSuite ("json value test");
 
       s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_copy", &json_value_test::test_assign_copy));
-      // return s;
-
       s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_undefined", &json_value_test::test_assign_undefined));
-      // return s;
 
       s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lookahead", &json_value_test::test_lookahead));
       s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_literal", &json_value_test::test_is_literal));

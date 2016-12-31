@@ -414,10 +414,11 @@ protected:
   /**
    * @brief _string Read in string.
    * If no opening quote, return 0.
-   * If no closing quote, unicode control charater, return number characters read as a negative value.
-   * Else return number of characters read + 2 (quotes).
+   * If no closing quote or unescaped unicode control character (0-31) met,
+   * return number characters read as a negative value. For example "\"xx\u001F\"" = -3
+   * Else return number of characters read + 2 (quotes). For example "\"xxx\"" = 5
    * @param endc Last character read
-   * @return Number of characters read
+   * @return Number of characters read, including quotes
    */
   long int
   _string (wchar_t &endc) const noexcept;
