@@ -33,7 +33,8 @@ String::String (const Value *ov, const String &nv)
   clone (nv);
 }
 
-const wchar_t *String::parse(const wchar_t *json)
+const wchar_t *
+String::parse (const wchar_t *json)
 {
   wchar_t endc   = 0;
   long charc  = 0;
