@@ -60,11 +60,12 @@ main ()
   }";
 
 
-  // std::wcout << j.value () << std::endl;   // FIXME: crash. *** Error in `/home/kare/devel/json/build/examples/exampes': free(): invalid size: 0x0000000000a7f030 ***
+  std::wcout << j.value () << std::endl;   // FIXME: crash.
+  // With line j[L"Image"].value ():
+  // *** Error in `/home/kare/devel/json/build/examples/exampes': free(): invalid size: 0x0000000000a7f030 ***
 
-  std::wcout << j[L"Image"].value () << std::endl;
-
-  std::wcout << j[L"Image"][L"Thumbnail"][L"Url"].value () << std::endl;
+  std::wcout  << j[L"Image"].value () << std::endl;
+  std::wcout  << j[L"Image"][L"Thumbnail"][L"Url"].value () << std::endl;
 
   return 0;
 }
