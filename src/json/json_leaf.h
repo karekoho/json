@@ -2,7 +2,6 @@
 #define LEAF_H
 
 #include "json_value.h"
-// #include "json_undefined.h"
 
 class Leaf : public Value
 {
