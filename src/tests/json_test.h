@@ -12,6 +12,39 @@ class json_test : public json_value_test_interface
 {
 public:
 
+  void
+  test_bug_example_free ()
+  {
+    JSON j = L"{\
+      \"Image\": {\
+          \"Width\":  800,\
+          \"Height\": 600,\
+          \"Title\":  \"View from 15th Floor\",\
+          \"Thumbnail\": {\
+              \"Url\":    \"http://www.example.com/image/481989943\",\
+              \"Height\": 125,\
+              \"Width\":  100\
+          },\
+          \"Animated\" : false,\
+          \"IDs\": [116, 943, 234, 38793]\
+        }\
+    }";
+
+    std::wcout << j.value () << std::endl;
+    // With line j[L"Image"].value ():
+    // *** Error in `/home/kare/devel/json/build/examples/exampes': free(): invalid size: 0x0000000000a7f030 ***
+
+    // j[L"Image"]; // OK
+
+    // Value & v = j[L"Image"];  // OK
+    // Object &o = static_cast<Object &>(v); // OK
+    // std::wcout << o.value () << std::endl; // NOT OK
+
+    // std::wcout  << j[L"Image"].value () << std::endl; // NOT OK, FIXME: crash. Ok when run alone
+    // std::wcout  << j[L"Image"][L"Thumbnail"].value () << std::endl; // NOT OK, FIXME: crash. Ok when run alone
+    std::wcout  << j[L"Image"][L"Thumbnail"][L"Url"].value () << std::endl; // OK
+  }
+
   virtual void
   test_ctor_dtor ()
   {
@@ -224,7 +257,8 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json test");
 
-
+    s->addTest (new CppUnit::TestCaller<json_test> ("test_bug_example_free", &json_test::test_bug_example_free));
+    return s;
 
     s->addTest (new CppUnit::TestCaller<json_test> ("test_smoke", &json_test::test_ctor_dtor));
     //return s;
