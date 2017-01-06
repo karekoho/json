@@ -48,6 +48,12 @@ JSON::JSON (const Value *ov, const JSON &nv)
 JSON::~JSON ()
 {
   delete __root;
+
+  if (_str_value[BEGIN])
+    {
+      // delete[] _str_value[BEGIN]; // FIXME: crash
+      // _str_value[BEGIN] = 0;
+    }
 }
 
 const wchar_t *

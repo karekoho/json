@@ -192,7 +192,11 @@ void
 Object::_clear ()
 {
   for (auto it = _member_list.begin (); it != _member_list.end (); it = _member_list.erase (it))
-    delete static_cast <std::pair<std::wstring, Value *>>(*it).second;
+    {
+      // delete static_cast <std::pair<std::wstring, Value *>>(*it).second;
+      Value *v = static_cast <std::pair<std::wstring, Value *>>(*it).second;
+      delete v;
+    }
 }
 
 Value *
@@ -239,8 +243,12 @@ Object::strLength () const noexcept
   return len;
 }
 
-const wchar_t *Object::strValue() const
+const wchar_t *
+Object::strValue () const
 {
+  if (_str_value[BEGIN])
+    return _str_value[BEGIN];
+
   _str_value[CURSOR] = _parent && _parent->_str_value[CURSOR]
       ? _parent->_str_value[CURSOR]
       : new wchar_t[strLength () + 1] ();
@@ -256,9 +264,9 @@ const wchar_t *Object::strValue() const
     {
       std::pair<std::wstring, Value *> p = *cur;
 
-      _str_value[CURSOR] = _str_append (_str_append (_str_value[CURSOR], L"\"", 1), p.first.c_str (), p.first.size ());
+      _str_value[CURSOR] = _str_append (_str_append (_str_value[CURSOR], L"\"", 1), p.first.c_str (), p.first.size ()); // Key
       _str_value[CURSOR] = _str_append (_str_value[CURSOR], L"\":", 2);
-      _str_value[CURSOR] = _str_append (_str_value[CURSOR] /*_str_append (_str_value[CURSOR], "\":", 2)*/, p.second->strValue (), p.second->strLength ());
+      _str_value[CURSOR] = _str_append (_str_value[CURSOR], p.second->strValue (), p.second->strLength ()); // Value
 
       if (++cur != end)
         *(_str_value[CURSOR]++) = _sc::value_separator;

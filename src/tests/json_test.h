@@ -13,7 +13,7 @@ class json_test : public json_value_test_interface
 public:
 
   void
-  test_bug_example_free ()
+  example_free_1 ()
   {
     JSON j = L"{\
       \"Image\": {\
@@ -30,19 +30,39 @@ public:
         }\
     }";
 
-    std::wcout << j.value () << std::endl;
-    // With line j[L"Image"].value ():
-    // *** Error in `/home/kare/devel/json/build/examples/exampes': free(): invalid size: 0x0000000000a7f030 ***
+    j.value ();
+    j[L"Image"].value ();
+    j[L"Image"][L"Thumbnail"].value ();
+    j[L"Image"][L"Thumbnail"][L"Url"].value ();
+    j[L"Animated"].value ();
+    j[L"IDs"].value ();
 
-    // j[L"Image"]; // OK
+    j.value ();
+    j[L"Image"].value ();
+    j[L"Image"][L"Thumbnail"].value ();
+    j[L"Image"][L"Thumbnail"][L"Url"].value ();
+    j[L"Animated"].value ();
+    j[L"IDs"].value ();
+  }
 
-    // Value & v = j[L"Image"];  // OK
-    // Object &o = static_cast<Object &>(v); // OK
-    // std::wcout << o.value () << std::endl; // NOT OK
 
-    // std::wcout  << j[L"Image"].value () << std::endl; // NOT OK, FIXME: crash. Ok when run alone
-    // std::wcout  << j[L"Image"][L"Thumbnail"].value () << std::endl; // NOT OK, FIXME: crash. Ok when run alone
-    std::wcout  << j[L"Image"][L"Thumbnail"][L"Url"].value () << std::endl; // OK
+    void
+    example_free_2 ()
+    {
+      JSON j = L"{\"x1\":{\"x1\":\"Xx\"}}"; // {\"x1\":\"X\"} is ok.
+
+      std::wcout << j.value () << std::endl;
+      std::wcout  << j[L"x1"].value () << std::endl; // NOT OK, FIXME: crash. Ok when run alone
+
+      std::wcout << j.value () << std::endl;
+      std::wcout  << j[L"x1"].value () << std::endl; // NOT OK, FIXME: crash. Ok when run alone
+   }
+
+  void
+  test_bug_example_free ()
+  {
+    example_free_1 ();
+    // example_free_2 ();
   }
 
   virtual void
@@ -258,10 +278,10 @@ public:
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json test");
 
     s->addTest (new CppUnit::TestCaller<json_test> ("test_bug_example_free", &json_test::test_bug_example_free));
-    return s;
+    // return s;
 
     s->addTest (new CppUnit::TestCaller<json_test> ("test_smoke", &json_test::test_ctor_dtor));
-    //return s;
+
     s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_1", &json_test::test_parse_1));
 
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_lookahead", &json_test::test_lookahead));   // value_test has the same
