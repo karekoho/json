@@ -59,13 +59,16 @@ main ()
       }\
   }";
 
+  // std::wcout << j.value () << std::endl;
 
-  std::wcout << j.value () << std::endl;   // FIXME: crash.
-  // With line j[L"Image"].value ():
-  // *** Error in `/home/kare/devel/json/build/examples/exampes': free(): invalid size: 0x0000000000a7f030 ***
+  std::wcout << j[L"Image"].value () << std::endl;
 
-  std::wcout  << j[L"Image"].value () << std::endl;
-  std::wcout  << j[L"Image"][L"Thumbnail"][L"Url"].value () << std::endl;
+  Number & n = static_cast<Number &> (j[L"Image"][L"Width"]);
+  std::cout << n.value () << std::endl;
+
+  // std::wcout << j[L"Image"][L"Thumbnail"][L"Url"].value () << std::endl;
+
+  std::wcout << j[L"Image"][L"IDs"].value () << std::endl;
 
   return 0;
 }
