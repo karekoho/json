@@ -200,6 +200,9 @@ Array::strLength () const noexcept
 const wchar_t *
 Array::strValue () const
 {
+  if (_str_value[BEGIN])
+    return _str_value[BEGIN];
+
   _str_value[CURSOR] = _parent && _parent->_str_value[CURSOR]
       ? _parent->_str_value[CURSOR]
       : new wchar_t[strLength () + 1] ();

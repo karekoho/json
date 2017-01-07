@@ -8,7 +8,12 @@
 #include "json_boolean.h"
 #include "json_leaf_iterator.h"
 
-JSON::JSON () : Value (), __root (0) {}
+JSON::JSON ()
+  : Value (),
+    _str_value { 0, 0 },
+    __root (0)
+{
+}
 
 JSON::JSON (const wchar_t *json, const bool _parse)
   : Value (json),
