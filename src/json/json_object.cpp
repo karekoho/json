@@ -37,12 +37,13 @@ Object::Object (const Value *ov, const Object &nv)
   (void) clone (nv);
 }
 
-Object::~Object()
+Object::~Object ()
 {
  _clear ();
 }
 
-const wchar_t *Object::parse(const wchar_t *json)
+const wchar_t *
+Object::parse (const wchar_t *json)
 {
   if (json == 0)
     throw JSON::error ("error: null string given");
