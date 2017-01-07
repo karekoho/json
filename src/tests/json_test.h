@@ -30,39 +30,25 @@ public:
         }\
     }";
 
-    j.value ();
-    j[L"Image"].value ();
-    j[L"Image"][L"Thumbnail"].value ();
-    j[L"Image"][L"Thumbnail"][L"Url"].value ();
-    j[L"Animated"].value ();
-    j[L"IDs"].value ();
+    const wchar_t *v = j.value ();
+    v = j[L"Image"].value ();
+    v = j[L"Image"][L"Thumbnail"].value ();
+    v = j[L"Image"][L"Thumbnail"][L"Url"].value ();
+    v = j[L"Animated"].value ();
+    v = j[L"IDs"].value ();
 
-    j.value ();
-    j[L"Image"].value ();
-    j[L"Image"][L"Thumbnail"].value ();
-    j[L"Image"][L"Thumbnail"][L"Url"].value ();
-    j[L"Animated"].value ();
-    j[L"IDs"].value ();
+    v = j.value ();
+    v = j[L"Image"].value ();
+    v = j[L"Image"][L"Thumbnail"].value ();
+    v = j[L"Image"][L"Thumbnail"][L"Url"].value ();
+    v = j[L"Animated"].value ();
+    v = j[L"IDs"].value ();
   }
-
-
-    void
-    example_free_2 ()
-    {
-      JSON j = L"{\"x1\":{\"x1\":\"Xx\"}}"; // {\"x1\":\"X\"} is ok.
-
-      std::wcout << j.value () << std::endl;
-      std::wcout  << j[L"x1"].value () << std::endl; // NOT OK, FIXME: crash. Ok when run alone
-
-      std::wcout << j.value () << std::endl;
-      std::wcout  << j[L"x1"].value () << std::endl; // NOT OK, FIXME: crash. Ok when run alone
-   }
 
   void
   test_bug_example_free ()
   {
     example_free_1 ();
-    // example_free_2 ();
   }
 
   virtual void
