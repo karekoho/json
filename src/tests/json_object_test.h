@@ -419,11 +419,15 @@ public:
     };
 
     std::vector<struct assert> test = {
-      { L"{}", { L"{}", L"{\"a\":null,\"b\":{}" }, PASS },  // <-- last closing } intentionally missing
+      { L"{}",
+        { L"{}",  // Without parent
+          L"{\"a\":null,\"b\":{}" }, PASS },  // <-- last closing } intentionally missing
 
       /// !!! UNORDERED MAP HAS KEYS ARE IN DIFFERENT ORDER !!!:
       /// {"c":null,"d":{}} --> {"d":{},"c":null}
-      { L"{\"c\":null,\"d\":{}}", { L"{\"d\":{},\"c\":null}", L"{\"a\":null,\"b\":{\"d\":{},\"c\":null}" }, PASS },  // <-- last closing ] intentionally missing
+      { L"{\"c\":null,\"d\":{}}",
+        { L"{\"d\":{},\"c\":null}", // Without parent
+          L"{\"a\":null,\"b\":{\"d\":{},\"c\":null}" }, PASS },  // <-- last closing ] intentionally missing
     };
 
     TEST_IT_START
@@ -449,7 +453,7 @@ public:
 
           (void) o.parse ((*it).input);
 
-          const wchar_t *output = o.strValue ();
+          const wchar_t *output = o.strValue (o._parent ? p._str_value[CURSOR] : 0);
 
           if (o._parent == 0)
             {
@@ -510,6 +514,42 @@ public:
     TEST_IT_END;
   }
 
+  void test_strValue_2 ()
+  {
+    /* JSON j = L"{\
+      \"Image\": {\
+          \"Width\":  800,\
+          \"Height\": 600,\
+          \"Title\":  \"View from 15th Floor\",\
+          \"Thumbnail\": {\
+              \"Url\":    \"http://www.example.com/image/481989943\",\
+              \"Height\": 125,\
+              \"Width\":  100\
+          },\
+          \"Animated\" : false,\
+          \"IDs\": [116, 943, 234, 38793]\
+        }\
+    }"; */
+
+    JSON j = L"{\
+      \"Image\": {\
+          \"Width\":  800,\
+          \"Height\": 600,\
+          \"Title\":  \"View from 15th Floor\",\
+          \"Thumbnail\": {\
+              \"Url\":    \"http://www.example.com/image/481989943\",\
+              \"Height\": 125,\
+              \"Width\":  100\
+          },\
+          \"Animated\" : false,\
+          \"IDs\": [116, 943, 234, 38793]\
+        }\
+    }";
+
+    std::wcout << j.value () << std::endl;
+    std::wcout << j[L"Image"][L"IDs"].value () << std::endl;
+  }
+
   /**
    * Test number 2
    *
@@ -520,6 +560,9 @@ public:
   suite ()
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json object test");
+
+    // s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strValue_2", &json_object_test::test_strValue_2));
+    // return s;
 
     s->addTest (new CppUnit::TestCaller<json_object_test> ("test_erase", &json_object_test::test_erase));
     // return s;

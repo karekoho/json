@@ -197,8 +197,8 @@ public:
    * @return
    */
   virtual const wchar_t *
-  strValue () const
-  { return __hasRoot () ? __root->strValue () : L""; }
+  strValue (wchar_t *str = 0) const
+  { return __hasRoot () ? __root->strValue (str) : L""; }
 
   /**
    * @brief erase

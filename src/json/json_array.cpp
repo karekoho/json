@@ -198,7 +198,7 @@ Array::strLength () const noexcept
 }
 
 const wchar_t *
-Array::strValue () const
+Array::strValue (wchar_t *str) const
 {
   if (_str_value[BEGIN])
     return _str_value[BEGIN];
@@ -206,6 +206,14 @@ Array::strValue () const
   _str_value[CURSOR] = _parent && _parent->_str_value[CURSOR]
       ? _parent->_str_value[CURSOR]
       : new wchar_t[strLength () + 1] ();
+
+//  if (str)
+//    _str_value[CURSOR] = str;
+
+//  else if (_str_value[BEGIN])
+//      return _str_value[BEGIN];
+//  else
+//    _str_value[CURSOR] = new wchar_t[strLength () + 1] ();
 
   _str_value[BEGIN] = _str_value[CURSOR];
 
@@ -217,7 +225,7 @@ Array::strValue () const
   while (cur != end)
     {
       Value *v = *cur;
-      _str_value[CURSOR] = _str_append (_str_value[CURSOR], v->strValue (), v->strLength ());
+      _str_value[CURSOR] = _str_append (_str_value[CURSOR], v->strValue (_str_value[CURSOR]), v->strLength ());
 
       if (++cur != end)
         *(_str_value[CURSOR]++) = _sc::value_separator;

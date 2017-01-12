@@ -264,7 +264,7 @@ class Value
    * @return
    */
   virtual const wchar_t *
-  strValue () /* TODO: noexcept */ const = 0;
+  strValue (wchar_t *str = 0) /* TODO: noexcept */ const = 0;
 
   /**
    * @brief erase

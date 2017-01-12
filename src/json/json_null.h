@@ -118,7 +118,7 @@ class Null : public Leaf
    * @return
    */
   virtual const wchar_t *
-  strValue () const noexcept override
+  strValue (wchar_t *) const noexcept override
   { return L"null"; }
 
   /**
