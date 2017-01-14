@@ -129,7 +129,7 @@ public:
    * @return
    */
   inline double
-  value ()
+  value () const
   {
     return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
 
@@ -152,12 +152,12 @@ protected:
   /**
    * @brief _value
    */
-  double _double_value;
+  mutable double _double_value;
 
   /**
    * @brief _double_valuep
    */
-  double *_double_valuep;
+  mutable double *_double_valuep;
 
   /**
    * @brief _digitp
@@ -196,7 +196,7 @@ protected:
    * @return
    */
   double
-  _calculate (const wchar_t * const digitp[2][2]);
+  _calculate (const wchar_t * const digitp[2][2]) const;
 
   /**
    * @brief _atof
