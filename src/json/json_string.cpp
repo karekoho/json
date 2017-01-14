@@ -70,7 +70,7 @@ String::value () const
 }
 
 const wchar_t *
-String::strValue() const
+String::strValue (wchar_t *) const
 {
   if (_startp == 0 || _charc == 0)
     return L"";

@@ -34,15 +34,15 @@ public:
     v = j[L"Image"].value ();
     v = j[L"Image"][L"Thumbnail"].value ();
     v = j[L"Image"][L"Thumbnail"][L"Url"].value ();
-    v = j[L"Animated"].value ();
-    v = j[L"IDs"].value ();
+    v = j[L"Image"][L"Animated"].value ();
+    v = j[L"Image"][L"IDs"].value ();
 
-    v = j.value ();
-    v = j[L"Image"].value ();
-    v = j[L"Image"][L"Thumbnail"].value ();
-    v = j[L"Image"][L"Thumbnail"][L"Url"].value ();
-    v = j[L"Animated"].value ();
-    v = j[L"IDs"].value ();
+//    std::wcout <<  j.value () << std::endl;
+//    std::wcout << j[L"Image"].value ()<< std::endl;
+//    std::wcout << j[L"Image"][L"Thumbnail"].value ()<< std::endl;
+//    std::wcout << j[L"Image"][L"Thumbnail"][L"Url"].value ()<< std::endl;
+//    std::wcout << j[L"Image"][L"Animated"].value ()<< std::endl;
+//    std::wcout << j[L"Image"][L"IDs"].value ()<< std::endl;
   }
 
   void
@@ -239,7 +239,59 @@ public:
   virtual void test_stringify () override {}
 
   virtual void test_strLength () override {}
-  virtual void test_strValue () override  {}
+
+  virtual void
+  test_strValue () override
+  {
+    /*JSON j = L"{\
+      \"Image\": {\
+          \"Width\":  800,\
+          \"Height\": 600,\
+          \"Title\":  \"View from 15th Floor\",\
+          \"Thumbnail\": {\
+              \"Url\":    \"http://www.example.com/image/481989943\",\
+              \"Height\": 125,\
+              \"Width\":  100\
+          },\
+          \"Animated\" : false,\
+          \"IDs\": [116, 943, 234, 38793]\
+        }\
+    }";*/
+
+    struct assert
+    {
+      const wchar_t *input;
+      const wchar_t *output[2];
+      int assert_status;
+    };
+
+    std::vector<struct assert> test = {
+      { L"{\"1\":{\"2\":{\"3\":\"three\"},\"4\":\"four\"}}",
+        { L"{\"1\":{\"2\":{\"3\":\"three\"},\"4\":\"four\"}}",
+          L"{\"3\":\"three\"}"  }, PASS },
+
+      { L"[\"1\",[\"2\",[\"3\"],\"4\"]]",
+        { L"[\"1\",[\"2\",[\"3\"],\"4\"]]",
+          L"\"4\"" }, PASS },
+    };
+
+    TEST_IT_START
+      JSON j;
+      (void) j.parse ((*it).input);
+      size_t len[2] = { wcslen ((*it).output[0]), wcslen ((*it).output[1]) };
+
+      for (uint mdx = 0; mdx < 2; mdx++)
+        {
+          const wchar_t *value[2] = { j.strValue (), j[L"1"][L"2"].strValue () };
+
+          std::wcout << value[0] << std::endl << value[1] << std::endl;
+
+          ASSERT_EQUAL_IDX ("wcslen (value[0])", len[0], wcslen (value[0]));
+          ASSERT_EQUAL_IDX ("wcslen (value[1])", len[1], wcslen (value[1]));
+        }
+    TEST_IT_END;
+
+  }
 
   virtual void test__clear () {}
 
@@ -262,6 +314,9 @@ public:
   suite ()
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json test");
+
+    s->addTest (new CppUnit::TestCaller<json_test> ("test_strValue", &json_test::test_strValue));
+    // return s;
 
     s->addTest (new CppUnit::TestCaller<json_test> ("test_bug_example_free", &json_test::test_bug_example_free));
     // return s;

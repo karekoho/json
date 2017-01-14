@@ -111,7 +111,7 @@ class Undefined : public Leaf
    * @return
    */
   virtual const wchar_t *
-  strValue () const
+  strValue (wchar_t * = 0) const
   { return L""; }
 
 protected:

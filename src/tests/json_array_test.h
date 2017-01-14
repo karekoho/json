@@ -346,8 +346,12 @@ public:
     };
 
     std::vector<struct assert> test = {
-      { L"[]", { L"[]", L"[\"x\",[]" }, PASS },  // <-- last closing ] intentionally missing
-      { L"[false,[true]]", { L"[false,[true]]", L"[\"x\",[false,[true]]" }, PASS },  // <-- last closing ] intentionally missing
+      { L"[]",
+        { L"[]",  // Without parent
+          L"[\"x\",[]" }, PASS },  // <-- last closing ] intentionally missing
+      { L"[false,[true]]",
+        { L"[false,[true]]",  // Without parent
+          L"[\"x\",[false,[true]]" }, PASS },  // <-- last closing ] intentionally missing
     };
 
     TEST_IT_START
@@ -368,12 +372,12 @@ public:
                 str_value = wcsncpy (str_value,  L"[\"x\",", 5);
 
                 p._str_value[BEGIN]   = str_value;
-                p._str_value[CURSOR]  = str_value + 5;
+                p._str_value[OFFSET]  = str_value + 5;
               }
 
             (void) a.parse ((*it).input);
 
-            const wchar_t *output = a.strValue ();
+            const wchar_t *output = a.strValue (a._parent ? p._str_value[OFFSET] : 0);
 
             if (a._parent == 0)
               {
@@ -452,6 +456,7 @@ public:
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json array test");
 
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test_strValue));
+    // return s;
     s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test_strLength));
     // return s;
 
