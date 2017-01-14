@@ -64,11 +64,12 @@ main ()
   std::wcout << j[L"Image"].value () << std::endl;
 
   Number & n = static_cast<Number &> (j[L"Image"][L"Width"]);
+
   std::cout << n.value () << std::endl;
 
-  // std::wcout << j[L"Image"][L"Thumbnail"][L"Url"].value () << std::endl;
+  std::wcout << j[L"Image"][L"Thumbnail"][L"Url"].value () << std::endl;
 
-  std::wcout << j[L"Image"][L"IDs"].value () << std::endl;
+  std::wcout << j[L"Image"][L"IDs"][L"2"].value () << std::endl;
 
   return 0;
 }
