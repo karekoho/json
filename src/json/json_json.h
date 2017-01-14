@@ -9,7 +9,7 @@
 #include <vector>
 #include <initializer_list>
 
-#define CURSOR  0
+#define OFFSET  0
 #define BEGIN  1
 
 // TODO: namespace JSON {
@@ -197,8 +197,8 @@ public:
    * @return
    */
   virtual const wchar_t *
-  strValue (wchar_t *str = 0) const
-  { return __hasRoot () ? __root->strValue (str) : L""; }
+  strValue (wchar_t *offset = 0) const
+  { return __hasRoot () ? __root->strValue (offset) : L""; }
 
   /**
    * @brief erase
