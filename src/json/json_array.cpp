@@ -198,26 +198,22 @@ Array::strLength () const noexcept
 }
 
 const wchar_t *
-Array::strValue (wchar_t *str) const
+Array::strValue (wchar_t *offset) const
 {
-  if (_str_value[BEGIN])
+  wchar_t *str_value[2] = { 0, 0 };
+
+  if (offset)
+    str_value[CURSOR] = offset;
+
+  else if (_str_value[BEGIN])
     return _str_value[BEGIN];
 
-  _str_value[CURSOR] = _parent && _parent->_str_value[CURSOR]
-      ? _parent->_str_value[CURSOR]
-      : new wchar_t[strLength () + 1] ();
+  else
+    str_value[CURSOR] = new wchar_t[strLength () + 1] ();
 
-//  if (str)
-//    _str_value[CURSOR] = str;
+  str_value[BEGIN] = str_value[CURSOR];
 
-//  else if (_str_value[BEGIN])
-//      return _str_value[BEGIN];
-//  else
-//    _str_value[CURSOR] = new wchar_t[strLength () + 1] ();
-
-  _str_value[BEGIN] = _str_value[CURSOR];
-
-  *(_str_value[CURSOR]++) = _sc::begin_array;
+  *(str_value[CURSOR]++) = _sc::begin_array;
 
   auto end = _element_list.cend ();
   auto cur = _element_list.cbegin ();
@@ -225,15 +221,18 @@ Array::strValue (wchar_t *str) const
   while (cur != end)
     {
       Value *v = *cur;
-      _str_value[CURSOR] = _str_append (_str_value[CURSOR], v->strValue (_str_value[CURSOR]), v->strLength ());
+      str_value[CURSOR] = _str_append (str_value[CURSOR], v->strValue (str_value[CURSOR]), v->strLength ());
 
       if (++cur != end)
-        *(_str_value[CURSOR]++) = _sc::value_separator;
+        *(str_value[CURSOR]++) = _sc::value_separator;
     }
 
-  *(_str_value[CURSOR]++) = _sc::end_array;
+  *(str_value[CURSOR]++) = _sc::end_array;
 
-  return _str_value[BEGIN];
+  if (offset == 0)
+    _str_value[BEGIN] = str_value[BEGIN];
+
+  return str_value[BEGIN];
 }
 
 Value &

@@ -377,8 +377,8 @@ public:
 
             (void) a.parse ((*it).input);
 
-            const wchar_t *output = a.strValue ();
-            std::wcout << output << std::endl;
+            const wchar_t *output = a.strValue (a._parent ? p._str_value[CURSOR] : 0);
+
             if (a._parent == 0)
               {
                 ASSERT_EQUAL_IDX ("strlen (output)", len, wcslen (output));
