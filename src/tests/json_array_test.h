@@ -372,12 +372,12 @@ public:
                 str_value = wcsncpy (str_value,  L"[\"x\",", 5);
 
                 p._str_value[BEGIN]   = str_value;
-                p._str_value[CURSOR]  = str_value + 5;
+                p._str_value[OFFSET]  = str_value + 5;
               }
 
             (void) a.parse ((*it).input);
 
-            const wchar_t *output = a.strValue (a._parent ? p._str_value[CURSOR] : 0);
+            const wchar_t *output = a.strValue (a._parent ? p._str_value[OFFSET] : 0);
 
             if (a._parent == 0)
               {

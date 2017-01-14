@@ -228,7 +228,7 @@ Number::strLength () const noexcept
 }
 
 const wchar_t *
-Number::strValue (wchar_t *str) const
+Number::strValue (wchar_t *) const
 {
   if (_double_str.empty ())
     _double_str = std::to_wstring (_double_value);

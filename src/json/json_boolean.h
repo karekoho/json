@@ -94,7 +94,7 @@ class Boolean : public Leaf
    * @return
    */
   virtual const wchar_t *
-  strValue (wchar_t *str = 0) const override
+  strValue (wchar_t * = 0) const override
   { return _boolean_value == true ? L"true" : L"false"; }
 
 public:

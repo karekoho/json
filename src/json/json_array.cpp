@@ -203,17 +203,17 @@ Array::strValue (wchar_t *offset) const
   wchar_t *str_value[2] = { 0, 0 };
 
   if (offset)
-    str_value[CURSOR] = offset;
+    str_value[OFFSET] = offset;
 
   else if (_str_value[BEGIN])
     return _str_value[BEGIN];
 
   else
-    str_value[CURSOR] = new wchar_t[strLength () + 1] ();
+    str_value[OFFSET] = new wchar_t[strLength () + 1] ();
 
-  str_value[BEGIN] = str_value[CURSOR];
+  str_value[BEGIN] = str_value[OFFSET];
 
-  *(str_value[CURSOR]++) = _sc::begin_array;
+  *(str_value[OFFSET]++) = _sc::begin_array;
 
   auto end = _element_list.cend ();
   auto cur = _element_list.cbegin ();
@@ -221,13 +221,13 @@ Array::strValue (wchar_t *offset) const
   while (cur != end)
     {
       Value *v = *cur;
-      str_value[CURSOR] = _str_append (str_value[CURSOR], v->strValue (str_value[CURSOR]), v->strLength ());
+      str_value[OFFSET] = _str_append (str_value[OFFSET], v->strValue (str_value[OFFSET]), v->strLength ());
 
       if (++cur != end)
-        *(str_value[CURSOR]++) = _sc::value_separator;
+        *(str_value[OFFSET]++) = _sc::value_separator;
     }
 
-  *(str_value[CURSOR]++) = _sc::end_array;
+  *(str_value[OFFSET]++) = _sc::end_array;
 
   if (offset == 0)
     _str_value[BEGIN] = str_value[BEGIN];

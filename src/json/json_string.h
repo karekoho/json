@@ -129,7 +129,7 @@ class String : public Leaf
    * @return
    */
   virtual const wchar_t *
-  strValue (wchar_t *str = 0) const;
+  strValue (wchar_t * = 0) const;
 
 protected:
 

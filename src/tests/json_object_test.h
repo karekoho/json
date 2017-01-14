@@ -448,12 +448,12 @@ public:
               str_value = wcsncpy (str_value,  L"{\"a\":null,\"b\":", 14);
 
               p._str_value[BEGIN]   = str_value;
-              p._str_value[CURSOR]  = str_value + 14;
+              p._str_value[OFFSET]  = str_value + 14;
             }
 
           (void) o.parse ((*it).input);
 
-          const wchar_t *output = o.strValue (o._parent ? p._str_value[CURSOR] : 0);
+          const wchar_t *output = o.strValue (o._parent ? p._str_value[OFFSET] : 0);
 
           if (o._parent == 0)
             {

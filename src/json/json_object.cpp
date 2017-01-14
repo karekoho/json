@@ -250,17 +250,17 @@ Object::strValue (wchar_t *offset) const
   wchar_t *str_value[2] = { 0, 0 };
 
   if (offset)
-    str_value[CURSOR] = offset;
+    str_value[OFFSET] = offset;
 
   else if (_str_value[BEGIN])
     return _str_value[BEGIN];
 
   else
-    str_value[CURSOR] = new wchar_t[strLength () + 1] ();
+    str_value[OFFSET] = new wchar_t[strLength () + 1] ();
 
-  str_value[BEGIN] = str_value[CURSOR];
+  str_value[BEGIN] = str_value[OFFSET];
 
-  *(str_value[CURSOR]++) = _sc::begin_object;
+  *(str_value[OFFSET]++) = _sc::begin_object;
 
   auto end = _member_list.cend ();
   auto cur = _member_list.cbegin ();
@@ -269,15 +269,15 @@ Object::strValue (wchar_t *offset) const
     {
       std::pair<std::wstring, Value *> p = *cur;
 
-      str_value[CURSOR] = _str_append (_str_append (str_value[CURSOR], L"\"", 1), p.first.c_str (), p.first.size ());   // Key
-      str_value[CURSOR] = _str_append (str_value[CURSOR], L"\":", 2);
-      str_value[CURSOR] = _str_append (str_value[CURSOR], p.second->strValue (str_value[CURSOR]), p.second->strLength ()); // Value
+      str_value[OFFSET] = _str_append (_str_append (str_value[OFFSET], L"\"", 1), p.first.c_str (), p.first.size ());   // Key
+      str_value[OFFSET] = _str_append (str_value[OFFSET], L"\":", 2);
+      str_value[OFFSET] = _str_append (str_value[OFFSET], p.second->strValue (str_value[OFFSET]), p.second->strLength ()); // Value
 
       if (++cur != end)
-        *(str_value[CURSOR]++) = _sc::value_separator;
+        *(str_value[OFFSET]++) = _sc::value_separator;
     }
 
-  *(str_value[CURSOR]++) = _sc::end_object;
+  *(str_value[OFFSET]++) = _sc::end_object;
 
   if (offset == 0)
     _str_value[BEGIN] = str_value[BEGIN];
