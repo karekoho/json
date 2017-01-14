@@ -161,7 +161,7 @@ const wchar_t *Number::_exp()
 }
 
 double
-Number::_calculate (const wchar_t * const digitp[2][2])
+Number::_calculate (const wchar_t * const digitp[2][2]) const
 {
   _double_valuep = & _double_value;
 
@@ -221,6 +221,8 @@ Number::clone (const Value &other)
 size_t
 Number::strLength () const noexcept
 {
+ (void) value ();
+
   if (_double_str.empty ())
     _double_str = std::to_wstring (_double_value);
 
@@ -230,6 +232,8 @@ Number::strLength () const noexcept
 const wchar_t *
 Number::strValue (wchar_t *) const
 {
+  (void) value ();
+
   if (_double_str.empty ())
     _double_str = std::to_wstring (_double_value);
 

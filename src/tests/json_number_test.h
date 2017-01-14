@@ -445,23 +445,27 @@ public:
     {
       double df;
       long li;
-      const wchar_t *output[2];
+      const wchar_t *str;
+      const wchar_t *output[3];
       int assert_status;
     };
 
     std::vector<struct assert > test = {
-      { 100, 100, { L"100.000000", L"100.000000" }, PASS }
+      { 100, 100, L"123", { L"100.000000", L"100.000000", L"123.000000" }, PASS }
     };
 
     TEST_IT_START
 
-      Number n[2] = {
+      Number n[3] = {
         Number ((*it).df),
         Number ((*it).li),
+        Number ((*it).str),
       };
 
       CPPUNIT_ASSERT_MESSAGE ("n[0].strValue ()", wcscmp((*it).output[0], n[0].strValue ()) == 0);
       CPPUNIT_ASSERT_MESSAGE ("n[1].strValue ()", wcscmp((*it).output[1], n[1].strValue ()) == 0);
+      CPPUNIT_ASSERT_MESSAGE ("n[2].strValue ()", wcscmp((*it).output[2], n[2].strValue ()) == 0);
+
 
       // std::cout << n[0].strValue () << std::endl;
       // std::cout << n[1].strValue () << std::endl;
