@@ -41,7 +41,8 @@ HEADERS += \
     json_iterator.h \
     json_object_iterator.h \
     json_array_iterator.h \
-    json_leaf_iterator.h
+    json_leaf_iterator.h \
+    json_shared_undefined.h
 
 unix:!symbian {
     maemo5 {

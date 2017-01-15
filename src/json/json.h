@@ -10,6 +10,7 @@
 #include "json_boolean.h"
 #include "json_null.h"
 #include "json_undefined.h"
+#include "json_shared_undefined.h"
 #include "json_iterator.h"
 #include "json_object_iterator.h"
 #include "json_array_iterator.h"

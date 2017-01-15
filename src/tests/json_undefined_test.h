@@ -134,6 +134,16 @@ public:
   virtual void test_debug_1 () {}
   virtual void test_erase () override {}
 
+  void
+  test_shared_undefined ()
+  {
+//    Shared_Undefined & u = Shared_Undefined::instance ();
+//    Shared_Undefined *pu = &u;
+//    delete pu;
+
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("instance () == instance ()",  & Shared_Undefined::instance (), & Shared_Undefined::instance ());
+  }
+
   /**
    * 8.
    * @brief suite
@@ -146,6 +156,7 @@ public:
 
     s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_ctor_dtor", &json_undefined_test::test_ctor_dtor));
     s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_assign_all_values", &json_undefined_test::test_assign_all_values));
+    s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_shared_undefined", &json_undefined_test::test_shared_undefined));
 
     return s;
   }

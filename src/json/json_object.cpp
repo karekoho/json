@@ -194,9 +194,7 @@ Object::_clear ()
 {
   for (auto it = _member_list.begin (); it != _member_list.end (); it = _member_list.erase (it))
     {
-      // delete static_cast <std::pair<std::wstring, Value *>>(*it).second;
-      Value *v = static_cast <std::pair<std::wstring, Value *>>(*it).second;
-      delete v;
+      delete static_cast <std::pair<std::wstring, Value *>>(*it).second;
     }
 }
 
