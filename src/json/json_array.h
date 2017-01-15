@@ -317,7 +317,6 @@ protected:
    */
   virtual Value &
    _at (const wchar_t *key)
-   // { return _at (atoll (key)); }
    {
      wchar_t *end = 0;
      return _at (std::wcstoll (key, & end, 10));

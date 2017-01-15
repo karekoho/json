@@ -243,21 +243,6 @@ public:
   virtual void
   test_strValue () override
   {
-    /*JSON j = L"{\
-      \"Image\": {\
-          \"Width\":  800,\
-          \"Height\": 600,\
-          \"Title\":  \"View from 15th Floor\",\
-          \"Thumbnail\": {\
-              \"Url\":    \"http://www.example.com/image/481989943\",\
-              \"Height\": 125,\
-              \"Width\":  100\
-          },\
-          \"Animated\" : false,\
-          \"IDs\": [116, 943, 234, 38793]\
-        }\
-    }";*/
-
     struct assert
     {
       const wchar_t *input;
@@ -299,7 +284,31 @@ public:
   virtual void test_operator_at () {}
 
   virtual void test_size_1 () {}
-  virtual void test_at () {}
+
+
+  virtual void
+  test_at ()  // TODO
+  {
+    struct assert
+    {
+      const wchar_t *input;
+      Value::object_type type;
+      int assert_status;
+    };
+
+    std::vector<struct assert> test = {
+      { L"{}", Value::object_type::boolean, PASS },
+      { L"[]", Value::object_type::boolean, PASS }
+     };
+
+     TEST_IT_START
+      // TODO: object.at(key)
+      // TODO: object.at(index)
+      // TODO: object[key]
+      // TODO: object[index]
+     TEST_IT_END;
+  }
+
   virtual void test_value_1 () {}
   virtual void test_debug_1 () {}
 

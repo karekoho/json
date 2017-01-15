@@ -109,14 +109,21 @@ JSON::_assign (const Value &v)
   return *this;
 }
 
-Value &
+/* Value &
 JSON::_at (const wchar_t *key)
 {
   if (! __hasRoot ())
     throw JSON::out_of_range ();
-
   return (*__root)[key];
 }
+
+Value &
+JSON::_at (size_t index)
+{
+  if (! __hasRoot ())
+    throw JSON::out_of_range ();
+  return (*__root)[index];
+} */
 
 Value *
 JSON::_make_value ()
@@ -164,6 +171,7 @@ JSON::_make_value ()
 
   return value_;
 }
+
 
 //Iterator *
 //JSON::iterator () const

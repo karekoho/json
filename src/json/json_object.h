@@ -324,6 +324,13 @@ protected:
   _at (const wchar_t *key);
 
   /**
+   * @brief _at
+   * @return
+   */
+  virtual Value & _at (size_t)
+  { throw JSON::out_of_range (); }
+
+  /**
    * @brief _assign
    * @param nv
    * @return

@@ -235,20 +235,23 @@ public:
     struct assert
     {
       size_t index;
+      wchar_t *key;
       Value::object_type type;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { 0, Value::object_type::boolean, PASS },
-      { 1, Value::object_type::undefined, FAIL }
+      { 0, L"0", Value::object_type::boolean, PASS },
+      { 1, L"1", Value::object_type::undefined, FAIL }
     };
 
     TEST_IT_START
 
-        const Value & v = a.at ((*it).index);
+        const Value & v1 = a.at ((*it).index);
+        const Value & v2 = a._at ((*it).key);
 
-        ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v.type ());
+        ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v1.type ());
+        ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v2.type ());
 
     TEST_IT_END;
   }
@@ -263,20 +266,23 @@ public:
     struct assert
     {
       size_t index;
+      wchar_t *key;
       Value::object_type type;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { 0, Value::object_type::boolean, PASS },
-      { 1, Value::object_type::undefined, PASS }
+      { 0, L"0", Value::object_type::boolean, PASS },
+      { 1, L"1", Value::object_type::undefined, PASS }
     };
 
     TEST_IT_START
 
-      const Value & v = a._at ((*it).index);
+      const Value & v1 = a._at ((*it).index);
+      const Value & v2 = a._at ((*it).key);
 
-      ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v.type ());
+      ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v1.type ());
+      ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v2.type ());
 
     TEST_IT_END;
   }

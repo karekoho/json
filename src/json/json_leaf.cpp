@@ -21,6 +21,12 @@ Leaf::_at (const wchar_t *)
   return *(new Undefined);
 }
 
+Value &
+Leaf::_at (size_t)
+{
+  return *(new Undefined);
+}
+
 JSON_Iterator *
 Leaf::iterator () const
 {

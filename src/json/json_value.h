@@ -440,13 +440,12 @@ protected:
   _at (const wchar_t *key)  = 0;
 
   /**
-   * TODO:
    * @brief _at
    * @param index
    * @return
    */
-  /* virtual */ Value &
-  _at (size_t index) /* = 0 */;
+  virtual Value &
+  _at (size_t index) = 0;
 
   /**
    * @brief _clear

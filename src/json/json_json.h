@@ -226,7 +226,17 @@ protected:
    * @return
    */
   virtual Value &
-  _at (const wchar_t *key);
+  _at (const wchar_t *key) override
+  { return __hasRoot() ? (*__root)[key] : *(new Undefined); }
+
+  /**
+   * @brief _at
+   * @param index
+   * @return
+   */
+  virtual Value &
+  _at (size_t index) override
+  { return __hasRoot() ? (*__root)[index] : *(new Undefined) ;}
 
   /**
    * @brief _make_value
@@ -318,6 +328,10 @@ public:
      */
     out_of_range (const char * const message = 0) : error (message) {}
   };  // class out_of_range
+
+
+
+
 };  // class json
 
 // } namespace

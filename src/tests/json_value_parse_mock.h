@@ -66,6 +66,11 @@ protected:
     _at (const wchar_t *)
     { return *this; }
 
+    virtual  Value &
+    _at (size_t)
+    { return *this; }
+
+
     virtual void _clear () override
     {}
 

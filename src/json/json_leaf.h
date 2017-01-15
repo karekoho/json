@@ -253,6 +253,13 @@ protected:
   _at (const wchar_t *) final override;
 
   /**
+   * @brief _at
+   * @return
+   */
+  virtual Value &
+  _at (size_t) final override;
+
+  /**
    * @brief _clear
    */
   virtual void
