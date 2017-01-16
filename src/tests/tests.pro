@@ -29,7 +29,8 @@ SOURCES += main.cpp \
     ../json/json_leaf.cpp \
     ../json/json_object_iterator.cpp \
     ../json/json_leaf_iterator.cpp \
-    ../json/json_array_iterator.cpp
+    ../json/json_array_iterator.cpp \
+    ../json/json_shared_undefined.cpp
 
 HEADERS += \
     json_value_test_interface.h \

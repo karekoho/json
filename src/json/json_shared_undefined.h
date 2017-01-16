@@ -3,6 +3,9 @@
 
 #include "json_undefined.h"
 
+/**
+ * @brief The Shared_Undefined class
+ */
 class Shared_Undefined : public Undefined
 {
 public:
@@ -13,17 +16,16 @@ public:
   virtual ~Shared_Undefined () = default;
 
   /**
+   * @brief operator delete
+   */
+//  void operator delete (void *) noexcept {}
+
+  /**
    * @brief instance
    * @return
    */
   static Shared_Undefined &
-  instance ()
-  {
-    if (__instance == 0)
-      __instance = new Shared_Undefined ();
-
-    return *__instance;
-  }
+  instance ();
 
 private:
 
@@ -35,12 +37,7 @@ private:
   /**
    * @brief Shared_Undefined
    */
-  Shared_Undefined ()
-    : Undefined ()
-  {
-  }
+  Shared_Undefined ();
 };
-
-Shared_Undefined * Shared_Undefined::__instance = 0;
 
 #endif // SHARED_UNDEFINED_H

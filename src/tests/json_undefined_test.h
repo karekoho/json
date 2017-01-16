@@ -140,6 +140,8 @@ public:
 //    Shared_Undefined & u = Shared_Undefined::instance ();
 //    Shared_Undefined *pu = &u;
 //    delete pu;
+//    Shared_Undefined & x = Shared_Undefined::instance ();
+//    x.strValue ();
 
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("instance () == instance ()",  & Shared_Undefined::instance (), & Shared_Undefined::instance ());
   }

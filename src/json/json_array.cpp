@@ -38,7 +38,8 @@ Array::~Array ()
   _clear ();
 }
 
-const wchar_t *Array::parse(const wchar_t *json)
+const wchar_t *
+Array::parse (const wchar_t *json)
 {
   if (json == 0)
     throw JSON::error ("error: null string given");

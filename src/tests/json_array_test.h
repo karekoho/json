@@ -235,7 +235,7 @@ public:
     struct assert
     {
       size_t index;
-      wchar_t *key;
+      const wchar_t *key;
       Value::object_type type;
       int assert_status;
     };
@@ -266,7 +266,7 @@ public:
     struct assert
     {
       size_t index;
-      wchar_t *key;
+      const wchar_t *key;
       Value::object_type type;
       int assert_status;
     };

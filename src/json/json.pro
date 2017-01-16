@@ -23,7 +23,8 @@ SOURCES += \
     json_object_iterator.cpp \
     json_array_iterator.cpp \
     json_leaf_iterator.cpp \
-    json_leaf.cpp
+    json_leaf.cpp \
+    json_shared_undefined.cpp
     #json_leaf.cpp
 
 HEADERS += \
