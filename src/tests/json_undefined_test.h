@@ -137,12 +137,12 @@ public:
   void
   test_shared_undefined ()
   {
-//    Shared_Undefined & u = Shared_Undefined::instance ();
-//    Shared_Undefined *pu = &u;
-//    delete pu;
-//    Shared_Undefined & x = Shared_Undefined::instance ();
-//    x.strValue ();
+    Shared_Undefined & u = Shared_Undefined::instance ();
+    Shared_Undefined *pu = & u;
 
+    delete pu;
+
+    CPPUNIT_ASSERT_MESSAGE ("instance () > 0", (& Shared_Undefined::instance ()) > 0 );
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("instance () == instance ()",  & Shared_Undefined::instance (), & Shared_Undefined::instance ());
   }
 

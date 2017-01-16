@@ -18,7 +18,7 @@ public:
   /**
    * @brief operator delete
    */
-//  void operator delete (void *) noexcept {}
+  void operator delete (void *) noexcept {}
 
   /**
    * @brief instance
