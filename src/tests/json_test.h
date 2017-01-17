@@ -36,13 +36,6 @@ public:
     v = j[L"Image"][L"Thumbnail"][L"Url"].value ();
     v = j[L"Image"][L"Animated"].value ();
     v = j[L"Image"][L"IDs"].value ();
-
-//    std::wcout <<  j.value () << std::endl;
-//    std::wcout << j[L"Image"].value ()<< std::endl;
-//    std::wcout << j[L"Image"][L"Thumbnail"].value ()<< std::endl;
-//    std::wcout << j[L"Image"][L"Thumbnail"][L"Url"].value ()<< std::endl;
-//    std::wcout << j[L"Image"][L"Animated"].value ()<< std::endl;
-//    std::wcout << j[L"Image"][L"IDs"].value ()<< std::endl;
   }
 
   void
@@ -269,7 +262,7 @@ public:
         {
           const wchar_t *value[2] = { j.strValue (), j[L"1"][L"2"].strValue () };
 
-          std::wcout << value[0] << std::endl << value[1] << std::endl;
+          // std::wcout << value[0] << std::endl << value[1] << std::endl;
 
           ASSERT_EQUAL_IDX ("wcslen (value[0])", len[0], wcslen (value[0]));
           ASSERT_EQUAL_IDX ("wcslen (value[1])", len[1], wcslen (value[1]));

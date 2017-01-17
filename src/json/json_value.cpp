@@ -66,7 +66,8 @@ Value::Value (const Value *ov, const Value &nv)
 
 Value::~Value ()
 {
-  free ((wchar_t *)_key);
+  //free ((wchar_t *)_key);
+  delete[] _key;
 
   delete _old_value;
   _old_value = 0;
