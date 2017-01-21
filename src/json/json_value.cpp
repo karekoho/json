@@ -12,7 +12,6 @@ Value::Value ()
     : _startp (0),
       _readp (0),
       _parent (0),
-     // _length (0),
       _key (0),
       _index (0),
       _old_value (0)
@@ -23,7 +22,6 @@ Value::Value (const wchar_t *)
     : _startp (0),
       _readp (0),
       _parent (0),
-     // _length (1 /* json == 0 ? 0 : strlen (json) */),
       _key (0),
       _index (0),
       _old_value (0)
@@ -34,7 +32,6 @@ Value::Value (JSON *parent)
     : _startp (0),
       _readp (0),
       _parent (parent),
-     // _length (0),
       _key (0),
       _index (0),
       _old_value (0)
@@ -45,8 +42,7 @@ Value::Value (const Value &other)
   : _startp (other._startp),
     _readp (other._readp),
     _parent (0),
-    // _length (other._length),
-    _key (other._key ? wcsdup (other._key) : 0),
+    _key (other._key ? new wchar_t [wcslen (other._key) + 1] () : 0),
     _index (other._index),
     _old_value (0)
 {
@@ -56,7 +52,7 @@ Value::Value (const Value *ov, const Value &nv)
   : _startp (nv._startp),
     _readp (nv._readp),
     _parent (0),
-    _key (nv._key ? wcsdup (nv._key) : 0),
+    _key (nv._key ? new wchar_t [wcslen (nv._key) + 1] () : 0),
     _index (nv._index),
     _old_value (0)
 {
@@ -66,7 +62,6 @@ Value::Value (const Value *ov, const Value &nv)
 
 Value::~Value ()
 {
-  //free ((wchar_t *)_key);
   delete[] _key;
 
   delete _old_value;

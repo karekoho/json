@@ -30,18 +30,12 @@ public:
         }\
     }";
 
-    const wchar_t *v = j.value ();
-    v = j[L"Image"].value ();
-    v = j[L"Image"][L"Thumbnail"].value ();
-    v = j[L"Image"][L"Thumbnail"][L"Url"].value ();
-    v = j[L"Image"][L"Animated"].value ();
-    v = j[L"Image"][L"IDs"].value ();
-  }
-
-  void
-  test_bug_example_free ()
-  {
-    example_free_1 ();
+    (void) j.value ();
+    (void) j[L"Image"].value ();
+    (void) j[L"Image"][L"Thumbnail"].value ();
+    (void) j[L"Image"][L"Thumbnail"][L"Url"].value ();
+    (void) j[L"Image"][L"Animated"].value ();
+    (void) j[L"Image"][L"IDs"].value ();
   }
 
   virtual void
@@ -254,15 +248,16 @@ public:
     };
 
     TEST_IT_START
-      JSON j;
-      (void) j.parse ((*it).input);
+
+      JSON j = (*it).input;
+
       size_t len[2] = { wcslen ((*it).output[0]), wcslen ((*it).output[1]) };
 
       for (uint mdx = 0; mdx < 2; mdx++)
         {
-          const wchar_t *value[2] = { j.strValue (), j[L"1"][L"2"].strValue () };
-
-          // std::wcout << value[0] << std::endl << value[1] << std::endl;
+          const wchar_t *value[2] = { j.strValue (),
+                                      j[L"1"][L"2"].strValue ()
+                                    };
 
           ASSERT_EQUAL_IDX ("wcslen (value[0])", len[0], wcslen (value[0]));
           ASSERT_EQUAL_IDX ("wcslen (value[1])", len[1], wcslen (value[1]));
@@ -318,23 +313,12 @@ public:
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json test");
 
     s->addTest (new CppUnit::TestCaller<json_test> ("test_strValue", &json_test::test_strValue));
-    // return s;
-
-    s->addTest (new CppUnit::TestCaller<json_test> ("test_bug_example_free", &json_test::test_bug_example_free));
-    // return s;
-
+//    s->addTest (new CppUnit::TestCaller<json_test> ("example_free_1", &json_test::example_free_1));
     s->addTest (new CppUnit::TestCaller<json_test> ("test_smoke", &json_test::test_ctor_dtor));
-
     s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_1", &json_test::test_parse_1));
-
-//    s->addTest (new CppUnit::TestCaller<json_test> ("test_lookahead", &json_test::test_lookahead));   // value_test has the same
-//    s->addTest (new CppUnit::TestCaller<json_test> ("test_is_literal", &json_test::test_is_literal)); // value_test has the same
-//    s->addTest (new CppUnit::TestCaller<json_test> ("test_is_quoted", &json_test::test_string));      // value_test has the same
-
     s->addTest (new CppUnit::TestCaller<json_test> ("test_make_value", &json_test::test_make_value));
     s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_to_parent", &json_test::test__assign_to_parent));
     s->addTest (new CppUnit::TestCaller<json_test> ("test_assign_all_values", &json_test::test_assign_all_values));
-
 
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_size_1", &json_test::test_size_1));
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_get_1", &json_test::test_get_1));

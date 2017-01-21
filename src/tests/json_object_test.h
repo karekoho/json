@@ -464,7 +464,9 @@ public:
             {
               ASSERT_EQUAL_IDX ("strlen (p._str_value[BEGIN])", len, wcslen (p._str_value[BEGIN]));
               CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[1])", wcscmp (p._str_value[BEGIN], (*it).output[1]) == 0);
-            }            
+            }
+
+          //if (o._parent == 0) delete[] str_value;
       }
 
     TEST_IT_END;
