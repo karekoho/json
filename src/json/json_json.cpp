@@ -52,16 +52,14 @@ JSON::JSON (const Value *ov, const JSON &nv)
 
 JSON::~JSON ()
 {
-  delete __root;
-
-  if (! _parent && _str_value[BEGIN])
+  if (_parent == 0 && _str_value[BEGIN])
     {
-      // FIXME: ....*** Error in `/home/kare/devel/json/build/tests/tests': double free or corruption (!prev): 0x00000000006afa40 ***
-      // FIXME: json_object_test, test_strValue ()
-      // delete[] _str_value[BEGIN];
+      delete[] _str_value[BEGIN];
 
       _str_value[BEGIN] = 0;
     }
+
+  delete __root;
 }
 
 const wchar_t *

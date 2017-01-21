@@ -457,18 +457,14 @@ public:
 
           if (o._parent == 0)
             {
-              // std::cout  << output  << std::endl;
               ASSERT_EQUAL_IDX ("strlen (output)", len, wcslen (output));
               CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[0])", wcscmp (output, (*it).output[0]) == 0);
             }
           else
             {
-              // std::cout << p._str_value[BEGIN]  << std::endl;
               ASSERT_EQUAL_IDX ("strlen (p._str_value[BEGIN])", len, wcslen (p._str_value[BEGIN]));
               CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[1])", wcscmp (p._str_value[BEGIN], (*it).output[1]) == 0);
-            }
-
-            delete[] str_value;
+            }            
       }
 
     TEST_IT_END;
@@ -560,6 +556,8 @@ public:
   suite ()
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json object test");
+
+    // s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strvalue", &json_object_test::test_strValue)); return s;
 
     // s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strValue_2", &json_object_test::test_strValue_2));
     // return s;
