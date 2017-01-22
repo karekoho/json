@@ -2,8 +2,10 @@
 #define JSON_VALUE_TEST_H
 
 #include <unit_test.h>
+// #include "test_selector.h"
 
-class json_value_test_interface : public unit_test
+class json_value_test_interface :
+    public unit_test //, public test_selector
 {
 public:
 
@@ -50,7 +52,7 @@ public:
 
 protected:
 
-    static const char *_input[];
+    //static const char *_input[];
 };
 
 #endif // JSON_VALUE_TEST_H

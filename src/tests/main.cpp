@@ -12,10 +12,11 @@
 #include <json_object_iterator_test.h>
 #include <json_array_iterator_test.h>
 #include <json_leaf_iterator_test.h>
+#include <test_selector_test.h>
 
 #define DBG(...) fprintf (stderr, __VA_ARGS__)
 
-#define TESTC 13   // Test count
+#define TESTC 14   // Test count
 
 int main(int argc, char *argv[])
 {
@@ -26,6 +27,7 @@ int main(int argc, char *argv[])
     struct _test {
       CppUnit::Test *test;
       bool is_added;
+      /// TODO: std::vector<int> *idxv
       _test (CppUnit::Test * _test = 0, bool _is_added = false) : test (_test), is_added (_is_added) {}
 
     } tests[] = {
@@ -37,11 +39,12 @@ int main(int argc, char *argv[])
       { json_number_test::suite () },       // 5
       { json_boolean_test::suite () },      // 6
       { json_null_test::suite () },         // 7
-      { json_undefined_test::suite () },          // 8
-      { json_object_iterator_test::suite () },    // 9
-      { json_array_iterator_test::suite () },     // 10
-      { json_leaf_iterator_test::suite () },      // 11
-      { json_leaf_test::suite () }                // 12
+      { json_undefined_test::suite () },            // 8
+      { json_object_iterator_test::suite () },      // 9
+      { json_array_iterator_test::suite () },       // 10
+      { json_leaf_iterator_test::suite () },        // 11
+      { json_leaf_test::suite () },                 // 12
+      { test_selector_test::suite () }              // 13
     };
 
     CppUnit::TextUi::TestRunner runner;
@@ -60,11 +63,16 @@ int main(int argc, char *argv[])
         for (int idx = 1; idx < argc; idx++)
           {
             test_num = atoi (argv[idx]);
+            /// TODO: std::vector<int> *idxv = test_selector::indexes (argv[idx])
 
             if (test_num >= -1 && test_num < last_test)
               {
+                /// TODO: CppUnit::Test *test = tests[idxv.at(0)];
+                /// TODO: runner.addTest (test_selector::tests(test, idxv + 1));
+
                 runner.addTest (tests[test_num].test);
                 tests[test_num].is_added = true;
+                /// TODO: tests[test_num].idxv = idxv;
                 std::cout << tests[test_num].test->getName () << std::endl;
               }
             else
@@ -87,6 +95,7 @@ int main(int argc, char *argv[])
     for (int idx = 0; idx < last_test; idx++)
       if (tests[idx].is_added == false)
         delete tests[idx].test;
+        /// TODO: delete tests[test_num].idxv;
 
     return 0;
 }
