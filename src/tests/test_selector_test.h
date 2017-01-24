@@ -2,6 +2,7 @@
 #define TEST_SELECTOR_TEST
 
 #include "unit_test.h"
+#include "test_selector.h"
 
 /**
  * 13.
@@ -15,7 +16,25 @@ public:
   void
   test_indexes ()
   {
+    struct assert
+    {
+        char *input;
+        size_t size;
+        int assert_status;
+    };
 
+    std::vector<struct assert > test = {
+        { "", 0,  PASS },
+        { "1", 1,  PASS },
+        { "1,1,2,3", 4, PASS }
+    };
+
+    TEST_IT_START
+
+      std::vector<int> *idxv = test_selector::indexes ((*it).input);
+      ASSERT_EQUAL_IDX ("idxv->size ()", (*it).size, idxv->size ());
+
+    TEST_IT_END;
   }
 
   void

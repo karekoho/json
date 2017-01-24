@@ -1,7 +1,11 @@
 #ifndef TEST_SELECTOR
 #define TEST_SELECTOR
 
-#include <unit_test.h>
+// #include <unit_test.h>
+
+#include <vector>
+#include <cstring>
+#include <cstdlib>
 
 /**
  * @brief The test_selector struct
@@ -15,7 +19,23 @@ struct test_selector
   static std::vector<int> *
   indexes (char *list)
   {
-    return 0;
+    char *saveptr = 0;
+    char *token = 0;
+    char *input = strdupa (list);
+
+    std::vector<int> *idxv = new std::vector<int> ();
+
+    for (size_t idx = 0; ; idx++, input = 0)
+      {
+        token = strtok_r (input, ",", & saveptr);
+
+        if (token == 0)
+          break;
+
+        idxv->push_back (atoi (token));
+      }
+
+    return idxv;
   }
 
   /**
