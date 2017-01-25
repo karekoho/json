@@ -20,19 +20,15 @@ struct test_selector
   indexes (char *list)
   {
     char *saveptr = 0;
-    char *token = 0;
-    char *input = strdupa (list);
 
     std::vector<int> *idxv = new std::vector<int> ();
 
-    for (size_t idx = 0; ; idx++, input = 0)
+    char *token = strtok_r (strdupa (list), ",", & saveptr);
+
+    while (token)
       {
-        token = strtok_r (input, ",", & saveptr);
-
-        if (token == 0)
-          break;
-
         idxv->push_back (atoi (token));
+        token = strtok_r (0, ",", & saveptr);
       }
 
     return idxv;
@@ -53,6 +49,7 @@ struct test_selector
     for (auto it = indexes.begin () + 1; it != indexes.end (); ++it)  // Pass the first (test) index
       s->addTest (test->getChildTestAt (*it));
 
+    /// TODO: delete old test
     return s;
   }
 };
