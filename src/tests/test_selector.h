@@ -1,7 +1,7 @@
 #ifndef TEST_SELECTOR
 #define TEST_SELECTOR
 
-// #include <unit_test.h>
+#include <unit_test.h>
 
 #include <vector>
 #include <cstring>
@@ -45,7 +45,15 @@ struct test_selector
   static CppUnit::Test *
   tests (CppUnit::Test *test, std::vector<int> & indexes)
   {
-    return 0;
+    if (indexes.empty ())
+      return test;
+
+    CppUnit::TestSuite *s = new CppUnit::TestSuite (test->getName ());
+
+    for (auto it = indexes.begin () + 1; it != indexes.end (); ++it)  // Pass the first (test) index
+      s->addTest (test->getChildTestAt (*it));
+
+    return s;
   }
 };
 

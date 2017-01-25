@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
             if (test_num >= -1 && test_num < last_test)
               {
                 /// TODO: CppUnit::Test *test = tests[idxv.at(0)];
-                /// TODO: runner.addTest (test_selector::tests(test, idxv + 1));
+                /// TODO: runner.addTest (test_selector::tests(test, idxv));
 
                 runner.addTest (tests[test_num].test);
                 tests[test_num].is_added = true;

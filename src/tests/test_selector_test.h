@@ -23,7 +23,7 @@ public:
         int assert_status;
     };
 
-    std::vector<struct assert > test = {
+    std::vector<struct assert> test = {
         { "", 0,  PASS },
         { "1", 1,  PASS },
         { "1,1,2,3", 4, PASS }
@@ -38,9 +38,38 @@ public:
   }
 
   void
-  test_tests()
+  test_tests ()
   {
+    CppUnit::TestSuite *s = new CppUnit::TestSuite ("test selector test");
 
+    s->addTest (new CppUnit::TestCaller<test_selector_test> ("test_stub_1", &test_selector_test::test_stub_1));
+    s->addTest (new CppUnit::TestCaller<test_selector_test> ("test_stub_2", &test_selector_test::test_stub_1));
+    s->addTest (new CppUnit::TestCaller<test_selector_test> ("test_stub_3", &test_selector_test::test_stub_1));
+
+    struct assert
+    {
+        std::vector<int> idxv;
+        int childCount;
+        int assert_status;
+    };
+
+    std::vector<struct assert> test = {
+      { std::vector<int> (), 3,  PASS },
+      { { 0 /* <-- test index, --> method indexes */, 0, 2 }, 2,  PASS }
+    };
+
+    TEST_IT_START
+
+      CppUnit::Test *t = test_selector::tests (s, (*it).idxv);
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("t->countTestCases ()", (*it).childCount,  t->countTestCases ());
+
+    TEST_IT_END;
+  }
+
+  void
+  test_stub_1 ()
+  {
   }
 
   /**
@@ -55,7 +84,7 @@ public:
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("test selector test");
 
     s->addTest (new CppUnit::TestCaller<test_selector_test> ("test_indexes", &test_selector_test::test_indexes));
-    s->addTest (new CppUnit::TestCaller<test_selector_test> ("test_testts", &test_selector_test::test_tests));
+    s->addTest (new CppUnit::TestCaller<test_selector_test> ("test_tests", &test_selector_test::test_tests));
 
     return s;
   }
