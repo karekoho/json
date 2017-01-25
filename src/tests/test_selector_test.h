@@ -54,8 +54,8 @@ public:
     };
 
     std::vector<struct assert> test = {
-      { std::vector<int> (), 3,  PASS },
-      { { 0 /* <-- test index, --> method indexes */, 0, 2 }, 2,  PASS }
+      { { 0 } , 3,  PASS },
+      { { 0 , 0, 2 }, 2,  PASS }
     };
 
     TEST_IT_START

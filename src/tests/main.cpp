@@ -62,17 +62,19 @@ int main(int argc, char *argv[])
       {
         for (int idx = 1; idx < argc; idx++)
           {
-            test_num = atoi (argv[idx]);
-            /// TODO: std::vector<int> *idxv = test_selector::indexes (argv[idx])
+            std::vector<int> *idxv = test_selector::indexes (argv[idx]);
+
+            test_num = idxv->at (0);
 
             if (test_num >= -1 && test_num < last_test)
               {
-                /// TODO: CppUnit::Test *test = tests[idxv.at(0)];
-                /// TODO: runner.addTest (test_selector::tests(test, idxv));
+                CppUnit::Test *test = tests[test_num].test;
 
-                runner.addTest (tests[test_num].test);
+                runner.addTest (test_selector::tests (test, *idxv));
+
                 tests[test_num].is_added = true;
                 /// TODO: tests[test_num].idxv = idxv;
+
                 std::cout << tests[test_num].test->getName () << std::endl;
               }
             else

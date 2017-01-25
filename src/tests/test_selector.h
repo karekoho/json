@@ -41,13 +41,20 @@ struct test_selector
   static CppUnit::Test *
   tests (CppUnit::Test *test, std::vector<int> & indexes)
   {
-    if (indexes.empty ())
+    if (indexes.size () <= 1)
       return test;
 
     CppUnit::TestSuite *s = new CppUnit::TestSuite (test->getName ());
 
     for (auto it = indexes.begin () + 1; it != indexes.end (); ++it)  // Pass the first (test) index
-      s->addTest (test->getChildTestAt (*it));
+      try
+        {
+          s->addTest (test->getChildTestAt (*it));
+        }
+      catch (std::exception &e)
+        {
+          std::cerr << e.what () << std::endl;
+        }
 
     /// TODO: delete old test
     return s;
