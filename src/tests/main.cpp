@@ -14,91 +14,132 @@
 #include <json_leaf_iterator_test.h>
 #include <test_selector_test.h>
 
-#define DBG(...) fprintf (stderr, __VA_ARGS__)
+#include <cstdlib>
 
-#define TESTC 14   // Test count
+// #define DBG(...) fprintf (stderr, __VA_ARGS__)
 
-int main(int argc, char *argv[])
+struct _test_
 {
-    int test_num    = 0;
-    int first_test  = 0;
-    int last_test   = TESTC;
+  /**
+   * @brief test
+   */
+  CppUnit::Test *test;
+  /**
+   * @brief idxv
+   */
+  std::vector<int> *idxv;
+  /**
+   * @brief _test_
+   * @param _test
+   * @param _idxv
+   */
+  _test_ (CppUnit::Test * _test = 0, std::vector<int> *_idxv = 0)
+    : test (_test), idxv (_idxv)
+  {}
+};
 
-    struct _test {
-      CppUnit::Test *test;
-      bool is_added;
-      /// TODO: std::vector<int> *idxv
-      _test (CppUnit::Test * _test = 0, bool _is_added = false) : test (_test), is_added (_is_added) {}
+std::vector<_test_> tests = {
+/* 0 */   { json_value_test::suite () },
+/* 1 */   { json_test::suite () },
+/* 2 */   { json_object_test::suite () },
+/* 3 */   { json_array_test::suite () },
+/* 4 */   { json_string_test::suite () },
+/* 5 */   { json_number_test::suite () },
+/* 6 */   { json_boolean_test::suite () },
+/* 7 */   { json_null_test::suite () },
+/* 8 */   { json_undefined_test::suite () },
+/* 9 */   { json_object_iterator_test::suite () },
+/* 10 */  { json_array_iterator_test::suite () },
+/* 11 */  { json_leaf_iterator_test::suite () },
+/* 12 */  { json_leaf_test::suite () },
+/* 13 */  { test_selector_test::suite () }
+};
 
-    } tests[] = {
-      { json_value_test::suite () },        // 0
-      { json_test::suite () },              // 1
-      { json_object_test::suite () },       // 2
-      { json_array_test::suite () },        // 3
-      { json_string_test::suite () },       // 4
-      { json_number_test::suite () },       // 5
-      { json_boolean_test::suite () },      // 6
-      { json_null_test::suite () },         // 7
-      { json_undefined_test::suite () },            // 8
-      { json_object_iterator_test::suite () },      // 9
-      { json_array_iterator_test::suite () },       // 10
-      { json_leaf_iterator_test::suite () },        // 11
-      { json_leaf_test::suite () },                 // 12
-      { test_selector_test::suite () }              // 13
-    };
+int
+run (CppUnit::TextUi::TestRunner & runner)
+{
+  try
+    {
+      runner.run ();
+    }
+  catch (std::exception &e)
+    {
+      std::cerr << e.what () << std::endl;
+      return EXIT_FAILURE;
+    }
+  catch (...)
+    {
+      std::cerr << "cought exception of unknown type" << std::endl;
+      return EXIT_FAILURE;
+    }
 
-    CppUnit::TextUi::TestRunner runner;
+  return EXIT_SUCCESS;
+}
 
-    if (argc == 1)
-      {
-        while (first_test < last_test)
-          {
-            runner.addTest (tests[first_test].test);
-            tests[first_test].is_added = true;
-            first_test++;
-          }
-      }
-    else
-      {
-        for (int idx = 1; idx < argc; idx++)
-          {
-            std::vector<int> *idxv = test_selector::indexes (argv[idx]);
+void
+clean ()
+{
+  for (auto & t : tests)
+    {
+      if (t.idxv == 0)
+        delete t.test;
 
-            test_num = idxv->at (0);
+      delete t.idxv;
+    }
+}
 
-            if (test_num >= -1 && test_num < last_test)
-              {
-                CppUnit::Test *test = tests[test_num].test;
+int
+main (int argc, char *argv[])
+{
+  atexit (clean);
 
-                runner.addTest (test_selector::tests (test, *idxv));
+  CppUnit::TextUi::TestRunner runner;
 
-                tests[test_num].is_added = true;
-                /// TODO: tests[test_num].idxv = idxv;
+  if (argc == 1)
+    {
+      for (auto & t : tests)
+        runner.addTest (t.test); // FIXME: crash after all tests.
 
-                std::cout << tests[test_num].test->getName () << std::endl;
-              }
-            else
-              {
-                std::cerr << "tests: " << 0 << " - " << TESTC - 1 << std::endl;
-                return 1;
-              }
-          }
-      }
+      return run (runner);
+    }
 
-    try
-      {
-        runner.run ();
-      }
-    catch (...)
-      {
-        DBG ("%s: cought exception of unknown type\n", argv[0]);
-      }
+  for (int idx = 1; idx < argc; idx++)
+    {
+      try
+        {
+          std::vector<int> *idxv = test_selector::indexes (argv[idx]);
+          size_t testn = idxv->at (0);
 
-    for (int idx = 0; idx < last_test; idx++)
-      if (tests[idx].is_added == false)
-        delete tests[idx].test;
-        /// TODO: delete tests[test_num].idxv;
+          CppUnit::Test *test = tests.at (testn).test;
+          CppUnit::Test *old = test;
 
-    return 0;
+          test = test_selector::tests (test, *idxv);
+
+          runner.addTest (test);
+
+          if (old != test)
+            {
+              // FIXME: leak: test_selector::tests(CppUnit::Test*, std::vector<int, std::allocator<int> >&) (test_selector.h:47)
+              // delete old;
+              tests[testn].test = test;
+            }
+
+          tests[testn].idxv = idxv;
+
+          std::cout << tests[testn].test->getName () << std::endl;
+        }
+      catch (std::out_of_range &)
+        {
+          std::cerr << "tests: " << 0 << " - " << tests.size () - 1 << std::endl;
+          return 1;
+        }
+      catch (std::exception & e)
+        {
+          std::cerr << e.what () << std::endl;
+          return 1;
+        }
+    }
+
+  return run (runner);
 }
 

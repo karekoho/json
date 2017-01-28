@@ -32,7 +32,10 @@ public:
     TEST_IT_START
 
       std::vector<int> *idxv = test_selector::indexes ((*it).input);
+
       ASSERT_EQUAL_IDX ("idxv->size ()", (*it).size, idxv->size ());
+
+      delete idxv;
 
     TEST_IT_END;
   }
@@ -65,6 +68,8 @@ public:
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("t->countTestCases ()", (*it).childCount,  t->countTestCases ());
 
     TEST_IT_END;
+
+    delete s;
   }
 
   void

@@ -56,7 +56,6 @@ struct test_selector
           std::cerr << e.what () << std::endl;
         }
 
-    /// TODO: delete old test
     return s;
   }
 };

@@ -90,13 +90,16 @@
 CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
 #endif
 
+class test_selector;
 class unit_test : public CppUnit::TestFixture
 {
+   friend class test_selector;
 public:
   unit_test ()
     : CppUnit::TestFixture(),
       _errorc { 0, 0 },
       _idx { 0, 0, 0, 0, 0 }
+      //_old (0)
   {
   }
 
@@ -140,6 +143,8 @@ protected:
   size_t _idx[5];
 
   char _sz_idx[300];
+
+  //CppUnit::TestSuite *_old;
 };
 
 #endif // UNIT_TEST
