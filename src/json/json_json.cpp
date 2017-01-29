@@ -11,14 +11,16 @@
 JSON::JSON ()
   : Value (),
     _str_value { 0, 0 },
-    __root (0)
+    __root (0),
+    __reviver (0)
 {
 }
 
 JSON::JSON (const wchar_t *json, const bool _parse)
   : Value (json),
     _str_value { 0, 0 },
-    __root (0)
+    __root (0),
+    __reviver (0)
 {
   if (json == 0)
     throw JSON::error ("null string");
@@ -29,24 +31,42 @@ JSON::JSON (const wchar_t *json, const bool _parse)
     (void) parse (json);
 }
 
+JSON::JSON (const wchar_t *json, Reviver r)
+  : Value (json),
+    _str_value { 0, 0 },
+    __root (0),
+    __reviver (0)
+{
+  if (json == 0)
+    throw JSON::error ("null string");
+
+  _startp = json;
+
+  (void) parse (json);
+}
+
+
 JSON::JSON (JSON *parent)
   : Value (parent),
     _str_value { 0, 0 },
-    __root (0)
+    __root (0),
+    __reviver (0)
 {
 }
 
 JSON::JSON (const JSON &other)
   : Value (other),
     _str_value { 0, 0 },
-   __root (other.__root ? other.__root->clone () : 0)
+    __root (other.__root ? other.__root->clone () : 0),
+    __reviver (0)
 {
 }
 
 JSON::JSON (const Value *ov, const JSON &nv)
   : Value (ov, nv),
     _str_value { 0, 0 },
-   __root (nv.__hasRoot () ? nv.__root->clone () : 0)
+    __root (nv.__hasRoot () ? nv.__root->clone () : 0),
+    __reviver (0)
 {
 }
 
@@ -83,6 +103,13 @@ JSON::JSON::parse (const wchar_t *readp)
 
   return _readp;
 }
+
+//Value *
+//JSON::parse (const wchar_t *json, Reviver r)
+//{
+//  JSON *j = new JSON (json, r);
+//  return j;
+//}
 
 Value &
 JSON::_assign (const JSON &j)
@@ -153,3 +180,5 @@ JSON::_make_value ()
 
   return value_;
 }
+
+

@@ -17,7 +17,7 @@ struct test_selector
    * @return
    */
   static std::vector<int> *
-  indexes (char *list)
+  indexes (const char *list)
   {
     char *saveptr = 0;
 

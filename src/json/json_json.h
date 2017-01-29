@@ -20,6 +20,8 @@
   class json_leaf_test;
 #endif
 
+  typedef Value * (*Reviver)(const wchar_t *, Value *);
+
 /**
  * @brief The json class
  */
@@ -90,6 +92,19 @@ public:
    */
   virtual const wchar_t *
   parse (const wchar_t *readp);
+
+  /**
+   * @brief parse
+   * @param json
+   * @param reviver
+   * @return
+   * @see http://stackoverflow.com/questions/1174169/function-passed-as-template-argument
+   */
+  // template<typename R>
+  static Value *
+  parse (const wchar_t *json, Reviver r)
+  // parse (const wchar_t *json, R r)
+  { return new JSON (json, r); }
 
   /**
    * @brief at
@@ -272,6 +287,18 @@ private:
    * @brief __value
    */
   Value *__root;
+
+  /**
+   * @brief _reviver
+   */
+  Reviver __reviver;
+
+  /**
+   * @brief JSON
+   * @param json
+   * @param r
+   */
+  JSON (const wchar_t *json, Reviver r);
 
   /**
    * @brief __hasRoot

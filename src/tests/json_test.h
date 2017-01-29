@@ -302,6 +302,58 @@ public:
 
   virtual void test_erase () override {}
 
+  void
+  test_parse_revive ()
+  {
+    // input:   L{\"0\":{},\"1\":[],\"2\":\"2\",\"3\":3,\"4\":false,\"5\":null}
+    // output:  input
+    // output:  L{\"0\":{},\"1\":[],\"2\":\"3\",\"3\":4,\"4\":true}
+
+    struct assert
+    {
+      const wchar_t *input;
+      std::vector<Value *> output[2];
+      int assert_status;
+    };
+
+    std::vector<struct assert> test = {
+      { L"{\"0\":{},\"1\":[],\"2\":\"2\",\"3\":3,\"4\":false,\"5\":null}", {
+          { new Object, new Array, new String (L"\"2\""), new Number (3), new Boolean (false), new Null },
+          { new Object, new Array, new String (L"\"3\""), new Number (4), new Boolean (true) }
+        }, PASS },
+
+      { L"[{},\[],\"2\",3,false,null]", {
+          { new Object, new Array, new String (L"\"2\""), new Number (3), new Boolean (false), new Null },
+          { new Object, new Array, new String (L"\"3\""), new Number (4), new Boolean (true) }
+        }, PASS },
+      };
+
+     Reviver r[2] = { 0, reviver };
+
+     TEST_IT_START
+
+      for (size_t rdx = 0; rdx < 1; rdx++)
+        {
+          Value *jv = JSON::parse ((*it).input, r[rdx]);
+
+          size_t output_size = (*it).output[rdx].size ();
+
+          for (size_t vdx = 0; vdx < output_size; vdx++)
+            {
+              Value *ov = (*it).output[rdx].at (vdx);
+
+              CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->count ()", output_size, jv->count ());
+              CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->at ().type ()", ov->type (), jv->at (std::to_wstring (vdx).c_str ()).type ());
+            }
+        }
+
+     TEST_IT_END;
+  }
+
+  static Value *
+  reviver (const wchar_t *key, Value *v)
+  { return v; }
+
   /**
    * 1.
    * @brief suite
@@ -319,6 +371,7 @@ public:
     s->addTest (new CppUnit::TestCaller<json_test> ("test_make_value", &json_test::test_make_value));
     s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_to_parent", &json_test::test__assign_to_parent));
     s->addTest (new CppUnit::TestCaller<json_test> ("test_assign_all_values", &json_test::test_assign_all_values));
+    s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_revive", &json_test::test_parse_revive));
 
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_size_1", &json_test::test_size_1));
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_get_1", &json_test::test_get_1));

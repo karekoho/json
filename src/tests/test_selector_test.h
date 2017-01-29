@@ -18,7 +18,7 @@ public:
   {
     struct assert
     {
-        char *input;
+        const char *input;
         size_t size;
         int assert_status;
     };
