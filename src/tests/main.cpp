@@ -28,13 +28,15 @@ struct _test_
    * @brief idxv
    */
   std::vector<int> *idxv;
+
+  bool selected;
   /**
    * @brief _test_
    * @param _test
    * @param _idxv
    */
-  _test_ (CppUnit::Test * _test = 0, std::vector<int> *_idxv = 0)
-    : test (_test), idxv (_idxv)
+  _test_ (CppUnit::Test * _test = 0, std::vector<int> *_idxv = 0, bool selected = false)
+    : test (_test), idxv (_idxv), selected (selected)
   {}
 };
 
@@ -81,7 +83,7 @@ clean ()
 {
   for (auto & t : tests)
     {
-      if (t.idxv == 0)
+      if (! t.selected)
         delete t.test;
 
       delete t.idxv;
@@ -98,7 +100,10 @@ main (int argc, char *argv[])
   if (argc == 1)
     {
       for (auto & t : tests)
-        runner.addTest (t.test); // FIXME: crash after all tests.
+        {
+          t.selected = true;
+          runner.addTest (t.test);
+        }
 
       return run (runner);
     }
@@ -110,20 +115,9 @@ main (int argc, char *argv[])
           std::vector<int> *idxv = test_selector::indexes (argv[idx]);
           size_t testn = idxv->at (0);
 
-          CppUnit::Test *test = tests.at (testn).test;
-          CppUnit::Test *old = test;
+          runner.addTest (test_selector::tests (tests.at (testn).test, *idxv));
 
-          test = test_selector::tests (test, *idxv);
-
-          runner.addTest (test);
-
-          if (old != test)
-            {
-              // FIXME: leak: test_selector::tests(CppUnit::Test*, std::vector<int, std::allocator<int> >&) (test_selector.h:47)
-              // delete old;
-              tests[testn].test = test;
-            }
-
+          tests[testn].selected = true;
           tests[testn].idxv = idxv;
 
           std::cout << tests[testn].test->getName () << std::endl;
@@ -131,12 +125,12 @@ main (int argc, char *argv[])
       catch (std::out_of_range &)
         {
           std::cerr << "tests: " << 0 << " - " << tests.size () - 1 << std::endl;
-          return 1;
+          return EXIT_FAILURE;
         }
       catch (std::exception & e)
         {
           std::cerr << e.what () << std::endl;
-          return 1;
+          return EXIT_FAILURE;
         }
     }
 
