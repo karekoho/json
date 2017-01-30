@@ -123,7 +123,7 @@ Object::_pair ()
 
   Value * v = _make_value ();
 
-  if (v->type () == Value::undefined)
+  if (v->type () == Value::novalue)
     throw "syntax error: expecting value after ':'";
 
   (void) _member_list.emplace (std::wstring (keyp, charc - 2), v);

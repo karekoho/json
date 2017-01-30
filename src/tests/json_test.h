@@ -124,8 +124,8 @@ public:
         { L"true ", Value::object_type::boolean, 4, PASS },
         { L"false ", Value::object_type::boolean, 5, PASS },
         { L"null ", Value::object_type::null, 4, PASS },
-        { L"x ", Value::object_type::undefined, 0, PASS },
-        { L"", Value::object_type::undefined, 0, PASS },
+        { L"x ", Value::object_type::novalue, 0, PASS },
+        { L"", Value::object_type::novalue, 0, PASS },
     };
 
     TEST_IT_START

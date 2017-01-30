@@ -37,7 +37,19 @@ protected:
   /**
    * @brief Shared_Undefined
    */
-  Shared_Undefined ();
+  Shared_Undefined ()
+    : Undefined ()
+  {
+  }
+
+  /**
+   * @brief Shared_Undefined
+   * @param parent
+   */
+  Shared_Undefined (JSON *parent)
+    :  Undefined (parent)
+  {
+  }
 };
 
 /**
@@ -46,6 +58,7 @@ protected:
 class No_Value : public Shared_Undefined
 {
 public:
+
   /**
    * @brief type
    * @return
@@ -54,12 +67,22 @@ public:
   type () const
   { return Value::object_type::novalue; }
 
+  /**
+   * @brief instance
+   * @param parent
+   * @return
+   */
+  static Value *
+  instance (JSON *parent);
+
 private:
 
   /**
    * @brief No_Value
    */
-  No_Value (){}
+  No_Value (JSON *parent)
+    : Shared_Undefined (parent)
+  {}
 };
 
 #endif // SHARED_UNDEFINED_H

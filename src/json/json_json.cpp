@@ -172,7 +172,8 @@ JSON::_make_value ()
         value_ = new Boolean (this, false);
         break;
       default:
-        value_ = new Undefined (this);
+        // value_ = new Undefined (this);
+        value_ = No_Value::instance (this);
         break;
       }
 
