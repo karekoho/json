@@ -27,7 +27,7 @@ public:
   static Shared_Undefined &
   instance ();
 
-private:
+protected:
 
   /**
    * @brief __instance
@@ -38,6 +38,28 @@ private:
    * @brief Shared_Undefined
    */
   Shared_Undefined ();
+};
+
+/**
+ * @brief The No_Value class
+ */
+class No_Value : public Shared_Undefined
+{
+public:
+  /**
+   * @brief type
+   * @return
+   */
+  virtual object_type
+  type () const
+  { return Value::object_type::novalue; }
+
+private:
+
+  /**
+   * @brief No_Value
+   */
+  No_Value (){}
 };
 
 #endif // SHARED_UNDEFINED_H

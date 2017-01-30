@@ -30,6 +30,7 @@ class Value
    */
   enum object_type
   {
+    novalue,
     undefined,
     object,
     array,
