@@ -94,7 +94,6 @@ bool
 Object::_pair ()
 {
   wchar_t endc = 0;
-  // wchar_t endc;
 
   long int charc = 0;
 
@@ -126,7 +125,12 @@ Object::_pair ()
   if (v->type () == Value::novalue)
     throw "syntax error: expecting value after ':'";
 
-  (void) _member_list.emplace (std::wstring (keyp, charc - 2), v);
+  std::wstring key (keyp, charc - 2);
+
+  if ((v = _call_reviver (v, key.c_str ()))->type () == Value::undefined)   // Reviver returned undefined, value is not added
+    return true;
+
+  (void) _member_list.emplace (/* std::wstring (keyp, charc - 2) */ key, v);
 
   v->setKey (keyp, charc - 2);
 

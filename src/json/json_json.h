@@ -277,6 +277,16 @@ protected:
   { return this; }
 
   /**
+   * @brief _call_reviver
+   * @param v
+   * @param key
+   * @param index
+   * @return
+   */
+  Value *
+  _call_reviver (Value *v, const wchar_t *key, size_t index = 0) const;
+
+  /**
    * @brief _str_value
    */
   mutable wchar_t *_str_value[2];

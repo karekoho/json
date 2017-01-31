@@ -182,4 +182,18 @@ JSON::_make_value ()
   return value_;
 }
 
+Value *
+JSON::_call_reviver (Value *v, const wchar_t *key, size_t index) const
+{
+  if (__reviver == 0)
+    return v;
+
+  Value *r = (__reviver) (key == 0 ? std::to_wstring (index).c_str () : key, v);
+
+  if (r != v)
+    delete v;
+
+  return r;
+}
+
 
