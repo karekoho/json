@@ -318,32 +318,33 @@ public:
 
     std::vector<struct assert> test = {
       { L"{\"0\":{},\"1\":[],\"2\":\"2\",\"3\":3,\"4\":false,\"5\":null}", {
-          { new Object, new Array, new String (L"\"2\""), new Number (3), new Boolean (false), new Null },
-          { new Object, new Array, new String (L"\"3\""), new Number (4), new Boolean (true) }
+          { new Object, new Array, new String, new Number, new Boolean , new Null },
+          { new Null, new Null, new String, new Number, new Boolean }
         }, PASS },
 
       { L"[{},\[],\"2\",3,false,null]", {
-          { new Object, new Array, new String (L"\"2\""), new Number (3), new Boolean (false), new Null },
-          { new Object, new Array, new String (L"\"3\""), new Number (4), new Boolean (true) }
+          { new Object, new Array, new String, new Number, new Boolean, new Null },
+          { new Null, new Null, new String, new Number, new Boolean }
         }, PASS },
       };
 
-     Reviver r[2] = { 0, reviver };
+     Reviver reviver[2] = { 0, fn_reviver };
 
      TEST_IT_START
 
-      for (size_t rdx = 0; rdx < 1; rdx++)
+      for (size_t rev_idx = 1; rev_idx < 2; rev_idx++) // Iterate reviver
         {
-          Value *jv = JSON::parse ((*it).input, r[rdx]);
 
-          size_t output_size = (*it).output[rdx].size ();
+          Value *jv = JSON::parse ((*it).input, reviver[rev_idx]);
 
-          for (size_t vdx = 0; vdx < output_size; vdx++)
+          size_t output_size = (*it).output[rev_idx].size ();
+
+          for (size_t val_idx = 0; val_idx < output_size; val_idx++) // Iterate values
             {
-              Value *ov = (*it).output[rdx].at (vdx);
+              Value *ov = (*it).output[rev_idx].at (val_idx);
 
               CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->count ()", output_size, jv->count ());
-              CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->at ().type ()", ov->type (), jv->at (std::to_wstring (vdx).c_str ()).type ());
+              CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->at ().type ()", ov->type (), jv->at (std::to_wstring (val_idx).c_str ()).type ());
             }
         }
 
@@ -351,8 +352,20 @@ public:
   }
 
   static Value *
-  reviver (const wchar_t *key, Value *v)
-  { return v; }
+  fn_reviver (const wchar_t *key, Value *v)
+  {
+    switch (v->type ()) {
+      case  Value::object_type::null:
+        return new Undefined;
+
+      case Value::object_type::object:
+      case Value::object_type::array:
+        return new Null;
+
+      default:
+        return v;
+      }
+  }
 
   /**
    * 1.
@@ -364,14 +377,14 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json test");
 
-    s->addTest (new CppUnit::TestCaller<json_test> ("test_strValue", &json_test::test_strValue));
-//    s->addTest (new CppUnit::TestCaller<json_test> ("example_free_1", &json_test::example_free_1));
+/*0.*/  s->addTest (new CppUnit::TestCaller<json_test> ("test_strValue", &json_test::test_strValue));
+//  s->addTest (new CppUnit::TestCaller<json_test> ("example_free_1", &json_test::example_free_1));
     s->addTest (new CppUnit::TestCaller<json_test> ("test_smoke", &json_test::test_ctor_dtor));
     s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_1", &json_test::test_parse_1));
     s->addTest (new CppUnit::TestCaller<json_test> ("test_make_value", &json_test::test_make_value));
     s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_to_parent", &json_test::test__assign_to_parent));
     s->addTest (new CppUnit::TestCaller<json_test> ("test_assign_all_values", &json_test::test_assign_all_values));
-    s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_revive", &json_test::test_parse_revive));
+/*6.*/  s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_revive", &json_test::test_parse_revive));
 
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_size_1", &json_test::test_size_1));
 //    s->addTest (new CppUnit::TestCaller<json_test> ("test_get_1", &json_test::test_get_1));

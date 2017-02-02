@@ -78,6 +78,9 @@ Array::parse (const wchar_t *json)
           if ((v = _make_value ())->type () == Value::novalue)
             throw "syntax error: unexpected ','";
 
+          if ((v = _call_reviver (v, 0, _element_list.size ()))->type () == Value::undefined)
+            continue;
+
           _element_list.push_back (v);
           v->setIndex (_element_list.size () - 1);
         }
@@ -91,6 +94,9 @@ Array::parse (const wchar_t *json)
 
           // Empty array
         }
+      else if ((v = _call_reviver (v, 0, _element_list.size ()))->type () == Value::undefined)
+        continue;
+
       else  // Value found
         {
           _element_list.push_back (v);

@@ -35,7 +35,7 @@ JSON::JSON (const wchar_t *json, Reviver r)
   : Value (json),
     _str_value { 0, 0 },
     __root (0),
-    __reviver (0)
+    __reviver (r)
 {
   if (json == 0)
     throw JSON::error ("null string");
@@ -50,7 +50,7 @@ JSON::JSON (JSON *parent)
   : Value (parent),
     _str_value { 0, 0 },
     __root (0),
-    __reviver (0)
+    __reviver (parent ? parent->__reviver : 0)
 {
 }
 

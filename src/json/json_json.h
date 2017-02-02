@@ -100,10 +100,8 @@ public:
    * @return
    * @see http://stackoverflow.com/questions/1174169/function-passed-as-template-argument
    */
-  // template<typename R>
   static Value *
   parse (const wchar_t *json, Reviver r)
-  // parse (const wchar_t *json, R r)
   { return new JSON (json, r); }
 
   /**
