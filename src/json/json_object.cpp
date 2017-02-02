@@ -122,7 +122,7 @@ Object::_pair ()
 
   Value * v = _make_value ();
 
-  if (v->type () == Value::novalue)
+  if (v->type () == Value::no_value)
     throw "syntax error: expecting value after ':'";
 
   std::wstring key (keyp, charc - 2);

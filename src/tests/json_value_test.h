@@ -106,10 +106,10 @@ public:
       };
 
       std::vector<struct assert> test = {
-        { L"", Value::_literal::no_value, PASS },
-        { L"   ", Value::_literal::no_value, PASS },
-        { L"xxx   ", Value::_literal::no_value, PASS },
-        { L"xxxxxx   ", Value::_literal::no_value, PASS },
+        { L"", Value::_literal::no_literal, PASS },
+        { L"   ", Value::_literal::no_literal, PASS },
+        { L"xxx   ", Value::_literal::no_literal, PASS },
+        { L"xxxxxx   ", Value::_literal::no_literal, PASS },
         { L"true    ", Value::_literal::true_value, PASS },
         { L"false    ", Value::_literal::false_value, PASS },
         { L"null   ", Value::_literal::null_value, PASS }

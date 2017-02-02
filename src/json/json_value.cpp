@@ -106,7 +106,7 @@ Value::_is_literal (const int _try) const noexcept
   if (idx == __ltr_value[_try].len)
     return __ltr_value[_try].ltr_value;
 
-  return _try < 2 ? _is_literal (_try + 1) :  Value::_literal::no_value;
+  return _try < 2 ? _is_literal (_try + 1) :  Value::_literal::no_literal;
 }
 
 void

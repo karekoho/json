@@ -30,7 +30,7 @@ class Value
    */
   enum object_type
   {
-    novalue,
+    no_value,
     undefined,
     object,
     array,
@@ -337,7 +337,7 @@ protected:
    */
   enum _literal
   {
-    no_value    = 0,
+    no_literal    = 0,
     true_value  = 1,
     false_value = 2,
     null_value  = 3

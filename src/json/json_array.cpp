@@ -75,7 +75,7 @@ Array::parse (const wchar_t *json)
         {
           _readp++;
 
-          if ((v = _make_value ())->type () == Value::novalue)
+          if ((v = _make_value ())->type () == Value::no_value)
             throw "syntax error: unexpected ','";
 
           if ((v = _call_reviver (v, 0, _element_list.size ()))->type () == Value::undefined)
@@ -87,7 +87,7 @@ Array::parse (const wchar_t *json)
       else if (*_readp == _sc::end_array)         // ']'
         return _readp + 1;
 
-      else if ((v = _make_value ())->type () == Value::novalue)  // No valid value found
+      else if ((v = _make_value ())->type () == Value::no_value)  // No valid value found
         {
           if (*_readp != Value::_ws::space /* TODO: check other ws_ characters */)
             throw "array::parse: unexpected character";
