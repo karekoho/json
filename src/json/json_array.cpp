@@ -66,6 +66,7 @@ Array::parse (const wchar_t *json)
     _clear ();
 
   Value *v = 0;
+  size_t next_idx = 0;
 
   while (*_readp != 0)
     {
@@ -78,10 +79,12 @@ Array::parse (const wchar_t *json)
           if ((v = _make_value ())->type () == Value::no_value)
             throw "syntax error: unexpected ','";
 
-          if ((v = _call_reviver (v, 0, _element_list.size ()))->type () != Value::undefined)
+          next_idx = _element_list.size ();
+
+          if ((v = _call_reviver (v, 0, next_idx))->type () != Value::undefined)
             {
               _element_list.push_back (v);
-              v->setIndex (_element_list.size () - 1);
+              v->setIndex (next_idx);
             }
         }
       else if (*_readp == _sc::end_array)         // ']'
@@ -94,10 +97,10 @@ Array::parse (const wchar_t *json)
 
           // Empty array
         }
-      else if ((v = _call_reviver (v, 0, _element_list.size ()))->type () != Value::undefined)  // Value found
+      else if ((v = _call_reviver (v, 0, next_idx))->type () != Value::undefined)  // Value found
         {
           _element_list.push_back (v);
-          v->setIndex (_element_list.size () - 1);
+          v->setIndex (next_idx);
         }
     }
 
