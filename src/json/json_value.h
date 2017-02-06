@@ -283,6 +283,14 @@ class Value
   value () const
   { return strValue (); }
 
+  /**
+   * @brief parent
+   * @return
+   */
+  inline JSON *
+  parent () const
+  { return _parent; }
+
 protected:
 
   /**
