@@ -43,6 +43,8 @@ JSON::JSON (const wchar_t *json, Reviver r)
   _startp = json;
 
   (void) parse (json);
+
+  __reviver = 0;
 }
 
 
