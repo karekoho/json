@@ -66,7 +66,8 @@ HEADERS += \
     json_leaf_test.h \
     ../json/json_shared_undefined.h \
     test_selector.h \
-    test_selector_test.h
+    test_selector_test.h \
+    ../json/json_exception.h
 
 SUBDIRS += \
     ../json/json.pro

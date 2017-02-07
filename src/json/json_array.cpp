@@ -48,8 +48,8 @@ Array::parse (const wchar_t *json)
     {
       _readp = json;
 
-      if (*(_look_ahead ()) != _sc::begin_array)
-        throw "syntax error: expecting '['";
+      if (*(_look_ahead ()) != _sc::begin_array)  // Expecting '['
+        throw JSON_Syntax_Error ("Unexpected end on JSON input");
 
       _readp++;
     }
@@ -60,7 +60,7 @@ Array::parse (const wchar_t *json)
     }
 
   if (*_readp == 0)
-    throw _readp;
+    throw JSON_Syntax_Error ("Unexpected end on JSON input");
 
   if (! _element_list.empty ())
     _clear ();
@@ -77,7 +77,7 @@ Array::parse (const wchar_t *json)
           _readp++;
 
           if ((v = _make_value ())->type () == Value::no_value)
-            throw "syntax error: unexpected ','";
+            throw JSON_Syntax_Error ("Unexpected token ','");
 
           next_idx = _element_list.size ();
 
@@ -92,8 +92,11 @@ Array::parse (const wchar_t *json)
 
       else if ((v = _make_value ())->type () == Value::no_value)  // No valid value found
         {
-          if (*_readp != Value::_ws::space /* TODO: check other ws_ characters */)
-            throw "array::parse: unexpected character";
+          if (*_readp != Value::_ws::space
+              && *_readp != Value::_ws::tab
+              && *_readp != Value::_ws::lf
+              && *_readp != Value::_ws::cr)
+            throw JSON_Syntax_Error ("Unexpected token");
 
           // Empty array
         }
@@ -114,9 +117,9 @@ Array::at (size_t index) const
     {
       return *(_element_list.at (index));
     }
-  catch (std::out_of_range &e)
+  catch (std::out_of_range & e)
     {
-      throw JSON::out_of_range (e.what ());
+      throw JSON_Out_Of_Range (e.what ());
     }
 }
 
@@ -167,7 +170,7 @@ Array::_clear ()
 Value *
 Array::clone (const Value &other)
 {
-  const Array &nv = dynamic_cast<const Array &> (other);
+  const Array & nv = dynamic_cast<const Array &> (other);
 
   _clear ();
 

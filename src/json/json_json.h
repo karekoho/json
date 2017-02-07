@@ -3,6 +3,7 @@
 
 #include "json_value.h"
 #include "json_leaf.h"
+#include "json_exception.h"
 // #include "json_undefined.h"
 #include "json_shared_undefined.h" // (.bss+0x0):-1: error: multiple definition of `Shared_Undefined::__instance'
 
