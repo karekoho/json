@@ -47,6 +47,9 @@ public:
     std::vector<struct assert> test = {
       { L"[]", 0, Value::object_type::array, 0, PASS },
       { L"[ ] ", 0, Value::object_type::array, 1, PASS },
+      { L"[\t] ", 0, Value::object_type::array, 1, PASS },
+      { L"[\r] ", 0, Value::object_type::array, 1, PASS },
+      { L"[\n] ", 0, Value::object_type::array, 1, PASS },
       { L"[\"x\"]", 1, Value::object_type::array, 0, PASS },
       { L"[\"x\",\"x\"] ", 2, Value::object_type::array, 1, PASS },
       { L"[\"x\",\"x\",[\"x\"]] ", 3,  Value::object_type::array, 1, PASS },
