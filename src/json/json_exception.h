@@ -59,7 +59,11 @@ public:
   JSON_Syntax_Error (const char * const what, wchar_t token)
     : JSON_Error (what)
   {
-    _what.push_back ((char) token);
+    char buf[4];
+
+    std::snprintf (buf, 4, "'%c'", (char) token);   /// TODO: unit test
+
+    _what.append (buf, 3);
   }
 
   /**
