@@ -42,14 +42,14 @@ const wchar_t *
 Array::parse (const wchar_t *json)
 {
   if (json == 0)
-    throw JSON::error ("error: null string given");
+    throw JSON_Syntax_Error (UNEX_END);
 
   if (_parent == 0)   // 1. Array (), 2. Array (const char *json)
     {
       _readp = json;
 
       if (*(_look_ahead ()) != _sc::begin_array)  // Expecting '['
-        throw JSON_Syntax_Error ("Unexpected end on JSON input");
+        throw JSON_Syntax_Error (UNEX_END);
 
       _readp++;
     }
@@ -60,7 +60,7 @@ Array::parse (const wchar_t *json)
     }
 
   if (*_readp == 0)
-    throw JSON_Syntax_Error ("Unexpected end on JSON input");
+    throw JSON_Syntax_Error (UNEX_END);
 
   if (! _element_list.empty ())
     _clear ();
@@ -77,7 +77,7 @@ Array::parse (const wchar_t *json)
           _readp++;
 
           if ((v = _make_value ())->type () == Value::no_value)
-            throw JSON_Syntax_Error ("Unexpected token ','");
+            throw JSON_Syntax_Error (UNEX_TOKEN, *_readp);
 
           next_idx = _element_list.size ();
 
@@ -96,7 +96,7 @@ Array::parse (const wchar_t *json)
               && *_readp != Value::_ws::tab
               && *_readp != Value::_ws::lf
               && *_readp != Value::_ws::cr)
-            throw JSON_Syntax_Error ("Unexpected token");
+            throw JSON_Syntax_Error (UNEX_TOKEN, *_readp);
 
           // Empty array
         }

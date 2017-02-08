@@ -8,7 +8,7 @@ String::String (const wchar_t *json)
     _charc (0)
 {
   if (json == 0)
-    throw "null string";
+    throw JSON_Syntax_Error ("Unexpected end of JSON input");
 
   (void) parse (json);
 }
@@ -46,7 +46,7 @@ String::parse (const wchar_t *json)
   if (_parent == 0)   // 2. ctor
     {
       if ((charc = _string (endc)) <= 0 )
-        throw _readp;
+        throw JSON_Syntax_Error ("Unexpected token ", *_readp);
 
       _charc = (size_t) charc;
     }
@@ -93,13 +93,3 @@ String::clone (const Value &nv)
 
   return this;
 }
-
-//void
-//String::_copy (const String &nv)
-//{
-//  if (nv._startp && _charc > 0)
-//    _string_value[0].assign (nv._startp + 1, _charc - 2);
-
-//  _startp = _string_value[0].c_str ();
-//}
-

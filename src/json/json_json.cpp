@@ -23,7 +23,7 @@ JSON::JSON (const wchar_t *json, const bool _parse)
     __reviver (0)
 {
   if (json == 0)
-    throw JSON::error ("null string");
+    throw JSON_Syntax_Error (UNEX_END);
 
   _startp = json;
 
@@ -38,7 +38,7 @@ JSON::JSON (const wchar_t *json, Reviver r)
     __reviver (r)
 {
   if (json == 0)
-    throw JSON::error ("null string");
+    throw JSON_Syntax_Error (UNEX_END);
 
   _startp = json;
 
@@ -88,7 +88,7 @@ const wchar_t *
 JSON::JSON::parse (const wchar_t *readp)
 {
   if (readp == 0 || *readp == 0)
-    throw readp;
+    throw JSON_Syntax_Error (UNEX_END);
 
   _readp = readp;
 
@@ -105,13 +105,6 @@ JSON::JSON::parse (const wchar_t *readp)
 
   return _readp;
 }
-
-//Value *
-//JSON::parse (const wchar_t *json, Reviver r)
-//{
-//  JSON *j = new JSON (json, r);
-//  return j;
-//}
 
 Value &
 JSON::_assign (const JSON &j)
@@ -148,7 +141,7 @@ JSON::_make_value ()
   if (readc == _sc::double_quote)           // String
     {
       if ((charc = _string (endc)) < 0)
-        throw JSON::syntax_error ("syntax error: expecting closing '\"'");
+        throw JSON_Syntax_Error (UNEX_TOKEN, *_readp);
 
       value_ = new String (this, charc);
     }
@@ -174,7 +167,6 @@ JSON::_make_value ()
         value_ = new Boolean (this, false);
         break;
       default:
-        // value_ = new Undefined (this);
         value_ = No_Value::instance (this);
         break;
       }

@@ -316,58 +316,7 @@ private:
   inline bool
   __hasRoot () const noexcept
   { return ! __root == 0; }
-
-public:
-
-  /**
-   * @brief The error class
-   */
-  class error : public std::exception {
-    public:
-      /**
-        * @brief error
-        * @param message
-        */
-      error (const char * const message = 0) : std::exception (), _message (message) {}
-
-      /**
-       * @brief what
-       * @return
-       */
-      virtual const char *
-      what ()
-      { return _message == 0 ? "" : _message; }
-
-    protected:
-      const char * const _message;
-  }; // class error
-
-  /**
-   * @brief The syntax_error class
-   */
-  class syntax_error : public error {
-    public:
-    /**
-     * @brief syntax_error
-     * @param message
-     */
-    syntax_error (const char * const message = 0) : error (message) {}
-  }; // class syntax_error
-
-  /**
-   * @brief The out_of_range class
-   */
-  class out_of_range : public error {
-    public:
-    /**
-     * @brief out_of_range
-     * @param message
-     */
-    out_of_range (const char * const message = 0) : error (message) {}
-  };  // class out_of_range
-
-};  // class json
-
+};
 // } namespace
 
 #endif // JSON_JSON_H

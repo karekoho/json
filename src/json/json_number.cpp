@@ -1,8 +1,6 @@
 #include "json_number.h"
 #include "json_json.h"
 
-
-
 Number::Number ()
   : Leaf (),
     _double_value (0),
@@ -26,7 +24,7 @@ Number::Number (const wchar_t *json)
     _digitp {{ 0, 0 }, { 0, 0 }}
 {
   if (json == 0)
-    throw JSON::error ("null string");
+    throw JSON_Error (UNEX_END);
 
   (void) parse (json);
 }
@@ -63,7 +61,7 @@ Number::parse (const wchar_t *json)
   wchar_t peek = 0;
 
   if (json == 0)
-    throw json;
+    throw JSON_Error (UNEX_END);
 
   _readp = json;
 
@@ -96,7 +94,8 @@ Number::parse (const wchar_t *json)
           return _frag ();
         }
 
-      throw _readp; // Anything else is no good
+      // throw _readp; // Anything else is no good
+      throw JSON_Syntax_Error (UNEX_TOKEN, *_readp); // Anything else is no good
     }
 
   if ((peek = _digits ()) == '.')
@@ -109,7 +108,8 @@ Number::parse (const wchar_t *json)
     }
 
   if (peek < 0)
-    throw _readp;
+    // throw _readp;
+    throw JSON_Syntax_Error (UNEX_TOKEN, *_readp);
 
   _digitp[DOUBLE][END] = _readp;
 
@@ -135,7 +135,7 @@ Number::_frag ()
   int peek = _digits ();
 
   if (peek < 0) // No digits found
-    throw _readp;
+    throw JSON_Syntax_Error (UNEX_TOKEN, *_readp);
 
   _digitp[DOUBLE][END] = _readp;
 
@@ -145,7 +145,8 @@ Number::_frag ()
   return peek == 'e' || peek == 'E' ? _exp () : _readp;
 }
 
-const wchar_t *Number::_exp()
+const wchar_t *
+Number::_exp ()
 {
   _digitp[EXP][START] = ++_readp; // Skip 'e|E'
 
@@ -153,7 +154,7 @@ const wchar_t *Number::_exp()
     _readp++;
 
   if (_digits () < 0) // No digits found
-    throw _readp;
+    throw JSON_Syntax_Error (UNEX_TOKEN, *_readp);
 
   _digitp[EXP][END] = _readp;
 

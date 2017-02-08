@@ -120,7 +120,7 @@ Value &
 Value::_assign (const Value &nv)
 {
   if (_parent == 0)
-    throw JSON::error ("bad assignment");
+    throw JSON_Error (BAD_ASSIGN);
 
   return _parent->assign (this, nv.clone (this));
 }

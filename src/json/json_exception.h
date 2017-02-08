@@ -3,6 +3,7 @@
 
 #include <exception>
 #include <string>
+#include <cstdlib>
 
 /**
  * @brief The JSON_Error class

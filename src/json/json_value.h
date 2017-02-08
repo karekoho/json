@@ -5,6 +5,10 @@
 #include <cstring>
 #include <string>
 
+#define UNEX_END    "Unexpected end of JSON input"
+#define UNEX_TOKEN  "Unexpected token "
+#define BAD_ASSIGN  "Bad assignment"
+
 #ifdef UNIT_TEST
   class json_value_test;
   class json_leaf_test;

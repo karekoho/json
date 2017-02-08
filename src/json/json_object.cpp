@@ -46,14 +46,14 @@ const wchar_t *
 Object::parse (const wchar_t *json)
 {
   if (json == 0)
-    throw JSON::error ("error: null string given");
+    throw JSON_Syntax_Error ("Unexpected end of JSON input");
 
   if (_parent == 0)   // 1. Object (), 2. Object (const char *json)
     {
       _readp = json;
 
       if (*(_look_ahead ()) != _sc::begin_object)
-        throw "syntax error: expecting '{'";
+        throw JSON_Syntax_Error ("Unexpected end of JSON input");
 
       _readp++;
     }
@@ -64,7 +64,7 @@ Object::parse (const wchar_t *json)
     }
 
   if (*_readp == 0)
-    throw _readp;
+    throw JSON_Syntax_Error ("Unexpected end of JSON input");
 
   if (! _member_list.empty ())
     _clear ();
@@ -78,7 +78,7 @@ Object::parse (const wchar_t *json)
           _readp++;
 
           if (! _pair ())
-            throw "syntax error: unexpected ','";
+            throw JSON_Syntax_Error ("Unexpected end of JSON input");
         }
       else if (*_readp == _sc::end_object)         // '}'
         return _readp + 1;
@@ -103,34 +103,34 @@ Object::_pair ()
   if ((charc = _string (endc)) == 0)  // No opening \"
     {
       if (*_readp == 0)
-        throw JSON::syntax_error ("syntax error: expecting closing '}'");
+        throw JSON_Syntax_Error ("Unexpected end of JSON input");
 
       if (*_readp == _sc::end_object || *(_look_ahead ()) ==  _sc::end_object)  // Empty object
         return false;
     }
 
   if (charc < 0)   // No closing "
-    throw JSON::syntax_error ("syntax error: expecting closing '\"'");
+    throw JSON_Syntax_Error ("Unexpected token ", *_readp);
 
   const wchar_t *keyp = _readp + 1;
   _readp += charc;
 
   if (*(_look_ahead ()) != _sc::name_separator)   // Expect ':'
-    throw JSON::syntax_error ("pair: syntax error: expecting ':'");   // TODO: throw syntax error: unexpected character '%c'
+    throw JSON_Syntax_Error ("Unexpected token ", *_readp);   // TODO: throw syntax error: unexpected character '%c'
 
   _readp++;
 
   Value * v = _make_value ();
 
   if (v->type () == Value::no_value)
-    throw "syntax error: expecting value after ':'";
+    throw JSON_Syntax_Error ("Unexpected token ", *_readp);
 
   std::wstring key (keyp, charc - 2);
 
   if ((v = _call_reviver (v, key.c_str ()))->type () == Value::undefined)   // Reviver returned undefined, value is not added
     return true;
 
-  (void) _member_list.emplace (/* std::wstring (keyp, charc - 2) */ key, v);
+  (void) _member_list.emplace (key, v);
 
   v->setKey (keyp, charc - 2);
 
@@ -144,9 +144,9 @@ Object::at (const wchar_t *key) const
     {
       return *(_member_list.at (key));
     }
-  catch (std::out_of_range &e)
+  catch (std::out_of_range & e)
     {
-      throw JSON::out_of_range (e.what ());
+      throw JSON_Out_Of_Range (e.what ());
   }
 }
 
@@ -205,7 +205,7 @@ Object::_clear ()
 Value *
 Object::clone (const Value &other)
 {
-  const Object &nv = static_cast<const Object &>(other);
+  const Object & nv = static_cast<const Object &>(other);
 
   _clear ();
 
@@ -288,7 +288,7 @@ Object::strValue (wchar_t *offset) const
 }
 
 Value &
-Object::erase (const Value &v) noexcept
+Object::erase (const Value & v) noexcept
 {
   auto it = _member_list.find (v.key ());
 

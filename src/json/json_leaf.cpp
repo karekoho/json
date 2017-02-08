@@ -32,12 +32,3 @@ Leaf::iterator () const
 {
   return new Leaf_Iterator (this);
 }
-
-//const char *
-//Leaf::stringify () noexcept
-//{
-//  char *dstp = 0;
-//  return (_parent && (dstp = (char *)_parent->_str_value[0]) != 0)
-//      ? Value::_str_append (dstp, strValue (), strLength ())
-//      : strValue ();
-//}
