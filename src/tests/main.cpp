@@ -13,6 +13,7 @@
 #include <json_array_iterator_test.h>
 #include <json_leaf_iterator_test.h>
 #include <test_selector_test.h>
+#include <json_exception_test.h>
 
 #include <cstdlib>
 
@@ -54,7 +55,8 @@ std::vector<_test_> tests = {
 /* 10 */  { json_array_iterator_test::suite () },
 /* 11 */  { json_leaf_iterator_test::suite () },
 /* 12 */  { json_leaf_test::suite () },
-/* 13 */  { test_selector_test::suite () }
+/* 13 */  { test_selector_test::suite () },
+/* 14 */  { json_exception_test::suite () }
 };
 
 int
