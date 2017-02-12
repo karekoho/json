@@ -56,7 +56,7 @@ std::vector<_test_> tests = {
 /* 11 */  { json_leaf_iterator_test::suite () },
 /* 12 */  { json_leaf_test::suite () },
 /* 13 */  { test_selector_test::suite () },
-/* 14 */  { json_exception_test::suite () }
+/* 14 */  { json_syntax_error_test::suite () }
 };
 
 int

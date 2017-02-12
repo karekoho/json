@@ -2,23 +2,46 @@
 #define JSON_EXCEPTION_TEST
 
 #include <unit_test.h>
+#include "json_exception_test.h"
 
 /**
  * 14.
  * @brief The json_test class
  */
-class json_exception_test : public unit_test
+class json_syntax_error_test:public unit_test
 {
 public:
 
   void
   test_ctor_1 ()
   {
+
   }
 
   void
   test_ctor_2 ()
   {
+    struct assert {
+      const char *what;
+      const char *output;
+      wchar_t token;
+      int assert_status;
+    };
+
+    std::vector<struct assert > test = {
+      { "a:", "a:'b'", 'b', PASS }  // "a:'b'"
+    };
+
+    TEST_IT_START;
+
+      JSON_Syntax_Error e ((*it).what, (*it).token);
+
+      const char *output = e.what ();
+      std::cerr << output << std::endl;
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("e.what ()", 0, strcmp ((*it).output, output));
+
+    TEST_IT_END
   }
 
   void
@@ -37,8 +60,8 @@ public:
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json exception test");
 
     // s->addTest (new CppUnit::TestCaller<json_exception_test> ("test_ctor_1", &json_exception_test::test_ctor_1));
-    s->addTest (new CppUnit::TestCaller<json_exception_test> ("test_ctor_2", &json_exception_test::test_ctor_1));
-    s->addTest (new CppUnit::TestCaller<json_exception_test> ("test_ctor_3", &json_exception_test::test_ctor_1));
+    s->addTest (new CppUnit::TestCaller<json_syntax_error_test> ("test_ctor_2", &json_syntax_error_test::test_ctor_2));
+    s->addTest (new CppUnit::TestCaller<json_syntax_error_test> ("test_ctor_3", &json_syntax_error_test::test_ctor_3));
 
     return s;
   }
