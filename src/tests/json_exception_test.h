@@ -37,7 +37,6 @@ public:
       JSON_Syntax_Error e ((*it).what, (*it).token);
 
       const char *output = e.what ();
-      std::cerr << output << std::endl;
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("e.what ()", 0, strcmp ((*it).output, output));
 
