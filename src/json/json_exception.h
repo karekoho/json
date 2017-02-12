@@ -97,12 +97,10 @@ protected:
 
     char *src_buf = (char *) alloca (token_len + 1);
 
-    src_buf = (char *) memset (src_buf, 0, token_len + 1);
-
-    if ((bytec = wcstombs (src_buf, token, token_len)) < token_len)
+    if ((bytec = wcstombs ((char *) memset (src_buf, 0, token_len + 1), token, token_len)) < token_len)
       return bytec;
 
-    char *dst_buf = (char *) alloca (token_len + 3);
+    char *dst_buf = (char *) alloca (token_len + 3); // ' + token + ' + 0
 
     if ((bytec = std::snprintf (dst_buf, token_len + 3, "'%s'", src_buf)) < token_len + 2)
       return bytec;
