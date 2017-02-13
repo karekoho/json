@@ -7,10 +7,6 @@
 #include <wchar.h>
 #include <alloca.h>
 
-#ifdef UNIT_TEST
-  class json_exception_test;
-#endif
-
   /**
  * @brief The JSON_Error class
  */
@@ -48,10 +44,6 @@ protected:
  */
 class JSON_Syntax_Error : public JSON_Error
 {
-#ifdef UNIT_TEST
-  friend class json_exception_test;
-#endif
-
 public:
   /**
    * @brief Syntax_Error
@@ -69,9 +61,6 @@ public:
   JSON_Syntax_Error (const char * const what, wchar_t token)
     : JSON_Error (what)
   {
-    // char str[4];
-    //if (std::snprintf (str, 4, "'%c'", (char) token) == 3) _what.append (str, 3);
-
     _add_token (& token, 1);
   }
 
