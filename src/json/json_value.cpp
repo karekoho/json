@@ -1,5 +1,9 @@
 #include "json_value.h"
 #include "json_json.h"
+#include "json_string.h"
+#include "json_number.h"
+#include "json_boolean.h"
+
 #include <stdlib.h>
 
 const struct Value::literal_value Value::__ltr_value[3] = {
@@ -124,3 +128,22 @@ Value::_assign (const Value &nv)
 
   return _parent->assign (this, nv.clone (this));
 }
+
+Value &
+Value::operator =(bool b)
+{
+  return _assign (*(new Boolean (b)));
+}
+
+Value &
+Value::operator =(const wchar_t *s)
+{
+  return _assign (*(new String (s)));
+}
+
+Value &
+Value::operator =(double d)
+{
+  return _assign (*(new Number (d)));
+}
+

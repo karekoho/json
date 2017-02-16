@@ -20,6 +20,7 @@
 class JSON;
 class JSON_Iterator;
 class Undefined;
+//class String;
 class Value
 {
 #ifdef UNIT_TEST
@@ -154,6 +155,30 @@ class Value
   inline Value &
   operator =(const Value & v)
   { return _assign (v);  }
+
+  /**
+   * @brief operator =
+   * @param s
+   * @return
+   */
+  Value &
+  operator =(const wchar_t *s);
+
+  /**
+   * @brief operator =
+   * @param d
+   * @return
+   */
+  Value &
+  operator =(double d);
+
+  /**
+   * @brief operator =
+   * @param b
+   * @return
+   */
+  Value &
+  operator =(bool b);
 
   /**
    * @brief type
