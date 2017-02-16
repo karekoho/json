@@ -98,15 +98,6 @@ public:
   { return Value::object_type::number; }
 
   /**
-   * @brief _assign
-   * @param nv
-   * @return
-   */
-//  virtual Value &
-//  _assign (Value & nv)
-//  { return Value::_assign (nv); }
-
-  /**
    * @brief operator =
    * @param n
    * @return

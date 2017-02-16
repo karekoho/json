@@ -138,7 +138,6 @@ class Value
   { return _at (key); }
 
   /**
-   * TODO:
    * @brief operator []
    * @param index
    * @return
@@ -154,6 +153,17 @@ class Value
   inline Value &
   operator =(const Value & v)
   { return _assign (v);  }
+
+  /**
+   * TODO
+   *
+   * @brief operator =
+   * @param v
+   * @return
+   *
+    Value &
+    operator =(const Value *v);
+   */
 
   /**
    * @brief operator =
