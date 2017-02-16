@@ -46,14 +46,14 @@ const wchar_t *
 Object::parse (const wchar_t *json)
 {
   if (json == 0)
-    throw JSON_Syntax_Error ("Unexpected end of JSON input");
+    throw JSON_Syntax_Error (UNEX_END);
 
   if (_parent == 0)   // 1. Object (), 2. Object (const char *json)
     {
       _readp = json;
 
       if (*(_look_ahead ()) != _sc::begin_object)
-        throw JSON_Syntax_Error ("Unexpected end of JSON input");
+        throw JSON_Syntax_Error (UNEX_END);
 
       _readp++;
     }
@@ -64,7 +64,7 @@ Object::parse (const wchar_t *json)
     }
 
   if (*_readp == 0)
-    throw JSON_Syntax_Error ("Unexpected end of JSON input");
+    throw JSON_Syntax_Error (UNEX_END);
 
   if (! _member_list.empty ())
     _clear ();
@@ -78,7 +78,7 @@ Object::parse (const wchar_t *json)
           _readp++;
 
           if (! _pair ())
-            throw JSON_Syntax_Error ("Unexpected end of JSON input");
+            throw JSON_Syntax_Error (UNEX_END);
         }
       else if (*_readp == _sc::end_object)         // '}'
         return _readp + 1;
@@ -103,7 +103,7 @@ Object::_pair ()
   if ((charc = _string (endc)) == 0)  // No opening \"
     {
       if (*_readp == 0)
-        throw JSON_Syntax_Error ("Unexpected end of JSON input");
+        throw JSON_Syntax_Error (UNEX_END);
 
       if (*_readp == _sc::end_object || *(_look_ahead ()) ==  _sc::end_object)  // Empty object
         return false;

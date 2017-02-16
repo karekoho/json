@@ -20,7 +20,6 @@
 class JSON;
 class JSON_Iterator;
 class Undefined;
-//class String;
 class Value
 {
 #ifdef UNIT_TEST
@@ -211,7 +210,8 @@ class Value
   { return _key; }
 
   /**
-    TODO: protected
+   * TODO: protected
+   *
    * @brief setKey
    * @param key
    * @param charc
@@ -233,7 +233,8 @@ class Value
   { return _index; }
 
   /**
-    TODO: protected
+   * TODO: protected
+   *
    * @brief setIndex
    * @param index
    */
@@ -243,6 +244,8 @@ class Value
 
   /**
    * TODO: protected
+   *
+   * Assign Value object to member_list or element_list.
    *
    * @brief _assign
    * @param Old value
@@ -324,6 +327,9 @@ protected:
 
   /**
    * TODO: public
+   *
+   * If value has parent object, assign to new value to this->_parent->[key],
+   * otherwise assign new value to Value object itself.
    *
    * @brief assign
    * @param nv
