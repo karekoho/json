@@ -95,6 +95,7 @@ public:
   parse (const wchar_t *json);
 
   /**
+   * TODO: REMOVE
    * @brief at
    * @param key
    * @return
@@ -103,6 +104,8 @@ public:
   at (const wchar_t *key) const;
 
   /**
+   * TODO: REMOVE
+   *
    * @brief at
    * @return
    */

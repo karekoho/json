@@ -16,6 +16,11 @@ public:
     virtual void test_ctor_dtor () = 0;
     virtual void test_parse_1 () = 0;
     virtual void test_size_1 () = 0;
+
+    /**
+     * TODO: REMOVE
+     * @brief test_at
+     */
     virtual void test_at () = 0;
 
     /**

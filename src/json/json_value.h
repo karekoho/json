@@ -310,6 +310,7 @@ class Value
   strValue (wchar_t *offset = 0) /* TODO: noexcept */ const = 0;
 
   /**
+   * TODO: REMOVE
    * @brief erase
    * @param v
    * @return

@@ -366,7 +366,11 @@ public:
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("object._member_list.size ()", (size_t) 0, o._member_list.size ());
   }
 
-  virtual void test_operator_at () {}
+  virtual void
+  test_operator_at ()
+  {
+    // test_at();
+  }
 
   virtual void test_stringify () override {}
 
