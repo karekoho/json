@@ -1,12 +1,16 @@
 #ifndef JSON_STRING_TEST_H
 #define JSON_STRING_TEST_H
 
-#include "json_value_test_interface.h"
+#include "json_leaf_test.h"
 
-/// Test number 4
-class json_string_test : public json_value_test_interface
+/**
+ * 4.
+ * @brief The json_string_test class
+ */
+class json_string_test : public json_leaf_test
 {
 public:
+
   virtual void
   test_ctor_dtor ()
   {
@@ -188,24 +192,18 @@ public:
 
     virtual void test_erase () override {}
 
-    virtual void test_stringify () override {}
+    // virtual void test_stringify () override {}
 
     virtual void test_strLength () override {}
     virtual void test_strValue () override {}
 
-    virtual void test__clear() {}
+    virtual void test__clear () {}
 
     virtual void test_operator_assign () {}
     virtual void test_operator_at () {}
 
-    virtual void test_size_1() {}
-    virtual void test_at() {}
-    virtual void test_value_1() {}
-    virtual void test_debug_1() {}
-
     /**
      * 4.
-     *
      * @brief suite
      * @return
      */
@@ -214,9 +212,9 @@ public:
     {
       CppUnit::TestSuite *s = new CppUnit::TestSuite ("json string test");
 
-      s->addTest (new CppUnit::TestCaller<json_string_test> ("test_ctor_dtor", &json_string_test::test_ctor_dtor));
-      s->addTest (new CppUnit::TestCaller<json_string_test> ("test_parse_1", &json_string_test::test_parse_1));
-      s->addTest (new CppUnit::TestCaller<json_string_test> ("test_assign_all_values", &json_string_test::test_assign_all_values));
+      /* 0. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_ctor_dtor", &json_string_test::test_ctor_dtor));
+      /* 1. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_parse_1", &json_string_test::test_parse_1));
+      /* 2. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_assign_all_values", &json_string_test::test_assign_all_values));
 
       return s;
     }

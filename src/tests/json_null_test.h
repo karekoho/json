@@ -1,15 +1,14 @@
 #ifndef JSON_NULL_TEST
 #define JSON_NULL_TEST
 
-#include "json_value_test_interface.h"
+#include "json_leaf_test.h"
 
 /**
  * 7.
  * @brief The json_null_test class
  */
-class json_null_test : public json_value_test_interface
+class json_null_test : public json_leaf_test
 {
-  // json_value_test_interface interface
 public:
 
   virtual void
@@ -35,12 +34,6 @@ public:
 
     CPPUNIT_ASSERT_MESSAGE ("null", & copy != & src);
   }
-
-  virtual void test_parse_1 () {}
-
-  virtual void test_size_1 () {}
-
-  virtual void test_at () {}
 
   virtual void
   test_assign_all_values ()
@@ -143,6 +136,12 @@ public:
           delete (*it).new_value;
   }
 
+  virtual void test_parse_1 () override {}
+  virtual void test_strLength () override {}
+  virtual void test_strValue () override {}
+  virtual void test__clear () override {}
+  virtual void test_erase () override {}
+
   /**
    * 7.
    * @brief suite
@@ -153,26 +152,11 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json null test");
 
-    s->addTest (new CppUnit::TestCaller<json_null_test> ("test_ctor_dtor", &json_null_test::test_ctor_dtor));
-    s->addTest (new CppUnit::TestCaller<json_null_test> ("test_assign_all_values", &json_null_test::test_assign_all_values));
+    /* 0. */  s->addTest (new CppUnit::TestCaller<json_null_test> ("test_ctor_dtor", &json_null_test::test_ctor_dtor));
+    /* 1. */  s->addTest (new CppUnit::TestCaller<json_null_test> ("test_assign_all_values", &json_null_test::test_assign_all_values));
 
     return s;
   }
-
-  virtual void test_strLength () override {}
-  virtual void test_strValue () override {}
-
-  virtual void test_stringify () override {}
-
-  virtual void test__clear () {}
-
-  virtual void test_operator_assign () {}
-  virtual void test_operator_at () {}
-
-  virtual void test_value_1 () {}
-  virtual void test_debug_1 () {}
-  virtual void test_erase () override {}
-
 };
 
 #endif // JSON_NULL_TEST

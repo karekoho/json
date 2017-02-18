@@ -141,7 +141,7 @@ public:
    */
   Value &
   _assign (const Boolean & nv)
-  { return _parent ? _parent->assign (this, new Boolean (nv)) : *(clone (nv)); }
+  { return _parent ? _parent->_assign (this, new Boolean (nv)) : *(clone (nv)); }
 
   /**
    * @brief value

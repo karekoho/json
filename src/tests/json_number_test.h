@@ -1,12 +1,14 @@
 #ifndef JSON_NUMBER_TEST
 #define JSON_NUMBER_TEST
 
-#include "json_value_test_interface.h"
+#include "json_leaf_test.h"
 
-/// Test number 5
-class json_number_test : public json_value_test_interface {
-
-  // json_value_test_interface interface
+/**
+ * 5.
+ * @brief The json_number_test class
+ */
+class json_number_test : public json_leaf_test
+{
 public:
 
   virtual void
@@ -96,14 +98,6 @@ public:
 
     TEST_IT_END;
   }
-
-  virtual void test_size_1() {}
-
-  virtual void test_at() {}
-
-  virtual void test_value_1() {}
-
-  virtual void test_debug_1() {}
 
   void
   test_digits ()
@@ -434,9 +428,6 @@ public:
       delete (*it).new_value;
   }
 
-  virtual void test_stringify () override {}
-  virtual void test_strLength () override {}
-
   virtual void
   test_strValue () override
   {
@@ -466,16 +457,11 @@ public:
       CPPUNIT_ASSERT_MESSAGE ("n[1].strValue ()", wcscmp((*it).output[1], n[1].strValue ()) == 0);
       CPPUNIT_ASSERT_MESSAGE ("n[2].strValue ()", wcscmp((*it).output[2], n[2].strValue ()) == 0);
 
-
-      // std::cout << n[0].strValue () << std::endl;
-      // std::cout << n[1].strValue () << std::endl;
-
     TEST_IT_END;
   }
 
-  virtual void test__clear () {}
-  virtual void test_operator_assign () {}
-  virtual void test_operator_at () {}
+  virtual void test_strLength () override {}
+  virtual void test__clear () override {}
   virtual void test_erase () override {}
 
   /**
@@ -488,24 +474,16 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json number test");
 
-    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_strValue", &json_number_test::test_strValue));
-
-    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_ctor_dtor", &json_number_test::test_ctor_dtor));
-    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_parse_1", &json_number_test::test_parse_1));
-
-//    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_size_1", &json_number_test::test_size_1));
-//    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_get_1", &json_number_test::test_get_1));
-//    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_value_1", &json_number_test::test_value_1));
-//    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_debug_1", &json_object_test::test_debug_1));
-
-    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_digits", &json_number_test::test_digits));
-    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_frag", &json_number_test::test_frag));
-    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_exp", &json_number_test::test_exp));
-    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_atof", &json_number_test::test_atof));
-    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_atoll", &json_number_test::test_atoll));
-
-    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_calculate", &json_number_test::test_calculate));
-    s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_all_values", &json_number_test::test_assign_all_values));
+    /* 0. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_strValue", &json_number_test::test_strValue));
+    /* 1. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_ctor_dtor", &json_number_test::test_ctor_dtor));
+    /* 2. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_parse_1", &json_number_test::test_parse_1));
+    /* 3. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_digits", &json_number_test::test_digits));
+    /* 4. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_frag", &json_number_test::test_frag));
+    /* 5. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_exp", &json_number_test::test_exp));
+    /* 6. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_atof", &json_number_test::test_atof));
+    /* 7. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_atoll", &json_number_test::test_atoll));
+    /* 8. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_calculate", &json_number_test::test_calculate));
+    /* 9. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_all_values", &json_number_test::test_assign_all_values));
 
     return s;
   }

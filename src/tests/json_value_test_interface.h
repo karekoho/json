@@ -2,26 +2,45 @@
 #define JSON_VALUE_TEST_H
 
 #include <unit_test.h>
-// #include "test_selector.h"
 
-class json_value_test_interface :
-    public unit_test //, public test_selector
+class json_value_test_interface : public unit_test
 {
 public:
 
+    /**
+     * @brief test_lookahead
+     */
     void test_lookahead ();
-    void test_lexeme ();
-    void test_is_literal ();
-
-    virtual void test_ctor_dtor () = 0;
-    virtual void test_parse_1 () = 0;
-    virtual void test_size_1 () = 0;
 
     /**
-     * TODO: REMOVE
+     * @brief test_lexeme
+     */
+    void test_lexeme ();
+
+    /**
+     * @brief test_is_literal
+     */
+    void test_is_literal ();
+
+    /**
+     * @brief test_ctor_dtor
+     */
+    virtual void test_ctor_dtor () = 0;
+
+    /**
+     * @brief test_parse_1
+     */
+    virtual void test_parse_1 () = 0;
+
+    /**
      * @brief test_at
      */
-    virtual void test_at () = 0;
+    virtual void test_operator_at_key () = 0;
+
+    /**
+     * @brief test_operator_at_index
+     */
+    virtual void test_operator_at_index () = 0;
 
     /**
      * @brief test_assign_all_values
@@ -29,35 +48,31 @@ public:
     virtual void test_assign_all_values () = 0;
 
     /**
-     * Test with "this" and Value (2 assertions).
-     * Node 2 pass
-     * Leaf 1 pass, 1 fail
-     * @brief test_operator_assign
+     * @brief test__clear
      */
-    virtual void test_operator_assign () = 0;   // =
     virtual void test__clear () = 0;
 
     /**
-     * Test with existing and missing node value (2 assertions).
-     * @brief test_operator_at
+     * @brief test__at
      */
-    virtual void test_operator_at () = 0;       // []
-
     virtual void test__at () {}
 
+    /**
+     * @brief test_strLength
+     */
     virtual void test_strLength () = 0;
+
+    /**
+     * @brief test_strValue
+     */
     virtual void test_strValue () = 0;
-    virtual void test_stringify ()  = 0;
 
+    /**
+     * TODO: replace Value.erase ()  with o[key] = undefined
+     *
+     * @brief test_erase
+     */
     virtual void test_erase () = 0;
-
-    /// TODO: test_assign
-    virtual void test_value_1 () = 0; /// TODO: remove
-    virtual void test_debug_1 () = 0;
-
-protected:
-
-    //static const char *_input[];
 };
 
 #endif // JSON_VALUE_TEST_H

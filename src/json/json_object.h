@@ -348,7 +348,7 @@ protected:
    * @param nv
    */
   virtual Value &
-  assign (Value *ov, Value *nv);
+  _assign (Value *ov, Value *nv);
 
   /**
    * @brief _clear

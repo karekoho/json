@@ -177,8 +177,8 @@ public:
         ASSERT_EQUAL_IDX ("value.type ()", Value::undefined, oov.type ());
         ASSERT_EQUAL_IDX ("value.type ()", Value::undefined, aov.type ());
 
-        op.assign (& oov, (*it).value[0]);
-        ap.assign (& aov, (*it).value[1]);
+        op._assign (& oov, (*it).value[0]);
+        ap._assign (& aov, (*it).value[1]);
 
         ASSERT_EQUAL_IDX ("parent._at (key)", (*it).type, op._at ((*it).key).type ());
         ASSERT_EQUAL_IDX ("parent._at (index)", (*it).type, ap._at ((*it).index).type ());
@@ -223,7 +223,7 @@ public:
 
 
 
-  virtual void test_stringify () override {}
+  //virtual void test_stringify () override {}
 
   virtual void test_strLength () override {}
 
@@ -271,11 +271,11 @@ public:
   virtual void test_operator_assign () {}
   virtual void test_operator_at () {}
 
-  virtual void test_size_1 () {}
+  //virtual void test_size_1 () {}
 
 
   virtual void
-  test_at ()  // TODO
+  test_operator_at_key ()  // TODO
   {
     struct assert
     {
@@ -295,6 +295,11 @@ public:
       // TODO: object[key]
       // TODO: object[index]
      TEST_IT_END;
+  }
+
+  virtual void
+  test_operator_at_index ()
+  {
   }
 
   virtual void test_value_1 () {}
@@ -342,9 +347,10 @@ public:
           for (size_t val_idx = 0; val_idx < output_size; val_idx++) // Iterate values
             {
               Value *ov = (*it).output[rev_idx].at (val_idx);
-
+              Value & jvv = *jv;
               CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->count ()", output_size, jv->count ());
-              CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->at ().type ()", ov->type (), jv->at (std::to_wstring (val_idx).c_str ()).type ());
+              // CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->at ().type ()", ov->type (), jv->at (std::to_wstring (val_idx).c_str ()).type ());
+              CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->at ().type ()", ov->type (), jvv[std::to_wstring (val_idx).c_str ()].type ());
             }
         }
 

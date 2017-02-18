@@ -136,7 +136,7 @@ public:
    * @param nv
    */
   virtual Value &
-  assign (Value *ov, Value *nv);
+  _assign (Value *ov, Value *nv);
 
   /**
    * @brief type

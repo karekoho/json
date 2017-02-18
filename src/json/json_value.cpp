@@ -126,7 +126,7 @@ Value::_assign (const Value &nv)
   if (_parent == 0)
     throw JSON_Error (BAD_ASSIGN);
 
-  return _parent->assign (this, nv.clone (this));
+  return _parent->_assign (this, nv.clone (this));
 }
 
 Value &
