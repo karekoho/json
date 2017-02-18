@@ -172,6 +172,23 @@ public:
   virtual void
   test_operator_at_index ()
   {
+    Object o;
+
+    /**
+      FIXME:
+
+      ./ut: FAIL
+        1) test: test_operator_at_index (F) line: 191 ../../src/tests/json_object_test.h
+        equality assertion failed
+        - Expected: 1
+        - Actual  : 0
+        - o[size_t].type ()
+
+      ./ut 2,6: PASS
+
+     */
+
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("o[size_t].type ()", Value::undefined, o[(size_t) 0].type ());
   }
 
   virtual void
@@ -539,10 +556,10 @@ public:
     /* 0. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_erase", &json_object_test::test_erase));
     /* 1. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_smoke", &json_object_test::test_ctor_dtor));
     /* 2. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_assign_all_values", &json_object_test::test_assign_all_values));
-    /* 3. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_parse_1", &json_object_test::test_key));
-    /* 4. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_key", &json_object_test::test_parse_1));
-    /* 5. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_at_1", &json_object_test::test_operator_at_key));
-    /* 6. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_at_1", &json_object_test::test__at));
+    /* 3. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_key", &json_object_test::test_key));
+    /* 4. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_parse_1", &json_object_test::test_parse_1));
+    /* 5. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_operator_at_key", &json_object_test::test_operator_at_key));
+    /* 6. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_operator_at_index", &json_object_test::test_operator_at_index));
     /* 7. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_pair_1", &json_object_test::test__pair));
     /* 8. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__clear", &json_object_test::test__clear));
     /* 9. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strLength", &json_object_test::test_strLength));

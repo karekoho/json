@@ -137,18 +137,18 @@ Object::_pair ()
   return true;
 }
 
-Value &
-Object::at (const wchar_t *key) const
-{
-  try
-    {
-      return *(_member_list.at (key));
-    }
-  catch (std::out_of_range & e)
-    {
-      throw JSON_Out_Of_Range (e.what ());
-  }
-}
+//Value &
+//Object::at (const wchar_t *key) const
+//{
+//  try
+//    {
+//      return *(_member_list.at (key));
+//    }
+//  catch (std::out_of_range & e)
+//    {
+//      throw JSON_Out_Of_Range (e.what ());
+//  }
+//}
 
 JSON_Iterator *
 Object::iterator () const

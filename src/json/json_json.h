@@ -106,24 +106,6 @@ public:
   { return new JSON (json, r); }
 
   /**
-   * @brief at
-   * @param key
-   * @return
-   */
-  //virtual Value &
-  //at (const wchar_t *key) const
-  //{ return __hasRoot () ? __root->at (key) : Shared_Undefined::instance (); }
-
-  /**
-   * @brief at
-   * @param index
-   * @return
-   */
-  //virtual Value &
-  //at (size_t index) const
-  //{ return __hasRoot () ? __root->at (index) : Shared_Undefined::instance (); }
-
-  /**
    * @brief type
    * @return
    */

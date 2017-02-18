@@ -144,15 +144,6 @@ protected:
   mutable std::wstring _string_value[2];
 
   /**
-   * @brief assign
-   * @param nv
-   * @return
-   */
-//  virtual Value &
-//  _assign (const Value & nv)
-//  { return Value::_assign (nv); }
-
-  /**
    * @brief _copy
    * @param nv
    * void _copy (const String &nv);

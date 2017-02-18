@@ -228,8 +228,6 @@ public:
           delete (*it).new_value;
   }
 
-  virtual void test_size_1 () {}
-
   virtual void
   test_operator_at_key ()
   {
@@ -239,20 +237,20 @@ public:
 
     struct assert
     {
-      size_t index;
       const wchar_t *key;
       Value::object_type type;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { 0, L"0", Value::object_type::boolean, PASS },
-      { 1, L"1", Value::object_type::undefined, PASS }
+      { L"0", Value::object_type::boolean, PASS },
+      { L"1", Value::object_type::undefined, PASS },
+      { L"x", Value::object_type::boolean, PASS }   // Converted to 0
     };
 
     TEST_IT_START
 
-        const Value & v = a[((*it).index)];
+        const Value & v = a[((*it).key)]; // Array::_at("key") tries to convert "key" to size_t
 
         ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v.type ());
 
@@ -262,11 +260,6 @@ public:
   virtual void
   test_operator_at_index ()
   {
-  }
-
-  virtual void
-  test__at ()
-  {
     Array a;
 
     a._element_list.push_back (new Boolean (true));
@@ -274,23 +267,20 @@ public:
     struct assert
     {
       size_t index;
-      const wchar_t *key;
       Value::object_type type;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { 0, L"0", Value::object_type::boolean, PASS },
-      { 1, L"1", Value::object_type::undefined, PASS }
+      { 0, Value::object_type::boolean, PASS },
+      { 1, Value::object_type::undefined, PASS }
     };
 
     TEST_IT_START
 
-      const Value & v1 = a._at ((*it).index);
-      const Value & v2 = a._at ((*it).key);
+      const Value & v = a [(*it).index];
 
-      ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v1.type ());
-      ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v2.type ());
+      ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v.type ());
 
     TEST_IT_END;
   }
@@ -444,6 +434,9 @@ public:
      TEST_IT_END;
   }
 
+  virtual void test__at () override {}
+  // virtual void test_size_1 () {}
+
   /**
    * 3.
    * @brief suite
@@ -459,8 +452,8 @@ public:
     /* 2. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_ctor_dtor", &json_array_test::test_ctor_dtor));
     /* 3. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_parse_1", &json_array_test::test_parse_1));
     /* 4. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_index", &json_array_test::test_index));
-    /* 5. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_at", &json_array_test::test_operator_at_key));
-    /* 6. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_at", &json_array_test::test__at));
+    /* 5. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_operator_at_key", &json_array_test::test_operator_at_key));
+    /* 6. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_operator_at_index", &json_array_test::test_operator_at_index));
     /* 7. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_assign_all_values", &json_array_test::test_assign_all_values));
     /* 8. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test__clear", &json_array_test::test__clear));
     /* 9. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_erase", &json_array_test::test_erase));

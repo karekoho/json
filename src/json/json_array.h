@@ -30,11 +30,6 @@ class Array : public JSON
   friend class json_undefined_test;
 #endif
 
-  // TODO: friend void Value::setKey (const char *key);
-  // TODO: friend void Value::setIndex (const size_t &index);
-
-  // friend Value & Value::_root__at (const char *key, JSON *root);
-
 public:
 
   typedef std::vector<Value *> element_list;
@@ -115,12 +110,10 @@ public:
    */
   virtual Value &
   at (const wchar_t *key) const
- // { return at (atoll (key)); }
   {
     wchar_t *end = 0;
     return at (std::wcstoll (key, & end, 10));
   }
-
 
   /**
    * @brief at

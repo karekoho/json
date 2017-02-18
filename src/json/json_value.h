@@ -113,22 +113,6 @@ class Value
   parse (const wchar_t *json) = 0;
 
   /**
-   * @brief at If key does not exist, throws json::out_of_range exception
-   * @param key
-   * @return
-   */
-  //virtual Value &
-  //at (const wchar_t *key) const  = 0;
-
-  /**
-   * @brief at
-   * @param index
-   * @return
-   */
-  //virtual Value &
-  //at (size_t index) const = 0;
-
-  /**
    * @brief operator []
    * @param key
    * @return
