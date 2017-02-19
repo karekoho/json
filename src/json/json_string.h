@@ -10,7 +10,7 @@ namespace Format {
 /**
  * @brief The string class
  */
-class String : public Leaf
+class string : public Leaf
 {
 #ifdef UNIT_TEST
   friend class json_string_test;
@@ -21,33 +21,33 @@ class String : public Leaf
   /**
    * @brief String
    */
-  String ();
+  string ();
 
   /**
    * @brief String
    * @param json
    */
-  String (const wchar_t *json);
+  string (const wchar_t *json);
 
   /**
    * @brief String
    * @param parent
    * @param charc
    */
-  String (json *parent, size_t charc);
+  string (json *parent, size_t charc);
 
   /**
    * @brief String
    * @param other
    */
-  String (const String & other);
+  string (const string & other);
 
   /**
    * @brief String
    * @param ov
    * @param nv
    */
-  String (const Value *ov, const String & nv);
+  string (const Value *ov, const string & nv);
 
   /**
    * @brief clone
@@ -56,7 +56,7 @@ class String : public Leaf
    */
   virtual Value *
   clone () const
-  { return new String (*this); }
+  { return new string (*this); }
 
   /**
    * @brief clone
@@ -65,7 +65,7 @@ class String : public Leaf
    */
   virtual Value *
   clone (const Value *ov) const override
-  { return new String (ov, *this);}
+  { return new string (ov, *this);}
 
   /**
    * @brief parse
@@ -89,7 +89,7 @@ class String : public Leaf
    * @return
    */
   inline Value &
-  operator =(const String & s)
+  operator =(const string & s)
   { return _assign (s); }
 
   /**
@@ -107,7 +107,7 @@ class String : public Leaf
    * @return
    */
   Value &
-  _assign (const String & nv);
+  _assign (const string & nv);
 
   /**
    * @brief value

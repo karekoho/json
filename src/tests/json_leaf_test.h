@@ -36,7 +36,7 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { new String (L"\"x\""), { 3, 4 }, { L"\"x\"", L"x\"x\"" }, PASS },
+      { new string (L"\"x\""), { 3, 4 }, { L"\"x\"", L"x\"x\"" }, PASS },
       { new Number (100), { 10, 11 }, { L"100.000000", L"x100.000000" }, PASS },
       { new Boolean (), { 5, 6 }, { L"false", L"xfalse" }, PASS },
       { new Null (), { 4, 5 }, { L"null", L"xnull" }, PASS },

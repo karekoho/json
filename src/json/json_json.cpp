@@ -144,7 +144,7 @@ json::_make_value ()
       if ((charc = _string (endc)) < 0)
         throw JSON_Syntax_Error (UNEX_TOKEN, *_readp);
 
-      value_ = new String (this, charc);
+      value_ = new string (this, charc);
     }
   else if (readc == _sc::begin_object)      // Object
     value_ = new Object (this);

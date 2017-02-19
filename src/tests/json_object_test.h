@@ -274,7 +274,7 @@ public:
     std::vector<struct assert > test = {
       { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object_t, L"key_1",  0, 1,  { PASS, PASS, PASS } },
       { new Array (L"[]"), Value::array_t, L"key_2",  0, 2,  { PASS, PASS, FAIL } },
-      { new String (L"\"x\""), Value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
+      { new string (L"\"x\""), Value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
       { new Number (), Value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
       { new Boolean (true), Value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
       { new Null (), Value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }

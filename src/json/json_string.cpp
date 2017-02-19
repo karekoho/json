@@ -2,9 +2,9 @@
 #include "json_json.h"
 using namespace Format;
 
-String::String() : Leaf (), _charc (0) {}
+string::string() : Leaf (), _charc (0) {}
 
-String::String (const wchar_t *json)
+string::string (const wchar_t *json)
   : Leaf (json),
     _charc (0)
 {
@@ -14,20 +14,20 @@ String::String (const wchar_t *json)
   (void) parse (json);
 }
 
-String::String (json *parent, size_t charc)
+string::string (json *parent, size_t charc)
   : Leaf (parent),
     _charc (charc)
 {
 }
 
-String::String (const String &other)
+string::string (const string &other)
   : Leaf (other),
     _charc (other._charc)
 {
   clone (other);
 }
 
-String::String (const Value *ov, const String &nv)
+string::string (const Value *ov, const string &nv)
   : Leaf (ov, nv),
     _charc (nv._charc)
 {
@@ -35,7 +35,7 @@ String::String (const Value *ov, const String &nv)
 }
 
 const wchar_t *
-String::parse (const wchar_t *json)
+string::parse (const wchar_t *json)
 {
   wchar_t endc   = 0;
   long charc  = 0;
@@ -56,13 +56,13 @@ String::parse (const wchar_t *json)
 }
 
 Value &
-String::_assign (const String &nv)
+string::_assign (const string &nv)
 {
-  return _parent ? _parent->_assign (this, new String (this, nv)) : *(clone (nv));
+  return _parent ? _parent->_assign (this, new string (this, nv)) : *(clone (nv));
 }
 
 const wchar_t *
-String::value () const
+string::value () const
 {
   if (_string_value[0].empty () && _startp && _charc > 0)
     _string_value[0].assign (_startp + 1, _charc - 2);
@@ -71,7 +71,7 @@ String::value () const
 }
 
 const wchar_t *
-String::strValue (wchar_t *) const
+string::strValue (wchar_t *) const
 {
   if (_startp == 0 || _charc == 0)
     return L"";
@@ -83,9 +83,9 @@ String::strValue (wchar_t *) const
 }
 
 Value *
-String::clone (const Value &nv)
+string::clone (const Value &nv)
 {
-  const String & s = dynamic_cast<const String &>(nv);
+  const string & s = dynamic_cast<const string &>(nv);
 
   if (s._startp && s._charc > 0)
     _string_value[0].assign (s._startp + 1, s._charc - 2);

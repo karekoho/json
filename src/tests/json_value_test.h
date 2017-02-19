@@ -212,7 +212,7 @@ public:
       std::vector<struct assert> test = {
         { new Object, Value::object_t, PASS },
         { new Array, Value::array_t, PASS },
-        { new String, Value::string_t, PASS },
+        { new string, Value::string_t, PASS },
         { new Number, Value::number_t, PASS },
         { new Boolean, Value::boolean_t, PASS },
         { new Null, Value::null_t, PASS },

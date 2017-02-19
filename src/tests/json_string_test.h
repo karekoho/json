@@ -20,10 +20,10 @@ public:
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
-        String *a[] = {
-          new String (),
-          new String (L"\"x\""),
-          new String (p[pidx], 1),
+        string *a[] = {
+          new string (),
+          new string (L"\"x\""),
+          new string (p[pidx], 1),
         };
 
         delete a[0];
@@ -33,8 +33,8 @@ public:
 
     delete p[1];
 
-    String src = L"\"xxx\"";
-    String copy = src;
+    string src = L"\"xxx\"";
+    string copy = src;
 
     CPPUNIT_ASSERT_MESSAGE ("string", & copy != & src);
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("src._string_value.empty ()", true, src._string_value[0].empty () );
@@ -67,7 +67,7 @@ public:
               const wchar_t *startp = (*it).startp;
               size_t move = (*it).charc + 2;
 
-              String *s = new String (p[pidx], move);
+              string *s = new string (p[pidx], move);
 
               std::wstring ss = s->value ();
 
@@ -113,7 +113,7 @@ public:
       std::vector<struct assert > test = {
         { new Array (L"[true,false]"), Value::array_t, L"key_1",  0, 1,  { PASS, PASS, FAIL } },
         { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object_t, L"key_2",  0, 2,  { PASS, PASS, FAIL } },
-        { new String (L"\"xxx\""), Value::string_t, L"key_3",  0, 3,  { PASS, PASS, PASS } },
+        { new string (L"\"xxx\""), Value::string_t, L"key_3",  0, 3,  { PASS, PASS, PASS } },
         { new Number (10), Value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
         { new Boolean (true), Value::boolean_t, L"key_6",  0, 5, { PASS, PASS, FAIL } },
         { new Null, Value::null_t, L"key_7",  0, 6, { PASS, PASS, FAIL } }
@@ -131,7 +131,7 @@ public:
 
             /// old_value: value from Value[key], any value
 
-            String *old_value = new String ();
+            string *old_value = new string ();
             old_value->_parent = parents[pidx];
 
             arr_parent._element_list.push_back (new Format::undefined);
@@ -144,7 +144,7 @@ public:
 
             if ((*it).new_value->type () == Value::string_t)
               {
-                String *new_a_value = static_cast<String *>((*it).new_value);
+                string *new_a_value = static_cast<string *>((*it).new_value);
 
                 // old_value->_assign (*new_a_value);
                 *old_value = *new_a_value;

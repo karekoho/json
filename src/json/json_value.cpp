@@ -138,7 +138,7 @@ Value::operator =(bool b)
 Value &
 Value::operator =(const wchar_t *s)
 {
-  return _assign (*(new String (s)));
+  return _assign (*(new string (s)));
 }
 
 Value &
