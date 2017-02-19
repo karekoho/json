@@ -34,14 +34,14 @@ public:
   test_construct_assign_destruct ()
   {
     Boolean b;
-    Leaf *l = & b;
+    leaf *l = & b;
 
-    Leaf::Iterator *it[] = {
-      new Leaf::Iterator,
-      new Leaf::Iterator (l),
+    leaf::Iterator *it[] = {
+      new leaf::Iterator,
+      new leaf::Iterator (l),
     };
 
-    Leaf::Iterator copy = Leaf::Iterator (*it[1]);
+    leaf::Iterator copy = leaf::Iterator (*it[1]);
 
     CPPUNIT_ASSERT_MESSAGE ("l.type ()", & copy != it[1]);
 
@@ -53,17 +53,17 @@ public:
   test_dereference ()
   {
     Boolean b;
-    Leaf *l = & b;
+    leaf *l = & b;
 
-    Leaf::Iterator it[] = {
-      Leaf::Iterator (),
-      Leaf::Iterator (l)
+    leaf::Iterator it[] = {
+      leaf::Iterator (),
+      leaf::Iterator (l)
     };
 
-    Leaf::Iterator copy = Leaf::Iterator (it[1]);
+    leaf::Iterator copy = leaf::Iterator (it[1]);
 
     struct assert {
-      Leaf::Iterator *itp;
+      leaf::Iterator *itp;
       Value::object_type type;
       int assert_status;
     };
@@ -87,10 +87,10 @@ public:
   test_pre_increment ()
   {
     Boolean b;
-    Leaf *l = & b;
+    leaf *l = & b;
 
-    Leaf::Iterator begin (l);
-    Leaf::Iterator end (l + 1);
+    leaf::Iterator begin (l);
+    leaf::Iterator end (l + 1);
 
     size_t count = 0;
 
@@ -104,10 +104,10 @@ public:
   test_post_increment ()
   {
     Boolean b;
-    Leaf *l = & b;
+    leaf *l = & b;
 
-    Leaf::Iterator begin (l);
-    Leaf::Iterator current = begin;
+    leaf::Iterator begin (l);
+    leaf::Iterator current = begin;
 
     CPPUNIT_ASSERT_MESSAGE ("current++ == begin", current++ == begin);
     CPPUNIT_ASSERT_MESSAGE ("current != begin", current != begin);
@@ -117,10 +117,10 @@ public:
   test_begin_end ()
   {
     Boolean b;
-    Leaf *l = & b;
+    leaf *l = & b;
 
-    Leaf::Iterator begin (l);
-    Leaf::Iterator end (l + 1);
+    leaf::Iterator begin (l);
+    leaf::Iterator end (l + 1);
 
     CPPUNIT_ASSERT_MESSAGE ("Object::begin ()", begin == b.begin ());
     CPPUNIT_ASSERT_MESSAGE ("Object::end ()", end == b.end ());

@@ -2,50 +2,52 @@
 #define LEAF_H
 
 #include "json_value.h"
-namespace Format {
-class Leaf : public Value
+
+namespace Format
+{
+class leaf : public Value
 {
 public:
 
   /**
    * @brief Leaf
    */
-  Leaf () : Value ()
+  leaf () : Value ()
   {}
 
   /**
    * @brief Leaf
    * @param json
    */
-  Leaf (const wchar_t *json) : Value (json)
+  leaf (const wchar_t *json) : Value (json)
   { _startp = json; }
 
   /**
    * @brief Leaf
    * @param parent
    */
-  Leaf (json *parent) : Value (parent)
+  leaf (json *parent) : Value (parent)
   {}
 
   /**
    * @brief Leaf
    * @param other
    */
-  Leaf (const Leaf &other) = default;
+  leaf (const leaf &other) = default;
 
   /**
    * @brief Leaf
    * @param ov
    * @param nv
    */
-  Leaf (const Value *ov, const Leaf &nv)
+  leaf (const Value *ov, const leaf &nv)
     : Value (ov, nv)
   {}
 
   /**
    * @brief ~Leaf
    */
-  virtual ~Leaf () = default;
+  virtual ~leaf () = default;
 
   /**
    * @brief _clone
@@ -147,7 +149,7 @@ public:
      * @brief Iterator
      * @param value
      */
-    Iterator (Leaf *value = 0)
+    Iterator (leaf *value = 0)
       : _value (value)
     {}
 
@@ -221,7 +223,7 @@ public:
     /**
      * @brief _value
      */
-    Leaf *_value;
+    leaf *_value;
 
   }; // Iterator
 

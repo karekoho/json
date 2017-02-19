@@ -29,7 +29,7 @@ public:
 
     struct assert
     {
-      Leaf *value;
+      leaf *value;
       size_t output_len[2];
       const wchar_t *output[2];
       int assert_status;

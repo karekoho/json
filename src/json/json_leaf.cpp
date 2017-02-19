@@ -5,19 +5,19 @@
 using namespace Format;
 
 Value &
-Leaf::_at (const wchar_t *)
+leaf::_at (const wchar_t *)
 {
   return Shared_Undefined::instance ();
 }
 
 Value &
-Leaf::_at (size_t)
+leaf::_at (size_t)
 {
   return Shared_Undefined::instance ();
 }
 
 JSON_Iterator *
-Leaf::iterator () const
+leaf::iterator () const
 {
   return new Leaf_Iterator (this);
 }

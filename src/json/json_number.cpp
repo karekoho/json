@@ -3,7 +3,7 @@
 using namespace Format;
 
 Number::Number ()
-  : Leaf (),
+  : leaf (),
     _double_value (0),
     _double_valuep (&_double_value),
     _digitp {{ 0, 0 }, { 0, 0 }}
@@ -11,7 +11,7 @@ Number::Number ()
 }
 
 Number::Number (const double value)
-  : Leaf (),
+  : leaf (),
     _double_value (value),
     _double_valuep (&_double_value),
     _digitp {{ 0, 0 }, { 0, 0 }}
@@ -19,7 +19,7 @@ Number::Number (const double value)
 }
 
 Number::Number (const wchar_t *json)
-  : Leaf (json),
+  : leaf (json),
     _double_value (0),
     _double_valuep (0),
     _digitp {{ 0, 0 }, { 0, 0 }}
@@ -31,7 +31,7 @@ Number::Number (const wchar_t *json)
 }
 
 Number::Number (json *parent)
-  : Leaf (parent),
+  : leaf (parent),
     _double_value (0),
     _double_valuep (0),
     _digitp {{ 0, 0 }, { 0, 0 }}
@@ -39,7 +39,7 @@ Number::Number (json *parent)
 }
 
 Number::Number (const Number &other)
- : Leaf (other),
+ : leaf (other),
    _double_value (0),
    _double_valuep (0),
    _digitp {{ 0, 0 }, { 0, 0 }}
@@ -48,7 +48,7 @@ Number::Number (const Number &other)
 }
 
 Number::Number (const Value *ov, const Number &nv)
-: Leaf (ov, nv),
+: leaf (ov, nv),
   _double_value (0),
   _double_valuep (0),
   _digitp {{ 0, 0 }, { 0, 0 }}

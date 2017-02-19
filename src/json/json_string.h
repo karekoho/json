@@ -6,163 +6,165 @@
 #ifdef UNIT_TEST
   class json_string_test;
 #endif
-namespace Format {
-/**
- * @brief The string class
- */
-class string : public Leaf
+
+namespace Format
 {
-#ifdef UNIT_TEST
-  friend class json_string_test;
-#endif
-
-  public:
-
   /**
-   * @brief String
+   * @brief The string class
    */
-  string ();
+  class string : public leaf
+  {
+  #ifdef UNIT_TEST
+    friend class json_string_test;
+  #endif
 
-  /**
-   * @brief String
-   * @param json
-   */
-  string (const wchar_t *json);
+    public:
 
-  /**
-   * @brief String
-   * @param parent
-   * @param charc
-   */
-  string (json *parent, size_t charc);
+    /**
+     * @brief String
+     */
+    string ();
 
-  /**
-   * @brief String
-   * @param other
-   */
-  string (const string & other);
+    /**
+     * @brief String
+     * @param json
+     */
+    string (const wchar_t *json);
 
-  /**
-   * @brief String
-   * @param ov
-   * @param nv
-   */
-  string (const Value *ov, const string & nv);
+    /**
+     * @brief String
+     * @param parent
+     * @param charc
+     */
+    string (json *parent, size_t charc);
 
-  /**
-   * @brief clone
-   * @param other
-   * @return
-   */
-  virtual Value *
-  clone () const
-  { return new string (*this); }
+    /**
+     * @brief String
+     * @param other
+     */
+    string (const string & other);
 
-  /**
-   * @brief clone
-   * @param ov
-   * @return
-   */
-  virtual Value *
-  clone (const Value *ov) const override
-  { return new string (ov, *this);}
+    /**
+     * @brief String
+     * @param ov
+     * @param nv
+     */
+    string (const Value *ov, const string & nv);
 
-  /**
-   * @brief parse
-   * @param json
-   * @return
-   */
-  virtual const wchar_t *
-  parse (const wchar_t *json);
+    /**
+     * @brief clone
+     * @param other
+     * @return
+     */
+    virtual Value *
+    clone () const
+    { return new string (*this); }
 
-  /**
-   * @brief type
-   * @return
-   */
-  virtual inline object_type
-  type () const
-  { return Value::object_type::string_t; }
+    /**
+     * @brief clone
+     * @param ov
+     * @return
+     */
+    virtual Value *
+    clone (const Value *ov) const override
+    { return new string (ov, *this);}
 
-  /**
-   * @brief operator =
-   * @param s
-   * @return
-   */
-  inline Value &
-  operator =(const string & s)
-  { return _assign (s); }
+    /**
+     * @brief parse
+     * @param json
+     * @return
+     */
+    virtual const wchar_t *
+    parse (const wchar_t *json);
 
-  /**
-   * @brief operator =
-   * @param v
-   * @return
-   */
-  inline Value &
-  operator =(const Value & v)
-  { return Value::_assign (v); }
+    /**
+     * @brief type
+     * @return
+     */
+    virtual inline object_type
+    type () const
+    { return Value::object_type::string_t; }
 
-  /**
-   * @brief assign
-   * @param nv
-   * @return
-   */
-  Value &
-  _assign (const string & nv);
+    /**
+     * @brief operator =
+     * @param s
+     * @return
+     */
+    inline Value &
+    operator =(const string & s)
+    { return _assign (s); }
 
-  /**
-   * @brief value
-   * @return
-   */
-  const wchar_t *
-  value() const;
+    /**
+     * @brief operator =
+     * @param v
+     * @return
+     */
+    inline Value &
+    operator =(const Value & v)
+    { return Value::_assign (v); }
 
-  /**
-   * @brief strLength
-   * @return
-   */
-  virtual size_t
-  strLength () const noexcept override
-  { return _charc; }
+    /**
+     * @brief assign
+     * @param nv
+     * @return
+     */
+    Value &
+    _assign (const string & nv);
 
-  /**
-   * @brief strValue
-   * @return
-   */
-  virtual const wchar_t *
-  strValue (wchar_t * = 0) const;
+    /**
+     * @brief value
+     * @return
+     */
+    const wchar_t *
+    value() const;
 
-protected:
+    /**
+     * @brief strLength
+     * @return
+     */
+    virtual size_t
+    strLength () const noexcept override
+    { return _charc; }
 
-  /**
-   * @brief _charc
-   */
-  size_t _charc;
+    /**
+     * @brief strValue
+     * @return
+     */
+    virtual const wchar_t *
+    strValue (wchar_t * = 0) const;
 
-  /**
-   * @brief _value
-   */
-  mutable std::wstring _string_value[2];
+  protected:
 
-  /**
-   * @brief _copy
-   * @param nv
-   * void _copy (const String &nv);
-   */
+    /**
+     * @brief _charc
+     */
+    size_t _charc;
 
-  /**
-   * @brief _clear
-   */
-  virtual void
-  _clear ()
-  {}
+    /**
+     * @brief _value
+     */
+    mutable std::wstring _string_value[2];
 
-  /**
-   * @brief _clone
-   * @return
-   */
-  virtual Value *
-  clone (const Value &nv) override;
-};
+    /**
+     * @brief _copy
+     * @param nv
+     * void _copy (const String &nv);
+     */
+
+    /**
+     * @brief _clear
+     */
+    virtual void
+    _clear ()
+    {}
+
+    /**
+     * @brief _clone
+     * @return
+     */
+    virtual Value *
+    clone (const Value &nv) override;
+  };
 }
 #endif // STRING
 

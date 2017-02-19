@@ -11,7 +11,7 @@ namespace Format {
 /**
  * @brief The undefined class
  */
-class undefined : public Leaf
+class undefined : public leaf
 {
 #ifdef UNIT_TEST
   friend class json_undefined_test;
@@ -20,7 +20,7 @@ class undefined : public Leaf
   public:
 
   undefined ()
-    : Leaf ()
+    : leaf ()
   {}
 
   /**
@@ -28,7 +28,7 @@ class undefined : public Leaf
    * @param parent
    */
   undefined (json *parent)
-    : Leaf (parent)
+    : leaf (parent)
   {}
 
   /**
@@ -43,7 +43,7 @@ class undefined : public Leaf
    * @param nv
    */
   undefined (const Value *ov, const undefined &nv)
-    : Leaf (ov, nv)
+    : leaf (ov, nv)
   {}
 
   /**

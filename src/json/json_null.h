@@ -11,7 +11,7 @@ namespace Format {
 /**
  * @brief The Null class
  */
-class Null : public Leaf
+class Null : public leaf
 {
 #ifdef UNIT_TEST
  friend class json_null_test;
@@ -23,7 +23,7 @@ class Null : public Leaf
    * @brief Null
    */
   Null ()
-    : Leaf ()
+    : leaf ()
   {}
 
   /**
@@ -33,7 +33,7 @@ class Null : public Leaf
    * @param charc
    */
   Null (json *parent)
-    : Leaf (parent)
+    : leaf (parent)
   {}
 
   /**
@@ -48,7 +48,7 @@ class Null : public Leaf
    * @param nv
    */
   Null (const Value *ov, const Null &nv)
-    : Leaf (ov, nv)
+    : leaf (ov, nv)
   {}
 
   /**

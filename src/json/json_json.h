@@ -35,7 +35,7 @@ class json : public Value
   friend class json_leaf_test;
 #endif
 
-  friend const wchar_t * Leaf::stringify ();
+  friend const wchar_t * leaf::stringify ();
   friend class Object;  // For stringify { _parent->_str_value }
   friend class Array;   // For stringify { _parent->_str_value }
 

@@ -2,10 +2,10 @@
 #include "json_json.h"
 using namespace Format;
 
-string::string() : Leaf (), _charc (0) {}
+string::string() : leaf (), _charc (0) {}
 
 string::string (const wchar_t *json)
-  : Leaf (json),
+  : leaf (json),
     _charc (0)
 {
   if (json == 0)
@@ -15,20 +15,20 @@ string::string (const wchar_t *json)
 }
 
 string::string (json *parent, size_t charc)
-  : Leaf (parent),
+  : leaf (parent),
     _charc (charc)
 {
 }
 
 string::string (const string &other)
-  : Leaf (other),
+  : leaf (other),
     _charc (other._charc)
 {
   clone (other);
 }
 
 string::string (const Value *ov, const string &nv)
-  : Leaf (ov, nv),
+  : leaf (ov, nv),
     _charc (nv._charc)
 {
   clone (nv);

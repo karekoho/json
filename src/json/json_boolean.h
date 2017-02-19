@@ -13,7 +13,7 @@ namespace Format
   /**
     * @brief The boolean class
     */
-    class Boolean : public Leaf
+    class Boolean : public leaf
     {
     #ifdef UNIT_TEST
       friend class json_boolean_test;
@@ -25,7 +25,7 @@ namespace Format
       * @brief Boolean
       */
       Boolean ()
-        : Leaf (), _boolean_value (false)
+        : leaf (), _boolean_value (false)
       {}
 
      /**
@@ -33,7 +33,7 @@ namespace Format
       * @param value
       */
       Boolean (const bool value)
-        : Leaf (), _boolean_value (value)
+        : leaf (), _boolean_value (value)
       {}
 
      /**
@@ -42,7 +42,7 @@ namespace Format
       * @param value
       */
       Boolean (json *parent, const bool value)
-        : Leaf (parent), _boolean_value (value)
+        : leaf (parent), _boolean_value (value)
       {}
 
      /**
@@ -57,7 +57,7 @@ namespace Format
       * @param nv
       */
       Boolean (const Value *ov, const Boolean &nv)
-        : Leaf (ov, nv), _boolean_value (nv._boolean_value)
+        : leaf (ov, nv), _boolean_value (nv._boolean_value)
       {}
 
      /**

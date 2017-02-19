@@ -19,7 +19,7 @@ namespace Format {
 /**
  * @brief The number class
  */
-class Number : public Leaf
+class Number : public leaf
 {
 #ifdef UNIT_TEST
   friend class json_number_test;
