@@ -5,7 +5,7 @@
 #include "json_array.h"
 
 #include <vector>
-
+namespace Format {
 /**
  * @brief The Array_Iterator class
  */
@@ -43,5 +43,5 @@ protected:
    */
   std::vector<Value *>::const_iterator _end;
 };
-
+}
 #endif // ARRAY_ITERATOR_H

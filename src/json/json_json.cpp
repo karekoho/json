@@ -7,6 +7,7 @@
 #include "json_undefined.h"
 #include "json_boolean.h"
 #include "json_leaf_iterator.h"
+using namespace Format;
 
 JSON::JSON ()
   : Value (),

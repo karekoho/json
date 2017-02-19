@@ -5,7 +5,7 @@
 #include "json_object.h"
 
 #include <unordered_map>
-
+namespace Format {
 /**
  * @brief The Object_Iterator class
  */
@@ -43,5 +43,5 @@ protected:
    */
   std::unordered_map<std::wstring, Value *>::const_iterator _end;
 };
-
+}
 #endif // OBJECT_ITERATOR_H

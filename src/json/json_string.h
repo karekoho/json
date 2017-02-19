@@ -6,7 +6,7 @@
 #ifdef UNIT_TEST
   class json_string_test;
 #endif
-
+namespace Format {
 /**
  * @brief The string class
  */
@@ -172,6 +172,6 @@ protected:
   virtual Value *
   clone (const Value &nv) override;
 };
-
+}
 #endif // STRING
 

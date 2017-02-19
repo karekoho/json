@@ -15,7 +15,7 @@
 #ifdef UNIT_TEST
   class json_number_test;
 #endif
-
+namespace Format {
 /**
  * @brief The number class
  */
@@ -229,5 +229,5 @@ protected:
   virtual Value *
   clone (const Value &other);
 };
-
+}
 #endif // NUMBER_H

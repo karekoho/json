@@ -3,7 +3,12 @@
 
 #include "json_value_test_interface.h"
 
-// Test number 12
+namespace Format {
+
+/**
+ * 12.
+ * @brief The json_leaf_test class
+ */
 class json_leaf_test : public json_value_test_interface
 {
 
@@ -83,7 +88,15 @@ public:
   virtual void test_operator_assign() override {}
   virtual void test__clear() override {}
   virtual void test_operator_at() override {}
+  virtual void test_strLength () override {}
+  virtual void test_strValue () override {}
+  virtual void test_erase () override {}
 
+  /**
+   * 12.
+   * @brief suite
+   * @return
+   */
   static CppUnit::Test *
   suite ()
   {
@@ -93,19 +106,7 @@ public:
 
     return s;
   }
-
-  // json_value_test_interface interface
-public:
-  virtual void test_strLength() override {}
-  virtual void test_strValue() override {}
-
-  // json_value_test_interface interface
-public:
-  virtual void test_erase() override
-  {
-  }
 };
-
-
+}
 #endif // JSON_LEAF_TEST
 

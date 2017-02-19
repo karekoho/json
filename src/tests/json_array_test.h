@@ -2,7 +2,7 @@
 #define JSON_ARRAY_TEST
 
 #include "json_value_test_interface.h"
-
+namespace Format {
 /// Test number 3
 class json_array_test : public json_value_test_interface
 {
@@ -168,7 +168,7 @@ public:
           old_value->_parent = parents[pidx];
 
           old_value->_element_list.clear ();
-          arr_parent._element_list.push_back (new Undefined);
+          arr_parent._element_list.push_back (new Format::Undefined);
           old_value->setKey ((*it).key, wcslen ((*it).key) /* (*it).keylen */);
 
           (*it).index  = arr_parent._element_list.size () - 1;
@@ -490,6 +490,6 @@ public:
 
 
 };
-
+}
 #endif // JSON_ARRAY_TEST
 

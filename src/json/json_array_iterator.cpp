@@ -1,4 +1,5 @@
 #include "json_array_iterator.h"
+using namespace Format;
 
 Array_Iterator::Array_Iterator (const Array::element_list &list)
   : _begin (list.begin ()),

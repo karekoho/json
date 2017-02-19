@@ -1,15 +1,16 @@
 #ifndef JSON_BOOLEAN_TEST
 #define JSON_BOOLEAN_TEST
 
-#include "json_value_test_interface.h"
+#include "json_leaf_test.h"
+
+namespace Format {
 
 /**
  * 6.
  * @brief The json_boolean_test class
  */
-class json_boolean_test : public json_value_test_interface
+class json_boolean_test : public json_leaf_test
 {
-  // json_value_test_interface interface
 public:
 
   virtual void
@@ -38,8 +39,6 @@ public:
     CPPUNIT_ASSERT_MESSAGE ("boolean", & src != & copy);
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.value ()", true, copy.value ());
   }
-
-
 
   virtual void
   test_assign_all_values ()
@@ -92,7 +91,7 @@ public:
 
           old_value->_parent = parents[pidx];
 
-          arr_parent._element_list.push_back (new Undefined);
+          arr_parent._element_list.push_back (new Format::Undefined);
 
           old_value->_boolean_value = false;
           old_value->setKey ((*it).key, wcslen ((*it).key));
@@ -154,6 +153,19 @@ public:
       delete (*it).new_value;
   }
 
+  virtual void test_parse_1 () override {}
+  virtual void test_size_1 () override {}
+  virtual void test_at () override {}
+  virtual void test_stringify () override {}
+  virtual void test_strLength () override {}
+  virtual void test_strValue () override {}
+  virtual void test__clear () override {}
+  virtual void test_operator_assign () {}
+  virtual void test_operator_at () override {}
+  virtual void test_value_1 ()  override {}
+  virtual void test_debug_1 ()  override {}
+  virtual void test_erase () override {}
+
   /**
    * 6.
    * @brief suite
@@ -164,25 +176,12 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json boolean test");
 
-    s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_ctor_dtor", &json_boolean_test::test_ctor_dtor));
-    s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_assign_all_values", &json_boolean_test::test_assign_all_values));
+    /* 0. */  s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_ctor_dtor", &json_boolean_test::test_ctor_dtor));
+    /* 1. */  s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_assign_all_values", &json_boolean_test::test_assign_all_values));
 
     return s;
   }
-
-  virtual void test_parse_1 () {}
-  virtual void test_size_1 () {}
-  virtual void test_at () {}
-  virtual void test_stringify () override {}
-  virtual void test_strLength () override {}
-  virtual void test_strValue () override {}
-  virtual void test__clear () {}
-  virtual void test_operator_assign () {}
-  virtual void test_operator_at () {}
-  virtual void test_value_1 () {}
-  virtual void test_debug_1 () {}
-  virtual void test_erase () override {}
 };
-
+}
 #endif // JSON_BOOLEAN_TEST
 

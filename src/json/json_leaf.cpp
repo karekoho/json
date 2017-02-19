@@ -2,6 +2,7 @@
 #include "json_json.h"
 #include "json_leaf_iterator.h"
 #include "json_shared_undefined.h"
+using namespace Format;
 
 Value &
 Leaf::at (const wchar_t *) const

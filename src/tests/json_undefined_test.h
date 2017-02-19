@@ -2,7 +2,7 @@
 #define JSON_UNDEFINED_TEST
 
 #include "json_value_test_interface.h"
-
+namespace Format {
 /**
  * 8.
  * @brief The json_undefined_test class
@@ -18,9 +18,9 @@ public:
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
-        Undefined *u[] = {
-          new Undefined,
-          new Undefined (p[pidx]),
+        Format::Undefined *u[] = {
+          new Format::Undefined,
+          new Format::Undefined (p[pidx]),
         };
 
         delete u[0];
@@ -29,8 +29,8 @@ public:
 
     delete p[1];
 
-    Undefined src;
-    Undefined copy = src;
+    Format::Undefined src;
+    Format::Undefined copy = src;
 
     CPPUNIT_ASSERT_MESSAGE ("undefined", & copy != & src);
   }
@@ -81,10 +81,10 @@ public:
 
           /// old_value: value from Value[key], any value
 
-          Undefined *old_value = new Undefined;
+          Format::Undefined *old_value = new Format::Undefined;
           old_value->_parent = parents[pidx];
 
-          arr_parent._element_list.push_back (new Undefined);
+          arr_parent._element_list.push_back (new Format::Undefined);
           old_value->setKey ((*it).key, wcslen ((*it).key));
 
           (*it).index  = arr_parent._element_list.size () - 1;
@@ -163,6 +163,7 @@ public:
     return s;
   }
 };
+  }
 
 #endif // JSON_UNDEFINED_TEST
 

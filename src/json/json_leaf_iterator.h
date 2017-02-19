@@ -2,7 +2,7 @@
 #define LEAF_ITERATOR_H
 
 #include "json_iterator.h"
-
+namespace Format {
 /**
  * @brief The Leaf_Iterator class
  */
@@ -40,5 +40,5 @@ protected:
    */
   bool _hasNext;
 };
-
+}
 #endif // LEAF_ITERATOR_H

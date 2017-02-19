@@ -2,6 +2,7 @@
 #include "json_array_iterator.h"
 
 #include <algorithm>
+using namespace Format;
 
 Array::Array () : JSON () {}
 

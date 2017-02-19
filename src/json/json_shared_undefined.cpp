@@ -1,5 +1,7 @@
 #include "json_shared_undefined.h"
 
+using namespace Format;
+
 Shared_Undefined * Shared_Undefined::__instance = 0;
 
 // Shared_Undefined::Shared_Undefined (): Undefined (){}

@@ -2,7 +2,7 @@
 #define SHARED_UNDEFINED_H
 
 #include "json_undefined.h"
-
+namespace Format {
 /**
  * @brief The Shared_Undefined class
  */
@@ -84,5 +84,5 @@ private:
     : Shared_Undefined (parent)
   {}
 };
-
+}
 #endif // SHARED_UNDEFINED_H

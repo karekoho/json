@@ -2,7 +2,7 @@
 #define ITERATOR
 
 #include "json_value.h"
-
+namespace Format {
 /**
  * @brief The Iterator class
  */
@@ -19,7 +19,7 @@ public:
    * @brief next
    * @return
    */
-  virtual const Value & next () = 0;
+  virtual const Format::Value & next () = 0;
 
   /**
    * @brief hasNext
@@ -27,6 +27,6 @@ public:
    */
   virtual bool hasNext () const noexcept = 0;
 };
-
+}
 #endif // ITERATOR
 

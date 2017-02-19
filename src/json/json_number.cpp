@@ -1,5 +1,6 @@
 #include "json_number.h"
 #include "json_json.h"
+using namespace Format;
 
 Number::Number ()
   : Leaf (),

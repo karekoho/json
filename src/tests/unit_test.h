@@ -119,17 +119,17 @@ public:
     _errorc[0] =_errorc[1] = _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0;
   }
 
-  std::unordered_map<std::wstring, Value *> &
-  member_list_clear (std::unordered_map<std::wstring, Value *> & m)
+  std::unordered_map<std::wstring, Format::Value *> &
+  member_list_clear (std::unordered_map<std::wstring, Format::Value *> & m)
   {
     for (auto it = m.begin (); it != m.end (); it = m.erase (it))
-      delete static_cast <std::pair<std::wstring, Value *>>(*it).second;
+      delete static_cast <std::pair<std::wstring, Format::Value *>>(*it).second;
 
     return m;
   }
 
-  std::vector<Value *> &
-  element_list_clear (std::vector<Value *> & v)
+  std::vector<Format::Value *> &
+  element_list_clear (std::vector<Format::Value *> & v)
   {
     for (auto it = v.begin (); it != v.end (); it = v.erase (it))
       delete *it;

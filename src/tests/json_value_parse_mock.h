@@ -2,7 +2,8 @@
 #define JSON_VALUE_PARSE_MOCK_H
 
 #include "unit_test.h"
-
+//using namespace Format;
+namespace Format  {
 class json_value_mock : public Value
 {
 public:
@@ -18,11 +19,11 @@ public:
 
     virtual Value &
     at (const wchar_t *) const
-    { return *(new Undefined); }
+    { return *(new Format::Undefined); }
 
     virtual Value &
     at (size_t) const
-    { return *(new Undefined); }
+    { return *(new Format::Undefined); }
 
     virtual Value::object_type
     type () const
@@ -78,6 +79,6 @@ protected:
     clone (const Value &) override
     { return this; }
 };
-
+}
 
 #endif // JSON_VALUE_PARSE_MOCK_H

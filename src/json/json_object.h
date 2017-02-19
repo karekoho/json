@@ -3,7 +3,7 @@
 
 #include "json_json.h"
 #include "json_undefined.h"
-
+namespace Format {
 /**
  * @brief The object class
  */
@@ -363,6 +363,6 @@ protected:
   virtual Value *
   clone (const Value &other);
 };
-
+}
 #endif // OBJECT_H
 

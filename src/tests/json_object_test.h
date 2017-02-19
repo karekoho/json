@@ -2,7 +2,7 @@
 #define JSON_OBJECT_TEST_H
 
 #include <json_value_test_interface.h>
-
+namespace Format {
 /**
  * Test number 2
  * @brief The json_object_test class
@@ -290,7 +290,7 @@ public:
           old_value->_parent = parents[pidx];
 
           old_value->_member_list.clear ();
-          arr_parent._element_list.push_back (new Undefined);
+          arr_parent._element_list.push_back (new Format::Undefined);
 
           old_value->setKey ((*it).key, wcslen ((*it).key));
 
@@ -595,5 +595,5 @@ public:
      return s;
   }
 };
-
+}
 #endif // JSON_OBJECT_TEST_H

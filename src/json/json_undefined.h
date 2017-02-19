@@ -7,6 +7,7 @@
   class json_undefined_test;
 #endif
 
+namespace Format {
 /**
  * @brief The undefined class
  */
@@ -140,5 +141,5 @@ protected:
   clone (const Value &) override
   { return new Undefined (*this); }
 };
-
+}
 #endif // UNDEFINED_H

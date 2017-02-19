@@ -13,7 +13,7 @@
   class json_value_test;
   class json_leaf_test;
 #endif
-
+namespace Format {
 /**
  * @brief The json_value class
  */
@@ -355,7 +355,7 @@ protected:
    * @return
    */
   Value &
-  _assign (const Undefined &)
+  _assign (const Format::Undefined &)
   {
     _erase ();
     return *this;
@@ -543,5 +543,5 @@ protected:
 
   } __ltr_value[3];
 };
-
+}
 #endif // JSON_VALUE_H

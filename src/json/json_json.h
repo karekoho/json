@@ -20,7 +20,7 @@
   class json_test;
   class json_leaf_test;
 #endif
-
+namespace Format {
   typedef Value * (*Reviver)(const wchar_t *, Value *);
 
 /**
@@ -112,7 +112,7 @@ public:
    */
   virtual Value &
   at (const wchar_t *key) const
-  { return __hasRoot () ? __root->at (key) : Shared_Undefined::instance (); }
+  { return __hasRoot () ? __root->at (key) : Format::Shared_Undefined::instance (); }
 
   /**
    * @brief at
@@ -121,7 +121,7 @@ public:
    */
   virtual Value &
   at (size_t index) const
-  { return __hasRoot () ? __root->at (index) : Shared_Undefined::instance (); }
+  { return __hasRoot () ? __root->at (index) : Format::Shared_Undefined::instance (); }
 
   /**
    * @brief type
@@ -242,7 +242,7 @@ protected:
    */
   virtual Value &
   _at (const wchar_t *key) override
-  { return __hasRoot() ? (*__root)[key] : Shared_Undefined::instance (); }
+  { return __hasRoot() ? (*__root)[key] : Format::Shared_Undefined::instance (); }
 
   /**
    * @brief _at
@@ -251,7 +251,7 @@ protected:
    */
   virtual Value &
   _at (size_t index) override
-  { return __hasRoot() ? (*__root)[index] : Shared_Undefined::instance (); }
+  { return __hasRoot() ? (*__root)[index] : Format::Shared_Undefined::instance (); }
 
   /**
    * @brief _make_value
@@ -317,6 +317,6 @@ private:
   __hasRoot () const noexcept
   { return ! __root == 0; }
 };
-// } namespace
+} //namespace
 
 #endif // JSON_JSON_H

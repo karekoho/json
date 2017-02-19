@@ -2,7 +2,7 @@
 #define JSON_NULL_TEST
 
 #include "json_value_test_interface.h"
-
+namespace Format {
 /**
  * 7.
  * @brief The json_null_test class
@@ -95,7 +95,7 @@ public:
           Null *old_value = new Null;
           old_value->_parent = parents[pidx];
 
-          arr_parent._element_list.push_back (new Undefined);
+          arr_parent._element_list.push_back (new Format::Undefined);
           old_value->setKey ((*it).key, wcslen ((*it).key));
 
           (*it).index  = arr_parent._element_list.size () - 1;
@@ -174,6 +174,6 @@ public:
   virtual void test_erase () override {}
 
 };
-
+}
 #endif // JSON_NULL_TEST
 

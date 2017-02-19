@@ -3,7 +3,7 @@
 
 #include <json_value_test_interface.h>
 #include "json_value_parse_mock.h"
-
+namespace Format {
 /**
  * 1.
  * @brief The json_test class
@@ -356,7 +356,7 @@ public:
   {
     switch (v->type ()) {
       case  Value::object_type::null:
-        return new Undefined;
+        return new Format::Undefined;
 
       case Value::object_type::object:
       case Value::object_type::array:
@@ -394,5 +394,5 @@ public:
     return s;
   }
 };
-
+}
 #endif // JSON_TEST_H

@@ -2,7 +2,7 @@
 #define JSON_STRING_TEST_H
 
 #include "json_value_test_interface.h"
-
+namespace Format {
 /// Test number 4
 class json_string_test : public json_value_test_interface
 {
@@ -128,7 +128,7 @@ public:
             String *old_value = new String ();
             old_value->_parent = parents[pidx];
 
-            arr_parent._element_list.push_back (new Undefined);
+            arr_parent._element_list.push_back (new Format::Undefined);
             old_value->setKey ((*it).key, wcslen ((*it).key));
 
             (*it).index  = arr_parent._element_list.size () - 1;
@@ -221,5 +221,5 @@ public:
       return s;
     }
 };
-
+}
 #endif // JSON_STRING_TEST_H

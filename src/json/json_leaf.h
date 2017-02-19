@@ -2,7 +2,7 @@
 #define LEAF_H
 
 #include "json_value.h"
-
+namespace Format {
 class Leaf : public Value
 {
 public:
@@ -270,5 +270,5 @@ protected:
   virtual Value *
   clone (const Value &) = 0;
 };
-
+}
 #endif // LEAF_H

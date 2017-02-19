@@ -1,5 +1,6 @@
 #include "json_string.h"
 #include "json_json.h"
+using namespace Format;
 
 String::String() : Leaf (), _charc (0) {}
 

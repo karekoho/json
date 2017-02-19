@@ -7,7 +7,7 @@
 #ifdef UNIT_TEST
  class json_null_test;
 #endif
-
+namespace Format {
 /**
  * @brief The Null class
  */
@@ -165,4 +165,5 @@ protected:
   { return this; }
 
 };
+}
 #endif // NULL_H
