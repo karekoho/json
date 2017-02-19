@@ -39,7 +39,7 @@ namespace Format {
 
   public:
 
-    typedef std::vector<Value *> element_list;
+    typedef std::vector<value *> element_list;
 
     /**
    * @brief Array
@@ -56,7 +56,7 @@ namespace Format {
    * @brief Array
    * @param l elements
    */
-    array (std::initializer_list<Value *> il);
+    array (std::initializer_list<value *> il);
 
     /**
    * @brief Array
@@ -77,14 +77,14 @@ namespace Format {
    * @param ov
    * @param nv
    */
-    array (const Value *ov, const array &nv);
+    array (const value *ov, const array &nv);
 
     /**
    * @brief clone
    * @param other
    * @return
    */
-    virtual Value *
+    virtual value *
     clone () const
     { return new array (*this); }
 
@@ -93,8 +93,8 @@ namespace Format {
    * @param ov
    * @return
    */
-    virtual Value *
-    clone (const Value *ov) const override
+    virtual value *
+    clone (const value *ov) const override
     { return new array (ov, *this); }
 
     /**
@@ -127,7 +127,7 @@ namespace Format {
    * @param index
    * @return
    */
-    Value &
+    value &
     at (size_t index) const;
 
     /**
@@ -147,7 +147,7 @@ namespace Format {
    */
     virtual object_type
     type () const
-    { return Value::object_type::array_t; }
+    { return value::object_type::array_t; }
 
     /**
    * @brief size
@@ -162,7 +162,7 @@ namespace Format {
    * @param a
    * @return
    */
-    inline Value &
+    inline value &
     operator =(const array & a)
     { return _assign (a); }
 
@@ -171,8 +171,8 @@ namespace Format {
    * @param v
    * @return
    */
-    inline Value &
-    operator =(const Value & v)
+    inline value &
+    operator =(const value & v)
     { return _assign (v); }
 
     /**
@@ -209,18 +209,18 @@ namespace Format {
    * @param v
    * @return
    */
-    virtual Value &
-    erase (const Value &v) noexcept  override;
+    virtual value &
+    erase (const value &v) noexcept  override;
 
     /**
    * @brief The Iterator class
    */
     class Iterator : public std::iterator<
         std::input_iterator_tag,
-        Value *,  // Type
-        Value *,  // Distance
-        Value *,
-        Value &>
+        value *,  // Type
+        value *,  // Distance
+        value *,
+        value &>
     {
     public:
 
@@ -319,7 +319,7 @@ namespace Format {
    * @return
    */
 
-    virtual Value &
+    virtual value &
     _at (const wchar_t *key)
     {
       wchar_t *end = 0;
@@ -332,7 +332,7 @@ namespace Format {
    * @param nv
    * @return
    */
-    Value &
+    value &
     _assign (const array & nv);
 
     /**
@@ -341,9 +341,9 @@ namespace Format {
    * @return
    */
 
-    virtual Value &
-    _assign (const Value & nv)
-    { return Value::_assign (nv); }
+    virtual value &
+    _assign (const value & nv)
+    { return value::_assign (nv); }
 
 
 
@@ -352,15 +352,15 @@ namespace Format {
    * @param ov
    * @param nv
    */
-  virtual Value &
-  _assign (Value *ov, Value *nv) override;
+  virtual value &
+  _assign (value *ov, value *nv) override;
 
   /**
    * @brief _at
    * @param index
    * @return
    */
-  virtual Value &
+  virtual value &
   _at (size_t index) override;
 
     /**
@@ -374,8 +374,8 @@ namespace Format {
    * @param other
    * @return
    */
-    virtual Value *
-    clone (const Value &other) override;
+    virtual value *
+    clone (const value &other) override;
   };
 } // Namespace Format
 

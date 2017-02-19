@@ -49,14 +49,14 @@ namespace Format
      * @param ov
      * @param nv
      */
-    string (const Value *ov, const string & nv);
+    string (const value *ov, const string & nv);
 
     /**
      * @brief clone
      * @param other
      * @return
      */
-    virtual Value *
+    virtual value *
     clone () const
     { return new string (*this); }
 
@@ -65,8 +65,8 @@ namespace Format
      * @param ov
      * @return
      */
-    virtual Value *
-    clone (const Value *ov) const override
+    virtual value *
+    clone (const value *ov) const override
     { return new string (ov, *this);}
 
     /**
@@ -83,14 +83,14 @@ namespace Format
      */
     virtual inline object_type
     type () const
-    { return Value::object_type::string_t; }
+    { return value::object_type::string_t; }
 
     /**
      * @brief operator =
      * @param s
      * @return
      */
-    inline Value &
+    inline value &
     operator =(const string & s)
     { return _assign (s); }
 
@@ -99,16 +99,16 @@ namespace Format
      * @param v
      * @return
      */
-    inline Value &
-    operator =(const Value & v)
-    { return Value::_assign (v); }
+    inline value &
+    operator =(const value & v)
+    { return value::_assign (v); }
 
     /**
      * @brief assign
      * @param nv
      * @return
      */
-    Value &
+    value &
     _assign (const string & nv);
 
     /**
@@ -162,8 +162,8 @@ namespace Format
      * @brief _clone
      * @return
      */
-    virtual Value *
-    clone (const Value &nv) override;
+    virtual value *
+    clone (const value &nv) override;
   };
 }
 #endif // STRING

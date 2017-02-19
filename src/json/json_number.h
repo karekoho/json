@@ -63,14 +63,14 @@ namespace Format
      * @param ov
      * @param nv
      */
-    number (const Value *ov, const number &nv);
+    number (const value *ov, const number &nv);
 
     /**
      * @brief clone
      * @param other
      * @return
      */
-    virtual Value *
+    virtual value *
     clone () const
     { return new number (*this); }
 
@@ -79,8 +79,8 @@ namespace Format
      * @param ov
      * @return
      */
-    virtual Value *
-    clone (const Value *ov) const override
+    virtual value *
+    clone (const value *ov) const override
     { return new number (ov, *this); }
 
     /**
@@ -97,14 +97,14 @@ namespace Format
      */
     virtual object_type
     type () const
-    { return Value::object_type::number_t; }
+    { return value::object_type::number_t; }
 
     /**
      * @brief operator =
      * @param n
      * @return
      */
-    inline Value &
+    inline value &
     operator =(const number & n)
     { return _assign (n);  }
 
@@ -113,9 +113,9 @@ namespace Format
      * @param v
      * @return
      */
-    inline Value &
-    operator =(const Value & v)
-    { return Value::_assign (v);  }
+    inline value &
+    operator =(const value & v)
+    { return value::_assign (v);  }
 
     /**
      * @brief value
@@ -214,7 +214,7 @@ namespace Format
      * @param nv
      * @return
      */
-    Value &
+    value &
     _assign (const number & nv)
     { return _parent  ? _parent->_assign (this, new number (this, nv)) : *(clone (nv)); }
 
@@ -228,8 +228,8 @@ namespace Format
      * @brief _clone
      * @return
      */
-    virtual Value *
-    clone (const Value &other);
+    virtual value *
+    clone (const value &other);
   };
 } // Namespace Format
 #endif // NUMBER_H

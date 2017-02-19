@@ -48,7 +48,7 @@ number::number (const number &other)
   (void) clone (other);
 }
 
-number::number (const Value *ov, const number &nv)
+number::number (const value *ov, const number &nv)
 : leaf (ov, nv),
   _double_value (0),
   _double_valuep (0),
@@ -200,8 +200,8 @@ number::_clear ()
   _digitp[EXP][END]       = 0;
 }
 
-Value *
-number::clone (const Value &other)
+value *
+number::clone (const value &other)
 {
   const number & nv = dynamic_cast<const number &>(other);
 

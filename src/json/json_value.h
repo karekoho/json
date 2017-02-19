@@ -22,7 +22,7 @@ namespace Format
 class json;
 class json_iterator;
 class undefined;
-class Value
+class value
 {
 #ifdef UNIT_TEST
   friend class json_value_test;
@@ -49,13 +49,13 @@ class Value
   /**
    * @brief Value
    */
-  Value ();
+  value ();
 
   /**
    * @brief json_value
    * @param json
    */
-  Value (const wchar_t *);
+  value (const wchar_t *);
 
   /**
    * @brief json_value
@@ -63,27 +63,27 @@ class Value
    * @param parent
    * @paran charc
    */
-  Value (json *parent);
+  value (json *parent);
 
   /**
    * @brief Value
    * @param other
    */
-  Value (const Value &other);
+  value (const value &other);
 
   /**
    * @brief Value
    * @param ov
    * @param nv
    */
-  Value (const Value *ov, const Value &nv);
+  value (const value *ov, const value &nv);
 
   /**
    * @brief clone Call object copy constructor from Value interface: Value *v->clone ()
    * @param other
    * @return
    */
-  virtual Value *
+  virtual value *
   clone () const = 0;
 
   /**
@@ -92,14 +92,14 @@ class Value
    * @param ov  previous key|index=>value
    * @return
    */
-  virtual Value *
-  clone (const Value *ov) const = 0;
+  virtual value *
+  clone (const value *ov) const = 0;
 
   /**
    * @brief ~Value
    */
   virtual
-  ~Value ();
+  ~value ();
 
   /**
    * @brief parse
@@ -119,7 +119,7 @@ class Value
    * @param key
    * @return
    */
-  inline Value &
+  inline value &
   operator [](const wchar_t *key)
   { return _at (key); }
 
@@ -128,7 +128,7 @@ class Value
    * @param index
    * @return
    */
-  inline Value &
+  inline value &
   operator [](size_t index)
   { return _at (index); }
 
@@ -136,8 +136,8 @@ class Value
    * @brief operator =
    * @param v
    */
-  inline Value &
-  operator =(const Value & v)
+  inline value &
+  operator =(const value & v)
   { return _assign (v);  }
 
   /**
@@ -156,7 +156,7 @@ class Value
    * @param s
    * @return
    */
-  Value &
+  value &
   operator =(const wchar_t *s);
 
   /**
@@ -164,7 +164,7 @@ class Value
    * @param d
    * @return
    */
-  Value &
+  value &
   operator =(double d);
 
   /**
@@ -172,7 +172,7 @@ class Value
    * @param b
    * @return
    */
-  Value &
+  value &
   operator =(bool b);
 
   /**
@@ -288,8 +288,8 @@ class Value
    * @param v
    * @return
    */
-  virtual Value &
-  erase (const Value &v) noexcept = 0;
+  virtual value &
+  erase (const value &v) noexcept = 0;
 
   /**
    * @brief value
@@ -317,8 +317,8 @@ protected:
    * @param nv
    * @return
    */
-  virtual Value &
-  _assign (const Value & nv);
+  virtual value &
+  _assign (const value & nv);
 
   /**
    * Assign Value object to member_list or element_list.
@@ -328,15 +328,15 @@ protected:
    * @param New value
    * @return
    */
-  virtual Value &
-  _assign (Value *, Value *) = 0;
+  virtual value &
+  _assign (value *, value *) = 0;
 
   /**
    * @brief _assign
    * @param u
    * @return
    */
-  Value &
+  value &
   _assign (const Format::undefined &)
   {
     _erase ();
@@ -412,7 +412,7 @@ protected:
   /**
    * @brief _old
    */
-  mutable const Value *_old_value;
+  mutable const value *_old_value;
 
   /**
    * @brief _look_ahead Move read pointer to next non-white space character
@@ -465,7 +465,7 @@ protected:
    * @param try_
    * @return
    */
-  Value::_literal
+  value::_literal
   _is_literal (const int _try = 0) const noexcept;
 
   /**
@@ -473,7 +473,7 @@ protected:
    * @param key
    * @return
    */
-  virtual Value &
+  virtual value &
   _at (const wchar_t *key)  = 0;
 
   /**
@@ -481,7 +481,7 @@ protected:
    * @param index
    * @return
    */
-  virtual Value &
+  virtual value &
   _at (size_t index) = 0;
 
   /**
@@ -496,16 +496,16 @@ protected:
    * @param other
    * @return
    */
-  virtual Value *
-  clone (const Value &other) = 0;
+  virtual value *
+  clone (const value &other) = 0;
 
   /**
    * @brief _clone
    * @param v
    * @return
    */
-  static inline Value *
-  _clone_cb (Value *v)
+  static inline value *
+  _clone_cb (value *v)
   { return v->clone (); }
 
   /**
@@ -521,7 +521,7 @@ protected:
   {
     const wchar_t * const str_value;
     const size_t len;
-    const Value::_literal ltr_value;
+    const value::_literal ltr_value;
 
   } __ltr_value[3];
 };

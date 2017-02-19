@@ -21,14 +21,14 @@
   class json_leaf_test;
 #endif
 namespace Format {
-  typedef Value * (*Reviver)(const wchar_t *, Value *);
+  typedef value * (*Reviver)(const wchar_t *, value *);
 
 /**
  * @brief The json class
  */
 class object;
 class array;
-class json : public Value
+class json : public value
 {
 #ifdef UNIT_TEST
   friend class json_test;
@@ -64,7 +64,7 @@ public:
    * @param other
    * @return
    */
-  virtual Value *
+  virtual value *
   clone () const
   { return new json (*this);  }
 
@@ -79,7 +79,7 @@ public:
    * @param ov
    * @param nv
    */
-  json (const Value *ov, const json &nv);
+  json (const value *ov, const json &nv);
 
   /**
    * @brief ~JSON
@@ -101,7 +101,7 @@ public:
    * @return
    * @see http://stackoverflow.com/questions/1174169/function-passed-as-template-argument
    */
-  static Value *
+  static value *
   parse (const wchar_t *text, Reviver r)
   { return new json (text, r); }
 
@@ -127,9 +127,9 @@ public:
    /* @brief type
    * @return
    */
-  virtual inline Value::object_type
+  virtual inline value::object_type
   type () const
-  { return __hasRoot () ?  __root->type () : Value::object_type::undefined_t; }
+  { return __hasRoot () ?  __root->type () : value::object_type::undefined_t; }
 
   /**
    * @brief size
@@ -144,7 +144,7 @@ public:
    * @param j
    * @return
    */
-  virtual Value
+  virtual value
   & _assign (const json & j);
 
   /**
@@ -152,7 +152,7 @@ public:
    * @param j
    * @return
    */
-  inline Value &
+  inline value &
   operator =(const json & j)
   { return _assign (j); }
 
@@ -161,16 +161,16 @@ public:
    * @param nv
    * @return
    */
-  virtual Value &
-  _assign (const Value & v) override;
+  virtual value &
+  _assign (const value & v) override;
 
   /**
    * @brief operator =
    * @param v
    * @return
    */
-  inline Value &
-  operator =(const Value & v)
+  inline value &
+  operator =(const value & v)
   { return _assign (v); }
 
   /**
@@ -179,8 +179,8 @@ public:
    * @param nv New value
    * @return
    */
-  virtual Value &
-  _assign (Value *, Value *) override
+  virtual value &
+  _assign (value *, value *) override
   { return *this; }
 
   /**
@@ -220,8 +220,8 @@ public:
    * @param v
    * @return
    */
-  virtual Value &
-  erase (const Value &v) noexcept override
+  virtual value &
+  erase (const value &v) noexcept override
   { return __hasRoot() ? __root->erase (v) : *this; }
 
   /**
@@ -229,8 +229,8 @@ public:
    * @param old
    * @return
    */
-  virtual Value *
-  clone (const Value *) const override
+  virtual value *
+  clone (const value *) const override
   { return new json (*this); }
 
 protected:
@@ -240,7 +240,7 @@ protected:
    * @param key
    * @return
    */
-  virtual Value &
+  virtual value &
   _at (const wchar_t *key) override
   { return __hasRoot() ? (*__root)[key] : Format::shared_undefined::instance (); }
 
@@ -249,7 +249,7 @@ protected:
    * @param index
    * @return
    */
-  virtual Value &
+  virtual value &
   _at (size_t index) override
   { return __hasRoot() ? (*__root)[index] : Format::shared_undefined::instance (); }
 
@@ -257,7 +257,7 @@ protected:
    * @brief _make_value
    * @return
    */
-  Value *
+  value *
   _make_value ();
 
   /**
@@ -271,8 +271,8 @@ protected:
    * @brief _clone
    * @return
    */
-  virtual Value *
-  clone (const Value &) override
+  virtual value *
+  clone (const value &) override
   { return this; }
 
   /**
@@ -282,8 +282,8 @@ protected:
    * @param index
    * @return
    */
-  Value *
-  _call_reviver (Value *v, const wchar_t *key, size_t index = 0) const;
+  value *
+  _call_reviver (value *v, const wchar_t *key, size_t index = 0) const;
 
   /**
    * @brief _str_value
@@ -295,7 +295,7 @@ private:
   /**
    * @brief __value
    */
-  Value *__root;
+  value *__root;
 
   /**
    * @brief _reviver

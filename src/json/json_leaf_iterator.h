@@ -16,13 +16,13 @@ namespace Format
      * @brief Leaf_Iterator
      * @param v
      */
-    leaf_iterator (const Value *v);
+    leaf_iterator (const value *v);
 
     /**
      * @brief next
      * @return
      */
-    virtual const Value & next () final override;
+    virtual const value & next () final override;
 
     /**
      * @brief hasNext
@@ -35,7 +35,7 @@ namespace Format
     /**
      * @brief _value
      */
-    const Value * _value;
+    const value * _value;
 
     /**
      * @brief _hasNext

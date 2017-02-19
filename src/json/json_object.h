@@ -25,7 +25,7 @@ namespace Format
 
   public:
 
-    typedef std::unordered_map<std::wstring, Value *> member_list;
+    typedef std::unordered_map<std::wstring, value *> member_list;
 
     /**
      * @brief Object
@@ -42,7 +42,7 @@ namespace Format
      * @brief Object
      * @param il
      */
-    object (std::initializer_list<std::pair<std::wstring, Value *>> il);
+    object (std::initializer_list<std::pair<std::wstring, value *>> il);
 
   /**
      * @brief Object
@@ -63,14 +63,14 @@ namespace Format
      * @param ov
      * @param nv
      */
-    object (const Value *ov, const object &nv);
+    object (const value *ov, const object &nv);
 
     /**
      * @brief clone
      * @param other
      * @return
      */
-    virtual Value *
+    virtual value *
     clone () const
     { return new object (*this); }
 
@@ -79,8 +79,8 @@ namespace Format
      * @param ov
      * @return
      */
-    virtual Value *
-    clone (const Value *ov) const override
+    virtual value *
+    clone (const value *ov) const override
     { return new object (ov, *this); }
 
     /**
@@ -102,7 +102,7 @@ namespace Format
      */
     virtual inline object_type
     type () const
-    { return Value::object_type::object_t; }
+    { return value::object_type::object_t; }
 
     /**
      * @brief size
@@ -117,7 +117,7 @@ namespace Format
      * @param o
      * @return
      */
-    inline Value &
+    inline value &
     operator =(const object & o)
     { return _assign (o);  }
 
@@ -126,8 +126,8 @@ namespace Format
      * @param v
      * @return
      */
-    inline Value &
-    operator =(const Value & v)
+    inline value &
+    operator =(const value & v)
     { return _assign (v); }
 
     /**
@@ -164,18 +164,18 @@ namespace Format
      * @param v
      * @return
      */
-    virtual Value &
-    erase (const Value &v) noexcept override;
+    virtual value &
+    erase (const value &v) noexcept override;
 
     /**
      * @brief The Iterator class
      */
     class Iterator : public std::iterator<
           std::input_iterator_tag,
-          std::pair<std::string, Value *>,  // Type
-          std::pair<std::string, Value *>,  // Distance
-          Value *,
-          Value &>
+          std::pair<std::string, value *>,  // Type
+          std::pair<std::string, value *>,  // Distance
+          value *,
+          value &>
     {
     public:
 
@@ -298,7 +298,7 @@ namespace Format
      * @param nv
      * @return
      */
-    Value &
+    value &
     _assign (const object & nv);
 
     /**
@@ -306,14 +306,14 @@ namespace Format
      * @param key
      * @return
      */
-    virtual Value &
+    virtual value &
     _at (const wchar_t *key);
 
     /**
      * @brief _at
      * @return
      */
-    virtual Value & _at (size_t)
+    virtual value & _at (size_t)
     { return shared_undefined::instance (); }
 
     /**
@@ -321,17 +321,17 @@ namespace Format
      * @param nv
      * @return
      */
-    virtual Value &
-    _assign (const Value & nv)
-    { return Value::_assign (nv); }
+    virtual value &
+    _assign (const value & nv)
+    { return value::_assign (nv); }
 
     /**
      * @brief assign
      * @param ov
      * @param nv
      */
-    virtual Value &
-    _assign (Value *ov, Value *nv);
+    virtual value &
+    _assign (value *ov, value *nv);
 
     /**
      * @brief _clear
@@ -343,8 +343,8 @@ namespace Format
      * @brief _clone
      * @return
      */
-    virtual Value *
-    clone (const Value &other);
+    virtual value *
+    clone (const value &other);
   };
 } // Namespace format
 

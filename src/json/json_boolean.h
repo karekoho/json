@@ -56,7 +56,7 @@ namespace Format
       * @param ov
       * @param nv
       */
-      Boolean (const Value *ov, const Boolean &nv)
+      Boolean (const value *ov, const Boolean &nv)
         : leaf (ov, nv), _boolean_value (nv._boolean_value)
       {}
 
@@ -70,7 +70,7 @@ namespace Format
       * @param other
       * @return
       */
-      virtual Value *
+      virtual value *
       clone () const
       { return new Boolean (*this); }
 
@@ -79,8 +79,8 @@ namespace Format
       * @param ov
       * @return
       */
-      virtual Value *
-      clone (const Value *ov) const override
+      virtual value *
+      clone (const value *ov) const override
       { return new Boolean (ov, *this); }
 
       /**
@@ -116,14 +116,14 @@ namespace Format
    */
       virtual inline object_type
       type () const
-      { return Value::object_type::boolean_t; }
+      { return value::object_type::boolean_t; }
 
       /**
    * @brief operator =
    * @param b
    * @return
    */
-      inline Value &
+      inline value &
       operator =(Boolean & b)
       { return _assign (b); }
 
@@ -132,16 +132,16 @@ namespace Format
    * @param v
    * @return
    */
-      inline Value &
-      operator =(const Value & v)
-      { return Value::_assign (v); }
+      inline value &
+      operator =(const value & v)
+      { return value::_assign (v); }
 
       /**
    * @brief assign
    * @param nv
    * @return
    */
-      Value &
+      value &
       _assign (const Boolean & nv)
       { return _parent ? _parent->_assign (this, new Boolean (nv)) : *(clone (nv)); }
 
@@ -177,8 +177,8 @@ namespace Format
    * @brief _clone
    * @return
    */
-      virtual Value *
-      clone (const Value &other) override
+      virtual value *
+      clone (const value &other) override
       {
         _boolean_value = dynamic_cast<const Boolean &>(other)._boolean_value;
         return this;

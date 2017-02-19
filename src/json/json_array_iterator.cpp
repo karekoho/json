@@ -7,7 +7,7 @@ array_iterator::array_iterator (const array::element_list &list)
 {
 }
 
-Value &
+value &
 array_iterator::next ()
 {
   return *(*_begin++);

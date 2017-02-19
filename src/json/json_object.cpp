@@ -16,7 +16,7 @@ object::object (const wchar_t *text)
   (void) parse (text);
 }
 
-object::object(std::initializer_list<std::pair<std::__cxx11::wstring, Value *> > il)
+object::object(std::initializer_list<std::pair<std::__cxx11::wstring, value *> > il)
   : json(), _member_list (il.begin (), il.end ())
 {
 }
@@ -32,7 +32,7 @@ object::object (const object &other)
   (void) clone (other);
 }
 
-object::object (const Value *ov, const object &nv)
+object::object (const value *ov, const object &nv)
   : json (ov, nv)
 {
   (void) clone (nv);
@@ -121,14 +121,14 @@ object::_pair ()
 
   _readp++;
 
-  Value * v = _make_value ();
+  value * v = _make_value ();
 
-  if (v->type () == Value::no_value_t)
+  if (v->type () == value::no_value_t)
     throw json_syntax_error ("Unexpected token ", *_readp);
 
   std::wstring key (keyp, charc - 2);
 
-  if ((v = _call_reviver (v, key.c_str ()))->type () == Value::undefined_t)   // Reviver returned undefined, value is not added
+  if ((v = _call_reviver (v, key.c_str ()))->type () == value::undefined_t)   // Reviver returned undefined, value is not added
     return true;
 
   (void) _member_list.emplace (key, v);
@@ -157,13 +157,13 @@ object::iterator () const
   return new object_iterator (_member_list);
 }
 
-Value &
+value &
 object::_assign (const object &nv)
 {
   return _parent ? _parent->_assign (this, new object (this, nv)) : *(clone (nv));
 }
 
-Value &
+value &
 object::_at (const wchar_t *key)
 {
   try
@@ -172,7 +172,7 @@ object::_at (const wchar_t *key)
     }
   catch (std::out_of_range &)
     {
-      Value *v = new undefined (this);
+      value *v = new undefined (this);
 
       v->setKey (key, wcslen (key));
       _member_list.emplace (key, v);
@@ -181,8 +181,8 @@ object::_at (const wchar_t *key)
   }
 }
 
-Value &
-object::_assign (Value *ov, Value *nv)
+value &
+object::_assign (value *ov, value *nv)
 {
   const wchar_t *key = ov->key ();
 
@@ -199,12 +199,12 @@ object::_clear ()
 {
   for (auto it = _member_list.begin (); it != _member_list.end (); it = _member_list.erase (it))
     {
-      delete static_cast <std::pair<std::wstring, Value *>>(*it).second;
+      delete static_cast <std::pair<std::wstring, value *>>(*it).second;
     }
 }
 
-Value *
-object::clone (const Value &other)
+value *
+object::clone (const value &other)
 {
   const object & nv = static_cast<const object &>(other);
 
@@ -220,7 +220,7 @@ object::clone (const Value &other)
 
   while (cur != end)
     {
-      std::pair<std::wstring, Value *> p = *cur++;
+      std::pair<std::wstring, value *> p = *cur++;
       _member_list.emplace (p.first, p.second->clone ());
     }
 
@@ -240,8 +240,8 @@ object::strLength () const noexcept
 
   while (cur != end)
     {
-      std::pair<std::wstring, Value *> p = *cur++;
-      len += p.first.size () + dynamic_cast<Value *>(p.second)->strLength () + 4;   // " + key + " + : +  value + , or }
+      std::pair<std::wstring, value *> p = *cur++;
+      len += p.first.size () + dynamic_cast<value *>(p.second)->strLength () + 4;   // " + key + " + : +  value + , or }
     }
 
   return len;
@@ -270,7 +270,7 @@ object::strValue (wchar_t *offset) const
 
   while (cur != end)
     {
-      std::pair<std::wstring, Value *> p = *cur;
+      std::pair<std::wstring, value *> p = *cur;
 
       str_value[OFFSET] = _str_append (_str_append (str_value[OFFSET], L"\"", 1), p.first.c_str (), p.first.size ());   // Key
       str_value[OFFSET] = _str_append (str_value[OFFSET], L"\":", 2);
@@ -288,8 +288,8 @@ object::strValue (wchar_t *offset) const
   return str_value[BEGIN];
 }
 
-Value &
-object::erase (const Value & v) noexcept
+value &
+object::erase (const value & v) noexcept
 {
   auto it = _member_list.find (v.key ());
 

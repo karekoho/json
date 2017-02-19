@@ -12,7 +12,7 @@ array::array (const wchar_t *text)
   (void) parse (text);
 }
 
-array::array(std::initializer_list<Value *> il)
+array::array(std::initializer_list<value *> il)
   : json (), _element_list (il)
 {
 }
@@ -28,7 +28,7 @@ array::array (const array &other)
   (void) clone (other);
 }
 
-array::array (const Value *ov, const array &nv)
+array::array (const value *ov, const array &nv)
   : json (ov, nv)
 {
   (void) clone (nv);
@@ -66,7 +66,7 @@ array::parse (const wchar_t *json)
   if (! _element_list.empty ())
     _clear ();
 
-  Value *v = 0;
+  value *v = 0;
   size_t next_idx = 0;
 
   while (*_readp != 0)
@@ -77,12 +77,12 @@ array::parse (const wchar_t *json)
         {
           _readp++;
 
-          if ((v = _make_value ())->type () == Value::no_value_t)
+          if ((v = _make_value ())->type () == value::no_value_t)
             throw json_syntax_error (UNEX_TOKEN, *_readp);
 
           next_idx = _element_list.size ();
 
-          if ((v = _call_reviver (v, 0, next_idx))->type () != Value::undefined_t)
+          if ((v = _call_reviver (v, 0, next_idx))->type () != value::undefined_t)
             {
               _element_list.push_back (v);
               v->setIndex (next_idx);
@@ -91,17 +91,17 @@ array::parse (const wchar_t *json)
       else if (*_readp == _sc::end_array)         // ']'
         return _readp + 1;
 
-      else if ((v = _make_value ())->type () == Value::no_value_t)  // No valid value found
+      else if ((v = _make_value ())->type () == value::no_value_t)  // No valid value found
         {
-          if (*_readp != Value::_ws::space
-              && *_readp != Value::_ws::tab
-              && *_readp != Value::_ws::lf
-              && *_readp != Value::_ws::cr)
+          if (*_readp != value::_ws::space
+              && *_readp != value::_ws::tab
+              && *_readp != value::_ws::lf
+              && *_readp != value::_ws::cr)
             throw json_syntax_error (UNEX_TOKEN, *_readp);
 
           // Empty array
         }
-      else if ((v = _call_reviver (v, 0, next_idx))->type () != Value::undefined_t)  // Value found
+      else if ((v = _call_reviver (v, 0, next_idx))->type () != value::undefined_t)  // Value found
         {
           _element_list.push_back (v);
           v->setIndex (next_idx);
@@ -111,13 +111,13 @@ array::parse (const wchar_t *json)
   return _readp;
 }
 
-Value &
+value &
 array::_assign (const array &nv)
 {
   return _parent ? _parent->_assign (this, new array (this, nv)) : *(clone (nv));
 }
 
-Value &
+value &
 array::_at (size_t index)
 {
   try
@@ -126,7 +126,7 @@ array::_at (size_t index)
     }
   catch (std::out_of_range &)
     {
-      Value *v = new undefined (this);
+      value *v = new undefined (this);
 
       _element_list.push_back (v);
       v->setIndex (_element_list.size () - 1);
@@ -135,8 +135,8 @@ array::_at (size_t index)
   }
 }
 
-Value &
-array::_assign (Value *ov, Value *nv)
+value &
+array::_assign (value *ov, value *nv)
 {
   size_t index = ov->index ();
 
@@ -155,8 +155,8 @@ array::_clear ()
     delete *it;
 }
 
-Value *
-array::clone (const Value &other)
+value *
+array::clone (const value &other)
 {
   const array & nv = dynamic_cast<const array &> (other);
 
@@ -218,7 +218,7 @@ array::strValue (wchar_t *offset) const
 
   while (cur != end)
     {
-      Value *v = *cur;
+      value *v = *cur;
       str_value[OFFSET] = _str_append (str_value[OFFSET], v->strValue (str_value[OFFSET]), v->strLength ());
 
       if (++cur != end)
@@ -233,8 +233,8 @@ array::strValue (wchar_t *offset) const
   return str_value[BEGIN];
 }
 
-Value &
-array::erase (const Value &v) noexcept
+value &
+array::erase (const value &v) noexcept
 {
   size_t index = v.index ();
 

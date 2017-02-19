@@ -50,8 +50,8 @@ public:
     };
 
     struct assert {
-      Value *new_value;
-      Value::object_type type;
+      value *new_value;
+      value::object_type type;
       const wchar_t *key;
       size_t index;
       size_t count;
@@ -59,12 +59,12 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { new array (L"[true,false]"), Value::array_t, L"key_1",  0, 1,  { PASS, PASS, FAIL } },
-      { new object (L"{\"k1\":true,\"k2\":false}"), Value::object_t, L"key_2",  0, 2, { PASS, PASS, FAIL } },
-      { new string (L"\"xxx\""), Value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
-      { new number (10), Value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-      { new Boolean (true), Value::boolean_t, L"key_6",  0, 5, { PASS, PASS, FAIL } },
-      { new null, Value::null_t, L"key_7",  0, 6, { PASS, PASS, FAIL } }
+      { new array (L"[true,false]"), value::array_t, L"key_1",  0, 1,  { PASS, PASS, FAIL } },
+      { new object (L"{\"k1\":true,\"k2\":false}"), value::object_t, L"key_2",  0, 2, { PASS, PASS, FAIL } },
+      { new string (L"\"xxx\""), value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
+      { new number (10), value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
+      { new Boolean (true), value::boolean_t, L"key_6",  0, 5, { PASS, PASS, FAIL } },
+      { new null, value::null_t, L"key_7",  0, 6, { PASS, PASS, FAIL } }
     };
 
     for (size_t pidx = 0; pidx < 3; pidx++)
@@ -98,16 +98,16 @@ public:
               ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
               // ASSERT_EQUAL_IDX ("(*it).new_value->_old->type ()", Value::object_type::undefined, (*it).new_value->_old->type ());
 
-              if (parent->type () == Value::object_t)
+              if (parent->type () == value::object_t)
                 {
-                  Value *ov =  obj_parent._member_list.at ((*it).key);
+                  value *ov =  obj_parent._member_list.at ((*it).key);
 
                   ASSERT_EQUAL_IDX ("obj_parent[key].type", ov->type (), (*it).type);
                   // ASSERT_EQUAL_IDX ("obj_parent[key].value", ov, new_value);
                 }
               else
                 {
-                  Value *av =  arr_parent._element_list.at ((*it).index);
+                  value *av =  arr_parent._element_list.at ((*it).index);
 
                   ASSERT_EQUAL_IDX ("arr_parent[key].type", av->type (), (*it).type);
                   // ASSERT_EQUAL_IDX ("arr_parent[key].value", av, new_value);

@@ -10,7 +10,7 @@
 using namespace Format;
 
 json::json ()
-  : Value (),
+  : value (),
     _str_value { 0, 0 },
     __root (0),
     __reviver (0)
@@ -18,7 +18,7 @@ json::json ()
 }
 
 json::json (const wchar_t *json, const bool _parse)
-  : Value (json),
+  : value (json),
     _str_value { 0, 0 },
     __root (0),
     __reviver (0)
@@ -33,7 +33,7 @@ json::json (const wchar_t *json, const bool _parse)
 }
 
 json::json (const wchar_t *json, Reviver r)
-  : Value (json),
+  : value (json),
     _str_value { 0, 0 },
     __root (0),
     __reviver (r)
@@ -50,7 +50,7 @@ json::json (const wchar_t *json, Reviver r)
 
 
 json::json (json *parent)
-  : Value (parent),
+  : value (parent),
     _str_value { 0, 0 },
     __root (0),
     __reviver (parent ? parent->__reviver : 0)
@@ -58,15 +58,15 @@ json::json (json *parent)
 }
 
 json::json (const json &other)
-  : Value (other),
+  : value (other),
     _str_value { 0, 0 },
     __root (other.__root ? other.__root->clone () : 0),
     __reviver (0)
 {
 }
 
-json::json (const Value *ov, const json &nv)
-  : Value (ov, nv),
+json::json (const value *ov, const json &nv)
+  : value (ov, nv),
     _str_value { 0, 0 },
     __root (nv.__hasRoot () ? nv.__root->clone () : 0),
     __reviver (0)
@@ -95,7 +95,7 @@ json::json::parse (const wchar_t *readp)
 
   // if (*_readp == 0) throw _readp;
 
-  Value * old_root = __root;
+  value * old_root = __root;
 
   __root = _make_value ();
 
@@ -107,7 +107,7 @@ json::json::parse (const wchar_t *readp)
   return _readp;
 }
 
-Value &
+value &
 json::_assign (const json &j)
 {
   if (j.__hasRoot ())
@@ -120,8 +120,8 @@ json::_assign (const json &j)
   return *this;
 }
 
-Value &
-json::_assign (const Value &v)
+value &
+json::_assign (const value &v)
 {
   delete __root;
 
@@ -130,10 +130,10 @@ json::_assign (const Value &v)
   return *this;
 }
 
-Value *
+value *
 json::_make_value ()
 {
-  Value *value_  = 0;
+  value *value_  = 0;
   long int charc = 0;
 
   wchar_t endc = 0;
@@ -158,13 +158,13 @@ json::_make_value ()
   else                                      // Literal or Undefined
     switch (_is_literal ())
       {
-      case Value::_literal::null_value:
+      case value::_literal::null_value:
         value_ = new null (this);
         break;
-      case Value::_literal::true_value :
+      case value::_literal::true_value :
         value_ = new Boolean (this, true);
         break;
-      case Value::_literal::false_value:
+      case value::_literal::false_value:
         value_ = new Boolean (this, false);
         break;
       default:
@@ -177,13 +177,13 @@ json::_make_value ()
   return value_;
 }
 
-Value *
-json::_call_reviver (Value *v, const wchar_t *key, size_t index) const
+value *
+json::_call_reviver (value *v, const wchar_t *key, size_t index) const
 {
   if (__reviver == 0)
     return v;
 
-  Value *r = (__reviver) (key == 0 ? std::to_wstring (index).c_str () : key, v);
+  value *r = (__reviver) (key == 0 ? std::to_wstring (index).c_str () : key, v);
 
   if (r != v)
     delete v;

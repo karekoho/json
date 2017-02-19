@@ -101,18 +101,18 @@ public:
     {
       struct assert {
           const wchar_t *startp;
-          Value::_literal value_type;
+          value::_literal value_type;
           int assert_status;
       };
 
       std::vector<struct assert> test = {
-        { L"", Value::_literal::no_literal, PASS },
-        { L"   ", Value::_literal::no_literal, PASS },
-        { L"xxx   ", Value::_literal::no_literal, PASS },
-        { L"xxxxxx   ", Value::_literal::no_literal, PASS },
-        { L"true    ", Value::_literal::true_value, PASS },
-        { L"false    ", Value::_literal::false_value, PASS },
-        { L"null   ", Value::_literal::null_value, PASS }
+        { L"", value::_literal::no_literal, PASS },
+        { L"   ", value::_literal::no_literal, PASS },
+        { L"xxx   ", value::_literal::no_literal, PASS },
+        { L"xxxxxx   ", value::_literal::no_literal, PASS },
+        { L"true    ", value::_literal::true_value, PASS },
+        { L"false    ", value::_literal::false_value, PASS },
+        { L"null   ", value::_literal::null_value, PASS }
       };
 
       TEST_IT_START
@@ -123,7 +123,7 @@ public:
 
           m->_startp = m->_readp = startp;
 
-          Value::_literal ltr = m->_is_literal ();
+          value::_literal ltr = m->_is_literal ();
 
           ASSERT_EQUAL_IDX ("literal value", (*it).value_type , ltr);
 
@@ -153,7 +153,7 @@ public:
 
       TEST_IT_START
 
-          dst = Value::_str_append (dst, (*it).src, (*it).charc[0]);
+          dst = value::_str_append (dst, (*it).src, (*it).charc[0]);
 
           ASSERT_EQUAL_IDX ("dst", startp + (*it).charc[1], dst);
 
@@ -173,7 +173,7 @@ public:
 
       struct assert
       {
-        Value *value;
+        value *val;
         size_t size;    // Array::_element_list.size ()
         int assert_status;
       };
@@ -187,7 +187,7 @@ public:
 
       TEST_IT_START
 
-          (*it).value->_assign (Format::undefined ());
+          (*it).val->_assign (Format::undefined ());
 
           ASSERT_EQUAL_IDX ("a.count ()", (*it).size, a.count ());
 
@@ -204,19 +204,19 @@ public:
 
       struct assert
       {
-        Value *value;
-        Value::object_type type;  // old, current
+        value *val;
+        value::object_type type;  // old, current
         int assert_status;
       };
 
       std::vector<struct assert> test = {
-        { new object, Value::object_t, PASS },
-        { new array, Value::array_t, PASS },
-        { new string, Value::string_t, PASS },
-        { new number, Value::number_t, PASS },
-        { new Boolean, Value::boolean_t, PASS },
-        { new null, Value::null_t, PASS },
-        { new Format::undefined, Value::undefined_t, PASS }
+        { new object, value::object_t, PASS },
+        { new array, value::array_t, PASS },
+        { new string, value::string_t, PASS },
+        { new number, value::number_t, PASS },
+        { new Boolean, value::boolean_t, PASS },
+        { new null, value::null_t, PASS },
+        { new Format::undefined, value::undefined_t, PASS }
       };
 
       for (size_t hdx = 0; hdx < 2; hdx++)
@@ -227,9 +227,9 @@ public:
 
           for (size_t jdx = 0; jdx < 2; jdx++)
             {
-              json[hdx][L"0"] = *(*it).value;   // Undefined <-- Object, Object <-- Array, ...
+              json[hdx][L"0"] = *(*it).val;   // Undefined <-- Object, Object <-- Array, ...
 
-              Value & v = json[hdx][L"0"];
+              value & v = json[hdx][L"0"];
 
               ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v.type ());
             }
@@ -238,7 +238,7 @@ public:
         }
 
       for (auto it = test.begin (); it != test.end (); ++it)
-        delete (*it).value;
+        delete (*it).val;
     }
 
 

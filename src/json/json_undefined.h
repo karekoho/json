@@ -42,7 +42,7 @@ class undefined : public leaf
    * @param ov
    * @param nv
    */
-  undefined (const Value *ov, const undefined &nv)
+  undefined (const value *ov, const undefined &nv)
     : leaf (ov, nv)
   {}
 
@@ -51,7 +51,7 @@ class undefined : public leaf
    * @param other
    * @return
    */
-  virtual Value *
+  virtual value *
   clone () const
   { return new undefined (*this); }
 
@@ -60,8 +60,8 @@ class undefined : public leaf
    * @param ov
    * @return
    */
-  virtual Value *
-  clone (const Value *ov) const override
+  virtual value *
+  clone (const value *ov) const override
   { return new undefined (ov, *this); }
 
   /**
@@ -88,16 +88,16 @@ class undefined : public leaf
    */
   virtual inline object_type
   type () const
-  { return Value::object_type::undefined_t; }
+  { return value::object_type::undefined_t; }
 
   /**
    * @brief operator =
    * @param v
    * @return
    */
-  inline Value &
-  operator =(const Value & v)
-  { return Value::_assign (v);  }
+  inline value &
+  operator =(const value & v)
+  { return value::_assign (v);  }
 
   /**
    * @brief strLength
@@ -137,8 +137,8 @@ protected:
    * @brief _clone
    * @return
    */
-  virtual Value *
-  clone (const Value &) override
+  virtual value *
+  clone (const value &) override
   { return new undefined (*this); }
 };
 }

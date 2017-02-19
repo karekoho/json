@@ -27,7 +27,7 @@ string::string (const string &other)
   clone (other);
 }
 
-string::string (const Value *ov, const string &nv)
+string::string (const value *ov, const string &nv)
   : leaf (ov, nv),
     _charc (nv._charc)
 {
@@ -55,7 +55,7 @@ string::parse (const wchar_t *json)
   return _readp += _charc;
 }
 
-Value &
+value &
 string::_assign (const string &nv)
 {
   return _parent ? _parent->_assign (this, new string (this, nv)) : *(clone (nv));
@@ -82,8 +82,8 @@ string::strValue (wchar_t *) const
   return _string_value[1].c_str ();
 }
 
-Value *
-string::clone (const Value &nv)
+value *
+string::clone (const value &nv)
 {
   const string & s = dynamic_cast<const string &>(nv);
 

@@ -47,7 +47,7 @@ class null : public leaf
    * @param ov
    * @param nv
    */
-  null (const Value *ov, const null &nv)
+  null (const value *ov, const null &nv)
     : leaf (ov, nv)
   {}
 
@@ -56,7 +56,7 @@ class null : public leaf
    * @param other
    * @return
    */
-  virtual Value *
+  virtual value *
   clone () const
   { return new null (*this); }
 
@@ -65,8 +65,8 @@ class null : public leaf
    * @param ov
    * @return
    */
-  virtual Value *
-  clone (const Value *ov) const override
+  virtual value *
+  clone (const value *ov) const override
   { return new null (ov, *this); }
 
   /**
@@ -82,9 +82,9 @@ class null : public leaf
    * @brief type
    * @return
    */
-  virtual inline Value::object_type
+  virtual inline value::object_type
   type () const
-  { return Value::object_type::null_t; }
+  { return value::object_type::null_t; }
 
   /**
    * TODO: return nullptr
@@ -100,7 +100,7 @@ class null : public leaf
    * @param n
    * @return
    */
-  inline Value &
+  inline value &
   operator =(const null & n)
   { return _assign (n); }
 
@@ -109,9 +109,9 @@ class null : public leaf
    * @param v
    * @return
    */
-  inline Value &
-  operator =(const Value & v)
-  { return Value::_assign (v); }
+  inline value &
+  operator =(const value & v)
+  { return value::_assign (v); }
 
   /**
    * @brief strValue
@@ -145,7 +145,7 @@ protected:
    * @param nv
    * @return
    */
-  Value &
+  value &
   _assign (const null &)
   { return _parent ? _parent->_assign (this, new null (this, *this)) : *this; }
 
@@ -160,8 +160,8 @@ protected:
    * @brief _clone
    * @return
    */
-  virtual Value *
-  clone (const Value &) override
+  virtual value *
+  clone (const value &) override
   { return this; }
 
 };

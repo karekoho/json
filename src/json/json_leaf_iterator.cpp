@@ -2,13 +2,13 @@
 
 using namespace Format;
 
-leaf_iterator::leaf_iterator (const Value *v)
+leaf_iterator::leaf_iterator (const value *v)
   : _value (v),
     _hasNext (true)
 {
 }
 
-const Value &
+const value &
 leaf_iterator::next ()
 {
   _hasNext = false;

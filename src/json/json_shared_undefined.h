@@ -69,14 +69,14 @@ namespace Format
      */
     virtual object_type
     type () const
-    { return Value::object_type::no_value_t; }
+    { return value::object_type::no_value_t; }
 
     /**
      * @brief instance
      * @param parent
      * @return
      */
-    static Value *
+    static value *
     instance (json *parent);
 
   protected:

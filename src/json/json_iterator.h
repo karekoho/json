@@ -21,7 +21,7 @@ namespace Format
      * @brief next
      * @return
      */
-    virtual const Format::Value & next () = 0;
+    virtual const Format::value & next () = 0;
 
     /**
      * @brief hasNext

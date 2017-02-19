@@ -5,28 +5,28 @@
 
 namespace Format
 {
-class leaf : public Value
+class leaf : public value
 {
 public:
 
   /**
    * @brief Leaf
    */
-  leaf () : Value ()
+  leaf () : value ()
   {}
 
   /**
    * @brief Leaf
    * @param json
    */
-  leaf (const wchar_t *json) : Value (json)
+  leaf (const wchar_t *json) : value (json)
   { _startp = json; }
 
   /**
    * @brief Leaf
    * @param parent
    */
-  leaf (json *parent) : Value (parent)
+  leaf (json *parent) : value (parent)
   {}
 
   /**
@@ -40,8 +40,8 @@ public:
    * @param ov
    * @param nv
    */
-  leaf (const Value *ov, const leaf &nv)
-    : Value (ov, nv)
+  leaf (const value *ov, const leaf &nv)
+    : value (ov, nv)
   {}
 
   /**
@@ -53,7 +53,7 @@ public:
    * @brief _clone
    * @return
    */
-  virtual Value *
+  virtual value *
   clone  () const override = 0;
 
   /**
@@ -97,8 +97,8 @@ public:
    * @brief assign
    * @return
    */
-  virtual Value &
-  _assign (Value *, Value *) final override
+  virtual value &
+  _assign (value *, value *) final override
   { return *this; }
 
   /**
@@ -128,8 +128,8 @@ public:
    * @brief erase
    * @return
    */
-  virtual Value &
-  erase (const Value &) noexcept final override
+  virtual value &
+  erase (const value &) noexcept final override
   { return *this; }
 
   /**
@@ -137,10 +137,10 @@ public:
    */
   class Iterator : public std::iterator<
       std::input_iterator_tag,
-      Value *,        // Type
-      Value *,        // Distance
-      Value *,
-      Value &
+      value *,        // Type
+      value *,        // Distance
+      value *,
+      value &
       >
   {
   public:
@@ -249,14 +249,14 @@ protected:
    * @brief _at
    * @return
    */
-  virtual Value &
+  virtual value &
   _at (const wchar_t *) final override;
 
   /**
    * @brief _at
    * @return
    */
-  virtual Value &
+  virtual value &
   _at (size_t) final override;
 
   /**
@@ -269,8 +269,8 @@ protected:
    * @brief _clone
    * @return
    */
-  virtual Value *
-  clone (const Value &) = 0;
+  virtual value *
+  clone (const value &) = 0;
 };
 }
 #endif // LEAF_H

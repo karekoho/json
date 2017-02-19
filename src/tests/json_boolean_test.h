@@ -56,8 +56,8 @@ public:
     // Boolean old_value;
 
     struct assert {
-      Value *new_value;
-      Value::object_type type;
+      value *new_value;
+      value::object_type type;
       const wchar_t *key;
       size_t index;
       size_t count;
@@ -65,12 +65,12 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { new array (L"[true,false]"), Value::array_t, L"key_2",  0, 1, { PASS, PASS, FAIL }  },
-      { new object (L"{\"k1\":true,\"k2\":false}"), Value::object_t, L"key_1",  0, 2, { PASS, PASS, FAIL } },
-      { new string (L"\"x\""), Value::string_t, L"key_3",  0, 3, { PASS, PASS, FAIL } },
-      { new number (10), Value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-      { new Boolean (true), Value::boolean_t, L"key_5",  0, 5, { PASS, PASS, PASS } },
-      { new null, Value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
+      { new array (L"[true,false]"), value::array_t, L"key_2",  0, 1, { PASS, PASS, FAIL }  },
+      { new object (L"{\"k1\":true,\"k2\":false}"), value::object_t, L"key_1",  0, 2, { PASS, PASS, FAIL } },
+      { new string (L"\"x\""), value::string_t, L"key_3",  0, 3, { PASS, PASS, FAIL } },
+      { new number (10), value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
+      { new Boolean (true), value::boolean_t, L"key_5",  0, 5, { PASS, PASS, PASS } },
+      { new null, value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
     };
       arr_parent._element_list.reserve (6);
 
@@ -100,9 +100,9 @@ public:
           (*it).index  = arr_parent._element_list.size () - 1;
           old_value->setIndex ((*it).index);
 
-          Value *new_value = 0;
+          value *new_value = 0;
 
-          if ((*it).new_value->type () == Value::boolean_t)
+          if ((*it).new_value->type () == value::boolean_t)
             {
               Boolean *new_boolean_value = static_cast<Boolean *>((*it).new_value);
 
@@ -125,16 +125,16 @@ public:
             {
               ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
 
-              if (parent->type () == Value::object_t)
+              if (parent->type () == value::object_t)
                 {
-                  Value *ov =  obj_parent._member_list.at ((*it).key);
+                  value *ov =  obj_parent._member_list.at ((*it).key);
 
                   ASSERT_EQUAL_IDX ("obj_parent[key].type", ov->type (), (*it).type);
                   // ASSERT_EQUAL_IDX ("obj_parent[key].value", ov, new_value);
                 }
               else
                 {
-                  Value *av =  arr_parent._element_list.at ((*it).index);
+                  value *av =  arr_parent._element_list.at ((*it).index);
 
                   ASSERT_EQUAL_IDX ("arr_parent[key].type", av->type (), (*it).type);
                   // ASSERT_EQUAL_IDX ("arr_parent[key].value", av, new_value);
@@ -142,7 +142,7 @@ public:
             }
           else
             {
-              if (new_value->type () == Value::boolean_t)
+              if (new_value->type () == value::boolean_t)
                 {
                   ASSERT_EQUAL_IDX ("old_value.value ()", (bool) true, old_value->get ());
                 }

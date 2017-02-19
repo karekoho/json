@@ -4,11 +4,11 @@
 #include "unit_test.h"
 //using namespace Format;
 namespace Format  {
-class json_value_mock : public Value
+class json_value_mock : public value
 {
 public:
 
-    json_value_mock (json *parent = 0) : Value (parent)
+    json_value_mock (json *parent = 0) : value (parent)
     {}
 
     virtual ~json_value_mock () {}
@@ -17,28 +17,28 @@ public:
     parse (const wchar_t *readp)
     { return readp; }
 
-    virtual Value &
+    virtual value &
     at (const wchar_t *) const
     { return *(new Format::undefined); }
 
-    virtual Value &
+    virtual value &
     at (size_t) const
     { return *(new Format::undefined); }
 
-    virtual Value::object_type
+    virtual value::object_type
     type () const
-    { return Value::object_type::undefined_t; }
+    { return value::object_type::undefined_t; }
 
     virtual size_t
     count () const
     { return 0; }
 
-    virtual Value *
+    virtual value *
     clone () const override
     { return 0; }
 
-    virtual Value &
-    _assign (Value *, Value *) override
+    virtual value &
+    _assign (value *, value *) override
     { return *this; }
 
     virtual json_iterator *
@@ -54,20 +54,20 @@ public:
     virtual const wchar_t * strValue (wchar_t *) const
     { return L""; }
 
-    virtual Value & erase (const Value &) noexcept override
+    virtual value & erase (const value &) noexcept override
     { return *this; }
 
-    virtual Value *
-    clone (const Value *) const override
+    virtual value *
+    clone (const value *) const override
     { return new json_value_mock (*this); }
 
 protected:
 
-    virtual  Value &
+    virtual  value &
     _at (const wchar_t *)
     { return *this; }
 
-    virtual  Value &
+    virtual  value &
     _at (size_t)
     { return *this; }
 
@@ -75,8 +75,8 @@ protected:
     virtual void _clear () override
     {}
 
-    virtual Value *
-    clone (const Value &) override
+    virtual value *
+    clone (const value &) override
     { return this; }
 };
 }

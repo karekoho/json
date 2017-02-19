@@ -25,7 +25,7 @@ namespace Format
      * @brief next
      * @return
      */
-    virtual Value & next () override;
+    virtual value & next () override;
 
     /**
      * @brief hasNext
@@ -38,12 +38,12 @@ namespace Format
     /**
      * @brief _begin
      */
-    std::unordered_map<std::wstring, Value *>::const_iterator _begin;
+    std::unordered_map<std::wstring, value *>::const_iterator _begin;
 
     /**
      * @brief _begin
      */
-    std::unordered_map<std::wstring, Value *>::const_iterator _end;
+    std::unordered_map<std::wstring, value *>::const_iterator _end;
   };
 } // Namespace format
 

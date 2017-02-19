@@ -41,7 +41,7 @@ public:
     struct assert {
       const wchar_t *startp;
       size_t size;
-      Value::object_type type;
+      value::object_type type;
       size_t moveback;
       int assert_status;
     };
@@ -49,27 +49,27 @@ public:
     json *p[] = { 0, new json () };
 
     std::vector<struct assert > test = {
-      { L"{}", 0, Value::undefined_t, 0, PASS },
-      { L"{ } ", 0, Value::undefined_t, 1, PASS },
-      { L"{\"k\":\"v\"} ", 1, Value::string_t, 1, PASS },
-      { L"{ \"k\" : \"v\" } ", 1, Value::string_t, 1, PASS },
-      { L"{\"k\":\"v\",\"q\":\"p\"} ", 2, Value::string_t, 1, PASS },
-      { L"{ \"k\": \"v\", \"q\" : \"p\",\"K\":\"v\" } ", 3, Value::string_t, 1, PASS },
-      { L"{ \"k\": \"p\" ,\"q\" : \"p\", \"K\" :\"v\",\"Q\":\"p\" } ", 4, Value::string_t, 1, PASS },
+      { L"{}", 0, value::undefined_t, 0, PASS },
+      { L"{ } ", 0, value::undefined_t, 1, PASS },
+      { L"{\"k\":\"v\"} ", 1, value::string_t, 1, PASS },
+      { L"{ \"k\" : \"v\" } ", 1, value::string_t, 1, PASS },
+      { L"{\"k\":\"v\",\"q\":\"p\"} ", 2, value::string_t, 1, PASS },
+      { L"{ \"k\": \"v\", \"q\" : \"p\",\"K\":\"v\" } ", 3, value::string_t, 1, PASS },
+      { L"{ \"k\": \"p\" ,\"q\" : \"p\", \"K\" :\"v\",\"Q\":\"p\" } ", 4, value::string_t, 1, PASS },
 
-      { L"{ \"k\" : { } }", 1, Value::object_t, 0, PASS },
-      { L"{ \"k\" : {\"kk\" : \"v\"}}", 1, Value::object_t, 0, PASS },
-      { L"{ \"k\" : {\"kk\" : {\"kkk\" : \"v\"}}", 1, Value::object_t, 0, PASS },
-      { L"{ \"k\" : null } ", 1, Value::null_t, 1, PASS },
+      { L"{ \"k\" : { } }", 1, value::object_t, 0, PASS },
+      { L"{ \"k\" : {\"kk\" : \"v\"}}", 1, value::object_t, 0, PASS },
+      { L"{ \"k\" : {\"kk\" : {\"kkk\" : \"v\"}}", 1, value::object_t, 0, PASS },
+      { L"{ \"k\" : null } ", 1, value::null_t, 1, PASS },
 
       // errors
-      { L"", 0, Value::undefined_t, 0, FAIL },   // json::syntax_error
-      { L" ", 0, Value::undefined_t, 0, FAIL },   // json::syntax_error
-      { L"x", 0, Value::undefined_t, 0, FAIL },   // json::syntax_error
-      { L"{", 0, Value::undefined_t, 0, FAIL },   // json::syntax_error
-      { L"}", 0, Value::undefined_t, 0, FAIL },   // json::syntax_error
-      { L"{ , }", 0, Value::undefined_t, 0, FAIL },   // json::syntax_error
-      { L"{ : }", 0, Value::undefined_t, 0, FAIL },   // json::syntax_error
+      { L"", 0, value::undefined_t, 0, FAIL },   // json::syntax_error
+      { L" ", 0, value::undefined_t, 0, FAIL },   // json::syntax_error
+      { L"x", 0, value::undefined_t, 0, FAIL },   // json::syntax_error
+      { L"{", 0, value::undefined_t, 0, FAIL },   // json::syntax_error
+      { L"}", 0, value::undefined_t, 0, FAIL },   // json::syntax_error
+      { L"{ , }", 0, value::undefined_t, 0, FAIL },   // json::syntax_error
+      { L"{ : }", 0, value::undefined_t, 0, FAIL },   // json::syntax_error
     };
 
     TEST_IT_START;
@@ -151,18 +151,18 @@ public:
 
     struct assert {
       const wchar_t *key;
-      Value::object_type type;
+      value::object_type type;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { L"0", Value::object_type::boolean_t, PASS },
-      { L"1", Value::object_type::undefined_t, PASS }
+      { L"0", value::object_type::boolean_t, PASS },
+      { L"1", value::object_type::undefined_t, PASS }
     };
 
     TEST_IT_START
 
-      const Value & v = o[((*it).key)];
+      const value & v = o[((*it).key)];
 
       ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v.type ());
 
@@ -173,7 +173,7 @@ public:
   test_operator_at_index ()
   {
     object o;
-    CPPUNIT_ASSERT_EQUAL_MESSAGE ("o[size_t].type ()", Value::undefined_t, o[(size_t) 0].type ());
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("o[size_t].type ()", value::undefined_t, o[(size_t) 0].type ());
   }
 
   virtual void
@@ -185,18 +185,18 @@ public:
 
     struct assert {
       const wchar_t *key;
-      Value::object_type type;
+      value::object_type type;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { L"key1", Value::object_type::boolean_t, PASS },
-      { L"key2", Value::object_type::undefined_t, PASS }
+      { L"key1", value::object_type::boolean_t, PASS },
+      { L"key2", value::object_type::undefined_t, PASS }
     };
 
     TEST_IT_START
 
-      const Value & _v = o._at ((*it).key);
+      const value & _v = o._at ((*it).key);
 
       ASSERT_EQUAL_IDX ("_v.type ()", (*it).type, _v.type ());
 
@@ -263,8 +263,8 @@ public:
     // Object old_value;
 
     struct assert {
-      Value *new_value;
-      Value::object_type type;
+      value *new_value;
+      value::object_type type;
       const wchar_t *key;
       size_t index;
       size_t count;
@@ -272,12 +272,12 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { new object (L"{\"k1\":true,\"k2\":false}"), Value::object_t, L"key_1",  0, 1,  { PASS, PASS, PASS } },
-      { new array (L"[]"), Value::array_t, L"key_2",  0, 2,  { PASS, PASS, FAIL } },
-      { new string (L"\"x\""), Value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
-      { new number (), Value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-      { new Boolean (true), Value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
-      { new null (), Value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
+      { new object (L"{\"k1\":true,\"k2\":false}"), value::object_t, L"key_1",  0, 1,  { PASS, PASS, PASS } },
+      { new array (L"[]"), value::array_t, L"key_2",  0, 2,  { PASS, PASS, FAIL } },
+      { new string (L"\"x\""), value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
+      { new number (), value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
+      { new Boolean (true), value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
+      { new null (), value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
     };
 
     // arr_parent._element_list.reserve (6);
@@ -305,9 +305,9 @@ public:
           (*it).index  = arr_parent._element_list.size () - 1;
           old_value->setIndex ((*it).index);
 
-          Value *new_value = 0;
+          value *new_value = 0;
 
-          if ((*it).new_value->type () == Value::object_t)
+          if ((*it).new_value->type () == value::object_t)
             {
               object *new_o_value = static_cast<object *>((*it).new_value);
 
@@ -330,16 +330,16 @@ public:
             {
               ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
 
-              if (parent->type () == Value::object_t)
+              if (parent->type () == value::object_t)
                 {
-                  Value *ov =  obj_parent._member_list.at ((*it).key);
+                  value *ov =  obj_parent._member_list.at ((*it).key);
 
                   ASSERT_EQUAL_IDX ("obj_parent[key].type", ov->type (), (*it).type);
                   // ASSERT_EQUAL_IDX ("obj_parent[key].value", ov, new_value);
                 }
               else
                 {
-                  Value *av =  arr_parent._element_list.at ((*it).index);
+                  value *av =  arr_parent._element_list.at ((*it).index);
 
                   ASSERT_EQUAL_IDX ("arr_parent[key].type", av->type (), (*it).type);
                   // ASSERT_EQUAL_IDX ("arr_parent[key].value", av, new_value);
@@ -474,7 +474,7 @@ public:
   {
     object o;
 
-    Value *v[3]= {
+    value *v[3]= {
       new Boolean (),
       new Boolean (),
       new Boolean ()
@@ -488,7 +488,7 @@ public:
 
     struct assert
     {
-      Value *value;
+      value *val;
       size_t size;
       int assert_status;
     };
@@ -501,7 +501,7 @@ public:
 
     TEST_IT_START
 
-      (void) o.erase (*(*it).value);
+      (void) o.erase (*(*it).val);
       size_t size = o.count ();
 
       ASSERT_EQUAL_IDX ("o.count ()", (*it).size, size);

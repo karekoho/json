@@ -15,17 +15,17 @@ public:
   void
   test_hasNext ()
   {
-    std::vector<Value *> vector;
+    std::vector<value *> vector;
 
     struct assert {
-      std::vector<Value *> *vector;
+      std::vector<value *> *vector;
       size_t vecc;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { new std::vector<Value *>({new number (1), new number (2), new number (3)}), 3, PASS },
-      { new std::vector<Value *>(), 0, PASS }
+      { new std::vector<value *>({new number (1), new number (2), new number (3)}), 3, PASS },
+      { new std::vector<value *>(), 0, PASS }
     };
 
     TEST_IT_START
@@ -82,20 +82,20 @@ public:
 
     struct assert {
       array::Iterator *itp;
-      Value::object_type type;
+      value::object_type type;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { & it, Value::boolean_t, PASS },
-      { & copy, Value::boolean_t, PASS }
+      { & it, value::boolean_t, PASS },
+      { & copy, value::boolean_t, PASS }
     };
 
     TEST_IT_START
 
-        Value & v = **(*it).itp;
+        value & v = **(*it).itp;
 
-        ASSERT_EQUAL_IDX ("v.type ()", Value::object_type::boolean_t, v.type ());
+        ASSERT_EQUAL_IDX ("v.type ()", value::object_type::boolean_t, v.type ());
 
     TEST_IT_END;
 

@@ -66,19 +66,19 @@ public:
 
     struct assert {
       leaf::Iterator *itp;
-      Value::object_type type;
+      value::object_type type;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { & it[0], Value::undefined_t, FAIL },
-      { & it[1], Value::boolean_t, PASS },
-      { & copy, Value::boolean_t, PASS }
+      { & it[0], value::undefined_t, FAIL },
+      { & it[1], value::boolean_t, PASS },
+      { & copy, value::boolean_t, PASS }
     };
 
     TEST_IT_START
 
-        Value & v = **(*it).itp;
+        value & v = **(*it).itp;
 
         ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v.type ());
 

@@ -7,7 +7,7 @@ object_iterator::object_iterator (const object::member_list &list)
 {
 }
 
-Value &
+value &
 object_iterator::next ()
 {
   return *(*_begin++).second;

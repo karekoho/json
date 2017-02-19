@@ -5,13 +5,13 @@
 
 using namespace Format;
 
-Value &
+value &
 leaf::_at (const wchar_t *)
 {
   return shared_undefined::instance ();
 }
 
-Value &
+value &
 leaf::_at (size_t)
 {
   return shared_undefined::instance ();

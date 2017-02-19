@@ -25,7 +25,7 @@ namespace Format
      * @brief next
      * @return
      */
-    virtual Value & next () override;
+    virtual value & next () override;
 
     /**
      * @brief hasNext
@@ -38,12 +38,12 @@ namespace Format
     /**
      * @brief _begin
      */
-    std::vector<Value *>::const_iterator _begin;
+    std::vector<value *>::const_iterator _begin;
 
     /**
      * @brief _end
      */
-    std::vector<Value *>::const_iterator _end;
+    std::vector<value *>::const_iterator _end;
   };
 }
 #endif // ARRAY_ITERATOR_H
