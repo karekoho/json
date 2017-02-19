@@ -8,13 +8,13 @@ using namespace Format;
 Value &
 leaf::_at (const wchar_t *)
 {
-  return Shared_Undefined::instance ();
+  return shared_undefined::instance ();
 }
 
 Value &
 leaf::_at (size_t)
 {
-  return Shared_Undefined::instance ();
+  return shared_undefined::instance ();
 }
 
 json_iterator *

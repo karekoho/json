@@ -2,24 +2,24 @@
 
 using namespace Format;
 
-Shared_Undefined * Shared_Undefined::__instance = 0;
+shared_undefined * shared_undefined::__instance = 0;
 
-Shared_Undefined &
-Shared_Undefined::instance ()
+shared_undefined &
+shared_undefined::instance ()
   {
     if (__instance == 0)
-      __instance = new Shared_Undefined ();
+      __instance = new shared_undefined ();
 
     return *__instance;
   }
 
-No_Value * No_Value::__instance = 0;
+no_value * no_value::__instance = 0;
 
 Value *
-No_Value::instance (json *parent)
+no_value::instance (json *parent)
 {
   if (__instance == 0)
-    __instance = new No_Value (parent);
+    __instance = new no_value (parent);
 
   return __instance;
 }

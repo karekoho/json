@@ -168,7 +168,7 @@ json::_make_value ()
         value_ = new Boolean (this, false);
         break;
       default:
-        value_ = No_Value::instance (this);
+        value_ = no_value::instance (this);
         break;
       }
 

@@ -2,96 +2,99 @@
 #define SHARED_UNDEFINED_H
 
 #include "json_undefined.h"
-namespace Format {
-/**
- * @brief The Shared_Undefined class
- */
-class Shared_Undefined : public undefined
+
+namespace Format
 {
-public:
-
   /**
-   * @brief ~Shared_Undefined
+   * @brief The Shared_Undefined class
    */
-  virtual ~Shared_Undefined () = default;
-
-  /**
-   * @brief operator delete
-   */
-  void operator delete (void *) noexcept {}
-
-  /**
-   * @brief instance
-   * @return
-   */
-  static Shared_Undefined &
-  instance ();
-
-protected:
-
-  /**
-   * @brief Shared_Undefined
-   */
-  Shared_Undefined ()
-    : undefined ()
+  class shared_undefined : public undefined
   {
-  }
+  public:
+
+    /**
+     * @brief ~Shared_Undefined
+     */
+    virtual ~shared_undefined () = default;
+
+    /**
+     * @brief operator delete
+     */
+    void operator delete (void *) noexcept {}
+
+    /**
+     * @brief instance
+     * @return
+     */
+    static shared_undefined &
+    instance ();
+
+  protected:
+
+    /**
+     * @brief Shared_Undefined
+     */
+    shared_undefined ()
+      : undefined ()
+    {
+    }
+
+    /**
+     * @brief Shared_Undefined
+     * @param parent
+     */
+    shared_undefined (json *parent)
+      :  undefined (parent)
+    {
+    }
+
+  private:
+
+    /**
+     * @brief __instance
+     */
+    static shared_undefined *__instance;
+  };
 
   /**
-   * @brief Shared_Undefined
-   * @param parent
+   * @brief The No_Value class
    */
-  Shared_Undefined (json *parent)
-    :  undefined (parent)
+  class no_value : public shared_undefined
   {
-  }
+  public:
 
-private:
+    /**
+     * @brief type
+     * @return
+     */
+    virtual object_type
+    type () const
+    { return Value::object_type::no_value_t; }
 
-  /**
-   * @brief __instance
-   */
-  static Shared_Undefined *__instance;
-};
+    /**
+     * @brief instance
+     * @param parent
+     * @return
+     */
+    static Value *
+    instance (json *parent);
 
-/**
- * @brief The No_Value class
- */
-class No_Value : public Shared_Undefined
-{
-public:
+  protected:
 
-  /**
-   * @brief type
-   * @return
-   */
-  virtual object_type
-  type () const
-  { return Value::object_type::no_value_t; }
+    /**
+     * @brief No_Value
+     */
+    no_value (json *parent)
+      : shared_undefined (parent)
+    {}
 
-  /**
-   * @brief instance
-   * @param parent
-   * @return
-   */
-  static Value *
-  instance (json *parent);
+  private:
 
-protected:
+    /**
+     * @brief __instance
+     */
+    static no_value *__instance;
+  };
+} // Namespace format
 
-  /**
-   * @brief No_Value
-   */
-  No_Value (json *parent)
-    : Shared_Undefined (parent)
-  {}
-
-private:
-
-  /**
-   * @brief __instance
-   */
-  static No_Value *__instance;
-};
-}
 #endif // SHARED_UNDEFINED_H

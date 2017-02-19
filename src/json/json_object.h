@@ -314,7 +314,7 @@ namespace Format
      * @return
      */
     virtual Value & _at (size_t)
-    { return Shared_Undefined::instance (); }
+    { return shared_undefined::instance (); }
 
     /**
      * @brief _assign

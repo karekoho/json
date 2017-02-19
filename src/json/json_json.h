@@ -242,7 +242,7 @@ protected:
    */
   virtual Value &
   _at (const wchar_t *key) override
-  { return __hasRoot() ? (*__root)[key] : Format::Shared_Undefined::instance (); }
+  { return __hasRoot() ? (*__root)[key] : Format::shared_undefined::instance (); }
 
   /**
    * @brief _at
@@ -251,7 +251,7 @@ protected:
    */
   virtual Value &
   _at (size_t index) override
-  { return __hasRoot() ? (*__root)[index] : Format::Shared_Undefined::instance (); }
+  { return __hasRoot() ? (*__root)[index] : Format::shared_undefined::instance (); }
 
   /**
    * @brief _make_value
