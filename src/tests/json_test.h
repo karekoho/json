@@ -146,7 +146,7 @@ public:
   void
   test__assign_to_parent ()
   {
-    Object op;
+    object op;
     array ap;
 
     struct assert
@@ -159,7 +159,7 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { L"ok", 0, { new Object (&op), new Object (&ap) }, Value::object_t, PASS },
+      { L"ok", 0, { new object (&op), new object (&ap) }, Value::object_t, PASS },
       { L"ak", 1, { new array (&op), new array (&ap) }, Value::array_t, PASS },
       { L"sk", 2, { new string (&op, 3), new string (&ap, 3) }, Value::string_t, PASS },
       { L"dk", 3, { new number (&op), new number (&ap) }, Value::number_t, PASS },
@@ -203,7 +203,7 @@ public:
 
     std::vector<struct assert > test = {
       { new json, Value::undefined_t, PASS },
-      { new Object, Value::object_t, PASS },
+      { new object, Value::object_t, PASS },
       { new array, Value::array_t, PASS },
       { new string, Value::string_t, PASS },
       { new number, Value::number_t, PASS },
@@ -323,12 +323,12 @@ public:
 
     std::vector<struct assert> test = {
       { L"{\"0\":{},\"1\":[],\"2\":\"2\",\"3\":3,\"4\":false,\"5\":null}", {
-          { new Object, new array, new string, new number, new Boolean , new null },
+          { new object, new array, new string, new number, new Boolean , new null },
           { new null, new null, new string, new number, new Boolean }
         }, PASS },
 
       { L"[{},\[],\"2\",3,false,null]", {
-          { new Object, new array, new string, new number, new Boolean, new null },
+          { new object, new array, new string, new number, new Boolean, new null },
           { new null, new null, new string, new number, new Boolean }
         }, PASS },
       };

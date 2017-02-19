@@ -14,17 +14,17 @@ public:
   void
   test_hasNext ()
   {
-    Object::member_list list;
+    object::member_list list;
 
     struct assert {
-      Object::member_list *list;
+      object::member_list *list;
       size_t listc;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { new Object::member_list ({ { L"1", new number(1) }, { L"2", new number (2) }, { L"3", new number (3) } }), 3, PASS },
-      { new Object::member_list (), 0, PASS }
+      { new object::member_list ({ { L"1", new number(1) }, { L"2", new number (2) }, { L"3", new number (3) } }), 3, PASS },
+      { new object::member_list (), 0, PASS }
     };
 
     TEST_IT_START
@@ -53,14 +53,14 @@ public:
   void
   test_construct_assign_destruct ()
   {
-    Object::member_list list = { { L"1", new Boolean } };
+    object::member_list list = { { L"1", new Boolean } };
 
-    Object::Iterator *it[] = {
-      new Object::Iterator,
-      new Object::Iterator (list.begin ()),
+    object::Iterator *it[] = {
+      new object::Iterator,
+      new object::Iterator (list.begin ()),
     };
 
-    Object::Iterator copy = Object::Iterator (*it[1]);
+    object::Iterator copy = object::Iterator (*it[1]);
 
     CPPUNIT_ASSERT_MESSAGE ("v.type ()", & copy != it[1]);
 
@@ -73,13 +73,13 @@ public:
   void
   test_dereference ()
   {
-    Object::member_list list = { { L"1", new Boolean } };
+    object::member_list list = { { L"1", new Boolean } };
 
-    Object::Iterator it (list.begin ());
-    Object::Iterator copy = Object::Iterator (it);
+    object::Iterator it (list.begin ());
+    object::Iterator copy = object::Iterator (it);
 
     struct assert {
-      Object::Iterator *itp;
+      object::Iterator *itp;
       Value::object_type type;
       int assert_status;
     };
@@ -103,10 +103,10 @@ public:
   void
   test_pre_increment ()
   {
-    Object::member_list list = { { L"1", new Boolean }, { L"2", new Boolean } };
+    object::member_list list = { { L"1", new Boolean }, { L"2", new Boolean } };
 
-    Object::Iterator begin (list.begin ());
-    Object::Iterator end (list.end ());
+    object::Iterator begin (list.begin ());
+    object::Iterator end (list.end ());
 
     size_t count = 0;
 
@@ -121,10 +121,10 @@ public:
   void
   test_post_increment ()
   {
-    Object::member_list list = { { L"1", new Boolean } };
+    object::member_list list = { { L"1", new Boolean } };
 
-    Object::Iterator begin (list.begin ());
-    Object::Iterator current = begin;
+    object::Iterator begin (list.begin ());
+    object::Iterator current = begin;
 
     CPPUNIT_ASSERT_MESSAGE ("current++ == begin", current++ == begin);
     CPPUNIT_ASSERT_MESSAGE ("current != begin", current != begin);
@@ -135,10 +135,10 @@ public:
   void
   test_begin_end ()
   {
-    Object o = L"{\"1\":true,\"2\":false}";
+    object o = L"{\"1\":true,\"2\":false}";
 
-    Object::Iterator begin (o._member_list.begin ());
-    Object::Iterator end (o._member_list.end ());
+    object::Iterator begin (o._member_list.begin ());
+    object::Iterator end (o._member_list.end ());
 
     CPPUNIT_ASSERT_MESSAGE ("Object::begin ()", begin == o.begin ());
     CPPUNIT_ASSERT_MESSAGE ("Object::end ()", end == o.end ());

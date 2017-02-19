@@ -8,43 +8,43 @@
 #include "json_object_iterator.h"
 using namespace Format;
 
-Object::Object () : json () {}
+object::object () : json () {}
 
-Object::Object (const wchar_t *text)
+object::object (const wchar_t *text)
   : json (text, false)
 {
   (void) parse (text);
 }
 
-Object::Object(std::initializer_list<std::pair<std::__cxx11::wstring, Value *> > il)
+object::object(std::initializer_list<std::pair<std::__cxx11::wstring, Value *> > il)
   : json(), _member_list (il.begin (), il.end ())
 {
 }
 
-Object::Object (json *parent)
+object::object (json *parent)
   : json::json (parent)
 {
 }
 
-Object::Object (const Object &other)
+object::object (const object &other)
   : json(other)
 {
   (void) clone (other);
 }
 
-Object::Object (const Value *ov, const Object &nv)
+object::object (const Value *ov, const object &nv)
   : json (ov, nv)
 {
   (void) clone (nv);
 }
 
-Object::~Object ()
+object::~object ()
 {
  _clear ();
 }
 
 const wchar_t *
-Object::parse (const wchar_t *json)
+object::parse (const wchar_t *json)
 {
   if (json == 0)
     throw json_syntax_error (UNEX_END);
@@ -92,7 +92,7 @@ Object::parse (const wchar_t *json)
 }
 
 bool
-Object::_pair ()
+object::_pair ()
 {
   wchar_t endc = 0;
 
@@ -152,19 +152,19 @@ Object::_pair ()
 //}
 
 json_iterator *
-Object::iterator () const
+object::iterator () const
 {
   return new object_iterator (_member_list);
 }
 
 Value &
-Object::_assign (const Object &nv)
+object::_assign (const object &nv)
 {
-  return _parent ? _parent->_assign (this, new Object (this, nv)) : *(clone (nv));
+  return _parent ? _parent->_assign (this, new object (this, nv)) : *(clone (nv));
 }
 
 Value &
-Object::_at (const wchar_t *key)
+object::_at (const wchar_t *key)
 {
   try
     {
@@ -182,7 +182,7 @@ Object::_at (const wchar_t *key)
 }
 
 Value &
-Object::_assign (Value *ov, Value *nv)
+object::_assign (Value *ov, Value *nv)
 {
   const wchar_t *key = ov->key ();
 
@@ -195,7 +195,7 @@ Object::_assign (Value *ov, Value *nv)
 }
 
 void
-Object::_clear ()
+object::_clear ()
 {
   for (auto it = _member_list.begin (); it != _member_list.end (); it = _member_list.erase (it))
     {
@@ -204,9 +204,9 @@ Object::_clear ()
 }
 
 Value *
-Object::clone (const Value &other)
+object::clone (const Value &other)
 {
-  const Object & nv = static_cast<const Object &>(other);
+  const object & nv = static_cast<const object &>(other);
 
   _clear ();
 
@@ -228,7 +228,7 @@ Object::clone (const Value &other)
 }
 
 size_t
-Object::strLength () const noexcept
+object::strLength () const noexcept
 {
   if (_member_list.empty ())
     return 2;
@@ -248,7 +248,7 @@ Object::strLength () const noexcept
 }
 
 const wchar_t *
-Object::strValue (wchar_t *offset) const
+object::strValue (wchar_t *offset) const
 {
   wchar_t *str_value[2] = { 0, 0 };
 
@@ -289,7 +289,7 @@ Object::strValue (wchar_t *offset) const
 }
 
 Value &
-Object::erase (const Value & v) noexcept
+object::erase (const Value & v) noexcept
 {
   auto it = _member_list.find (v.key ());
 

@@ -18,18 +18,18 @@ public:
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
-        Object o[] = {
-          Object (),
-          Object (L"{}"),
-          Object (p[pidx]),
-          Object {{L"1", new number (1)}}
+        object o[] = {
+          object (),
+          object (L"{}"),
+          object (p[pidx]),
+          object {{L"1", new number (1)}}
         };
       }
 
     delete p[1];
 
-    Object src  = L"{\"key\":true}";
-    Object copy = src;
+    object src  = L"{\"key\":true}";
+    object copy = src;
 
     CPPUNIT_ASSERT_MESSAGE ("object", & copy != & src);
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("object._member_list.size ()", (size_t) 1, copy._member_list.size ());
@@ -79,7 +79,7 @@ public:
 
           size_t charc = wcslen (startp);
 
-          Object *o = new Object (p[pidx]);
+          object *o = new object (p[pidx]);
 
           const wchar_t *readp = o->parse (startp);
 
@@ -89,7 +89,7 @@ public:
 
           if (o->count () > 0)
             {
-              Object & oo = *o;
+              object & oo = *o;
 
               ASSERT_EQUAL_IDX ("value.type", (*it).type, oo[L"k"].type ());
               ASSERT_EQUAL_IDX ("*(value.key)", (wchar_t) L'k', *(oo[(L"k")].key ()));
@@ -119,7 +119,7 @@ public:
     TEST_IT_START;
       const wchar_t *startp = (*it).startp;
 
-      Object *o = new Object ();
+      object *o = new object ();
 
       (void) o->parse (startp);
 
@@ -130,7 +130,7 @@ public:
           for (auto it = o->_member_list.begin (); it != o->_member_list.end (); ++it, idx++)
             {
               const wchar_t *k = (*it).first.c_str ();
-              Object & oo = *o;
+              object & oo = *o;
               ASSERT_EQUAL_IDX ("value.key", 0, wcscmp (k, oo[k].key ()));
             }
         }
@@ -145,7 +145,7 @@ public:
   virtual void
   test_operator_at_key ()
   {
-    Object o;
+    object o;
 
     o._member_list.emplace (L"0", new Boolean (true));
 
@@ -172,14 +172,14 @@ public:
   virtual void
   test_operator_at_index ()
   {
-    Object o;
+    object o;
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("o[size_t].type ()", Value::undefined_t, o[(size_t) 0].type ());
   }
 
   virtual void
   test__at ()
   {
-    Object o;
+    object o;
 
     o._member_list.emplace (L"key1", new Boolean (true));
 
@@ -210,7 +210,7 @@ public:
   void
   test__pair ()
   {
-    Object *p = new Object ();
+    object *p = new object ();
 
     struct assert {
       const wchar_t *startp;
@@ -233,7 +233,7 @@ public:
 
       const wchar_t *startp = (*it).startp;
 
-      Object *o = new Object (p);
+      object *o = new object (p);
 
       o->_readp = startp;
       bool status = o->_pair ();
@@ -251,7 +251,7 @@ public:
   virtual void
   test_assign_all_values ()
   {
-    Object obj_parent;
+    object obj_parent;
     array arr_parent;
 
     json *parents[] = {
@@ -272,7 +272,7 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object_t, L"key_1",  0, 1,  { PASS, PASS, PASS } },
+      { new object (L"{\"k1\":true,\"k2\":false}"), Value::object_t, L"key_1",  0, 1,  { PASS, PASS, PASS } },
       { new array (L"[]"), Value::array_t, L"key_2",  0, 2,  { PASS, PASS, FAIL } },
       { new string (L"\"x\""), Value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
       { new number (), Value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
@@ -294,7 +294,7 @@ public:
                 if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
 
           /// old_value: value from Value[key], any value
-          Object *old_value = new Object;
+          object *old_value = new object;
           old_value->_parent = parents[pidx];
 
           old_value->_member_list.clear ();
@@ -309,7 +309,7 @@ public:
 
           if ((*it).new_value->type () == Value::object_t)
             {
-              Object *new_o_value = static_cast<Object *>((*it).new_value);
+              object *new_o_value = static_cast<object *>((*it).new_value);
 
               // old_value->_assign (*new_o_value); // Can't do. *old_value is free'd
               *old_value = *new_o_value;
@@ -361,7 +361,7 @@ public:
   virtual void
   test__clear ()
   {
-    Object o = L"{\"a\":true,\"b\":false}";
+    object o = L"{\"a\":true,\"b\":false}";
     o._clear ();
 
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("object._member_list.size ()", (size_t) 0, o._member_list.size ());
@@ -391,7 +391,7 @@ public:
 
     TEST_IT_START
 
-        Object o = (*it).input;
+        object o = (*it).input;
 
         ASSERT_EQUAL_IDX ("o.strLength ()", (*it).length, o.strLength ());
 
@@ -402,7 +402,7 @@ public:
   test_strValue () override
   {
     // return;
-    Object p;
+    object p;
 
     json *parent[] = {
       0, &p
@@ -435,7 +435,7 @@ public:
 
           size_t len = wcslen ((*it).output[pidx]);
 
-          Object o;
+          object o;
 
           o._parent = parent[pidx];
 
@@ -472,7 +472,7 @@ public:
   virtual void
   test_erase () override
   {
-    Object o;
+    object o;
 
     Value *v[3]= {
       new Boolean (),

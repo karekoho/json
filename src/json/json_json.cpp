@@ -147,7 +147,7 @@ json::_make_value ()
       value_ = new string (this, charc);
     }
   else if (readc == _sc::begin_object)      // Object
-    value_ = new Object (this);
+    value_ = new object (this);
 
   else if (readc == _sc::begin_array)       // Array
     value_ = new array (this);

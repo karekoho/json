@@ -125,7 +125,7 @@ public:
   virtual void
   test_assign_all_values ()
   {
-    Object obj_parent;
+    object obj_parent;
     array arr_parent;
 
     json *parents[] = {
@@ -147,7 +147,7 @@ public:
 
     std::vector<struct assert > test = {
       { new array (L"[true,false]"), Value::array_t, L"key_2",  0, 1,  { PASS, PASS, PASS } },
-      { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object_t, L"key_1",  0, 2,  { PASS, PASS, FAIL } },
+      { new object (L"{\"k1\":true,\"k2\":false}"), Value::object_t, L"key_1",  0, 2,  { PASS, PASS, FAIL } },
       { new string (L"\"x\""), Value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
       { new number (), Value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
       { new Boolean (true), Value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },

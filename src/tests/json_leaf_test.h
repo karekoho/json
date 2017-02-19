@@ -19,7 +19,7 @@ public:
     // stringify calls strValue which always returns string value
     // TODO: move to test_strValue
 
-    Object op;
+    object op;
 
     json *parent[2] = {
       0, & op,

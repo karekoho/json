@@ -19,7 +19,7 @@ namespace Format
      * @brief Object_Iterator
      * @param umap
      */
-    object_iterator (const Object::member_list & list);
+    object_iterator (const object::member_list & list);
 
     /**
      * @brief next

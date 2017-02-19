@@ -26,7 +26,7 @@ namespace Format {
 /**
  * @brief The json class
  */
-class Object;
+class object;
 class array;
 class json : public Value
 {
@@ -36,7 +36,7 @@ class json : public Value
 #endif
 
   friend const wchar_t * leaf::stringify ();
-  friend class Object;  // For stringify { _parent->_str_value }
+  friend class object;  // For stringify { _parent->_str_value }
   friend class array;   // For stringify { _parent->_str_value }
 
 public:
