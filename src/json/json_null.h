@@ -92,7 +92,7 @@ class null : public leaf
    * @return
    */
   inline std::nullptr_t
-  value () const
+  get () const
   { return nullptr; }
 
   /**

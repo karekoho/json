@@ -30,12 +30,12 @@ public:
         }\
     }";
 
-    (void) j.value ();
-    (void) j[L"Image"].value ();
-    (void) j[L"Image"][L"Thumbnail"].value ();
-    (void) j[L"Image"][L"Thumbnail"][L"Url"].value ();
-    (void) j[L"Image"][L"Animated"].value ();
-    (void) j[L"Image"][L"IDs"].value ();
+    (void) j.get ();
+    (void) j[L"Image"].get ();
+    (void) j[L"Image"][L"Thumbnail"].get ();
+    (void) j[L"Image"][L"Thumbnail"][L"Url"].get ();
+    (void) j[L"Image"][L"Animated"].get ();
+    (void) j[L"Image"][L"IDs"].get ();
   }
 
   virtual void

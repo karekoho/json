@@ -51,8 +51,8 @@ public:
 
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("src[1]._double_value", (double) 0, src[1]._double_value);
 
-    CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[0].value ()", (double) 10, copy[0].value ());
-    CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[1].value ()", (double) 100, copy[1].value ());
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[0].value ()", (double) 10, copy[0].get ());
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[1].value ()", (double) 100, copy[1].get ());
 
   }
 
@@ -96,7 +96,7 @@ public:
       n._double_valuep = 0;
 
       ASSERT_EQUAL_IDX ("n._readp", startp + (*it).move, readp);
-      ASSERT_EQUAL_IDX ("n.value ()", (*it).dval, n.value ());
+      ASSERT_EQUAL_IDX ("n.value ()", (*it).dval, n.get ());
 
     TEST_IT_END;
   }
@@ -419,7 +419,7 @@ public:
             }
           else if (new_value->type () == Value::number_t)
             {
-              ASSERT_EQUAL_IDX ("old_value.value ()", (double) 10, old_value->value ());
+              ASSERT_EQUAL_IDX ("old_value.value ()", (double) 10, old_value->get ());
               // ASSERT_EQUAL_IDX ("old_value.value ()", static_cast<Number *>(new_value)->value (), old_value.value ());
             }
 

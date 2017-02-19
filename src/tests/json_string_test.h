@@ -38,7 +38,7 @@ public:
 
     CPPUNIT_ASSERT_MESSAGE ("string", & copy != & src);
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("src._string_value.empty ()", true, src._string_value[0].empty () );
-    CPPUNIT_ASSERT_MESSAGE ("copy.value ()", wcscmp (L"xxx", copy.value ()) == 0);
+    CPPUNIT_ASSERT_MESSAGE ("copy.value ()", wcscmp (L"xxx", copy.get ()) == 0);
   }
 
   virtual void
@@ -69,12 +69,12 @@ public:
 
               string *s = new string (p[pidx], move);
 
-              std::wstring ss = s->value ();
+              std::wstring ss = s->get ();
 
               CPPUNIT_ASSERT_MESSAGE ("string.empty ()", ss.empty () );
 
               const wchar_t *readp = s->parse (startp);
-              ss = s->value ();
+              ss = s->get ();
 
               // std::cout << readp << "" << ss.length () << " " << ss << std::endl;
 
@@ -182,7 +182,7 @@ public:
               }
             else if (new_value->type () == Value::string_t)
               {
-                CPPUNIT_ASSERT_MESSAGE ("old_value.value ()", wcscmp (L"xxx", old_value->value ()) == 0);
+                CPPUNIT_ASSERT_MESSAGE ("old_value.value ()", wcscmp (L"xxx", old_value->get ()) == 0);
               }
 
             TEST_IT_END;

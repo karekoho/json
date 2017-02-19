@@ -62,7 +62,7 @@ string::_assign (const string &nv)
 }
 
 const wchar_t *
-string::value () const
+string::get () const
 {
   if (_string_value[0].empty () && _startp && _charc > 0)
     _string_value[0].assign (_startp + 1, _charc - 2);

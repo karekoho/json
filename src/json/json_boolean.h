@@ -149,7 +149,7 @@ namespace Format
    * @brief value
    * @return
    */
-      inline bool value () const
+      inline bool get () const
       { return _boolean_value; }
 
       /**

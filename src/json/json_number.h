@@ -38,7 +38,7 @@ namespace Format
      * @brief Number
      * @param value
      */
-    explicit number (const double value);
+    explicit number (const double get);
 
     /**
      * @brief Number
@@ -122,7 +122,7 @@ namespace Format
      * @return
      */
     inline double
-    value () const
+    get () const
     {
       return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
 

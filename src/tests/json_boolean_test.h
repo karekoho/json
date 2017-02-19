@@ -38,7 +38,7 @@ public:
     Boolean copy = src;
 
     CPPUNIT_ASSERT_MESSAGE ("boolean", & src != & copy);
-    CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.value ()", true, copy.value ());
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.value ()", true, copy.get ());
   }
 
   virtual void
@@ -144,7 +144,7 @@ public:
             {
               if (new_value->type () == Value::boolean_t)
                 {
-                  ASSERT_EQUAL_IDX ("old_value.value ()", (bool) true, old_value->value ());
+                  ASSERT_EQUAL_IDX ("old_value.value ()", (bool) true, old_value->get ());
                 }
             }
           TEST_IT_END;

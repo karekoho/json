@@ -13,7 +13,9 @@
   class json_value_test;
   class json_leaf_test;
 #endif
-namespace Format {
+
+namespace Format
+{
 /**
  * @brief The json_value class
  */
@@ -294,7 +296,7 @@ class Value
    * @return
    */
   inline const wchar_t *
-  value () const
+  get () const
   { return strValue (); }
 
   /**

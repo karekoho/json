@@ -224,7 +224,7 @@ number::clone (const Value &other)
 size_t
 number::strLength () const noexcept
 {
- (void) value ();
+ (void) get ();
 
   if (_double_str.empty ())
     _double_str = std::to_wstring (_double_value);
@@ -235,7 +235,7 @@ number::strLength () const noexcept
 const wchar_t *
 number::strValue (wchar_t *) const
 {
-  (void) value ();
+  (void) get ();
 
   if (_double_str.empty ())
     _double_str = std::to_wstring (_double_value);
