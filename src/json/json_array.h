@@ -101,35 +101,7 @@ public:
    * @return
    */
   virtual const wchar_t *
-  parse ( const wchar_t *json);
-
-  /**
-   * @brief at
-   * @param key
-   * @return
-   */
-  virtual Value &
-  at (const wchar_t *key) const
-  {
-    wchar_t *end = 0;
-    return at (std::wcstoll (key, & end, 10));
-  }
-
-  /**
-   * @brief at
-   * @param index
-   * @return
-   */
-  Value &
-  at (size_t index) const;
-
-  /**
-   * @brief assign
-   * @param ov
-   * @param nv
-   */
-  virtual Value &
-  _assign (Value *ov, Value *nv);
+  parse (const wchar_t *json);
 
   /**
    * @brief type
@@ -309,7 +281,7 @@ protected:
    * @return
    */
   virtual Value &
-   _at (const wchar_t *key)
+   _at (const wchar_t *key) override
    {
      wchar_t *end = 0;
      return _at (std::wcstoll (key, & end, 10));
@@ -329,16 +301,24 @@ protected:
    * @return
    */
   virtual Value &
-  _assign (const Value & nv)
+  _assign (const Value & nv) override
   { return Value::_assign (nv); }
+
+  /**
+   * @brief assign
+   * @param ov
+   * @param nv
+   */
+  virtual Value &
+  _assign (Value *ov, Value *nv) override;
 
   /**
    * @brief _at
    * @param index
    * @return
    */
-  Value &
-  _at (size_t index);
+  virtual Value &
+  _at (size_t index) override;
 
   /**
    * @brief _clear
