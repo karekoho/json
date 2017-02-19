@@ -7,7 +7,7 @@
   class json_undefined_test;
 #endif
 
-namespace Format {
+namespace format {
 /**
  * @brief The undefined class
  */

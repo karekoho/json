@@ -6,7 +6,7 @@
 #include "json_number.h"
 #include "json_boolean.h"
 #include "json_object_iterator.h"
-using namespace Format;
+using namespace format;
 
 object::object () : json () {}
 

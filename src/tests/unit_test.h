@@ -81,9 +81,9 @@
 #ifndef TEST_IT_END
   #define TEST_IT_END\
   \
-} catch (Format::json_syntax_error & se) { this->_errorc[ACTUAL]++; std::cerr << se.what () << std::endl; }\
-  catch (Format::json_out_of_range & oor) { this->_errorc[ACTUAL]++; std::cerr << oor.what () << std::endl; }\
-  catch (Format::json_error & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
+} catch (format::json_syntax_error & se) { this->_errorc[ACTUAL]++; std::cerr << se.what () << std::endl; }\
+  catch (format::json_out_of_range & oor) { this->_errorc[ACTUAL]++; std::cerr << oor.what () << std::endl; }\
+  catch (format::json_error & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
   catch (const char *error) { this->_errorc[ACTUAL]++; std::cerr << error << std::endl; } \
   catch (const wchar_t *error) { this->_errorc[ACTUAL]++; std::cerr << error << std::endl; } }\
 (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]); \
@@ -119,17 +119,17 @@ public:
     _errorc[0] =_errorc[1] = _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0;
   }
 
-  std::unordered_map<std::wstring, Format::value *> &
-  member_list_clear (std::unordered_map<std::wstring, Format::value *> & m)
+  std::unordered_map<std::wstring, format::value *> &
+  member_list_clear (std::unordered_map<std::wstring, format::value *> & m)
   {
     for (auto it = m.begin (); it != m.end (); it = m.erase (it))
-      delete static_cast <std::pair<std::wstring, Format::value *>>(*it).second;
+      delete static_cast <std::pair<std::wstring, format::value *>>(*it).second;
 
     return m;
   }
 
-  std::vector<Format::value *> &
-  element_list_clear (std::vector<Format::value *> & v)
+  std::vector<format::value *> &
+  element_list_clear (std::vector<format::value *> & v)
   {
     for (auto it = v.begin (); it != v.end (); it = v.erase (it))
       delete *it;

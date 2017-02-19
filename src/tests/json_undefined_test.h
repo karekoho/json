@@ -3,7 +3,7 @@
 
 #include "json_leaf_test.h"
 
-namespace Format {
+namespace format {
 
 /**
  * 8.
@@ -19,9 +19,9 @@ public:
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
-        Format::undefined *u[] = {
-          new Format::undefined,
-          new Format::undefined (p[pidx]),
+        format::undefined *u[] = {
+          new format::undefined,
+          new format::undefined (p[pidx]),
         };
 
         delete u[0];
@@ -30,8 +30,8 @@ public:
 
     delete p[1];
 
-    Format::undefined src;
-    Format::undefined copy = src;
+    format::undefined src;
+    format::undefined copy = src;
 
     CPPUNIT_ASSERT_MESSAGE ("undefined", & copy != & src);
   }
@@ -79,10 +79,10 @@ public:
 
           /// old_value: value from Value[key], any value
 
-          Format::undefined *old_value = new Format::undefined;
+          format::undefined *old_value = new format::undefined;
           old_value->_parent = parents[pidx];
 
-          arr_parent._element_list.push_back (new Format::undefined);
+          arr_parent._element_list.push_back (new format::undefined);
           old_value->setKey ((*it).key, wcslen ((*it).key));
 
           (*it).index  = arr_parent._element_list.size () - 1;

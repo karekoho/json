@@ -20,7 +20,7 @@
   class json_test;
   class json_leaf_test;
 #endif
-namespace Format {
+namespace format {
   typedef value * (*Reviver)(const wchar_t *, value *);
 
 /**
@@ -242,7 +242,7 @@ protected:
    */
   virtual value &
   _at (const wchar_t *key) override
-  { return __hasRoot() ? (*__root)[key] : Format::shared_undefined::instance (); }
+  { return __hasRoot() ? (*__root)[key] : format::shared_undefined::instance (); }
 
   /**
    * @brief _at
@@ -251,7 +251,7 @@ protected:
    */
   virtual value &
   _at (size_t index) override
-  { return __hasRoot() ? (*__root)[index] : Format::shared_undefined::instance (); }
+  { return __hasRoot() ? (*__root)[index] : format::shared_undefined::instance (); }
 
   /**
    * @brief _make_value

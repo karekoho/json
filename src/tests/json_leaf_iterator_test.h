@@ -3,7 +3,7 @@
 
 #include "unit_test.h"
 
-namespace Format
+namespace format
 {
 /**
  * 11.

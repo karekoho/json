@@ -16,7 +16,7 @@
   class json_number_test;
 #endif
 
-namespace Format
+namespace format
 {
   /**
    * @brief The number class

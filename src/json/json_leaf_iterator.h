@@ -3,7 +3,7 @@
 
 #include "json_iterator.h"
 
-namespace Format
+namespace format
 {
   /**
    * @brief The Leaf_Iterator class

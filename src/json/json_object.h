@@ -4,7 +4,7 @@
 #include "json_json.h"
 #include "json_undefined.h"
 
-namespace Format
+namespace format
 {
   /**
    * @brief The object class

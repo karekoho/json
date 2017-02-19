@@ -8,7 +8,7 @@
   class json_boolean_test;
 #endif
 
-namespace Format
+namespace format
 {
   /**
     * @brief The boolean class

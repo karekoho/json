@@ -3,7 +3,7 @@
 
 #include <json_value_test_interface.h>
 #include "json_value_parse_mock.h"
-namespace Format {
+namespace format {
 /**
  * 0.
  * @brief The json_value_test class
@@ -41,7 +41,7 @@ public:
 
         const wchar_t *startp = (*it).startp;
 
-        Format::json_value_mock *m  = new Format::json_value_mock;
+        format::json_value_mock *m  = new format::json_value_mock;
 
         m->_startp = m->_readp = startp;
 
@@ -187,7 +187,7 @@ public:
 
       TEST_IT_START
 
-          (*it).val->_assign (Format::undefined ());
+          (*it).val->_assign (format::undefined ());
 
           ASSERT_EQUAL_IDX ("a.count ()", (*it).size, a.count ());
 
@@ -216,7 +216,7 @@ public:
         { new number, value::number_t, PASS },
         { new Boolean, value::boolean_t, PASS },
         { new null, value::null_t, PASS },
-        { new Format::undefined, value::undefined_t, PASS }
+        { new format::undefined, value::undefined_t, PASS }
       };
 
       for (size_t hdx = 0; hdx < 2; hdx++)

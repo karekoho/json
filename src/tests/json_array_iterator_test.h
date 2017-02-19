@@ -2,7 +2,7 @@
 #define JSON_ARRAY_ITERATOR_TEST
 
 #include "unit_test.h"
-namespace Format {
+namespace format {
 /**
  * 10.
  *

@@ -1,6 +1,6 @@
 #include "json_leaf_iterator.h"
 
-using namespace Format;
+using namespace format;
 
 leaf_iterator::leaf_iterator (const value *v)
   : _value (v),

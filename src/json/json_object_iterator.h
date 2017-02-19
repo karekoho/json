@@ -6,7 +6,7 @@
 
 #include <unordered_map>
 
-namespace Format
+namespace format
 {
   /**
    * @brief The Object_Iterator class

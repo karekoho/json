@@ -6,7 +6,7 @@
 
 #include <vector>
 
-namespace Format
+namespace format
 {
   /**
    * @brief The Array_Iterator class

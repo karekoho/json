@@ -7,7 +7,7 @@
 #ifdef UNIT_TEST
  class json_null_test;
 #endif
-namespace Format {
+namespace format {
 /**
  * @brief The Null class
  */

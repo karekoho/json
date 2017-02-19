@@ -14,7 +14,7 @@ class json_null_test;
 class json_undefined_test;
 #endif
 
-namespace Format {
+namespace format {
 
  /**
   * @brief The array class

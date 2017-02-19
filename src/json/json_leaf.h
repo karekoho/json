@@ -3,7 +3,7 @@
 
 #include "json_value.h"
 
-namespace Format
+namespace format
 {
 class leaf : public value
 {

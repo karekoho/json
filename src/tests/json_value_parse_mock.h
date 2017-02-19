@@ -3,7 +3,7 @@
 
 #include "unit_test.h"
 //using namespace Format;
-namespace Format  {
+namespace format  {
 class json_value_mock : public value
 {
 public:
@@ -19,11 +19,11 @@ public:
 
     virtual value &
     at (const wchar_t *) const
-    { return *(new Format::undefined); }
+    { return *(new format::undefined); }
 
     virtual value &
     at (size_t) const
-    { return *(new Format::undefined); }
+    { return *(new format::undefined); }
 
     virtual value::object_type
     type () const

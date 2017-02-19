@@ -7,7 +7,7 @@
 #include <wchar.h>
 #include <alloca.h>
 
-namespace Format {
+namespace format {
   /**
  * @brief The JSON_Error class
  */

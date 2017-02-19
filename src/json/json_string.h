@@ -7,7 +7,7 @@
   class json_string_test;
 #endif
 
-namespace Format
+namespace format
 {
   /**
    * @brief The string class

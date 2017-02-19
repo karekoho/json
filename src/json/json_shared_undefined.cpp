@@ -1,6 +1,6 @@
 #include "json_shared_undefined.h"
 
-using namespace Format;
+using namespace format;
 
 shared_undefined * shared_undefined::__instance = 0;
 

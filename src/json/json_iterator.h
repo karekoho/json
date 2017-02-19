@@ -3,7 +3,7 @@
 
 #include "json_value.h"
 
-namespace Format
+namespace format
 {
   /**
    * @brief The Iterator class
@@ -21,7 +21,7 @@ namespace Format
      * @brief next
      * @return
      */
-    virtual const Format::value & next () = 0;
+    virtual const format::value & next () = 0;
 
     /**
      * @brief hasNext

@@ -1,5 +1,5 @@
 #include "json_object_iterator.h"
-using namespace Format;
+using namespace format;
 
 object_iterator::object_iterator (const object::member_list &list)
   : _begin (list.begin ()),

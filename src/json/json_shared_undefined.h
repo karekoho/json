@@ -3,7 +3,7 @@
 
 #include "json_undefined.h"
 
-namespace Format
+namespace format
 {
   /**
    * @brief The Shared_Undefined class

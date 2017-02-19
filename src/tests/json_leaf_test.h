@@ -3,7 +3,7 @@
 
 #include "json_value_test_interface.h"
 
-namespace Format {
+namespace format {
 
 /**
  * 12.

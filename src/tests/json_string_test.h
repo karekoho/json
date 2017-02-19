@@ -3,7 +3,7 @@
 
 #include "json_leaf_test.h"
 
-namespace Format {
+namespace format {
 
 /**
  * 4.
@@ -134,7 +134,7 @@ public:
             string *old_value = new string ();
             old_value->_parent = parents[pidx];
 
-            arr_parent._element_list.push_back (new Format::undefined);
+            arr_parent._element_list.push_back (new format::undefined);
             old_value->setKey ((*it).key, wcslen ((*it).key));
 
             (*it).index  = arr_parent._element_list.size () - 1;

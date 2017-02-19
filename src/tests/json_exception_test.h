@@ -29,7 +29,7 @@ public:
 
     TEST_IT_START;
 
-      Format::json_syntax_error e ("a:", L'b');
+      format::json_syntax_error e ("a:", L'b');
 
       const char *output = e.what ();
 
@@ -55,7 +55,7 @@ public:
 
     TEST_IT_START;
 
-      Format::json_syntax_error e ("a:", L"abcd", (*it).charc);
+      format::json_syntax_error e ("a:", L"abcd", (*it).charc);
 
       const char *output = e.what ();
 
