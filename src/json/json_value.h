@@ -183,6 +183,24 @@ namespace format
     type () const /* TODO: noexcept */ = 0;
 
     /**
+     * @brief operator ==
+     * @param t
+     * @return
+     */
+    inline bool
+    operator ==(value_t t) const noexcept
+    { return type () == t; }
+
+    /**
+     * @brief operator ==
+     * @param v
+     * @return
+     */
+    inline bool
+    operator ==(const value & v) const noexcept
+    { return operator ==(v.type ()); }
+
+    /**
      * @brief size
      * @return
      */

@@ -258,6 +258,20 @@ public:
     {
     }
 
+    void
+    test_operator_equal_value_t ()
+    {
+      boolean b;
+      CPPUNIT_ASSERT_MESSAGE ("value == value_t", b == value::boolean_t);
+    }
+
+    void
+    test_operator_equal_value ()
+    {
+      boolean b[2];
+      CPPUNIT_ASSERT_MESSAGE ("value == value", b[0] == b[1]);
+    }
+
     /**
      * 0.
      * @brief suite
@@ -268,14 +282,14 @@ public:
     {
       CppUnit::TestSuite *s = new CppUnit::TestSuite ("json value test");
 
-      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_copy", &json_value_test::test_assign_copy));
-      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_undefined", &json_value_test::test_assign_undefined));
-
-      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lookahead", &json_value_test::test_lookahead));
-      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_literal", &json_value_test::test_is_literal));
-      s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_quoted", &json_value_test::test_string));
-
-      s->addTest (new CppUnit::TestCaller<json_value_test> ("test__str_append", &json_value_test::test__str_append));
+      /* 0. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_copy", &json_value_test::test_assign_copy));
+      /* 1. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_undefined", &json_value_test::test_assign_undefined));
+      /* 2. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lookahead", &json_value_test::test_lookahead));
+      /* 3. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_literal", &json_value_test::test_is_literal));
+      /* 4. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_quoted", &json_value_test::test_string));
+      /* 5. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__str_append", &json_value_test::test__str_append));
+      /* 6. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value_t", &json_value_test::test_operator_equal_value_t));
+      /* 7. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value", &json_value_test::test_operator_equal_value));
 
       return s;
     }
