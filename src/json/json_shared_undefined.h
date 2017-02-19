@@ -30,11 +30,6 @@ public:
 protected:
 
   /**
-   * @brief __instance
-   */
-  static Shared_Undefined *__instance;
-
-  /**
    * @brief Shared_Undefined
    */
   Shared_Undefined ()
@@ -50,6 +45,13 @@ protected:
     :  Undefined (parent)
   {
   }
+
+private:
+
+  /**
+   * @brief __instance
+   */
+  static Shared_Undefined *__instance;
 };
 
 /**
@@ -75,7 +77,7 @@ public:
   static Value *
   instance (JSON *parent);
 
-private:
+protected:
 
   /**
    * @brief No_Value
@@ -83,6 +85,13 @@ private:
   No_Value (JSON *parent)
     : Shared_Undefined (parent)
   {}
+
+private:
+
+  /**
+   * @brief __instance
+   */
+  static No_Value *__instance;
 };
 
 #endif // SHARED_UNDEFINED_H

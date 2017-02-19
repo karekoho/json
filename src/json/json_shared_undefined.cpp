@@ -11,6 +11,8 @@ Shared_Undefined::instance ()
     return *__instance;
   }
 
+No_Value * No_Value::__instance = 0;
+
 Value *
 No_Value::instance (JSON *parent)
 {
