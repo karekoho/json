@@ -44,7 +44,7 @@ namespace format
      */
     object (std::initializer_list<std::pair<std::wstring, value *>> il);
 
-  /**
+    /**
      * @brief Object
      * @param endp
      * @param parent
