@@ -173,21 +173,6 @@ public:
   test_operator_at_index ()
   {
     Object o;
-
-    /**
-      FIXME:
-
-      ./ut: FAIL
-        1) test: test_operator_at_index (F) line: 191 ../../src/tests/json_object_test.h
-        equality assertion failed
-        - Expected: 1
-        - Actual  : 0
-        - o[size_t].type ()
-
-      ./ut 2,6: PASS
-
-     */
-
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("o[size_t].type ()", Value::undefined, o[(size_t) 0].type ());
   }
 
