@@ -7,7 +7,7 @@ namespace Format {
 /**
  * @brief The object class
  */
-class Object : public JSON
+class Object : public json
 {
 #ifdef UNIT_TEST
   friend class json_test;
@@ -48,7 +48,7 @@ public:
    * @param parent
    * @param charc
    */
-  Object (JSON *parent);
+  Object (json *parent);
 
   /**
    * @brief Object

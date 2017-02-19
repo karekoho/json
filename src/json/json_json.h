@@ -28,7 +28,7 @@ namespace Format {
  */
 class Object;
 class Array;
-class JSON : public Value
+class json : public Value
 {
 #ifdef UNIT_TEST
   friend class json_test;
@@ -44,20 +44,20 @@ public:
   /**
    * @brief JSON
    */
-  JSON ();
+  json ();
 
   /**
    * @brief json
    * @param json
    */
-  JSON (const wchar_t *json, const bool _parse = true);
+  json (const wchar_t *json, const bool _parse = true);
 
   /**
    * @brief json
    * @param endp
    * @param charc
    */
-  JSON (JSON *parent);
+  json (json *parent);
 
   /**
    * @brief clone
@@ -66,25 +66,25 @@ public:
    */
   virtual Value *
   clone () const
-  { return new JSON (*this);  }
+  { return new json (*this);  }
 
   /**
    * @brief JSON
    * @param other
    */
-  JSON (const JSON &other);
+  json (const json &other);
 
   /**
    * @brief JSON
    * @param ov
    * @param nv
    */
-  JSON (const Value *ov, const JSON &nv);
+  json (const Value *ov, const json &nv);
 
   /**
    * @brief ~JSON
    */
-  virtual ~JSON ();
+  virtual ~json ();
 
   /**
    * @brief parse
@@ -102,8 +102,8 @@ public:
    * @see http://stackoverflow.com/questions/1174169/function-passed-as-template-argument
    */
   static Value *
-  parse (const wchar_t *json, Reviver r)
-  { return new JSON (json, r); }
+  parse (const wchar_t *text, Reviver r)
+  { return new json (text, r); }
 
   /**
    * @brief at
@@ -145,7 +145,7 @@ public:
    * @return
    */
   virtual Value
-  & _assign (const JSON & j);
+  & _assign (const json & j);
 
   /**
    * @brief operator =
@@ -153,7 +153,7 @@ public:
    * @return
    */
   inline Value &
-  operator =(const JSON & j)
+  operator =(const json & j)
   { return _assign (j); }
 
   /**
@@ -231,7 +231,7 @@ public:
    */
   virtual Value *
   clone (const Value *) const override
-  { return new JSON (*this); }
+  { return new json (*this); }
 
 protected:
 
@@ -307,7 +307,7 @@ private:
    * @param json
    * @param r
    */
-  JSON (const wchar_t *json, Reviver r);
+  json (const wchar_t *json, Reviver r);
 
   /**
    * @brief __hasRoot

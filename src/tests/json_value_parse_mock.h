@@ -8,7 +8,7 @@ class json_value_mock : public Value
 {
 public:
 
-    json_value_mock (JSON *parent = 0) : Value (parent)
+    json_value_mock (json *parent = 0) : Value (parent)
     {}
 
     virtual ~json_value_mock () {}

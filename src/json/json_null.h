@@ -32,7 +32,7 @@ class Null : public Leaf
    * @param parent
    * @param charc
    */
-  Null (JSON *parent)
+  Null (json *parent)
     : Leaf (parent)
   {}
 

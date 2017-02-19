@@ -32,7 +32,7 @@ Value::Value (const wchar_t *)
 {
 }
 
-Value::Value (JSON *parent)
+Value::Value (json *parent)
     : _startp (0),
       _readp (0),
       _parent (parent),

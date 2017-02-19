@@ -21,11 +21,11 @@ public:
 
     Object op;
 
-    JSON *parent[2] = {
+    json *parent[2] = {
       0, & op,
     };
 
-    JSON *p = 0;
+    json *p = 0;
 
     struct assert
     {

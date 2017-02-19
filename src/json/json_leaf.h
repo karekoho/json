@@ -24,7 +24,7 @@ public:
    * @brief Leaf
    * @param parent
    */
-  Leaf (JSON *parent) : Value (parent)
+  Leaf (json *parent) : Value (parent)
   {}
 
   /**

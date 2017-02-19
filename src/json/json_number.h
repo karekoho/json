@@ -48,7 +48,7 @@ public:
    * @brief Number
    * @param parent
    */
-  Number (JSON *parent);
+  Number (json *parent);
 
   /**
    * @brief Number

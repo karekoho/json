@@ -19,7 +19,7 @@ namespace Format {
  /**
   * @brief The array class
   */
-  class Array : public JSON
+  class Array : public json
   {
 #ifdef UNIT_TEST
     friend class json_test;
@@ -64,7 +64,7 @@ namespace Format {
    * @param parent
    * @param charc
    */
-    Array (JSON *parent);
+    Array (json *parent);
 
     /**
    * @brief Array

@@ -9,7 +9,7 @@
 #include "json_leaf_iterator.h"
 using namespace Format;
 
-JSON::JSON ()
+json::json ()
   : Value (),
     _str_value { 0, 0 },
     __root (0),
@@ -17,7 +17,7 @@ JSON::JSON ()
 {
 }
 
-JSON::JSON (const wchar_t *json, const bool _parse)
+json::json (const wchar_t *json, const bool _parse)
   : Value (json),
     _str_value { 0, 0 },
     __root (0),
@@ -32,7 +32,7 @@ JSON::JSON (const wchar_t *json, const bool _parse)
     (void) parse (json);
 }
 
-JSON::JSON (const wchar_t *json, Reviver r)
+json::json (const wchar_t *json, Reviver r)
   : Value (json),
     _str_value { 0, 0 },
     __root (0),
@@ -49,7 +49,7 @@ JSON::JSON (const wchar_t *json, Reviver r)
 }
 
 
-JSON::JSON (JSON *parent)
+json::json (json *parent)
   : Value (parent),
     _str_value { 0, 0 },
     __root (0),
@@ -57,7 +57,7 @@ JSON::JSON (JSON *parent)
 {
 }
 
-JSON::JSON (const JSON &other)
+json::json (const json &other)
   : Value (other),
     _str_value { 0, 0 },
     __root (other.__root ? other.__root->clone () : 0),
@@ -65,7 +65,7 @@ JSON::JSON (const JSON &other)
 {
 }
 
-JSON::JSON (const Value *ov, const JSON &nv)
+json::json (const Value *ov, const json &nv)
   : Value (ov, nv),
     _str_value { 0, 0 },
     __root (nv.__hasRoot () ? nv.__root->clone () : 0),
@@ -73,7 +73,7 @@ JSON::JSON (const Value *ov, const JSON &nv)
 {
 }
 
-JSON::~JSON ()
+json::~json ()
 {
   if (_parent == 0 && _str_value[BEGIN])
     {
@@ -86,7 +86,7 @@ JSON::~JSON ()
 }
 
 const wchar_t *
-JSON::JSON::parse (const wchar_t *readp)
+json::json::parse (const wchar_t *readp)
 {
   if (readp == 0 || *readp == 0)
     throw JSON_Syntax_Error (UNEX_END);
@@ -108,7 +108,7 @@ JSON::JSON::parse (const wchar_t *readp)
 }
 
 Value &
-JSON::_assign (const JSON &j)
+json::_assign (const json &j)
 {
   if (j.__hasRoot ())
     {
@@ -121,7 +121,7 @@ JSON::_assign (const JSON &j)
 }
 
 Value &
-JSON::_assign (const Value &v)
+json::_assign (const Value &v)
 {
   delete __root;
 
@@ -131,7 +131,7 @@ JSON::_assign (const Value &v)
 }
 
 Value *
-JSON::_make_value ()
+json::_make_value ()
 {
   Value *value_  = 0;
   long int charc = 0;
@@ -178,7 +178,7 @@ JSON::_make_value ()
 }
 
 Value *
-JSON::_call_reviver (Value *v, const wchar_t *key, size_t index) const
+json::_call_reviver (Value *v, const wchar_t *key, size_t index) const
 {
   if (__reviver == 0)
     return v;

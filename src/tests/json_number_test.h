@@ -16,7 +16,7 @@ public:
   virtual void
   test_ctor_dtor ()
   {
-    JSON *p[] = { 0, new JSON };
+    json *p[] = { 0, new json };
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
@@ -328,7 +328,7 @@ public:
     Object obj_parent;
     Array arr_parent;
 
-    JSON *parents[] = {
+    json *parents[] = {
       & obj_parent,
       & arr_parent,
       0
@@ -396,7 +396,7 @@ public:
               new_value = (*it).new_value;
             }
 
-          JSON *parent = old_value->_parent;
+          json *parent = old_value->_parent;
 
           if (parent)
             {

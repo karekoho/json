@@ -41,7 +41,7 @@ namespace Format
       * @param parent
       * @param value
       */
-      Boolean (JSON *parent, const bool value)
+      Boolean (json *parent, const bool value)
         : Leaf (parent), _boolean_value (value)
       {}
 

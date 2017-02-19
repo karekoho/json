@@ -14,7 +14,7 @@ public:
   virtual void
   test_ctor_dtor ()
   {
-    JSON *p[] = { 0, new JSON () };
+    json *p[] = { 0, new json () };
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
@@ -46,7 +46,7 @@ public:
       int assert_status;
     };
 
-    JSON *p[] = { 0, new JSON () };
+    json *p[] = { 0, new json () };
 
     std::vector<struct assert > test = {
       { L"{}", 0, Value::undefined_t, 0, PASS },
@@ -254,7 +254,7 @@ public:
     Object obj_parent;
     Array arr_parent;
 
-    JSON *parents[] = {
+    json *parents[] = {
       & obj_parent,
       & arr_parent,
       0
@@ -324,7 +324,7 @@ public:
               new_value = (*it).new_value;
             }
 
-          JSON *parent = parents[pidx];
+          json *parent = parents[pidx];
 
           if (parent)
             {
@@ -404,7 +404,7 @@ public:
     // return;
     Object p;
 
-    JSON *parent[] = {
+    json *parent[] = {
       0, &p
     };
 

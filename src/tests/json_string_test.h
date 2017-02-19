@@ -16,7 +16,7 @@ public:
   virtual void
   test_ctor_dtor ()
   {
-    JSON *p[] = { 0, new JSON () };
+    json *p[] = { 0, new json () };
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
@@ -44,7 +44,7 @@ public:
   virtual void
   test_parse_1 ()
     {
-      JSON *p[] = { 0, new JSON () };
+      json *p[] = { 0, new json () };
 
       struct assert
       {
@@ -95,7 +95,7 @@ public:
       Object obj_parent;
       Array arr_parent;
 
-      JSON *parents[] = {
+      json *parents[] = {
         & obj_parent,
         & arr_parent,
         0
@@ -159,7 +159,7 @@ public:
                 new_value = (*it).new_value;
               }
 
-            JSON *parent = parents[pidx];   //  old_value->_parent;
+            json *parent = parents[pidx];   //  old_value->_parent;
 
             if (parent)
               {

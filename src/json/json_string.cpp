@@ -14,7 +14,7 @@ String::String (const wchar_t *json)
   (void) parse (json);
 }
 
-String::String (JSON *parent, size_t charc)
+String::String (json *parent, size_t charc)
   : Leaf (parent),
     _charc (charc)
 {

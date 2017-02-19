@@ -27,7 +27,7 @@ class Undefined : public Leaf
    * @brief Undefined
    * @param parent
    */
-  Undefined (JSON *parent)
+  Undefined (json *parent)
     : Leaf (parent)
   {}
 

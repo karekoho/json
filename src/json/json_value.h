@@ -17,7 +17,7 @@ namespace Format {
 /**
  * @brief The json_value class
  */
-class JSON;
+class json;
 class JSON_Iterator;
 class Undefined;
 class Value
@@ -61,7 +61,7 @@ class Value
    * @param parent
    * @paran charc
    */
-  Value (JSON *parent);
+  Value (json *parent);
 
   /**
    * @brief Value
@@ -192,7 +192,7 @@ class Value
    * @param parent
    */
   inline void
-  setParent (JSON *parent)
+  setParent (json *parent)
   { _parent = parent; }
 
   /**
@@ -301,7 +301,7 @@ class Value
    * @brief parent
    * @return
    */
-  inline JSON *
+  inline json *
   parent () const
   { return _parent; }
 
@@ -390,7 +390,7 @@ protected:
   /**
    * @brief _parent
    */
-  JSON *_parent;
+  json *_parent;
 
   /**
    * @brief charc

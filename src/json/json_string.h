@@ -34,7 +34,7 @@ class String : public Leaf
    * @param parent
    * @param charc
    */
-  String (JSON *parent, size_t charc);
+  String (json *parent, size_t charc);
 
   /**
    * @brief String

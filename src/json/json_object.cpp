@@ -8,32 +8,32 @@
 #include "json_object_iterator.h"
 using namespace Format;
 
-Object::Object () : JSON () {}
+Object::Object () : json () {}
 
-Object::Object (const wchar_t *json)
-  : JSON (json, false)
+Object::Object (const wchar_t *text)
+  : json (text, false)
 {
-  (void) parse (json);
+  (void) parse (text);
 }
 
 Object::Object(std::initializer_list<std::pair<std::__cxx11::wstring, Value *> > il)
-  : JSON(), _member_list (il.begin (), il.end ())
+  : json(), _member_list (il.begin (), il.end ())
 {
 }
 
-Object::Object (JSON *parent)
-  : JSON::JSON (parent)
+Object::Object (json *parent)
+  : json::json (parent)
 {
 }
 
 Object::Object (const Object &other)
-  : JSON(other)
+  : json(other)
 {
   (void) clone (other);
 }
 
 Object::Object (const Value *ov, const Object &nv)
-  : JSON (ov, nv)
+  : json (ov, nv)
 {
   (void) clone (nv);
 }

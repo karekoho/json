@@ -16,7 +16,7 @@ Shared_Undefined::instance ()
 No_Value * No_Value::__instance = 0;
 
 Value *
-No_Value::instance (JSON *parent)
+No_Value::instance (json *parent)
 {
   if (__instance == 0)
     __instance = new No_Value (parent);

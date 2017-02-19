@@ -197,7 +197,7 @@ public:
     void
     test_assign_copy ()
     {
-      JSON json[] = {
+      json json[] = {
         L"{}",
         L"[]"
       };

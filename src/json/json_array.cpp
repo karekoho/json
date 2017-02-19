@@ -4,32 +4,32 @@
 #include <algorithm>
 using namespace Format;
 
-Array::Array () : JSON () {}
+Array::Array () : json () {}
 
-Array::Array (const wchar_t *json)
-  : JSON (json, false)
+Array::Array (const wchar_t *text)
+  : json (text, false)
 {
-  (void) parse (json);
+  (void) parse (text);
 }
 
 Array::Array(std::initializer_list<Value *> il)
-  : JSON (), _element_list (il)
+  : json (), _element_list (il)
 {
 }
 
-Array::Array (JSON *parent)
-  : JSON (parent)
+Array::Array (json *parent)
+  : json (parent)
 {
 }
 
 Array::Array (const Array &other)
-  : JSON (other)
+  : json (other)
 {
   (void) clone (other);
 }
 
 Array::Array (const Value *ov, const Array &nv)
-  : JSON (ov, nv)
+  : json (ov, nv)
 {
   (void) clone (nv);
 }

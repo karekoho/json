@@ -15,7 +15,7 @@ public:
   void
   example_free_1 ()
   {
-    JSON j = L"{\
+    json j = L"{\
       \"Image\": {\
           \"Width\":  800,\
           \"Height\": 600,\
@@ -41,15 +41,15 @@ public:
   virtual void
   test_ctor_dtor ()
   {
-    JSON p;
+    json p;
 
-    JSON j[] = {
-      JSON (),
-      JSON (L"{\"key\":true}"),
-      JSON (p)
+    json j[] = {
+      json (),
+      json (L"{\"key\":true}"),
+      json (p)
     };
 
-    JSON copy = j[1];
+    json copy = j[1];
 
     CPPUNIT_ASSERT_MESSAGE ("json", & copy != & j[1]);
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("json.count ()", (size_t) 1, copy.count ());
@@ -91,7 +91,7 @@ public:
       const wchar_t *startp = (*it).starp;
 
       size_t charc = wcslen (startp);
-      JSON *j = new JSON ();
+      json *j = new json ();
 
       const wchar_t * readp = j->parse (startp);
 
@@ -106,7 +106,7 @@ public:
 
   void test_make_value ()
   {
-    JSON j;
+    json j;
 
     struct assert {
         const wchar_t *starp;
@@ -192,7 +192,7 @@ public:
   virtual void
   test_assign_all_values ()
   {
-    JSON json;
+    json j;
 
     struct assert
     {
@@ -202,7 +202,7 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { new JSON, Value::undefined_t, PASS },
+      { new json, Value::undefined_t, PASS },
       { new Object, Value::object_t, PASS },
       { new Array, Value::array_t, PASS },
       { new String, Value::string_t, PASS },
@@ -213,10 +213,10 @@ public:
 
     TEST_IT_START
 
-        json._assign (*(*it).value);
-        json = *(*it).value;
+        j._assign (*(*it).value);
+        j = *(*it).value;
 
-        ASSERT_EQUAL_IDX ("json.__value->type ()", (*it).type, json.__root->type ());
+        ASSERT_EQUAL_IDX ("json.__value->type ()", (*it).type, j.__root->type ());
 
     TEST_IT_END;
   }
@@ -249,7 +249,7 @@ public:
 
     TEST_IT_START
 
-      JSON j = (*it).input;
+      json j = (*it).input;
 
       size_t len[2] = { wcslen ((*it).output[0]), wcslen ((*it).output[1]) };
 
@@ -340,7 +340,7 @@ public:
       for (size_t rev_idx = 1; rev_idx < 2; rev_idx++) // Iterate reviver
         {
 
-          Value *jv = JSON::parse ((*it).input, reviver[rev_idx]);
+          Value *jv = json::parse ((*it).input, reviver[rev_idx]);
 
           size_t output_size = (*it).output[rev_idx].size ();
 

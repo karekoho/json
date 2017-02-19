@@ -41,7 +41,7 @@ protected:
    * @brief Shared_Undefined
    * @param parent
    */
-  Shared_Undefined (JSON *parent)
+  Shared_Undefined (json *parent)
     :  Undefined (parent)
   {
   }
@@ -75,14 +75,14 @@ public:
    * @return
    */
   static Value *
-  instance (JSON *parent);
+  instance (json *parent);
 
 protected:
 
   /**
    * @brief No_Value
    */
-  No_Value (JSON *parent)
+  No_Value (json *parent)
     : Shared_Undefined (parent)
   {}
 

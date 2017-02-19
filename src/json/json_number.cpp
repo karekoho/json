@@ -30,7 +30,7 @@ Number::Number (const wchar_t *json)
   (void) parse (json);
 }
 
-Number::Number (JSON *parent)
+Number::Number (json *parent)
   : Leaf (parent),
     _double_value (0),
     _double_valuep (0),
