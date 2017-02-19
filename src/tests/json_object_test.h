@@ -41,7 +41,7 @@ public:
     struct assert {
       const wchar_t *startp;
       size_t size;
-      value::object_type type;
+      value::value_t type;
       size_t moveback;
       int assert_status;
     };
@@ -151,13 +151,13 @@ public:
 
     struct assert {
       const wchar_t *key;
-      value::object_type type;
+      value::value_t type;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { L"0", value::object_type::boolean_t, PASS },
-      { L"1", value::object_type::undefined_t, PASS }
+      { L"0", value::value_t::boolean_t, PASS },
+      { L"1", value::value_t::undefined_t, PASS }
     };
 
     TEST_IT_START
@@ -185,13 +185,13 @@ public:
 
     struct assert {
       const wchar_t *key;
-      value::object_type type;
+      value::value_t type;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { L"key1", value::object_type::boolean_t, PASS },
-      { L"key2", value::object_type::undefined_t, PASS }
+      { L"key1", value::value_t::boolean_t, PASS },
+      { L"key2", value::value_t::undefined_t, PASS }
     };
 
     TEST_IT_START
@@ -264,7 +264,7 @@ public:
 
     struct assert {
       value *new_value;
-      value::object_type type;
+      value::value_t type;
       const wchar_t *key;
       size_t index;
       size_t count;

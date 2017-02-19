@@ -67,9 +67,9 @@ namespace format
      * @brief type
      * @return
      */
-    virtual object_type
+    virtual value_t
     type () const
-    { return value::object_type::no_value_t; }
+    { return value::value_t::no_value_t; }
 
     /**
      * @brief instance

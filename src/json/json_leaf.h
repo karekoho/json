@@ -82,7 +82,7 @@ public:
    * @brief type
    * @return
    */
-  virtual object_type
+  virtual value_t
   type () const = 0;
 
   /**

@@ -44,30 +44,30 @@ public:
     struct assert {
       const wchar_t *startp;
       size_t size;
-      value::object_type type; 
+      value::value_t type;
       int moveback;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { L"[]", 0, value::object_type::array_t, 0, PASS },
-      { L"[ ] ", 0, value::object_type::array_t, 1, PASS },
-      { L"[\t] ", 0, value::object_type::array_t, 1, PASS },
-      { L"[\r] ", 0, value::object_type::array_t, 1, PASS },
-      { L"[\n] ", 0, value::object_type::array_t, 1, PASS },
-      { L"[\"x\"]", 1, value::object_type::array_t, 0, PASS },
-      { L"[\"x\",\"x\"] ", 2, value::object_type::array_t, 1, PASS },
-      { L"[\"x\",\"x\",[\"x\"]] ", 3,  value::object_type::array_t, 1, PASS },
+      { L"[]", 0, value::value_t::array_t, 0, PASS },
+      { L"[ ] ", 0, value::value_t::array_t, 1, PASS },
+      { L"[\t] ", 0, value::value_t::array_t, 1, PASS },
+      { L"[\r] ", 0, value::value_t::array_t, 1, PASS },
+      { L"[\n] ", 0, value::value_t::array_t, 1, PASS },
+      { L"[\"x\"]", 1, value::value_t::array_t, 0, PASS },
+      { L"[\"x\",\"x\"] ", 2, value::value_t::array_t, 1, PASS },
+      { L"[\"x\",\"x\",[\"x\"]] ", 3,  value::value_t::array_t, 1, PASS },
 
       // errors
-      { L"[", 0, value::object_type::undefined_t, 0, FAIL },
-      { L"[ ", 0, value::object_type::undefined_t, 0, FAIL },
-      { L"]", 0, value::object_type::undefined_t, 0, FAIL },
-      { L"[, ", 0, value::object_type::undefined_t, 0, FAIL },
-      { L"[ x ", 0, value::object_type::undefined_t, 0, FAIL },
-      { L"", 0, value::object_type::undefined_t, 0, FAIL },
-      { L" ", 0, value::object_type::undefined_t, 0, FAIL },
-      { L"x", 0, value::object_type::undefined_t, 0, FAIL },
+      { L"[", 0, value::value_t::undefined_t, 0, FAIL },
+      { L"[ ", 0, value::value_t::undefined_t, 0, FAIL },
+      { L"]", 0, value::value_t::undefined_t, 0, FAIL },
+      { L"[, ", 0, value::value_t::undefined_t, 0, FAIL },
+      { L"[ x ", 0, value::value_t::undefined_t, 0, FAIL },
+      { L"", 0, value::value_t::undefined_t, 0, FAIL },
+      { L" ", 0, value::value_t::undefined_t, 0, FAIL },
+      { L"x", 0, value::value_t::undefined_t, 0, FAIL },
     };
 
     json *p[] = { 0, new json () };
@@ -138,7 +138,7 @@ public:
 
     struct assert {
       value *new_value;
-      value::object_type type;
+      value::value_t type;
       const wchar_t *key;
       size_t index;
       size_t count;
@@ -240,14 +240,14 @@ public:
     struct assert
     {
       const wchar_t *key;
-      value::object_type type;
+      value::value_t type;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { L"0", value::object_type::boolean_t, PASS },
-      { L"1", value::object_type::undefined_t, PASS },
-      { L"x", value::object_type::boolean_t, PASS }   // Converted to 0
+      { L"0", value::value_t::boolean_t, PASS },
+      { L"1", value::value_t::undefined_t, PASS },
+      { L"x", value::value_t::boolean_t, PASS }   // Converted to 0
     };
 
     TEST_IT_START
@@ -269,15 +269,15 @@ public:
     struct assert
     {
       size_t index;
-      value::object_type type;
+      value::value_t type;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
 
 
-      { 0, value::object_type::boolean_t, PASS },
-      { 1, value::object_type::undefined_t, PASS }
+      { 0, value::value_t::boolean_t, PASS },
+      { 1, value::value_t::undefined_t, PASS }
 
     };
 

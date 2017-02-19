@@ -95,9 +95,9 @@ namespace format
      * @brief type
      * @return
      */
-    virtual object_type
+    virtual value_t
     type () const
-    { return value::object_type::number_t; }
+    { return value::value_t::number_t; }
 
     /**
      * @brief operator =

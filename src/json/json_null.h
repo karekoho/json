@@ -82,9 +82,9 @@ class null : public leaf
    * @brief type
    * @return
    */
-  virtual inline value::object_type
+  virtual inline value::value_t
   type () const
-  { return value::object_type::null_t; }
+  { return value::value_t::null_t; }
 
   /**
    * TODO: return nullptr

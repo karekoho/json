@@ -25,9 +25,9 @@ public:
     at (size_t) const
     { return *(new format::undefined); }
 
-    virtual value::object_type
+    virtual value::value_t
     type () const
-    { return value::object_type::undefined_t; }
+    { return value::value_t::undefined_t; }
 
     virtual size_t
     count () const

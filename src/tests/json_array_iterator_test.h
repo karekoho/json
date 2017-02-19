@@ -82,7 +82,7 @@ public:
 
     struct assert {
       array::Iterator *itp;
-      value::object_type type;
+      value::value_t type;
       int assert_status;
     };
 
@@ -95,7 +95,7 @@ public:
 
         value & v = **(*it).itp;
 
-        ASSERT_EQUAL_IDX ("v.type ()", value::object_type::boolean_t, v.type ());
+        ASSERT_EQUAL_IDX ("v.type ()", value::value_t::boolean_t, v.type ());
 
     TEST_IT_END;
 

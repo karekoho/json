@@ -81,9 +81,9 @@ namespace format
      * @brief type
      * @return
      */
-    virtual inline object_type
+    virtual inline value_t
     type () const
-    { return value::object_type::string_t; }
+    { return value::value_t::string_t; }
 
     /**
      * @brief operator =

@@ -127,9 +127,9 @@ public:
    /* @brief type
    * @return
    */
-  virtual inline value::object_type
+  virtual inline value::value_t
   type () const
-  { return __hasRoot () ?  __root->type () : value::object_type::undefined_t; }
+  { return __hasRoot () ?  __root->type () : value::value_t::undefined_t; }
 
   /**
    * @brief size

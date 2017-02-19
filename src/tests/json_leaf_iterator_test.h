@@ -66,7 +66,7 @@ public:
 
     struct assert {
       leaf::Iterator *itp;
-      value::object_type type;
+      value::value_t type;
       int assert_status;
     };
 

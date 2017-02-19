@@ -100,9 +100,9 @@ namespace format
      * @brief type
      * @return
      */
-    virtual inline object_type
+    virtual inline value_t
     type () const
-    { return value::object_type::object_t; }
+    { return value::value_t::object_t; }
 
     /**
      * @brief size

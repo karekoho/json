@@ -51,7 +51,7 @@ public:
 
     struct assert {
       value *new_value;
-      value::object_type type;
+      value::value_t type;
       const wchar_t *key;
       size_t index;
       size_t count;

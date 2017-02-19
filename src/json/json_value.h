@@ -34,7 +34,7 @@ namespace format
     /**
      * @brief The otype enum
      */
-    enum object_type
+    enum value_t
     {
       no_value_t,
       undefined_t,
@@ -179,7 +179,7 @@ namespace format
      * @brief type
      * @return
      */
-    virtual object_type
+    virtual value_t
     type () const /* TODO: noexcept */ = 0;
 
     /**

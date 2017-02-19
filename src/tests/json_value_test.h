@@ -205,7 +205,7 @@ public:
       struct assert
       {
         value *val;
-        value::object_type type;  // old, current
+        value::value_t type;  // old, current
         int assert_status;
       };
 
