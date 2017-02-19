@@ -153,7 +153,7 @@ json::_make_value ()
     value_ = new Array (this);
 
   else if (isdigit (readc) || readc == '-') // Number
-    value_ = new Number (this);
+    value_ = new number (this);
 
   else                                      // Literal or Undefined
     switch (_is_literal ())

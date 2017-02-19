@@ -213,7 +213,7 @@ public:
         { new Object, Value::object_t, PASS },
         { new Array, Value::array_t, PASS },
         { new string, Value::string_t, PASS },
-        { new Number, Value::number_t, PASS },
+        { new number, Value::number_t, PASS },
         { new Boolean, Value::boolean_t, PASS },
         { new null, Value::null_t, PASS },
         { new Format::undefined, Value::undefined_t, PASS }

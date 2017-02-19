@@ -24,7 +24,7 @@ public:
           Array (),
           Array (L"[]"),
           Array (p[pidx]),
-          Array {new Number (1)},
+          Array {new number (1)},
         };
       }
 
@@ -149,7 +149,7 @@ public:
       { new Array (L"[true,false]"), Value::array_t, L"key_2",  0, 1,  { PASS, PASS, PASS } },
       { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object_t, L"key_1",  0, 2,  { PASS, PASS, FAIL } },
       { new string (L"\"x\""), Value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
-      { new Number (), Value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
+      { new number (), Value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
       { new Boolean (true), Value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
       { new null (), Value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
     };

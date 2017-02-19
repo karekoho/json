@@ -1,8 +1,9 @@
 #include "json_number.h"
 #include "json_json.h"
+
 using namespace Format;
 
-Number::Number ()
+number::number ()
   : leaf (),
     _double_value (0),
     _double_valuep (&_double_value),
@@ -10,7 +11,7 @@ Number::Number ()
 {
 }
 
-Number::Number (const double value)
+number::number (const double value)
   : leaf (),
     _double_value (value),
     _double_valuep (&_double_value),
@@ -18,7 +19,7 @@ Number::Number (const double value)
 {
 }
 
-Number::Number (const wchar_t *json)
+number::number (const wchar_t *json)
   : leaf (json),
     _double_value (0),
     _double_valuep (0),
@@ -30,7 +31,7 @@ Number::Number (const wchar_t *json)
   (void) parse (json);
 }
 
-Number::Number (json *parent)
+number::number (json *parent)
   : leaf (parent),
     _double_value (0),
     _double_valuep (0),
@@ -38,7 +39,7 @@ Number::Number (json *parent)
 {
 }
 
-Number::Number (const Number &other)
+number::number (const number &other)
  : leaf (other),
    _double_value (0),
    _double_valuep (0),
@@ -47,7 +48,7 @@ Number::Number (const Number &other)
   (void) clone (other);
 }
 
-Number::Number (const Value *ov, const Number &nv)
+number::number (const Value *ov, const number &nv)
 : leaf (ov, nv),
   _double_value (0),
   _double_valuep (0),
@@ -57,7 +58,7 @@ Number::Number (const Value *ov, const Number &nv)
 }
 
 const wchar_t *
-Number::parse (const wchar_t *json)
+number::parse (const wchar_t *json)
 {
   wchar_t peek = 0;
 
@@ -118,7 +119,7 @@ Number::parse (const wchar_t *json)
 }
 
 int
-Number::_digits () noexcept
+number::_digits () noexcept
 {
   const wchar_t * const startp = _readp;
 
@@ -129,7 +130,7 @@ Number::_digits () noexcept
 }
 
 const wchar_t *
-Number::_frag ()
+number::_frag ()
 {
   _readp++; // Skip '.'
 
@@ -147,7 +148,7 @@ Number::_frag ()
 }
 
 const wchar_t *
-Number::_exp ()
+number::_exp ()
 {
   _digitp[EXP][START] = ++_readp; // Skip 'e|E'
 
@@ -163,7 +164,7 @@ Number::_exp ()
 }
 
 double
-Number::_calculate (const wchar_t * const digitp[2][2]) const
+number::_calculate (const wchar_t * const digitp[2][2]) const
 {
   _double_valuep = & _double_value;
 
@@ -188,7 +189,7 @@ Number::_calculate (const wchar_t * const digitp[2][2]) const
 }
 
 void
-Number::_clear ()
+number::_clear ()
 {
   _double_value   = 0;
   _double_valuep  = 0;
@@ -200,9 +201,9 @@ Number::_clear ()
 }
 
 Value *
-Number::clone (const Value &other)
+number::clone (const Value &other)
 {
-  const Number & nv = dynamic_cast<const Number &>(other);
+  const number & nv = dynamic_cast<const number &>(other);
 
   if (nv._double_valuep)
     {
@@ -221,7 +222,7 @@ Number::clone (const Value &other)
 }
 
 size_t
-Number::strLength () const noexcept
+number::strLength () const noexcept
 {
  (void) value ();
 
@@ -232,7 +233,7 @@ Number::strLength () const noexcept
 }
 
 const wchar_t *
-Number::strValue (wchar_t *) const
+number::strValue (wchar_t *) const
 {
   (void) value ();
 

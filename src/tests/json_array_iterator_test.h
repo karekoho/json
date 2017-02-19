@@ -24,7 +24,7 @@ public:
     };
 
     std::vector<struct assert> test = {
-      { new std::vector<Value *>({new Number (1), new Number (2), new Number (3)}), 3, PASS },
+      { new std::vector<Value *>({new number (1), new number (2), new number (3)}), 3, PASS },
       { new std::vector<Value *>(), 0, PASS }
     };
 

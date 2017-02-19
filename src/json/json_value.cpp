@@ -144,6 +144,6 @@ Value::operator =(const wchar_t *s)
 Value &
 Value::operator =(double d)
 {
-  return _assign (*(new Number (d)));
+  return _assign (*(new number (d)));
 }
 

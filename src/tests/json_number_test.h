@@ -20,11 +20,11 @@ public:
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
-        Number *n[] = {
-          new Number,
-          new Number (10),
-          new Number (L"10"),
-          new Number (p[pidx]),
+        number *n[] = {
+          new number,
+          new number (10),
+          new number (L"10"),
+          new number (p[pidx]),
         };
 
         delete n[0];
@@ -35,14 +35,14 @@ public:
 
     delete p[1];
 
-    Number src[] = {
-      Number (10),
-      Number (L"100")
+    number src[] = {
+      number (10),
+      number (L"100")
     };
 
-    Number copy[] = {
-        Number (src[0]),
-        Number (src[1])
+    number copy[] = {
+        number (src[0]),
+        number (src[1])
     };
 
     // double d[] = { copy[0].value (), copy[1].value () };
@@ -59,7 +59,7 @@ public:
   virtual void
   test_parse_1 ()
   {
-    Number n;
+    number n;
 
     struct assert
     {
@@ -104,7 +104,7 @@ public:
   void
   test_digits ()
   {
-    Number n;
+    number n;
 
     struct assert
     {
@@ -142,7 +142,7 @@ public:
   void
   test_frag ()
   {
-    Number n;
+    number n;
 
     struct assert
     {
@@ -183,7 +183,7 @@ public:
   void
   test_exp ()
   {
-    Number n;
+    number n;
 
     struct assert {
         const wchar_t *starp;
@@ -232,7 +232,7 @@ public:
   void
   test_calculate ()
   {
-    Number n;
+    number n;
 
     struct assert {
         const wchar_t *starp[2];
@@ -270,7 +270,7 @@ public:
   void
   test_atof ()
   {
-    Number n;
+    number n;
 
     struct assert {
         const wchar_t *starp;
@@ -298,7 +298,7 @@ public:
   void
   test_atoll ()
   {
-    Number n;
+    number n;
 
     struct assert {
         const wchar_t *starp;
@@ -347,8 +347,8 @@ public:
       { new Array (L"[true,false]"), Value::array_t, L"key_2",  0, 1,  { PASS, PASS, FAIL } },
       { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object_t, L"key_1",  0, 2,  { PASS, PASS, FAIL } },
       { new string (L"\"x\""), Value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
-      { new Number (10), Value::number_t, L"key_4",  0, 4, { PASS, PASS, PASS } },
-      { new Number (L"10"), Value::number_t, L"key_5",  0, 5, { PASS, PASS, PASS } },
+      { new number (10), Value::number_t, L"key_4",  0, 4, { PASS, PASS, PASS } },
+      { new number (L"10"), Value::number_t, L"key_5",  0, 5, { PASS, PASS, PASS } },
       { new Boolean (true), Value::boolean_t, L"key_6",  0, 6, { PASS, PASS, FAIL } },
       { new null, Value::null_t, L"key_7",  0, 7, { PASS, PASS, FAIL } }
     };
@@ -366,7 +366,7 @@ public:
 
           /// old_value: value from Value[key], any value
 
-          Number *old_value = new Number;
+          number *old_value = new number;
           old_value->_double_valuep = 0;
 
           old_value->_parent = parents[pidx];
@@ -381,7 +381,7 @@ public:
 
           if ((*it).new_value->type () == Value::number_t)
             {
-              Number *new_number_value = dynamic_cast<Number *>((*it).new_value);
+              number *new_number_value = dynamic_cast<number *>((*it).new_value);
 
               // old_value->_assign (*new_number_value);  // Can't do. old_value will be free'd by new_value
               *old_value = *new_number_value;
@@ -449,10 +449,10 @@ public:
 
     TEST_IT_START
 
-      Number n[3] = {
-        Number ((*it).df),
-        Number ((*it).li),
-        Number ((*it).str),
+      number n[3] = {
+        number ((*it).df),
+        number ((*it).li),
+        number ((*it).str),
       };
 
       CPPUNIT_ASSERT_MESSAGE ("n[0].strValue ()", wcscmp((*it).output[0], n[0].strValue ()) == 0);

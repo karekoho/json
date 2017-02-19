@@ -23,7 +23,7 @@ public:
     };
 
     std::vector<struct assert> test = {
-      { new Object::member_list ({ { L"1", new Number(1) }, { L"2", new Number (2) }, { L"3", new Number (3) } }), 3, PASS },
+      { new Object::member_list ({ { L"1", new number(1) }, { L"2", new number (2) }, { L"3", new number (3) } }), 3, PASS },
       { new Object::member_list (), 0, PASS }
     };
 
