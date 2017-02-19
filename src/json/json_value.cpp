@@ -132,7 +132,7 @@ value::_assign (const value &nv)
 value &
 value::operator =(bool b)
 {
-  return _assign (*(new Boolean (b)));
+  return _assign (*(new boolean (b)));
 }
 
 value &

@@ -21,10 +21,10 @@ public:
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
-          Boolean *b[] = {
-          new Boolean,
-          new Boolean (true),
-          new Boolean (p[pidx]),
+          boolean *b[] = {
+          new boolean,
+          new boolean (true),
+          new boolean (p[pidx]),
         };
 
         delete b[0];
@@ -34,8 +34,8 @@ public:
 
     delete p[1];
 
-    Boolean src = true;
-    Boolean copy = src;
+    boolean src = true;
+    boolean copy = src;
 
     CPPUNIT_ASSERT_MESSAGE ("boolean", & src != & copy);
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.value ()", true, copy.get ());
@@ -69,7 +69,7 @@ public:
       { new object (L"{\"k1\":true,\"k2\":false}"), value::object_t, L"key_1",  0, 2, { PASS, PASS, FAIL } },
       { new string (L"\"x\""), value::string_t, L"key_3",  0, 3, { PASS, PASS, FAIL } },
       { new number (10), value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-      { new Boolean (true), value::boolean_t, L"key_5",  0, 5, { PASS, PASS, PASS } },
+      { new boolean (true), value::boolean_t, L"key_5",  0, 5, { PASS, PASS, PASS } },
       { new null, value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
     };
       arr_parent._element_list.reserve (6);
@@ -88,7 +88,7 @@ public:
 
           /// old_value: value from Value[key], any value
 
-          Boolean *old_value = new Boolean;
+          boolean *old_value = new boolean;
 
           old_value->_parent = parents[pidx];
 
@@ -104,7 +104,7 @@ public:
 
           if ((*it).new_value->type () == value::boolean_t)
             {
-              Boolean *new_boolean_value = static_cast<Boolean *>((*it).new_value);
+              boolean *new_boolean_value = static_cast<boolean *>((*it).new_value);
 
               // old_value->_assign (*new_boolean_value);
               *old_value = *new_boolean_value;

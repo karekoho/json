@@ -162,10 +162,10 @@ json::_make_value ()
         value_ = new null (this);
         break;
       case value::_literal::true_value :
-        value_ = new Boolean (this, true);
+        value_ = new boolean (this, true);
         break;
       case value::_literal::false_value:
-        value_ = new Boolean (this, false);
+        value_ = new boolean (this, false);
         break;
       default:
         value_ = no_value::instance (this);

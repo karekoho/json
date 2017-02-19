@@ -55,7 +55,7 @@ public:
   void
   test_construct_assign_destruct ()
   {
-    array::element_list list = { new Boolean };
+    array::element_list list = { new boolean };
 
     array::Iterator *it[] = {
       new array::Iterator,
@@ -75,7 +75,7 @@ public:
   void
   test_dereference ()
   {
-    array::element_list list = { new Boolean };
+    array::element_list list = { new boolean };
 
     array::Iterator it (list.begin ());
     array::Iterator copy = array::Iterator (it);
@@ -105,7 +105,7 @@ public:
   void
   test_pre_increment ()
   {
-    array::element_list list = { new Boolean, new Boolean };
+    array::element_list list = { new boolean, new boolean };
 
     array::Iterator begin (list.begin ());
     array::Iterator end (list.end ());
@@ -123,7 +123,7 @@ public:
   void
   test_post_increment ()
   {
-    array::element_list list = { new Boolean };
+    array::element_list list = { new boolean };
 
     array::Iterator begin (list.begin ());
     array::Iterator current = begin;

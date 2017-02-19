@@ -147,7 +147,7 @@ public:
   {
     object o;
 
-    o._member_list.emplace (L"0", new Boolean (true));
+    o._member_list.emplace (L"0", new boolean (true));
 
     struct assert {
       const wchar_t *key;
@@ -181,7 +181,7 @@ public:
   {
     object o;
 
-    o._member_list.emplace (L"key1", new Boolean (true));
+    o._member_list.emplace (L"key1", new boolean (true));
 
     struct assert {
       const wchar_t *key;
@@ -276,7 +276,7 @@ public:
       { new array (L"[]"), value::array_t, L"key_2",  0, 2,  { PASS, PASS, FAIL } },
       { new string (L"\"x\""), value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
       { new number (), value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-      { new Boolean (true), value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
+      { new boolean (true), value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
       { new null (), value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
     };
 
@@ -475,9 +475,9 @@ public:
     object o;
 
     value *v[3]= {
-      new Boolean (),
-      new Boolean (),
-      new Boolean ()
+      new boolean (),
+      new boolean (),
+      new boolean ()
     };
 
     v[0]->setKey (L"key_1", 5);

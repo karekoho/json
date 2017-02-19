@@ -115,7 +115,7 @@ public:
         { new object (L"{\"k1\":true,\"k2\":false}"), value::object_t, L"key_2",  0, 2,  { PASS, PASS, FAIL } },
         { new string (L"\"xxx\""), value::string_t, L"key_3",  0, 3,  { PASS, PASS, PASS } },
         { new number (10), value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-        { new Boolean (true), value::boolean_t, L"key_6",  0, 5, { PASS, PASS, FAIL } },
+        { new boolean (true), value::boolean_t, L"key_6",  0, 5, { PASS, PASS, FAIL } },
         { new null, value::null_t, L"key_7",  0, 6, { PASS, PASS, FAIL } }
       };
 

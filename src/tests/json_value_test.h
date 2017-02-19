@@ -167,7 +167,7 @@ public:
     void
     test_assign_undefined ()
     {
-      Boolean b;
+      boolean b;
 
       array a = L"[true]";
 
@@ -214,7 +214,7 @@ public:
         { new array, value::array_t, PASS },
         { new string, value::string_t, PASS },
         { new number, value::number_t, PASS },
-        { new Boolean, value::boolean_t, PASS },
+        { new boolean, value::boolean_t, PASS },
         { new null, value::null_t, PASS },
         { new format::undefined, value::undefined_t, PASS }
       };

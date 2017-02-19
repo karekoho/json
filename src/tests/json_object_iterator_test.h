@@ -53,7 +53,7 @@ public:
   void
   test_construct_assign_destruct ()
   {
-    object::member_list list = { { L"1", new Boolean } };
+    object::member_list list = { { L"1", new boolean } };
 
     object::Iterator *it[] = {
       new object::Iterator,
@@ -73,7 +73,7 @@ public:
   void
   test_dereference ()
   {
-    object::member_list list = { { L"1", new Boolean } };
+    object::member_list list = { { L"1", new boolean } };
 
     object::Iterator it (list.begin ());
     object::Iterator copy = object::Iterator (it);
@@ -103,7 +103,7 @@ public:
   void
   test_pre_increment ()
   {
-    object::member_list list = { { L"1", new Boolean }, { L"2", new Boolean } };
+    object::member_list list = { { L"1", new boolean }, { L"2", new boolean } };
 
     object::Iterator begin (list.begin ());
     object::Iterator end (list.end ());
@@ -121,7 +121,7 @@ public:
   void
   test_post_increment ()
   {
-    object::member_list list = { { L"1", new Boolean } };
+    object::member_list list = { { L"1", new boolean } };
 
     object::Iterator begin (list.begin ());
     object::Iterator current = begin;

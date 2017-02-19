@@ -35,7 +35,7 @@ public:
   void
   test_construct_assign_destruct ()
   {
-    Boolean b;
+    boolean b;
     leaf *l = & b;
 
     leaf::Iterator *it[] = {
@@ -54,7 +54,7 @@ public:
   void
   test_dereference ()
   {
-    Boolean b;
+    boolean b;
     leaf *l = & b;
 
     leaf::Iterator it[] = {
@@ -88,7 +88,7 @@ public:
   void
   test_pre_increment ()
   {
-    Boolean b;
+    boolean b;
     leaf *l = & b;
 
     leaf::Iterator begin (l);
@@ -105,7 +105,7 @@ public:
   void
   test_post_increment ()
   {
-    Boolean b;
+    boolean b;
     leaf *l = & b;
 
     leaf::Iterator begin (l);
@@ -118,7 +118,7 @@ public:
   void
   test_begin_end ()
   {
-    Boolean b;
+    boolean b;
     leaf *l = & b;
 
     leaf::Iterator begin (l);

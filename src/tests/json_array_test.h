@@ -150,7 +150,7 @@ public:
       { new object (L"{\"k1\":true,\"k2\":false}"), value::object_t, L"key_1",  0, 2,  { PASS, PASS, FAIL } },
       { new string (L"\"x\""), value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
       { new number (), value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-      { new Boolean (true), value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
+      { new boolean (true), value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
       { new null (), value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
     };
       arr_parent._element_list.reserve (6);
@@ -235,7 +235,7 @@ public:
   {
     array a;
 
-    a._element_list.push_back (new Boolean (true));
+    a._element_list.push_back (new boolean (true));
 
     struct assert
     {
@@ -264,7 +264,7 @@ public:
   {
     array a;
 
-    a._element_list.push_back (new Boolean (true));
+    a._element_list.push_back (new boolean (true));
 
     struct assert
     {
@@ -405,9 +405,9 @@ public:
     array a;
 
     value *v[3]= {
-      new Boolean (),
-      new Boolean (),
-      new Boolean ()
+      new boolean (),
+      new boolean (),
+      new boolean ()
     };
 
     v[0]->setIndex (0);

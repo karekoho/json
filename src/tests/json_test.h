@@ -163,7 +163,7 @@ public:
       { L"ak", 1, { new array (&op), new array (&ap) }, value::array_t, PASS },
       { L"sk", 2, { new string (&op, 3), new string (&ap, 3) }, value::string_t, PASS },
       { L"dk", 3, { new number (&op), new number (&ap) }, value::number_t, PASS },
-      { L"bk", 4, { new Boolean (&op, true), new Boolean (&ap, true) }, value::boolean_t, PASS },
+      { L"bk", 4, { new boolean (&op, true), new boolean (&ap, true) }, value::boolean_t, PASS },
       { L"nk", 5, { new null (&op), new null (&ap) }, value::null_t, PASS },
     };
 
@@ -207,7 +207,7 @@ public:
       { new array, value::array_t, PASS },
       { new string, value::string_t, PASS },
       { new number, value::number_t, PASS },
-      { new Boolean, value::boolean_t, PASS },
+      { new boolean, value::boolean_t, PASS },
       { new null, value::null_t, PASS },
     };
 
@@ -323,13 +323,13 @@ public:
 
     std::vector<struct assert> test = {
       { L"{\"0\":{},\"1\":[],\"2\":\"2\",\"3\":3,\"4\":false,\"5\":null}", {
-          { new object, new array, new string, new number, new Boolean , new null },
-          { new null, new null, new string, new number, new Boolean }
+          { new object, new array, new string, new number, new boolean , new null },
+          { new null, new null, new string, new number, new boolean }
         }, PASS },
 
       { L"[{},\[],\"2\",3,false,null]", {
-          { new object, new array, new string, new number, new Boolean, new null },
-          { new null, new null, new string, new number, new Boolean }
+          { new object, new array, new string, new number, new boolean, new null },
+          { new null, new null, new string, new number, new boolean }
         }, PASS },
       };
 

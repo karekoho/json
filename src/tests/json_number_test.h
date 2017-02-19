@@ -349,7 +349,7 @@ public:
       { new string (L"\"x\""), value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
       { new number (10), value::number_t, L"key_4",  0, 4, { PASS, PASS, PASS } },
       { new number (L"10"), value::number_t, L"key_5",  0, 5, { PASS, PASS, PASS } },
-      { new Boolean (true), value::boolean_t, L"key_6",  0, 6, { PASS, PASS, FAIL } },
+      { new boolean (true), value::boolean_t, L"key_6",  0, 6, { PASS, PASS, FAIL } },
       { new null, value::null_t, L"key_7",  0, 7, { PASS, PASS, FAIL } }
     };
 
