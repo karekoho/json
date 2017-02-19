@@ -18,7 +18,7 @@ namespace Format {
  * @brief The json_value class
  */
 class json;
-class JSON_Iterator;
+class json_iterator;
 class undefined;
 class Value
 {
@@ -240,7 +240,7 @@ class Value
    * @brief iterator
    * @return
    */
-  virtual JSON_Iterator *
+  virtual json_iterator *
   iterator () const = 0;
 
   /**

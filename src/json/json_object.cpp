@@ -151,10 +151,10 @@ Object::_pair ()
 //  }
 //}
 
-JSON_Iterator *
+json_iterator *
 Object::iterator () const
 {
-  return new Object_Iterator (_member_list);
+  return new object_iterator (_member_list);
 }
 
 Value &

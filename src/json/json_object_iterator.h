@@ -5,43 +5,46 @@
 #include "json_object.h"
 
 #include <unordered_map>
-namespace Format {
-/**
- * @brief The Object_Iterator class
- */
-class Object_Iterator : public JSON_Iterator
+
+namespace Format
 {
-public:
-
   /**
-   * @brief Object_Iterator
-   * @param umap
+   * @brief The Object_Iterator class
    */
-  Object_Iterator (const Object::member_list & list);
+  class object_iterator : public json_iterator
+  {
+  public:
 
-  /**
-   * @brief next
-   * @return
-   */
-  virtual Value & next () override;
+    /**
+     * @brief Object_Iterator
+     * @param umap
+     */
+    object_iterator (const Object::member_list & list);
 
-  /**
-   * @brief hasNext
-   * @return
-   */
-  virtual bool hasNext () const noexcept override;
+    /**
+     * @brief next
+     * @return
+     */
+    virtual Value & next () override;
 
-protected:
+    /**
+     * @brief hasNext
+     * @return
+     */
+    virtual bool hasNext () const noexcept override;
 
-  /**
-   * @brief _begin
-   */
-  std::unordered_map<std::wstring, Value *>::const_iterator _begin;
+  protected:
 
-  /**
-   * @brief _begin
-   */
-  std::unordered_map<std::wstring, Value *>::const_iterator _end;
-};
-}
+    /**
+     * @brief _begin
+     */
+    std::unordered_map<std::wstring, Value *>::const_iterator _begin;
+
+    /**
+     * @brief _begin
+     */
+    std::unordered_map<std::wstring, Value *>::const_iterator _end;
+  };
+} // Namespace format
+
 #endif // OBJECT_ITERATOR_H

@@ -172,10 +172,10 @@ array::clone (const Value &other)
   return this;
 }
 
-JSON_Iterator *
+json_iterator *
 array::iterator () const
 {
-  return new Array_Iterator (_element_list);
+  return new array_iterator (_element_list);
 }
 
 size_t

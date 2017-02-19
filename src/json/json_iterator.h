@@ -2,31 +2,34 @@
 #define ITERATOR
 
 #include "json_value.h"
-namespace Format {
-/**
- * @brief The Iterator class
- */
-class JSON_Iterator
+
+namespace Format
 {
-public:
-
   /**
-   * @brief ~Iterator
+   * @brief The Iterator class
    */
-  virtual ~JSON_Iterator () = default;
+  class json_iterator
+  {
+  public:
 
-  /**
-   * @brief next
-   * @return
-   */
-  virtual const Format::Value & next () = 0;
+    /**
+     * @brief ~Iterator
+     */
+    virtual ~json_iterator () = default;
 
-  /**
-   * @brief hasNext
-   * @return
-   */
-  virtual bool hasNext () const noexcept = 0;
-};
-}
+    /**
+     * @brief next
+     * @return
+     */
+    virtual const Format::Value & next () = 0;
+
+    /**
+     * @brief hasNext
+     * @return
+     */
+    virtual bool hasNext () const noexcept = 0;
+  };
+} // Namespace format
+
 #endif // ITERATOR
 

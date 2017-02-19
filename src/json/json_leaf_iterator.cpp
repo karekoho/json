@@ -1,21 +1,22 @@
 #include "json_leaf_iterator.h"
+
 using namespace Format;
 
-Leaf_Iterator::Leaf_Iterator (const Value *v)
+leaf_iterator::leaf_iterator (const Value *v)
   : _value (v),
     _hasNext (true)
 {
 }
 
 const Value &
-Leaf_Iterator::next ()
+leaf_iterator::next ()
 {
   _hasNext = false;
   return *_value;
 }
 
 bool
-Leaf_Iterator::hasNext () const noexcept
+leaf_iterator::hasNext () const noexcept
 {
   return _hasNext;
 }

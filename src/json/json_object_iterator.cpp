@@ -1,20 +1,20 @@
 #include "json_object_iterator.h"
 using namespace Format;
 
-Object_Iterator::Object_Iterator (const Object::member_list &list)
+object_iterator::object_iterator (const Object::member_list &list)
   : _begin (list.begin ()),
     _end (list.end ())
 {
 }
 
 Value &
-Object_Iterator::next ()
+object_iterator::next ()
 {
   return *(*_begin++).second;
 }
 
 bool
-Object_Iterator::hasNext () const noexcept
+object_iterator::hasNext () const noexcept
 {
   return _begin != _end;
 }

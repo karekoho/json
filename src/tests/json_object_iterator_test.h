@@ -31,7 +31,7 @@ public:
 
         list = *(*it).list;
 
-        JSON_Iterator *oit = new Object_Iterator (list);
+        json_iterator *oit = new object_iterator (list);
         size_t listc = 0;
 
         while (oit->hasNext ())

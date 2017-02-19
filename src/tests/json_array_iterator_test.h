@@ -32,7 +32,7 @@ public:
 
         vector = *(*it).vector;
 
-        JSON_Iterator *vit = new Array_Iterator (vector);
+        json_iterator *vit = new array_iterator (vector);
 
         size_t vecc = 0;
 

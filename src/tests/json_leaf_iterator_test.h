@@ -2,7 +2,9 @@
 #define JSON_LEAF_ITERATOR_TEST
 
 #include "unit_test.h"
-namespace Format {
+
+namespace Format
+{
 /**
  * 11.
  * @brief The json_leaf_iterator_test class
@@ -17,7 +19,7 @@ public:
     size_t c = 0;
     null n;
 
-    JSON_Iterator *iit = new Leaf_Iterator (&n);
+    json_iterator *iit = new leaf_iterator (&n);
 
     while (iit->hasNext ())
       {

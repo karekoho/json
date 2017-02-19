@@ -113,7 +113,7 @@ public:
    * @brief iterator
    * @return
    */
-  virtual JSON_Iterator *
+  virtual json_iterator *
   iterator () const final override;
 
   /**

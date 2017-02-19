@@ -5,43 +5,45 @@
 #include "json_array.h"
 
 #include <vector>
-namespace Format {
-/**
- * @brief The Array_Iterator class
- */
-class Array_Iterator : public JSON_Iterator
+
+namespace Format
 {
-public:
-
   /**
-   * @brief Array_Iterator
-   * @param vec
+   * @brief The Array_Iterator class
    */
-  Array_Iterator (const array::element_list & list);
+  class array_iterator : public json_iterator
+  {
+  public:
 
-  /**
-   * @brief next
-   * @return
-   */
-  virtual Value & next () override;
+    /**
+     * @brief Array_Iterator
+     * @param vec
+     */
+    array_iterator (const array::element_list & list);
 
-  /**
-   * @brief hasNext
-   * @return
-   */
-  virtual bool hasNext () const noexcept override;
+    /**
+     * @brief next
+     * @return
+     */
+    virtual Value & next () override;
 
-protected:
+    /**
+     * @brief hasNext
+     * @return
+     */
+    virtual bool hasNext () const noexcept override;
 
-  /**
-   * @brief _begin
-   */
-  std::vector<Value *>::const_iterator _begin;
+  protected:
 
-  /**
-   * @brief _end
-   */
-  std::vector<Value *>::const_iterator _end;
-};
+    /**
+     * @brief _begin
+     */
+    std::vector<Value *>::const_iterator _begin;
+
+    /**
+     * @brief _end
+     */
+    std::vector<Value *>::const_iterator _end;
+  };
 }
 #endif // ARRAY_ITERATOR_H

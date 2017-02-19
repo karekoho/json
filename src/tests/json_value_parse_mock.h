@@ -41,9 +41,9 @@ public:
     _assign (Value *, Value *) override
     { return *this; }
 
-    virtual JSON_Iterator *
+    virtual json_iterator *
     iterator () const override
-    { return new Leaf_Iterator (this); }
+    { return new leaf_iterator (this); }
 
     virtual const wchar_t *stringify () noexcept override
     { return L""; }
