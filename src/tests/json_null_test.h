@@ -20,9 +20,9 @@ public:
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
-          Null *n[] = {
-          new Null,
-          new Null (p[pidx]),
+          null *n[] = {
+          new null,
+          new null (p[pidx]),
         };
 
         delete n[0];
@@ -31,8 +31,8 @@ public:
 
     delete p[1];
 
-    Null src;
-    Null copy = src;
+    null src;
+    null copy = src;
 
     CPPUNIT_ASSERT_MESSAGE ("null", & copy != & src);
   }
@@ -69,7 +69,7 @@ public:
       { new string (L"\"xxx\""), Value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL }  },
       { new Number (10), Value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
       { new Boolean (true), Value::boolean_t, L"key_6",  0, 5, { PASS, PASS, FAIL } },
-      { new Null, Value::null_t, L"key_7",  0, 6, { PASS, PASS, PASS } }
+      { new null, Value::null_t, L"key_7",  0, 6, { PASS, PASS, PASS } }
     };
 
     // arr_parent._element_list.reserve (6);
@@ -87,7 +87,7 @@ public:
 
           /// old_value: value from Value[key], any value
 
-          Null *old_value = new Null;
+          null *old_value = new null;
           old_value->_parent = parents[pidx];
 
           arr_parent._element_list.push_back (new Format::undefined);
@@ -98,7 +98,7 @@ public:
 
           if ((*it).new_value->type () == Value::null_t)
             {
-              Null *new_null_value = dynamic_cast<Null *>((*it).new_value);
+              null *new_null_value = dynamic_cast<null *>((*it).new_value);
 
               //old_value->_assign (*new_null_value);
               *old_value = *new_null_value;

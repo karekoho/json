@@ -15,7 +15,7 @@ public:
   test_hasNext ()
   {
     size_t c = 0;
-    Null n;
+    null n;
 
     JSON_Iterator *iit = new Leaf_Iterator (&n);
 

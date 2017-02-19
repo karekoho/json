@@ -159,7 +159,7 @@ json::_make_value ()
     switch (_is_literal ())
       {
       case Value::_literal::null_value:
-        value_ = new Null (this);
+        value_ = new null (this);
         break;
       case Value::_literal::true_value :
         value_ = new Boolean (this, true);

@@ -350,7 +350,7 @@ public:
       { new Number (10), Value::number_t, L"key_4",  0, 4, { PASS, PASS, PASS } },
       { new Number (L"10"), Value::number_t, L"key_5",  0, 5, { PASS, PASS, PASS } },
       { new Boolean (true), Value::boolean_t, L"key_6",  0, 6, { PASS, PASS, FAIL } },
-      { new Null, Value::null_t, L"key_7",  0, 7, { PASS, PASS, FAIL } }
+      { new null, Value::null_t, L"key_7",  0, 7, { PASS, PASS, FAIL } }
     };
 
       for (size_t pidx = 0; pidx < 3; pidx++)

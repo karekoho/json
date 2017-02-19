@@ -215,7 +215,7 @@ public:
         { new string, Value::string_t, PASS },
         { new Number, Value::number_t, PASS },
         { new Boolean, Value::boolean_t, PASS },
-        { new Null, Value::null_t, PASS },
+        { new null, Value::null_t, PASS },
         { new Format::undefined, Value::undefined_t, PASS }
       };
 

@@ -70,7 +70,7 @@ public:
       { new string (L"\"x\""), Value::string_t, L"key_3",  0, 3, { PASS, PASS, FAIL } },
       { new Number (10), Value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
       { new Boolean (true), Value::boolean_t, L"key_5",  0, 5, { PASS, PASS, PASS } },
-      { new Null, Value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
+      { new null, Value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
     };
       arr_parent._element_list.reserve (6);
 

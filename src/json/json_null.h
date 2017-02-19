@@ -11,7 +11,7 @@ namespace Format {
 /**
  * @brief The Null class
  */
-class Null : public leaf
+class null : public leaf
 {
 #ifdef UNIT_TEST
  friend class json_null_test;
@@ -22,7 +22,7 @@ class Null : public leaf
   /**
    * @brief Null
    */
-  Null ()
+  null ()
     : leaf ()
   {}
 
@@ -32,7 +32,7 @@ class Null : public leaf
    * @param parent
    * @param charc
    */
-  Null (json *parent)
+  null (json *parent)
     : leaf (parent)
   {}
 
@@ -40,14 +40,14 @@ class Null : public leaf
    * @brief Null
    * @param other
    */
-  Null (const Null &other) = default;
+  null (const null &other) = default;
 
   /**
    * @brief Null
    * @param ov
    * @param nv
    */
-  Null (const Value *ov, const Null &nv)
+  null (const Value *ov, const null &nv)
     : leaf (ov, nv)
   {}
 
@@ -58,7 +58,7 @@ class Null : public leaf
    */
   virtual Value *
   clone () const
-  { return new Null (*this); }
+  { return new null (*this); }
 
   /**
    * @brief clone
@@ -67,7 +67,7 @@ class Null : public leaf
    */
   virtual Value *
   clone (const Value *ov) const override
-  { return new Null (ov, *this); }
+  { return new null (ov, *this); }
 
   /**
    * @brief parse
@@ -101,7 +101,7 @@ class Null : public leaf
    * @return
    */
   inline Value &
-  operator =(const Null & n)
+  operator =(const null & n)
   { return _assign (n); }
 
   /**
@@ -146,8 +146,8 @@ protected:
    * @return
    */
   Value &
-  _assign (const Null &)
-  { return _parent ? _parent->_assign (this, new Null (this, *this)) : *this; }
+  _assign (const null &)
+  { return _parent ? _parent->_assign (this, new null (this, *this)) : *this; }
 
   /**
    * @brief _clear
