@@ -77,12 +77,12 @@ Array::parse (const wchar_t *json)
         {
           _readp++;
 
-          if ((v = _make_value ())->type () == Value::no_value)
+          if ((v = _make_value ())->type () == Value::no_value_t)
             throw JSON_Syntax_Error (UNEX_TOKEN, *_readp);
 
           next_idx = _element_list.size ();
 
-          if ((v = _call_reviver (v, 0, next_idx))->type () != Value::undefined)
+          if ((v = _call_reviver (v, 0, next_idx))->type () != Value::undefined_t)
             {
               _element_list.push_back (v);
               v->setIndex (next_idx);
@@ -91,7 +91,7 @@ Array::parse (const wchar_t *json)
       else if (*_readp == _sc::end_array)         // ']'
         return _readp + 1;
 
-      else if ((v = _make_value ())->type () == Value::no_value)  // No valid value found
+      else if ((v = _make_value ())->type () == Value::no_value_t)  // No valid value found
         {
           if (*_readp != Value::_ws::space
               && *_readp != Value::_ws::tab
@@ -101,7 +101,7 @@ Array::parse (const wchar_t *json)
 
           // Empty array
         }
-      else if ((v = _call_reviver (v, 0, next_idx))->type () != Value::undefined)  // Value found
+      else if ((v = _call_reviver (v, 0, next_idx))->type () != Value::undefined_t)  // Value found
         {
           _element_list.push_back (v);
           v->setIndex (next_idx);

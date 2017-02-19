@@ -69,12 +69,12 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { new Array (L"[true,false]"), Value::array, L"key_1",  0, 1,  { PASS, PASS, FAIL }  },
-      { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object, L"key_2",  0, 2,  { PASS, PASS, FAIL }},
-      { new String (L"\"xxx\""), Value::string, L"key_3",  0, 3,  { PASS, PASS, FAIL }  },
-      { new Number (10), Value::number, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-      { new Boolean (true), Value::boolean, L"key_6",  0, 5, { PASS, PASS, FAIL } },
-      { new Null, Value::null, L"key_7",  0, 6, { PASS, PASS, PASS } }
+      { new Array (L"[true,false]"), Value::array_t, L"key_1",  0, 1,  { PASS, PASS, FAIL }  },
+      { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object_t, L"key_2",  0, 2,  { PASS, PASS, FAIL }},
+      { new String (L"\"xxx\""), Value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL }  },
+      { new Number (10), Value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
+      { new Boolean (true), Value::boolean_t, L"key_6",  0, 5, { PASS, PASS, FAIL } },
+      { new Null, Value::null_t, L"key_7",  0, 6, { PASS, PASS, PASS } }
     };
 
     // arr_parent._element_list.reserve (6);
@@ -101,7 +101,7 @@ public:
           (*it).index  = arr_parent._element_list.size () - 1;
           old_value->setIndex ((*it).index);
 
-          if ((*it).new_value->type () == Value::null)
+          if ((*it).new_value->type () == Value::null_t)
             {
               Null *new_null_value = dynamic_cast<Null *>((*it).new_value);
 
@@ -120,7 +120,7 @@ public:
             {
               ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
 
-              if (parent->type () == Value::object)
+              if (parent->type () == Value::object_t)
                 {
                   Value *ov =  obj_parent._member_list.at ((*it).key);
 

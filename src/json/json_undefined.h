@@ -88,7 +88,7 @@ class Undefined : public Leaf
    */
   virtual inline object_type
   type () const
-  { return Value::object_type::undefined; }
+  { return Value::object_type::undefined_t; }
 
   /**
    * @brief operator =

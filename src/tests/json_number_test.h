@@ -348,13 +348,13 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { new Array (L"[true,false]"), Value::array, L"key_2",  0, 1,  { PASS, PASS, FAIL } },
-      { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object, L"key_1",  0, 2,  { PASS, PASS, FAIL } },
-      { new String (L"\"x\""), Value::string, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
-      { new Number (10), Value::number, L"key_4",  0, 4, { PASS, PASS, PASS } },
-      { new Number (L"10"), Value::number, L"key_5",  0, 5, { PASS, PASS, PASS } },
-      { new Boolean (true), Value::boolean, L"key_6",  0, 6, { PASS, PASS, FAIL } },
-      { new Null, Value::null, L"key_7",  0, 7, { PASS, PASS, FAIL } }
+      { new Array (L"[true,false]"), Value::array_t, L"key_2",  0, 1,  { PASS, PASS, FAIL } },
+      { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object_t, L"key_1",  0, 2,  { PASS, PASS, FAIL } },
+      { new String (L"\"x\""), Value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
+      { new Number (10), Value::number_t, L"key_4",  0, 4, { PASS, PASS, PASS } },
+      { new Number (L"10"), Value::number_t, L"key_5",  0, 5, { PASS, PASS, PASS } },
+      { new Boolean (true), Value::boolean_t, L"key_6",  0, 6, { PASS, PASS, FAIL } },
+      { new Null, Value::null_t, L"key_7",  0, 7, { PASS, PASS, FAIL } }
     };
 
       for (size_t pidx = 0; pidx < 3; pidx++)
@@ -383,7 +383,7 @@ public:
 
           Value *new_value = 0;
 
-          if ((*it).new_value->type () == Value::number)
+          if ((*it).new_value->type () == Value::number_t)
             {
               Number *new_number_value = dynamic_cast<Number *>((*it).new_value);
 
@@ -406,7 +406,7 @@ public:
             {
               ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
 
-              if (parent->type () == Value::object)
+              if (parent->type () == Value::object_t)
                 {
                   Value *ov =  obj_parent._member_list.at ((*it).key);
 
@@ -421,7 +421,7 @@ public:
                   // ASSERT_EQUAL_IDX ("arr_parent[key].value", av, new_value);
                 }
             }
-          else if (new_value->type () == Value::number)
+          else if (new_value->type () == Value::number_t)
             {
               ASSERT_EQUAL_IDX ("old_value.value ()", (double) 10, old_value->value ());
               // ASSERT_EQUAL_IDX ("old_value.value ()", static_cast<Number *>(new_value)->value (), old_value.value ());

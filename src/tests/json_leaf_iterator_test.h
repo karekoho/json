@@ -69,9 +69,9 @@ public:
     };
 
     std::vector<struct assert> test = {
-      { & it[0], Value::undefined, FAIL },
-      { & it[1], Value::boolean, PASS },
-      { & copy, Value::boolean, PASS }
+      { & it[0], Value::undefined_t, FAIL },
+      { & it[1], Value::boolean_t, PASS },
+      { & copy, Value::boolean_t, PASS }
     };
 
     TEST_IT_START

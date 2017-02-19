@@ -65,7 +65,7 @@ public:
    */
   virtual object_type
   type () const
-  { return Value::object_type::no_value; }
+  { return Value::object_type::no_value_t; }
 
   /**
    * @brief instance

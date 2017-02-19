@@ -123,12 +123,12 @@ Object::_pair ()
 
   Value * v = _make_value ();
 
-  if (v->type () == Value::no_value)
+  if (v->type () == Value::no_value_t)
     throw JSON_Syntax_Error ("Unexpected token ", *_readp);
 
   std::wstring key (keyp, charc - 2);
 
-  if ((v = _call_reviver (v, key.c_str ()))->type () == Value::undefined)   // Reviver returned undefined, value is not added
+  if ((v = _call_reviver (v, key.c_str ()))->type () == Value::undefined_t)   // Reviver returned undefined, value is not added
     return true;
 
   (void) _member_list.emplace (key, v);

@@ -85,15 +85,15 @@ public:
     };
 
     std::vector<struct assert> test = {
-      { & it, Value::boolean, PASS },
-      { & copy, Value::boolean, PASS }
+      { & it, Value::boolean_t, PASS },
+      { & copy, Value::boolean_t, PASS }
     };
 
     TEST_IT_START
 
         Value & v = **(*it).itp;
 
-        ASSERT_EQUAL_IDX ("v.type ()", Value::object_type::boolean, v.type ());
+        ASSERT_EQUAL_IDX ("v.type ()", Value::object_type::boolean_t, v.type ());
 
     TEST_IT_END;
 

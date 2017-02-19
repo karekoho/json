@@ -116,7 +116,7 @@ namespace Format
    */
       virtual inline object_type
       type () const
-      { return Value::object_type::boolean; }
+      { return Value::object_type::boolean_t; }
 
       /**
    * @brief operator =

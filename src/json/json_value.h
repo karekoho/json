@@ -34,14 +34,14 @@ class Value
    */
   enum object_type
   {
-    no_value,
-    undefined,
-    object,
-    array,
-    string,
-    number,
-    boolean,
-    null
+    no_value_t,
+    undefined_t,
+    object_t,
+    array_t,
+    string_t,
+    number_t,
+    boolean_t,
+    null_t
   };
 
   /**

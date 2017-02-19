@@ -81,7 +81,7 @@ class String : public Leaf
    */
   virtual inline object_type
   type () const
-  { return Value::object_type::string; }
+  { return Value::object_type::string_t; }
 
   /**
    * @brief operator =

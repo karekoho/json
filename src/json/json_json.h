@@ -129,7 +129,7 @@ public:
    */
   virtual inline Value::object_type
   type () const
-  { return __hasRoot () ?  __root->type () : Value::object_type::undefined; }
+  { return __hasRoot () ?  __root->type () : Value::object_type::undefined_t; }
 
   /**
    * @brief size

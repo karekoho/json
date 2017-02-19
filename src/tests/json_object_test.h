@@ -49,27 +49,27 @@ public:
     JSON *p[] = { 0, new JSON () };
 
     std::vector<struct assert > test = {
-      { L"{}", 0, Value::undefined, 0, PASS },
-      { L"{ } ", 0, Value::undefined, 1, PASS },
-      { L"{\"k\":\"v\"} ", 1, Value::string, 1, PASS },
-      { L"{ \"k\" : \"v\" } ", 1, Value::string, 1, PASS },
-      { L"{\"k\":\"v\",\"q\":\"p\"} ", 2, Value::string, 1, PASS },
-      { L"{ \"k\": \"v\", \"q\" : \"p\",\"K\":\"v\" } ", 3, Value::string, 1, PASS },
-      { L"{ \"k\": \"p\" ,\"q\" : \"p\", \"K\" :\"v\",\"Q\":\"p\" } ", 4, Value::string, 1, PASS },
+      { L"{}", 0, Value::undefined_t, 0, PASS },
+      { L"{ } ", 0, Value::undefined_t, 1, PASS },
+      { L"{\"k\":\"v\"} ", 1, Value::string_t, 1, PASS },
+      { L"{ \"k\" : \"v\" } ", 1, Value::string_t, 1, PASS },
+      { L"{\"k\":\"v\",\"q\":\"p\"} ", 2, Value::string_t, 1, PASS },
+      { L"{ \"k\": \"v\", \"q\" : \"p\",\"K\":\"v\" } ", 3, Value::string_t, 1, PASS },
+      { L"{ \"k\": \"p\" ,\"q\" : \"p\", \"K\" :\"v\",\"Q\":\"p\" } ", 4, Value::string_t, 1, PASS },
 
-      { L"{ \"k\" : { } }", 1, Value::object, 0, PASS },
-      { L"{ \"k\" : {\"kk\" : \"v\"}}", 1, Value::object, 0, PASS },
-      { L"{ \"k\" : {\"kk\" : {\"kkk\" : \"v\"}}", 1, Value::object, 0, PASS },
-      { L"{ \"k\" : null } ", 1, Value::null, 1, PASS },
+      { L"{ \"k\" : { } }", 1, Value::object_t, 0, PASS },
+      { L"{ \"k\" : {\"kk\" : \"v\"}}", 1, Value::object_t, 0, PASS },
+      { L"{ \"k\" : {\"kk\" : {\"kkk\" : \"v\"}}", 1, Value::object_t, 0, PASS },
+      { L"{ \"k\" : null } ", 1, Value::null_t, 1, PASS },
 
       // errors
-      { L"", 0, Value::undefined, 0, FAIL },   // json::syntax_error
-      { L" ", 0, Value::undefined, 0, FAIL },   // json::syntax_error
-      { L"x", 0, Value::undefined, 0, FAIL },   // json::syntax_error
-      { L"{", 0, Value::undefined, 0, FAIL },   // json::syntax_error
-      { L"}", 0, Value::undefined, 0, FAIL },   // json::syntax_error
-      { L"{ , }", 0, Value::undefined, 0, FAIL },   // json::syntax_error
-      { L"{ : }", 0, Value::undefined, 0, FAIL },   // json::syntax_error
+      { L"", 0, Value::undefined_t, 0, FAIL },   // json::syntax_error
+      { L" ", 0, Value::undefined_t, 0, FAIL },   // json::syntax_error
+      { L"x", 0, Value::undefined_t, 0, FAIL },   // json::syntax_error
+      { L"{", 0, Value::undefined_t, 0, FAIL },   // json::syntax_error
+      { L"}", 0, Value::undefined_t, 0, FAIL },   // json::syntax_error
+      { L"{ , }", 0, Value::undefined_t, 0, FAIL },   // json::syntax_error
+      { L"{ : }", 0, Value::undefined_t, 0, FAIL },   // json::syntax_error
     };
 
     TEST_IT_START;
@@ -155,8 +155,8 @@ public:
     };
 
     std::vector<struct assert> test = {
-      { L"key1", Value::object_type::boolean, PASS },
-      { L"key2", Value::object_type::undefined, FAIL }
+      { L"key1", Value::object_type::boolean_t, PASS },
+      { L"key2", Value::object_type::undefined_t, FAIL }
     };
 
     TEST_IT_START
@@ -182,8 +182,8 @@ public:
     };
 
     std::vector<struct assert> test = {
-      { L"key1", Value::object_type::boolean, PASS },
-      { L"key2", Value::object_type::undefined, PASS }
+      { L"key1", Value::object_type::boolean_t, PASS },
+      { L"key2", Value::object_type::undefined_t, PASS }
     };
 
     TEST_IT_START
@@ -264,12 +264,12 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object, L"key_1",  0, 1,  { PASS, PASS, PASS } },
-      { new Array (L"[]"), Value::array, L"key_2",  0, 2,  { PASS, PASS, FAIL } },
-      { new String (L"\"x\""), Value::string, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
-      { new Number (), Value::number, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-      { new Boolean (true), Value::boolean, L"key_5",  0, 5, { PASS, PASS, FAIL } },
-      { new Null (), Value::null, L"key_6",  0, 6, { PASS, PASS, FAIL } }
+      { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object_t, L"key_1",  0, 1,  { PASS, PASS, PASS } },
+      { new Array (L"[]"), Value::array_t, L"key_2",  0, 2,  { PASS, PASS, FAIL } },
+      { new String (L"\"x\""), Value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
+      { new Number (), Value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
+      { new Boolean (true), Value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
+      { new Null (), Value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
     };
 
     // arr_parent._element_list.reserve (6);
@@ -299,7 +299,7 @@ public:
 
           Value *new_value = 0;
 
-          if ((*it).new_value->type () == Value::object)
+          if ((*it).new_value->type () == Value::object_t)
             {
               Object *new_o_value = static_cast<Object *>((*it).new_value);
 
@@ -322,7 +322,7 @@ public:
             {
               ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
 
-              if (parent->type () == Value::object)
+              if (parent->type () == Value::object_t)
                 {
                   Value *ov =  obj_parent._member_list.at ((*it).key);
 

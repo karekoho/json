@@ -210,13 +210,13 @@ public:
       };
 
       std::vector<struct assert> test = {
-        { new Object, Value::object, PASS },
-        { new Array, Value::array, PASS },
-        { new String, Value::string, PASS },
-        { new Number, Value::number, PASS },
-        { new Boolean, Value::boolean, PASS },
-        { new Null, Value::null, PASS },
-        { new Format::Undefined, Value::undefined, PASS }
+        { new Object, Value::object_t, PASS },
+        { new Array, Value::array_t, PASS },
+        { new String, Value::string_t, PASS },
+        { new Number, Value::number_t, PASS },
+        { new Boolean, Value::boolean_t, PASS },
+        { new Null, Value::null_t, PASS },
+        { new Format::Undefined, Value::undefined_t, PASS }
       };
 
       for (size_t hdx = 0; hdx < 2; hdx++)

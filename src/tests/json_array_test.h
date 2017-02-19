@@ -45,24 +45,24 @@ public:
     };
 
     std::vector<struct assert> test = {
-      { L"[]", 0, Value::object_type::array, 0, PASS },
-      { L"[ ] ", 0, Value::object_type::array, 1, PASS },
-      { L"[\t] ", 0, Value::object_type::array, 1, PASS },
-      { L"[\r] ", 0, Value::object_type::array, 1, PASS },
-      { L"[\n] ", 0, Value::object_type::array, 1, PASS },
-      { L"[\"x\"]", 1, Value::object_type::array, 0, PASS },
-      { L"[\"x\",\"x\"] ", 2, Value::object_type::array, 1, PASS },
-      { L"[\"x\",\"x\",[\"x\"]] ", 3,  Value::object_type::array, 1, PASS },
+      { L"[]", 0, Value::object_type::array_t, 0, PASS },
+      { L"[ ] ", 0, Value::object_type::array_t, 1, PASS },
+      { L"[\t] ", 0, Value::object_type::array_t, 1, PASS },
+      { L"[\r] ", 0, Value::object_type::array_t, 1, PASS },
+      { L"[\n] ", 0, Value::object_type::array_t, 1, PASS },
+      { L"[\"x\"]", 1, Value::object_type::array_t, 0, PASS },
+      { L"[\"x\",\"x\"] ", 2, Value::object_type::array_t, 1, PASS },
+      { L"[\"x\",\"x\",[\"x\"]] ", 3,  Value::object_type::array_t, 1, PASS },
 
       // errors
-      { L"[", 0, Value::object_type::undefined, 0, FAIL },
-      { L"[ ", 0, Value::object_type::undefined, 0, FAIL },
-      { L"]", 0, Value::object_type::undefined, 0, FAIL },
-      { L"[, ", 0, Value::object_type::undefined, 0, FAIL },
-      { L"[ x ", 0, Value::object_type::undefined, 0, FAIL },
-      { L"", 0, Value::object_type::undefined, 0, FAIL },
-      { L" ", 0, Value::object_type::undefined, 0, FAIL },
-      { L"x", 0, Value::object_type::undefined, 0, FAIL },
+      { L"[", 0, Value::object_type::undefined_t, 0, FAIL },
+      { L"[ ", 0, Value::object_type::undefined_t, 0, FAIL },
+      { L"]", 0, Value::object_type::undefined_t, 0, FAIL },
+      { L"[, ", 0, Value::object_type::undefined_t, 0, FAIL },
+      { L"[ x ", 0, Value::object_type::undefined_t, 0, FAIL },
+      { L"", 0, Value::object_type::undefined_t, 0, FAIL },
+      { L" ", 0, Value::object_type::undefined_t, 0, FAIL },
+      { L"x", 0, Value::object_type::undefined_t, 0, FAIL },
     };
 
     JSON *p[] = { 0, new JSON () };
@@ -142,12 +142,12 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { new Array (L"[true,false]"), Value::array, L"key_2",  0, 1,  { PASS, PASS, PASS } },
-      { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object, L"key_1",  0, 2,  { PASS, PASS, FAIL } },
-      { new String (L"\"x\""), Value::string, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
-      { new Number (), Value::number, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-      { new Boolean (true), Value::boolean, L"key_5",  0, 5, { PASS, PASS, FAIL } },
-      { new Null (), Value::null, L"key_6",  0, 6, { PASS, PASS, FAIL } }
+      { new Array (L"[true,false]"), Value::array_t, L"key_2",  0, 1,  { PASS, PASS, PASS } },
+      { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object_t, L"key_1",  0, 2,  { PASS, PASS, FAIL } },
+      { new String (L"\"x\""), Value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
+      { new Number (), Value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
+      { new Boolean (true), Value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
+      { new Null (), Value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
     };
       arr_parent._element_list.reserve (6);
 
@@ -176,7 +176,7 @@ public:
 
           // Value *new_value = 0;
 
-          if ((*it).new_value->type () == Value::array)
+          if ((*it).new_value->type () == Value::array_t)
             {
               Array *new_a_value = static_cast<Array *>((*it).new_value);
 
@@ -199,7 +199,7 @@ public:
             {
               ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
 
-              if (parent->type () == Value::object)
+              if (parent->type () == Value::object_t)
                 {
                   Value *ov =  obj_parent._member_list.at ((*it).key);
 
@@ -244,8 +244,8 @@ public:
     };
 
     std::vector<struct assert> test = {
-      { 0, L"0", Value::object_type::boolean, PASS },
-      { 1, L"1", Value::object_type::undefined, FAIL }
+      { 0, L"0", Value::object_type::boolean_t, PASS },
+      { 1, L"1", Value::object_type::undefined_t, FAIL }
     };
 
     TEST_IT_START
@@ -275,8 +275,8 @@ public:
     };
 
     std::vector<struct assert> test = {
-      { 0, L"0", Value::object_type::boolean, PASS },
-      { 1, L"1", Value::object_type::undefined, PASS }
+      { 0, L"0", Value::object_type::boolean_t, PASS },
+      { 1, L"1", Value::object_type::undefined_t, PASS }
     };
 
     TEST_IT_START

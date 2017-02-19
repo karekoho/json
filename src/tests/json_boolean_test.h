@@ -64,12 +64,12 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { new Array (L"[true,false]"), Value::array, L"key_2",  0, 1, { PASS, PASS, FAIL }  },
-      { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object, L"key_1",  0, 2, { PASS, PASS, FAIL } },
-      { new String (L"\"x\""), Value::string, L"key_3",  0, 3, { PASS, PASS, FAIL } },
-      { new Number (10), Value::number, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-      { new Boolean (true), Value::boolean, L"key_5",  0, 5, { PASS, PASS, PASS } },
-      { new Null, Value::null, L"key_6",  0, 6, { PASS, PASS, FAIL } }
+      { new Array (L"[true,false]"), Value::array_t, L"key_2",  0, 1, { PASS, PASS, FAIL }  },
+      { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object_t, L"key_1",  0, 2, { PASS, PASS, FAIL } },
+      { new String (L"\"x\""), Value::string_t, L"key_3",  0, 3, { PASS, PASS, FAIL } },
+      { new Number (10), Value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
+      { new Boolean (true), Value::boolean_t, L"key_5",  0, 5, { PASS, PASS, PASS } },
+      { new Null, Value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
     };
       arr_parent._element_list.reserve (6);
 
@@ -101,7 +101,7 @@ public:
 
           Value *new_value = 0;
 
-          if ((*it).new_value->type () == Value::boolean)
+          if ((*it).new_value->type () == Value::boolean_t)
             {
               Boolean *new_boolean_value = static_cast<Boolean *>((*it).new_value);
 
@@ -124,7 +124,7 @@ public:
             {
               ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
 
-              if (parent->type () == Value::object)
+              if (parent->type () == Value::object_t)
                 {
                   Value *ov =  obj_parent._member_list.at ((*it).key);
 
@@ -141,7 +141,7 @@ public:
             }
           else
             {
-              if (new_value->type () == Value::boolean)
+              if (new_value->type () == Value::boolean_t)
                 {
                   ASSERT_EQUAL_IDX ("old_value.value ()", (bool) true, old_value->value ());
                 }

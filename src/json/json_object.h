@@ -119,7 +119,7 @@ public:
    */
   virtual inline object_type
   type () const
-  { return Value::object_type::object; }
+  { return Value::object_type::object_t; }
 
   /**
    * @brief size

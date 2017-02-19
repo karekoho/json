@@ -143,7 +143,7 @@ namespace Format {
    */
     virtual object_type
     type () const
-    { return Value::object_type::array; }
+    { return Value::object_type::array_t; }
 
     /**
    * @brief size

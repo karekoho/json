@@ -95,7 +95,7 @@ public:
    */
   virtual object_type
   type () const
-  { return Value::object_type::number; }
+  { return Value::object_type::number_t; }
 
   /**
    * @brief operator =

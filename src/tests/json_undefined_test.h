@@ -61,12 +61,12 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { new Array (L"[true,false]"), Value::array, L"key_1",  0, 1,  { PASS, PASS, FAIL } },
-      { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object, L"key_2",  0, 2, { PASS, PASS, FAIL } },
-      { new String (L"\"xxx\""), Value::string, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
-      { new Number (10), Value::number, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-      { new Boolean (true), Value::boolean, L"key_6",  0, 5, { PASS, PASS, FAIL } },
-      { new Null, Value::null, L"key_7",  0, 6, { PASS, PASS, FAIL } }
+      { new Array (L"[true,false]"), Value::array_t, L"key_1",  0, 1,  { PASS, PASS, FAIL } },
+      { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object_t, L"key_2",  0, 2, { PASS, PASS, FAIL } },
+      { new String (L"\"xxx\""), Value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
+      { new Number (10), Value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
+      { new Boolean (true), Value::boolean_t, L"key_6",  0, 5, { PASS, PASS, FAIL } },
+      { new Null, Value::null_t, L"key_7",  0, 6, { PASS, PASS, FAIL } }
     };
 
     for (size_t pidx = 0; pidx < 3; pidx++)
@@ -100,7 +100,7 @@ public:
               ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
               // ASSERT_EQUAL_IDX ("(*it).new_value->_old->type ()", Value::object_type::undefined, (*it).new_value->_old->type ());
 
-              if (parent->type () == Value::object)
+              if (parent->type () == Value::object_t)
                 {
                   Value *ov =  obj_parent._member_list.at ((*it).key);
 

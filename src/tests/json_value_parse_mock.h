@@ -27,7 +27,7 @@ public:
 
     virtual Value::object_type
     type () const
-    { return Value::object_type::undefined; }
+    { return Value::object_type::undefined_t; }
 
     virtual size_t
     count () const
