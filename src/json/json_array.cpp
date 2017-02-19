@@ -43,14 +43,14 @@ const wchar_t *
 array::parse (const wchar_t *json)
 {
   if (json == 0)
-    throw JSON_Syntax_Error (UNEX_END);
+    throw json_syntax_error (UNEX_END);
 
   if (_parent == 0)   // 1. Array (), 2. Array (const char *json)
     {
       _readp = json;
 
       if (*(_look_ahead ()) != _sc::begin_array)  // Expecting '['
-        throw JSON_Syntax_Error (UNEX_END);
+        throw json_syntax_error (UNEX_END);
 
       _readp++;
     }
@@ -61,7 +61,7 @@ array::parse (const wchar_t *json)
     }
 
   if (*_readp == 0)
-    throw JSON_Syntax_Error (UNEX_END);
+    throw json_syntax_error (UNEX_END);
 
   if (! _element_list.empty ())
     _clear ();
@@ -78,7 +78,7 @@ array::parse (const wchar_t *json)
           _readp++;
 
           if ((v = _make_value ())->type () == Value::no_value_t)
-            throw JSON_Syntax_Error (UNEX_TOKEN, *_readp);
+            throw json_syntax_error (UNEX_TOKEN, *_readp);
 
           next_idx = _element_list.size ();
 
@@ -97,7 +97,7 @@ array::parse (const wchar_t *json)
               && *_readp != Value::_ws::tab
               && *_readp != Value::_ws::lf
               && *_readp != Value::_ws::cr)
-            throw JSON_Syntax_Error (UNEX_TOKEN, *_readp);
+            throw json_syntax_error (UNEX_TOKEN, *_readp);
 
           // Empty array
         }

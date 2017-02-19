@@ -26,7 +26,7 @@ number::number (const wchar_t *json)
     _digitp {{ 0, 0 }, { 0, 0 }}
 {
   if (json == 0)
-    throw JSON_Error (UNEX_END);
+    throw json_error (UNEX_END);
 
   (void) parse (json);
 }
@@ -63,7 +63,7 @@ number::parse (const wchar_t *json)
   wchar_t peek = 0;
 
   if (json == 0)
-    throw JSON_Error (UNEX_END);
+    throw json_error (UNEX_END);
 
   _readp = json;
 
@@ -97,7 +97,7 @@ number::parse (const wchar_t *json)
         }
 
       // throw _readp; // Anything else is no good
-      throw JSON_Syntax_Error (UNEX_TOKEN, *_readp); // Anything else is no good
+      throw json_syntax_error (UNEX_TOKEN, *_readp); // Anything else is no good
     }
 
   if ((peek = _digits ()) == '.')
@@ -111,7 +111,7 @@ number::parse (const wchar_t *json)
 
   if (peek < 0)
     // throw _readp;
-    throw JSON_Syntax_Error (UNEX_TOKEN, *_readp);
+    throw json_syntax_error (UNEX_TOKEN, *_readp);
 
   _digitp[DOUBLE][END] = _readp;
 
@@ -137,7 +137,7 @@ number::_frag ()
   int peek = _digits ();
 
   if (peek < 0) // No digits found
-    throw JSON_Syntax_Error (UNEX_TOKEN, *_readp);
+    throw json_syntax_error (UNEX_TOKEN, *_readp);
 
   _digitp[DOUBLE][END] = _readp;
 
@@ -156,7 +156,7 @@ number::_exp ()
     _readp++;
 
   if (_digits () < 0) // No digits found
-    throw JSON_Syntax_Error (UNEX_TOKEN, *_readp);
+    throw json_syntax_error (UNEX_TOKEN, *_readp);
 
   _digitp[EXP][END] = _readp;
 

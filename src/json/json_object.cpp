@@ -47,14 +47,14 @@ const wchar_t *
 Object::parse (const wchar_t *json)
 {
   if (json == 0)
-    throw JSON_Syntax_Error (UNEX_END);
+    throw json_syntax_error (UNEX_END);
 
   if (_parent == 0)   // 1. Object (), 2. Object (const char *json)
     {
       _readp = json;
 
       if (*(_look_ahead ()) != _sc::begin_object)
-        throw JSON_Syntax_Error (UNEX_END);
+        throw json_syntax_error (UNEX_END);
 
       _readp++;
     }
@@ -65,7 +65,7 @@ Object::parse (const wchar_t *json)
     }
 
   if (*_readp == 0)
-    throw JSON_Syntax_Error (UNEX_END);
+    throw json_syntax_error (UNEX_END);
 
   if (! _member_list.empty ())
     _clear ();
@@ -79,7 +79,7 @@ Object::parse (const wchar_t *json)
           _readp++;
 
           if (! _pair ())
-            throw JSON_Syntax_Error (UNEX_END);
+            throw json_syntax_error (UNEX_END);
         }
       else if (*_readp == _sc::end_object)         // '}'
         return _readp + 1;
@@ -104,27 +104,27 @@ Object::_pair ()
   if ((charc = _string (endc)) == 0)  // No opening \"
     {
       if (*_readp == 0)
-        throw JSON_Syntax_Error (UNEX_END);
+        throw json_syntax_error (UNEX_END);
 
       if (*_readp == _sc::end_object || *(_look_ahead ()) ==  _sc::end_object)  // Empty object
         return false;
     }
 
   if (charc < 0)   // No closing "
-    throw JSON_Syntax_Error ("Unexpected token ", *_readp);
+    throw json_syntax_error ("Unexpected token ", *_readp);
 
   const wchar_t *keyp = _readp + 1;
   _readp += charc;
 
   if (*(_look_ahead ()) != _sc::name_separator)   // Expect ':'
-    throw JSON_Syntax_Error ("Unexpected token ", *_readp);   // TODO: throw syntax error: unexpected character '%c'
+    throw json_syntax_error ("Unexpected token ", *_readp);   // TODO: throw syntax error: unexpected character '%c'
 
   _readp++;
 
   Value * v = _make_value ();
 
   if (v->type () == Value::no_value_t)
-    throw JSON_Syntax_Error ("Unexpected token ", *_readp);
+    throw json_syntax_error ("Unexpected token ", *_readp);
 
   std::wstring key (keyp, charc - 2);
 

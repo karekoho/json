@@ -8,7 +8,7 @@
  * 14.
  * @brief The json_test class
  */
-class json_syntax_error_test:public unit_test
+class json_syntax_error_test : public unit_test
 {
 public:
 
@@ -29,7 +29,7 @@ public:
 
     TEST_IT_START;
 
-      JSON_Syntax_Error e ("a:", L'b');
+      Format::json_syntax_error e ("a:", L'b');
 
       const char *output = e.what ();
 
@@ -55,7 +55,7 @@ public:
 
     TEST_IT_START;
 
-      JSON_Syntax_Error e ("a:", L"abcd", (*it).charc);
+      Format::json_syntax_error e ("a:", L"abcd", (*it).charc);
 
       const char *output = e.what ();
 

@@ -9,7 +9,7 @@ string::string (const wchar_t *json)
     _charc (0)
 {
   if (json == 0)
-    throw JSON_Syntax_Error ("Unexpected end of JSON input");
+    throw json_syntax_error ("Unexpected end of JSON input");
 
   (void) parse (json);
 }
@@ -47,7 +47,7 @@ string::parse (const wchar_t *json)
   if (_parent == 0)   // 2. ctor
     {
       if ((charc = _string (endc)) <= 0 )
-        throw JSON_Syntax_Error ("Unexpected token ", *_readp);
+        throw json_syntax_error ("Unexpected token ", *_readp);
 
       _charc = (size_t) charc;
     }

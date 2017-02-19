@@ -24,7 +24,7 @@ json::json (const wchar_t *json, const bool _parse)
     __reviver (0)
 {
   if (json == 0)
-    throw JSON_Syntax_Error (UNEX_END);
+    throw json_syntax_error (UNEX_END);
 
   _startp = json;
 
@@ -39,7 +39,7 @@ json::json (const wchar_t *json, Reviver r)
     __reviver (r)
 {
   if (json == 0)
-    throw JSON_Syntax_Error (UNEX_END);
+    throw json_syntax_error (UNEX_END);
 
   _startp = json;
 
@@ -89,7 +89,7 @@ const wchar_t *
 json::json::parse (const wchar_t *readp)
 {
   if (readp == 0 || *readp == 0)
-    throw JSON_Syntax_Error (UNEX_END);
+    throw json_syntax_error (UNEX_END);
 
   _readp = readp;
 
@@ -142,7 +142,7 @@ json::_make_value ()
   if (readc == _sc::double_quote)           // String
     {
       if ((charc = _string (endc)) < 0)
-        throw JSON_Syntax_Error (UNEX_TOKEN, *_readp);
+        throw json_syntax_error (UNEX_TOKEN, *_readp);
 
       value_ = new string (this, charc);
     }

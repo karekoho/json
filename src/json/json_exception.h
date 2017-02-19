@@ -7,17 +7,18 @@
 #include <wchar.h>
 #include <alloca.h>
 
+namespace Format {
   /**
  * @brief The JSON_Error class
  */
-class JSON_Error : public std::exception
+class json_error : public std::exception
 {
   public:
   /**
    * @brief JSON_Error
    * @param what
    */
-  JSON_Error (const char * const what)
+  json_error (const char * const what)
     : exception (),
       _what (what)
   {
@@ -42,15 +43,15 @@ protected:
 /**
  * @brief The JSON_Syntax_Error class
  */
-class JSON_Syntax_Error : public JSON_Error
+class json_syntax_error : public json_error
 {
 public:
   /**
    * @brief Syntax_Error
    * @param what
    */
-  JSON_Syntax_Error (const char * const what)
-    : JSON_Error (what)
+  json_syntax_error (const char * const what)
+    : json_error (what)
   {}
 
   /**
@@ -58,8 +59,8 @@ public:
    * @param what
    * @param token
    */
-  JSON_Syntax_Error (const char * const what, wchar_t token)
-    : JSON_Error (what)
+  json_syntax_error (const char * const what, wchar_t token)
+    : json_error (what)
   {
     _add_token (& token, 1);
   }
@@ -70,8 +71,8 @@ public:
    * @param what
    * @param token
    */
-  JSON_Syntax_Error (const char * const what, const wchar_t *token, size_t charc = 0)
-    : JSON_Error (what)
+  json_syntax_error (const char * const what, const wchar_t *token, size_t charc = 0)
+    : json_error (what)
   {
     _add_token (token, charc);
   }
@@ -104,17 +105,18 @@ protected:
 /**
  * @brief The JSON_Out_Of_Range class
  */
-class JSON_Out_Of_Range : public JSON_Error
+class json_out_of_range : public json_error
 {
 public:
   /**
    * @brief Syntax_Error
    * @param what
    */
-  JSON_Out_Of_Range (const char * const what)
-    : JSON_Error (what)
+  json_out_of_range (const char * const what)
+    : json_error (what)
   {}
 };
+}
 
 #endif // JSON_EXCEPTION
 
