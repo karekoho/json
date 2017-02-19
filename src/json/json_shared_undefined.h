@@ -6,7 +6,7 @@ namespace Format {
 /**
  * @brief The Shared_Undefined class
  */
-class Shared_Undefined : public Undefined
+class Shared_Undefined : public undefined
 {
 public:
 
@@ -33,7 +33,7 @@ protected:
    * @brief Shared_Undefined
    */
   Shared_Undefined ()
-    : Undefined ()
+    : undefined ()
   {
   }
 
@@ -42,7 +42,7 @@ protected:
    * @param parent
    */
   Shared_Undefined (json *parent)
-    :  Undefined (parent)
+    :  undefined (parent)
   {
   }
 

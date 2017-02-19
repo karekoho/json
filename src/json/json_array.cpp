@@ -126,7 +126,7 @@ Array::_at (size_t index)
     }
   catch (std::out_of_range &)
     {
-      Value *v = new Undefined (this);
+      Value *v = new undefined (this);
 
       _element_list.push_back (v);
       v->setIndex (_element_list.size () - 1);

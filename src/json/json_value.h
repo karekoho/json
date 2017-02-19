@@ -19,7 +19,7 @@ namespace Format {
  */
 class json;
 class JSON_Iterator;
-class Undefined;
+class undefined;
 class Value
 {
 #ifdef UNIT_TEST
@@ -335,7 +335,7 @@ protected:
    * @return
    */
   Value &
-  _assign (const Format::Undefined &)
+  _assign (const Format::undefined &)
   {
     _erase ();
     return *this;

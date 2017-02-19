@@ -172,7 +172,7 @@ public:
           old_value->_parent = parents[pidx];
 
           old_value->_element_list.clear ();
-          arr_parent._element_list.push_back (new Format::Undefined);
+          arr_parent._element_list.push_back (new Format::undefined);
           old_value->setKey ((*it).key, wcslen ((*it).key) /* (*it).keylen */);
 
           (*it).index  = arr_parent._element_list.size () - 1;

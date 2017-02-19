@@ -11,7 +11,7 @@ namespace Format {
 /**
  * @brief The undefined class
  */
-class Undefined : public Leaf
+class undefined : public Leaf
 {
 #ifdef UNIT_TEST
   friend class json_undefined_test;
@@ -19,7 +19,7 @@ class Undefined : public Leaf
 
   public:
 
-  Undefined ()
+  undefined ()
     : Leaf ()
   {}
 
@@ -27,7 +27,7 @@ class Undefined : public Leaf
    * @brief Undefined
    * @param parent
    */
-  Undefined (json *parent)
+  undefined (json *parent)
     : Leaf (parent)
   {}
 
@@ -35,14 +35,14 @@ class Undefined : public Leaf
    * @brief Undefined
    * @param other
    */
-  Undefined (const Undefined &other) = default;
+  undefined (const undefined &other) = default;
 
   /**
    * @brief Undefined
    * @param ov
    * @param nv
    */
-  Undefined (const Value *ov, const Undefined &nv)
+  undefined (const Value *ov, const undefined &nv)
     : Leaf (ov, nv)
   {}
 
@@ -53,7 +53,7 @@ class Undefined : public Leaf
    */
   virtual Value *
   clone () const
-  { return new Undefined (*this); }
+  { return new undefined (*this); }
 
   /**
    * @brief clone
@@ -62,7 +62,7 @@ class Undefined : public Leaf
    */
   virtual Value *
   clone (const Value *ov) const override
-  { return new Undefined (ov, *this); }
+  { return new undefined (ov, *this); }
 
   /**
    * TODO: return nullptr
@@ -139,7 +139,7 @@ protected:
    */
   virtual Value *
   clone (const Value &) override
-  { return new Undefined (*this); }
+  { return new undefined (*this); }
 };
 }
 #endif // UNDEFINED_H

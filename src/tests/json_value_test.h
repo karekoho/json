@@ -187,7 +187,7 @@ public:
 
       TEST_IT_START
 
-          (*it).value->_assign (Format::Undefined ());
+          (*it).value->_assign (Format::undefined ());
 
           ASSERT_EQUAL_IDX ("a.count ()", (*it).size, a.count ());
 
@@ -216,7 +216,7 @@ public:
         { new Number, Value::number_t, PASS },
         { new Boolean, Value::boolean_t, PASS },
         { new Null, Value::null_t, PASS },
-        { new Format::Undefined, Value::undefined_t, PASS }
+        { new Format::undefined, Value::undefined_t, PASS }
       };
 
       for (size_t hdx = 0; hdx < 2; hdx++)

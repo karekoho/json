@@ -19,9 +19,9 @@ public:
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
-        Format::Undefined *u[] = {
-          new Format::Undefined,
-          new Format::Undefined (p[pidx]),
+        Format::undefined *u[] = {
+          new Format::undefined,
+          new Format::undefined (p[pidx]),
         };
 
         delete u[0];
@@ -30,8 +30,8 @@ public:
 
     delete p[1];
 
-    Format::Undefined src;
-    Format::Undefined copy = src;
+    Format::undefined src;
+    Format::undefined copy = src;
 
     CPPUNIT_ASSERT_MESSAGE ("undefined", & copy != & src);
   }
@@ -79,10 +79,10 @@ public:
 
           /// old_value: value from Value[key], any value
 
-          Format::Undefined *old_value = new Format::Undefined;
+          Format::undefined *old_value = new Format::undefined;
           old_value->_parent = parents[pidx];
 
-          arr_parent._element_list.push_back (new Format::Undefined);
+          arr_parent._element_list.push_back (new Format::undefined);
           old_value->setKey ((*it).key, wcslen ((*it).key));
 
           (*it).index  = arr_parent._element_list.size () - 1;

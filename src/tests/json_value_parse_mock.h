@@ -19,11 +19,11 @@ public:
 
     virtual Value &
     at (const wchar_t *) const
-    { return *(new Format::Undefined); }
+    { return *(new Format::undefined); }
 
     virtual Value &
     at (size_t) const
-    { return *(new Format::Undefined); }
+    { return *(new Format::undefined); }
 
     virtual Value::object_type
     type () const

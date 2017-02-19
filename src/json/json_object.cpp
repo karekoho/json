@@ -172,7 +172,7 @@ Object::_at (const wchar_t *key)
     }
   catch (std::out_of_range &)
     {
-      Value *v = new Undefined (this);
+      Value *v = new undefined (this);
 
       v->setKey (key, wcslen (key));
       _member_list.emplace (key, v);

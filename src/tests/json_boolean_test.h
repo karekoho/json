@@ -92,7 +92,7 @@ public:
 
           old_value->_parent = parents[pidx];
 
-          arr_parent._element_list.push_back (new Format::Undefined);
+          arr_parent._element_list.push_back (new Format::undefined);
 
           old_value->_boolean_value = false;
           old_value->setKey ((*it).key, wcslen ((*it).key));
