@@ -6,7 +6,6 @@
 
 /**
  * 13.
- *
  * @brief The test_selector_test class
  */
 class test_selector_test : public unit_test
@@ -90,7 +89,6 @@ public:
 
   /**
    * 13.
-   *
    * @brief suite
    * @return
    */

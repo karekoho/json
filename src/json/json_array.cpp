@@ -112,22 +112,9 @@ Array::parse (const wchar_t *json)
 }
 
 Value &
-Array::at (size_t index) const
-{
-  try
-    {
-      return *(_element_list.at (index));
-    }
-  catch (std::out_of_range & e)
-    {
-      throw JSON_Out_Of_Range (e.what ());
-    }
-}
-
-Value &
 Array::_assign (const Array &nv)
 {
-  return _parent ? _parent->assign (this, new Array (this, nv)) : *(clone (nv));
+  return _parent ? _parent->_assign (this, new Array (this, nv)) : *(clone (nv));
 }
 
 Value &
@@ -149,7 +136,7 @@ Array::_at (size_t index)
 }
 
 Value &
-Array::assign (Value *ov, Value *nv)
+Array::_assign (Value *ov, Value *nv)
 {
   size_t index = ov->index ();
 

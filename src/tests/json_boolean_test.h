@@ -7,6 +7,7 @@ namespace Format {
 
 /**
  * 6.
+ *
  * @brief The json_boolean_test class
  */
 class json_boolean_test : public json_leaf_test
@@ -154,16 +155,11 @@ public:
   }
 
   virtual void test_parse_1 () override {}
-  virtual void test_size_1 () override {}
-  virtual void test_at () override {}
-  virtual void test_stringify () override {}
+
   virtual void test_strLength () override {}
   virtual void test_strValue () override {}
   virtual void test__clear () override {}
-  virtual void test_operator_assign () {}
-  virtual void test_operator_at () override {}
-  virtual void test_value_1 ()  override {}
-  virtual void test_debug_1 ()  override {}
+
   virtual void test_erase () override {}
 
   /**
@@ -176,8 +172,13 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json boolean test");
 
-    /* 0. */  s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_ctor_dtor", &json_boolean_test::test_ctor_dtor));
-    /* 1. */  s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_assign_all_values", &json_boolean_test::test_assign_all_values));
+//<<<<<<< HEAD
+//    /* 0. */  s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_ctor_dtor", &json_boolean_test::test_ctor_dtor));
+//    /* 1. */  s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_assign_all_values", &json_boolean_test::test_assign_all_values));
+//=======
+    /* 0.*/ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_ctor_dtor", &json_boolean_test::test_ctor_dtor));
+    /* 1.*/ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_assign_all_values", &json_boolean_test::test_assign_all_values));
+//>>>>>>> f058e8b1150497ae319ee0ca0a6d4851cbc80ddf
 
     return s;
   }

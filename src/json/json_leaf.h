@@ -66,15 +66,15 @@ public:
    * @brief at
    * @return
    */
-  virtual  Value &
-  at (const wchar_t *) const final override;
+  //virtual  Value &
+  //at (const wchar_t *) const final override;
 
   /**
    * @brief at
    * @return
    */
-  virtual Value &
-  at (size_t) const final override;
+  //virtual Value &
+  //at (size_t) const final override;
 
   /**
    * @brief type
@@ -96,7 +96,7 @@ public:
    * @return
    */
   virtual Value &
-  assign (Value *, Value *) final override
+  _assign (Value *, Value *) final override
   { return *this; }
 
   /**

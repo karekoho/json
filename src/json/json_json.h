@@ -109,7 +109,7 @@ public:
    * @brief at
    * @param key
    * @return
-   */
+   *
   virtual Value &
   at (const wchar_t *key) const
   { return __hasRoot () ? __root->at (key) : Format::Shared_Undefined::instance (); }
@@ -118,13 +118,13 @@ public:
    * @brief at
    * @param index
    * @return
-   */
+   *
   virtual Value &
   at (size_t index) const
   { return __hasRoot () ? __root->at (index) : Format::Shared_Undefined::instance (); }
+  */
 
-  /**
-   * @brief type
+   /* @brief type
    * @return
    */
   virtual inline Value::object_type
@@ -180,7 +180,7 @@ public:
    * @return
    */
   virtual Value &
-  assign (Value *, Value *) override
+  _assign (Value *, Value *) override
   { return *this; }
 
   /**

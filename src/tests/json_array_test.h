@@ -2,8 +2,13 @@
 #define JSON_ARRAY_TEST
 
 #include "json_value_test_interface.h"
+
 namespace Format {
-/// Test number 3
+
+/**
+ * 3.
+ * @brief The json_array_test class
+ */
 class json_array_test : public json_value_test_interface
 {
 public:
@@ -90,7 +95,6 @@ public:
   {
     struct assert {
       const wchar_t *startp;
-      // const char *key;
       int assert_status;
     };
 
@@ -226,10 +230,8 @@ public:
           delete (*it).new_value;
   }
 
-  virtual void test_size_1 () {}
-
   virtual void
-  test_at ()
+  test_operator_at_key ()
   {
     Array a;
 
@@ -237,30 +239,28 @@ public:
 
     struct assert
     {
-      size_t index;
       const wchar_t *key;
       Value::object_type type;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { 0, L"0", Value::object_type::boolean_t, PASS },
-      { 1, L"1", Value::object_type::undefined_t, FAIL }
+      { L"0", Value::object_type::boolean_t, PASS },
+      { L"1", Value::object_type::undefined_t, PASS },
+      { L"x", Value::object_type::boolean_t, PASS }   // Converted to 0
     };
 
     TEST_IT_START
 
-        const Value & v1 = a.at ((*it).index);
-        const Value & v2 = a._at ((*it).key);
+        const Value & v = a[((*it).key)]; // Array::_at("key") tries to convert "key" to size_t
 
-        ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v1.type ());
-        ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v2.type ());
+        ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v.type ());
 
     TEST_IT_END;
   }
 
   virtual void
-  test__at ()
+  test_operator_at_index ()
   {
     Array a;
 
@@ -269,23 +269,23 @@ public:
     struct assert
     {
       size_t index;
-      const wchar_t *key;
       Value::object_type type;
       int assert_status;
     };
 
     std::vector<struct assert> test = {
-      { 0, L"0", Value::object_type::boolean_t, PASS },
-      { 1, L"1", Value::object_type::undefined_t, PASS }
+
+
+      { 0, Value::object_type::boolean_t, PASS },
+      { 1, Value::object_type::undefined_t, PASS }
+
     };
 
     TEST_IT_START
 
-      const Value & v1 = a._at ((*it).index);
-      const Value & v2 = a._at ((*it).key);
+      const Value & v = a [(*it).index];
 
-      ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v1.type ());
-      ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v2.type ());
+      ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v.type ());
 
     TEST_IT_END;
   }
@@ -299,13 +299,6 @@ public:
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("array._element_list.size ()", (size_t) 0, a._element_list.size ());
   }
 
-  virtual void
-  test_stringify () override
-  {
-    // parents: 0, array
-    // []
-    // [\"x\",100,true,null]
-  }
 
   virtual void
   test_strLength () override
@@ -446,14 +439,11 @@ public:
      TEST_IT_END;
   }
 
-  virtual void test_operator_assign () {}
-  virtual void test_operator_at () {}
-
-  virtual void test_value_1 () {}
-  virtual void test_debug_1 () {}
+  virtual void test__at () override {}
+  // virtual void test_size_1 () {}
 
   /**
-   * Test number 3
+   * 3.
    * @brief suite
    * @return
    */
@@ -462,33 +452,19 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json array test");
 
-    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test_strValue));
-    // return s;
-    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test_strLength));
-    // return s;
-
-    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_ctor_dtor", &json_array_test::test_ctor_dtor));
-    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_parse_1", &json_array_test::test_parse_1));
-    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_index", &json_array_test::test_index));
-
-    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_at", &json_array_test::test_at));
-    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_at", &json_array_test::test__at));
-
-    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_assign_all_values", &json_array_test::test_assign_all_values));
-    s->addTest (new CppUnit::TestCaller<json_array_test> ("test__clear", &json_array_test::test__clear));
-
-    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_erase", &json_array_test::test_erase));
-
-//    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_size_1", &json_array_test::test_size_1));
-//    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_get_1", &json_array_test::test_get_1));
-//    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_value_1", &json_array_test::test_value_1));
-//    s->addTest (new CppUnit::TestCaller<json_array_test> ("test_debug_1", &json_array_test::test_debug_1));
+    /* 0. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test_strValue));
+    /* 1. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test_strLength));
+    /* 2. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_ctor_dtor", &json_array_test::test_ctor_dtor));
+    /* 3. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_parse_1", &json_array_test::test_parse_1));
+    /* 4. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_index", &json_array_test::test_index));
+    /* 5. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_operator_at_key", &json_array_test::test_operator_at_key));
+    /* 6. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_operator_at_index", &json_array_test::test_operator_at_index));
+    /* 7. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_assign_all_values", &json_array_test::test_assign_all_values));
+    /* 8. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test__clear", &json_array_test::test__clear));
+    /* 9. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_erase", &json_array_test::test_erase));
 
     return s;
   }
-
-
-
 };
 }
 #endif // JSON_ARRAY_TEST

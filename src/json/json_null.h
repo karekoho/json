@@ -147,7 +147,7 @@ protected:
    */
   Value &
   _assign (const Null &)
-  { return _parent ? _parent->assign (this, new Null (this, *this)) : *this; }
+  { return _parent ? _parent->_assign (this, new Null (this, *this)) : *this; }
 
   /**
    * @brief _clear

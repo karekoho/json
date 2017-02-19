@@ -214,7 +214,7 @@ protected:
    */
   Value &
   _assign (const Number & nv)
-  { return _parent  ? _parent->assign (this, new Number (this, nv)) : *(clone (nv)); }
+  { return _parent  ? _parent->_assign (this, new Number (this, nv)) : *(clone (nv)); }
 
   /**
    * @brief _clear

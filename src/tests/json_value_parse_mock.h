@@ -38,7 +38,7 @@ public:
     { return 0; }
 
     virtual Value &
-    assign (Value *, Value *) override
+    _assign (Value *, Value *) override
     { return *this; }
 
     virtual JSON_Iterator *

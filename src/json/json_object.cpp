@@ -138,18 +138,18 @@ Object::_pair ()
   return true;
 }
 
-Value &
-Object::at (const wchar_t *key) const
-{
-  try
-    {
-      return *(_member_list.at (key));
-    }
-  catch (std::out_of_range & e)
-    {
-      throw JSON_Out_Of_Range (e.what ());
-  }
-}
+//Value &
+//Object::at (const wchar_t *key) const
+//{
+//  try
+//    {
+//      return *(_member_list.at (key));
+//    }
+//  catch (std::out_of_range & e)
+//    {
+//      throw JSON_Out_Of_Range (e.what ());
+//  }
+//}
 
 JSON_Iterator *
 Object::iterator () const
@@ -160,7 +160,7 @@ Object::iterator () const
 Value &
 Object::_assign (const Object &nv)
 {
-  return _parent ? _parent->assign (this, new Object (this, nv)) : *(clone (nv));
+  return _parent ? _parent->_assign (this, new Object (this, nv)) : *(clone (nv));
 }
 
 Value &
@@ -182,7 +182,7 @@ Object::_at (const wchar_t *key)
 }
 
 Value &
-Object::assign (Value *ov, Value *nv)
+Object::_assign (Value *ov, Value *nv)
 {
   const wchar_t *key = ov->key ();
 

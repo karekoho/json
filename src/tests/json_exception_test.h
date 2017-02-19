@@ -74,12 +74,11 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json exception test");
 
-    s->addTest (new CppUnit::TestCaller<json_syntax_error_test> ("test_ctor_2", &json_syntax_error_test::test_ctor_2));
-    s->addTest (new CppUnit::TestCaller<json_syntax_error_test> ("test_ctor_3", &json_syntax_error_test::test_ctor_3));
+    /* 0. */  s->addTest (new CppUnit::TestCaller<json_syntax_error_test> ("test_ctor_2", &json_syntax_error_test::test_ctor_2));
+    /* 1. */  s->addTest (new CppUnit::TestCaller<json_syntax_error_test> ("test_ctor_3", &json_syntax_error_test::test_ctor_3));
 
     return s;
   }
-
 };
 
 #endif // JSON_EXCEPTION_TEST

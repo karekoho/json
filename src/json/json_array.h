@@ -32,6 +32,7 @@ namespace Format {
     friend class json_undefined_test;
 #endif
 
+
     // TODO: friend void Value::setKey (const char *key);
     // TODO: friend void Value::setIndex (const size_t &index);
     // TODO: friend Value & Value::_root__at (const char *key, JSON *root);
@@ -113,13 +114,13 @@ namespace Format {
    * @brief at
    * @param key
    * @return
-   */
+   *
     virtual Value &
     at (const wchar_t *key) const
     {
       wchar_t *end = 0;
       return at (std::wcstoll (key, & end, 10));
-    }
+    } */
 
     /**
    * @brief at
@@ -134,8 +135,11 @@ namespace Format {
    * @param ov
    * @param nv
    */
-    virtual Value &
-    assign (Value *ov, Value *nv);
+    //virtual Value &
+    //assign (Value *ov, Value *nv);
+
+  //virtual const wchar_t *
+  //parse (const wchar_t *json);
 
     /**
    * @brief type
@@ -314,6 +318,7 @@ namespace Format {
    * @brief _at
    * @return
    */
+
     virtual Value &
     _at (const wchar_t *key)
     {
@@ -321,7 +326,8 @@ namespace Format {
       return _at (std::wcstoll (key, & end, 10));
     }
 
-    /**
+
+  /**
    * @brief _assign
    * @param nv
    * @return
@@ -334,17 +340,28 @@ namespace Format {
    * @param nv
    * @return
    */
+
     virtual Value &
     _assign (const Value & nv)
     { return Value::_assign (nv); }
 
-    /**
+
+
+  /**
+   * @brief assign
+   * @param ov
+   * @param nv
+   */
+  virtual Value &
+  _assign (Value *ov, Value *nv) override;
+
+  /**
    * @brief _at
    * @param index
    * @return
    */
-    Value &
-    _at (size_t index);
+  virtual Value &
+  _at (size_t index) override;
 
     /**
    * @brief _clear

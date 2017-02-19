@@ -58,7 +58,7 @@ String::parse (const wchar_t *json)
 Value &
 String::_assign (const String &nv)
 {
-  return _parent ? _parent->assign (this, new String (this, nv)) : *(clone (nv));
+  return _parent ? _parent->_assign (this, new String (this, nv)) : *(clone (nv));
 }
 
 const wchar_t *

@@ -113,22 +113,6 @@ class Value
   parse (const wchar_t *json) = 0;
 
   /**
-   * @brief at If key does not exist, throws json::out_of_range exception
-   * @param key
-   * @return
-   */
-  virtual Value &
-  at (const wchar_t *key) const  = 0;
-
-  /**
-   * @brief at
-   * @param index
-   * @return
-   */
-  virtual Value &
-  at (size_t index) const = 0;
-
-  /**
    * @brief operator []
    * @param key
    * @return
@@ -253,19 +237,6 @@ class Value
   { _index = index; }
 
   /**
-   * TODO: protected
-   *
-   * Assign Value object to member_list or element_list.
-   *
-   * @brief _assign
-   * @param Old value
-   * @param New value
-   * @return
-   */
-  virtual Value &
-  assign (Value *, Value *) = 0;
-
-  /**
    * @brief iterator
    * @return
    */
@@ -337,8 +308,6 @@ class Value
 protected:
 
   /**
-   * TODO: public
-   *
    * If value has parent object, assign to new value to this->_parent->[key],
    * otherwise assign new value to Value object itself.
    *
@@ -348,6 +317,17 @@ protected:
    */
   virtual Value &
   _assign (const Value & nv);
+
+  /**
+   * Assign Value object to member_list or element_list.
+   *
+   * @brief _assign
+   * @param Old value
+   * @param New value
+   * @return
+   */
+  virtual Value &
+  _assign (Value *, Value *) = 0;
 
   /**
    * @brief _assign

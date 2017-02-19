@@ -14,7 +14,7 @@ public:
     virtual void test_ctor_dtor() {}
     virtual void test_parse_1(){}
     virtual void test_size_1(){}
-    virtual void test_at(){}
+    virtual void test_operator_at_key(){}
     virtual void test_value_1(){}
     virtual void test_debug_1(){}
 
@@ -182,7 +182,7 @@ public:
 
       std::vector<struct assert> test = {
         { & b, 1, PASS }, // No parent
-        { & (a.at (index)), 0, PASS }  // Has parent
+        { & (a[index]), 0, PASS }  // Has parent
       };
 
       TEST_IT_START
@@ -242,7 +242,7 @@ public:
     }
 
 
-    virtual void test_stringify () override {}
+    //virtual void test_stringify () override {}
     virtual void test_strLength () override {}
     virtual void test_strValue () override {}
 
@@ -252,6 +252,11 @@ public:
     virtual void test__clear () {}
 
     virtual void test_erase () override {}
+
+    virtual void
+    test_operator_at_index ()
+    {
+    }
 
     /**
      * 0.

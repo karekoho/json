@@ -100,8 +100,8 @@ public:
    * @param key
    * @return
    */
-  virtual Value &
-  at (const wchar_t *key) const;
+//  virtual Value &
+//  at (const wchar_t *key) const;
 
   /**
    * TODO: REMOVE
@@ -109,9 +109,9 @@ public:
    * @brief at
    * @return
    */
-  virtual Value &
-  at (size_t)
-  { /* return *this; */ throw JSON_Out_Of_Range (""); }
+//  virtual Value &
+//  at (size_t)
+//  { return Shared_Undefined::instance (); /* return *this; */ /* throw JSON_Out_Of_Range (""); */ }
 
   /**
    * @brief type
@@ -331,7 +331,7 @@ protected:
    * @return
    */
   virtual Value & _at (size_t)
-  { throw JSON_Out_Of_Range (""); }
+  { return Shared_Undefined::instance (); }
 
   /**
    * @brief _assign
@@ -348,7 +348,7 @@ protected:
    * @param nv
    */
   virtual Value &
-  assign (Value *ov, Value *nv);
+  _assign (Value *ov, Value *nv);
 
   /**
    * @brief _clear

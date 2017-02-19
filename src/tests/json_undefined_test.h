@@ -1,15 +1,16 @@
 #ifndef JSON_UNDEFINED_TEST
 #define JSON_UNDEFINED_TEST
 
-#include "json_value_test_interface.h"
+#include "json_leaf_test.h"
+
 namespace Format {
+
 /**
  * 8.
  * @brief The json_undefined_test class
  */
-class json_undefined_test : public json_value_test_interface
+class json_undefined_test : public json_leaf_test
 {
-  // json_value_test_interface interface
 public:
 
   virtual void test_ctor_dtor ()
@@ -35,9 +36,6 @@ public:
     CPPUNIT_ASSERT_MESSAGE ("undefined", & copy != & src);
   }
 
-  virtual void test_parse_1 () {}
-  virtual void test_size_1 () {}
-  virtual void test_at () {}
 
   virtual void
   test_assign_all_values ()
@@ -123,15 +121,13 @@ public:
           delete (*it).new_value;
   }
 
-
-  virtual void test_stringify () override {}
+  virtual void test_parse_1 () {}
+  //virtual void test_stringify () override {}
   virtual void test_strLength () override {}
   virtual void test_strValue () override  {}
   virtual void test__clear() {}
   virtual void test_operator_assign () {}
   virtual void test_operator_at () {}
-  virtual void test_value_1 () {}
-  virtual void test_debug_1 () {}
   virtual void test_erase () override {}
 
   void
@@ -156,9 +152,9 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json undefined test");
 
-    s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_ctor_dtor", &json_undefined_test::test_ctor_dtor));
-    s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_assign_all_values", &json_undefined_test::test_assign_all_values));
-    s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_shared_undefined", &json_undefined_test::test_shared_undefined));
+    /* 0. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_ctor_dtor", &json_undefined_test::test_ctor_dtor));
+    /* 1. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_assign_all_values", &json_undefined_test::test_assign_all_values));
+    /* 2. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_shared_undefined", &json_undefined_test::test_shared_undefined));
 
     return s;
   }
