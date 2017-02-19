@@ -7,163 +7,156 @@
 #ifdef UNIT_TEST
  class json_null_test;
 #endif
-namespace format {
-/**
- * @brief The Null class
- */
-class null : public leaf
+
+namespace format
 {
-#ifdef UNIT_TEST
- friend class json_null_test;
-#endif
-
-  public:
-
   /**
-   * @brief Null
+   * @brief The Null class
    */
-  null ()
-    : leaf ()
-  {}
+  class null : public leaf
+  {
+    #ifdef UNIT_TEST
+      friend class json_null_test;
+    #endif
 
-  /**
-   * @brief Null
-   * @param endp
-   * @param parent
-   * @param charc
-   */
-  null (json *parent)
-    : leaf (parent)
-  {}
+    public:
 
-  /**
-   * @brief Null
-   * @param other
-   */
-  null (const null &other) = default;
+    /**
+     * @brief Null
+     */
+    null ()
+      : leaf ()
+    {}
 
-  /**
-   * @brief Null
-   * @param ov
-   * @param nv
-   */
-  null (const value *ov, const null &nv)
-    : leaf (ov, nv)
-  {}
+    /**
+     * @brief Null
+     * @param endp
+     * @param parent
+     * @param charc
+     */
+    null (json *parent)
+      : leaf (parent)
+    {}
 
-  /**
-   * @brief clone
-   * @param other
-   * @return
-   */
-  virtual value *
-  clone () const
-  { return new null (*this); }
+    /**
+     * @brief Null
+     * @param other
+     */
+    null (const null &other) = default;
 
-  /**
-   * @brief clone
-   * @param ov
-   * @return
-   */
-  virtual value *
-  clone (const value *ov) const override
-  { return new null (ov, *this); }
+    /**
+     * @brief Null
+     * @param ov
+     * @param nv
+     */
+    null (const value *ov, const null &nv)
+      : leaf (ov, nv)
+    {}
 
-  /**
-   * @brief parse
-   * @param json
-   * @return
-   */
-  virtual inline const wchar_t *
-  parse (const wchar_t *json)
-  { return json + 4; }
+    /**
+     * @brief clone
+     * @param other
+     * @return
+     */
+    virtual value *
+    clone () const
+    { return new null (*this); }
 
-  /**
-   * @brief type
-   * @return
-   */
-  virtual inline value::value_t
-  type () const
-  { return value::value_t::null_t; }
+    /**
+     * @brief clone
+     * @param ov
+     * @return
+     */
+    virtual value *
+    clone (const value *ov) const override
+    { return new null (ov, *this); }
 
-  /**
-   * TODO: return nullptr
-   * @brief Value
-   * @return
-   */
-  inline std::nullptr_t
-  get () const
-  { return nullptr; }
+    /**
+     * @brief parse
+     * @param json
+     * @return
+     */
+    virtual inline const wchar_t *
+    parse (const wchar_t *json)
+    { return json + 4; }
 
-  /**
-   * @brief operator =
-   * @param n
-   * @return
-   */
-  inline value &
-  operator =(const null & n)
-  { return _assign (n); }
+    /**
+     * @brief type
+     * @return
+     */
+    virtual inline value::value_t
+    type () const
+    { return value::value_t::null_t; }
 
-  /**
-   * @brief operator =
-   * @param v
-   * @return
-   */
-  inline value &
-  operator =(const value & v)
-  { return value::_assign (v); }
+    /**
+     * TODO: return nullptr
+     * @brief Value
+     * @return
+     */
+    inline std::nullptr_t
+    get () const
+    { return nullptr; }
 
-  /**
-   * @brief strValue
-   * @return
-   */
-  virtual const wchar_t *
-  strValue (wchar_t *) const noexcept override
-  { return L"null"; }
+    /**
+     * @brief operator =
+     * @param n
+     * @return
+     */
+    inline value &
+    operator =(const null & n)
+    { return _assign (n); }
 
-  /**
-   * @brief strLength
-   * @return
-   */
-  virtual size_t
-  strLength () const noexcept override
-  { return 4; }
+    /**
+     * @brief operator =
+     * @param v
+     * @return
+     */
+    inline value &
+    operator =(const value & v)
+    { return value::_assign (v); }
 
-protected:
+    /**
+     * @brief strValue
+     * @return
+     */
+    virtual const wchar_t *
+    strValue (wchar_t *) const noexcept override
+    { return L"null"; }
 
-  /**
-   * @brief _assign
-   * @param nv
-   * @return
-   */
-//  virtual Value &
-//  _assign (const Value & nv)
-//  { return Value::_assign (nv); }
+    /**
+     * @brief strLength
+     * @return
+     */
+    virtual size_t
+    strLength () const noexcept override
+    { return 4; }
 
-  /**
-   * @brief assign
-   * @param nv
-   * @return
-   */
-  value &
-  _assign (const null &)
-  { return _parent ? _parent->_assign (this, new null (this, *this)) : *this; }
+  protected:
 
-  /**
-   * @brief _clear
-   */
-  virtual void
-  _clear ()
-  {}
+    /**
+     * @brief assign
+     * @param nv
+     * @return
+     */
+    value &
+    _assign (const null &)
+    { return _parent ? _parent->_assign (this, new null (this, *this)) : *this; }
 
-  /**
-   * @brief _clone
-   * @return
-   */
-  virtual value *
-  clone (const value &) override
-  { return this; }
+    /**
+     * @brief _clear
+     */
+    virtual void
+    _clear ()
+    {}
 
-};
-}
+    /**
+     * @brief _clone
+     * @return
+     */
+    virtual value *
+    clone (const value &) override
+    { return this; }
+  };
+} // Namespace format
+
 #endif // NULL_H
