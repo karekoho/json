@@ -17,7 +17,7 @@ public:
    * @brief Array_Iterator
    * @param vec
    */
-  Array_Iterator (const Array::element_list & list);
+  Array_Iterator (const array::element_list & list);
 
   /**
    * @brief next

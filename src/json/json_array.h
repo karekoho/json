@@ -19,7 +19,7 @@ namespace Format {
  /**
   * @brief The array class
   */
-  class Array : public json
+  class array : public json
   {
 #ifdef UNIT_TEST
     friend class json_test;
@@ -44,19 +44,19 @@ namespace Format {
     /**
    * @brief Array
    */
-    Array ();
+    array ();
 
     /**
    * @brief Array
    * @param json
    */
-    Array (const wchar_t *json);
+    array (const wchar_t *json);
 
     /**
    * @brief Array
    * @param l elements
    */
-    Array (std::initializer_list<Value *> il);
+    array (std::initializer_list<Value *> il);
 
     /**
    * @brief Array
@@ -64,20 +64,20 @@ namespace Format {
    * @param parent
    * @param charc
    */
-    Array (json *parent);
+    array (json *parent);
 
     /**
    * @brief Array
    * @param other
    */
-    Array (const Array &other);
+    array (const array &other);
 
     /**
    * @brief Array
    * @param ov
    * @param nv
    */
-    Array (const Value *ov, const Array &nv);
+    array (const Value *ov, const array &nv);
 
     /**
    * @brief clone
@@ -86,7 +86,7 @@ namespace Format {
    */
     virtual Value *
     clone () const
-    { return new Array (*this); }
+    { return new array (*this); }
 
     /**
    * @brief clone
@@ -95,12 +95,12 @@ namespace Format {
    */
     virtual Value *
     clone (const Value *ov) const override
-    { return new Array (ov, *this); }
+    { return new array (ov, *this); }
 
     /**
    * @brief ~Array
    */
-    virtual ~Array ();
+    virtual ~array ();
 
     /**
    * @brief parse
@@ -163,7 +163,7 @@ namespace Format {
    * @return
    */
     inline Value &
-    operator =(const Array & a)
+    operator =(const array & a)
     { return _assign (a); }
 
     /**
@@ -333,7 +333,7 @@ namespace Format {
    * @return
    */
     Value &
-    _assign (const Array & nv);
+    _assign (const array & nv);
 
     /**
    * @brief _assign

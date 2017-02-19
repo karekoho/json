@@ -169,7 +169,7 @@ public:
     {
       Boolean b;
 
-      Array a = L"[true]";
+      array a = L"[true]";
 
       struct assert
       {
@@ -211,7 +211,7 @@ public:
 
       std::vector<struct assert> test = {
         { new Object, Value::object_t, PASS },
-        { new Array, Value::array_t, PASS },
+        { new array, Value::array_t, PASS },
         { new string, Value::string_t, PASS },
         { new number, Value::number_t, PASS },
         { new Boolean, Value::boolean_t, PASS },

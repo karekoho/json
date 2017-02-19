@@ -150,7 +150,7 @@ json::_make_value ()
     value_ = new Object (this);
 
   else if (readc == _sc::begin_array)       // Array
-    value_ = new Array (this);
+    value_ = new array (this);
 
   else if (isdigit (readc) || readc == '-') // Number
     value_ = new number (this);

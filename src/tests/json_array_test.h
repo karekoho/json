@@ -20,18 +20,18 @@ public:
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
-        Array a[] = {
-          Array (),
-          Array (L"[]"),
-          Array (p[pidx]),
-          Array {new number (1)},
+        array a[] = {
+          array (),
+          array (L"[]"),
+          array (p[pidx]),
+          array {new number (1)},
         };
       }
 
     delete p[1];
 
-    Array src = L"[true]";
-    Array copy = src;
+    array src = L"[true]";
+    array copy = src;
 
     CPPUNIT_ASSERT_MESSAGE ("array", & copy != & src);
     CPPUNIT_ASSERT_MESSAGE ("array", & copy._element_list.at (0) != & src._element_list.at (0));
@@ -77,7 +77,7 @@ public:
         {
           const wchar_t *startp = (*it).startp;
           size_t charc = wcslen (startp);
-          Array *a = new Array (p[pidx]);
+          array *a = new array (p[pidx]);
 
           const wchar_t *readp = a->parse (startp);
 
@@ -106,7 +106,7 @@ public:
 
     TEST_IT_START;
       const wchar_t *startp = (*it).startp;
-      Array *a = new Array ();
+      array *a = new array ();
 
       (void) a->parse (startp);
 
@@ -126,7 +126,7 @@ public:
   test_assign_all_values ()
   {
     Object obj_parent;
-    Array arr_parent;
+    array arr_parent;
 
     json *parents[] = {
       & obj_parent,
@@ -146,7 +146,7 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { new Array (L"[true,false]"), Value::array_t, L"key_2",  0, 1,  { PASS, PASS, PASS } },
+      { new array (L"[true,false]"), Value::array_t, L"key_2",  0, 1,  { PASS, PASS, PASS } },
       { new Object (L"{\"k1\":true,\"k2\":false}"), Value::object_t, L"key_1",  0, 2,  { PASS, PASS, FAIL } },
       { new string (L"\"x\""), Value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
       { new number (), Value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
@@ -168,7 +168,7 @@ public:
 
           /// old_value: value from Value[key], any value
 
-          Array *old_value = new Array;
+          array *old_value = new array;
           old_value->_parent = parents[pidx];
 
           old_value->_element_list.clear ();
@@ -182,7 +182,7 @@ public:
 
           if ((*it).new_value->type () == Value::array_t)
             {
-              Array *new_a_value = static_cast<Array *>((*it).new_value);
+              array *new_a_value = static_cast<array *>((*it).new_value);
 
               // old_value->_assign (*new_a_value);
               *old_value = *new_a_value;
@@ -233,7 +233,7 @@ public:
   virtual void
   test_operator_at_key ()
   {
-    Array a;
+    array a;
 
     a._element_list.push_back (new Boolean (true));
 
@@ -262,7 +262,7 @@ public:
   virtual void
   test_operator_at_index ()
   {
-    Array a;
+    array a;
 
     a._element_list.push_back (new Boolean (true));
 
@@ -293,7 +293,7 @@ public:
   virtual void
   test__clear ()
   {
-    Array a = L"[true, false]";
+    array a = L"[true, false]";
     a._clear ();
 
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("array._element_list.size ()", (size_t) 0, a._element_list.size ());
@@ -324,7 +324,7 @@ public:
 
     TEST_IT_START
 
-        Array a = (*it).input;
+        array a = (*it).input;
 
         ASSERT_EQUAL_IDX ("a.strLength ()", (*it).length, a.strLength ());
 
@@ -334,7 +334,7 @@ public:
   virtual void
   test_strValue () override
   {
-    Array p;
+    array p;
 
     json *parent[] = {
       0, &p
@@ -364,7 +364,7 @@ public:
 
             size_t len = wcslen ((*it).output[pidx]);
 
-            Array a;
+            array a;
 
             a._parent = parent[pidx];
 
@@ -402,7 +402,7 @@ public:
   virtual void
   test_erase () override
   {
-    Array a;
+    array a;
 
     Value *v[3]= {
       new Boolean (),

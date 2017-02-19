@@ -4,43 +4,43 @@
 #include <algorithm>
 using namespace Format;
 
-Array::Array () : json () {}
+array::array () : json () {}
 
-Array::Array (const wchar_t *text)
+array::array (const wchar_t *text)
   : json (text, false)
 {
   (void) parse (text);
 }
 
-Array::Array(std::initializer_list<Value *> il)
+array::array(std::initializer_list<Value *> il)
   : json (), _element_list (il)
 {
 }
 
-Array::Array (json *parent)
+array::array (json *parent)
   : json (parent)
 {
 }
 
-Array::Array (const Array &other)
+array::array (const array &other)
   : json (other)
 {
   (void) clone (other);
 }
 
-Array::Array (const Value *ov, const Array &nv)
+array::array (const Value *ov, const array &nv)
   : json (ov, nv)
 {
   (void) clone (nv);
 }
 
-Array::~Array ()
+array::~array ()
 {
   _clear ();
 }
 
 const wchar_t *
-Array::parse (const wchar_t *json)
+array::parse (const wchar_t *json)
 {
   if (json == 0)
     throw JSON_Syntax_Error (UNEX_END);
@@ -112,13 +112,13 @@ Array::parse (const wchar_t *json)
 }
 
 Value &
-Array::_assign (const Array &nv)
+array::_assign (const array &nv)
 {
-  return _parent ? _parent->_assign (this, new Array (this, nv)) : *(clone (nv));
+  return _parent ? _parent->_assign (this, new array (this, nv)) : *(clone (nv));
 }
 
 Value &
-Array::_at (size_t index)
+array::_at (size_t index)
 {
   try
     {
@@ -136,7 +136,7 @@ Array::_at (size_t index)
 }
 
 Value &
-Array::_assign (Value *ov, Value *nv)
+array::_assign (Value *ov, Value *nv)
 {
   size_t index = ov->index ();
 
@@ -149,16 +149,16 @@ Array::_assign (Value *ov, Value *nv)
 }
 
 void
-Array::_clear ()
+array::_clear ()
 {
   for (auto it = _element_list.begin (); it != _element_list.end (); it = _element_list.erase (it))
     delete *it;
 }
 
 Value *
-Array::clone (const Value &other)
+array::clone (const Value &other)
 {
-  const Array & nv = dynamic_cast<const Array &> (other);
+  const array & nv = dynamic_cast<const array &> (other);
 
   _clear ();
 
@@ -173,13 +173,13 @@ Array::clone (const Value &other)
 }
 
 JSON_Iterator *
-Array::iterator () const
+array::iterator () const
 {
   return new Array_Iterator (_element_list);
 }
 
 size_t
-Array::strLength () const noexcept
+array::strLength () const noexcept
 {
   if (_element_list.empty ())
     return 2;
@@ -196,7 +196,7 @@ Array::strLength () const noexcept
 }
 
 const wchar_t *
-Array::strValue (wchar_t *offset) const
+array::strValue (wchar_t *offset) const
 {
   wchar_t *str_value[2] = { 0, 0 };
 
@@ -234,7 +234,7 @@ Array::strValue (wchar_t *offset) const
 }
 
 Value &
-Array::erase (const Value &v) noexcept
+array::erase (const Value &v) noexcept
 {
   size_t index = v.index ();
 

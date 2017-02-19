@@ -55,14 +55,14 @@ public:
   void
   test_construct_assign_destruct ()
   {
-    Array::element_list list = { new Boolean };
+    array::element_list list = { new Boolean };
 
-    Array::Iterator *it[] = {
-      new Array::Iterator,
-      new Array::Iterator (list.begin ()),
+    array::Iterator *it[] = {
+      new array::Iterator,
+      new array::Iterator (list.begin ()),
     };
 
-    Array::Iterator copy = Array::Iterator (*it[1]);
+    array::Iterator copy = array::Iterator (*it[1]);
 
     CPPUNIT_ASSERT_MESSAGE ("& copy != it[1]", & copy != it[1]);
 
@@ -75,13 +75,13 @@ public:
   void
   test_dereference ()
   {
-    Array::element_list list = { new Boolean };
+    array::element_list list = { new Boolean };
 
-    Array::Iterator it (list.begin ());
-    Array::Iterator copy = Array::Iterator (it);
+    array::Iterator it (list.begin ());
+    array::Iterator copy = array::Iterator (it);
 
     struct assert {
-      Array::Iterator *itp;
+      array::Iterator *itp;
       Value::object_type type;
       int assert_status;
     };
@@ -105,10 +105,10 @@ public:
   void
   test_pre_increment ()
   {
-    Array::element_list list = { new Boolean, new Boolean };
+    array::element_list list = { new Boolean, new Boolean };
 
-    Array::Iterator begin (list.begin ());
-    Array::Iterator end (list.end ());
+    array::Iterator begin (list.begin ());
+    array::Iterator end (list.end ());
 
     size_t count = 0;
 
@@ -123,10 +123,10 @@ public:
   void
   test_post_increment ()
   {
-    Array::element_list list = { new Boolean };
+    array::element_list list = { new Boolean };
 
-    Array::Iterator begin (list.begin ());
-    Array::Iterator current = begin;
+    array::Iterator begin (list.begin ());
+    array::Iterator current = begin;
 
     CPPUNIT_ASSERT_MESSAGE ("current++ == begin", current++ == begin);
     CPPUNIT_ASSERT_MESSAGE ("current != begin", current != begin);
