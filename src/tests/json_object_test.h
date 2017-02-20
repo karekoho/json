@@ -507,6 +507,12 @@ public:
       ASSERT_EQUAL_IDX ("o.count ()", (*it).size, size);
 
     TEST_IT_END;
+
+    // TODO: move to test_operator_assign_undefined
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("object.count ()",
+                                  (size_t) 1,
+                                  (object (L"{\"false\":false,\"true\":true}") [L"true"] = undefined ()).count ());
+
   }
 
   void test_strValue_2 ()
