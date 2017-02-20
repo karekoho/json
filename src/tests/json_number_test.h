@@ -71,7 +71,10 @@ public:
 
     std::vector<struct assert > test = {
         { L"0", 1, 0, PASS },
+        { L"0 ", 1, 0, PASS },
         { L"1 ", 1, 1, PASS },
+        { L"00", 1, 0, PASS },
+        { L"05", 1, 0, PASS },
         { L"-2]", 2, -2, PASS },
         { L"3.3 }", 3, 3.3, PASS },
         { L"0.4, ", 3, 0.4, PASS },
@@ -81,12 +84,12 @@ public:
         { L"8E+2 ] ", 4, 800, PASS },
         { L"9E-2, ", 4, 0.09, PASS },
 
-        { L"x", 1, 0, FAIL },
-        { L"00", 1, 0, FAIL },
-        { L"05", 2, 0, FAIL },
-        { L"+5", 2, 0, FAIL },
-        { L"2e", 2, 0, FAIL },
-        { L"2eX", 2, 0, FAIL },
+        { L"x", 1, 0, FAIL },   // NaN
+        //{ L"00", 1, 0, FAIL },
+        //{ L"05", 2, 0, FAIL },
+        { L"+5", 2, 0, FAIL },  // Positive sign is not allowed
+        { L"2e", 2, 0, FAIL },  // Multiplier of ten is not specified
+        { L"2eX", 2, 0, FAIL }, // Multiplier of ten is NaN
     };
 
     TEST_IT_START

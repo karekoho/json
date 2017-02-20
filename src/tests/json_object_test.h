@@ -511,7 +511,7 @@ public:
     // TODO: move to test_operator_assign_undefined
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("object.count ()",
                                   (size_t) 1,
-                                  (object (L"{\"false\":false,\"true\":true}") [L"true"] = undefined ()).count ());
+                                  (object (L"{\"0\":0,\"1\":1}") [L"0"] = undefined ()).count ());
 
   }
 

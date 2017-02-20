@@ -163,7 +163,8 @@ namespace format
     mutable std::wstring _double_str;
 
     /**
-     * @brief _digits If >= 1 digits found, return last character. Else return -1.
+     * @brief _digits If >= 1 digits found, return first non-digit character.
+     * Else return -1.
      * @return
      */
     int

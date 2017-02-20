@@ -441,7 +441,7 @@ public:
      // TODO: move to test_operator_assign_undefined
      CPPUNIT_ASSERT_EQUAL_MESSAGE ("array.count ()",
                                    (size_t) 1,
-                                   (array (L"[false,true]") [(size_t) 0] = undefined ()).count ());
+                                   (array (L"[0,1]") [(size_t) 0] = undefined ()).count ());
   }
 
   virtual void test__at () override {}

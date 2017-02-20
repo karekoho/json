@@ -75,7 +75,7 @@ number::parse (const wchar_t *json)
     _startp = json;
 
   if (*_readp == 0)
-    throw _readp;
+    throw json_syntax_error (UNEX_TOKEN, *_readp);
 
   if (_double_valuep)
     _clear ();
@@ -87,8 +87,14 @@ number::parse (const wchar_t *json)
 
   if (*_readp == 48)    // Expect 0\0 | 0.digits
     {
-      if (*(_readp + 1) == 0) // Null terminator, found single zero
-          return _readp + 1;
+//      if (*(_readp + 1) == 0) // Null terminator, found single zero
+//          return _readp + 1;
+//      if (*(_readp + 1) == '.') // Possible float value
+//        {
+//          _readp++;
+//          return _frag ();
+//        }
+//      throw json_syntax_error (UNEX_TOKEN, *_readp); // Anything else is no good
 
       if (*(_readp + 1) == '.') // Possible float value
         {
@@ -96,8 +102,7 @@ number::parse (const wchar_t *json)
           return _frag ();
         }
 
-      // throw _readp; // Anything else is no good
-      throw json_syntax_error (UNEX_TOKEN, *_readp); // Anything else is no good
+      return (_digitp[DOUBLE][END] = ++_readp);  // Found single zero: 0[\0NaN]
     }
 
   if ((peek = _digits ()) == '.')
@@ -110,7 +115,6 @@ number::parse (const wchar_t *json)
     }
 
   if (peek < 0)
-    // throw _readp;
     throw json_syntax_error (UNEX_TOKEN, *_readp);
 
   _digitp[DOUBLE][END] = _readp;
