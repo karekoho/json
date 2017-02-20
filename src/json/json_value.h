@@ -11,7 +11,6 @@
 
 #ifdef UNIT_TEST
   class json_value_test;
-  class json_leaf_test;
 #endif
 
 namespace format
@@ -26,7 +25,6 @@ namespace format
   {
   #ifdef UNIT_TEST
     friend class json_value_test;
-    friend class json_leaf_test;
   #endif
 
     public:
@@ -355,7 +353,7 @@ namespace format
      * @return
      */
     value &
-    _assign (const format::undefined &)
+    _assign (const undefined &)
     {
       _erase ();
       return *this;

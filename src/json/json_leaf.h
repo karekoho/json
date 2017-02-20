@@ -5,8 +5,14 @@
 
 namespace format
 {
+#ifdef UNIT_TEST
+  class json_leaf_test;
+#endif
 class leaf : public value
 {
+#ifdef UNIT_TEST
+  friend class json_leaf_test;
+#endif
 public:
 
   /**
@@ -55,28 +61,6 @@ public:
    */
   virtual value *
   clone  () const override = 0;
-
-  /**
-   * @brief parse
-   * @param json
-   * @return
-   */
-  virtual const wchar_t *
-  parse (const wchar_t *json) = 0;
-
-  /**
-   * @brief at
-   * @return
-   */
-  //virtual  Value &
-  //at (const wchar_t *) const final override;
-
-  /**
-   * @brief at
-   * @return
-   */
-  //virtual Value &
-  //at (size_t) const final override;
 
   /**
    * @brief type
