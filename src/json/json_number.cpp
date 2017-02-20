@@ -87,15 +87,6 @@ number::parse (const wchar_t *json)
 
   if (*_readp == 48)    // Expect 0\0 | 0.digits
     {
-//      if (*(_readp + 1) == 0) // Null terminator, found single zero
-//          return _readp + 1;
-//      if (*(_readp + 1) == '.') // Possible float value
-//        {
-//          _readp++;
-//          return _frag ();
-//        }
-//      throw json_syntax_error (UNEX_TOKEN, *_readp); // Anything else is no good
-
       if (*(_readp + 1) == '.') // Possible float value
         {
           _readp++;
