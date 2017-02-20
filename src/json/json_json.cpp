@@ -93,8 +93,6 @@ json::json::parse (const wchar_t *readp)
 
   _readp = readp;
 
-  // if (*_readp == 0) throw _readp;
-
   value * old_root = __root;
 
   __root = _make_value ();
@@ -102,7 +100,7 @@ json::json::parse (const wchar_t *readp)
   delete old_root;
 
   if (*(_look_ahead ()) != 0)
-    throw _readp;
+    throw json_syntax_error (UNEX_TOKEN, *_readp);
 
   return _readp;
 }
