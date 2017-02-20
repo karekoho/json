@@ -178,7 +178,7 @@ namespace format
     * @return
     */
     virtual value &
-    erase (const value &v) noexcept  override;
+    erase (const value &v) noexcept override;
 
    /**
     * @brief The Iterator class

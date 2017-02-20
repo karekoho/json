@@ -139,6 +139,15 @@ namespace format
     { return _assign (v);  }
 
     /**
+     * @brief operator =
+     * @param u
+     * @return
+     */
+    inline value &
+    operator =(const undefined & u)
+    { return _assign (u);}
+
+    /**
      * TODO
      *
      * @brief operator =
@@ -348,16 +357,15 @@ namespace format
     _assign (value *, value *) = 0;
 
     /**
+     * If value has parent object, remove value from it's parent,
+     * otherwise do nothing.
+     *
      * @brief _assign
      * @param u
      * @return
      */
     value &
-    _assign (const undefined &)
-    {
-      _erase ();
-      return *this;
-    }
+    _assign (const undefined &) noexcept;
 
     /**
      * @brief The _sc enum Structural characters.
@@ -409,11 +417,6 @@ namespace format
      * @brief _parent
      */
     json *_parent;
-
-    /**
-     * @brief charc
-     * size_t _length;
-     */
 
     /**
      * @brief _key
@@ -527,8 +530,7 @@ namespace format
     /**
      * @brief _erase
      */
-    void
-    _erase () noexcept;
+    //void _erase () noexcept;
 
     /**
      * @brief _literal_value

@@ -113,11 +113,17 @@ value::_is_literal (const int _try) const noexcept
   return _try < 2 ? _is_literal (_try + 1) :  value::_literal::no_literal;
 }
 
-void
-value::_erase () noexcept
+//void
+//value::_erase () noexcept
+//{
+//  if (_parent)
+//    (void) _parent->erase (*this);
+//}
+
+value &
+value::_assign (const undefined &) noexcept
 {
-  if (_parent)
-    (void) _parent->erase (*this);
+  return  _parent ? _parent->erase (*this) : *this;
 }
 
 value &

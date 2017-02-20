@@ -437,6 +437,11 @@ public:
          ASSERT_EQUAL_IDX ("a.count ()", (*it).size, size);
 
      TEST_IT_END;
+
+     // TODO: move to test_operator_assign_undefined
+     CPPUNIT_ASSERT_EQUAL_MESSAGE ("array.count ()",
+                                   (size_t) 1,
+                                   (array (L"[true,true]") [(size_t) 0] = undefined ()).count ());
   }
 
   virtual void test__at () override {}

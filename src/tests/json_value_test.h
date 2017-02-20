@@ -261,15 +261,13 @@ public:
     void
     test_operator_equal_value_t ()
     {
-      boolean b;
-      CPPUNIT_ASSERT_MESSAGE ("value == value_t", b == value::boolean_t);
+      CPPUNIT_ASSERT_MESSAGE ("value == value_t", boolean () == value::boolean_t);
     }
 
     void
     test_operator_equal_value ()
     {
-      boolean b[2];
-      CPPUNIT_ASSERT_MESSAGE ("value == value", b[0] == b[1]);
+      CPPUNIT_ASSERT_MESSAGE ("value == value", boolean () == boolean ());
     }
 
     /**
