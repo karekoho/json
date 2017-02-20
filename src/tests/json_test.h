@@ -333,7 +333,7 @@ public:
         }, PASS },
       };
 
-     Reviver reviver[2] = { 0, fn_reviver };
+     reviver reviver[2] = { 0, fn_reviver };
 
      TEST_IT_START
 

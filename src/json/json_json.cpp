@@ -32,7 +32,7 @@ json::json (const wchar_t *json, const bool _parse)
     (void) parse (json);
 }
 
-json::json (const wchar_t *json, Reviver r)
+json::json (const wchar_t *json, reviver r)
   : value (json),
     _str_value { 0, 0 },
     __root (0),
