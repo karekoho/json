@@ -35,10 +35,16 @@ namespace format
     number ();
 
     /**
-     * @brief Number
-     * @param value
+     * @brief number
+     * @param d
      */
-    explicit number (const double get);
+    number (double d);
+
+    /**
+     * @brief number
+     * @param l
+     */
+    number (long l, long);
 
     /**
      * @brief Number
@@ -161,6 +167,32 @@ namespace format
      * @brief _double_str
      */
     mutable std::wstring _double_str;
+
+    /**
+     * @brief The n_val struct
+     */
+    struct n_val
+    {
+      /**
+       * @brief is_d
+       */
+      bool is_d;
+      /**
+       * @brief The Anonymous:1 union
+       */
+      union
+      {
+        /**
+         * @brief l_val
+         */
+        long    l_val;
+        /**
+         * @brief d_val
+         */
+        double  d_val;
+      };
+
+    } _n_val;
 
     /**
      * @brief _digits If >= 1 digits found, return first non-digit character.

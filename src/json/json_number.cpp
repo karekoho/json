@@ -7,15 +7,27 @@ number::number ()
   : leaf (),
     _double_value (0),
     _double_valuep (&_double_value),
-    _digitp {{ 0, 0 }, { 0, 0 }}
+    _digitp {{ 0, 0 }, { 0, 0 }},
+    _n_val {  false, { 0 } }
 {
 }
 
-number::number (const double value)
+number::number (double d)
   : leaf (),
-    _double_value (value),
+    _double_value (d),
     _double_valuep (&_double_value),
-    _digitp {{ 0, 0 }, { 0, 0 }}
+    _digitp {{ 0, 0 }, { 0, 0 }},
+    _n_val { true, { 0 } }
+{
+  _n_val.d_val = d;
+}
+
+number::number (long l, long)
+  : leaf (),
+    _double_value (l),
+    _double_valuep (&_double_value),
+    _digitp {{ 0, 0 }, { 0, 0 }},
+    _n_val {  false, { l } }
 {
 }
 
@@ -23,7 +35,8 @@ number::number (const wchar_t *json)
   : leaf (json),
     _double_value (0),
     _double_valuep (0),
-    _digitp {{ 0, 0 }, { 0, 0 }}
+    _digitp {{ 0, 0 }, { 0, 0 }},
+    _n_val {  false, { 0 } }
 {
   if (json == 0)
     throw json_error (UNEX_END);
@@ -35,7 +48,8 @@ number::number (json *parent)
   : leaf (parent),
     _double_value (0),
     _double_valuep (0),
-    _digitp {{ 0, 0 }, { 0, 0 }}
+    _digitp {{ 0, 0 }, { 0, 0 }},
+     _n_val {  false, { 0 } }
 {
 }
 
@@ -43,7 +57,8 @@ number::number (const number &other)
  : leaf (other),
    _double_value (0),
    _double_valuep (0),
-   _digitp {{ 0, 0 }, { 0, 0 }}
+   _digitp {{ 0, 0 }, { 0, 0 }},
+   _n_val {  false, { 0 } }
 {
   (void) clone (other);
 }
@@ -52,7 +67,8 @@ number::number (const value *ov, const number &nv)
 : leaf (ov, nv),
   _double_value (0),
   _double_valuep (0),
-  _digitp {{ 0, 0 }, { 0, 0 }}
+  _digitp {{ 0, 0 }, { 0, 0 }},
+  _n_val {  false, { 0 } }
 {
   (void) clone (nv);
 }

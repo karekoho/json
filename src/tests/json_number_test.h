@@ -454,7 +454,7 @@ public:
 
       number n[3] = {
         number ((*it).df),
-        number ((*it).li),
+        number ((*it).li, 0),
         number ((*it).str),
       };
 
