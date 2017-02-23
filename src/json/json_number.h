@@ -245,7 +245,7 @@ namespace format
       if (_double_str.empty ())
         _double_str = _is_double
             ? std::to_wstring (_double_value)
-            : std::to_wstring ((int) _double_value);
+            : std::to_wstring ((long) _double_value);
     }
 
     /**

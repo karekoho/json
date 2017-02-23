@@ -187,11 +187,9 @@ number::_calculate (const wchar_t * const digitp[2][2]) const
   _double_valuep = & _double_value;
 
   if (digitp[DOUBLE][START] == 0 || digitp[DOUBLE][END] == 0)
-    {
-      return (_double_value = 0);
-    }
+    return (_double_value = 0);
 
-  _double_value =  _atof (digitp[DOUBLE]);
+  _double_value = _atof (digitp[DOUBLE]);
 
   if (digitp[EXP][START] == 0 || digitp[EXP][END] == 0)
     return _double_value;
