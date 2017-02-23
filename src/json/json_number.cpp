@@ -194,7 +194,7 @@ number::_calculate (const wchar_t * const digitp[2][2]) const
   if (digitp[EXP][START] == 0 || digitp[EXP][END] == 0)
     return _double_value;
 
-  long long exp =  _atoll (digitp[EXP]);
+  long long exp = _atoll (digitp[EXP]);
 
   if (exp == 0)
     return _double_value;

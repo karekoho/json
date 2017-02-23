@@ -129,8 +129,7 @@ namespace format
      */
     inline double
     get () const
-    {
-      return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
+    { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
 
     /**
      * @brief strLength
