@@ -243,9 +243,7 @@ size_t
 number::strLength () const noexcept
 {
  (void) get ();
-
-  if (_double_str.empty ())
-    _double_str = _is_double ? std::to_wstring (_double_value) : std::to_wstring ((int) _double_value);
+ _to_string ();
 
   return _double_str.length ();
 }
@@ -254,9 +252,7 @@ const wchar_t *
 number::strValue (wchar_t *) const
 {
   (void) get ();
-
-  if (_double_str.empty ())
-    _double_str = _is_double ? std::to_wstring (_double_value) : std::to_wstring ((int) _double_value);
+  _to_string ();
 
   return _double_str.c_str ();
 }

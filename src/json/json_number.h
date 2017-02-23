@@ -237,6 +237,18 @@ namespace format
     _clear ();
 
     /**
+     * @brief _to_string
+     */
+    inline void
+    _to_string () const noexcept
+    {
+      if (_double_str.empty ())
+        _double_str = _is_double
+            ? std::to_wstring (_double_value)
+            : std::to_wstring ((int) _double_value);
+    }
+
+    /**
      * @brief _clone
      * @return
      */
