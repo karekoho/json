@@ -436,7 +436,6 @@ public:
   virtual void
   test_strValue () override
   {
-
     struct assert
     {
       double df;
@@ -447,7 +446,7 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { 100, 100, L"123", { L"100.000000", L"100.000000", L"123.000000" }, PASS }
+      { 100, 200, L"300", { L"100.000000", L"200", L"300" }, PASS }
     };
 
     TEST_IT_START

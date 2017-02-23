@@ -1,5 +1,6 @@
 #include "json_number.h"
 #include "json_json.h"
+#include <iostream>
 
 using namespace format;
 
@@ -8,7 +9,8 @@ number::number ()
     _double_value (0),
     _double_valuep (&_double_value),
     _digitp {{ 0, 0 }, { 0, 0 }},
-    _n_val {  false, { 0 } }
+    // _n_val {  false, 0, 0  }
+    _is_double (false)
 {
 }
 
@@ -17,9 +19,10 @@ number::number (double d)
     _double_value (d),
     _double_valuep (&_double_value),
     _digitp {{ 0, 0 }, { 0, 0 }},
-    _n_val { true, { 0 } }
+    // _n_val { true, 0, 0 },
+    _is_double (true)
 {
-  _n_val.d_val = d;
+  //_n_val.d_val = d;
 }
 
 number::number (long l, long)
@@ -27,7 +30,8 @@ number::number (long l, long)
     _double_value (l),
     _double_valuep (&_double_value),
     _digitp {{ 0, 0 }, { 0, 0 }},
-    _n_val {  false, { l } }
+    //_n_val {  false, 0, 0 }
+    _is_double (false)
 {
 }
 
@@ -36,7 +40,8 @@ number::number (const wchar_t *json)
     _double_value (0),
     _double_valuep (0),
     _digitp {{ 0, 0 }, { 0, 0 }},
-    _n_val {  false, { 0 } }
+    //_n_val {  false, 0,0 },
+    _is_double (false)
 {
   if (json == 0)
     throw json_error (UNEX_END);
@@ -49,7 +54,8 @@ number::number (json *parent)
     _double_value (0),
     _double_valuep (0),
     _digitp {{ 0, 0 }, { 0, 0 }},
-     _n_val {  false, { 0 } }
+    // _n_val {  false, 0,0 }
+   _is_double (false)
 {
 }
 
@@ -58,7 +64,8 @@ number::number (const number &other)
    _double_value (0),
    _double_valuep (0),
    _digitp {{ 0, 0 }, { 0, 0 }},
-   _n_val {  false, { 0 } }
+   //_n_val {  false, 0,0 }
+   _is_double (false)
 {
   (void) clone (other);
 }
@@ -68,7 +75,8 @@ number::number (const value *ov, const number &nv)
   _double_value (0),
   _double_valuep (0),
   _digitp {{ 0, 0 }, { 0, 0 }},
-  _n_val {  false, { 0 } }
+  //_n_val {  false, 0,0 }
+  _is_double (false)
 {
   (void) clone (nv);
 }
@@ -152,8 +160,7 @@ number::_frag ()
 
   _digitp[DOUBLE][END] = _readp;
 
-  // TODO: assign struct _value.is_double = true
-  // TODO: assign struct _value.double_value
+  _is_double = true;
 
   return peek == 'e' || peek == 'E' ? _exp () : _readp;
 }
@@ -238,7 +245,7 @@ number::strLength () const noexcept
  (void) get ();
 
   if (_double_str.empty ())
-    _double_str = std::to_wstring (_double_value);
+    _double_str = _is_double ? std::to_wstring (_double_value) : std::to_wstring ((int) _double_value);
 
   return _double_str.length ();
 }
@@ -249,7 +256,7 @@ number::strValue (wchar_t *) const
   (void) get ();
 
   if (_double_str.empty ())
-    _double_str = std::to_wstring (_double_value);
+    _double_str = _is_double ? std::to_wstring (_double_value) : std::to_wstring ((int) _double_value);
 
   return _double_str.c_str ();
 }

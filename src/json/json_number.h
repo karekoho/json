@@ -169,30 +169,9 @@ namespace format
     mutable std::wstring _double_str;
 
     /**
-     * @brief The n_val struct
+     * @brief _is_double
      */
-    struct n_val
-    {
-      /**
-       * @brief is_d
-       */
-      bool is_d;
-      /**
-       * @brief The Anonymous:1 union
-       */
-      union
-      {
-        /**
-         * @brief l_val
-         */
-        long    l_val;
-        /**
-         * @brief d_val
-         */
-        double  d_val;
-      };
-
-    } _n_val;
+    bool _is_double;
 
     /**
      * @brief _digits If >= 1 digits found, return first non-digit character.
