@@ -438,23 +438,22 @@ public:
   {
     struct assert
     {
-      double df;
-      long li;
-      const wchar_t *str;
+      double d;
+      const wchar_t *s[2];
       const wchar_t *output[3];
       int assert_status;
     };
 
     std::vector<struct assert > test = {
-      { 100, 200, L"300", { L"100.000000", L"200", L"300" }, PASS }
+    { 100, { L"200", L"200.5" }, { L"100.000000", L"200", L"200.500000" }, PASS }
     };
 
     TEST_IT_START
 
       number n[3] = {
-        number ((*it).df),
-        number ((*it).li, 0),
-        number ((*it).str),
+        number ((*it).d),
+        number ((*it).s[0]),
+        number ((*it).s[1]),
       };
 
       CPPUNIT_ASSERT_MESSAGE ("n[0].strValue ()", wcscmp((*it).output[0], n[0].strValue ()) == 0);

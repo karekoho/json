@@ -6,18 +6,18 @@
 
 #include <cmath>
 
-#define DOUBLE 0
-#define EXP 1
-
-#define START 0
-#define END 1
-
 #ifdef UNIT_TEST
   class json_number_test;
 #endif
 
 namespace format
 {
+#define DOUBLE 0
+#define EXP 1
+
+#define START 0
+#define END 1
+
   /**
    * @brief The number class
    */
@@ -39,12 +39,6 @@ namespace format
      * @param d
      */
     number (double d);
-
-    /**
-     * @brief number
-     * @param l
-     */
-    number (long l, long);
 
     /**
      * @brief Number
@@ -163,14 +157,14 @@ namespace format
     const wchar_t *_digitp[2][2];
 
     /**
-     * @brief _double_str
-     */
-    mutable std::wstring _double_str;
-
-    /**
      * @brief _is_double
      */
     bool _is_double;
+
+    /**
+     * @brief _double_str
+     */
+    mutable std::wstring _double_str;
 
     /**
      * @brief _digits If >= 1 digits found, return first non-digit character.
