@@ -3,12 +3,12 @@
 
 #include "json_leaf.h"
 
+namespace format
+{
 #ifdef UNIT_TEST
   class json_string_test;
 #endif
 
-namespace format
-{
   /**
    * @brief The string class
    */
@@ -57,7 +57,7 @@ namespace format
      * @return
      */
     virtual value *
-    clone () const
+    clone () const override
     { return new string (*this); }
 
     /**
@@ -67,7 +67,7 @@ namespace format
      */
     virtual value *
     clone (const value *ov) const override
-    { return new string (ov, *this);}
+    { return new string (ov, *this); }
 
     /**
      * @brief parse
@@ -75,14 +75,14 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    parse (const wchar_t *json);
+    parse (const wchar_t *json) override;
 
     /**
      * @brief type
      * @return
      */
     virtual inline value_t
-    type () const
+    type () const override
     { return value::value_t::string_t; }
 
     /**
@@ -131,7 +131,7 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    strValue (wchar_t * = 0) const;
+    strValue (wchar_t * = 0) const override;
 
   protected:
 
@@ -155,7 +155,7 @@ namespace format
      * @brief _clear
      */
     virtual void
-    _clear ()
+    _clear () override
     {}
 
     /**

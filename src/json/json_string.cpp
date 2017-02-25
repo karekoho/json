@@ -1,10 +1,12 @@
 #include "json_string.h"
 #include "json_json.h"
-using namespace format;
 
-string::string() : leaf (), _charc (0) {}
+format::string::string ()
+  : leaf (),
+    _charc (0)
+{}
 
-string::string (const wchar_t *json)
+format::string::string (const wchar_t *json)
   : leaf (json),
     _charc (0)
 {
@@ -14,20 +16,20 @@ string::string (const wchar_t *json)
   (void) parse (json);
 }
 
-string::string (json *parent, size_t charc)
+format::string::string (json *parent, size_t charc)
   : leaf (parent),
     _charc (charc)
 {
 }
 
-string::string (const string &other)
+format::string::string (const string &other)
   : leaf (other),
     _charc (other._charc)
 {
   clone (other);
 }
 
-string::string (const value *ov, const string &nv)
+format::string::string (const value *ov, const string &nv)
   : leaf (ov, nv),
     _charc (nv._charc)
 {
@@ -35,7 +37,7 @@ string::string (const value *ov, const string &nv)
 }
 
 const wchar_t *
-string::parse (const wchar_t *json)
+format::string::parse (const wchar_t *json)
 {
   wchar_t endc   = 0;
   long charc  = 0;
@@ -55,14 +57,14 @@ string::parse (const wchar_t *json)
   return _readp += _charc;
 }
 
-value &
-string::_assign (const string &nv)
+format::value &
+format::string::_assign (const string &nv)
 {
   return _parent ? _parent->_assign (this, new string (this, nv)) : *(clone (nv));
 }
 
 const wchar_t *
-string::get () const
+format::string::get () const
 {
   if (_string_value[0].empty () && _startp && _charc > 0)
     _string_value[0].assign (_startp + 1, _charc - 2);
@@ -71,7 +73,7 @@ string::get () const
 }
 
 const wchar_t *
-string::strValue (wchar_t *) const
+format::string::strValue (wchar_t *) const
 {
   if (_startp == 0 || _charc == 0)
     return L"";
@@ -82,10 +84,10 @@ string::strValue (wchar_t *) const
   return _string_value[1].c_str ();
 }
 
-value *
-string::clone (const value &nv)
+format::value *
+format::string::clone (const value &nv)
 {
-  const string & s = dynamic_cast<const string &>(nv);
+  const string & s = dynamic_cast<const string &> (nv);
 
   if (s._startp && s._charc > 0)
     _string_value[0].assign (s._startp + 1, s._charc - 2);
