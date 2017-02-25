@@ -3,8 +3,8 @@
 
 #include "json_leaf_test.h"
 
-namespace format {
-
+namespace format
+{
 /**
  * 4.
  * @brief The json_string_test class
@@ -221,5 +221,5 @@ public:
       return s;
     }
 };
-}
+} // Namespace format
 #endif // JSON_STRING_TEST_H
