@@ -80,6 +80,7 @@ public:
 
       ASSERT_EQUAL_IDX ("string.readp", readp, (*it).startp + (*it).charc);
       ASSERT_EQUAL_IDX ("*(string.readp)", (wchar_t) *readp, (*it).endc);
+      ASSERT_EQUAL_IDX ("s->strLength ()", (*it).charc, s->strLength ());
 
       delete s;
 
@@ -114,7 +115,6 @@ public:
 
     TEST_IT_END;
   }
-
 
   virtual void
   test_assign_all_values ()
