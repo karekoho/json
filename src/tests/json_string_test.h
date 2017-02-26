@@ -48,39 +48,48 @@ public:
 
       struct assert
       {
-        const wchar_t *startp;
-        size_t charc;
-        wchar_t endc;
+        const wchar_t *startp[2];
+        size_t charc[2];
+        wchar_t endc[2];
         int assert_status;
       };
 
       std::vector<struct assert > test = {
-          { L"\"\"", 0, (wchar_t) 0, PASS },
-          { L"\"xxx\"", 3, (wchar_t) 0, PASS },
-          { L"\" xxx \"", 5, (wchar_t) 0, PASS },
-          { L"\" xxx \" ", 5, L' ', PASS },
+          { { L"\"\"", L"\"\"" }, { 0, 0 }, { (wchar_t) 0, (wchar_t) 0 }, PASS },
+          { { L"xxx", L"\"xxx\"" }, { 3, 3 }, { (wchar_t) 0, (wchar_t) 0 }, PASS },
+          { { L" xxx ", L"\" xxx \"" }, { 5, 5 }, { (wchar_t) 0, (wchar_t) 0 }, PASS },
+          { { L" xxx ", L"\" xxx \" " }, { 5, 5 }, { (wchar_t) 0, L' ' }, PASS },
       };
 
       TEST_IT_START
-          for (int pidx = 0; pidx < 2; pidx++)
+          for (int pidx = 1; pidx < 2; pidx++)
             {
-              const wchar_t *startp = (*it).startp;
-              size_t move = (*it).charc + 2;
+              const wchar_t *startp = (*it).startp[pidx];
+              size_t move = (*it).charc[pidx] + 2;
 
-              string *s = new string (p[pidx], move);
+              string *s = 0;
 
-              std::wstring ss = s->get ();
+              if (pidx == 1)
+                {
+                  s = new string (p[pidx], move);
 
-              CPPUNIT_ASSERT_MESSAGE ("string.empty ()", ss.empty () );
+                  std::wstring ss = s->get ();
 
-              const wchar_t *readp = s->_parse (startp);
-              ss = s->get ();
+                  CPPUNIT_ASSERT_MESSAGE ("string.empty ()", ss.empty () );
 
+                  const wchar_t *readp = s->_parse (startp);
+                  ss = s->get ();
+
+                  ASSERT_EQUAL_IDX ("string.readp", readp, startp + move);
+                  ASSERT_EQUAL_IDX ("*(string.readp)", (wchar_t)* readp, (*it).endc[pidx]);
+                  ASSERT_EQUAL_IDX ("string.length", (*it).charc[pidx], ss.length () /* s->strLength() - 2 */ );
+                }
+              else
+                {
+                  s = new string (startp);
+                  ASSERT_EQUAL_IDX ("string.length", (*it).charc[pidx], s->strLength () );
+                }
               // std::cout << readp << "" << ss.length () << " " << ss << std::endl;
-
-              ASSERT_EQUAL_IDX ("string.readp", readp, startp + move);
-              ASSERT_EQUAL_IDX ("*(string.readp)", (wchar_t)* readp, (*it).endc);
-              ASSERT_EQUAL_IDX ("string.length", (*it).charc, ss.length () );
 
               delete s;
             }

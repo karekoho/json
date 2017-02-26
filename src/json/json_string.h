@@ -70,14 +70,6 @@ namespace format
     { return new string (ov, *this); }
 
     /**
-     * @brief parse
-     * @param json
-     * @return
-     */
-    virtual const wchar_t *
-    _parse (const wchar_t *json) override;
-
-    /**
      * @brief type
      * @return
      */
@@ -144,6 +136,14 @@ namespace format
      * @brief _value
      */
     mutable std::wstring _string_value[2];
+
+    /**
+     * @brief parse
+     * @param json
+     * @return
+     */
+    virtual const wchar_t *
+    _parse (const wchar_t *json) override;
 
     /**
      * @brief _copy

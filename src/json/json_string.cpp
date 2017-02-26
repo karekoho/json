@@ -39,8 +39,8 @@ format::string::string (const value *ov, const string &nv)
 const wchar_t *
 format::string::_parse (const wchar_t *json)
 {
-  wchar_t endc   = 0;
-  long charc  = 0;
+  wchar_t endc  = 0;
+  long charc    = 0;
 
   _startp =_readp = json;
 
