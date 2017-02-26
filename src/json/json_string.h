@@ -174,7 +174,7 @@ namespace format
      * @return Number of characters read
      */
     long
-    __string () const noexcept;
+    __string (wchar_t & endc) const noexcept;
   };
 }
 #endif // STRING

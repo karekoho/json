@@ -43,60 +43,78 @@ public:
 
   virtual void
   test_parse_1 ()
+  {
+    test_parse_parent ();
+    test_parse_no_parent ();
+  }
+
+  void
+  test_parse_parent ()
+  {
+    struct assert
     {
-      json *p[] = { 0, new json () };
+      const wchar_t *startp;
+      size_t charc;
+      wchar_t endc;
+      int assert_status;
+    };
 
-      struct assert
-      {
-        const wchar_t *startp[2];
-        size_t charc[2];
-        wchar_t endc[2];
-        int assert_status;
-      };
+    std::vector<struct assert > test = {
+        { L"\"\"", 0 + 2, (wchar_t) 0, PASS },
+        { L"\"xxx\"", 3 + 2, (wchar_t) 0, PASS },
+        { L"\" xxx \"", 5 + 2, (wchar_t) 0, PASS },
+        { L"\" xxx \" ", 5 + 2, L' ', PASS },
+    };
 
-      std::vector<struct assert > test = {
-          { { L"\"\"", L"\"\"" }, { 0, 0 }, { (wchar_t) 0, (wchar_t) 0 }, PASS },
-          { { L"xxx", L"\"xxx\"" }, { 3, 3 }, { (wchar_t) 0, (wchar_t) 0 }, PASS },
-          { { L" xxx ", L"\" xxx \"" }, { 5, 5 }, { (wchar_t) 0, (wchar_t) 0 }, PASS },
-          { { L" xxx ", L"\" xxx \" " }, { 5, 5 }, { (wchar_t) 0, L' ' }, PASS },
-      };
+    TEST_IT_START
 
-      TEST_IT_START
-          for (int pidx = 1; pidx < 2; pidx++)
-            {
-              const wchar_t *startp = (*it).startp[pidx];
-              size_t move = (*it).charc[pidx] + 2;
+      json p;
 
-              string *s = 0;
+      const wchar_t *startp = (*it).startp;
 
-              if (pidx == 1)
-                {
-                  s = new string (p[pidx], move);
+      string *s = new string (& p, (*it).charc);
 
-                  std::wstring ss = s->get ();
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("s->get ()", (size_t) 0, wcslen (s->get ()));
 
-                  CPPUNIT_ASSERT_MESSAGE ("string.empty ()", ss.empty () );
+      const wchar_t *readp = s->_parse (startp);
 
-                  const wchar_t *readp = s->_parse (startp);
-                  ss = s->get ();
+      ASSERT_EQUAL_IDX ("string.readp", readp, (*it).startp + (*it).charc);
+      ASSERT_EQUAL_IDX ("*(string.readp)", (wchar_t) *readp, (*it).endc);
 
-                  ASSERT_EQUAL_IDX ("string.readp", readp, startp + move);
-                  ASSERT_EQUAL_IDX ("*(string.readp)", (wchar_t)* readp, (*it).endc[pidx]);
-                  ASSERT_EQUAL_IDX ("string.length", (*it).charc[pidx], ss.length () /* s->strLength() - 2 */ );
-                }
-              else
-                {
-                  s = new string (startp);
-                  ASSERT_EQUAL_IDX ("string.length", (*it).charc[pidx], s->strLength () );
-                }
-              // std::cout << readp << "" << ss.length () << " " << ss << std::endl;
+      delete s;
 
-              delete s;
-            }
-       TEST_IT_END;
+     TEST_IT_END;
+  }
 
-       delete p[1];
-    }
+  void
+  test_parse_no_parent ()
+  {
+    struct assert
+    {
+      const wchar_t *startp;
+      size_t charc;
+      wchar_t endc;
+      int assert_status;
+    };
+
+    std::vector<struct assert > test = {
+        { L"", 0, (wchar_t) 0, PASS },
+        { L"xxx", 3, (wchar_t) 0, PASS },
+        { L"xxx\"", 0, (wchar_t) 0, FAIL },
+        { L"x\u001F", 0, (wchar_t) 0, FAIL }
+    };
+
+    TEST_IT_START
+
+      string *s = new string ((*it).startp);
+
+      ASSERT_EQUAL_IDX ("s->strLength ()", (*it).charc, s->strLength () );
+
+      delete s;
+
+    TEST_IT_END;
+  }
+
 
   virtual void
   test_assign_all_values ()
@@ -216,6 +234,8 @@ public:
     void
     test__string ()
     {
+      wchar_t endc = 0;
+
       struct assert
       {
           const wchar_t *input;
@@ -231,14 +251,13 @@ public:
           { L"x\u001F\"", -1, PASS }
       };
 
-
       TEST_IT_START
 
         string s;
 
         s._readp = (*it).input;
 
-        long charc = s.__string ();
+        long charc = s.__string (endc);
 
         ASSERT_EQUAL_IDX ("charc", (*it).charc, charc);
 

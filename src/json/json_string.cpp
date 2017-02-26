@@ -48,8 +48,8 @@ format::string::_parse (const wchar_t *json)
 
   if (_parent == 0)   // 2. ctor
     {
-      if ((charc = _string (endc)) <= 0 )
-        throw json_syntax_error (UNEX_TOKEN, *_readp);
+      if ((charc = __string (endc)) < 0 )
+        throw json_syntax_error (UNEX_TOKEN, endc);
 
       _charc = (size_t) charc;
     }
@@ -98,13 +98,14 @@ format::string::clone (const value &nv)
 }
 
 long
-format::string::__string () const noexcept
+format::string::__string (wchar_t & endc) const noexcept
 {
   const wchar_t * readp = _readp;
 
   while (*readp > 31 && *readp != _sc::double_quote)
     readp++;
 
+  endc = *readp;
   size_t charc = readp - _readp;
 
   return *readp == 0
