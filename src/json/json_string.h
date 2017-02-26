@@ -168,13 +168,13 @@ namespace format
   private:
 
     /**
-     * @brief __string Read characters until character is < 31 or \".
+     * @brief __string Read characters until character is < 32 or \".
      * If last charater is \0, return string length,
      * otherwise return string as negative value.
      * @return Number of characters read
      */
-    long __string () const noexcept
-    { return 0; }
+    long
+    __string () const noexcept;
   };
 }
 #endif // STRING

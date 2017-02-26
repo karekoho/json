@@ -96,3 +96,20 @@ format::string::clone (const value &nv)
 
   return this;
 }
+
+long
+format::string::__string () const noexcept
+{
+  const wchar_t * readp = _readp;
+
+  while (*readp > 31 && *readp != _sc::double_quote)
+    readp++;
+
+  size_t charc = readp - _readp;
+
+  return *readp == 0
+      ? charc
+      : (*readp > 31 && *readp != _sc::double_quote
+         ? charc
+         : -1 * charc);
+}

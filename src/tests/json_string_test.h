@@ -134,7 +134,7 @@ public:
             string *old_value = new string ();
             old_value->_parent = parents[pidx];
 
-            arr_parent._element_list.push_back (new format::undefined);
+            arr_parent._element_list.push_back (new undefined);
             old_value->setKey ((*it).key, wcslen ((*it).key));
 
             (*it).index  = arr_parent._element_list.size () - 1;
@@ -204,6 +204,38 @@ public:
     virtual void test_operator_assign () {}
     virtual void test_operator_at () {}
 
+    void
+    test__string ()
+    {
+      struct assert
+      {
+          const wchar_t *input;
+          long charc;
+          int assert_status;
+      };
+
+      std::vector<struct assert > test = {
+          { L"", 0, PASS },
+          { L"x", 1, PASS },
+
+          { L"x\"", -1, PASS },
+          { L"x\u001F\"", -1, PASS }
+      };
+
+
+      TEST_IT_START
+
+        string s;
+
+        s._readp = (*it).input;
+
+        long charc = s.__string ();
+
+        ASSERT_EQUAL_IDX ("charc", (*it).charc, charc);
+
+      TEST_IT_END;
+    }
+
     /**
      * 4.
      * @brief suite
@@ -217,6 +249,7 @@ public:
       /* 0. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_ctor_dtor", &json_string_test::test_ctor_dtor));
       /* 1. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_parse_1", &json_string_test::test_parse_1));
       /* 2. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_assign_all_values", &json_string_test::test_assign_all_values));
+      /* 3. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__string", &json_string_test::test__string));
 
       return s;
     }
