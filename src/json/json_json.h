@@ -87,21 +87,13 @@ namespace format
 
     /**
      * @brief parse
-     * @param readp
-     * @return
-     */
-    virtual const wchar_t *
-    _parse (const wchar_t *readp);
-
-    /**
-     * @brief parse
      * @param json
      * @param reviver
      * @return
      * @see http://stackoverflow.com/questions/1174169/function-passed-as-template-argument
      */
-    static value *
-    _parse (const wchar_t *text, reviver r)
+    static inline value *
+    parse (const wchar_t *text, reviver r = 0)
     { return new json (text, r); }
 
     /**
@@ -215,6 +207,14 @@ namespace format
     { return new json (*this); }
 
   protected:
+
+    /**
+     * @brief parse
+     * @param readp
+     * @return
+     */
+    virtual const wchar_t *
+    _parse (const wchar_t *readp) override;
 
     /**
      * @brief _at

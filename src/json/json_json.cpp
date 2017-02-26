@@ -7,9 +7,8 @@
 #include "json_undefined.h"
 #include "json_boolean.h"
 #include "json_leaf_iterator.h"
-using namespace format;
 
-json::json ()
+format::json::json ()
   : value (),
     _str_value { 0, 0 },
     __root (0),
@@ -17,7 +16,7 @@ json::json ()
 {
 }
 
-json::json (const wchar_t *json, const bool _call_parse)
+format::json::json (const wchar_t *json, const bool _call_parse)
   : value (json),
     _str_value { 0, 0 },
     __root (0),
@@ -32,7 +31,7 @@ json::json (const wchar_t *json, const bool _call_parse)
     (void) _parse (json);
 }
 
-json::json (const wchar_t *json, reviver r)
+format::json::json (const wchar_t *json, reviver r)
   : value (json),
     _str_value { 0, 0 },
     __root (0),
@@ -49,7 +48,7 @@ json::json (const wchar_t *json, reviver r)
 }
 
 
-json::json (json *parent)
+format::json::json (json *parent)
   : value (parent),
     _str_value { 0, 0 },
     __root (0),
@@ -57,7 +56,7 @@ json::json (json *parent)
 {
 }
 
-json::json (const json &other)
+format::json::json (const json &other)
   : value (other),
     _str_value { 0, 0 },
     __root (other.__root ? other.__root->clone () : 0),
@@ -65,7 +64,7 @@ json::json (const json &other)
 {
 }
 
-json::json (const value *ov, const json &nv)
+format::json::json (const value *ov, const json &nv)
   : value (ov, nv),
     _str_value { 0, 0 },
     __root (nv.__hasRoot () ? nv.__root->clone () : 0),
@@ -73,7 +72,7 @@ json::json (const value *ov, const json &nv)
 {
 }
 
-json::~json ()
+format::json::~json ()
 {
   if (_parent == 0 && _str_value[BEGIN])
     {
@@ -86,7 +85,7 @@ json::~json ()
 }
 
 const wchar_t *
-json::json::_parse (const wchar_t *readp)
+format::json::json::_parse (const wchar_t *readp)
 {
   if (readp == 0 || *readp == 0)
     throw json_syntax_error (UNEX_END);
@@ -105,8 +104,8 @@ json::json::_parse (const wchar_t *readp)
   return _readp;
 }
 
-value &
-json::_assign (const json &j)
+format::value &
+format::json::_assign (const json &j)
 {
   if (j.__hasRoot ())
     {
@@ -118,8 +117,8 @@ json::_assign (const json &j)
   return *this;
 }
 
-value &
-json::_assign (const value &v)
+format::value &
+format::json::_assign (const value &v)
 {
   delete __root;
 
@@ -128,8 +127,8 @@ json::_assign (const value &v)
   return *this;
 }
 
-value *
-json::_make_value ()
+format::value *
+format::json::_make_value ()
 {
   value *value_  = 0;
   long int charc = 0;
@@ -175,8 +174,8 @@ json::_make_value ()
   return value_;
 }
 
-value *
-json::_call_reviver (value *v, const wchar_t *key, size_t index) const
+format::value *
+format::json::_call_reviver (value *v, const wchar_t *key, size_t index) const
 {
   if (__reviver == 0)
     return v;

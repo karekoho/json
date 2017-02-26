@@ -12,31 +12,7 @@ class json_test : public json_value_test_interface
 {
 public:
 
-  void
-  example_free_1 ()
-  {
-    json j = L"{\
-      \"Image\": {\
-          \"Width\":  800,\
-          \"Height\": 600,\
-          \"Title\":  \"View from 15th Floor\",\
-          \"Thumbnail\": {\
-              \"Url\":    \"http://www.example.com/image/481989943\",\
-              \"Height\": 125,\
-              \"Width\":  100\
-          },\
-          \"Animated\" : false,\
-          \"IDs\": [116, 943, 234, 38793]\
-        }\
-    }";
 
-    (void) j.get ();
-    (void) j[L"Image"].get ();
-    (void) j[L"Image"][L"Thumbnail"].get ();
-    (void) j[L"Image"][L"Thumbnail"][L"Url"].get ();
-    (void) j[L"Image"][L"Animated"].get ();
-    (void) j[L"Image"][L"IDs"].get ();
-  }
 
   virtual void
   test_ctor_dtor ()
@@ -46,13 +22,15 @@ public:
     json j[] = {
       json (),
       json (L"{\"key\":true}"),
-      json (p)
+      json (p),
     };
 
     json copy = j[1];
 
     CPPUNIT_ASSERT_MESSAGE ("json", & copy != & j[1]);
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("json.count ()", (size_t) 1, copy.count ());
+
+    delete json::parse (L"{}");
   }
 
   virtual void
@@ -340,7 +318,7 @@ public:
       for (size_t rev_idx = 1; rev_idx < 2; rev_idx++) // Iterate reviver
         {
 
-          value *jv = json::_parse ((*it).input, reviver[rev_idx]);
+          value *jv = json::parse ((*it).input, reviver[rev_idx]);
 
           size_t output_size = (*it).output[rev_idx].size ();
 
@@ -373,6 +351,32 @@ public:
       }
   }
 
+  void
+  example_1 ()
+  {
+    json j = L"{\
+      \"Image\": {\
+          \"Width\":  800,\
+          \"Height\": 600,\
+          \"Title\":  \"View from 15th Floor\",\
+          \"Thumbnail\": {\
+              \"Url\":    \"http://www.example.com/image/481989943\",\
+              \"Height\": 125,\
+              \"Width\":  100\
+          },\
+          \"Animated\" : false,\
+          \"IDs\": [116, 943, 234, 38793]\
+        }\
+    }";
+
+    std::wcout << j.get () << std::endl;
+    std::wcout << j[L"Image"].get () << std::endl;
+    std::wcout << j[L"Image"][L"Thumbnail"].get () << std::endl;
+    std::wcout << j[L"Image"][L"Thumbnail"][L"Url"].get () << std::endl;
+    std::wcout << j[L"Image"][L"Animated"].get () << std::endl;
+    std::wcout << j[L"Image"][L"IDs"].get () << std::endl;
+  }
+
   /**
    * 1.
    * @brief suite
@@ -383,19 +387,14 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json test");
 
-/*0.*/  s->addTest (new CppUnit::TestCaller<json_test> ("test_strValue", &json_test::test_strValue));
-//  s->addTest (new CppUnit::TestCaller<json_test> ("example_free_1", &json_test::example_free_1));
-    s->addTest (new CppUnit::TestCaller<json_test> ("test_smoke", &json_test::test_ctor_dtor));
-    s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_1", &json_test::test_parse_1));
-    s->addTest (new CppUnit::TestCaller<json_test> ("test_make_value", &json_test::test_make_value));
-    s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_to_parent", &json_test::test__assign_to_parent));
-    s->addTest (new CppUnit::TestCaller<json_test> ("test_assign_all_values", &json_test::test_assign_all_values));
-/*6.*/  s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_revive", &json_test::test_parse_revive));
-
-//    s->addTest (new CppUnit::TestCaller<json_test> ("test_size_1", &json_test::test_size_1));
-//    s->addTest (new CppUnit::TestCaller<json_test> ("test_get_1", &json_test::test_get_1));
-//    s->addTest (new CppUnit::TestCaller<json_test> ("test_value_1", &json_test::test_value_1));
-//    s->addTest (new CppUnit::TestCaller<json_test> ("test_debug_1", &json_test::test_debug_1));
+    /* 0. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_strValue", &json_test::test_strValue));
+    /* 1. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_smoke", &json_test::test_ctor_dtor));
+    /* 2. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_1", &json_test::test_parse_1));
+    /* 3. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_make_value", &json_test::test_make_value));
+    /* 4. */  s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_to_parent", &json_test::test__assign_to_parent));
+    /* 5. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_assign_all_values", &json_test::test_assign_all_values));
+    /* 6. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_revive", &json_test::test_parse_revive));
+    /* 7.   s->addTest (new CppUnit::TestCaller<json_test> ("example_1", &json_test::example_1)); */
 
     return s;
   }
