@@ -75,7 +75,7 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    parse (const wchar_t *json) override;
+    _parse (const wchar_t *json) override;
 
     /**
      * @brief type

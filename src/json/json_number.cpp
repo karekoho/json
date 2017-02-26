@@ -30,7 +30,7 @@ format::number::number (const wchar_t *json)
   if (json == 0)
     throw json_error (UNEX_END);
 
-  (void) parse (json);
+  (void) _parse (json);
 }
 
 format::number::number (json *parent)
@@ -63,7 +63,7 @@ format::number::number (const value *ov, const number &nv)
 }
 
 const wchar_t *
-format::number::parse (const wchar_t *json)
+format::number::_parse (const wchar_t *json)
 {
   wchar_t peek = 0;
 

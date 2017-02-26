@@ -93,7 +93,7 @@ public:
       size_t charc = wcslen (startp);
       json *j = new json ();
 
-      const wchar_t * readp = j->parse (startp);
+      const wchar_t * readp = j->_parse (startp);
 
       ASSERT_EQUAL_IDX ("json.readp", (*it).starp + (charc), readp);
       ASSERT_EQUAL_IDX ("*(json.readp)", (wchar_t) 0, *readp);
@@ -340,7 +340,7 @@ public:
       for (size_t rev_idx = 1; rev_idx < 2; rev_idx++) // Iterate reviver
         {
 
-          value *jv = json::parse ((*it).input, reviver[rev_idx]);
+          value *jv = json::_parse ((*it).input, reviver[rev_idx]);
 
           size_t output_size = (*it).output[rev_idx].size ();
 

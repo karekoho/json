@@ -9,7 +9,7 @@ array::array () : json () {}
 array::array (const wchar_t *text)
   : json (text, false)
 {
-  (void) parse (text);
+  (void) _parse (text);
 }
 
 array::array(std::initializer_list<value *> il)
@@ -40,7 +40,7 @@ array::~array ()
 }
 
 const wchar_t *
-array::parse (const wchar_t *json)
+array::_parse (const wchar_t *json)
 {
   if (json == 0)
     throw json_syntax_error (UNEX_END);

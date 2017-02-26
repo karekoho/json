@@ -49,7 +49,7 @@ namespace format
      * @brief json
      * @param json
      */
-    json (const wchar_t *json, const bool _parse = true);
+    json (const wchar_t *json, const bool _call_parse = true);
 
     /**
      * @brief json
@@ -91,7 +91,7 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    parse (const wchar_t *readp);
+    _parse (const wchar_t *readp);
 
     /**
      * @brief parse
@@ -101,7 +101,7 @@ namespace format
      * @see http://stackoverflow.com/questions/1174169/function-passed-as-template-argument
      */
     static value *
-    parse (const wchar_t *text, reviver r)
+    _parse (const wchar_t *text, reviver r)
     { return new json (text, r); }
 
     /**

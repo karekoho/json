@@ -79,7 +79,7 @@ public:
           size_t charc = wcslen (startp);
           array *a = new array (p[pidx]);
 
-          const wchar_t *readp = a->parse (startp);
+          const wchar_t *readp = a->_parse (startp);
 
           ASSERT_EQUAL_IDX ("array.readp", (startp + charc) - (*it).moveback, readp);
           ASSERT_EQUAL_IDX ("*(array.readp - 1)", L']', *(readp - 1));
@@ -108,7 +108,7 @@ public:
       const wchar_t *startp = (*it).startp;
       array *a = new array ();
 
-      (void) a->parse (startp);
+      (void) a->_parse (startp);
 
       if (a->count () > 0)
         {
@@ -377,7 +377,7 @@ public:
                 p._str_value[OFFSET]  = str_value + 5;
               }
 
-            (void) a.parse ((*it).input);
+            (void) a._parse ((*it).input);
 
             const wchar_t *output = a.strValue (a._parent ? p._str_value[OFFSET] : 0);
 

@@ -77,7 +77,7 @@ namespace format
      * @return
      */
     virtual inline const wchar_t *
-    parse (const wchar_t *json)
+    _parse (const wchar_t *json)
     { return json + 4; }
 
     /**

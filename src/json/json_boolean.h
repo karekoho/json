@@ -107,7 +107,7 @@ namespace format
    * @return
    */
       virtual const wchar_t *
-      parse (const wchar_t *json)
+      _parse (const wchar_t *json)
       { return json + (_boolean_value == true ? 4 : 5); }
 
       /**

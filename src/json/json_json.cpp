@@ -17,7 +17,7 @@ json::json ()
 {
 }
 
-json::json (const wchar_t *json, const bool _parse)
+json::json (const wchar_t *json, const bool _call_parse)
   : value (json),
     _str_value { 0, 0 },
     __root (0),
@@ -28,8 +28,8 @@ json::json (const wchar_t *json, const bool _parse)
 
   _startp = json;
 
-  if (_parse)
-    (void) parse (json);
+  if (_call_parse)
+    (void) _parse (json);
 }
 
 json::json (const wchar_t *json, reviver r)
@@ -43,7 +43,7 @@ json::json (const wchar_t *json, reviver r)
 
   _startp = json;
 
-  (void) parse (json);
+  (void) _parse (json);
 
   __reviver = 0;
 }
@@ -86,7 +86,7 @@ json::~json ()
 }
 
 const wchar_t *
-json::json::parse (const wchar_t *readp)
+json::json::_parse (const wchar_t *readp)
 {
   if (readp == 0 || *readp == 0)
     throw json_syntax_error (UNEX_END);

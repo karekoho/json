@@ -89,7 +89,7 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    parse (const wchar_t *json);
+    _parse (const wchar_t *json);
 
     /**
      * @brief type

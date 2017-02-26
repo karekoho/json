@@ -100,20 +100,7 @@ namespace format
      */
     virtual
     ~value ();
-protected:
-    /**
-     * @brief parse
-     * @param json
-     * @return
-     * @see https://tools.ietf.org/html/rfc7159
-     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse
-     * @see http://www.ecma-international.org/ecma-262/5.1/#sec-15.12.2
-     * @see https://en.wikipedia.org/wiki/List_of_Unicode_characters
-     * @see http://en.cppreference.com/w/cpp/language/types
-     */
-    virtual const wchar_t *
-    parse (const wchar_t *json) = 0;
-public:
+
     /**
      * @brief operator []
      * @param key
@@ -337,6 +324,19 @@ public:
   protected:
 
     /**
+     * @brief parse
+     * @param json
+     * @return
+     * @see https://tools.ietf.org/html/rfc7159
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse
+     * @see http://www.ecma-international.org/ecma-262/5.1/#sec-15.12.2
+     * @see https://en.wikipedia.org/wiki/List_of_Unicode_characters
+     * @see http://en.cppreference.com/w/cpp/language/types
+     */
+    virtual const wchar_t *
+    _parse (const wchar_t *json) = 0;
+
+    /**
      * If value has parent object, assign to new value to this->_parent->[key],
      * otherwise assign new value to Value object itself.
      *
@@ -554,7 +554,7 @@ public:
    */
    inline
    const wchar_t * call_parse__ (value *v, const wchar_t *readp)
-   { return v->parse (readp); }
+   { return v->_parse (readp); }
 
 } // Namespace format
 

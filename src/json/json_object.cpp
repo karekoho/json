@@ -13,7 +13,7 @@ object::object () : json () {}
 object::object (const wchar_t *text)
   : json (text, false)
 {
-  (void) parse (text);
+  (void) _parse (text);
 }
 
 object::object(std::initializer_list<std::pair<std::__cxx11::wstring, value *> > il)
@@ -44,7 +44,7 @@ object::~object ()
 }
 
 const wchar_t *
-object::parse (const wchar_t *json)
+object::_parse (const wchar_t *json)
 {
   if (json == 0)
     throw json_syntax_error (UNEX_END);

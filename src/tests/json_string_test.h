@@ -73,7 +73,7 @@ public:
 
               CPPUNIT_ASSERT_MESSAGE ("string.empty ()", ss.empty () );
 
-              const wchar_t *readp = s->parse (startp);
+              const wchar_t *readp = s->_parse (startp);
               ss = s->get ();
 
               // std::cout << readp << "" << ss.length () << " " << ss << std::endl;

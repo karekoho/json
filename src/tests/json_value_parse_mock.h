@@ -14,7 +14,7 @@ public:
     virtual ~json_value_mock () {}
 
     virtual const wchar_t *
-    parse (const wchar_t *readp)
+    _parse (const wchar_t *readp)
     { return readp; }
 
     virtual value &

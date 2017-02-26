@@ -13,7 +13,7 @@ format::string::string (const wchar_t *json)
   if (json == 0)
     throw json_syntax_error (UNEX_END);
 
-  (void) parse (json);
+  (void) _parse (json);
 }
 
 format::string::string (json *parent, size_t charc)
@@ -37,7 +37,7 @@ format::string::string (const value *ov, const string &nv)
 }
 
 const wchar_t *
-format::string::parse (const wchar_t *json)
+format::string::_parse (const wchar_t *json)
 {
   wchar_t endc   = 0;
   long charc  = 0;

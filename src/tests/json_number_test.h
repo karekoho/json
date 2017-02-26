@@ -94,7 +94,7 @@ public:
 
     TEST_IT_START
       const wchar_t *startp = (*it).starp;
-      const wchar_t *readp = n.parse (startp);
+      const wchar_t *readp = n._parse (startp);
 
       n._double_valuep = 0;
 

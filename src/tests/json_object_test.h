@@ -81,7 +81,7 @@ public:
 
           object *o = new object (p[pidx]);
 
-          const wchar_t *readp = o->parse (startp);
+          const wchar_t *readp = o->_parse (startp);
 
           ASSERT_EQUAL_IDX ("value.readp", (startp + charc) - (*it).moveback, readp);
           ASSERT_EQUAL_IDX ("*(value.readp -1)", L'}', *(readp - 1));
@@ -121,7 +121,7 @@ public:
 
       object *o = new object ();
 
-      (void) o->parse (startp);
+      (void) o->_parse (startp);
 
       if (o->count () > 0)
         {
@@ -448,7 +448,7 @@ public:
               p._str_value[OFFSET]  = str_value + 14;
             }
 
-          (void) o.parse ((*it).input);
+          (void) o._parse ((*it).input);
 
           const wchar_t *output = o.strValue (o._parent ? p._str_value[OFFSET] : 0);
 
