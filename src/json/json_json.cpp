@@ -170,7 +170,7 @@ json::_make_value ()
         break;
       }
 
-  _readp = value_->parse (_readp);
+  _readp = call_parse__ (value_, _readp);
 
   return value_;
 }

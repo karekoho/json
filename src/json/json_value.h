@@ -27,6 +27,8 @@ namespace format
     friend class json_value_test;
   #endif
 
+    friend const wchar_t * call_parse__ (value *, const wchar_t *);
+
     public:
 
     /**
@@ -98,7 +100,7 @@ namespace format
      */
     virtual
     ~value ();
-
+protected:
     /**
      * @brief parse
      * @param json
@@ -111,7 +113,7 @@ namespace format
      */
     virtual const wchar_t *
     parse (const wchar_t *json) = 0;
-
+public:
     /**
      * @brief operator []
      * @param key
@@ -543,6 +545,17 @@ namespace format
 
     } __ltr_value[3];
   };
+
+  /**
+   * @brief call_parse
+   * @param v
+   * @param readp
+   * @return
+   */
+   inline
+   const wchar_t * call_parse__ (value *v, const wchar_t *readp)
+   { return v->parse (readp); }
+
 } // Namespace format
 
 #endif // JSON_VALUE_H
