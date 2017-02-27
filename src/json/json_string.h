@@ -108,7 +108,7 @@ namespace format
      * @return
      */
     const wchar_t *
-    get() const;
+    get () const;
 
     /**
      * @brief strLength

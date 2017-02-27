@@ -113,7 +113,6 @@ public:
     TEST_IT_START
 
       string *s = new string ((*it).startp);
-    std::wcout << s->strValue() << std::endl;
 
       ASSERT_EQUAL_IDX ("s->strLength ()", (*it).charc, s->strLength ());
       CPPUNIT_ASSERT_MESSAGE ("s->strValue ()", wcscmp ((*it).str_value, s->strValue ()) == 0);
