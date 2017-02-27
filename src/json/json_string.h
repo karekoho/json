@@ -116,7 +116,7 @@ namespace format
      */
     virtual size_t
     strLength () const noexcept override
-    { return _charc; }
+    { return _charc == 0 || *_startp == _sc::double_quote ? _charc : _charc + 2; }
 
     /**
      * @brief strValue

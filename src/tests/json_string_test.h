@@ -22,7 +22,7 @@ public:
       {
         string *a[] = {
           new string (),
-          new string (L"\"x\""),
+          new string (L"x"),
           new string (p[pidx], 1),
         };
 
@@ -33,7 +33,7 @@ public:
 
     delete p[1];
 
-    string src = L"\"xxx\"";
+    string src = L"xxx";
     string copy = src;
 
     CPPUNIT_ASSERT_MESSAGE ("string", & copy != & src);
@@ -98,9 +98,11 @@ public:
       int assert_status;
     };
 
+    this->_idx[0] = 0;
+
     std::vector<struct assert > test = {
         { L"", 0, (wchar_t) 0, PASS },
-        { L"xxx", 3, (wchar_t) 0, PASS },
+        { L"xxx", 3 + 2, (wchar_t) 0, PASS },
         { L"xxx\"", 0, (wchar_t) 0, FAIL },
         { L"x\u001F", 0, (wchar_t) 0, FAIL }
     };
@@ -118,7 +120,7 @@ public:
 
   virtual void
   test_assign_all_values ()
-    {
+  {
       object obj_parent;
       array arr_parent;
 
@@ -140,7 +142,7 @@ public:
       std::vector<struct assert > test = {
         { new array (L"[true,false]"), value::array_t, L"key_1",  0, 1,  { PASS, PASS, FAIL } },
         { new object (L"{\"k1\":true,\"k2\":false}"), value::object_t, L"key_2",  0, 2,  { PASS, PASS, FAIL } },
-        { new string (L"\"xxx\""), value::string_t, L"key_3",  0, 3,  { PASS, PASS, PASS } },
+        { new string (L"xxx"), value::string_t, L"key_3",  0, 3,  { PASS, PASS, PASS } },
         { new number (10), value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
         { new boolean (true), value::boolean_t, L"key_6",  0, 5, { PASS, PASS, FAIL } },
         { new null, value::null_t, L"key_7",  0, 6, { PASS, PASS, FAIL } }
@@ -173,16 +175,12 @@ public:
               {
                 string *new_a_value = static_cast<string *>((*it).new_value);
 
-                // old_value->_assign (*new_a_value);
                 *old_value = *new_a_value;
-
                 new_value = new_a_value;
               }
             else
               {
-                // old_value->_assign (*(*it).new_value);
                 *old_value = *(*it).new_value;
-
                 new_value = (*it).new_value;
               }
 

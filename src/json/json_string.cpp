@@ -45,6 +45,7 @@ format::string::_parse (const wchar_t *json)
   _startp =_readp = json;
 
   _string_value[0].clear ();
+  _string_value[1].clear ();
 
   if (_parent == 0)   // 2. ctor
     {
@@ -67,7 +68,9 @@ const wchar_t *
 format::string::get () const
 {
   if (_string_value[0].empty () && _startp && _charc > 0)
-    _string_value[0].assign (_startp + 1, _charc - 2);
+    *_startp == _sc::double_quote
+      ? _string_value[0].assign (_startp + 1, _charc - 2)
+      : _string_value[0].assign (_startp, _charc);
 
   return _string_value[0].c_str ();
 }
@@ -79,7 +82,15 @@ format::string::strValue (wchar_t *) const
     return L"";
 
   if (_string_value[1].empty ())
-    _string_value[1].assign (_startp, _charc);
+    if (*_startp == _sc::double_quote)
+      _string_value[1].assign (_startp, _charc);
+    else
+      {
+        _string_value[1].reserve (_charc + 2);
+        _string_value[1].push_back (L'"');
+        _string_value[1].append (_startp, _charc)
+            .push_back (L'"');
+      }
 
   return _string_value[1].c_str ();
 }
@@ -90,7 +101,9 @@ format::string::clone (const value &nv)
   const string & s = dynamic_cast<const string &> (nv);
 
   if (s._startp && s._charc > 0)
-    _string_value[0].assign (s._startp + 1, s._charc - 2);
+    *s._startp == _sc::double_quote
+        ? _string_value[0].assign (s._startp + 1, s._charc - 2)
+        : _string_value[0].assign (s._startp, s._charc);
 
   _startp = _string_value[0].c_str ();
 
