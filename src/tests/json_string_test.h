@@ -54,16 +54,17 @@ public:
     struct assert
     {
       const wchar_t *startp;
+      const wchar_t *str_value;
       size_t charc;
       wchar_t endc;
       int assert_status;
     };
 
     std::vector<struct assert > test = {
-        { L"\"\"", 0 + 2, (wchar_t) 0, PASS },
-        { L"\"xxx\"", 3 + 2, (wchar_t) 0, PASS },
-        { L"\" xxx \"", 5 + 2, (wchar_t) 0, PASS },
-        { L"\" xxx \" ", 5 + 2, L' ', PASS },
+        { L"\"\"", L"\"\"", 0 + 2, (wchar_t) 0, PASS },
+        { L"\"xxx\"", L"\"xxx\"", 3 + 2, (wchar_t) 0, PASS },
+        { L"\" xxx \"", L"\" xxx \"", 5 + 2, (wchar_t) 0, PASS },
+        { L"\" xxx \" ", L"\" xxx \"", 5 + 2, L' ', PASS },
     };
 
     TEST_IT_START
@@ -81,6 +82,7 @@ public:
       ASSERT_EQUAL_IDX ("string.readp", readp, (*it).startp + (*it).charc);
       ASSERT_EQUAL_IDX ("*(string.readp)", (wchar_t) *readp, (*it).endc);
       ASSERT_EQUAL_IDX ("s->strLength ()", (*it).charc, s->strLength ());
+      CPPUNIT_ASSERT_MESSAGE ("s->strValue ()", wcscmp ((*it).str_value, s->strValue ()) == 0);
 
       delete s;
 
@@ -93,6 +95,7 @@ public:
     struct assert
     {
       const wchar_t *startp;
+      const wchar_t *str_value;
       size_t charc;
       wchar_t endc;
       int assert_status;
@@ -101,17 +104,19 @@ public:
     this->_idx[0] = 0;
 
     std::vector<struct assert > test = {
-        { L"", 0, (wchar_t) 0, PASS },
-        { L"xxx", 3 + 2, (wchar_t) 0, PASS },
-        { L"xxx\"", 0, (wchar_t) 0, FAIL },
-        { L"x\u001F", 0, (wchar_t) 0, FAIL }
+        { L"", L"", 0, (wchar_t) 0, PASS },
+        { L"xxx", L"\"xxx\"", 3 + 2, (wchar_t) 0, PASS },
+        { L"xxx\"", 0, 0, (wchar_t) 0, FAIL },
+        { L"x\u001F", 0, 0, (wchar_t) 0, FAIL }
     };
 
     TEST_IT_START
 
       string *s = new string ((*it).startp);
+    std::wcout << s->strValue() << std::endl;
 
-      ASSERT_EQUAL_IDX ("s->strLength ()", (*it).charc, s->strLength () );
+      ASSERT_EQUAL_IDX ("s->strLength ()", (*it).charc, s->strLength ());
+      CPPUNIT_ASSERT_MESSAGE ("s->strValue ()", wcscmp ((*it).str_value, s->strValue ()) == 0);
 
       delete s;
 
@@ -221,8 +226,17 @@ public:
 
     // virtual void test_stringify () override {}
 
-    virtual void test_strLength () override {}
-    virtual void test_strValue () override {}
+    virtual void
+    test_strLength () override
+    {
+     // Tested in test_parse_parent () and test_parse_no_parent ()
+    }
+
+    virtual void
+    test_strValue () override
+    {
+      // Tested in test_parse_parent () and test_parse_no_parent ()
+    }
 
     virtual void test__clear () {}
 

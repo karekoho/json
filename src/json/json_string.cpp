@@ -86,10 +86,16 @@ format::string::strValue (wchar_t *) const
       _string_value[1].assign (_startp, _charc);
     else
       {
-        _string_value[1].reserve (_charc + 2);
-        _string_value[1].push_back (L'"');
-        _string_value[1].append (_startp, _charc)
-            .push_back (L'"');
+        //_string_value[1].reserve (_charc + 2);
+        //_string_value[1].push_back (L'"');
+        //_string_value[1].append (_startp, _charc).push_back (L'"');
+
+        wchar_t *s =  (wchar_t *) alloca (sizeof (wchar_t) * _charc + 2);
+
+        *s = L'"';
+        *(wcsncpy (s + 1,_startp, _charc) +_charc) = L'"';
+
+        _string_value[1].assign (s, _charc + 2);
       }
 
   return _string_value[1].c_str ();
