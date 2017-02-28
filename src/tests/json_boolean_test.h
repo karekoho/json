@@ -95,10 +95,10 @@ public:
           arr_parent._element_list.push_back (new format::undefined);
 
           old_value->_boolean_value = false;
-          old_value->setKey ((*it).key, wcslen ((*it).key));
+          old_value->set_key ((*it).key, wcslen ((*it).key));
 
           (*it).index  = arr_parent._element_list.size () - 1;
-          old_value->setIndex ((*it).index);
+          old_value->set_index ((*it).index);
 
           value *new_value = 0;
 

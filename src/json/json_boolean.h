@@ -88,7 +88,7 @@ namespace format
    * @return
    */
       virtual size_t
-      strLength () const noexcept override
+      str_length () const noexcept override
       { return _boolean_value == true ? 4 : 5; }
 
       /**
@@ -96,7 +96,7 @@ namespace format
    * @return
    */
       virtual const wchar_t *
-      strValue (wchar_t * = 0) const override
+      str_value (wchar_t * = 0) const override
       { return _boolean_value == true ? L"true" : L"false"; }
 
     public:

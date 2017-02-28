@@ -233,8 +233,8 @@ public:
 
       for (uint mdx = 0; mdx < 2; mdx++)
         {
-          const wchar_t *value[2] = { j.strValue (),
-                                      j[L"1"][L"2"].strValue ()
+          const wchar_t *value[2] = { j.str_value (),
+                                      j[L"1"][L"2"].str_value ()
                                     };
 
           ASSERT_EQUAL_IDX ("wcslen (value[0])", len[0], wcslen (value[0]));

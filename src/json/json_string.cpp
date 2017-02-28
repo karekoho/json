@@ -76,7 +76,7 @@ format::string::get () const
 }
 
 const wchar_t *
-format::string::strValue (wchar_t *) const
+format::string::str_value (wchar_t *) const
 {
   if (_startp == 0 || _charc == 0)
     return L"";

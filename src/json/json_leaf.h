@@ -90,7 +90,7 @@ public:
    * @return
    */
   virtual bool
-  isLeaf () const noexcept final override
+  is_leaf () const noexcept final override
   { return true; }
 
   /**
@@ -106,7 +106,7 @@ public:
    */
   virtual const wchar_t *
   stringify () noexcept final override
-  { return strValue (); }
+  { return str_value (); }
 
   /**
    * @brief erase

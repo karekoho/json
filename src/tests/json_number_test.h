@@ -375,10 +375,10 @@ public:
           old_value->_parent = parents[pidx];
 
           arr_parent._element_list.push_back (new format::undefined);
-          old_value->setKey ((*it).key, wcslen ((*it).key));
+          old_value->set_key ((*it).key, wcslen ((*it).key));
 
           (*it).index  = arr_parent._element_list.size () - 1;
-          old_value->setIndex ((*it).index);
+          old_value->set_index ((*it).index);
 
           value *new_value = 0;
 
@@ -456,9 +456,9 @@ public:
         number ((*it).s[1]),
       };
 
-      CPPUNIT_ASSERT_MESSAGE ("n[0].strValue ()", wcscmp((*it).output[0], n[0].strValue ()) == 0);
-      CPPUNIT_ASSERT_MESSAGE ("n[1].strValue ()", wcscmp((*it).output[1], n[1].strValue ()) == 0);
-      CPPUNIT_ASSERT_MESSAGE ("n[2].strValue ()", wcscmp((*it).output[2], n[2].strValue ()) == 0);
+      CPPUNIT_ASSERT_MESSAGE ("n[0].strValue ()", wcscmp((*it).output[0], n[0].str_value ()) == 0);
+      CPPUNIT_ASSERT_MESSAGE ("n[1].strValue ()", wcscmp((*it).output[1], n[1].str_value ()) == 0);
+      CPPUNIT_ASSERT_MESSAGE ("n[2].strValue ()", wcscmp((*it).output[2], n[2].str_value ()) == 0);
 
     TEST_IT_END;
   }

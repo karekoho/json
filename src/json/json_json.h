@@ -170,23 +170,23 @@ namespace format
      */
     virtual const wchar_t *
     stringify () noexcept override
-    { return strValue (); }
+    { return str_value (); }
 
     /**
      * @brief strLength
      * @return
      */
     virtual size_t
-    strLength () const noexcept override
-    { return __hasRoot () ? __root->strLength () : 0; }
+    str_length () const noexcept override
+    { return __hasRoot () ? __root->str_length () : 0; }
 
     /**
      * @brief strValue
      * @return
      */
     virtual const wchar_t *
-    strValue (wchar_t *offset = 0) const
-    { return __hasRoot () ? __root->strValue (offset) : L""; }
+    str_value (wchar_t *offset = 0) const
+    { return __hasRoot () ? __root->str_value (offset) : L""; }
 
     /**
      * @brief erase

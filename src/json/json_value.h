@@ -208,7 +208,7 @@ namespace format
      * @param parent
      */
     inline void
-    setParent (json *parent)
+    set_parent (json *parent)
     { _parent = parent; }
 
     /**
@@ -227,7 +227,7 @@ namespace format
      * @param charc
      */
     inline void
-    setKey (const wchar_t *key, size_t charc) noexcept
+    set_key (const wchar_t *key, size_t charc) noexcept
     {
        delete[] _key;
        wchar_t *dest_ = new wchar_t[charc + 1] ();
@@ -249,7 +249,7 @@ namespace format
      * @param index
      */
     inline void
-    setIndex (const size_t &index) noexcept
+    set_index (const size_t &index) noexcept
     { _index = index; }
 
     /**
@@ -264,7 +264,7 @@ namespace format
      * @return
      */
     virtual bool
-    isLeaf () const noexcept
+    is_leaf () const noexcept
     { return false; }
 
     /**
@@ -272,29 +272,33 @@ namespace format
      * @return
      */
     inline bool
-    isNode () const noexcept
-    { return ! isLeaf (); }
+    is_node () const noexcept
+    { return ! is_leaf (); }
 
     /**
      * @brief stringify
      * @return
      */
     virtual const wchar_t *
-    stringify () /* TODO: noexcept */ noexcept = 0;
+    stringify () noexcept = 0;
 
     /**
+     * TODO: protected
+     *
      * @brief strLength
      * @return
      */
     virtual size_t
-    strLength () const noexcept = 0;
+    str_length () const noexcept = 0;
 
     /**
+     * TODO: protected
+     *
      * @brief strValue
      * @return
      */
     virtual const wchar_t *
-    strValue (wchar_t *offset = 0) /* TODO: noexcept */ const = 0;
+    str_value (wchar_t *offset = 0) /* TODO: noexcept */ const = 0;
 
     /**
      * TODO: REMOVE
@@ -311,7 +315,7 @@ namespace format
      */
     inline const wchar_t *
     get () const
-    { return strValue (); }
+    { return str_value (); }
 
     /**
      * @brief parent
@@ -528,11 +532,6 @@ namespace format
     static inline value *
     _clone_cb (value *v)
     { return v->clone (); }
-
-    /**
-     * @brief _erase
-     */
-    //void _erase () noexcept;
 
     /**
      * @brief _literal_value

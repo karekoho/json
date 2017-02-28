@@ -219,7 +219,7 @@ format::number::clone (const value &other)
 }
 
 size_t
-format::number::strLength () const noexcept
+format::number::str_length () const noexcept
 {
  (void) get ();
  _to_string ();
@@ -228,7 +228,7 @@ format::number::strLength () const noexcept
 }
 
 const wchar_t *
-format::number::strValue (wchar_t *) const
+format::number::str_value (wchar_t *) const
 {
   (void) get ();
   _to_string ();

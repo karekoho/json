@@ -104,7 +104,7 @@ class undefined : public leaf
    * @return
    */
   virtual size_t
-  strLength () const noexcept override
+  str_length () const noexcept override
   { return 0; }
 
   /**
@@ -112,7 +112,7 @@ class undefined : public leaf
    * @return
    */
   virtual const wchar_t *
-  strValue (wchar_t * = 0) const
+  str_value (wchar_t * = 0) const
   { return L""; }
 
 protected:

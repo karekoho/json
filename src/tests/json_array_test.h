@@ -173,10 +173,10 @@ public:
 
           old_value->_element_list.clear ();
           arr_parent._element_list.push_back (new format::undefined);
-          old_value->setKey ((*it).key, wcslen ((*it).key) /* (*it).keylen */);
+          old_value->set_key ((*it).key, wcslen ((*it).key) /* (*it).keylen */);
 
           (*it).index  = arr_parent._element_list.size () - 1;
-          old_value->setIndex ((*it).index);
+          old_value->set_index ((*it).index);
 
           // Value *new_value = 0;
 
@@ -326,7 +326,7 @@ public:
 
         array a = (*it).input;
 
-        ASSERT_EQUAL_IDX ("a.strLength ()", (*it).length, a.strLength ());
+        ASSERT_EQUAL_IDX ("a.strLength ()", (*it).length, a.str_length ());
 
     TEST_IT_END;
   }
@@ -379,7 +379,7 @@ public:
 
             (void) a._parse ((*it).input);
 
-            const wchar_t *output = a.strValue (a._parent ? p._str_value[OFFSET] : 0);
+            const wchar_t *output = a.str_value (a._parent ? p._str_value[OFFSET] : 0);
 
             if (a._parent == 0)
               {
@@ -410,9 +410,9 @@ public:
       new boolean ()
     };
 
-    v[0]->setIndex (0);
-    v[1]->setIndex (1);
-    v[2]->setIndex (2);
+    v[0]->set_index (0);
+    v[1]->set_index (1);
+    v[2]->set_index (2);
 
     a._element_list = { v[0], v[1] };
 

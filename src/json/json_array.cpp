@@ -85,7 +85,7 @@ array::_parse (const wchar_t *json)
           if ((v = _call_reviver (v, 0, next_idx))->type () != value::undefined_t)
             {
               _element_list.push_back (v);
-              v->setIndex (next_idx);
+              v->set_index (next_idx);
             }
         }
       else if (*_readp == _sc::end_array)         // ']'
@@ -104,7 +104,7 @@ array::_parse (const wchar_t *json)
       else if ((v = _call_reviver (v, 0, next_idx))->type () != value::undefined_t)  // Value found
         {
           _element_list.push_back (v);
-          v->setIndex (next_idx);
+          v->set_index (next_idx);
         }
     }
 
@@ -129,7 +129,7 @@ array::_at (size_t index)
       value *v = new undefined (this);
 
       _element_list.push_back (v);
-      v->setIndex (_element_list.size () - 1);
+      v->set_index (_element_list.size () - 1);
 
       return *v;
   }
@@ -142,8 +142,8 @@ array::_assign (value *ov, value *nv)
 
   _element_list.at (index) = nv;
 
-  nv->setIndex (index);
-  nv->setParent (this);
+  nv->set_index (index);
+  nv->set_parent (this);
 
   return *this;
 }
@@ -179,7 +179,7 @@ array::iterator () const
 }
 
 size_t
-array::strLength () const noexcept
+array::str_length () const noexcept
 {
   if (_element_list.empty ())
     return 2;
@@ -190,13 +190,13 @@ array::strLength () const noexcept
   auto cur = _element_list.cbegin ();
 
   while (cur != end)
-    len += ((*cur++)->strLength () + 1);   // , or ]
+    len += ((*cur++)->str_length () + 1);   // , or ]
 
   return len;
 }
 
 const wchar_t *
-array::strValue (wchar_t *offset) const
+array::str_value (wchar_t *offset) const
 {
   wchar_t *str_value[2] = { 0, 0 };
 
@@ -207,7 +207,7 @@ array::strValue (wchar_t *offset) const
     return _str_value[BEGIN];
 
   else
-    str_value[OFFSET] = new wchar_t[strLength () + 1] ();
+    str_value[OFFSET] = new wchar_t[str_length () + 1] ();
 
   str_value[BEGIN] = str_value[OFFSET];
 
@@ -219,7 +219,7 @@ array::strValue (wchar_t *offset) const
   while (cur != end)
     {
       value *v = *cur;
-      str_value[OFFSET] = _str_append (str_value[OFFSET], v->strValue (str_value[OFFSET]), v->strLength ());
+      str_value[OFFSET] = _str_append (str_value[OFFSET], v->str_value (str_value[OFFSET]), v->str_length ());
 
       if (++cur != end)
         *(str_value[OFFSET]++) = _sc::value_separator;

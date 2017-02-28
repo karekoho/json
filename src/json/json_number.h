@@ -130,14 +130,14 @@ namespace format
      * @return
      */
     virtual size_t
-    strLength () const noexcept override;
+    str_length () const noexcept override;
 
     /**
      * @brief strValue
      * @return
      */
     virtual const wchar_t *
-    strValue (wchar_t * = 0) const;
+    str_value (wchar_t * = 0) const;
 
   protected:
 

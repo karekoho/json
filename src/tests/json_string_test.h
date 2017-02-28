@@ -81,8 +81,8 @@ public:
 
       ASSERT_EQUAL_IDX ("string.readp", readp, (*it).startp + (*it).charc);
       ASSERT_EQUAL_IDX ("*(string.readp)", (wchar_t) *readp, (*it).endc);
-      ASSERT_EQUAL_IDX ("s->strLength ()", (*it).charc, s->strLength ());
-      CPPUNIT_ASSERT_MESSAGE ("s->strValue ()", wcscmp ((*it).str_value, s->strValue ()) == 0);
+      ASSERT_EQUAL_IDX ("s->strLength ()", (*it).charc, s->str_length ());
+      CPPUNIT_ASSERT_MESSAGE ("s->strValue ()", wcscmp ((*it).str_value, s->str_value ()) == 0);
 
       delete s;
 
@@ -118,8 +118,8 @@ public:
 
       string *s = new string ((*it).startp);
 
-      ASSERT_EQUAL_IDX ("s->strLength ()", (*it).charc, s->strLength ());
-      CPPUNIT_ASSERT_MESSAGE ("s->strValue ()", wcscmp ((*it).str_value, s->strValue ()) == 0);
+      ASSERT_EQUAL_IDX ("s->strLength ()", (*it).charc, s->str_length ());
+      CPPUNIT_ASSERT_MESSAGE ("s->strValue ()", wcscmp ((*it).str_value, s->str_value ()) == 0);
 
       delete s;
 
@@ -172,10 +172,10 @@ public:
             old_value->_parent = parents[pidx];
 
             arr_parent._element_list.push_back (new undefined);
-            old_value->setKey ((*it).key, wcslen ((*it).key));
+            old_value->set_key ((*it).key, wcslen ((*it).key));
 
             (*it).index  = arr_parent._element_list.size () - 1;
-            old_value->setIndex ((*it).index);
+            old_value->set_index ((*it).index);
 
             value *new_value = 0;
 

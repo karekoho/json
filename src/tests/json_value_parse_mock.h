@@ -48,10 +48,10 @@ public:
     virtual const wchar_t *stringify () noexcept override
     { return L""; }
 
-    virtual size_t strLength () const noexcept override
+    virtual size_t str_length () const noexcept override
     { return 0; }
 
-    virtual const wchar_t * strValue (wchar_t *) const
+    virtual const wchar_t * str_value (wchar_t *) const
     { return L""; }
 
     virtual value & erase (const value &) noexcept override

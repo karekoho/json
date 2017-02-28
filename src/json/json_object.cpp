@@ -133,7 +133,7 @@ object::_pair ()
 
   (void) _member_list.emplace (key, v);
 
-  v->setKey (keyp, charc - 2);
+  v->set_key (keyp, charc - 2);
 
   return true;
 }
@@ -174,7 +174,7 @@ object::_at (const wchar_t *key)
     {
       value *v = new undefined (this);
 
-      v->setKey (key, wcslen (key));
+      v->set_key (key, wcslen (key));
       _member_list.emplace (key, v);
 
       return *v;
@@ -188,8 +188,8 @@ object::_assign (value *ov, value *nv)
 
   _member_list[key] = nv;
 
-  nv->setKey (key, wcslen (key));
-  nv->setParent (this);
+  nv->set_key (key, wcslen (key));
+  nv->set_parent (this);
 
   return *this;
 }
@@ -228,7 +228,7 @@ object::clone (const value &other)
 }
 
 size_t
-object::strLength () const noexcept
+object::str_length () const noexcept
 {
   if (_member_list.empty ())
     return 2;
@@ -241,14 +241,14 @@ object::strLength () const noexcept
   while (cur != end)
     {
       std::pair<std::wstring, value *> p = *cur++;
-      len += p.first.size () + dynamic_cast<value *>(p.second)->strLength () + 4;   // " + key + " + : +  value + , or }
+      len += p.first.size () + dynamic_cast<value *>(p.second)->str_length () + 4;   // " + key + " + : +  value + , or }
     }
 
   return len;
 }
 
 const wchar_t *
-object::strValue (wchar_t *offset) const
+object::str_value (wchar_t *offset) const
 {
   wchar_t *str_value[2] = { 0, 0 };
 
@@ -259,7 +259,7 @@ object::strValue (wchar_t *offset) const
     return _str_value[BEGIN];
 
   else
-    str_value[OFFSET] = new wchar_t[strLength () + 1] ();
+    str_value[OFFSET] = new wchar_t[str_length () + 1] ();
 
   str_value[BEGIN] = str_value[OFFSET];
 
@@ -274,7 +274,7 @@ object::strValue (wchar_t *offset) const
 
       str_value[OFFSET] = _str_append (_str_append (str_value[OFFSET], L"\"", 1), p.first.c_str (), p.first.size ());   // Key
       str_value[OFFSET] = _str_append (str_value[OFFSET], L"\":", 2);
-      str_value[OFFSET] = _str_append (str_value[OFFSET], p.second->strValue (str_value[OFFSET]), p.second->strLength ()); // Value
+      str_value[OFFSET] = _str_append (str_value[OFFSET], p.second->str_value (str_value[OFFSET]), p.second->str_length ()); // Value
 
       if (++cur != end)
         *(str_value[OFFSET]++) = _sc::value_separator;

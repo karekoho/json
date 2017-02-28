@@ -300,10 +300,10 @@ public:
           old_value->_member_list.clear ();
           arr_parent._element_list.push_back (new format::undefined);
 
-          old_value->setKey ((*it).key, wcslen ((*it).key));
+          old_value->set_key ((*it).key, wcslen ((*it).key));
 
           (*it).index  = arr_parent._element_list.size () - 1;
-          old_value->setIndex ((*it).index);
+          old_value->set_index ((*it).index);
 
           value *new_value = 0;
 
@@ -393,7 +393,7 @@ public:
 
         object o = (*it).input;
 
-        ASSERT_EQUAL_IDX ("o.strLength ()", (*it).length, o.strLength ());
+        ASSERT_EQUAL_IDX ("o.strLength ()", (*it).length, o.str_length ());
 
     TEST_IT_END;
   }
@@ -450,7 +450,7 @@ public:
 
           (void) o._parse ((*it).input);
 
-          const wchar_t *output = o.strValue (o._parent ? p._str_value[OFFSET] : 0);
+          const wchar_t *output = o.str_value (o._parent ? p._str_value[OFFSET] : 0);
 
           if (o._parent == 0)
             {
@@ -480,9 +480,9 @@ public:
       new boolean ()
     };
 
-    v[0]->setKey (L"key_1", 5);
-    v[1]->setKey (L"key_2", 5);
-    v[2]->setKey (L"key_3", 5);
+    v[0]->set_key (L"key_1", 5);
+    v[1]->set_key (L"key_2", 5);
+    v[2]->set_key (L"key_3", 5);
 
     o._member_list = { { v[0]->key (), v[0] }, { v[1]->key (), v[1] } };
 

@@ -120,7 +120,7 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    strValue (wchar_t *) const noexcept override
+    str_value (wchar_t *) const noexcept override
     { return L"null"; }
 
     /**
@@ -128,7 +128,7 @@ namespace format
      * @return
      */
     virtual size_t
-    strLength () const noexcept override
+    str_length () const noexcept override
     { return 4; }
 
   protected:

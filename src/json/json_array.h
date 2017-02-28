@@ -155,14 +155,14 @@ namespace format
     * @return
     */
     virtual size_t
-    strLength () const noexcept override;
+    str_length () const noexcept override;
 
    /**
     * @brief strValue
     * @return
     */
     virtual const wchar_t *
-    strValue (wchar_t *offset = 0) const;
+    str_value (wchar_t *offset = 0) const;
 
    /**
     * @brief stringify
@@ -170,7 +170,7 @@ namespace format
     */
     virtual const wchar_t *
     stringify () noexcept
-    { return strValue (); }
+    { return str_value (); }
 
    /**
     * @brief erase
