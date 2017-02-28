@@ -36,7 +36,7 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { new string (L"\"x\""), { 3, 4 }, { L"\"x\"", L"x\"x\"" }, PASS },
+      { new string (L"x"), { 3, 4 }, { L"\"x\"", L"x\"x\"" }, PASS },
       { new number (100), { 10, 11 }, { L"100.000000", L"x100.000000" }, PASS },
       { new boolean (), { 5, 6 }, { L"false", L"xfalse" }, PASS },
       { new null (), { 4, 5 }, { L"null", L"xnull" }, PASS },
@@ -77,19 +77,12 @@ public:
       }
   }
 
-
-  //virtual void test_value_1() override {}
-  //virtual void test_debug_1() override {}
   virtual void test_ctor_dtor() override {}
   virtual void test_parse_1() override {}
-  //virtual void test_size_1() override {}
-  //virtual void test_at() override {}
   virtual void test_assign_all_values() override {}
-  //virtual void test_operator_assign() override {}
   virtual void test__clear() override {}
-  //virtual void test_operator_at() override {}
   virtual void test_strLength () override {}
-  //virtual void test_strValue () override {}
+
   virtual void
   test_operator_at_key () final override
   {

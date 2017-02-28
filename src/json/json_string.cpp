@@ -117,6 +117,9 @@ format::string::__string (wchar_t & endc) const noexcept
 {
   const wchar_t * readp = _readp;
 
+  if ((*readp > 0 && *readp < 32) || *readp == _sc::double_quote)
+    return -1;
+
   while (*readp > 31 && *readp != _sc::double_quote)
     readp++;
 

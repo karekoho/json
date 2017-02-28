@@ -106,7 +106,11 @@ public:
     std::vector<struct assert > test = {
         { L"", L"", 0, (wchar_t) 0, PASS },
         { L"xxx", L"\"xxx\"", 3 + 2, (wchar_t) 0, PASS },
+
+        { L"\"xxx", 0, 0, (wchar_t) 0, FAIL },
         { L"xxx\"", 0, 0, (wchar_t) 0, FAIL },
+        { L"\"xxx\"", 0, 0, (wchar_t) 0, FAIL },
+        { L"\u001Fx", 0, 0, (wchar_t) 0, FAIL },
         { L"x\u001F", 0, 0, (wchar_t) 0, FAIL }
     };
 
