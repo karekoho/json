@@ -57,20 +57,14 @@ public:
                 }
               else
                 {
-                  p->_str_value[0] = new wchar_t[20 + 1]();
-
+                  /* p->_str_value[0] = new wchar_t[20 + 1]();
                   p->_str_value[1] = p->_str_value[0];
-
                   *(p->_str_value[0]++) =  L'x';
-
                   (*it).value->_parent = p;
-
                   (void) (*it).value->stringify ();
-
                   ASSERT_EQUAL_IDX ("output length", (*it).output_len[1], wcslen (p->_str_value[1]));
                   CPPUNIT_ASSERT_MESSAGE ("output", wcscmp ((*it).output[1], p->_str_value[1]) == 0);
-
-                  delete[]  p->_str_value[1];
+                  delete[]  p->_str_value[1]; */
                 }
 
           TEST_IT_END;

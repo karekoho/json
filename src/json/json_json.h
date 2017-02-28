@@ -14,7 +14,6 @@ namespace format
 {
   #ifdef UNIT_TEST
     class json_test;
-    class json_leaf_test;
   #endif
 
   #define OFFSET  0
@@ -25,42 +24,34 @@ namespace format
   /**
    * @brief The json class
    */
-  class object;
-  class array;
   class json : public value
   {
   #ifdef UNIT_TEST
     friend class json_test;
-    friend class json_leaf_test;
   #endif
-
-    friend const wchar_t * leaf::stringify ();
-    friend class object;  // For stringify { _parent->_str_value }
-    friend class array;   // For stringify { _parent->_str_value }
 
   public:
 
     /**
-     * @brief JSON
+     * @brief json
      */
     json ();
 
     /**
      * @brief json
      * @param json
+     * @param _call_parse
      */
     json (const wchar_t *json, const bool _call_parse = true);
 
     /**
      * @brief json
-     * @param endp
-     * @param charc
+     * @param parent
      */
     json (json *parent);
 
     /**
      * @brief clone
-     * @param other
      * @return
      */
     virtual value *
@@ -68,20 +59,20 @@ namespace format
     { return new json (*this);  }
 
     /**
-     * @brief JSON
+     * @brief json
      * @param other
      */
     json (const json &other);
 
     /**
-     * @brief JSON
+     * @brief json
      * @param ov
      * @param nv
      */
     json (const value *ov, const json &nv);
 
     /**
-     * @brief ~JSON
+     * @brief ~json
      */
     virtual ~json ();
 
@@ -162,15 +153,7 @@ namespace format
      */
     virtual json_iterator *
     iterator () const override
-    { return __root ? __root->iterator () : 0; /* TODO: new Leaf_Iterator (new Undefined);  // FIXME: leak */ }
-
-    /**
-     * @brief stringify
-     * @return
-     */
-    virtual const wchar_t *
-    stringify () noexcept override
-    { return str_value (); }
+    { return __root ? __root->iterator () : 0; }
 
     /**
      * @brief strLength
@@ -185,7 +168,7 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    str_value (wchar_t *offset = 0) const
+    str_value (wchar_t *offset = 0) const override
     { return __hasRoot () ? __root->str_value (offset) : L""; }
 
     /**
@@ -245,7 +228,7 @@ namespace format
      * @brief _clear
      */
     virtual void
-    _clear ()
+    _clear () override
     {}
 
     /**

@@ -45,8 +45,8 @@ public:
     iterator () const override
     { return new leaf_iterator (this); }
 
-    virtual const wchar_t *stringify () noexcept override
-    { return L""; }
+    //virtual const wchar_t *stringify () noexcept override
+    //{ return L""; }
 
     virtual size_t str_length () const noexcept override
     { return 0; }

@@ -138,14 +138,6 @@ namespace format
     iterator () const override;
 
     /**
-     * @brief stringify
-     * @return
-     */
-    virtual const wchar_t *
-    stringify () noexcept override
-    { return str_value (); }
-
-    /**
      * @brief strLength
      * @return
      */
@@ -157,7 +149,7 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    str_value (wchar_t *offset = 0) const;
+    str_value (wchar_t *offset = 0) const override;
 
     /**
      * @brief erase

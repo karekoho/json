@@ -162,15 +162,7 @@ namespace format
     * @return
     */
     virtual const wchar_t *
-    str_value (wchar_t *offset = 0) const;
-
-   /**
-    * @brief stringify
-    * @return
-    */
-    virtual const wchar_t *
-    stringify () noexcept
-    { return str_value (); }
+    str_value (wchar_t *offset = 0) const override;
 
    /**
     * @brief erase

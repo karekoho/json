@@ -5,6 +5,8 @@
 #include <cstring>
 #include <string>
 
+namespace format
+{
 #define UNEX_END    "Unexpected end of JSON input"
 #define UNEX_TOKEN  "Unexpected token "
 #define BAD_ASSIGN  "Bad assignment"
@@ -13,8 +15,6 @@
   class json_value_test;
 #endif
 
-namespace format
-{
   /**
    * @brief The json_value class
    */
@@ -279,15 +279,17 @@ namespace format
      * @brief stringify
      * @return
      */
-    virtual const wchar_t *
-    stringify () noexcept = 0;
+    const wchar_t *
+    stringify () noexcept
+    { return str_value (); }
 
     /**
      * TODO: protected
      *
-     * @brief strLength
+     * @brief str_length
      * @return
      */
+
     virtual size_t
     str_length () const noexcept = 0;
 

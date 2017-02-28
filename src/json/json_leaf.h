@@ -101,14 +101,6 @@ public:
   iterator () const final override;
 
   /**
-   * @brief stringify
-   * @return
-   */
-  virtual const wchar_t *
-  stringify () noexcept final override
-  { return str_value (); }
-
-  /**
    * @brief erase
    * @return
    */
