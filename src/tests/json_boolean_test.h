@@ -53,8 +53,6 @@ public:
       0
     };
 
-    // Boolean old_value;
-
     struct assert {
       value *new_value;
       value::value_t type;
@@ -78,8 +76,6 @@ public:
         {
           obj_parent._member_list.clear ();
           arr_parent._element_list.clear ();
-
-          // old_value._parent = parents[pidx];
 
           for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++) {\
             try {\
@@ -106,14 +102,12 @@ public:
             {
               boolean *new_boolean_value = static_cast<boolean *>((*it).new_value);
 
-              // old_value->_assign (*new_boolean_value);
               *old_value = *new_boolean_value;
 
               new_value = new_boolean_value;
             }
           else
             {
-              // old_value->_assign (*(*it).new_value);
               *old_value = *(*it).new_value;
 
               new_value = (*it).new_value;
@@ -172,13 +166,8 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json boolean test");
 
-//<<<<<<< HEAD
-//    /* 0. */  s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_ctor_dtor", &json_boolean_test::test_ctor_dtor));
-//    /* 1. */  s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_assign_all_values", &json_boolean_test::test_assign_all_values));
-//=======
     /* 0.*/ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_ctor_dtor", &json_boolean_test::test_ctor_dtor));
     /* 1.*/ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_assign_all_values", &json_boolean_test::test_assign_all_values));
-//>>>>>>> f058e8b1150497ae319ee0ca0a6d4851cbc80ddf
 
     return s;
   }

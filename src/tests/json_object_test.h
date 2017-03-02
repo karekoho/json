@@ -2,7 +2,9 @@
 #define JSON_OBJECT_TEST_H
 
 #include <json_value_test_interface.h>
+
 namespace format {
+
 /**
  * 2.
  * @brief The json_object_test class
@@ -176,7 +178,7 @@ public:
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("o[size_t].type ()", value::undefined_t, o[(size_t) 0].type ());
   }
 
-  virtual void
+  /* virtual void
   test__at ()
   {
     object o;
@@ -201,11 +203,11 @@ public:
       ASSERT_EQUAL_IDX ("_v.type ()", (*it).type, _v.type ());
 
     TEST_IT_END;
-  }
+  } */
 
 
-  virtual void test_value_1 () {}
-  virtual void test_debug_1 () {}
+  // virtual void test_value_1 () {}
+  // virtual void test_debug_1 () {}
 
   void
   test__pair ()
@@ -260,9 +262,8 @@ public:
       0
     };
 
-    // Object old_value;
-
-    struct assert {
+    struct assert
+    {
       value *new_value;
       value::value_t type;
       const wchar_t *key;
@@ -280,76 +281,60 @@ public:
       { new null (), value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
     };
 
-    // arr_parent._element_list.reserve (6);
-
     for (size_t pidx = 0; pidx < 3; pidx++)
       {
-          obj_parent._member_list.clear ();
-          arr_parent._element_list.clear ();
-          // old_value._parent = parents[pidx];
+        obj_parent._member_list.clear ();
+        arr_parent._element_list.clear ();
 
-          for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++) {\
-            try {\
-                if ((*it).assert_status[pidx] == SKIP) { continue; }\
-                if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
+        this->_idx[0]= 0;
 
-          /// old_value: value from Value[key], any value
-          object *old_value = new object;
-          old_value->_parent = parents[pidx];
-
-          old_value->_member_list.clear ();
-          arr_parent._element_list.push_back (new format::undefined);
-
-          old_value->set_key ((*it).key, wcslen ((*it).key));
-
-          (*it).index  = arr_parent._element_list.size () - 1;
-          old_value->set_index ((*it).index);
-
-          value *new_value = 0;
-
-          if ((*it).new_value->type () == value::object_t)
+        for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++) {
+          try
             {
-              object *new_o_value = static_cast<object *>((*it).new_value);
+              if ((*it).assert_status[pidx] == SKIP) { continue; }
+              if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
 
-              // old_value->_assign (*new_o_value); // Can't do. *old_value is free'd
-              *old_value = *new_o_value;
+            /** old_value: value from value[key] */
+            object *old_value = new object;
+            old_value->_parent = parents[pidx];
 
-              new_value = new_o_value;
-            }
-          else
-            {
-              // old_value->_assign (*(*it).new_value); // Can't do. *old_value is free'd
-              *old_value = *(*it).new_value;
+            arr_parent._element_list.push_back (new format::undefined);   // For the index
 
-              new_value = (*it).new_value;
-            }
+            old_value->set_key ((*it).key, wcslen ((*it).key));
 
-          json *parent = parents[pidx];
+            (*it).index  = arr_parent._element_list.size () - 1;
+            old_value->set_index ((*it).index);
 
-          if (parent)
-            {
-              ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
+            if ((*it).new_value->type () == value::object_t)
+              {
+                *old_value = *(static_cast<object *>((*it).new_value));
+              }
+            else
+              {
+                *old_value = *(*it).new_value;
+              }
 
-              if (parent->type () == value::object_t)
-                {
-                  value *ov =  obj_parent._member_list.at ((*it).key);
+            json *parent = parents[pidx];
 
-                  ASSERT_EQUAL_IDX ("obj_parent[key].type", ov->type (), (*it).type);
-                  // ASSERT_EQUAL_IDX ("obj_parent[key].value", ov, new_value);
-                }
-              else
-                {
-                  value *av =  arr_parent._element_list.at ((*it).index);
+            if (parent)
+              {
+                ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
 
-                  ASSERT_EQUAL_IDX ("arr_parent[key].type", av->type (), (*it).type);
-                  // ASSERT_EQUAL_IDX ("arr_parent[key].value", av, new_value);
-                }
-            }
-          else
-            {
-              ASSERT_EQUAL_IDX ("old_value.size ()", (size_t) 2, old_value->count ());
-            }
-
+                if (parent->type () == value::object_t)
+                  {
+                    value *ov =  obj_parent._member_list.at ((*it).key);
+                    ASSERT_EQUAL_IDX ("obj_parent[key].type", ov->type (), (*it).type);
+                  }
+                else
+                  {
+                    value *av =  arr_parent._element_list.at ((*it).index);
+                    ASSERT_EQUAL_IDX ("arr_parent[key].type", av->type (), (*it).type);
+                  }
+              }
+            else
+              {
+                ASSERT_EQUAL_IDX ("old_value.size ()", (size_t) 2, old_value->count ());
+              }
           TEST_IT_END;
         }
 
@@ -401,7 +386,6 @@ public:
   virtual void
   test_strValue () override
   {
-    // return;
     object p;
 
     json *parent[] = {

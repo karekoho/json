@@ -122,12 +122,9 @@ public:
   }
 
   virtual void test_parse_1 () {}
-  //virtual void test_stringify () override {}
   virtual void test_strLength () override {}
   virtual void test_strValue () override  {}
-  virtual void test__clear() {}
-  virtual void test_operator_assign () {}
-  virtual void test_operator_at () {}
+  virtual void test__clear() override {}
   virtual void test_erase () override {}
 
   void

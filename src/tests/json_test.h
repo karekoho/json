@@ -3,7 +3,9 @@
 
 #include <json_value_test_interface.h>
 #include "json_value_parse_mock.h"
-namespace format {
+
+namespace format
+{
 /**
  * 1.
  * @brief The json_test class
@@ -11,8 +13,6 @@ namespace format {
 class json_test : public json_value_test_interface
 {
 public:
-
-
 
   virtual void
   test_ctor_dtor ()
@@ -246,9 +246,8 @@ public:
 
   virtual void test__clear () {}
 
-  virtual void test_operator_assign () {}
-  virtual void test_operator_at () {}
-
+  //virtual void test_operator_assign () {}
+  //virtual void test_operator_at () {}
   //virtual void test_size_1 () {}
 
 
@@ -280,8 +279,8 @@ public:
   {
   }
 
-  virtual void test_value_1 () {}
-  virtual void test_debug_1 () {}
+  //virtual void test_value_1 () {}
+  //virtual void test_debug_1 () {}
 
   virtual void test_erase () override {}
 

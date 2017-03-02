@@ -134,8 +134,6 @@ public:
       0
     };
 
-    // Array old_value;
-
     struct assert {
       value *new_value;
       value::value_t type;
@@ -183,18 +181,11 @@ public:
           if ((*it).new_value->type () == value::array_t)
             {
               array *new_a_value = static_cast<array *>((*it).new_value);
-
-              // old_value->_assign (*new_a_value);
               *old_value = *new_a_value;
-
-              // new_value = new_a_value;
             }
           else
             {
-              // old_value->_assign (*(*it).new_value);
               *old_value = *(*it).new_value;
-
-              // new_value = (*it).new_value;
             }
 
           json *parent = parents[pidx]; // old_value->_parent;
@@ -443,9 +434,6 @@ public:
                                    (size_t) 1,
                                    (array (L"[0,1]") [(size_t) 0] = undefined ()).count ());
   }
-
-  virtual void test__at () override {}
-  // virtual void test_size_1 () {}
 
   /**
    * 3.

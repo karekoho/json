@@ -3,11 +3,11 @@
 
 #include "json_leaf.h"
 
+namespace format
+{
 #ifdef UNIT_TEST
   class json_undefined_test;
 #endif
-
-namespace format {
 /**
  * @brief The undefined class
  */
@@ -116,15 +116,6 @@ class undefined : public leaf
   { return L""; }
 
 protected:
-
-  /**
-   * @brief assign
-   * @param nv
-   * @return
-   */
-//  virtual Value &
-//  _assign (const Value & nv)
-//  { return Value::_assign (nv); }
 
   /**
    * @brief _clear
