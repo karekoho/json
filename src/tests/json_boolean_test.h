@@ -150,8 +150,8 @@ public:
 
   virtual void test_parse_1 () override {}
 
-  virtual void test_strLength () override {}
-  virtual void test_strValue () override {}
+  virtual void test_str_length () override {}
+  virtual void test_str_value () override {}
   virtual void test__clear () override {}
 
   virtual void test_erase () override {}

@@ -89,14 +89,14 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    _parse (const wchar_t *json);
+    _parse (const wchar_t *json) override;
 
     /**
      * @brief type
      * @return
      */
     virtual value_t
-    type () const
+    type () const noexcept override
     { return value::value_t::number_t; }
 
     /**
@@ -137,7 +137,7 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    str_value (wchar_t * = 0) const;
+    str_value (wchar_t * = 0) const override;
 
   protected:
 

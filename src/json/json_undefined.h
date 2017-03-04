@@ -70,7 +70,7 @@ class undefined : public leaf
    * @return
    */
   inline std::nullptr_t
-  get () const
+  get () const noexcept
   { return nullptr; }
 
   /**
@@ -79,7 +79,7 @@ class undefined : public leaf
    * @return
    */
   virtual const wchar_t *
-  _parse (const wchar_t *json)
+  _parse (const wchar_t *json) override
   { return json; }
 
   /**
@@ -87,7 +87,7 @@ class undefined : public leaf
    * @return
    */
   virtual inline value_t
-  type () const
+  type () const noexcept override
   { return value::value_t::undefined_t; }
 
   /**
@@ -112,7 +112,7 @@ class undefined : public leaf
    * @return
    */
   virtual const wchar_t *
-  str_value (wchar_t * = 0) const
+  str_value (wchar_t * = 0) const override
   { return L""; }
 
 protected:

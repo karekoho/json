@@ -101,7 +101,7 @@ namespace format
      * @return
      */
     virtual inline value_t
-    type () const
+    type () const noexcept override
     { return value::value_t::object_t; }
 
     /**
@@ -109,7 +109,7 @@ namespace format
      * @return
      */
     virtual inline size_t
-    count () const
+    count () const noexcept
     { return _member_list.size (); }
 
     /**

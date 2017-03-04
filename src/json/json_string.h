@@ -74,7 +74,7 @@ namespace format
      * @return
      */
     virtual inline value_t
-    type () const override
+    type () const noexcept override
     { return value::value_t::string_t; }
 
     /**

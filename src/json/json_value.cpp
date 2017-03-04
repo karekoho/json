@@ -5,7 +5,9 @@
 #include "json_boolean.h"
 
 #include <stdlib.h>
+
 using namespace format;
+
 const struct value::literal_value value::__ltr_value[3] = {
   { L"true", 4, value::_literal::true_value },
   { L"false", 5, value::_literal::false_value },

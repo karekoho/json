@@ -14,7 +14,7 @@ class json_leaf_test : public json_value_test_interface
 public:
 
   virtual void
-  test_strValue () override
+  test_str_value () override
   {
     // stringify calls strValue which always returns string value
     // TODO: move to test_strValue
@@ -75,7 +75,7 @@ public:
   virtual void test_parse_1() override {}
   virtual void test_assign_all_values() override {}
   virtual void test__clear() override {}
-  virtual void test_strLength () override {}
+  virtual void test_str_length () override {}
 
   virtual void
   test_operator_at_key () final override
@@ -99,7 +99,7 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json leaf test");
 
-    /* 0. */ s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_assign_all_values", &json_leaf_test::test_strValue));
+    /* 0. */ s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_assign_all_values", &json_leaf_test::test_str_value));
 
     return s;
   }

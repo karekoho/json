@@ -26,11 +26,11 @@ public:
     { return *(new format::undefined); }
 
     virtual value::value_t
-    type () const
+    type () const noexcept
     { return value::value_t::undefined_t; }
 
     virtual size_t
-    count () const
+    count () const noexcept
     { return 0; }
 
     virtual value *

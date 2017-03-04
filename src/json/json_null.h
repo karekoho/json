@@ -77,7 +77,7 @@ namespace format
      * @return
      */
     virtual inline const wchar_t *
-    _parse (const wchar_t *json)
+    _parse (const wchar_t *json) override
     { return json + 4; }
 
     /**
@@ -85,7 +85,7 @@ namespace format
      * @return
      */
     virtual inline value::value_t
-    type () const
+    type () const noexcept override
     { return value::value_t::null_t; }
 
     /**
@@ -94,7 +94,7 @@ namespace format
      * @return
      */
     inline std::nullptr_t
-    get () const
+    get () const noexcept
     { return nullptr; }
 
     /**

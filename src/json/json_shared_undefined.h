@@ -68,7 +68,7 @@ namespace format
      * @return
      */
     virtual value_t
-    type () const
+    type () const noexcept override
     { return value::value_t::no_value_t; }
 
     /**

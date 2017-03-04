@@ -353,7 +353,7 @@ public:
   }
 
   virtual void
-  test_strLength () override
+  test_str_length () override
   {
     // assert: {} = 2,
     // assert: {\"a\":null} = 2 + 3 + 1 + 4 = 10,
@@ -384,7 +384,7 @@ public:
   }
 
   virtual void
-  test_strValue () override
+  test_str_value () override
   {
     object p;
 
@@ -537,8 +537,8 @@ public:
     /* 6. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_operator_at_index", &json_object_test::test_operator_at_index));
     /* 7. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_pair_1", &json_object_test::test__pair));
     /* 8. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__clear", &json_object_test::test__clear));
-    /* 9. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strLength", &json_object_test::test_strLength));
-    /* 10. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strvalue", &json_object_test::test_strValue));
+    /* 9. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strLength", &json_object_test::test_str_length));
+    /* 10. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strvalue", &json_object_test::test_str_value));
 
      return s;
   }

@@ -107,14 +107,14 @@ namespace format
     * @return
     */
     virtual const wchar_t *
-    _parse ( const wchar_t *json);
+    _parse ( const wchar_t *json) override;
 
    /**
     * @brief type
     * @return
     */
     virtual value_t
-    type () const
+    type () const noexcept override
     { return value::value_t::array_t; }
 
    /**
@@ -122,7 +122,7 @@ namespace format
     * @return
     */
     virtual size_t
-    count () const
+    count () const noexcept override
     { return _element_list.size (); }
 
    /**

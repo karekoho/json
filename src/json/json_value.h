@@ -148,6 +148,8 @@ namespace format
      */
 
     /**
+     * TODO:
+     *
      * @brief operator =
      * @param s
      * @return
@@ -156,6 +158,8 @@ namespace format
     operator =(const wchar_t *s);
 
     /**
+     * TODO:
+     *
      * @brief operator =
      * @param d
      * @return
@@ -164,6 +168,8 @@ namespace format
     operator =(double d);
 
     /**
+     * TODO:
+     *
      * @brief operator =
      * @param b
      * @return
@@ -176,7 +182,7 @@ namespace format
      * @return
      */
     virtual value_t
-    type () const /* TODO: noexcept */ = 0;
+    type () const noexcept = 0;
 
     /**
      * @brief operator ==
@@ -201,14 +207,14 @@ namespace format
      * @return
      */
     virtual size_t
-    count () const = 0;
+    count () const noexcept = 0;
 
     /**
      * @brief setParent
      * @param parent
      */
     inline void
-    set_parent (json *parent)
+    set_parent (json *parent) noexcept
     { _parent = parent; }
 
     /**

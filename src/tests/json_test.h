@@ -203,10 +203,10 @@ public:
 
   //virtual void test_stringify () override {}
 
-  virtual void test_strLength () override {}
+  virtual void test_str_length () override {}
 
   virtual void
-  test_strValue () override
+  test_str_value () override
   {
     struct assert
     {
@@ -335,7 +335,7 @@ public:
   }
 
   static value *
-  fn_reviver (const wchar_t *key, value *v)
+  fn_reviver (const wchar_t *, value *v)
   {
     switch (v->type ()) {
       case  value::value_t::null_t:
@@ -386,7 +386,7 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json test");
 
-    /* 0. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_strValue", &json_test::test_strValue));
+    /* 0. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_strValue", &json_test::test_str_value));
     /* 1. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_smoke", &json_test::test_ctor_dtor));
     /* 2. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_1", &json_test::test_parse_1));
     /* 3. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_make_value", &json_test::test_make_value));

@@ -3,7 +3,9 @@
 
 #include <json_value_test_interface.h>
 #include "json_value_parse_mock.h"
+
 namespace format {
+
 /**
  * 0.
  * @brief The json_value_test class
@@ -11,14 +13,9 @@ namespace format {
 class json_value_test : public json_value_test_interface
 {
 public:
-    virtual void test_ctor_dtor() {}
-    virtual void test_parse_1(){}
-    virtual void test_size_1(){}
-    virtual void test_operator_at_key(){}
-    virtual void test_value_1(){}
-    virtual void test_debug_1(){}
 
-    void test_lookahead ()
+    void
+    test__lookahead ()
     {
       struct assert {
           const wchar_t *startp;
@@ -54,9 +51,10 @@ public:
       TEST_IT_END;
     }
 
-    void test_lexeme ();
+    // void test_lexeme ();
 
-    void test_string () // Moved to json_test
+    void
+    test__string () // Moved to json_test
     {
       wchar_t endc;
 
@@ -97,7 +95,8 @@ public:
       TEST_IT_END;
     }
 
-    void test_is_literal ()
+    void
+    test__is_literal ()
     {
       struct assert {
           const wchar_t *startp;
@@ -242,19 +241,8 @@ public:
     }
 
 
-    //virtual void test_stringify () override {}
-    virtual void test_strLength () override {}
-    virtual void test_strValue () override {}
-
-    virtual void test_operator_assign () {}
-    virtual void test_operator_at () {}
-    virtual void test_assign_all_values (){}
-    virtual void test__clear () {}
-
-    virtual void test_erase () override {}
-
     virtual void
-    test_operator_at_index ()
+    test_operator_at_index () override
     {
     }
 
@@ -270,6 +258,15 @@ public:
       CPPUNIT_ASSERT_MESSAGE ("value == value", boolean () == boolean ());
     }
 
+    virtual void test_str_length () override {}
+    virtual void test_str_value () override {}
+    virtual void test_assign_all_values () override {}
+    virtual void test__clear () override {}
+    virtual void test_erase () override {}
+    virtual void test_ctor_dtor () override {}
+    virtual void test_parse_1 () override {}
+    virtual void test_operator_at_key () override {}
+
     /**
      * 0.
      * @brief suite
@@ -282,9 +279,9 @@ public:
 
       /* 0. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_copy", &json_value_test::test_assign_copy));
       /* 1. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_undefined", &json_value_test::test_assign_undefined));
-      /* 2. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lookahead", &json_value_test::test_lookahead));
-      /* 3. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_literal", &json_value_test::test_is_literal));
-      /* 4. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_quoted", &json_value_test::test_string));
+      /* 2. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lookahead", &json_value_test::test__lookahead));
+      /* 3. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_literal", &json_value_test::test__is_literal));
+      /* 4. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_quoted", &json_value_test::test__string));
       /* 5. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__str_append", &json_value_test::test__str_append));
       /* 6. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value_t", &json_value_test::test_operator_equal_value_t));
       /* 7. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value", &json_value_test::test_operator_equal_value));

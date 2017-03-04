@@ -82,17 +82,19 @@ format::string::str_value (wchar_t *) const
     return L"";
 
   if (_string_value[1].empty ())
-    if (*_startp == _sc::double_quote)
-      _string_value[1].assign (_startp, _charc);
-    else
-      {
-        wchar_t *s =  (wchar_t *) alloca (sizeof (wchar_t) * _charc + 2);
+    {
+      if (*_startp == _sc::double_quote)
+        _string_value[1].assign (_startp, _charc);
+      else
+        {
+          wchar_t *s =  (wchar_t *) alloca (sizeof (wchar_t) * _charc + 2);
 
-        *s = L'"';
-        *(wcsncpy (s + 1,_startp, _charc) +_charc) = L'"';
+          *s = L'"';
+          *(wcsncpy (s + 1,_startp, _charc) +_charc) = L'"';
 
-        _string_value[1].assign (s, _charc + 2);
-      }
+          _string_value[1].assign (s, _charc + 2);
+        }
+    }
 
   return _string_value[1].c_str ();
 }

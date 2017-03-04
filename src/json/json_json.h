@@ -92,7 +92,7 @@ namespace format
      * @return
      */
     virtual inline value::value_t
-    type () const
+    type () const noexcept override
     { return __hasRoot () ?  __root->type () : value::value_t::undefined_t; }
 
     /**
@@ -100,7 +100,7 @@ namespace format
      * @return
      */
     virtual inline size_t
-    count () const
+    count () const noexcept override
     { return __hasRoot () ? __root->count () : 0; }
 
     /**
@@ -108,7 +108,7 @@ namespace format
      * @param j
      * @return
      */
-    virtual value
+    value
     & _assign (const json & j);
 
     /**

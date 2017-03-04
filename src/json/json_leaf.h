@@ -72,14 +72,14 @@ namespace format
      * @return
      */
     virtual value_t
-    type () const = 0;
+    type () const noexcept = 0;
 
     /**
      * @brief size
      * @return
      */
     virtual size_t
-    count () const final override
+    count () const noexcept final override
     { return 0; }
 
     /**

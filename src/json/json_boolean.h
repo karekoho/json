@@ -71,7 +71,7 @@ namespace format
       * @return
       */
       virtual value *
-      clone () const
+      clone () const override
       { return new boolean (*this); }
 
      /**
@@ -107,7 +107,7 @@ namespace format
    * @return
    */
       virtual const wchar_t *
-      _parse (const wchar_t *json)
+      _parse (const wchar_t *json) override
       { return json + (_boolean_value == true ? 4 : 5); }
 
       /**
@@ -115,7 +115,7 @@ namespace format
    * @return
    */
       virtual inline value_t
-      type () const
+      type () const noexcept override
       { return value::value_t::boolean_t; }
 
       /**

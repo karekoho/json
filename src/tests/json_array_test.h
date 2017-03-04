@@ -292,7 +292,7 @@ public:
 
 
   virtual void
-  test_strLength () override
+  test_str_length () override
   {
     // assert: [] = 2,
     // assert: [null] = 2 + 4 = 6,
@@ -323,7 +323,7 @@ public:
   }
 
   virtual void
-  test_strValue () override
+  test_str_value () override
   {
     array p;
 
@@ -445,8 +445,8 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json array test");
 
-    /* 0. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test_strValue));
-    /* 1. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test_strLength));
+    /* 0. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test_str_value));
+    /* 1. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test_str_length));
     /* 2. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_ctor_dtor", &json_array_test::test_ctor_dtor));
     /* 3. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_parse_1", &json_array_test::test_parse_1));
     /* 4. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_index", &json_array_test::test_index));

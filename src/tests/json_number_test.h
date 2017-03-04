@@ -434,7 +434,7 @@ public:
   }
 
   virtual void
-  test_strValue () override
+  test_str_value () override
   {
     struct assert
     {
@@ -463,7 +463,7 @@ public:
     TEST_IT_END;
   }
 
-  virtual void test_strLength () override {}
+  virtual void test_str_length () override {}
   virtual void test__clear () override {}
   virtual void test_erase () override {}
 
@@ -477,7 +477,7 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json number test");
 
-    /* 0. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_strValue", &json_number_test::test_strValue));
+    /* 0. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_strValue", &json_number_test::test_str_value));
     /* 1. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_ctor_dtor", &json_number_test::test_ctor_dtor));
     /* 2. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_parse_1", &json_number_test::test_parse_1));
     /* 3. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_digits", &json_number_test::test_digits));

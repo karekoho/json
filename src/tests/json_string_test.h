@@ -230,13 +230,13 @@ public:
     // virtual void test_stringify () override {}
 
     virtual void
-    test_strLength () override
+    test_str_length () override
     {
      // Tested in test_parse_parent () and test_parse_no_parent ()
     }
 
     virtual void
-    test_strValue () override
+    test_str_value () override
     {
       // Tested in test_parse_parent () and test_parse_no_parent ()
     }

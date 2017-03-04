@@ -7,20 +7,7 @@ class json_value_test_interface : public unit_test
 {
 public:
 
-    /**
-     * @brief test_lookahead
-     */
-    void test_lookahead ();
-
-    /**
-     * @brief test_lexeme
-     */
-    void test_lexeme ();
-
-    /**
-     * @brief test_is_literal
-     */
-    void test_is_literal ();
+    /**  public abstract value interface */
 
     /**
      * @brief test_ctor_dtor
@@ -48,31 +35,37 @@ public:
     virtual void test_assign_all_values () = 0;
 
     /**
+     * @brief test_strLength
+     */
+    virtual void test_str_length () = 0;
+
+    /**
+     * @brief test_strValue
+     */
+    virtual void test_str_value () = 0;
+
+    /** protected */
+
+    /**
+     *
+     * @brief test_erase
+     */
+    virtual void test_erase () = 0;
+
+    /**
      * @brief test__clear
      */
     virtual void test__clear () = 0;
 
     /**
-     * @brief test__at
+     * @brief test_count
      */
-    // virtual void test__at () {}
+    // TODO: virtual void test_count () = 0;
 
     /**
-     * @brief test_strLength
+     * @brief test_type
      */
-    virtual void test_strLength () = 0;
-
-    /**
-     * @brief test_strValue
-     */
-    virtual void test_strValue () = 0;
-
-    /**
-     * TODO: replace Value.erase ()  with o[key] = undefined
-     *
-     * @brief test_erase
-     */
-    virtual void test_erase () = 0;
+    // virtual void test_type () = 0;
 };
 
 #endif // JSON_VALUE_TEST_H
