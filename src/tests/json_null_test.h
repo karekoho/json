@@ -91,10 +91,10 @@ public:
           old_value->_parent = parents[pidx];
 
           arr_parent._element_list.push_back (new format::undefined);
-          old_value->set_key ((*it).key, wcslen ((*it).key));
+          old_value->_set_key ((*it).key, wcslen ((*it).key));
 
           (*it).index  = arr_parent._element_list.size () - 1;
-          old_value->set_index ((*it).index);
+          old_value->_set_index ((*it).index);
 
           if ((*it).new_value->type () == value::null_t)
             {

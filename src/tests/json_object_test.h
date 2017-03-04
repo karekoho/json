@@ -300,10 +300,10 @@ public:
 
             arr_parent._element_list.push_back (new format::undefined);   // For the index
 
-            old_value->set_key ((*it).key, wcslen ((*it).key));
+            old_value->_set_key ((*it).key, wcslen ((*it).key));
 
             (*it).index  = arr_parent._element_list.size () - 1;
-            old_value->set_index ((*it).index);
+            old_value->_set_index ((*it).index);
 
             if ((*it).new_value->type () == value::object_t)
               {
@@ -464,9 +464,13 @@ public:
       new boolean ()
     };
 
-    v[0]->set_key (L"key_1", 5);
-    v[1]->set_key (L"key_2", 5);
-    v[2]->set_key (L"key_3", 5);
+//    v[0]->set_key (L"key_1", 5);
+//    v[1]->set_key (L"key_2", 5);
+//    v[2]->set_key (L"key_3", 5);
+
+    call__set_key__ (v[0], L"key_1", 5);
+    call__set_key__ (v[1], L"key_2", 5);
+    call__set_key__ (v[2], L"key_3", 5);
 
     o._member_list = { { v[0]->key (), v[0] }, { v[1]->key (), v[1] } };
 

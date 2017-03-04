@@ -169,7 +169,7 @@ format::json::_make_value ()
         break;
       }
 
-  _readp = call_parse__ (value_, _readp);
+  _readp = call__parse__ (value_, _readp);
 
   return value_;
 }

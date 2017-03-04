@@ -84,10 +84,10 @@ namespace format
             old_value->_parent = parents[pidx];
 
             arr_parent._element_list.push_back (new format::undefined);
-            old_value->set_key ((*it).key, wcslen ((*it).key));
+            old_value->_set_key ((*it).key, wcslen ((*it).key));
 
             (*it).index  = arr_parent._element_list.size () - 1;
-            old_value->set_index ((*it).index);
+            old_value->_set_index ((*it).index);
 
             // old_value->_assign (*(*it).new_value);   // Can't do. old_value will be free'd by new_value
             *old_value = *(*it).new_value;

@@ -133,7 +133,8 @@ format::object::_pair ()
 
   (void) _member_list.emplace (key, v);
 
-  v->set_key (keyp, charc - 2);
+  // v->set_key (keyp, charc - 2);
+  call__set_key__ (v, keyp, charc - 2);
 
   return true;
 }
@@ -174,7 +175,7 @@ format::object::_at (const wchar_t *key)
     {
       value *v = new undefined (this);
 
-      v->set_key (key, wcslen (key));
+      call__set_key__ (v, key, wcslen (key));
       _member_list.emplace (key, v);
 
       return *v;
@@ -188,8 +189,8 @@ format::object::_assign (value *ov, value *nv)
 
   _member_list[key] = nv;
 
-  nv->set_key (key, wcslen (key));
-  nv->set_parent (this);
+  call__set_key__ (nv, key, wcslen (key));
+  call__set_parent__ (nv, this);
 
   return *this;
 }

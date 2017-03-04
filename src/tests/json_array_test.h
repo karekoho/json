@@ -171,10 +171,10 @@ namespace format
 
             old_value->_element_list.clear ();
             arr_parent._element_list.push_back (new format::undefined);
-            old_value->set_key ((*it).key, wcslen ((*it).key) /* (*it).keylen */);
+            old_value->_set_key ((*it).key, wcslen ((*it).key) /* (*it).keylen */);
 
             (*it).index  = arr_parent._element_list.size () - 1;
-            old_value->set_index ((*it).index);
+            old_value->_set_index ((*it).index);
 
             // Value *new_value = 0;
 
@@ -401,9 +401,13 @@ namespace format
         new boolean ()
       };
 
-      v[0]->set_index (0);
-      v[1]->set_index (1);
-      v[2]->set_index (2);
+//      v[0]->set_index (0);
+//      v[1]->set_index (1);
+//      v[2]->set_index (2);
+
+      call__set_index__ (v[0], 0);
+      call__set_index__ (v[1], 1);
+      call__set_index__ (v[2], 2);
 
       a._element_list = { v[0], v[1] };
 

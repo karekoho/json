@@ -84,7 +84,8 @@ format::array::_parse (const wchar_t *json)
           if ((v = _call_reviver (v, 0, next_idx))->type () != value::undefined_t)
             {
               _element_list.push_back (v);
-              v->set_index (next_idx);
+              // v->set_index (next_idx);
+              call__set_index__ (v, next_idx);
             }
         }
       else if (*_readp == _sc::end_array)         // ']'
@@ -103,7 +104,8 @@ format::array::_parse (const wchar_t *json)
       else if ((v = _call_reviver (v, 0, next_idx))->type () != value::undefined_t)  // Value found
         {
           _element_list.push_back (v);
-          v->set_index (next_idx);
+          // v->set_index (next_idx);
+          call__set_index__ (v, next_idx);
         }
     }
 
@@ -127,8 +129,8 @@ format::array::_at (size_t index)
     {
       value *v = new undefined (this);
 
-      _element_list.push_back (v);
-      v->set_index (_element_list.size () - 1);
+      _element_list.push_back (v);      
+      call__set_index__ (v, _element_list.size () - 1);
 
       return *v;
   }
@@ -141,8 +143,8 @@ format::array::_assign (value *ov, value *nv)
 
   _element_list.at (index) = nv;
 
-  nv->set_index (index);
-  nv->set_parent (this);
+  call__set_index__ (nv, index);
+  call__set_parent__(nv, this);
 
   return *this;
 }

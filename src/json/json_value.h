@@ -7,13 +7,13 @@
 
 namespace format
 {
-#define UNEX_END    "Unexpected end of JSON input"
-#define UNEX_TOKEN  "Unexpected token "
-#define BAD_ASSIGN  "Bad assignment"
+  #define UNEX_END    "Unexpected end of JSON input"
+  #define UNEX_TOKEN  "Unexpected token "
+  #define BAD_ASSIGN  "Bad assignment"
 
-#ifdef UNIT_TEST
-  class json_value_test;
-#endif
+  #ifdef UNIT_TEST
+    class json_value_test;
+  #endif
 
   /**
    * @brief The json_value class
@@ -23,11 +23,14 @@ namespace format
   class undefined;
   class value
   {
-  #ifdef UNIT_TEST
-    friend class json_value_test;
-  #endif
+    #ifdef UNIT_TEST
+      friend class json_value_test;
+    #endif
 
-    friend const wchar_t * call_parse__ (value *, const wchar_t *);
+    friend const wchar_t * call__parse__ (value *, const wchar_t *);
+    friend void call__set_key__ (value *, const wchar_t *, size_t);
+    friend void call__set_index__ (value *, const size_t &);
+    friend void call__set_parent__(value *, json *);
 
     public:
 
@@ -210,14 +213,6 @@ namespace format
     count () const noexcept = 0;
 
     /**
-     * @brief setParent
-     * @param parent
-     */
-    inline void
-    set_parent (json *parent) noexcept
-    { _parent = parent; }
-
-    /**
      * @brief key
      * @return
      */
@@ -226,37 +221,12 @@ namespace format
     { return _key; }
 
     /**
-     * TODO: protected
-     *
-     * @brief setKey
-     * @param key
-     * @param charc
-     */
-    inline void
-    set_key (const wchar_t *key, size_t charc) noexcept
-    {
-       delete[] _key;
-       wchar_t *dest_ = new wchar_t[charc + 1] ();
-       _key = wcsncpy (dest_, key, charc);
-    }
-
-    /**
      * @brief index
      * @return
      */
     inline size_t
     index () const noexcept
     { return _index; }
-
-    /**
-     * TODO: protected
-     *
-     * @brief setIndex
-     * @param index
-     */
-    inline void
-    set_index (const size_t &index) noexcept
-    { _index = index; }
 
     /**
      * @brief iterator
@@ -380,6 +350,36 @@ namespace format
      */
     value &
     _assign (const undefined &) noexcept;
+
+    /**
+     * @brief setKey
+     * @param key
+     * @param charc
+     */
+    inline void
+    _set_key (const wchar_t *key, size_t charc) noexcept
+    {
+       delete[] _key;
+       wchar_t *dest_ = new wchar_t[charc + 1] ();
+       _key = wcsncpy (dest_, key, charc);
+    }
+
+    /**
+     *
+     * @brief setIndex
+     * @param index
+     */
+    inline void
+    _set_index (const size_t & index) noexcept
+    { _index = index; }
+
+    /**
+     * @brief setParent
+     * @param parent
+     */
+    inline void
+    _set_parent (json *parent) noexcept
+    { _parent = parent; }
 
     /**
      * @brief The _sc enum Structural characters.
@@ -560,8 +560,36 @@ namespace format
    * @return
    */
    inline
-   const wchar_t * call_parse__ (value *v, const wchar_t *readp)
+   const wchar_t * call__parse__ (value *v, const wchar_t *readp)
    { return v->_parse (readp); }
+
+   /**
+    * @brief call_set_key__
+    * @param v
+    * @param keyp
+    * @param charc
+    */
+   inline void
+   call__set_key__ (value *v, const wchar_t *keyp, size_t charc)
+   { v->_set_key (keyp, charc); }
+
+   /**
+    * @brief call_set_index
+    * @param v
+    * @param index
+    */
+   inline void
+   call__set_index__ (value *v, const size_t & index)
+   { v->_set_index (index); }
+
+   /**
+    * @brief call_set_parent__
+    * @param v
+    * @param parent
+    */
+   inline void
+   call__set_parent__ (value *v, json *parent)
+   { v->_set_parent (parent); }
 
 } // Namespace format
 
