@@ -87,7 +87,16 @@ public:
   {
   }
 
+  virtual void
+  test_count () final override
+  {
+    json j;
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("leaf::count ()", (size_t) 0, no_value::instance (& j)->count ());
+  }
+
   virtual void test_erase () override {}
+
+
 
   /**
    * 12.
@@ -100,6 +109,7 @@ public:
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json leaf test");
 
     /* 0. */ s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_assign_all_values", &json_leaf_test::test_str_value));
+    /* 1. */ s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_count", &json_leaf_test::test_count));
 
     return s;
   }

@@ -246,6 +246,11 @@ public:
     {
     }
 
+    virtual void
+    test_count () override
+    {
+    }
+
     void
     test_operator_equal_value_t ()
     {
@@ -266,6 +271,7 @@ public:
     virtual void test_ctor_dtor () override {}
     virtual void test_parse_1 () override {}
     virtual void test_operator_at_key () override {}
+
 
     /**
      * 0.

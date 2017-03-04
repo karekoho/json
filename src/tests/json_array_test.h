@@ -430,9 +430,17 @@ public:
      TEST_IT_END;
 
      // TODO: move to test_operator_assign_undefined
-     CPPUNIT_ASSERT_EQUAL_MESSAGE ("array.count ()",
+     CPPUNIT_ASSERT_EQUAL_MESSAGE ("array::count ()",
                                    (size_t) 1,
                                    (array (L"[0,1]") [(size_t) 0] = undefined ()).count ());
+  }
+
+  virtual void
+  test_count () override
+  {
+
+   array a (L"[1]");
+   CPPUNIT_ASSERT_EQUAL_MESSAGE ("array::count ()", (size_t) 1, a.count ());
   }
 
   /**
@@ -455,6 +463,7 @@ public:
     /* 7. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_assign_all_values", &json_array_test::test_assign_all_values));
     /* 8. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test__clear", &json_array_test::test__clear));
     /* 9. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_erase", &json_array_test::test_erase));
+    /* 10. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_count", &json_array_test::test_count));
 
     return s;
   }

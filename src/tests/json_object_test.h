@@ -499,23 +499,13 @@ public:
 
   }
 
-  void test_strValue_2 ()
+  virtual void
+  test_count () override
   {
-    /* JSON j = L"{\
-      \"Image\": {\
-          \"Width\":  800,\
-          \"Height\": 600,\
-          \"Title\":  \"View from 15th Floor\",\
-          \"Thumbnail\": {\
-              \"Url\":    \"http://www.example.com/image/481989943\",\
-              \"Height\": 125,\
-              \"Width\":  100\
-          },\
-          \"Animated\" : false,\
-          \"IDs\": [116, 943, 234, 38793]\
-        }\
-    }"; */
+    object o = L"{\"1\":1}";
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("object::count ()", (size_t) 1, o.count ());
   }
+
 
   /**
    * 2.
@@ -539,6 +529,7 @@ public:
     /* 8. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__clear", &json_object_test::test__clear));
     /* 9. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strLength", &json_object_test::test_str_length));
     /* 10. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strvalue", &json_object_test::test_str_value));
+    /* 11. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_count", &json_object_test::test_count));
 
      return s;
   }

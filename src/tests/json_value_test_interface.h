@@ -60,7 +60,7 @@ public:
     /**
      * @brief test_count
      */
-    // TODO: virtual void test_count () = 0;
+    virtual void test_count () = 0;
 
     /**
      * @brief test_type

@@ -376,6 +376,18 @@ public:
     std::wcout << j[L"Image"][L"IDs"].get () << std::endl;
   }
 
+  virtual void
+  test_count () override
+  {
+    json j[2] = {
+      json (),
+      json (L"{}")
+    };
+
+    for (size_t idx = 0; idx < 2; idx++)
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::count ()", (size_t) 0, j[idx].count ());
+  }
+
   /**
    * 1.
    * @brief suite
@@ -393,7 +405,9 @@ public:
     /* 4. */  s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_to_parent", &json_test::test__assign_to_parent));
     /* 5. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_assign_all_values", &json_test::test_assign_all_values));
     /* 6. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_revive", &json_test::test_parse_revive));
-    /* 7.   s->addTest (new CppUnit::TestCaller<json_test> ("example_1", &json_test::example_1)); */
+    /* 7. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_count", &json_test::test_count));
+
+    /* 8.   s->addTest (new CppUnit::TestCaller<json_test> ("example_1", &json_test::example_1)); */
 
     return s;
   }
