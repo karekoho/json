@@ -2,7 +2,7 @@
 #define JSON_INTERFACE_TEST_H
 
 #include <json_value_test_interface.h>
-#include "json_value_parse_mock.h"
+#include "json_mock_value.h"
 
 namespace format {
 
@@ -38,7 +38,7 @@ public:
 
         const wchar_t *startp = (*it).startp;
 
-        format::json_value_mock *m  = new format::json_value_mock;
+        format::json_mock_value *m  = new format::json_mock_value;
 
         m->_startp = m->_readp = startp;
 
@@ -80,7 +80,7 @@ public:
           const wchar_t *startp = (*it).startp;
           long int charc = wcslen (startp);
 
-          json_value_mock *m  = new json_value_mock;
+          json_mock_value *m  = new json_mock_value;
 
           m->_startp = m->_readp = startp;
 
@@ -118,7 +118,7 @@ public:
 
           const wchar_t *startp = (*it).startp;
 
-          json_value_mock *m  = new json_value_mock;
+          json_mock_value *m  = new json_mock_value;
 
           m->_startp = m->_readp = startp;
 

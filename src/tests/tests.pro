@@ -38,7 +38,6 @@ HEADERS += \
     unit_test.h \
     json_object_test.h \
     json_value_test.h \
-    json_value_parse_mock.h \
     json_undefined_test.h \
     json_string_test.h \
     json_number_test.h \
@@ -68,7 +67,8 @@ HEADERS += \
     test_selector.h \
     test_selector_test.h \
     ../json/json_exception.h \
-    json_exception_test.h
+    json_exception_test.h \
+    json_mock_value.h
 
 SUBDIRS += \
     ../json/json.pro
