@@ -64,6 +64,11 @@ namespace format
   public:
 
     /**
+     * @brief ~no_value
+     */
+    virtual ~no_value () = default;
+
+    /**
      * @brief type
      * @return
      */

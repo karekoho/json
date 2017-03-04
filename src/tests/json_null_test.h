@@ -142,7 +142,6 @@ public:
   virtual void test_str_length () override {}
   virtual void test_str_value () override {}
   virtual void test__clear () override {}
-  virtual void test_erase () override {}
 
   /**
    * 7.
@@ -156,6 +155,11 @@ public:
 
     /* 0. */  s->addTest (new CppUnit::TestCaller<json_null_test> ("test_ctor_dtor", &json_null_test::test_ctor_dtor));
     /* 1. */  s->addTest (new CppUnit::TestCaller<json_null_test> ("test_assign_all_values", &json_null_test::test_assign_all_values));
+
+    /* 2.   s->addTest (new CppUnit::TestCaller<json_null_test> ("", &json_null_test::test_parse_1));
+       3.   s->addTest (new CppUnit::TestCaller<json_null_test> ("", &json_null_test::test_str_length));
+       4.   s->addTest (new CppUnit::TestCaller<json_null_test> ("", &json_null_test::test_str_value));
+       5.   s->addTest (new CppUnit::TestCaller<json_null_test> ("", &json_null_test::test__clear)); */
 
     return s;
   }

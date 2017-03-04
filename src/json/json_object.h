@@ -86,7 +86,8 @@ namespace format
     /**
      * @brief ~Object
      */
-    virtual ~object ();
+    virtual
+    ~object () override;
 
     /**
      * @brief parse

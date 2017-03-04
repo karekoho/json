@@ -99,7 +99,8 @@ namespace format
    /**
     * @brief ~Array
     */
-    virtual ~array ();
+    virtual
+    ~array () override;
 
    /**
     * @brief parse

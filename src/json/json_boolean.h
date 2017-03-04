@@ -4,12 +4,12 @@
 #include "json_leaf.h"
 #include "json_json.h"
 
+namespace format
+{
 #ifdef UNIT_TEST
   class json_boolean_test;
 #endif
 
-namespace format
-{
   /**
     * @brief The boolean class
     */
@@ -63,7 +63,7 @@ namespace format
      /**
       * @brief ~Boolean
       */
-      virtual ~boolean () = default;
+      virtual ~boolean () override = default;
 
      /**
       * @brief clone

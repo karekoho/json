@@ -6,15 +6,13 @@
 
 #include <stdlib.h>
 
-using namespace format;
-
-const struct value::literal_value value::__ltr_value[3] = {
-  { L"true", 4, value::_literal::true_value },
-  { L"false", 5, value::_literal::false_value },
-  { L"null", 4, value::_literal::null_value }
+const struct format::value::literal_value format::value::__ltr_value[3] = {
+  { L"true", 4, format::value::_literal::true_value },
+  { L"false", 5, format::value::_literal::false_value },
+  { L"null", 4, format::value::_literal::null_value }
 };
 
-value::value ()
+format::value::value ()
     : _startp (0),
       _readp (0),
       _parent (0),
@@ -24,7 +22,7 @@ value::value ()
 {
 }
 
-value::value (const wchar_t *)
+format::value::value (const wchar_t *)
     : _startp (0),
       _readp (0),
       _parent (0),
@@ -34,7 +32,7 @@ value::value (const wchar_t *)
 {
 }
 
-value::value (json *parent)
+format::value::value (json *parent)
     : _startp (0),
       _readp (0),
       _parent (parent),
@@ -44,7 +42,7 @@ value::value (json *parent)
 {
 }
 
-value::value (const value &other)
+format::value::value (const value &other)
   : _startp (other._startp),
     _readp (other._readp),
     _parent (0),
@@ -54,7 +52,7 @@ value::value (const value &other)
 {
 }
 
-value::value (const value *ov, const value &nv)
+format::value::value (const value *ov, const value &nv)
   : _startp (nv._startp),
     _readp (nv._readp),
     _parent (0),
@@ -66,7 +64,8 @@ value::value (const value *ov, const value &nv)
   nv._old_value = ov;
 }
 
-value::~value ()
+format::value::
+~value ()
 {
   delete[] _key;
 
@@ -75,7 +74,7 @@ value::~value ()
 }
 
 long int
-value::_string (wchar_t &endc) const noexcept
+format::value::_string (wchar_t &endc) const noexcept
 {
   const wchar_t * const startp = _readp;
 
@@ -97,8 +96,8 @@ value::_string (wchar_t &endc) const noexcept
     : -1 * (readp - startp);
 }
 
-value::_literal
-value::_is_literal (const int _try) const noexcept
+format::value::_literal
+format::value::_is_literal (const int _try) const noexcept
 {
   const wchar_t *readp = _readp;
 
@@ -122,14 +121,14 @@ value::_is_literal (const int _try) const noexcept
 //    (void) _parent->erase (*this);
 //}
 
-value &
-value::_assign (const undefined &) noexcept
+format::value &
+format::value::_assign (const undefined &) noexcept
 {
   return  _parent ? _parent->erase (*this) : *this;
 }
 
-value &
-value::_assign (const value &nv)
+format::value &
+format::value::_assign (const value &nv)
 {
   if (_parent == 0)
     throw json_error (BAD_ASSIGN);
@@ -137,20 +136,20 @@ value::_assign (const value &nv)
   return _parent->_assign (this, nv.clone (this));
 }
 
-value &
-value::operator =(bool b)
+format::value &
+format::value::operator =(bool b)
 {
   return _assign (*(new boolean (b)));
 }
 
-value &
-value::operator =(const wchar_t *s)
+format::value &
+format::value::operator =(const wchar_t *s)
 {
   return _assign (*(new string (s)));
 }
 
-value &
-value::operator =(double d)
+format::value &
+format::value::operator =(double d)
 {
   return _assign (*(new number (d)));
 }

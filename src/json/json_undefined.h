@@ -4,133 +4,139 @@
 #include "json_leaf.h"
 
 namespace format
-{
-#ifdef UNIT_TEST
-  class json_undefined_test;
-#endif
-/**
- * @brief The undefined class
- */
-class undefined : public leaf
-{
-#ifdef UNIT_TEST
-  friend class json_undefined_test;
-#endif
-
-  public:
-
-  undefined ()
-    : leaf ()
-  {}
+  {
+  #ifdef UNIT_TEST
+    class json_undefined_test;
+  #endif
 
   /**
-   * @brief Undefined
-   * @param parent
+   * @brief The undefined class
    */
-  undefined (json *parent)
-    : leaf (parent)
-  {}
+  class undefined : public leaf
+  {
+  #ifdef UNIT_TEST
+    friend class json_undefined_test;
+  #endif
 
-  /**
-   * @brief Undefined
-   * @param other
-   */
-  undefined (const undefined &other) = default;
+    public:
 
-  /**
-   * @brief Undefined
-   * @param ov
-   * @param nv
-   */
-  undefined (const value *ov, const undefined &nv)
-    : leaf (ov, nv)
-  {}
+    undefined ()
+      : leaf ()
+    {}
 
-  /**
-   * @brief clone
-   * @param other
-   * @return
-   */
-  virtual value *
-  clone () const
-  { return new undefined (*this); }
+    /**
+     * @brief Undefined
+     * @param parent
+     */
+    undefined (json *parent)
+      : leaf (parent)
+    {}
 
-  /**
-   * @brief clone
-   * @param ov
-   * @return
-   */
-  virtual value *
-  clone (const value *ov) const override
-  { return new undefined (ov, *this); }
+    /**
+     * @brief Undefined
+     * @param other
+     */
+    undefined (const undefined &other) = default;
 
-  /**
-   * TODO: return nullptr
-   * @brief value
-   * @return
-   */
-  inline std::nullptr_t
-  get () const noexcept
-  { return nullptr; }
+    /**
+     * @brief Undefined
+     * @param ov
+     * @param nv
+     */
+    undefined (const value *ov, const undefined &nv)
+      : leaf (ov, nv)
+    {}
 
-  /**
-   * @brief parse
-   * @param json
-   * @return
-   */
-  virtual const wchar_t *
-  _parse (const wchar_t *json) override
-  { return json; }
+    /**
+     * @brief ~undefined
+     */
+    virtual ~undefined () override = default;
 
-  /**
-   * @brief type
-   * @return
-   */
-  virtual inline value_t
-  type () const noexcept override
-  { return value::value_t::undefined_t; }
+    /**
+     * @brief clone
+     * @param other
+     * @return
+     */
+    virtual value *
+    clone () const
+    { return new undefined (*this); }
 
-  /**
-   * @brief operator =
-   * @param v
-   * @return
-   */
-  inline value &
-  operator =(const value & v)
-  { return value::_assign (v);  }
+    /**
+     * @brief clone
+     * @param ov
+     * @return
+     */
+    virtual value *
+    clone (const value *ov) const override
+    { return new undefined (ov, *this); }
 
-  /**
-   * @brief strLength
-   * @return
-   */
-  virtual size_t
-  str_length () const noexcept override
-  { return 0; }
+    /**
+     * TODO: return nullptr
+     * @brief value
+     * @return
+     */
+    inline std::nullptr_t
+    get () const noexcept
+    { return nullptr; }
 
-  /**
-   * @brief strValue
-   * @return
-   */
-  virtual const wchar_t *
-  str_value (wchar_t * = 0) const override
-  { return L""; }
+    /**
+     * @brief parse
+     * @param json
+     * @return
+     */
+    virtual const wchar_t *
+    _parse (const wchar_t *json) override
+    { return json; }
 
-protected:
+    /**
+     * @brief type
+     * @return
+     */
+    virtual inline value_t
+    type () const noexcept override
+    { return value::value_t::undefined_t; }
 
-  /**
-   * @brief _clear
-   */
-  virtual void
-  _clear ()
-  {}
+    /**
+     * @brief operator =
+     * @param v
+     * @return
+     */
+    inline value &
+    operator =(const value & v)
+    { return value::_assign (v);  }
 
-  /**
-   * @brief _clone
-   * @return
-   */
-  virtual value *
-  clone (const value &) override
-  { return new undefined (*this); }
-};
+    /**
+     * @brief strLength
+     * @return
+     */
+    virtual size_t
+    str_length () const noexcept override
+    { return 0; }
+
+    /**
+     * @brief strValue
+     * @return
+     */
+    virtual const wchar_t *
+    str_value (wchar_t * = 0) const override
+    { return L""; }
+
+  protected:
+
+    /**
+     * @brief _clear
+     */
+    virtual void
+    _clear ()
+    {}
+
+    /**
+     * @brief _clone
+     * @return
+     */
+    virtual value *
+    clone (const value &) override
+    { return new undefined (*this); }
+  }; // Namespace format
 }
 #endif // UNDEFINED_H

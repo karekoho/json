@@ -6,9 +6,9 @@
 
 namespace format
 {
-#ifdef UNIT_TEST
- class json_null_test;
-#endif
+  #ifdef UNIT_TEST
+   class json_null_test;
+  #endif
 
   /**
    * @brief The Null class
@@ -52,6 +52,11 @@ namespace format
     null (const value *ov, const null &nv)
       : leaf (ov, nv)
     {}
+
+    /**
+     * @brief ~null
+     */
+    virtual ~null () override = default;
 
     /**
      * @brief clone

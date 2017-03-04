@@ -52,6 +52,11 @@ namespace format
     string (const value *ov, const string & nv);
 
     /**
+     * @brief ~string
+     */
+    virtual ~string () override = default;
+
+    /**
      * @brief clone
      * @param other
      * @return
@@ -175,7 +180,7 @@ namespace format
      */
     long
     __string (wchar_t & endc) const noexcept;
-  };
+  }; // Namespace format
 }
 #endif // STRING
 

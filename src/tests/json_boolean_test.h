@@ -149,12 +149,9 @@ public:
   }
 
   virtual void test_parse_1 () override {}
-
   virtual void test_str_length () override {}
   virtual void test_str_value () override {}
   virtual void test__clear () override {}
-
-  virtual void test_erase () override {}
 
   /**
    * 6.
@@ -168,6 +165,11 @@ public:
 
     /* 0.*/ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_ctor_dtor", &json_boolean_test::test_ctor_dtor));
     /* 1.*/ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_assign_all_values", &json_boolean_test::test_assign_all_values));
+
+    /* 2. s->addTest (new CppUnit::TestCaller<json_boolean_test> ("", &json_boolean_test::test_parse_1));
+       3. s->addTest (new CppUnit::TestCaller<json_boolean_test> ("", &json_boolean_test::test_str_length));
+       4. s->addTest (new CppUnit::TestCaller<json_boolean_test> ("", &json_boolean_test::test_str_value));
+       5. s->addTest (new CppUnit::TestCaller<json_boolean_test> ("", &json_boolean_test::test__clear)); */
 
     return s;
   }

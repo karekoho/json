@@ -2,45 +2,44 @@
 #include "json_array_iterator.h"
 
 #include <algorithm>
-using namespace format;
 
-array::array () : json () {}
+format::array::array () : json () {}
 
-array::array (const wchar_t *text)
+format::array::array (const wchar_t *text)
   : json (text, false)
 {
   (void) _parse (text);
 }
 
-array::array(std::initializer_list<value *> il)
+format::array::array(std::initializer_list<value *> il)
   : json (), _element_list (il)
 {
 }
 
-array::array (json *parent)
+format::array::array (json *parent)
   : json (parent)
 {
 }
 
-array::array (const array &other)
+format::array::array (const array &other)
   : json (other)
 {
   (void) clone (other);
 }
 
-array::array (const value *ov, const array &nv)
+format::array::array (const value *ov, const array &nv)
   : json (ov, nv)
 {
   (void) clone (nv);
 }
 
-array::~array ()
+format::array::~array ()
 {
   _clear ();
 }
 
 const wchar_t *
-array::_parse (const wchar_t *json)
+format::array::_parse (const wchar_t *json)
 {
   if (json == 0)
     throw json_syntax_error (UNEX_END);
@@ -111,14 +110,14 @@ array::_parse (const wchar_t *json)
   return _readp;
 }
 
-value &
-array::_assign (const array &nv)
+format::value &
+format::array::_assign (const array &nv)
 {
   return _parent ? _parent->_assign (this, new array (this, nv)) : *(clone (nv));
 }
 
-value &
-array::_at (size_t index)
+format::value &
+format::array::_at (size_t index)
 {
   try
     {
@@ -135,8 +134,8 @@ array::_at (size_t index)
   }
 }
 
-value &
-array::_assign (value *ov, value *nv)
+format::value &
+format::array::_assign (value *ov, value *nv)
 {
   size_t index = ov->index ();
 
@@ -149,14 +148,14 @@ array::_assign (value *ov, value *nv)
 }
 
 void
-array::_clear ()
+format::array::_clear ()
 {
   for (auto it = _element_list.begin (); it != _element_list.end (); it = _element_list.erase (it))
     delete *it;
 }
 
-value *
-array::clone (const value &other)
+format::value *
+format::array::clone (const value &other)
 {
   const array & nv = dynamic_cast<const array &> (other);
 
@@ -172,14 +171,14 @@ array::clone (const value &other)
   return this;
 }
 
-json_iterator *
-array::iterator () const
+format::json_iterator *
+format::array::iterator () const
 {
   return new array_iterator (_element_list);
 }
 
 size_t
-array::str_length () const noexcept
+format::array::str_length () const noexcept
 {
   if (_element_list.empty ())
     return 2;
@@ -196,7 +195,7 @@ array::str_length () const noexcept
 }
 
 const wchar_t *
-array::str_value (wchar_t *offset) const
+format::array::str_value (wchar_t *offset) const
 {
   wchar_t *str_value[2] = { 0, 0 };
 
@@ -233,8 +232,8 @@ array::str_value (wchar_t *offset) const
   return str_value[BEGIN];
 }
 
-value &
-array::erase (const value &v) noexcept
+format::value &
+format::array::erase (const value &v) noexcept
 {
   size_t index = v.index ();
 

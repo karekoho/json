@@ -16,7 +16,6 @@ SOURCES += \
     json_string.cpp \
     json_object.cpp \
     json_number.cpp \
-    json_null.cpp \
     json_json.cpp \
     json_boolean.cpp \
     json_array.cpp \

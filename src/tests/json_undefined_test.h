@@ -134,11 +134,29 @@ namespace format
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("instance () == instance ()",  & shared_undefined::instance (), & shared_undefined::instance ());
     }
 
-    virtual void test_parse_1 () override {}
-    virtual void test_str_length () override {}
-    virtual void test_str_value () override  {}
-    virtual void test__clear() override {}
-    virtual void test_erase () override {}
+    virtual void
+    test_parse_1 () override
+    {
+      const wchar_t *s = L"x";
+      undefined u;
+      CPPUNIT_ASSERT_MESSAGE ("undefined::_parse (L\"x\")", s == u._parse (s));
+    }
+
+    virtual void
+    test_str_length () override
+    {
+      undefined u;
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("undefined::str_length ()", (size_t) 0, u.str_length ()) ;
+    }
+
+    virtual void
+    test_str_value () override
+    {
+      undefined u;
+      CPPUNIT_ASSERT_MESSAGE ("undefined::str_value ()", wcslen (u.str_value ()) == 0);
+    }
+
+    virtual void test__clear () override {}
 
     /**
      * 8.
@@ -153,6 +171,10 @@ namespace format
       /* 0. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_ctor_dtor", &json_undefined_test::test_ctor_dtor));
       /* 1. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_assign_all_values", &json_undefined_test::test_assign_all_values));
       /* 2. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_shared_undefined", &json_undefined_test::test_shared_undefined));
+      /* 3. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_parse_1", &json_undefined_test::test_parse_1));
+      /* 4. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_str_length", &json_undefined_test::test_str_length));
+      /* 5. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_str_value", &json_undefined_test::test_str_value));
+      /* 6. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test__clear", &json_undefined_test::test__clear));
 
       return s;
     }

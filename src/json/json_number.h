@@ -6,17 +6,17 @@
 
 #include <cmath>
 
-#ifdef UNIT_TEST
-  class json_number_test;
-#endif
-
 namespace format
 {
-#define DOUBLE 0
-#define EXP 1
+  #ifdef UNIT_TEST
+    class json_number_test;
+  #endif
 
-#define START 0
-#define END 1
+  #define DOUBLE 0
+  #define EXP 1
+
+  #define START 0
+  #define END 1
 
   /**
    * @brief The number class
@@ -64,6 +64,12 @@ namespace format
      * @param nv
      */
     number (const value *ov, const number &nv);
+
+    /**
+     * @brief ~number
+     * @return
+     */
+    virtual ~number () override = default;
 
     /**
      * @brief clone

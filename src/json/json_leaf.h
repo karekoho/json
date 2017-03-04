@@ -58,7 +58,7 @@ namespace format
     /**
      * @brief ~Leaf
      */
-    virtual ~leaf () = default;
+    virtual ~leaf () override = default;
 
     /**
      * @brief _clone
@@ -231,14 +231,16 @@ namespace format
      * @return
      */
     virtual value &
-    _at (const wchar_t *) final override;
+    _at (const wchar_t *) final override
+    { return *this; }
 
     /**
      * @brief _at
      * @return
      */
     virtual value &
-    _at (size_t) final override;
+    _at (size_t) final override
+    { return *this; }
 
     /**
      * @brief _clear

@@ -74,7 +74,8 @@ namespace format
     /**
      * @brief ~json
      */
-    virtual ~json ();
+    virtual
+    ~json () override;
 
     /**
      * @brief parse

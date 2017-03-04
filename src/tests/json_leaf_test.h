@@ -71,10 +71,10 @@ public:
       }
   }
 
-  virtual void test_ctor_dtor() override {}
-  virtual void test_parse_1() override {}
-  virtual void test_assign_all_values() override {}
-  virtual void test__clear() override {}
+  virtual void test_ctor_dtor () override {}
+  virtual void test_parse_1 () override {}
+  virtual void test_assign_all_values () override {}
+  virtual void test__clear () override {}
   virtual void test_str_length () override {}
 
   virtual void
@@ -94,9 +94,7 @@ public:
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("leaf::count ()", (size_t) 0, no_value::instance (& j)->count ());
   }
 
-  virtual void test_erase () override {}
-
-
+  virtual void test_erase () final override {}
 
   /**
    * 12.
@@ -110,6 +108,7 @@ public:
 
     /* 0. */ s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_assign_all_values", &json_leaf_test::test_str_value));
     /* 1. */ s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_count", &json_leaf_test::test_count));
+    /* 2. */ s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_erase", &json_leaf_test::test_erase));
 
     return s;
   }
