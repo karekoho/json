@@ -137,6 +137,15 @@ namespace format
     virtual value *
     clone (const value &) override
     { return new undefined (*this); }
+
+    /**
+     * @brief _sizeof
+     * @return
+     */
+    virtual size_t
+    _sizeof () const noexcept
+    { return sizeof (undefined); }
+
   }; // Namespace format
 }
 #endif // UNDEFINED_H

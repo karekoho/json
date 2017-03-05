@@ -222,18 +222,17 @@ public:
         {
           _idx[0] = 0;
 
-      TEST_IT_START
+          TEST_IT_START
 
-          for (size_t jdx = 0; jdx < 2; jdx++)
-            {
-              json[hdx][L"0"] = *(*it).val;   // Undefined <-- Object, Object <-- Array, ...
+              for (size_t jdx = 0; jdx < 2; jdx++)
+                {
+                  json[hdx][L"0"] = *(*it).val;   // Undefined <-- Object, Object <-- Array, ...
 
-              value & v = json[hdx][L"0"];
+                  value & v = json[hdx][L"0"];
 
-              ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v.type ());
-            }
-
-      TEST_IT_END;
+                  ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v.type ());
+                }
+          TEST_IT_END;
         }
 
       for (auto it = test.begin (); it != test.end (); ++it)
@@ -273,6 +272,40 @@ public:
     virtual void test_operator_at_key () override {}
     virtual void test_type () override {}
 
+    void
+    test___sizeof ()
+    {
+      json parent;
+
+      struct assert
+      {
+        value *val;
+        size_t size;
+        int assert_status;
+      };
+
+      std::vector<struct assert> test = {
+        { new json (), sizeof (json), PASS },
+        { new object (), sizeof (object), PASS },
+        { new array (), sizeof (array), PASS },
+        { new string (), sizeof (string), PASS },
+        { new number (), sizeof (number), PASS },
+        { new boolean (), sizeof (boolean), PASS },
+        { new null (), sizeof (null), PASS },
+        { new undefined (), sizeof (undefined), PASS },
+        { & shared_undefined::instance (), sizeof (shared_undefined), PASS },
+        { no_value::instance (& parent), sizeof (no_value), PASS }
+      };
+
+      TEST_IT_START
+          // std::cout << (*it).size << std::endl;
+          ASSERT_EQUAL_IDX ("value::__sizeof ()", (*it).size, (*it).val->__sizeof ());
+      TEST_IT_END;
+
+      for (auto it = test.begin (); it != test.end () - 2; ++it)
+        delete (*it).val;
+    }
+
     /**
      * 0.
      * @brief suite
@@ -291,6 +324,7 @@ public:
       /* 5. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__str_append", &json_value_test::test__str_append));
       /* 6. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value_t", &json_value_test::test_operator_equal_value_t));
       /* 7. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value", &json_value_test::test_operator_equal_value));
+      /* 8. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_size", &json_value_test::test___sizeof));
 
       return s;
     }

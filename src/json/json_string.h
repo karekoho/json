@@ -170,6 +170,14 @@ namespace format
     virtual value *
     clone (const value &nv) override;
 
+    /**
+     * @brief _sizeof
+     * @return
+     */
+    virtual size_t
+    _sizeof () const noexcept
+    { return sizeof (string); }
+
   private:
 
     /**

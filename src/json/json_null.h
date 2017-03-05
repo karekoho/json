@@ -161,6 +161,14 @@ namespace format
     virtual value *
     clone (const value &) override
     { return this; }
+
+    /**
+     * @brief _sizeof
+     * @return
+     */
+    virtual size_t
+    _sizeof () const noexcept
+    { return sizeof (null); }
   };
 } // Namespace format
 

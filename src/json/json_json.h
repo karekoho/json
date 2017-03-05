@@ -251,6 +251,14 @@ namespace format
     _call_reviver (value *v, const wchar_t *key, size_t index = 0) const;
 
     /**
+     * @brief _sizeof
+     * @return
+     */
+    virtual size_t
+    _sizeof () const noexcept
+    { return sizeof (json); }
+
+    /**
      * @brief _str_value
      */
     mutable wchar_t *_str_value[2];

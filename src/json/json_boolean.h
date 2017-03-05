@@ -83,106 +83,114 @@ namespace format
       clone (const value *ov) const override
       { return new boolean (ov, *this); }
 
-      /**
-   * @brief strLength
-   * @return
-   */
+     /**
+      * @brief strLength
+      * @return
+      */
       virtual size_t
       str_length () const noexcept override
       { return _boolean_value == true ? 4 : 5; }
 
-      /**
-   * @brief strValue
-   * @return
-   */
+     /**
+      * @brief strValue
+      * @return
+      */
       virtual const wchar_t *
       str_value (wchar_t * = 0) const override
       { return _boolean_value == true ? L"true" : L"false"; }
 
     public:
 
-      /**
-   * @brief parse
-   * @param json
-   * @return
-   */
+     /**
+      * @brief parse
+      * @param json
+      * @return
+      */
       virtual const wchar_t *
       _parse (const wchar_t *json) override
       { return json + (_boolean_value == true ? 4 : 5); }
 
-      /**
-   * @brief type
-   * @return
-   */
+     /**
+      * @brief type
+      * @return
+      */
       virtual inline value_t
       type () const noexcept override
       { return value::value_t::boolean_t; }
 
-      /**
-   * @brief operator =
-   * @param b
-   * @return
-   */
+     /**
+      * @brief operator =
+      * @param b
+      * @return
+      */
       inline value &
       operator =(boolean & b)
       { return _assign (b); }
 
-      /**
-   * @brief operator =
-   * @param v
-   * @return
-   */
+     /**
+      * @brief operator =
+      * @param v
+      * @return
+      */
       inline value &
       operator =(const value & v)
       { return value::_assign (v); }
 
-      /**
-   * @brief assign
-   * @param nv
-   * @return
-   */
+     /**
+      * @brief assign
+      * @param nv
+      * @return
+      */
       value &
       _assign (const boolean & nv)
       { return _parent ? _parent->_assign (this, new boolean (nv)) : *(clone (nv)); }
 
-      /**
-   * @brief value
-   * @return
-   */
+     /**
+      * @brief value
+      * @return
+      */
       inline bool get () const
       { return _boolean_value; }
 
-      /**
-   * @brief setValue
-   * @param value
-   */
+     /**
+      * @brief setValue
+      * @param value
+      */
       void setValue (bool value)
       { _boolean_value = value; }
 
     protected:
 
-      /**
-   * @brief _boolean_value
-   */
+     /**
+      * @brief _boolean_value
+      */
       bool _boolean_value;
 
-      /**
-   * @brief _clear
-   */
+     /**
+      * @brief _clear
+      */
       virtual void
       _clear ()
       {}
 
-      /**
-   * @brief _clone
-   * @return
-   */
+     /**
+      * @brief _clone
+      * @return
+      */
       virtual value *
       clone (const value &other) override
       {
         _boolean_value = dynamic_cast<const boolean &>(other)._boolean_value;
         return this;
       }
+
+      /**
+       * @brief _sizeof
+       * @return
+       */
+      virtual size_t
+      _sizeof () const noexcept
+      { return sizeof (boolean); }
     };
   } // Namespace Format
 

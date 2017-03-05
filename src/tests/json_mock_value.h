@@ -81,6 +81,10 @@ namespace format
       virtual value *
       clone (const value &) override
       { return this; }
+
+      virtual size_t
+      _sizeof () const noexcept
+      { return sizeof (json_mock_value); }
   };
 }
 

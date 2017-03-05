@@ -253,6 +253,14 @@ namespace format
      */
     virtual value *
     clone (const value &other);
+
+    /**
+     * @brief _sizeof
+     * @return
+     */
+    virtual size_t
+    _sizeof () const noexcept
+    { return sizeof (number); }
   };
 } // Namespace Format
 #endif // NUMBER_H

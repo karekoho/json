@@ -140,17 +140,6 @@ namespace format
     { return _assign (u);}
 
     /**
-     * TODO
-     *
-     * @brief operator =
-     * @param v
-     * @return
-     *
-      Value &
-      operator =(const Value *v);
-     */
-
-    /**
      * TODO:
      *
      * @brief operator =
@@ -179,6 +168,15 @@ namespace format
      */
     value &
     operator =(bool b);
+
+    /**
+     * TODO:
+     *
+     * @brief operator =
+     * @return
+     */
+    value &
+    operator =(std::nullptr_t);
 
     /**
      * @brief type
@@ -381,6 +379,7 @@ namespace format
     _set_parent (json *parent) noexcept
     { _parent = parent; }
 
+
     /**
      * @brief The _sc enum Structural characters.
      */
@@ -542,6 +541,12 @@ namespace format
     { return v->clone (); }
 
     /**
+     * @brief _sizeof
+     * @return
+     */
+    virtual size_t _sizeof () const noexcept = 0;
+
+    /**
      * @brief _literal_value
      */
     static const struct literal_value
@@ -551,7 +556,16 @@ namespace format
       const value::_literal ltr_value;
 
     } __ltr_value[3];
-  };
+
+  private:
+    /**
+     * @brief _size
+     * @return
+     */
+    inline size_t
+    __sizeof () const noexcept
+    { return _sizeof (); }
+  };  // Class value
 
   /**
    * @brief call_parse
