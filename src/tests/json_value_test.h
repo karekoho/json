@@ -271,7 +271,7 @@ public:
     virtual void test_ctor_dtor () override {}
     virtual void test_parse_1 () override {}
     virtual void test_operator_at_key () override {}
-
+    virtual void test_type () override {}
 
     /**
      * 0.

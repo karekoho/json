@@ -63,9 +63,10 @@ public:
     virtual void test_count () = 0;
 
     /**
+     * Asserted in test_ctor_dtor
      * @brief test_type
      */
-    // virtual void test_type () = 0;
+    virtual void test_type () = 0;
 };
 
 #endif // JSON_VALUE_TEST_H

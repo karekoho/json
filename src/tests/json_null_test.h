@@ -34,6 +34,7 @@ public:
     null src;
     null copy = src;
 
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("null::type ()", json::null_t, src.type ());
     CPPUNIT_ASSERT_MESSAGE ("null", & copy != & src);
   }
 
@@ -127,6 +128,7 @@ public:
   virtual void test_str_length () override {}
   virtual void test_str_value () override {}
   virtual void test__clear () override {}
+  virtual void test_type () override {}
 
   /**
    * 7.

@@ -14,7 +14,7 @@ namespace format
   public:
 
     virtual void
-    test_ctor_dtor ()
+    test_ctor_dtor () override
     {
       json *p[] = { 0, new json };
 
@@ -34,12 +34,12 @@ namespace format
       format::undefined src;
       format::undefined copy = src;
 
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("undefined::type ()", json::undefined_t, src.type ());
       CPPUNIT_ASSERT_MESSAGE ("undefined", & copy != & src);
     }
 
-
     virtual void
-    test_assign_all_values ()
+    test_assign_all_values () override
     {
       object_accessor object_parent;
       array_accessor array_parent;
@@ -150,6 +150,7 @@ namespace format
     }
 
     virtual void test__clear () override {}
+    virtual void test_type () override {}
 
     /**
      * 8.

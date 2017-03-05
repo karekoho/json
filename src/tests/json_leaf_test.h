@@ -95,6 +95,7 @@ public:
   }
 
   virtual void test_erase () final override {}
+  virtual void test_type () override {}
 
   /**
    * 12.

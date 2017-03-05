@@ -369,6 +369,7 @@ public:
   virtual void test_str_length () override {}
   virtual void test__clear () override {}
   virtual void test_erase () override {}
+  virtual void test_type () override {}
 
   /**
    * 1.

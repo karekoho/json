@@ -14,7 +14,7 @@ namespace format
   public:
 
     virtual void
-    test_ctor_dtor ()
+    test_ctor_dtor () override
     {
       json *p[] = { 0, new json () };
 
@@ -36,13 +36,14 @@ namespace format
       string src = L"xxx";
       string copy = src;
 
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("string::type ()", json::string_t , src.type ());
       CPPUNIT_ASSERT_MESSAGE ("string", & copy != & src);
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("src._string_value.empty ()", true, src._string_value[0].empty () );
       CPPUNIT_ASSERT_MESSAGE ("copy.value ()", wcscmp (L"xxx", copy.get ()) == 0);
     }
 
     virtual void
-    test_parse_1 ()
+    test_parse_1 () override
     {
       test_parse_parent ();
       test_parse_no_parent ();
@@ -127,7 +128,7 @@ namespace format
     }
 
     virtual void
-    test_assign_all_values ()
+    test_assign_all_values () override
     {
         object_accessor object_parent;
         array_accessor array_parent;

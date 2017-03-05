@@ -1,7 +1,7 @@
 #ifndef JSON_ARRAY_TEST
 #define JSON_ARRAY_TEST
 
-#include "json_value_test_interface.h"
+#include "json_test.h"
 
 namespace format
 {
@@ -9,12 +9,12 @@ namespace format
    * 3.
    * @brief The json_array_test class
    */
-  class json_array_test : public json_value_test_interface
+  class json_array_test : public json_test
   {
   public:
 
     virtual void
-    test_ctor_dtor ()
+    test_ctor_dtor () override
     {
       json *p[] = { 0, new json };
 
@@ -39,7 +39,7 @@ namespace format
     }
 
     virtual void
-    test_parse_1 ()
+    test_parse_1 () override
     {
       struct assert {
         const wchar_t *startp;
@@ -123,7 +123,7 @@ namespace format
     }
 
     virtual void
-    test_assign_all_values ()
+    test_assign_all_values () override
     {
       object_accessor object_parent;
       array_accessor array_parent;
@@ -212,7 +212,7 @@ namespace format
     }
 
     virtual void
-    test_operator_at_key ()
+    test_operator_at_key () override
     {
       array a;
 
@@ -241,7 +241,7 @@ namespace format
     }
 
     virtual void
-    test_operator_at_index ()
+    test_operator_at_index () override
     {
       array a;
 
@@ -272,7 +272,7 @@ namespace format
     }
 
     virtual void
-    test__clear ()
+    test__clear () override
     {
       array a = L"[true, false]";
       a._clear ();
@@ -391,10 +391,6 @@ namespace format
         new boolean ()
       };
 
-//      v[0]->set_index (0);
-//      v[1]->set_index (1);
-//      v[2]->set_index (2);
-
       call__set_index__ (v[0], 0);
       call__set_index__ (v[1], 1);
       call__set_index__ (v[2], 2);
@@ -435,6 +431,8 @@ namespace format
       array a (L"[1]");
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("array::count ()", (size_t) 1, a.count ());
     }
+
+    virtual void test_type () override {}
 
     /**
      * 3.

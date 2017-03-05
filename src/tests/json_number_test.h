@@ -47,13 +47,11 @@ namespace format
 
       // double d[] = { copy[0].value (), copy[1].value () };
 
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("number::type ()", json::number_t, src[0].type ());
       CPPUNIT_ASSERT_MESSAGE ("number", & copy[0] != & src[0]);
-
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("src[1]._double_value", (double) 0, src[1]._double_value);
-
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[0].value ()", (double) 10, copy[0].get ());
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[1].value ()", (double) 100, copy[1].get ());
-
     }
 
     virtual void
@@ -445,6 +443,7 @@ namespace format
 
     virtual void test_str_length () override {}
     virtual void test__clear () override {}
+    virtual void test_type () override {}
 
     /**
      * 5.

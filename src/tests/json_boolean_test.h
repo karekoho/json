@@ -37,7 +37,8 @@ public:
     boolean src = true;
     boolean copy = src;
 
-    CPPUNIT_ASSERT_MESSAGE ("boolean", & src != & copy);
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("boolean::type ()", json::boolean_t, src.type ());
+    CPPUNIT_ASSERT_MESSAGE ("src != copy", & src != & copy);
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.value ()", true, copy.get ());
   }
 
@@ -116,13 +117,11 @@ public:
                           ASSERT_EQUAL_IDX ("arr_parent[key].type", av.type (), (*it).type);
                         }
                     }
-                  else
+                  else if ((*it).new_value->type () == value::boolean_t)
                     {
-                      if ((*it).new_value->type () == value::boolean_t)
-                        {
-                          ASSERT_EQUAL_IDX ("old_value.value ()", (bool) true, old_value->get ());
-                        }
+                      ASSERT_EQUAL_IDX ("old_value.value ()", (bool) true, old_value->get ());
                     }
+
           TEST_IT_END;
         }
 
