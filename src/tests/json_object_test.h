@@ -286,12 +286,10 @@ namespace format
 
                       if (parent->type () == value::object_t)
                         {
-                          // value & ov =  object_parent[(*it).key];
                           ASSERT_EQUAL_IDX ("obj_parent[key].type", object_parent[(*it).key].type (), (*it).type);
                         }
                       else
                         {
-                          // value & av =  array_parent[(*it).index];
                           ASSERT_EQUAL_IDX ("arr_parent[key].type", array_parent[(*it).index].type (), (*it).type);
                         }
                     }

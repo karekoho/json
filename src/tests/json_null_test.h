@@ -98,7 +98,6 @@ public:
                 if ((*it).new_value->type () == value::null_t)
                     *old_value = *(dynamic_cast<null *>((*it).new_value));
                 else
-                    // *old_value = *(*it).new_value;
                    *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
 
                 json *parent = old_value->_parent;

@@ -382,7 +382,6 @@ namespace format
                     if ((*it).new_value->type () == value::number_t)
                       *old_value = *(dynamic_cast<number *>((*it).new_value));
                     else
-                      // *old_value = *(*it).new_value;
                       *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
 
                     json *parent = old_value->_parent;
