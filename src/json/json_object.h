@@ -123,9 +123,9 @@ namespace format
      * @param v
      * @return
      */
-    inline value &
-    operator =(const value & v)
-    { return _assign (v); }
+//    inline value &
+//    operator =(const value & v)
+//    { return _assign (v); }
 
     /**
      * @brief iterator

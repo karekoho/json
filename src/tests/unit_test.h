@@ -224,5 +224,12 @@ class array_accessor : public format::array
   { _clear (); }
 };  // Class array_accessor
 
+class value_accessor : public format::value
+{
+public:
+  void set_parent (format::json *parent)
+  { _set_parent (parent); }
+};
+
 #endif // UNIT_TEST
 

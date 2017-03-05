@@ -96,9 +96,9 @@ namespace format
      * @param v
      * @return
      */
-    inline value &
-    operator =(const value & v)
-    { return value::_assign (v); }
+//    inline value &
+//    operator =(const value & v)
+//    { return value::_assign (v); }
 
     /**
      * @brief assign

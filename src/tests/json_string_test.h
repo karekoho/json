@@ -180,9 +180,9 @@ namespace format
                     old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                     if ((*it).new_value->type () == value::string_t)
-                      *old_value = *(static_cast<string *>((*it).new_value));
+                      *old_value = *(dynamic_cast<string *>((*it).new_value));
                     else
-                      *old_value = *(*it).new_value;
+                      *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
 
                     json *parent = parents[pidx];   //  old_value->_parent;
 
@@ -192,12 +192,10 @@ namespace format
 
                         if (parent->type () == value::object_t)
                           {
-                            // value & ov =  object_parent[(*it).key];
                             ASSERT_EQUAL_IDX ("obj_parent[key].type", object_parent[(*it).key].type (), (*it).type);
                           }
                         else
                           {
-                            // value & av =  array_parent[(*it).index];
                             ASSERT_EQUAL_IDX ("obj_parent[key].type", array_parent[(*it).index].type (), (*it).type);
                           }
                       }

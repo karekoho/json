@@ -91,7 +91,8 @@ namespace format
                   old_value->_set_index ((*it).index);
                   old_value->_set_key ((*it).key, wcslen ((*it).key));
 
-                  *old_value = *(*it).new_value;
+                  // *old_value = *(*it).new_value;
+                  *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
 
                   json *parent = old_value->_parent;
 

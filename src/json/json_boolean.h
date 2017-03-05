@@ -99,17 +99,6 @@ namespace format
       str_value (wchar_t * = 0) const override
       { return _boolean_value == true ? L"true" : L"false"; }
 
-    public:
-
-     /**
-      * @brief parse
-      * @param json
-      * @return
-      */
-      virtual const wchar_t *
-      _parse (const wchar_t *json) override
-      { return json + (_boolean_value == true ? 4 : 5); }
-
      /**
       * @brief type
       * @return
@@ -132,9 +121,9 @@ namespace format
       * @param v
       * @return
       */
-      inline value &
-      operator =(const value & v)
-      { return value::_assign (v); }
+//      inline value &
+//      operator =(const value & v)
+//      { return value::_assign (v); }
 
      /**
       * @brief assign
@@ -165,6 +154,15 @@ namespace format
       * @brief _boolean_value
       */
       bool _boolean_value;
+
+      /**
+       * @brief parse
+       * @param json
+       * @return
+       */
+       virtual const wchar_t *
+       _parse (const wchar_t *json) override
+       { return json + (_boolean_value == true ? 4 : 5); }
 
      /**
       * @brief _clear

@@ -274,9 +274,9 @@ namespace format
                   old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                   if ((*it).new_value->type () == value::object_t)
-                    *old_value = *(static_cast<object *>((*it).new_value));
+                    *old_value = *(dynamic_cast<object *>((*it).new_value));
                   else
-                    *old_value = *(*it).new_value;
+                    *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
 
                   json *parent = parents[pidx];
 

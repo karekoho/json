@@ -351,6 +351,10 @@ public:
     std::wcout << j[L"Image"][L"Thumbnail"][L"Url"].get () << std::endl;
     std::wcout << j[L"Image"][L"Animated"].get () << std::endl;
     std::wcout << j[L"Image"][L"IDs"].get () << std::endl;
+
+    j[L"Image"] = string (L"foo bar quux");
+
+    std::wcout << j[L"Image"].get () << std::endl;
   }
 
   virtual void
