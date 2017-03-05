@@ -135,10 +135,13 @@ public:
   void
   test_begin_end ()
   {
-    object o = L"{\"1\":true,\"2\":false}";
+    object_accessor o = L"{\"1\":true,\"2\":false}";
 
-    object::Iterator begin (o._member_list.begin ());
-    object::Iterator end (o._member_list.end ());
+    // object::Iterator begin (o._member_list.begin ());
+    // object::Iterator end (o._member_list.end ());
+
+    object::Iterator begin (o.begin ());
+    object::Iterator end (o.end ());
 
     CPPUNIT_ASSERT_MESSAGE ("Object::begin ()", begin == o.begin ());
     CPPUNIT_ASSERT_MESSAGE ("Object::end ()", end == o.end ());

@@ -41,16 +41,17 @@ namespace format
     virtual void
     test_assign_all_values ()
     {
-      object obj_parent;
-      array arr_parent;
+      object_accessor object_parent;
+      array_accessor array_parent;
 
       json *parents[] = {
-        & obj_parent,
-        & arr_parent,
+        & object_parent,
+        & array_parent,
         0
       };
 
-      struct assert {
+      struct assert
+      {
         value *new_value;
         value::value_t type;
         const wchar_t *key;
@@ -70,53 +71,45 @@ namespace format
 
       for (size_t pidx = 0; pidx < 3; pidx++)
         {
-            obj_parent._member_list.clear ();
-            arr_parent._element_list.clear ();
+          object_parent.clear ();
+          array_parent.clear ();
 
-            for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++) {\
-              try {\
+          this->_idx[0] = 0;
+
+          for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
+            {\
+              try
+                {\
                   if ((*it).assert_status[pidx] == SKIP) { continue; }\
                   if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
 
-            /// old_value: value from Value[key], any value
+                  /** old_value: value from value[key] */
+                  format::undefined *old_value = new format::undefined ();
+                  old_value->_parent = parents[pidx];
 
-            format::undefined *old_value = new format::undefined;
-            old_value->_parent = parents[pidx];
+                  (*it).index  = array_parent.push (new format::undefined ());
+                  old_value->_set_index ((*it).index);
+                  old_value->_set_key ((*it).key, wcslen ((*it).key));
 
-            arr_parent._element_list.push_back (new format::undefined);
-            old_value->_set_key ((*it).key, wcslen ((*it).key));
+                  *old_value = *(*it).new_value;
 
-            (*it).index  = arr_parent._element_list.size () - 1;
-            old_value->_set_index ((*it).index);
+                  json *parent = old_value->_parent;
 
-            // old_value->_assign (*(*it).new_value);   // Can't do. old_value will be free'd by new_value
-            *old_value = *(*it).new_value;
+                  if (parent)
+                    {
+                      ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
 
-            json *parent = old_value->_parent;
-
-            if (parent)
-              {
-                ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
-                // ASSERT_EQUAL_IDX ("(*it).new_value->_old->type ()", Value::object_type::undefined, (*it).new_value->_old->type ());
-
-                if (parent->type () == value::object_t)
-                  {
-                    value *ov =  obj_parent._member_list.at ((*it).key);
-
-                    ASSERT_EQUAL_IDX ("obj_parent[key].type", ov->type (), (*it).type);
-                    // ASSERT_EQUAL_IDX ("obj_parent[key].value", ov, new_value);
-                  }
-                else
-                  {
-                    value *av =  arr_parent._element_list.at ((*it).index);
-
-                    ASSERT_EQUAL_IDX ("arr_parent[key].type", av->type (), (*it).type);
-                    // ASSERT_EQUAL_IDX ("arr_parent[key].value", av, new_value);
-                  }
-              }
-
-            TEST_IT_END;
-          }
+                      if (parent->type () == value::object_t)
+                        {
+                          ASSERT_EQUAL_IDX ("obj_parent[key].type", object_parent[(*it).key].type (), (*it).type);
+                        }
+                      else
+                        {
+                          ASSERT_EQUAL_IDX ("arr_parent[key].type", array_parent[(*it).index].type (), (*it).type);
+                        }
+                    }
+              TEST_IT_END;
+            }
 
           for (auto it = test.begin (); it != test.end (); ++it)
             delete (*it).new_value;

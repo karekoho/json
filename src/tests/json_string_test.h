@@ -129,12 +129,12 @@ namespace format
     virtual void
     test_assign_all_values ()
     {
-        object obj_parent;
-        array arr_parent;
+        object_accessor object_parent;
+        array_accessor array_parent;
 
         json *parents[] = {
-          & obj_parent,
-          & arr_parent,
+          & object_parent,
+          & array_parent,
           0
         };
 
@@ -158,66 +158,52 @@ namespace format
 
         for (size_t pidx = 0; pidx < 3; pidx++)
           {
-              obj_parent._member_list.clear ();
-              arr_parent._element_list.clear ();
+            object_parent.clear ();
+            array_parent.clear ();
 
-              for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++) {\
-                try {\
+            this->_idx[0] = 0;
+
+            for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
+              {\
+                try
+                  {\
                     if ((*it).assert_status[pidx] == SKIP) { continue; }\
                     if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
 
-              /// old_value: value from Value[key], any value
+                    /** old_value: value from Value[key] */
+                    string *old_value = new string ();
+                    old_value->_parent = parents[pidx];
 
-              string *old_value = new string ();
-              old_value->_parent = parents[pidx];
+                    (*it).index = array_parent.push (new undefined ());
+                    old_value->_set_index ((*it).index);
+                    old_value->_set_key ((*it).key, wcslen ((*it).key));
 
-              arr_parent._element_list.push_back (new undefined);
-              old_value->_set_key ((*it).key, wcslen ((*it).key));
+                    if ((*it).new_value->type () == value::string_t)
+                      *old_value = *(static_cast<string *>((*it).new_value));
+                    else
+                      *old_value = *(*it).new_value;
 
-              (*it).index  = arr_parent._element_list.size () - 1;
-              old_value->_set_index ((*it).index);
+                    json *parent = parents[pidx];   //  old_value->_parent;
 
-              value *new_value = 0;
+                    if (parent)
+                      {
+                        ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
 
-              if ((*it).new_value->type () == value::string_t)
-                {
-                  string *new_a_value = static_cast<string *>((*it).new_value);
-
-                  *old_value = *new_a_value;
-                  new_value = new_a_value;
-                }
-              else
-                {
-                  *old_value = *(*it).new_value;
-                  new_value = (*it).new_value;
-                }
-
-              json *parent = parents[pidx];   //  old_value->_parent;
-
-              if (parent)
-                {
-                  ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
-
-                  if (parent->type () == value::object_t)
-                    {
-                      value *ov =  obj_parent._member_list.at ((*it).key);
-
-                      ASSERT_EQUAL_IDX ("obj_parent[key].type", ov->type (), (*it).type);
-                      //ASSERT_EQUAL_IDX ("obj_parent[key].value", ov, new_value);
-                    }
-                  else
-                    {
-                      value *av =  arr_parent._element_list.at ((*it).index);
-
-                      ASSERT_EQUAL_IDX ("arr_parent[key].type", av->type (), (*it).type);
-                      //ASSERT_EQUAL_IDX ("arr_parent[key].value", av, new_value);
-                    }
-                }
-              else if (new_value->type () == value::string_t)
-                {
-                  CPPUNIT_ASSERT_MESSAGE ("old_value.value ()", wcscmp (L"xxx", old_value->get ()) == 0);
-                }
-
+                        if (parent->type () == value::object_t)
+                          {
+                            // value & ov =  object_parent[(*it).key];
+                            ASSERT_EQUAL_IDX ("obj_parent[key].type", object_parent[(*it).key].type (), (*it).type);
+                          }
+                        else
+                          {
+                            // value & av =  array_parent[(*it).index];
+                            ASSERT_EQUAL_IDX ("obj_parent[key].type", array_parent[(*it).index].type (), (*it).type);
+                          }
+                      }
+                    else if ((*it).new_value->type () == value::string_t)
+                      {
+                        CPPUNIT_ASSERT_MESSAGE ("old_value.value ()", wcscmp (L"xxx", old_value->get ()) == 0);
+                      }
               TEST_IT_END;
             }
 

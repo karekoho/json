@@ -253,12 +253,12 @@ public:
   virtual void
   test_assign_all_values ()
   {
-    object obj_parent;
-    array arr_parent;
+    object_accessor object_parent;
+    array_accessor array_parent;
 
     json *parents[] = {
-      & obj_parent,
-      & arr_parent,
+      & object_parent,
+      & array_parent,
       0
     };
 
@@ -283,58 +283,53 @@ public:
 
     for (size_t pidx = 0; pidx < 3; pidx++)
       {
-        obj_parent._member_list.clear ();
-        arr_parent._element_list.clear ();
+        object_parent.clear ();
+        array_parent.clear ();
 
-        this->_idx[0]= 0;
+        this->_idx[0] = 0;
 
-        for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++) {
-          try
-            {
-              if ((*it).assert_status[pidx] == SKIP) { continue; }
-              if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
-
-            /** old_value: value from value[key] */
-            object *old_value = new object;
-            old_value->_parent = parents[pidx];
-
-            arr_parent._element_list.push_back (new format::undefined);   // For the index
-
-            old_value->_set_key ((*it).key, wcslen ((*it).key));
-
-            (*it).index  = arr_parent._element_list.size () - 1;
-            old_value->_set_index ((*it).index);
-
-            if ((*it).new_value->type () == value::object_t)
+        for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
+          {
+            try
               {
-                *old_value = *(static_cast<object *>((*it).new_value));
-              }
-            else
-              {
-                *old_value = *(*it).new_value;
-              }
+                if ((*it).assert_status[pidx] == SKIP) { continue; }
+                if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
 
-            json *parent = parents[pidx];
+                /** old_value: value from value[key] */
+                object *old_value = new object;
+                old_value->_parent = parents[pidx];
 
-            if (parent)
-              {
-                ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
+                (*it).index  = array_parent.push (new format::undefined ());
 
-                if (parent->type () == value::object_t)
+                old_value->_set_index ((*it).index);
+                old_value->_set_key ((*it).key, wcslen ((*it).key));
+
+                if ((*it).new_value->type () == value::object_t)
+                  *old_value = *(static_cast<object *>((*it).new_value));
+                else
+                  *old_value = *(*it).new_value;
+
+                json *parent = parents[pidx];
+
+                if (parent)
                   {
-                    value *ov =  obj_parent._member_list.at ((*it).key);
-                    ASSERT_EQUAL_IDX ("obj_parent[key].type", ov->type (), (*it).type);
+                    ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
+
+                    if (parent->type () == value::object_t)
+                      {
+                        // value & ov =  object_parent[(*it).key];
+                        ASSERT_EQUAL_IDX ("obj_parent[key].type", object_parent[(*it).key].type (), (*it).type);
+                      }
+                    else
+                      {
+                        // value & av =  array_parent[(*it).index];
+                        ASSERT_EQUAL_IDX ("arr_parent[key].type", array_parent[(*it).index].type (), (*it).type);
+                      }
                   }
                 else
                   {
-                    value *av =  arr_parent._element_list.at ((*it).index);
-                    ASSERT_EQUAL_IDX ("arr_parent[key].type", av->type (), (*it).type);
+                    ASSERT_EQUAL_IDX ("old_value.size ()", (size_t) 2, old_value->count ());
                   }
-              }
-            else
-              {
-                ASSERT_EQUAL_IDX ("old_value.size ()", (size_t) 2, old_value->count ());
-              }
           TEST_IT_END;
         }
 

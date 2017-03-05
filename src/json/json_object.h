@@ -6,22 +6,18 @@
 
 namespace format
 {
+  #ifdef UNIT_TEST
+    class json_object_test;
+  #endif
+
   /**
    * @brief The object class
    */
   class object : public json
   {
-  #ifdef UNIT_TEST
-    friend class json_test;
-    friend class json_object_test;
-    friend class json_object_iterator_test;
-    friend class json_array_test;
-    friend class json_string_test;
-    friend class json_number_test;
-    friend class json_boolean_test;
-    friend class json_null_test;
-    friend class json_undefined_test;
-  #endif
+    #ifdef UNIT_TEST
+      friend class json_object_test;
+    #endif
 
   public:
 

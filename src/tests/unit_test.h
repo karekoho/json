@@ -91,33 +91,29 @@ CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[AC
 #endif
 
 class test_selector;
+/**
+ * @brief The unit_test class
+ */
 class unit_test : public CppUnit::TestFixture
 {
-   friend class test_selector;
+  friend class test_selector;
+
 public:
   unit_test ()
     : CppUnit::TestFixture(),
       _errorc { 0, 0 },
       _idx { 0, 0, 0, 0, 0 }
-      //_old (0)
-  {
-  }
+  {}
 
   // virtual ~unit_test (){ std::cerr << "delete" << std::endl; }
 
   void
   setUp ()
-  {
-    // _errorc[0] = _errorc[1] = 0;
-    _errorc[0] = _errorc[1] = _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0;
-  }
+  { _errorc[0] = _errorc[1] = _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0; }
 
   void
   tearDown ()
-  {
-    // _errorc[0] =_errorc[1] = 0;
-    _errorc[0] =_errorc[1] = _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0;
-  }
+  { _errorc[0] =_errorc[1] = _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0; }
 
   std::unordered_map<std::wstring, format::value *> &
   member_list_clear (std::unordered_map<std::wstring, format::value *> & m)
@@ -143,9 +139,90 @@ protected:
   size_t _idx[5];
 
   char _sz_idx[300];
+}; // Class unit_test
 
-  //CppUnit::TestSuite *_old;
-};
+/**
+ * @brief The object_accessor class
+ */
+class object_accessor : public format::object
+{
+public:
+
+  /**
+   * @brief object_accessor
+   */
+  object_accessor () : object () {}
+
+  /**
+   * @brief object_accessor
+   * @param input
+   */
+  object_accessor (const wchar_t *input) : object (input) {}
+
+  /**
+   * @brief begin
+   * @return
+   */
+  std::unordered_map<std::wstring, value *>::iterator
+  begin ()
+  { return _member_list.begin (); }
+
+  /**
+   * @brief end
+   * @return
+   */
+  std::unordered_map<std::wstring, value *>::iterator
+  end ()
+  { return _member_list.end (); }
+
+  /**
+   * @brief clear
+   */
+  void clear ()
+  { _clear (); }
+
+  /**
+   * @brief assign
+   * @param ov
+   * @param nv
+   * @return
+   */
+  value & assign (value *ov, value *nv)
+  { return _assign (ov, nv); }
+
+};  // Class object_accessor
+
+/**
+ * @brief The array_accessor class
+ */
+class array_accessor : public format::array
+{
+  public:
+  /**
+   * @brief push
+   * @param v
+   */
+  size_t push (format::value *v)
+  {
+    _element_list.push_back (v);
+    return _element_list.size () - 1;
+  }
+
+  /**
+   * @brief assign
+   * @param ov
+   * @param nv
+   * @return
+   */
+  value & assign (value *ov, value *nv)
+  { return _assign (ov, nv); }
+
+  /**
+   * @brief clear
+   */
+  void clear ()
+  { _clear (); }
+};  // Class array_accessor
 
 #endif // UNIT_TEST
 

@@ -3,38 +3,20 @@
 
 #include "json_json.h"
 
-#ifdef UNIT_TEST
-class json_test;
-class json_array_test;
-class json_object_test;
-class json_string_test;
-class json_number_test;
-class json_boolean_test;
-class json_null_test;
-class json_undefined_test;
-#endif
-
 namespace format
 {
+  #ifdef UNIT_TEST
+    class json_array_test;
+  #endif
+
  /**
   * @brief The array class
   */
   class array : public json
   {
   #ifdef UNIT_TEST
-    friend class json_test;
     friend class json_array_test;
-    friend class json_object_test;
-    friend class json_string_test;
-    friend class json_number_test;
-    friend class json_boolean_test;
-    friend class json_null_test;
-    friend class json_undefined_test;
   #endif
-
-  // TODO: friend void Value::setKey (const char *key);
-  // TODO: friend void Value::setIndex (const size_t &index);
-  // TODO: friend Value & Value::_root__at (const char *key, JSON *root);
 
   public:
 

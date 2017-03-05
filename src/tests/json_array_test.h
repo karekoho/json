@@ -125,16 +125,17 @@ namespace format
     virtual void
     test_assign_all_values ()
     {
-      object obj_parent;
-      array arr_parent;
+      object_accessor object_parent;
+      array_accessor array_parent;
 
       json *parents[] = {
-        & obj_parent,
-        & arr_parent,
+        & object_parent,
+        & array_parent,
         0
       };
 
-      struct assert {
+      struct assert
+      {
         value *new_value;
         value::value_t type;
         const wchar_t *key;
@@ -151,69 +152,58 @@ namespace format
         { new boolean (true), value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
         { new null (), value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
       };
-        arr_parent._element_list.reserve (6);
 
         for (size_t pidx = 0; pidx < 3; pidx++)
           {
-            obj_parent._member_list.clear ();
-            arr_parent._element_list.clear ();
-            // old_value._parent = parents[pidx];
+            object_parent.clear ();
+            array_parent.clear ();
 
-            for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++) {\
-              try {\
-                  if ((*it).assert_status[pidx] == SKIP) { continue; }\
-                  if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
+            this->_idx[0] = 0;
 
-            /// old_value: value from Value[key], any value
+            for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
+              {\
+                try
+                  {\
+                    if ((*it).assert_status[pidx] == SKIP) { continue; }\
+                    if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
 
-            array *old_value = new array;
-            old_value->_parent = parents[pidx];
+                    /** old_value: value from value[key] */
+                    array *old_value = new array ();
+                    old_value->_parent = parents[pidx];
 
-            old_value->_element_list.clear ();
-            arr_parent._element_list.push_back (new format::undefined);
-            old_value->_set_key ((*it).key, wcslen ((*it).key) /* (*it).keylen */);
+                    old_value->_clear ();
 
-            (*it).index  = arr_parent._element_list.size () - 1;
-            old_value->_set_index ((*it).index);
+                    (*it).index = array_parent.push (new format::undefined ());
 
-            // Value *new_value = 0;
+                    old_value->_set_index ((*it).index);
+                    old_value->_set_key ((*it).key, wcslen ((*it).key));
 
-            if ((*it).new_value->type () == value::array_t)
-              {
-                array *new_a_value = static_cast<array *>((*it).new_value);
-                *old_value = *new_a_value;
-              }
-            else
-              {
-                *old_value = *(*it).new_value;
-              }
+                    if ((*it).new_value->type () == value::array_t)
+                      *old_value = *(static_cast<array *>((*it).new_value));
+                    else
+                      *old_value = *(*it).new_value;
 
-            json *parent = parents[pidx]; // old_value->_parent;
+                    json *parent = parents[pidx]; // old_value->_parent;
 
-            if (parent)
-              {
-                ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
+                    if (parent)
+                      {
+                        ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
 
-                if (parent->type () == value::object_t)
-                  {
-                    value *ov =  obj_parent._member_list.at ((*it).key);
-
-                    ASSERT_EQUAL_IDX ("obj_parent[key].type", ov->type (), (*it).type);
-                    // ASSERT_EQUAL_IDX ("obj_parent[key].value", ov, new_value);
-                  }
-                else
-                  {
-                    value *av =  arr_parent._element_list.at ((*it).index);
-
-                    ASSERT_EQUAL_IDX ("arr_parent[index].type", av->type (), (*it).type);
-                    // ASSERT_EQUAL_IDX ("arr_parent[index].value", av, new_value);
-                  }
-              }
-            else
-              {
-                ASSERT_EQUAL_IDX ("old_value.size ()", (size_t) 2, old_value->count ());
-              }
-
+                        if (parent->type () == value::object_t)
+                          {
+                            value & ov =  object_parent[(*it).key];
+                            ASSERT_EQUAL_IDX ("obj_parent[key].type", ov.type (), (*it).type);
+                          }
+                        else
+                          {
+                            value & av =  array_parent[(*it).index];
+                            ASSERT_EQUAL_IDX ("arr_parent[index].type", av.type (), (*it).type);
+                          }
+                      }
+                    else
+                      {
+                        ASSERT_EQUAL_IDX ("old_value.size ()", (size_t) 2, old_value->count ());
+                      }
             TEST_IT_END;
           }
 

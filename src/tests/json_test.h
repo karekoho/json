@@ -15,7 +15,7 @@ class json_test : public json_value_test_interface
 public:
 
   virtual void
-  test_ctor_dtor ()
+  test_ctor_dtor () override
   {
     json p;
 
@@ -34,7 +34,7 @@ public:
   }
 
   virtual void
-  test_parse_1 ()
+  test_parse_1 () override
   {
     struct assert
     {
@@ -124,8 +124,8 @@ public:
   void
   test__assign_to_parent ()
   {
-    object op;
-    array ap;
+    object_accessor object_parent;
+    array_accessor array_parent;
 
     struct assert
     {
@@ -137,38 +137,37 @@ public:
     };
 
     std::vector<struct assert > test = {
-      { L"ok", 0, { new object (&op), new object (&ap) }, value::object_t, PASS },
-      { L"ak", 1, { new array (&op), new array (&ap) }, value::array_t, PASS },
-      { L"sk", 2, { new string (&op, 3), new string (&ap, 3) }, value::string_t, PASS },
-      { L"dk", 3, { new number (&op), new number (&ap) }, value::number_t, PASS },
-      { L"bk", 4, { new boolean (&op, true), new boolean (&ap, true) }, value::boolean_t, PASS },
-      { L"nk", 5, { new null (&op), new null (&ap) }, value::null_t, PASS },
+      { L"ok", 0, { new object (&object_parent), new object (&array_parent) }, value::object_t, PASS },
+      { L"ak", 1, { new array (&object_parent), new array (&array_parent) }, value::array_t, PASS },
+      { L"sk", 2, { new string (&object_parent, 3), new string (&array_parent, 3) }, value::string_t, PASS },
+      { L"dk", 3, { new number (&object_parent), new number (&array_parent) }, value::number_t, PASS },
+      { L"bk", 4, { new boolean (&object_parent, true), new boolean (&array_parent, true) }, value::boolean_t, PASS },
+      { L"nk", 5, { new null (&object_parent), new null (&array_parent) }, value::null_t, PASS },
     };
 
-    size_t x =0;
+    size_t x = 0;
 
     TEST_IT_START
 
-        value & oov = op._at ((*it).key);
-        value & aov = ap._at ((*it).index);
+        value & oov = object_parent[(*it).key];
+        value & aov = array_parent[(*it).index];
 
         ASSERT_EQUAL_IDX ("value.type ()", value::undefined_t, oov.type ());
         ASSERT_EQUAL_IDX ("value.type ()", value::undefined_t, aov.type ());
 
-        op._assign (& oov, (*it).val[0]);
-        ap._assign (& aov, (*it).val[1]);
+        object_parent.assign (& oov, (*it).val[0]);
+        array_parent.assign (& aov, (*it).val[1]);
 
-        ASSERT_EQUAL_IDX ("parent._at (key)", (*it).type, op._at ((*it).key).type ());
-        ASSERT_EQUAL_IDX ("parent._at (index)", (*it).type, ap._at ((*it).index).type ());
+        ASSERT_EQUAL_IDX ("parent._at (key)", (*it).type, object_parent[(*it).key].type ());
+        ASSERT_EQUAL_IDX ("parent._at (index)", (*it).type, array_parent[(*it).index].type ());
 
         x++;
-        // (*it).value->parse ((*it).startp);
 
     TEST_IT_END;
   }
 
   virtual void
-  test_assign_all_values ()
+  test_assign_all_values () override
   {
     json j;
 
@@ -198,12 +197,6 @@ public:
 
     TEST_IT_END;
   }
-
-
-
-  //virtual void test_stringify () override {}
-
-  virtual void test_str_length () override {}
 
   virtual void
   test_str_value () override
@@ -244,15 +237,8 @@ public:
 
   }
 
-  virtual void test__clear () {}
-
-  //virtual void test_operator_assign () {}
-  //virtual void test_operator_at () {}
-  //virtual void test_size_1 () {}
-
-
   virtual void
-  test_operator_at_key ()  // TODO
+  test_operator_at_key () override  // TODO
   {
     struct assert
     {
@@ -274,15 +260,6 @@ public:
      TEST_IT_END;
   }
 
-  virtual void
-  test_operator_at_index ()
-  {
-  }
-
-  //virtual void test_value_1 () {}
-  //virtual void test_debug_1 () {}
-
-  virtual void test_erase () override {}
 
   void
   test_parse_revive ()
@@ -387,6 +364,11 @@ public:
     for (size_t idx = 0; idx < 2; idx++)
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::count ()", (size_t) 0, j[idx].count ());
   }
+
+  virtual void test_operator_at_index () override {}
+  virtual void test_str_length () override {}
+  virtual void test__clear () override {}
+  virtual void test_erase () override {}
 
   /**
    * 1.

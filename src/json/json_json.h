@@ -26,9 +26,9 @@ namespace format
    */
   class json : public value
   {
-  #ifdef UNIT_TEST
-    friend class json_test;
-  #endif
+    #ifdef UNIT_TEST
+      friend class json_test;
+    #endif
 
   public:
 
