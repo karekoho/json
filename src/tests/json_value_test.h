@@ -262,6 +262,41 @@ public:
       CPPUNIT_ASSERT_MESSAGE ("value == value", boolean () == boolean ());
     }
 
+    void
+    test_operator_assign_wchar_t_ptr ()
+    {
+      json j = L"{\"1\":{}}";
+
+      // j[L"1"] = "true"; // FIXME: type_t == boolean, operator=(const char *) is called. Where ???
+      j[L"1"] = L"x";
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[\"1\"].type ()", value::string_t, j[L"1"].type ());
+    }
+
+    void
+    test_operator_assign_double ()
+    {
+      json j = L"{\"1\":{}}";
+      j[L"1"] = (double) 100;
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[\"1\"].type ()", value::number_t, j[L"1"].type ());
+    }
+
+    void
+    test_operator_assign_bool ()
+    {
+      json j = L"{\"1\":{}}";
+      j[L"1"] = true;
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[\"1\"].type ()", value::boolean_t, j[L"1"].type ());
+    }
+
+    void
+    test_operator_assign_nullptr ()
+    {
+      json j = L"{\"key\":{}}";
+    }
+
     virtual void test_str_length () override {}
     virtual void test_str_value () override {}
     virtual void test_assign_all_values () override {}
@@ -325,6 +360,11 @@ public:
       /* 6. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value_t", &json_value_test::test_operator_equal_value_t));
       /* 7. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value", &json_value_test::test_operator_equal_value));
       /* 8. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_size", &json_value_test::test___sizeof));
+
+      /* 9. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("", &json_value_test::test_operator_assign_wchar_t_ptr));
+      /* 10. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("", &json_value_test::test_operator_assign_double));
+      /* 11. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("", &json_value_test::test_operator_assign_bool));
+      /* 12. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("", &json_value_test::test_operator_assign_nullptr));
 
       return s;
     }
