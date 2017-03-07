@@ -140,18 +140,14 @@ namespace format
     { return _assign (u);}
 
     /**
-     * TODO:
-     *
      * @brief operator =
      * @param s
      * @return
      */
     value &
-    operator =(const wchar_t *s);
+    operator =(const wchar_t *json);
 
     /**
-     * TODO:
-     *
      * @brief operator =
      * @param d
      * @return
@@ -160,8 +156,6 @@ namespace format
     operator =(double d);
 
     /**
-     * TODO:
-     *
      * @brief operator =
      * @param b
      * @return
@@ -170,8 +164,6 @@ namespace format
     operator =(bool b);
 
     /**
-     * TODO:
-     *
      * @brief operator =
      * @return
      */

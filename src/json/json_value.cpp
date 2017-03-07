@@ -3,6 +3,7 @@
 #include "json_string.h"
 #include "json_number.h"
 #include "json_boolean.h"
+#include "json_null.h"
 
 #include <stdlib.h>
 
@@ -73,6 +74,7 @@ format::value::
   _old_value = 0;
 }
 
+
 long int
 format::value::_string (wchar_t &endc) const noexcept
 {
@@ -136,9 +138,9 @@ format::value::operator =(bool b)
 }
 
 format::value &
-format::value::operator =(const wchar_t *s)
+format::value::operator =(const wchar_t *json)
 {
-  return _assign (*(new string (s)));
+  return _assign (*(json::parse (json)));
 }
 
 format::value &
@@ -146,4 +148,11 @@ format::value::operator =(double d)
 {
   return _assign (*(new number (d)));
 }
+
+format::value &
+format::value::operator =(std::nullptr_t)
+{
+  return _assign (*(new null ()));
+}
+
 

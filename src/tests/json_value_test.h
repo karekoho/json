@@ -265,36 +265,46 @@ public:
     void
     test_operator_assign_wchar_t_ptr ()
     {
-      json j = L"{\"1\":{}}";
+      json j = L"{}";
 
-      // j[L"1"] = "true"; // FIXME: type_t == boolean, operator=(const char *) is called. Where ???
-      j[L"1"] = L"x";
-
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[\"1\"].type ()", value::string_t, j[L"1"].type ());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[\"0\"].type ()",
+                                    value::array_t,
+                                    (j[L"0"] = L"[]")[L"0"].type ()
+                                    // (json (L"{}")[L"0"] = L"[]")[L"0"].type () // Compiles and passes
+          );
     }
 
     void
     test_operator_assign_double ()
     {
-      json j = L"{\"1\":{}}";
-      j[L"1"] = (double) 100;
+      json j = L"{}";
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[\"1\"].type ()", value::number_t, j[L"1"].type ());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[\"0\"].type ()",
+                                    value::number_t,
+                                    (j[L"0"] = (double) 100)[L"0"].type ()
+          );
     }
 
     void
     test_operator_assign_bool ()
     {
-      json j = L"{\"1\":{}}";
-      j[L"1"] = true;
+      json j = L"{}";
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[\"1\"].type ()", value::boolean_t, j[L"1"].type ());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[\"0\"].type ()",
+                                    value::boolean_t,
+                                    (j[L"0"] = true)[L"0"].type ()
+          );
     }
 
     void
     test_operator_assign_nullptr ()
     {
-      json j = L"{\"key\":{}}";
+      json j = L"{}";
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[\"0\"].type ()",
+                                    value::null_t,
+                                    (j[L"0"] = nullptr)[L"0"].type ()
+          );
     }
 
     virtual void test_str_length () override {}
