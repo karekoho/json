@@ -61,42 +61,18 @@ namespace format
     value (const wchar_t *);
 
     /**
-     * @brief json_value
-     * @param endp
-     * @param parent
-     * @paran charc
-     */
-    value (json *parent);
-
-    /**
      * @brief Value
      * @param other
      */
     value (const value &other);
 
     /**
-     * @brief Value
-     * @param ov
-     * @param nv
-     */
-    value (const value *ov, const value &nv);
-
-    /**
-     * @brief clone Call object copy constructor from Value interface: Value *v->clone ()
+     * @brief clone Call object copy constructor when derived type in not known
      * @param other
      * @return
      */
     virtual value *
     clone () const = 0;
-
-    /**
-     * @brief clone Call object copy constructor from Value interface: Value *v->clone ().
-     * Store previous key|index=>value for deletion.
-     * @param ov  previous key|index=>value
-     * @return
-     */
-    virtual value *
-    clone (const value *ov) const = 0;
 
     /**
      * @brief ~Value
@@ -439,6 +415,42 @@ namespace format
     mutable const value *_old_value;
 
     /**
+     * @brief json_value
+     * @param endp
+     * @param parent
+     * @paran charc
+     */
+    value (json *parent);
+
+    /**
+     * @brief Value
+     * @param ov
+     * @param nv
+     */
+    value (const value *ov, const value &nv);
+
+    /**
+     * TODO: rename to *** _clone ***
+     *
+     * @brief clone Call object copy constructor from Value interface: Value *v->clone ().
+     * Store previous key|index=>value for deletion.
+     * @param ov  previous key|index=>value
+     * @return
+     */
+    virtual value *
+    clone (const value *ov) const = 0;
+
+    /**
+     * TODO: rename to *** _clone ***
+     *
+     * @brief _clone  Called by copy constructor
+     * @param other
+     * @return
+     */
+    virtual value *
+    clone (const value &other) = 0;
+
+    /**
      * @brief _look_ahead Move read pointer to next non-white space character
      */
     inline const wchar_t *
@@ -513,15 +525,6 @@ namespace format
      */
     virtual void
     _clear () = 0;
-
-    /**
-     * TODO: rename to *** _clone ***
-     * @brief _clone  Called by copy constructor
-     * @param other
-     * @return
-     */
-    virtual value *
-    clone (const value &other) = 0;
 
     /**
      * @brief _clone

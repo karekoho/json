@@ -66,7 +66,7 @@ namespace format
     * @return
     */
     virtual value *
-    clone () const
+    clone () const override
     { return new array (*this); }
 
    /**
@@ -83,14 +83,6 @@ namespace format
     */
     virtual
     ~array () override;
-
-   /**
-    * @brief parse
-    * @param json
-    * @return
-    */
-    virtual const wchar_t *
-    _parse ( const wchar_t *json) override;
 
    /**
     * @brief type
@@ -116,15 +108,6 @@ namespace format
     inline value &
     operator =(const array & a)
     { return _assign (a); }
-
-   /**
-    * @brief operator =
-    * @param v
-    * @return
-    */
-//    inline value &
-//    operator =(const value & v)
-//    { return _assign (v); }
 
    /**
     * @brief iterator
@@ -258,11 +241,19 @@ namespace format
     element_list _element_list;
 
    /**
+    * @brief parse
+    * @param json
+    * @return
+    */
+    virtual const wchar_t *
+    _parse ( const wchar_t *json) override;
+
+   /**
     * @brief _at
     * @return
     */
     virtual value &
-    _at (const wchar_t *key)
+    _at (const wchar_t *key) override
     {
       wchar_t *end = 0;
       return _at (std::wcstoll (key, & end, 10));
@@ -277,6 +268,26 @@ namespace format
     _assign (const array & nv);
 
    /**
+    FIXME: IF REMOVED:
+
+    !!!FAILURES!!!
+    Test Results:
+    Run:  93   Failures: 2   Errors: 0
+
+
+    1) test: test_assign_copy (F) line: 233 ../../src/tests/json_value_test.h
+    equality assertion failed
+    - Expected: 4
+    - Actual  : 3
+    - test_assign_copy: idx[0] = 2: v.type ()
+
+
+    2) test: test_assign_all_values (F) line: 190 ../../src/tests/json_array_test.h
+    equality assertion failed
+    - Expected: 2
+    - Actual  : 1
+    - test_assign_all_values: idx[0] = 1: old_value.parent.count ()
+
     * @brief _assign
     * @param nv
     * @return
@@ -320,7 +331,7 @@ namespace format
      * @return
      */
     virtual size_t
-    _sizeof () const noexcept
+    _sizeof () const noexcept override
     { return sizeof (array); }
   };
 } // Namespace format

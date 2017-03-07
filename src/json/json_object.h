@@ -67,7 +67,7 @@ namespace format
      * @return
      */
     virtual value *
-    clone () const
+    clone () const override
     { return new object (*this); }
 
     /**
@@ -86,14 +86,6 @@ namespace format
     ~object () override;
 
     /**
-     * @brief parse
-     * @param JSON
-     * @return
-     */
-    virtual const wchar_t *
-    _parse (const wchar_t *json);
-
-    /**
      * @brief type
      * @return
      */
@@ -106,7 +98,7 @@ namespace format
      * @return
      */
     virtual inline size_t
-    count () const noexcept
+    count () const noexcept override
     { return _member_list.size (); }
 
     /**
@@ -116,16 +108,7 @@ namespace format
      */
     inline value &
     operator =(const object & o)
-    { return _assign (o);  }
-
-    /**
-     * @brief operator =
-     * @param v
-     * @return
-     */
-//    inline value &
-//    operator =(const value & v)
-//    { return _assign (v); }
+    { return _assign (o); }
 
     /**
      * @brief iterator
@@ -249,7 +232,6 @@ namespace format
          * @brief _it
          */
         member_list::iterator _it;
-
     }; // Iterator
 
     /**
@@ -276,6 +258,14 @@ namespace format
     mutable member_list _member_list;
 
     /**
+     * @brief parse
+     * @param JSON
+     * @return
+     */
+    virtual const wchar_t *
+    _parse (const wchar_t *json) override;
+
+    /**
      * @brief _pair
      * @return
      */
@@ -296,22 +286,42 @@ namespace format
      * @return
      */
     virtual value &
-    _at (const wchar_t *key);
+    _at (const wchar_t *key) override;
 
     /**
      * @brief _at
      * @return
      */
-    virtual value & _at (size_t)
+    virtual value & _at (size_t) override
     { return shared_undefined::instance (); }
 
     /**
+      FIXME: IF REMOVED:
+
+      !!!FAILURES!!!
+      Test Results:
+      Run:  93   Failures: 2   Errors: 0
+
+
+      1) test: test_assign_copy (F) line: 233 ../../src/tests/json_value_test.h
+      equality assertion failed
+      - Expected: 3
+      - Actual  : 2
+      - test_assign_copy: idx[0] = 1: v.type ()
+
+
+      2) test: test_assign_all_values (F) line: 285 ../../src/tests/json_object_test.h
+      equality assertion failed
+      - Expected: 2
+      - Actual  : 1
+      - test_assign_all_values: idx[0] = 1: old_value.parent.count ()
+
      * @brief _assign
      * @param nv
      * @return
      */
     virtual value &
-    _assign (const value & nv)
+    _assign (const value & nv) override
     { return value::_assign (nv); }
 
     /**
@@ -320,27 +330,27 @@ namespace format
      * @param nv
      */
     virtual value &
-    _assign (value *ov, value *nv);
+    _assign (value *ov, value *nv) override;
 
     /**
      * @brief _clear
      */
     virtual void
-    _clear ();
+    _clear () override;
 
     /**
      * @brief _clone
      * @return
      */
     virtual value *
-    clone (const value &other);
+    clone (const value &other) override;
 
     /**
      * @brief _sizeof
      * @return
      */
     virtual size_t
-    _sizeof () const noexcept
+    _sizeof () const noexcept override
     { return sizeof (object); }
   };
 } // Namespace format
