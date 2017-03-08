@@ -101,6 +101,15 @@ namespace format
     /**
      * @brief operator =
      * @param v
+     * @return
+     */
+    inline value &
+    operator =(value *v)
+    { return _assign(v); }
+
+    /**
+     * @brief operator =
+     * @param v
      */
     inline value &
     operator =(const value & v)
@@ -121,7 +130,7 @@ namespace format
      * @return
      */
     value &
-    operator =(const wchar_t *json);
+    operator =(const wchar_t *json_text);
 
     /**
      * @brief operator =
@@ -285,6 +294,14 @@ namespace format
     _parse (const wchar_t *json) = 0;
 
     /**
+     * @brief _assign
+     * @param nv
+     * @return
+     */
+    value &
+    _assign (value * nv);
+
+    /**
      * If value has parent object, assign to new value to this->_parent->[key],
      * otherwise assign new value to Value object itself.
      *
@@ -292,7 +309,7 @@ namespace format
      * @param nv
      * @return
      */
-    virtual value &
+    value &
     _assign (const value & nv);
 
     /**
@@ -346,7 +363,6 @@ namespace format
     inline void
     _set_parent (json *parent) noexcept
     { _parent = parent; }
-
 
     /**
      * @brief The _sc enum Structural characters.

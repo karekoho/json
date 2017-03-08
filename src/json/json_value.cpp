@@ -20,8 +20,7 @@ format::value::value ()
       _key (0),
       _index (0),
       _old_value (0)
-{
-}
+{}
 
 format::value::value (const wchar_t *)
     : _startp (0),
@@ -30,8 +29,7 @@ format::value::value (const wchar_t *)
       _key (0),
       _index (0),
       _old_value (0)
-{
-}
+{}
 
 format::value::value (json *parent)
     : _startp (0),
@@ -40,8 +38,7 @@ format::value::value (json *parent)
       _key (0),
       _index (0),
       _old_value (0)
-{
-}
+{}
 
 format::value::value (const value &other)
   : _startp (other._startp),
@@ -50,8 +47,7 @@ format::value::value (const value &other)
     _key (other._key ? new wchar_t [wcslen (other._key) + 1] () : 0),
     _index (other._index),
     _old_value (0)
-{
-}
+{}
 
 format::value::value (const value *ov, const value &nv)
   : _startp (nv._startp),
@@ -69,11 +65,9 @@ format::value::
 ~value ()
 {
   delete[] _key;
-
   delete _old_value;
   _old_value = 0;
 }
-
 
 long int
 format::value::_string (wchar_t &endc) const noexcept
@@ -132,27 +126,36 @@ format::value::_assign (const value &nv)
 }
 
 format::value &
-format::value::operator =(bool b)
+format::value::_assign (value *nv)
 {
-  return _assign (*(new boolean (b)));
+  if (_parent == 0)
+    throw json_error (BAD_ASSIGN);
+
+  return _parent->_assign (this, nv);
 }
 
 format::value &
-format::value::operator =(const wchar_t *json)
+format::value::operator =(bool b)
 {
-  return _assign (*(json::parse (json)));
+  return _assign (new boolean (b));
+}
+
+format::value &
+format::value::operator =(const wchar_t *json_text)
+{
+  return _assign (new json (json_text));
 }
 
 format::value &
 format::value::operator =(double d)
 {
-  return _assign (*(new number (d)));
+  return _assign (new number (d));
 }
 
 format::value &
 format::value::operator =(std::nullptr_t)
 {
-  return _assign (*(new null ()));
+  return _assign (new null ());
 }
 
 

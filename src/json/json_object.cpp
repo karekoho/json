@@ -1,14 +1,9 @@
 #include "json_object.h"
-#include "json_array.h"
-#include "json_string.h"
-#include "json_undefined.h"
-#include "json_null.h"
-#include "json_number.h"
-#include "json_boolean.h"
 #include "json_object_iterator.h"
-// using namespace format;
 
-format::object::object () : json () {}
+format::object::object ()
+  : json ()
+{}
 
 format::object::object (const wchar_t *text)
   : json (text, false)
@@ -18,13 +13,11 @@ format::object::object (const wchar_t *text)
 
 format::object::object (std::initializer_list<std::pair<std::__cxx11::wstring, value *> > il)
   : json(), _member_list (il.begin (), il.end ())
-{
-}
+{}
 
 format::object::object (json *parent)
   : json::json (parent)
-{
-}
+{}
 
 format::object::object (const object &other)
   : json(other)
@@ -133,24 +126,10 @@ format::object::_pair ()
 
   (void) _member_list.emplace (key, v);
 
-  // v->set_key (keyp, charc - 2);
   call__set_key__ (v, keyp, charc - 2);
 
   return true;
 }
-
-//Value &
-//Object::at (const wchar_t *key) const
-//{
-//  try
-//    {
-//      return *(_member_list.at (key));
-//    }
-//  catch (std::out_of_range & e)
-//    {
-//      throw JSON_Out_Of_Range (e.what ());
-//  }
-//}
 
 format::json_iterator *
 format::object::iterator () const

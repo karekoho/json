@@ -196,7 +196,7 @@ public:
     void
     test_assign_copy ()
     {
-      json json[] = {
+      json j[] = {
         L"{}",
         L"[]"
       };
@@ -226,11 +226,12 @@ public:
 
               for (size_t jdx = 0; jdx < 2; jdx++)
                 {
-                  json[hdx][L"0"] = *(*it).val;   // Undefined <-- Object, Object <-- Array, ...
+                  j[hdx][L"0"] = *(*it).val;   // Undefined <-- Object, Object <-- Array, ...
 
-                  value & v = json[hdx][L"0"];
-
-                  ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v.type ());
+                  ASSERT_EQUAL_IDX ("value::type ()",
+                                    (*it).type,
+                                    j[hdx][L"0"].type ()
+                                   );
                 }
           TEST_IT_END;
         }
