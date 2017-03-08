@@ -13,8 +13,7 @@ format::json::json ()
     _str_value { 0, 0 },
     __root (0),
     __reviver (0)
-{
-}
+{}
 
 format::json::json (const wchar_t *json, const bool _call_parse)
   : value (json),
@@ -47,40 +46,34 @@ format::json::json (const wchar_t *json, reviver r)
   __reviver = 0;
 }
 
-
 format::json::json (json *parent)
   : value (parent),
     _str_value { 0, 0 },
     __root (0),
     __reviver (parent ? parent->__reviver : 0)
-{
-}
+{}
 
 format::json::json (const json &other)
   : value (other),
     _str_value { 0, 0 },
     __root (other.__root ? other.__root->clone () : 0),
     __reviver (0)
-{
-}
+{}
 
 format::json::json (const value *ov, const json &nv)
   : value (ov, nv),
     _str_value { 0, 0 },
     __root (nv.__hasRoot () ? nv.__root->clone () : 0),
     __reviver (0)
-{
-}
+{}
 
 format::json::~json ()
 {
   if (_parent == 0 && _str_value[BEGIN])
     {
       delete[] _str_value[BEGIN];
-
       _str_value[BEGIN] = 0;
     }
-
   delete __root;
 }
 
@@ -110,20 +103,8 @@ format::json::_assign (const json &j)
   if (j.__hasRoot ())
     {
       delete __root;
-
       __root = j.__root->clone ();
     }
-
-  return *this;
-}
-
-format::value &
-format::json::_assign (const value &v)
-{
-  delete __root;
-
-  __root = v.clone ();
-
   return *this;
 }
 

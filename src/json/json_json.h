@@ -122,23 +122,6 @@ namespace format
     { return _assign (j); }
 
     /**
-     * @brief _assign
-     * @param nv
-     * @return
-     */
-    virtual value &
-    _assign (const value & v) override;
-
-    /**
-     * @brief operator =
-     * @param v
-     * @return
-     */
-    inline value &
-    operator =(const value & v)
-    { return _assign (v); }
-
-    /**
      * @brief assign
      * @param ov Old value
      * @param nv New value

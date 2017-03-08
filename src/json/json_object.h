@@ -296,35 +296,6 @@ namespace format
     { return shared_undefined::instance (); }
 
     /**
-      FIXME: IF REMOVED:
-
-      !!!FAILURES!!!
-      Test Results:
-      Run:  93   Failures: 2   Errors: 0
-
-
-      1) test: test_assign_copy (F) line: 233 ../../src/tests/json_value_test.h
-      equality assertion failed
-      - Expected: 3
-      - Actual  : 2
-      - test_assign_copy: idx[0] = 1: v.type ()
-
-
-      2) test: test_assign_all_values (F) line: 285 ../../src/tests/json_object_test.h
-      equality assertion failed
-      - Expected: 2
-      - Actual  : 1
-      - test_assign_all_values: idx[0] = 1: old_value.parent.count ()
-
-     * @brief _assign
-     * @param nv
-     * @return
-     */
-    virtual value &
-    _assign (const value & nv) override
-    { return value::_assign (nv); }
-
-    /**
      * @brief assign
      * @param ov
      * @param nv

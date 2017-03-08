@@ -268,35 +268,6 @@ namespace format
     _assign (const array & nv);
 
    /**
-    FIXME: IF REMOVED:
-
-    !!!FAILURES!!!
-    Test Results:
-    Run:  93   Failures: 2   Errors: 0
-
-
-    1) test: test_assign_copy (F) line: 233 ../../src/tests/json_value_test.h
-    equality assertion failed
-    - Expected: 4
-    - Actual  : 3
-    - test_assign_copy: idx[0] = 2: v.type ()
-
-
-    2) test: test_assign_all_values (F) line: 190 ../../src/tests/json_array_test.h
-    equality assertion failed
-    - Expected: 2
-    - Actual  : 1
-    - test_assign_all_values: idx[0] = 1: old_value.parent.count ()
-
-    * @brief _assign
-    * @param nv
-    * @return
-    */
-    virtual value &
-    _assign (const value & nv)
-    { return value::_assign (nv); }
-
-   /**
     * @brief assign
     * @param ov
     * @param nv

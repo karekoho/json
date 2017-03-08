@@ -13,13 +13,11 @@ format::array::array (const wchar_t *text)
 
 format::array::array(std::initializer_list<value *> il)
   : json (), _element_list (il)
-{
-}
+{}
 
 format::array::array (json *parent)
   : json (parent)
-{
-}
+{}
 
 format::array::array (const array &other)
   : json (other)
@@ -84,7 +82,6 @@ format::array::_parse (const wchar_t *json)
           if ((v = _call_reviver (v, 0, next_idx))->type () != value::undefined_t)
             {
               _element_list.push_back (v);
-              // v->set_index (next_idx);
               call__set_index__ (v, next_idx);
             }
         }
@@ -104,7 +101,6 @@ format::array::_parse (const wchar_t *json)
       else if ((v = _call_reviver (v, 0, next_idx))->type () != value::undefined_t)  // Value found
         {
           _element_list.push_back (v);
-          // v->set_index (next_idx);
           call__set_index__ (v, next_idx);
         }
     }

@@ -239,7 +239,6 @@ public:
         delete (*it).val;
     }
 
-
     virtual void
     test_operator_at_index () override
     {
