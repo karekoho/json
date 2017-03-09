@@ -76,7 +76,7 @@ namespace format
      * @return
      */
     virtual value *
-    clone (const value *ov) const override
+    _clone (const value *ov) const override
     { return new object (ov, *this); }
 
     /**

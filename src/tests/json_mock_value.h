@@ -62,7 +62,7 @@ namespace format
       { return *this; }
 
       virtual value *
-      clone (const value *) const override
+      _clone (const value *) const override
       { return new json_mock_value (*this); }
 
   protected:

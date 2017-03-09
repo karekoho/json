@@ -170,7 +170,7 @@ namespace format
      * @return
      */
     virtual value *
-    clone (const value *) const override
+    _clone (const value *) const override
     { return new json (*this); }
 
   protected:

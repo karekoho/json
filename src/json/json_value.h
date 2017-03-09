@@ -105,7 +105,7 @@ namespace format
      */
     inline value &
     operator =(value *v)
-    { return _assign(v); }
+    { return _assign (v); }
 
     /**
      * @brief operator =
@@ -454,7 +454,7 @@ namespace format
      * @return
      */
     virtual value *
-    clone (const value *ov) const = 0;
+    _clone (const value *ov) const = 0;
 
     /**
      * TODO: rename to *** _clone ***
