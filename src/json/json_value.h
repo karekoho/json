@@ -299,7 +299,7 @@ namespace format
      * @return
      */
     value &
-    _assign (value * nv);
+    _assign (value *nv);
 
     /**
      * If value has parent object, assign to new value to this->_parent->[key],
@@ -446,8 +446,6 @@ namespace format
     value (const value *ov, const value &nv);
 
     /**
-     * TODO: rename to *** _clone ***
-     *
      * @brief clone Call object copy constructor from Value interface: Value *v->clone ().
      * Store previous key|index=>value for deletion.
      * @param ov  previous key|index=>value
@@ -457,8 +455,6 @@ namespace format
     _clone (const value *ov) const = 0;
 
     /**
-     * TODO: rename to *** _clone ***
-     *
      * @brief _clone  Called by copy constructor
      * @param other
      * @return

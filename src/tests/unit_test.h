@@ -181,6 +181,9 @@ public:
   void clear ()
   { _clear (); }
 
+  void _clear ()
+  { _member_list.clear (); }
+
   /**
    * @brief assign
    * @param ov
@@ -222,6 +225,10 @@ class array_accessor : public format::array
    */
   void clear ()
   { _clear (); }
+
+  void _clear ()
+  { _element_list.clear (); }
+
 };  // Class array_accessor
 
 class value_accessor : public format::value

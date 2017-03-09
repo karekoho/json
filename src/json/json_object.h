@@ -40,7 +40,9 @@ namespace format
      */
     object (std::initializer_list<std::pair<std::wstring, value *>> il);
 
-  /**
+    /**
+     * TODO: protected
+     *
      * @brief Object
      * @param endp
      * @param parent
@@ -55,13 +57,6 @@ namespace format
     object (const object &other);
 
     /**
-     * @brief Object
-     * @param ov
-     * @param nv
-     */
-    object (const value *ov, const object &nv);
-
-    /**
      * @brief clone
      * @param other
      * @return
@@ -69,15 +64,6 @@ namespace format
     virtual value *
     clone () const override
     { return new object (*this); }
-
-    /**
-     * @brief clone
-     * @param ov
-     * @return
-     */
-    virtual value *
-    _clone (const value *ov) const override
-    { return new object (ov, *this); }
 
     /**
      * @brief ~Object
@@ -258,6 +244,29 @@ namespace format
     mutable member_list _member_list;
 
     /**
+     * @brief Object
+     * @param ov
+     * @param nv
+     */
+    object (const value *ov, const object &nv);
+
+    /**
+     * @brief clone
+     * @param ov
+     * @return
+     */
+    virtual value *
+    _clone (const value *ov) const override
+    { return new object (ov, *this); }
+
+    /**
+     * @brief _clone
+     * @return
+     */
+    virtual value *
+    _clone (const value &other) override;
+
+    /**
      * @brief parse
      * @param JSON
      * @return
@@ -308,13 +317,6 @@ namespace format
      */
     virtual void
     _clear () override;
-
-    /**
-     * @brief _clone
-     * @return
-     */
-    virtual value *
-    _clone (const value &other) override;
 
     /**
      * @brief _sizeof
