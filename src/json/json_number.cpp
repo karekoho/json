@@ -49,7 +49,7 @@ format::number::number (const number &other)
    _digitp {{ 0, 0 }, { 0, 0 }},
    _is_double (false)
 {
-  (void) clone (other);
+  (void) _clone (other);
 }
 
 format::number::number (const value *ov, const number &nv)
@@ -59,7 +59,7 @@ format::number::number (const value *ov, const number &nv)
   _digitp {{ 0, 0 }, { 0, 0 }},
   _is_double (false)
 {
-  (void) clone (nv);
+  (void) _clone (nv);
 }
 
 const wchar_t *
@@ -198,7 +198,7 @@ format::number::_clear ()
 }
 
 format::value *
-format::number::clone (const value &other)
+format::number::_clone (const value &other)
 {
   const number & nv = dynamic_cast<const number &>(other);
 

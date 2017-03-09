@@ -135,7 +135,7 @@ namespace format
      * @return
      */
     virtual value *
-    clone (const value &) override
+    _clone (const value &) override
     { return new undefined (*this); }
 
     /**

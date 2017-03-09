@@ -26,14 +26,14 @@ format::string::string (const string &other)
   : leaf (other),
     _charc (other._charc)
 {
-  clone (other);
+  _clone (other);
 }
 
 format::string::string (const value *ov, const string &nv)
   : leaf (ov, nv),
     _charc (nv._charc)
 {
-  clone (nv);
+  _clone (nv);
 }
 
 const wchar_t *
@@ -61,7 +61,7 @@ format::string::_parse (const wchar_t *json)
 format::value &
 format::string::_assign (const string &nv)
 {
-  return _parent ? _parent->_assign (this, new string (this, nv)) : *(clone (nv));
+  return _parent ? _parent->_assign (this, new string (this, nv)) : *(_clone (nv));
 }
 
 const wchar_t *
@@ -100,7 +100,7 @@ format::string::str_value (wchar_t *) const
 }
 
 format::value *
-format::string::clone (const value &nv)
+format::string::_clone (const value &nv)
 {
   const string & s = dynamic_cast<const string &> (nv);
 

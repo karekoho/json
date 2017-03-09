@@ -22,13 +22,13 @@ format::array::array (json *parent)
 format::array::array (const array &other)
   : json (other)
 {
-  (void) clone (other);
+  (void) _clone (other);
 }
 
 format::array::array (const value *ov, const array &nv)
   : json (ov, nv)
 {
-  (void) clone (nv);
+  (void) _clone (nv);
 }
 
 format::array::~array ()
@@ -111,7 +111,7 @@ format::array::_parse (const wchar_t *json)
 format::value &
 format::array::_assign (const array &nv)
 {
-  return _parent ? _parent->_assign (this, new array (this, nv)) : *(clone (nv));
+  return _parent ? _parent->_assign (this, new array (this, nv)) : *(_clone (nv));
 }
 
 format::value &
@@ -153,7 +153,7 @@ format::array::_clear ()
 }
 
 format::value *
-format::array::clone (const value &other)
+format::array::_clone (const value &other)
 {
   const array & nv = dynamic_cast<const array &> (other);
 

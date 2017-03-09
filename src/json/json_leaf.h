@@ -253,7 +253,7 @@ namespace format
      * @return
      */
     virtual value *
-    clone (const value &) = 0;
+    _clone (const value &) = 0;
   };
 }
 #endif // LEAF_H

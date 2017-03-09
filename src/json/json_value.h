@@ -464,7 +464,7 @@ namespace format
      * @return
      */
     virtual value *
-    clone (const value &other) = 0;
+    _clone (const value &other) = 0;
 
     /**
      * @brief _look_ahead Move read pointer to next non-white space character

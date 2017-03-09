@@ -79,7 +79,7 @@ namespace format
       {}
 
       virtual value *
-      clone (const value &) override
+      _clone (const value &) override
       { return this; }
 
       virtual size_t

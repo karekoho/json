@@ -22,13 +22,13 @@ format::object::object (json *parent)
 format::object::object (const object &other)
   : json(other)
 {
-  (void) clone (other);
+  (void) _clone (other);
 }
 
 format::object::object (const value *ov, const object &nv)
   : json (ov, nv)
 {
-  (void) clone (nv);
+  (void) _clone (nv);
 }
 
 format::object::~object ()
@@ -140,7 +140,7 @@ format::object::iterator () const
 format::value &
 format::object::_assign (const object &nv)
 {
-  return _parent ? _parent->_assign (this, new object (this, nv)) : *(clone (nv));
+  return _parent ? _parent->_assign (this, new object (this, nv)) : *(_clone (nv));
 }
 
 format::value &
@@ -184,7 +184,7 @@ format::object::_clear ()
 }
 
 format::value *
-format::object::clone (const value &other)
+format::object::_clone (const value &other)
 {
   const object & nv = static_cast<const object &>(other);
 

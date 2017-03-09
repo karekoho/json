@@ -168,7 +168,7 @@ namespace format
      * @return
      */
     virtual value *
-    clone (const value &nv) override;
+    _clone (const value &nv) override;
 
     /**
      * @brief _sizeof

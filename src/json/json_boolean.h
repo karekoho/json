@@ -132,7 +132,7 @@ namespace format
       */
       value &
       _assign (const boolean & nv)
-      { return _parent ? _parent->_assign (this, new boolean (nv)) : *(clone (nv)); }
+      { return _parent ? _parent->_assign (this, new boolean (nv)) : *(_clone (nv)); }
 
      /**
       * @brief value
@@ -176,7 +176,7 @@ namespace format
       * @return
       */
       virtual value *
-      clone (const value &other) override
+      _clone (const value &other) override
       {
         _boolean_value = dynamic_cast<const boolean &>(other)._boolean_value;
         return this;

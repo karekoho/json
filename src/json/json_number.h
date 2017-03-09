@@ -227,7 +227,7 @@ namespace format
      */
     value &
     _assign (const number & nv)
-    { return _parent  ? _parent->_assign (this, new number (this, nv)) : *(clone (nv)); }
+    { return _parent  ? _parent->_assign (this, new number (this, nv)) : *(_clone (nv)); }
 
     /**
      * @brief _clear
@@ -252,7 +252,7 @@ namespace format
      * @return
      */
     virtual value *
-    clone (const value &other);
+    _clone (const value &other);
 
     /**
      * @brief _sizeof
