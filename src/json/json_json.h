@@ -4,7 +4,8 @@
 #include "json_value.h"
 #include "json_leaf.h"
 #include "json_exception.h"
-#include "json_shared_undefined.h"
+// #include "json_shared_undefined.h"
+#include "json_undefined.h"
 
 #include <unordered_map>
 #include <vector>
@@ -190,7 +191,7 @@ namespace format
      */
     virtual value &
     _at (const wchar_t *key) override
-    { return __hasRoot() ? (*__root)[key] : format::shared_undefined::instance (); }
+    { return __hasRoot() ? (*__root)[key] : *(new format::undefined ()); }
 
     /**
      * @brief _at
@@ -199,7 +200,7 @@ namespace format
      */
     virtual value &
     _at (size_t index) override
-    { return __hasRoot() ? (*__root)[index] : format::shared_undefined::instance (); }
+    { return __hasRoot() ? (*__root)[index] : *(new format::undefined ()); }
 
     /**
      * @brief _make_value

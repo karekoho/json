@@ -83,14 +83,16 @@ namespace format
     /**
      * @brief operator delete
      */
-    void operator
+    void
+    operator
     delete (void *)
     {/* nop */}
 
     /**
      * @brief operator delete[]
      */
-    void operator
+    void
+    operator
     delete[] (void *)
     {/* nop */}
 
@@ -155,7 +157,6 @@ namespace format
     { return L""; }
 
   protected:
-
     /**
      * @brief _clear
      */
@@ -186,6 +187,9 @@ namespace format
     static  void * __instance;
   }; // Class undefined
 
+  /**
+   * @brief The unique_undefined class
+   */
   class unique_undefined : public undefined
   {
   public:
@@ -248,15 +252,15 @@ namespace format
     /**
      * @brief operator delete
      */
-    void operator
-    delete (void *ptr)
+    void
+    operator delete (void *ptr)
     { ::operator delete (ptr); }
 
     /**
      * @brief operator delete[]
      */
-    void operator
-    delete[] (void *ptr)
+    void
+    operator delete[] (void *ptr)
     { ::operator delete (ptr); }
 
     protected:
@@ -269,5 +273,50 @@ namespace format
     _clone (const value *ov) const override
     { return new unique_undefined (ov, *this); }
   };
+
+  /**
+   * @brief The No_Value class
+   */
+  class no_value : public unique_undefined
+  {
+  public:
+
+    /**
+     * @brief ~no_value
+     */
+    virtual ~no_value () = default;
+
+    /**
+     * @brief type
+     * @return
+     */
+    virtual value_t
+    type () const noexcept override
+    { return value::value_t::no_value_t; }
+
+    /**
+     * @brief instance
+     * @param parent
+     * @return
+     */
+    static value *
+    instance (json *parent);
+
+  protected:
+
+    /**
+     * @brief No_Value
+     */
+    no_value (json *parent)
+      : unique_undefined (parent)
+    {}
+
+  private:
+
+    /**
+     * @brief __instance
+     */
+    static no_value *__instance;
+  }; // Class no_value
 } // Namespace format
 #endif // UNDEFINED_H

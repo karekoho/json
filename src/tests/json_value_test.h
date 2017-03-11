@@ -378,7 +378,7 @@ namespace format
           { new boolean (), sizeof (boolean), PASS },
           { new null (), sizeof (null), PASS },
           { new undefined (), sizeof (undefined), PASS },
-          { & shared_undefined::instance (), sizeof (shared_undefined), PASS },
+          { new format::undefined (), sizeof (format::undefined), PASS },
           { no_value::instance (& parent), sizeof (no_value), PASS }
         };
 

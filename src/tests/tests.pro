@@ -30,7 +30,7 @@ SOURCES += main.cpp \
     ../json/json_object_iterator.cpp \
     ../json/json_leaf_iterator.cpp \
     ../json/json_array_iterator.cpp \
-    ../json/json_shared_undefined.cpp
+    #../json/json_shared_undefined.cpp
 
 HEADERS += \
     json_value_test_interface.h \
@@ -63,7 +63,6 @@ HEADERS += \
     ../json/json_leaf_iterator.h \
     ../json/json_array_iterator.h \
     json_leaf_test.h \
-    ../json/json_shared_undefined.h \
     test_selector.h \
     test_selector_test.h \
     ../json/json_exception.h \

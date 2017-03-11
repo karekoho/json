@@ -23,11 +23,11 @@ namespace format
 
       virtual value &
       at (const wchar_t *) const
-      { return shared_undefined::instance (); }
+      { return *(new format::undefined ()); }
 
       virtual value &
       at (size_t) const
-      { return shared_undefined::instance (); }
+      { return *(new format::undefined ()); }
 
       virtual value::value_t
       type () const noexcept
@@ -69,11 +69,11 @@ namespace format
 
       virtual  value &
       _at (const wchar_t *)
-      { return shared_undefined::instance (); }
+      { return *(new format::undefined ()); }
 
       virtual  value &
       _at (size_t)
-      { return shared_undefined::instance (); }
+      { return *(new format::undefined ()); }
 
       virtual void _clear () override
       {}

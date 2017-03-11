@@ -302,7 +302,7 @@ namespace format
      * @return
      */
     virtual value & _at (size_t) override
-    { return shared_undefined::instance (); }
+    { return *(new format::undefined ()); }
 
     /**
      * @brief assign

@@ -16,7 +16,7 @@ namespace format
     virtual void
     test_ctor_dtor () override
     {
-      json *p[] = { 0, new json };
+      json *p[] = { 0, new json () };
 
       for (size_t pidx = 0; pidx < 2; pidx++)
         {
@@ -28,18 +28,18 @@ namespace format
 
       delete p[1];
 
-      format::undefined src;
-      format::undefined copy = src;
+      format::unique_undefined src;
+      format::unique_undefined copy = src;
 
-      format::undefined *up[] = {
+      format::undefined *u[] = {
         new format::undefined (),
         new format::undefined ()
       };
 
-      delete up[0];
-      up[0] = new format::undefined () ;
+      delete u[0];
+      u[0] = new format::undefined () ;
 
-      CPPUNIT_ASSERT_MESSAGE ("new () == new ()", up[0] == up[1]);
+      CPPUNIT_ASSERT_MESSAGE ("new () == new ()", u[0] == u[1]);
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("undefined::type ()", json::undefined_t, src.type ());
       CPPUNIT_ASSERT_MESSAGE ("undefined", & copy != & src);
     }
@@ -121,7 +121,7 @@ namespace format
             delete (*it).new_value;
     }
 
-    void
+    /* void
     test_shared_undefined ()
     {
       shared_undefined & u = shared_undefined::instance ();
@@ -131,7 +131,7 @@ namespace format
 
       CPPUNIT_ASSERT_MESSAGE ("instance () > 0", (& shared_undefined::instance ()));
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("instance () == instance ()",  & shared_undefined::instance (), & shared_undefined::instance ());
-    }
+    } */
 
     virtual void
     test_parse_1 () override
@@ -170,11 +170,11 @@ namespace format
 
       /* 0. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_ctor_dtor", &json_undefined_test::test_ctor_dtor));
       /* 1. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_assign_all_values", &json_undefined_test::test_assign_all_values));
-      /* 2. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_shared_undefined", &json_undefined_test::test_shared_undefined));
-      /* 3. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_parse_1", &json_undefined_test::test_parse_1));
-      /* 4. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_str_length", &json_undefined_test::test_str_length));
-      /* 5. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_str_value", &json_undefined_test::test_str_value));
-      /* 6. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test__clear", &json_undefined_test::test__clear));
+      /* 2. */  // s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_shared_undefined", &json_undefined_test::test_shared_undefined));
+      /* 2. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_parse_1", &json_undefined_test::test_parse_1));
+      /* 3. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_str_length", &json_undefined_test::test_str_length));
+      /* 4. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_str_value", &json_undefined_test::test_str_value));
+      /* 5. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test__clear", &json_undefined_test::test__clear));
 
       return s;
     }
