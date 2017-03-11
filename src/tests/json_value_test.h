@@ -164,7 +164,7 @@ namespace format
       }
 
       void
-      test_assign_undefined ()
+      test_operator_assign_undefined ()
       {
         boolean b;
 
@@ -177,19 +177,17 @@ namespace format
           int assert_status;
         };
 
-        size_t index = 0;
-
         std::vector<struct assert> test = {
           { & b, 1, PASS }, // No parent
-          { & (a[index]), 0, PASS }  // Has parent
+          { & (a[(size_t) 0]), 0, PASS }  // Has parent
         };
 
         TEST_IT_START
-
-            (*it).val->_assign (format::undefined ());
-
-            ASSERT_EQUAL_IDX ("a.count ()", (*it).size, a.count ());
-
+            *(*it).val = format::undefined ();
+            ASSERT_EQUAL_IDX ("array::count ()",
+                              (*it).size,
+                              a.count ()
+                              );
         TEST_IT_END;
       }
 
@@ -402,7 +400,7 @@ namespace format
         CppUnit::TestSuite *s = new CppUnit::TestSuite ("json value test");
 
         /* 0. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_copy", &json_value_test::test_assign_copy));
-        /* 1. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_undefined", &json_value_test::test_assign_undefined));
+        /* 1. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_undefined", &json_value_test::test_operator_assign_undefined));
         /* 2. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lookahead", &json_value_test::test__lookahead));
         /* 3. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_literal", &json_value_test::test__is_literal));
         /* 4. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_quoted", &json_value_test::test__string));
