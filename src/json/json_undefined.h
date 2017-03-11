@@ -4,7 +4,7 @@
 #include "json_leaf.h"
 
 namespace format
-  {
+{
   #ifdef UNIT_TEST
     class json_undefined_test;
   #endif
@@ -53,6 +53,48 @@ namespace format
     virtual ~undefined () override = default;
 
     /**
+     * @brief operator new
+     * @param size
+     * @return
+     */
+    static void *
+    operator new (std::size_t size)
+    {
+      if (__instance == 0)
+        __instance = ::operator new (size);
+
+      return __instance;
+    }
+
+    /**
+     * @brief operator new[]
+     * @param size
+     * @return
+     */
+    static void *
+    operator new[] (std::size_t size)
+    {
+      if (__instance == 0)
+        __instance = ::operator new[] (size);
+
+      return __instance;
+    }
+
+    /**
+     * @brief operator delete
+     */
+    void operator
+    delete (void *)
+    {/* nop */}
+
+    /**
+     * @brief operator delete[]
+     */
+    void operator
+    delete[] (void *)
+    {/* nop */}
+
+    /**
      * @brief clone
      * @param other
      * @return
@@ -97,15 +139,6 @@ namespace format
     { return value::value_t::undefined_t; }
 
     /**
-     * @brief operator =
-     * @param v
-     * @return
-     */
-//    inline value &
-//    operator =(const value & v)
-//    { return value::_assign (v);  }
-
-    /**
      * @brief strLength
      * @return
      */
@@ -146,6 +179,11 @@ namespace format
     _sizeof () const noexcept
     { return sizeof (undefined); }
 
+  private:
+    /**
+     * @brief __instance
+     */
+    static  void * __instance;
   }; // Namespace format
 }
 #endif // UNDEFINED_H

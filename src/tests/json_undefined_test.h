@@ -24,9 +24,6 @@ namespace format
             new format::undefined,
             new format::undefined (p[pidx]),
           };
-
-          delete u[0];
-          delete u[1];
         }
 
       delete p[1];
@@ -34,6 +31,15 @@ namespace format
       format::undefined src;
       format::undefined copy = src;
 
+      format::undefined *up[] = {
+        new format::undefined (),
+        new format::undefined ()
+      };
+
+      delete up[0];
+      up[0] = new format::undefined () ;
+
+      CPPUNIT_ASSERT_MESSAGE ("new () == new ()", up[0] == up[1]);
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("undefined::type ()", json::undefined_t, src.type ());
       CPPUNIT_ASSERT_MESSAGE ("undefined", & copy != & src);
     }
