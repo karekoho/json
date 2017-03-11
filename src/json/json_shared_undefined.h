@@ -8,7 +8,7 @@ namespace format
   /**
    * @brief The Shared_Undefined class
    */
-  class shared_undefined : public undefined
+  class shared_undefined : public unique_undefined
   {
   public:
 
@@ -35,7 +35,7 @@ namespace format
      * @brief Shared_Undefined
      */
     shared_undefined ()
-      : undefined ()
+      : unique_undefined ()
     {
     }
 
@@ -44,7 +44,7 @@ namespace format
      * @param parent
      */
     shared_undefined (json *parent)
-      :  undefined (parent)
+      :  unique_undefined (parent)
     {
     }
 

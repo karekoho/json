@@ -311,7 +311,7 @@ public:
   {
     switch (v->type ()) {
       case  value::value_t::null_t:
-        return new format::undefined;
+        return new format::undefined ();
 
       case value::value_t::object_t:
       case value::value_t::array_t:

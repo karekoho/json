@@ -152,7 +152,7 @@ format::object::_at (const wchar_t *key)
     }
   catch (std::out_of_range &)
     {
-      value *v = new undefined (this);
+      value *v = new unique_undefined (this);
 
       call__set_key__ (v, key, wcslen (key));
       _member_list.emplace (key, v);

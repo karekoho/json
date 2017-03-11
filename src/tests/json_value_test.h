@@ -209,13 +209,13 @@ namespace format
         };
 
         std::vector<struct assert> test = {
-          { new object, value::object_t, PASS },
-          { new array, value::array_t, PASS },
-          { new string, value::string_t, PASS },
-          { new number, value::number_t, PASS },
-          { new boolean, value::boolean_t, PASS },
-          { new null, value::null_t, PASS },
-          { new format::undefined, value::undefined_t, PASS }
+          { new object (), value::object_t, PASS },
+          { new array (), value::array_t, PASS },
+          { new string (), value::string_t, PASS },
+          { new number (), value::number_t, PASS },
+          { new boolean (), value::boolean_t, PASS },
+          { new null (), value::null_t, PASS },
+          { new unique_undefined (), value::undefined_t, PASS }
         };
 
         for (size_t hdx = 0; hdx < 2; hdx++)
@@ -264,7 +264,7 @@ namespace format
               { new number, value::number_t, PASS },
               { new boolean, value::boolean_t, PASS },
               { new null, value::null_t, PASS },
-              { new format::undefined, value::undefined_t, PASS }
+              { new format::unique_undefined, value::undefined_t, PASS }
             };
 
             _idx[0] = 0;

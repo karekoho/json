@@ -268,7 +268,7 @@ namespace format
                   object *old_value = new object ();
                   old_value->_parent = parents[pidx];
 
-                  (*it).index  = array_parent.push (new format::undefined ());
+                  (*it).index  = array_parent.push (new format::unique_undefined ());
 
                   old_value->_set_index ((*it).index);
                   old_value->_set_key ((*it).key, wcslen ((*it).key));

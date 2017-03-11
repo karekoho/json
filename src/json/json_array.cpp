@@ -123,7 +123,7 @@ format::array::_at (size_t index)
     }
   catch (std::out_of_range &)
     {
-      value *v = new undefined (this);
+      value *v = new unique_undefined (this);
 
       _element_list.push_back (v);      
       call__set_index__ (v, _element_list.size () - 1);

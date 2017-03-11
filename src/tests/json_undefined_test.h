@@ -20,9 +20,9 @@ namespace format
 
       for (size_t pidx = 0; pidx < 2; pidx++)
         {
-          format::undefined *u[] = {
-            new format::undefined,
-            new format::undefined (p[pidx]),
+          format::unique_undefined *uu[] = {
+            new format::unique_undefined (),
+            new format::unique_undefined (p[pidx]),
           };
         }
 
@@ -90,10 +90,10 @@ namespace format
                   if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
 
                   /** old_value: value from value[key] */
-                  format::undefined *old_value = new format::undefined ();
+                  format::unique_undefined *old_value = new format::unique_undefined ();
                   old_value->_parent = parents[pidx];
 
-                  (*it).index  = array_parent.push (new format::undefined ());
+                  (*it).index  = array_parent.push (new format::unique_undefined ());
                   old_value->_set_index ((*it).index);
                   old_value->_set_key ((*it).key, wcslen ((*it).key));
 

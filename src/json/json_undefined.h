@@ -184,6 +184,90 @@ namespace format
      * @brief __instance
      */
     static  void * __instance;
-  }; // Namespace format
-}
+  }; // Class undefined
+
+  class unique_undefined : public undefined
+  {
+  public:
+    /**
+     * @brief unique_undefined
+     */
+    unique_undefined ()
+     : undefined ()
+    {}
+
+    /**
+     * @brief unique_undefined
+     * @param parent
+     */
+    unique_undefined (json *parent)
+     : undefined (parent)
+    {}
+
+    /**
+     * @brief Undefined
+     * @param other
+     */
+    unique_undefined (const unique_undefined &other) = default;
+
+    /**
+     * @brief Undefined
+     * @param ov
+     * @param nv
+     */
+    unique_undefined (const value *ov, const unique_undefined &nv)
+      : undefined (ov, nv)
+    {}
+
+    /**
+     * @brief clone
+     * @return
+     */
+    virtual value *
+    clone () const
+    { return new unique_undefined (*this); }
+
+    /**
+     * @brief operator new
+     * @param size
+     * @return
+     */
+    static void *
+    operator new (std::size_t size)
+    { return ::operator new (size); }
+
+    /**
+     * @brief operator new[]
+     * @param size
+     * @return
+     */
+    static void *
+    operator new[] (std::size_t size)
+    { return ::operator new[] (size); }
+
+    /**
+     * @brief operator delete
+     */
+    void operator
+    delete (void *ptr)
+    { ::operator delete (ptr); }
+
+    /**
+     * @brief operator delete[]
+     */
+    void operator
+    delete[] (void *ptr)
+    { ::operator delete (ptr); }
+
+    protected:
+    /**
+     * @brief clone
+     * @param ov
+     * @return
+     */
+    virtual value *
+    _clone (const value *ov) const override
+    { return new unique_undefined (ov, *this); }
+  };
+} // Namespace format
 #endif // UNDEFINED_H
