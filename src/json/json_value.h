@@ -39,7 +39,7 @@ namespace format
      */
     enum value_t
     {
-      no_value_t,
+      no_value_t = 0,
       undefined_t,
       object_t,
       array_t,

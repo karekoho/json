@@ -141,7 +141,7 @@ format::array::_assign (value *ov, value *nv)
 
   call__set_index__ (nv, index);
   call__set_parent__(nv, this);
-
+  //delete ov;
   return *this;
 }
 

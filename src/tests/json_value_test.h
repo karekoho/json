@@ -38,7 +38,7 @@ namespace format
 
           const wchar_t *startp = (*it).startp;
 
-          format::json_mock_value *m  = new format::json_mock_value;
+          format::json_mock_value *m  = new format::json_mock_value ();
 
           m->_startp = m->_readp = startp;
 
@@ -80,7 +80,7 @@ namespace format
             const wchar_t *startp = (*it).startp;
             long int charc = wcslen (startp);
 
-            json_mock_value *m  = new json_mock_value;
+            json_mock_value *m  = new json_mock_value ();
 
             m->_startp = m->_readp = startp;
 
@@ -118,7 +118,7 @@ namespace format
 
             const wchar_t *startp = (*it).startp;
 
-            json_mock_value *m  = new json_mock_value;
+            json_mock_value *m  = new json_mock_value ();
 
             m->_startp = m->_readp = startp;
 
@@ -161,6 +161,7 @@ namespace format
         CPPUNIT_ASSERT_MESSAGE ("starp", wcscmp (L"abb\"ccc\"", startp) == 0);
 
         delete[] startp;
+        // delete dst;
       }
 
       void
@@ -206,14 +207,24 @@ namespace format
           int assert_status;
         };
 
+//        std::vector<struct assert> test = {
+//          { new object (), value::object_t, PASS },
+//          { new array (), value::array_t, PASS },
+//          { new string (), value::string_t, PASS },
+//          { new number (), value::number_t, PASS },
+//          { new boolean (), value::boolean_t, PASS },
+//          { new null (), value::null_t, PASS },
+//          { new unique_undefined (), value::undefined_t, PASS }
+//        };
+
         std::vector<struct assert> test = {
-          { new object (), value::object_t, PASS },
-          { new array (), value::array_t, PASS },
-          { new string (), value::string_t, PASS },
-          { new number (), value::number_t, PASS },
-          { new boolean (), value::boolean_t, PASS },
-          { new null (), value::null_t, PASS },
-          { new unique_undefined (), value::undefined_t, PASS }
+          { __VALUE[value::object_t], value::object_t, PASS },
+          { __VALUE[value::array_t], value::array_t, PASS },
+          { __VALUE[value::string_t], value::string_t, PASS },
+          { __VALUE[value::number_t], value::number_t, PASS },
+          { __VALUE[value::boolean_t], value::boolean_t, PASS },
+          { __VALUE[value::null_t], value::null_t, PASS },
+          { __VALUE[value::undefined_t], value::undefined_t, PASS }
         };
 
         for (size_t hdx = 0; hdx < 2; hdx++)
@@ -234,8 +245,8 @@ namespace format
             TEST_IT_END;
           }
 
-        for (auto it = test.begin (); it != test.end (); ++it)
-          delete (*it).val;
+//        for (auto it = test.begin (); it != test.end (); ++it)
+//          delete (*it).val;
       }
 
       void
@@ -256,13 +267,13 @@ namespace format
         for (size_t hdx = 0; hdx < 2; hdx++)
           {
             std::vector<struct assert> test = {
-              { new object, value::object_t, PASS },
-              { new array, value::array_t, PASS },
-              { new string, value::string_t, PASS },
-              { new number, value::number_t, PASS },
-              { new boolean, value::boolean_t, PASS },
-              { new null, value::null_t, PASS },
-              { new format::unique_undefined, value::undefined_t, PASS }
+              { new object (), value::object_t, PASS },
+              { new array (), value::array_t, PASS },
+              { new string (), value::string_t, PASS },
+              { new number (), value::number_t, PASS },
+              { new boolean (), value::boolean_t, PASS },
+              { new null (), value::null_t, PASS },
+              { new format::unique_undefined (), value::undefined_t, PASS }
             };
 
             _idx[0] = 0;

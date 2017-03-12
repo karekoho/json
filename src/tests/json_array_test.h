@@ -1,4 +1,4 @@
-#ifndef JSON_ARRAY_TEST
+﻿#ifndef JSON_ARRAY_TEST
 #define JSON_ARRAY_TEST
 
 #include "json_test.h"
@@ -144,13 +144,24 @@ namespace format
         int assert_status[3];
       };
 
+//      std::vector<struct assert > test = {
+//        { new array (L"[true,false]"), value::array_t, L"key_2",  0, 1,  { PASS, PASS, PASS } },
+//        { new object (L"{\"k1\":true,\"k2\":false}"), value::object_t, L"key_1",  0, 2,  { PASS, PASS, FAIL } },
+//        { new string (L"x"), value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
+//        { new number (), value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
+//        { new boolean (true), value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
+//        { new null (), value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
+//      };
+
+      array a (L"[true,false]");
+
       std::vector<struct assert > test = {
-        { new array (L"[true,false]"), value::array_t, L"key_2",  0, 1,  { PASS, PASS, PASS } },
-        { new object (L"{\"k1\":true,\"k2\":false}"), value::object_t, L"key_1",  0, 2,  { PASS, PASS, FAIL } },
-        { new string (L"x"), value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
-        { new number (), value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-        { new boolean (true), value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
-        { new null (), value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
+        { & a, value::array_t, L"key_2",  0, 1,  { PASS, PASS, PASS } },
+        { __VALUE[value::object_t], value::object_t, L"key_1",  0, 2,  { PASS, PASS, FAIL } },
+        { __VALUE[value::string_t], value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
+        { __VALUE[value::number_t], value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
+        { __VALUE[value::boolean_t], value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
+        { __VALUE[value::null_t], value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
       };
 
         for (size_t pidx = 0; pidx < 3; pidx++)
@@ -207,8 +218,8 @@ namespace format
             TEST_IT_END;
           }
 
-          for (auto it = test.begin (); it != test.end (); ++it)
-            delete (*it).new_value;
+//          for (auto it = test.begin (); it != test.end (); ++it)
+//            delete (*it).new_value;
     }
 
     virtual void

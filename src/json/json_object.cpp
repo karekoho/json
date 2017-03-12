@@ -170,7 +170,7 @@ format::object::_assign (value *ov, value *nv)
 
   call__set_key__ (nv, key, wcslen (key));
   call__set_parent__ (nv, this);
-
+  //delete ov;
   return *this;
 }
 

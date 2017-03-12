@@ -139,6 +139,19 @@ protected:
   size_t _idx[5];
 
   char _sz_idx[300];
+
+//  static format::no_value   *__NO_VALUE;
+//  static format::undefined  *__UNDEFINED;
+//  static format::object   *__OBJECT;
+//  static format::array    *__ARRAY;
+
+//  static format::string   *__STRING;
+//  static format::number   *__NUMBER;
+//  static format::boolean  *__BOOLEAN;
+//  static format::null     *__NULL;
+  static format::json     *__JSON;
+
+  static format::value    *__VALUE[];
 }; // Class unit_test
 
 /**
@@ -236,6 +249,19 @@ class value_accessor : public format::value
 public:
   void set_parent (format::json *parent)
   { _set_parent (parent); }
+};
+
+format::json * unit_test::__JSON = new format::json ();
+
+format::value * unit_test::__VALUE[] = {
+     format::no_value::instance (unit_test::__JSON),
+      new format::unique_undefined (),
+      new format::object (),
+      new format::array (),
+      new format::string (),
+      new format::number (),
+      new format::boolean (),
+      new format::null (),
 };
 
 #endif // UNIT_TEST
