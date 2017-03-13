@@ -279,6 +279,7 @@ format::object::erase (const value & v) noexcept
     return *this;
 
   (void) _member_list.erase (it);
+  delete & v;
 
   return *this;
 }

@@ -69,11 +69,11 @@ format::json::json (const value *ov, const json &nv)
 
 format::json::~json ()
 {
-  if (_parent == 0 && _str_value[BEGIN])
-    {
+  //if (_parent == 0 && _str_value[BEGIN])
+    //{
       delete[] _str_value[BEGIN];
       _str_value[BEGIN] = 0;
-    }
+    //}
   delete __root;
 }
 
@@ -133,22 +133,24 @@ format::json::_make_value ()
   else if (isdigit (readc) || readc == '-') // Number
     value_ = new number (this);
 
-  else                                      // Literal or Undefined
-    switch (_is_literal ())
-      {
-      case value::_literal::null_value:
-        value_ = new null (this);
-        break;
-      case value::_literal::true_value :
-        value_ = new boolean (this, true);
-        break;
-      case value::_literal::false_value:
-        value_ = new boolean (this, false);
-        break;
-      default:
-        value_ = no_value::instance (this);
-        break;
-      }
+  else
+     {  // Literal or Undefined
+      switch (_is_literal ())
+        {
+          case value::_literal::null_value:
+            value_ = new null (this);
+            break;
+          case value::_literal::true_value :
+            value_ = new boolean (this, true);
+            break;
+          case value::_literal::false_value:
+            value_ = new boolean (this, false);
+            break;
+          default:
+            value_ = no_value::instance (this);
+            break;
+        }
+    }
 
   _readp = call__parse__ (value_, _readp);
 

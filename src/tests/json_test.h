@@ -28,7 +28,7 @@ public:
     json copy = j[1];
 
     CPPUNIT_ASSERT_MESSAGE ("json", & copy != & j[1]);
-    CPPUNIT_ASSERT_EQUAL_MESSAGE ("json.count ()", (size_t) 1, copy.count ());
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::count ()", (size_t) 1, copy.count ());
 
     delete json::parse (L"{}");
   }
@@ -82,11 +82,13 @@ public:
     TEST_IT_END;
   }
 
-  void test_make_value ()
+  void
+  test_make_value ()
   {
     json j;
 
-    struct assert {
+    struct assert
+    {
         const wchar_t *starp;
         value::value_t type;
         size_t move;
@@ -110,13 +112,15 @@ public:
 
         const wchar_t *startp = (*it).starp;
 
-        //j._endp = startp + strlen (startp);
         j._readp = startp;
 
         value *v = j._make_value ();
 
         ASSERT_EQUAL_IDX ("json._readp", startp + (*it).move , j._readp);
         ASSERT_EQUAL_IDX ("value.type ()", (*it).type , v->type ());
+
+        if (v->type () != value::no_value_t)
+          delete v;
 
     TEST_IT_END;
   }
@@ -169,7 +173,7 @@ public:
   virtual void
   test_assign_all_values () override
   {
-    json j;
+    /* json j;
     struct assert
     {
         value *val;
@@ -188,9 +192,9 @@ public:
     };
 
     TEST_IT_START
-        // j = *(*it).val;
-        // ASSERT_EQUAL_IDX ("json.__value->type ()", (*it).type, j.__root->type ());
-    TEST_IT_END;
+        j = *(*it).val;
+        ASSERT_EQUAL_IDX ("json.__value->type ()", (*it).type, j.__root->type ());
+    TEST_IT_END; */
   }
 
   virtual void
@@ -229,7 +233,6 @@ public:
           ASSERT_EQUAL_IDX ("wcslen (value[1])", len[1], wcslen (value[1]));
         }
     TEST_IT_END;
-
   }
 
   virtual void
@@ -248,13 +251,10 @@ public:
      };
 
      TEST_IT_START
-      // TODO: object.at(key)
-      // TODO: object.at(index)
       // TODO: object[key]
       // TODO: object[index]
      TEST_IT_END;
   }
-
 
   void
   test_parse_revive ()
@@ -288,7 +288,6 @@ public:
 
       for (size_t rev_idx = 1; rev_idx < 2; rev_idx++) // Iterate reviver
         {
-
           value *jv = json::parse ((*it).input, reviver[rev_idx]);
 
           size_t output_size = (*it).output[rev_idx].size ();
@@ -302,23 +301,23 @@ public:
               CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->at ().type ()", ov->type (), jvv[std::to_wstring (val_idx).c_str ()].type ());
             }
         }
-
      TEST_IT_END;
   }
 
   static value *
   fn_reviver (const wchar_t *, value *v)
   {
-    switch (v->type ()) {
-      case  value::value_t::null_t:
-        return new format::undefined ();
+    switch (v->type ())
+      {
+        case  value::value_t::null_t:
+          return new format::undefined ();
 
-      case value::value_t::object_t:
-      case value::value_t::array_t:
-        return new null;
+        case value::value_t::object_t:
+        case value::value_t::array_t:
+          return new null;
 
-      default:
-        return v;
+        default:
+          return v;
       }
   }
 
