@@ -111,7 +111,7 @@ format::array::_parse (const wchar_t *json)
 format::value &
 format::array::_assign (const array &nv)
 {
-  return _parent ? _parent->_assign (this, new array (this, nv)) : *(_clone (nv));
+  return _parent ? _parent->_assign (this, new array (/*this,*/ nv)) : *(_clone (nv));
 }
 
 format::value &
@@ -141,7 +141,9 @@ format::array::_assign (value *ov, value *nv)
 
   call__set_index__ (nv, index);
   call__set_parent__(nv, this);
-  //delete ov;
+
+  delete ov;
+
   return *this;
 }
 
@@ -239,6 +241,7 @@ format::array::erase (const value &v) noexcept
     return *this;
 
   (void) _element_list.erase (_element_list.cbegin () + index);
+  delete & v;
 
   return *this;
 }

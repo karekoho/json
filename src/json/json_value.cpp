@@ -57,8 +57,8 @@ format::value::value (const value *ov, const value &nv)
     _index (nv._index),
     _old_value (0)
 {
-  delete nv._old_value;
-  nv._old_value = ov;
+  //delete nv._old_value;
+  //nv._old_value = ov;
 }
 
 format::value::

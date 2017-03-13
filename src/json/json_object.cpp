@@ -140,7 +140,7 @@ format::object::iterator () const
 format::value &
 format::object::_assign (const object &nv)
 {
-  return _parent ? _parent->_assign (this, new object (this, nv)) : *(_clone (nv));
+  return _parent ? _parent->_assign (this, new object (/*this,*/ nv)) : *(_clone (nv));
 }
 
 format::value &
@@ -170,7 +170,9 @@ format::object::_assign (value *ov, value *nv)
 
   call__set_key__ (nv, key, wcslen (key));
   call__set_parent__ (nv, this);
-  //delete ov;
+
+  delete ov;
+
   return *this;
 }
 
