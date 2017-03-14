@@ -64,22 +64,33 @@ public:
         { L" truee ", value::value_t::undefined_t, FAIL },
     };
 
+    json *j = 0;
+
     TEST_IT_START
+          const wchar_t *startp = (*it).starp;
+          size_t charc = wcslen (startp);
 
-      const wchar_t *startp = (*it).starp;
+          j = new json ();
 
-      size_t charc = wcslen (startp);
-      json *j = new json ();
+          const wchar_t * readp = j->_parse (startp);
 
-      const wchar_t * readp = j->_parse (startp);
+          ASSERT_EQUAL_IDX ("json.readp", (*it).starp + (charc), readp);
+          ASSERT_EQUAL_IDX ("*(json.readp)", (wchar_t) 0, *readp);
+          ASSERT_EQUAL_IDX ("json.type ()", (*it).type, j->type ());
 
-      ASSERT_EQUAL_IDX ("json.readp", (*it).starp + (charc), readp);
-      ASSERT_EQUAL_IDX ("*(json.readp)", (wchar_t) 0, *readp);
-      ASSERT_EQUAL_IDX ("json.type ()", (*it).type, j->type ());
+          delete j;
+        }
+      catch (format::json_syntax_error & se)
+        {
+          this->_errorc[ACTUAL]++; std::cerr << se.what () << std::endl;
+          // delete j; // FIXME
+          // FIXME: valgrind: pure virtual method called
+          // terminate called without an active exception
+        }
 
-      delete j;
-
-    TEST_IT_END;
+      (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);
+      CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
+    }
   }
 
   void
@@ -270,7 +281,7 @@ public:
       int assert_status;
     };
 
-    std::vector<struct assert> test = {
+    /* std::vector<struct assert> test = {
       { L"{\"0\":{},\"1\":[],\"2\":\"2\",\"3\":3,\"4\":false,\"5\":null}", {
           { new object, new array, new string, new number, new boolean , new null },
           { new null, new null, new string, new number, new boolean }
@@ -279,6 +290,18 @@ public:
       { L"[{},\[],\"2\",3,false,null]", {
           { new object, new array, new string, new number, new boolean, new null },
           { new null, new null, new string, new number, new boolean }
+        }, PASS },
+      }; */
+
+    std::vector<struct assert> test = {
+      { L"{\"0\":{},\"1\":[],\"2\":\"2\",\"3\":3,\"4\":false,\"5\":null}", {
+          { __VALUE[value::object_t], __VALUE[value::array_t], __VALUE[value::string_t], __VALUE[value::number_t], __VALUE[value::boolean_t] , __VALUE[value::null_t] },
+          { __VALUE[value::null_t], __VALUE[value::null_t], __VALUE[value::string_t], __VALUE[value::number_t], __VALUE[value::boolean_t] }
+        }, PASS },
+
+      { L"[{},\[],\"2\",3,false,null]", {
+          { __VALUE[value::object_t], __VALUE[value::array_t], __VALUE[value::string_t], __VALUE[value::number_t], __VALUE[value::boolean_t] , __VALUE[value::null_t] },
+          { __VALUE[value::null_t], __VALUE[value::null_t], __VALUE[value::string_t], __VALUE[value::number_t], __VALUE[value::boolean_t] }
         }, PASS },
       };
 
@@ -296,10 +319,16 @@ public:
             {
               value *ov = (*it).output[rev_idx].at (val_idx);
               value & jvv = *jv;
-              CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->count ()", output_size, jv->count ());
-              // CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->at ().type ()", ov->type (), jv->at (std::to_wstring (val_idx).c_str ()).type ());
-              CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->at ().type ()", ov->type (), jvv[std::to_wstring (val_idx).c_str ()].type ());
+
+              CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->count ()",
+                                            output_size,
+                                            jv->count ());
+
+              CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->at ().type ()",
+                                            ov->type (),
+                                            jvv[ std::to_wstring (val_idx).c_str () ].type ());
             }
+          delete jv;
         }
      TEST_IT_END;
   }
