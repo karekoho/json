@@ -292,10 +292,9 @@ namespace format
                   if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
 
                   /** old_value: value from value[key] */
-                  old_value = new object ();
-                  old_value->_parent = parents[pidx];
+                  old_value = new object (parents[pidx]);
 
-                  (*it).index  = array_parent.push (new format::unique_undefined ());
+                  (*it).index  = array_parent.push (new format::undefined ());
                   old_value->_set_index ((*it).index);
 
                   old_value->_set_key ((*it).key, wcslen ((*it).key));
@@ -324,6 +323,7 @@ namespace format
                   else
                     {
                       ASSERT_EQUAL_IDX ("old_value.size ()", (size_t) 2, old_value->count ());
+                      delete old_value;
                     }
                 }
               catch (std::exception & e)
