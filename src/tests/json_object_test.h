@@ -418,7 +418,6 @@ namespace format
             size_t len = wcslen ((*it).output[pidx]);
 
             object o (parent[pidx]);
-            // o._parent = parent[pidx];
 
             if (o.parent ())
               {
@@ -443,7 +442,11 @@ namespace format
                 ASSERT_EQUAL_IDX ("strlen (p._str_value[BEGIN])", len, wcslen (p._str_value[BEGIN]));
                 CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[1])", wcscmp (p._str_value[BEGIN], (*it).output[1]) == 0);
               }
-            // if (o._parent) delete[] str_value;
+            if (o._parent)
+              {
+                delete[] str_value;
+                p._str_value[BEGIN] = 0;
+              }
         }
 
       TEST_IT_END;
