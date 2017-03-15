@@ -83,9 +83,7 @@ public:
       catch (format::json_syntax_error & se)
         {
           this->_errorc[ACTUAL]++; std::cerr << se.what () << std::endl;
-          // delete j; // FIXME
-          // FIXME: valgrind: pure virtual method called
-          // terminate called without an active exception
+          delete j;
         }
 
       (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);

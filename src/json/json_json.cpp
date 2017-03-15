@@ -69,11 +69,9 @@ format::json::json (const value *ov, const json &nv)
 
 format::json::~json ()
 {
-  //if (_parent == 0 && _str_value[BEGIN])
-    //{
-      delete[] _str_value[BEGIN];
-      _str_value[BEGIN] = 0;
-    //}
+  delete[] _str_value[BEGIN];
+  _str_value[BEGIN] = 0;
+
   delete __root;
 }
 
@@ -87,7 +85,8 @@ format::json::json::_parse (const wchar_t *readp)
 
   value * old_root = __root;
 
-  __root = _make_value ();
+  if ((__root = _make_value ())->type () == value::no_value_t)
+    __root = 0;
 
   delete old_root;
 

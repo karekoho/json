@@ -4,7 +4,7 @@ void * format::undefined::__instance = 0;
 
 format::no_value * format::no_value::__instance = 0;
 
-format::value *
+format::no_value *
 format::no_value::instance (json *parent)
 {
   if (__instance == 0)

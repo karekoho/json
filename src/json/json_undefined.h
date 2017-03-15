@@ -223,6 +223,8 @@ namespace format
       : undefined (ov, nv)
     {}
 
+    virtual ~unique_undefined () override = default;
+
     /**
      * @brief clone
      * @return
@@ -281,10 +283,14 @@ namespace format
   {
   public:
 
+    void operator delete (void *) {}
+
+    void operator delete[](void *) {}
+
     /**
      * @brief ~no_value
      */
-    virtual ~no_value () = default;
+    virtual ~no_value () override = default;
 
     /**
      * @brief type
@@ -299,7 +305,7 @@ namespace format
      * @param parent
      * @return
      */
-    static value *
+    static no_value *
     instance (json *parent);
 
   protected:

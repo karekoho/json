@@ -33,13 +33,18 @@ namespace format
 
       format::undefined *u[] = {
         new format::undefined (),
-        new format::undefined ()
+        new format::undefined (),
+        no_value::instance (p[1])
       };
 
       delete u[0];
-      u[0] = new format::undefined () ;
+      u[0] = new format::undefined ();
+
+      delete no_value::instance (p[1]);
 
       CPPUNIT_ASSERT_MESSAGE ("new () == new ()", u[0] == u[1]);
+      CPPUNIT_ASSERT_MESSAGE ("new () == new ()", no_value::instance (p[1]) == no_value::instance (p[1]));
+
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("undefined::type ()", json::undefined_t, src.type ());
       CPPUNIT_ASSERT_MESSAGE ("undefined", & copy != & src);
     }
