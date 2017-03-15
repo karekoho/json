@@ -75,6 +75,8 @@ namespace format
         { L"{ : }", 0, value::undefined_t, 0, FAIL },   // json::syntax_error
       };
 
+      object *o = 0;
+
       TEST_IT_START;
         for (int pidx = 0; pidx < 2; pidx++)
           {
@@ -82,7 +84,7 @@ namespace format
 
             size_t charc = wcslen (startp);
 
-            object *o = new object (p[pidx]);
+            o = new object (p[pidx]);
 
             const wchar_t *readp = o->_parse (startp);
 
@@ -97,10 +99,18 @@ namespace format
                 ASSERT_EQUAL_IDX ("value.type", (*it).type, oo[L"k"].type ());
                 ASSERT_EQUAL_IDX ("*(value.key)", (wchar_t) L'k', *(oo[(L"k")].key ()));
               }
-
             delete o;
           }
-      TEST_IT_END;
+        }
+       catch (format::json_syntax_error & se)
+        {
+          this->_errorc[ACTUAL]++; std::cerr << se.what () << std::endl;
+          delete o;
+        }
+      }
+
+      (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]); \
+      CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
 
       delete p[1];
     }
@@ -135,10 +145,12 @@ namespace format
               {
                 const wchar_t *k = (*it).first.c_str ();
                 object & oo = *o;
-                ASSERT_EQUAL_IDX ("value.key", 0, wcscmp (k, oo[k].key ()));
+
+                ASSERT_EQUAL_IDX ("value::key ()",
+                                  0,
+                                  wcscmp (k, oo[k].key ()));
               }
           }
-
         delete o;
 
       TEST_IT_END
@@ -166,7 +178,9 @@ namespace format
 
         const value & v = o[((*it).key)];
 
-        ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v.type ());
+        ASSERT_EQUAL_IDX ("value::type ()",
+                          (*it).type,
+                          v.type ());
 
       TEST_IT_END;
     }
@@ -181,9 +195,10 @@ namespace format
     void
     test__pair ()
     {
-      object *p = new object ();
+      object  p;
 
-      struct assert {
+      struct assert
+      {
         const wchar_t *startp;
         bool status;
         int assert_status;
@@ -200,22 +215,30 @@ namespace format
         { L" \"foo\" : ", false, SKIP }, // FAIL: json::syntax_error
       };
 
+      object *o = 0;
+
       TEST_IT_START;
+          const wchar_t *startp = (*it).startp;
 
-        const wchar_t *startp = (*it).startp;
+          o = new object (& p);
+          o->_readp = startp;
 
-        object *o = new object (p);
+          bool status = o->_pair ();
 
-        o->_readp = startp;
-        bool status = o->_pair ();
+          ASSERT_EQUAL_IDX ("status", (*it).status, status);
 
-        // readp = o->parse (startp);
+          delete o;
+        }
+      catch (format::json_syntax_error & se)
+        {
+          this->_errorc[ACTUAL]++; std::cerr << se.what () << std::endl;
+           delete o;
+         }
+       }
 
-        ASSERT_EQUAL_IDX ("status", (*it).status, status);
+       (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);
 
-        delete o;
-
-      TEST_IT_END;
+       CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
     }
 
 
@@ -241,25 +264,18 @@ namespace format
         int assert_status[3];
       };
 
-//      std::vector<struct assert > test = {
-//        { new object (L"{\"k1\":true,\"k2\":false}"),  value::object_t, L"key_1",  0, 1,  { PASS, PASS, PASS } },
-//        { new array (L"[]"), value::array_t, L"key_2",  0, 2,  { PASS, PASS, FAIL } },
-//        { new string (L"x"), value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
-//        { new number (), value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-//        { new boolean (true), value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
-//        { new null (), value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
-//      };
-
       object o (L"{\"1\":true,\"2\":false}");
 
       std::vector<struct assert > test = {
         { & o,  value::object_t, L"key_1",  0, 1,  { PASS, PASS, PASS } },
-        { __VALUE[value::array_t], value::array_t, L"key_2",  0, 2,  { PASS, PASS, FAIL } },
-        { __VALUE[value::string_t], value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
-        { __VALUE[value::number_t], value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-        { __VALUE[value::boolean_t], value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
-        { __VALUE[value::null_t], value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
+//        { __VALUE[value::array_t], value::array_t, L"key_2",  0, 2,  { PASS, PASS, FAIL } },
+//        { __VALUE[value::string_t], value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
+//        { __VALUE[value::number_t], value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
+//        { __VALUE[value::boolean_t], value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
+//        { __VALUE[value::null_t], value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
       };
+
+      object *old_value = 0;
 
       for (size_t pidx = 0; pidx < 3; pidx++)
         {
@@ -276,24 +292,19 @@ namespace format
                   if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
 
                   /** old_value: value from value[key] */
-                  object *old_value = new object ();
+                  old_value = new object ();
                   old_value->_parent = parents[pidx];
 
                   (*it).index  = array_parent.push (new format::unique_undefined ());
-
                   old_value->_set_index ((*it).index);
+
                   old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                   if ((*it).new_value->type () == value::object_t)
-                    {
-                      *old_value = *(dynamic_cast<object *>((*it).new_value));
-                    }
+                    *old_value = *(dynamic_cast<object *>((*it).new_value));
+
                   else
-                    {
-                      value *v = dynamic_cast<value *>(old_value);
-                      *v = *(*it).new_value;
-                      //*v = (*it).new_value;
-                    }
+                    *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
 
                   json *parent = parents[pidx];
 
@@ -314,13 +325,18 @@ namespace format
                     {
                       ASSERT_EQUAL_IDX ("old_value.size ()", (size_t) 2, old_value->count ());
                     }
-            TEST_IT_END;
-          }
+                }
+              catch (std::exception & e)
+                {
+                  this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl;
+                  delete old_value;
+                }
+            }
+          (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]); \
 
-//          for (auto it = test.begin (); it != test.end (); ++it)
-//            delete (*it).new_value;
+          CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
+        }
     }
-
 
     virtual void
     test__clear () override
@@ -328,7 +344,9 @@ namespace format
       object o = L"{\"a\":true,\"b\":false}";
       o._clear ();
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("object._member_list.size ()", (size_t) 0, o._member_list.size ());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("object::_member_list.size ()",
+                                    (size_t) 0,
+                                    o._member_list.size ());
     }
 
     virtual void
@@ -357,8 +375,9 @@ namespace format
 
           object o = (*it).input;
 
-          ASSERT_EQUAL_IDX ("o.strLength ()", (*it).length, o.str_length ());
-
+          ASSERT_EQUAL_IDX ("object::str_length ()",
+                            (*it).length,
+                            o.str_length ());
       TEST_IT_END;
     }
 
@@ -398,11 +417,10 @@ namespace format
 
             size_t len = wcslen ((*it).output[pidx]);
 
-            object o;
+            object o (parent[pidx]);
+            // o._parent = parent[pidx];
 
-            o._parent = parent[pidx];
-
-            if (o._parent)
+            if (o.parent ())
               {
                 str_value = new wchar_t[len +1 ] ();
                 str_value = wcsncpy (str_value,  L"{\"a\":null,\"b\":", 14);
@@ -425,8 +443,7 @@ namespace format
                 ASSERT_EQUAL_IDX ("strlen (p._str_value[BEGIN])", len, wcslen (p._str_value[BEGIN]));
                 CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[1])", wcscmp (p._str_value[BEGIN], (*it).output[1]) == 0);
               }
-
-            //if (o._parent == 0) delete[] str_value;
+            // if (o._parent) delete[] str_value;
         }
 
       TEST_IT_END;
@@ -442,10 +459,6 @@ namespace format
         new boolean (),
         new boolean ()
       };
-
-  //    v[0]->set_key (L"key_1", 5);
-  //    v[1]->set_key (L"key_2", 5);
-  //    v[2]->set_key (L"key_3", 5);
 
       call__set_key__ (v[0], L"key_1", 5);
       call__set_key__ (v[1], L"key_2", 5);
@@ -479,16 +492,17 @@ namespace format
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("object.count ()",
                                     (size_t) 1,
                                     (object (L"{\"0\":0,\"1\":1}") [L"0"] = undefined ()).count ());
-
+      delete v[2];
     }
 
     virtual void
     test_count () override
     {
       object o = L"{\"1\":1}";
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("object::count ()", (size_t) 1, o.count ());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("object::count ()",
+                                    (size_t) 1,
+                                    o.count ());
     }
-
 
     /**
      * 2.

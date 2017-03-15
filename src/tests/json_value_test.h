@@ -161,7 +161,6 @@ namespace format
         CPPUNIT_ASSERT_MESSAGE ("starp", wcscmp (L"abb\"ccc\"", startp) == 0);
 
         delete[] startp;
-        // delete dst;
       }
 
       void
@@ -187,8 +186,7 @@ namespace format
             *(*it).val = format::undefined ();
             ASSERT_EQUAL_IDX ("array::count ()",
                               (*it).size,
-                              a.count ()
-                              );
+                              a.count ());
         TEST_IT_END;
       }
 
@@ -206,16 +204,6 @@ namespace format
           value::value_t type;  // old, current
           int assert_status;
         };
-
-//        std::vector<struct assert> test = {
-//          { new object (), value::object_t, PASS },
-//          { new array (), value::array_t, PASS },
-//          { new string (), value::string_t, PASS },
-//          { new number (), value::number_t, PASS },
-//          { new boolean (), value::boolean_t, PASS },
-//          { new null (), value::null_t, PASS },
-//          { new unique_undefined (), value::undefined_t, PASS }
-//        };
 
         std::vector<struct assert> test = {
           { __VALUE[value::object_t], value::object_t, PASS },
@@ -239,14 +227,10 @@ namespace format
 
                     ASSERT_EQUAL_IDX ("value::type ()",
                                       (*it).type,
-                                      j[hdx][L"0"].type ()
-                                     );
+                                      j[hdx][L"0"].type ());
                   }
             TEST_IT_END;
           }
-
-//        for (auto it = test.begin (); it != test.end (); ++it)
-//          delete (*it).val;
       }
 
       void
@@ -283,8 +267,7 @@ namespace format
 
                 ASSERT_EQUAL_IDX ("value::type ()",
                                   (*it).type,
-                                  j[hdx][L"0"].type ()
-                                 );
+                                  j[hdx][L"0"].type ());
             TEST_IT_END;
           }
       }
@@ -330,8 +313,7 @@ namespace format
 
         CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[\"0\"].type ()",
                                       value::number_t,
-                                      (j[L"0"] = (double) 100)[L"0"].type ()
-            );
+                                      (j[L"0"] = (double) 100)[L"0"].type ());
       }
 
       void
@@ -341,8 +323,7 @@ namespace format
 
         CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[\"0\"].type ()",
                                       value::boolean_t,
-                                      (j[L"0"] = true)[L"0"].type ()
-            );
+                                      (j[L"0"] = true)[L"0"].type ());
       }
 
       void
@@ -352,8 +333,7 @@ namespace format
 
         CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[\"0\"].type ()",
                                       value::null_t,
-                                      (j[L"0"] = nullptr)[L"0"].type ()
-            );
+                                      (j[L"0"] = nullptr)[L"0"].type ());
       }
 
       virtual void test_str_length () override {}
