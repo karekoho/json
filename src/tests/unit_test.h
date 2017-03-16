@@ -11,6 +11,7 @@
 #include <ctype.h>
 #include <vector>
 #include <cstring>
+#include <array>
 #include <wchar.h>
 
 #include "../json/json.h"

@@ -20,15 +20,11 @@ namespace format
 
       for (size_t pidx = 0; pidx < 2; pidx++)
         {
-          string *a[] = {
-            new string (),
-            new string (L"x"),
-            new string (p[pidx], 1),
+          string a[] = {
+            string (),
+            string (L"x"),
+            string (p[pidx], 1),
           };
-
-          delete a[0];
-          delete a[1];
-          delete a[2];
         }
 
       delete p[1];
@@ -102,8 +98,6 @@ namespace format
         int assert_status;
       };
 
-      this->_idx[0] = 0;
-
       std::vector<struct assert > test = {
           { L"", L"", 0, (wchar_t) 0, PASS },
           { L"xxx", L"\"xxx\"", 3 + 2, (wchar_t) 0, PASS },
@@ -115,68 +109,71 @@ namespace format
           { L"x\u001F", 0, 0, (wchar_t) 0, FAIL }
       };
 
+      string *s = 0;
+
       TEST_IT_START
 
-        string *s = new string ((*it).startp);
+            s = new string ((*it).startp);
 
-        ASSERT_EQUAL_IDX ("s->strLength ()", (*it).charc, s->str_length ());
-        CPPUNIT_ASSERT_MESSAGE ("s->strValue ()", wcscmp ((*it).str_value, s->str_value ()) == 0);
+            ASSERT_EQUAL_IDX ("s->strLength ()", (*it).charc, s->str_length ());
+            CPPUNIT_ASSERT_MESSAGE ("s->strValue ()", wcscmp ((*it).str_value, s->str_value ()) == 0);
 
-        delete s;
+            delete s;
+          }
+        catch (format::json_error & e)
+          {
+            this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl;
+            // delete s; // Can't delete ???
+          }
+        }
 
-      TEST_IT_END;
+      (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]); \
+      CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
     }
 
     virtual void
     test_assign_all_values () override
     {
-        object_accessor object_parent;
-        array_accessor array_parent;
+      object_accessor object_parent;
 
-        json *parents[] = {
-          & object_parent,
-          & array_parent,
-          0
-        };
+      std::array<json *, 2> parents = {
+        & object_parent,
+        0
+      };
 
-        struct assert {
-          value *new_value;
-          value::value_t type;
-          const wchar_t *key;
-          size_t index;
-          size_t count;
-          int assert_status[3];
-        };
+      struct assert
+      {
+        value *new_value;
+        value::value_t type;
+        const wchar_t *key;
+        size_t index;
+        size_t count;
+        int assert_status[3];
+       };
 
-        std::vector<struct assert > test = {
-          { new array (L"[true,false]"), value::array_t, L"key_1",  0, 1,  { PASS, PASS, FAIL } },
-          { new object (L"{\"k1\":true,\"k2\":false}"), value::object_t, L"key_2",  0, 2,  { PASS, PASS, FAIL } },
-          { new string (L"xxx"), value::string_t, L"key_3",  0, 3,  { PASS, PASS, PASS } },
-          { new number (10), value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-          { new boolean (true), value::boolean_t, L"key_6",  0, 5, { PASS, PASS, FAIL } },
-          { new null, value::null_t, L"key_7",  0, 6, { PASS, PASS, FAIL } }
-        };
+       string s (L"xxx");
 
-        for (size_t pidx = 0; pidx < 3; pidx++)
+       std::vector<struct assert > test = {
+        { & s, value::string_t, L"0",  0, 1,  { PASS, PASS } },
+        { __VALUE[value::number_t], value::number_t, L"1",  0, 2, { PASS, FAIL } },
+       };
+
+       string *old_value = 0;
+
+       for (size_t pidx = 0; pidx < parents.size () ; pidx++)
           {
-            object_parent.clear ();
-            array_parent.clear ();
-
             this->_idx[0] = 0;
 
             for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
-              {\
+              {
                 try
-                  {\
+                  {
                     if ((*it).assert_status[pidx] == SKIP) { continue; }\
                     if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
 
                     /** old_value: value from Value[key] */
-                    string *old_value = new string ();
-                    old_value->_parent = parents[pidx];
+                    old_value = new string (parents[pidx], 0);
 
-                    (*it).index = array_parent.push (new unique_undefined ());
-                    old_value->_set_index ((*it).index);
                     old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                     if ((*it).new_value->type () == value::string_t)
@@ -190,24 +187,24 @@ namespace format
                       {
                         ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
 
-                        if (parent->type () == value::object_t)
-                          {
                             ASSERT_EQUAL_IDX ("obj_parent[key].type", object_parent[(*it).key].type (), (*it).type);
-                          }
-                        else
-                          {
-                            ASSERT_EQUAL_IDX ("obj_parent[key].type", array_parent[(*it).index].type (), (*it).type);
-                          }
                       }
                     else if ((*it).new_value->type () == value::string_t)
                       {
                         CPPUNIT_ASSERT_MESSAGE ("old_value.value ()", wcscmp (L"xxx", old_value->get ()) == 0);
+                        delete old_value;
                       }
-              TEST_IT_END;
-            }
+                  }
+                 catch (format::json_error & e)
+                  {
+                    this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl;
+                    delete old_value;
+                  }
+                }
 
-          for (auto it = test.begin (); it != test.end (); ++it)
-            delete (*it).new_value;
+              (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);
+              CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
+            }
       }
 
       virtual void
