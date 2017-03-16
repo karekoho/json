@@ -241,16 +241,13 @@ namespace format
        CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
     }
 
-
     virtual void
     test_assign_all_values () override
     {
       object_accessor object_parent;
-      array_accessor array_parent;
 
       json *parents[] = {
         & object_parent,
-        & array_parent,
         0
       };
 
@@ -261,27 +258,24 @@ namespace format
         const wchar_t *key;
         size_t index;
         size_t count;
-        int assert_status[3];
+        int assert_status[2];
       };
 
-      object o (L"{\"1\":true,\"2\":false}");
+      object o (L"{\"0\":true,\"1\":false}");
 
       std::vector<struct assert > test = {
-        { & o,  value::object_t, L"key_1",  0, 1,  { PASS, PASS, PASS } },
-//        { __VALUE[value::array_t], value::array_t, L"key_2",  0, 2,  { PASS, PASS, FAIL } },
-//        { __VALUE[value::string_t], value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
-//        { __VALUE[value::number_t], value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-//        { __VALUE[value::boolean_t], value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
-//        { __VALUE[value::null_t], value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
+        { & o,  value::object_t, L"0",  0, 1,  { PASS, PASS } },
+        { __VALUE[value::array_t], value::array_t, L"1",  0, 2,  { PASS, FAIL } },
+//        { __VALUE[value::string_t], value::string_t, L"2",  0, 3,  { PASS, FAIL } },
+//        { __VALUE[value::number_t], value::number_t, L"3",  0, 4, { PASS, FAIL } },
+//        { __VALUE[value::boolean_t], value::boolean_t, L"4",  0, 5, { PASS, FAIL } },
+//        { __VALUE[value::null_t], value::null_t, L"5",  0, 6, { PASS, FAIL } }
       };
 
       object *old_value = 0;
 
-      for (size_t pidx = 0; pidx < 3; pidx++)
+      for (size_t pidx = 0; pidx < 2; pidx++)
         {
-          object_parent.clear ();
-          array_parent.clear ();
-
           this->_idx[0] = 0;
 
           for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
@@ -294,14 +288,10 @@ namespace format
                   /** old_value: value from value[key] */
                   old_value = new object (parents[pidx]);
 
-                  (*it).index  = array_parent.push (new format::undefined ());
-                  old_value->_set_index ((*it).index);
-
                   old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                   if ((*it).new_value->type () == value::object_t)
                     *old_value = *(dynamic_cast<object *>((*it).new_value));
-
                   else
                     *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
 
@@ -309,16 +299,8 @@ namespace format
 
                   if (parent)
                     {
-                      ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
-
-                      if (parent->type () == value::object_t)
-                        {
-                          ASSERT_EQUAL_IDX ("obj_parent[key].type", object_parent[(*it).key].type (), (*it).type);
-                        }
-                      else
-                        {
-                          ASSERT_EQUAL_IDX ("arr_parent[key].type", array_parent[(*it).index].type (), (*it).type);
-                        }
+                      ASSERT_EQUAL_IDX ("parent->count ()", (*it).count, parent->count ());
+                      ASSERT_EQUAL_IDX ("obj_parent[key].type", object_parent[(*it).key].type (), (*it).type);
                     }
                   else
                     {
