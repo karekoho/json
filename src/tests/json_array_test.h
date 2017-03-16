@@ -71,23 +71,35 @@ namespace format
       };
 
       json *p[] = { 0, new json () };
+      array *a = 0;
 
       TEST_IT_START
-        for (size_t pidx = 0; pidx < 2; pidx++)
+          for (size_t pidx = 0; pidx < 2; pidx++)
+            {
+              const wchar_t *startp = (*it).startp;
+              size_t charc = wcslen (startp);
+              a = new array (p[pidx]);
+
+              const wchar_t *readp = a->_parse (startp);
+
+              ASSERT_EQUAL_IDX ("array.readp", (startp + charc) - (*it).moveback, readp);
+              ASSERT_EQUAL_IDX ("*(array.readp - 1)", L']', *(readp - 1));
+              ASSERT_EQUAL_IDX ("array.size", (*it).size, a->count ());
+
+              delete a;
+            }
+          }
+        catch (format::json_syntax_error & se)
           {
-            const wchar_t *startp = (*it).startp;
-            size_t charc = wcslen (startp);
-            array *a = new array (p[pidx]);
-
-            const wchar_t *readp = a->_parse (startp);
-
-            ASSERT_EQUAL_IDX ("array.readp", (startp + charc) - (*it).moveback, readp);
-            ASSERT_EQUAL_IDX ("*(array.readp - 1)", L']', *(readp - 1));
-            ASSERT_EQUAL_IDX ("array.size", (*it).size, a->count ());
-
+            this->_errorc[ACTUAL]++; std::cerr << se.what () << std::endl;
             delete a;
           }
-      TEST_IT_END;
+        }
+
+      delete p[1];
+
+      (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);
+      CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
     }
 
     void
@@ -126,11 +138,9 @@ namespace format
     test_assign_all_values () override
     {
       object_accessor object_parent;
-      array_accessor array_parent;
 
       json *parents[] = {
         & object_parent,
-        & array_parent,
         0
       };
 
@@ -141,52 +151,35 @@ namespace format
         const wchar_t *key;
         size_t index;
         size_t count;
-        int assert_status[3];
+        int assert_status[2];
       };
-
-//      std::vector<struct assert > test = {
-//        { new array (L"[true,false]"), value::array_t, L"key_2",  0, 1,  { PASS, PASS, PASS } },
-//        { new object (L"{\"k1\":true,\"k2\":false}"), value::object_t, L"key_1",  0, 2,  { PASS, PASS, FAIL } },
-//        { new string (L"x"), value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
-//        { new number (), value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-//        { new boolean (true), value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
-//        { new null (), value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
-//      };
 
       array a (L"[true,false]");
 
       std::vector<struct assert > test = {
-        { & a, value::array_t, L"key_2",  0, 1,  { PASS, PASS, PASS } },
-        { __VALUE[value::object_t], value::object_t, L"key_1",  0, 2,  { PASS, PASS, FAIL } },
-        { __VALUE[value::string_t], value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
-        { __VALUE[value::number_t], value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-        { __VALUE[value::boolean_t], value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
-        { __VALUE[value::null_t], value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
+        { & a, value::array_t, L"key_2",  0, 1,  { PASS, PASS } },
+        { __VALUE[value::object_t], value::object_t, L"key_1",  0, 2,  { PASS, FAIL } },
+//        { __VALUE[value::string_t], value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
+//        { __VALUE[value::number_t], value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
+//        { __VALUE[value::boolean_t], value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
+//        { __VALUE[value::null_t], value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
       };
 
-        for (size_t pidx = 0; pidx < 3; pidx++)
-          {
-            object_parent.clear ();
-            array_parent.clear ();
+        array *old_value = 0;
 
+        for (size_t pidx = 0; pidx < 2; pidx++)
+          {
             this->_idx[0] = 0;
 
             for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
-              {\
+              {
                 try
-                  {\
+                  {
                     if ((*it).assert_status[pidx] == SKIP) { continue; }\
                     if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
 
                     /** old_value: value from value[key] */
-                    array *old_value = new array ();
-                    old_value->_parent = parents[pidx];
-
-                    old_value->_clear ();
-
-                    (*it).index = array_parent.push (new format::unique_undefined ());
-
-                    old_value->_set_index ((*it).index);
+                    old_value = new array (parents[pidx]);
                     old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                     if ((*it).new_value->type () == value::array_t)
@@ -199,27 +192,25 @@ namespace format
                     if (parent)
                       {
                         ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
-
-                        if (parent->type () == value::object_t)
-                          {
-                            value & ov =  object_parent[(*it).key];
-                            ASSERT_EQUAL_IDX ("obj_parent[key].type", ov.type (), (*it).type);
-                          }
-                        else
-                          {
-                            value & av =  array_parent[(*it).index];
-                            ASSERT_EQUAL_IDX ("arr_parent[index].type", av.type (), (*it).type);
-                          }
+                        value & ov =  object_parent[(*it).key];
+                        ASSERT_EQUAL_IDX ("obj_parent[key].type", ov.type (), (*it).type);
                       }
                     else
                       {
                         ASSERT_EQUAL_IDX ("old_value.size ()", (size_t) 2, old_value->count ());
+                        delete old_value;
                       }
-            TEST_IT_END;
-          }
+                  }
+                catch (format::json_error & se)
+                  {
+                    this->_errorc[ACTUAL]++; std::cerr << se.what () << std::endl;
+                    delete old_value;
+                  }
+              }
 
-//          for (auto it = test.begin (); it != test.end (); ++it)
-//            delete (*it).new_value;
+            (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]); \
+            CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
+          }
     }
 
     virtual void
@@ -266,11 +257,8 @@ namespace format
       };
 
       std::vector<struct assert> test = {
-
-
         { 0, value::value_t::boolean_t, PASS },
         { 1, value::value_t::undefined_t, PASS }
-
       };
 
       TEST_IT_START
@@ -384,11 +372,13 @@ namespace format
                   CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[1])", wcscmp (p._str_value[BEGIN], (*it).output[1]) == 0);
                 }
 
-              //if (a._parent == 0) delete[] str_value;
+              if (a._parent)
+                {
+                  delete[] str_value;
+                  p._str_value[BEGIN] = 0;
+                }
             }
-
       TEST_IT_END;
-
     }
 
     virtual void
@@ -422,18 +412,17 @@ namespace format
        };
 
        TEST_IT_START
-
            (void) a.erase (*(*it).val);
            size_t size = a.count ();
 
-           ASSERT_EQUAL_IDX ("a.count ()", (*it).size, size);
-
+           ASSERT_EQUAL_IDX ("array::count ()", (*it).size, size);
        TEST_IT_END;
 
        // TODO: move to test_operator_assign_undefined
        CPPUNIT_ASSERT_EQUAL_MESSAGE ("array::count ()",
                                      (size_t) 1,
                                      (array (L"[0,1]") [(size_t) 0] = undefined ()).count ());
+       delete v[2];
     }
 
     virtual void
