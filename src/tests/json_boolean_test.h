@@ -21,15 +21,10 @@ public:
 
     for (size_t pidx = 0; pidx < 2; pidx++)
       {
-          boolean *b[] = {
-          new boolean,
-          new boolean (true),
-          new boolean (p[pidx]),
-        };
-
-        delete b[0];
-        delete b[1];
-        delete b[2];
+        boolean b[] = {
+        boolean (),
+        boolean (true),
+        boolean (p[pidx])};
       }
 
     delete p[1];
@@ -39,6 +34,7 @@ public:
 
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("boolean::type ()", json::boolean_t, src.type ());
     CPPUNIT_ASSERT_MESSAGE ("src != copy", & src != & copy);
+    CPPUNIT_ASSERT_MESSAGE ("src.get () == copy.get ()", src.get () == copy.get ());
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.value ()", true, copy.get ());
   }
 
@@ -46,11 +42,9 @@ public:
   test_assign_all_values ()
   {
     object_accessor object_parent;
-    array_accessor array_parent;
 
     json *parents[] = {
       & object_parent,
-      & array_parent,
       0
     };
 
@@ -64,69 +58,62 @@ public:
       int assert_status[3];
     };
 
+    boolean b (true);
+
     std::vector<struct assert > test = {
-      { new array (L"[true,false]"), value::array_t, L"key_2",  0, 1, { PASS, PASS, FAIL }  },
-      { new object (L"{\"k1\":true,\"k2\":false}"), value::object_t, L"key_1",  0, 2, { PASS, PASS, FAIL } },
-      { new string (L"x"), value::string_t, L"key_3",  0, 3, { PASS, PASS, FAIL } },
-      { new number (10), value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-      { new boolean (true), value::boolean_t, L"key_5",  0, 5, { PASS, PASS, PASS } },
-      { new null, value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
+      { & b, value::boolean_t, L"0",  0, 1, { PASS, PASS } },
+      { __VALUE[value::null_t], value::null_t, L"1",  0, 2, { PASS, FAIL } }
     };
 
-      for (size_t pidx = 0; pidx < 3; pidx++)
-        {
-          object_parent.clear ();
-          array_parent.clear ();
+    boolean *old_value = 0;
 
-          this->_idx[0] = 0;
+    for (size_t pidx = 0; pidx < 2; pidx++)
+      {
+        this->_idx[0] = 0;
+        for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
+          {
+            try
+              {
+                if ((*it).assert_status[pidx] == SKIP) { continue; }\
+                if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
 
-          for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
-            {\
-              try
-                {\
-                  if ((*it).assert_status[pidx] == SKIP) { continue; }\
-                  if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
+                /** old_value: value from value[key] */
+                old_value = new boolean (parents[pidx], false);
 
-                  /** old_value: value from value[key] */
-                  boolean *old_value = new boolean (false);
-                  old_value->_parent = parents[pidx];
+                old_value->_set_key ((*it).key, wcslen ((*it).key));
 
-                  (*it).index  = array_parent.push (new format::unique_undefined ());
-                  old_value->_set_index ((*it).index);
-                  old_value->_set_key ((*it).key, wcslen ((*it).key));
+                if ((*it).new_value->type () == value::boolean_t)
+                  *old_value = *(static_cast<boolean *>((*it).new_value));
+                else
+                  *(static_cast<value *>(old_value)) = *(*it).new_value;
 
-                  if ((*it).new_value->type () == value::boolean_t)
-                    *old_value = *(static_cast<boolean *>((*it).new_value));
-                  else
-                    *(static_cast<value *>(old_value)) = *(*it).new_value;
+                if (old_value->parent ())
+                  {
+                    json *parent = old_value->parent ();
 
-                  json *parent = old_value->_parent;
+                    ASSERT_EQUAL_IDX ("old_value.parent.count ()",
+                                      (*it).count,
+                                      parent->count ());
 
-                  if (parent)
-                    {
-                      ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
-
-                      if (parent->type () == value::object_t)
-                        {
-                          value & ov =  object_parent[(*it).key];
-                          ASSERT_EQUAL_IDX ("obj_parent[key].type", ov.type (), (*it).type);
-                        }
-                      else
-                        {
-                          value & av =  array_parent[(*it).index];
-                          ASSERT_EQUAL_IDX ("arr_parent[key].type", av.type (), (*it).type);
-                        }
-                    }
-                  else if ((*it).new_value->type () == value::boolean_t)
-                    {
-                      ASSERT_EQUAL_IDX ("old_value.value ()", (bool) true, old_value->get ());
-                    }
-
-          TEST_IT_END;
+                    ASSERT_EQUAL_IDX ("obj_parent[key].type",
+                                      (*parent)[(*it).key].type (),
+                                      (*it).type);
+                  }
+                else if ((*it).new_value->type () == value::boolean_t)
+                  {
+                    ASSERT_EQUAL_IDX ("old_value.value ()", (bool) true, old_value->get ());
+                    delete old_value;
+                  }
+               }
+             catch (format::json_error & e)
+              {
+                this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl;
+                delete old_value;
+              }
+           }
+          (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);
+          CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
         }
-
-    for (auto it = test.begin (); it != test.end (); ++it)
-      delete (*it).new_value;
   }
 
   virtual void test_parse_1 () override {}
