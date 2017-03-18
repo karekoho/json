@@ -20,17 +20,12 @@ namespace format
 
       for (size_t pidx = 0; pidx < 2; pidx++)
         {
-          number *n[] = {
-            new number,
-            new number (10),
-            new number (L"10"),
-            new number (p[pidx]),
+          number n[] = {
+            number (),
+            number (10),
+            number (L"10"),
+            number (p[pidx]),
           };
-
-          delete n[0];
-          delete n[1];
-          delete n[2];
-          delete n[3];
         }
 
       delete p[1];
@@ -327,11 +322,9 @@ namespace format
     test_assign_all_values ()
     {
       object_accessor object_parent;
-      array_accessor array_parent;
 
       json *parents[] = {
         & object_parent,
-        & array_parent,
         0
       };
 
@@ -345,38 +338,30 @@ namespace format
         int assert_status[3];
       };
 
+      number n (10);
+
       std::vector<struct assert > test = {
-        { new array (L"[true,false]"), value::array_t, L"key_2",  0, 1,  { PASS, PASS, FAIL } },
-        { new object (L"{\"k1\":true,\"k2\":false}"), value::object_t, L"key_1",  0, 2,  { PASS, PASS, FAIL } },
-        { new string (L"x"), value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
-        { new number (10), value::number_t, L"key_4",  0, 4, { PASS, PASS, PASS } },
-        { new number (L"10"), value::number_t, L"key_5",  0, 5, { PASS, PASS, PASS } },
-        { new boolean (true), value::boolean_t, L"key_6",  0, 6, { PASS, PASS, FAIL } },
-        { new null, value::null_t, L"key_7",  0, 7, { PASS, PASS, FAIL } }
+        { & n, value::number_t, L"0",  0, 1, { PASS, PASS } },
+        { __VALUE[value::boolean_t], value::boolean_t, L"1",  0, 2, { PASS, FAIL } },
       };
 
-        for (size_t pidx = 0; pidx < 3; pidx++)
-          {
-            object_parent.clear ();
-            array_parent.clear ();
+      number *old_value = 0;
 
-            this->_idx[0] = 0;
+      for (size_t pidx = 0; pidx < 2; pidx++)
+        {
+          this->_idx[0] = 0;
 
-            for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
-              {\
-                try
-                  {\
+          for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
+            {
+              try
+                  {
                     if ((*it).assert_status[pidx] == SKIP) { continue; }\
                     if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
 
                     /** old_value: value from value[key] */
-                    number *old_value = new number ();
+                    old_value = new number (parents[pidx]);
                     old_value->_double_valuep = 0;
 
-                    old_value->_parent = parents[pidx];
-
-                    (*it).index  = array_parent.push (new format::unique_undefined ());
-                    old_value->_set_index ((*it).index);
                     old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                     if ((*it).new_value->type () == value::number_t)
@@ -384,31 +369,28 @@ namespace format
                     else
                       *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
 
-                    json *parent = old_value->_parent;
+                    json *parent = old_value->parent ();
 
                     if (parent)
                       {
                         ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
-
-                        if (parent->type () == value::object_t)
-                          {
-                            ASSERT_EQUAL_IDX ("obj_parent[key].type", object_parent[(*it).key].type (), (*it).type);
-                          }
-                        else
-                          {
-                            ASSERT_EQUAL_IDX ("arr_parent[key].type", array_parent[(*it).index].type (), (*it).type);
-                          }
+                        ASSERT_EQUAL_IDX ("obj_parent[key].type", object_parent[(*it).key].type (), (*it).type);
                       }
                     else if ((*it).new_value->type () == value::number_t)
                       {
                         ASSERT_EQUAL_IDX ("old_value.value ()", (double) 10, old_value->get ());
+                        delete old_value;
                       }
-
-            TEST_IT_END;
+                  }
+                catch (format::json_error & e)
+                  {
+                    this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl;
+                    delete old_value;
+                  }
+              }
+            (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]); \
+            CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
           }
-
-      for (auto it = test.begin (); it != test.end (); ++it)
-        delete (*it).new_value;
     }
 
     virtual void
