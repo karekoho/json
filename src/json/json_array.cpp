@@ -108,11 +108,11 @@ format::array::_parse (const wchar_t *json)
   return _readp;
 }
 
-format::value &
-format::array::_assign (const array &nv)
-{
-  return _parent ? _parent->_assign (this, new array (/*this,*/ nv)) : *(_clone (nv));
-}
+//format::value &
+//format::array::_assign (const array &nv)
+//{
+//  return _parent ? _parent->_assign (this, new array (/*this,*/ nv)) : *(_clone (nv));
+//}
 
 format::value &
 format::array::_at (size_t index)

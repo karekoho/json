@@ -107,7 +107,7 @@ namespace format
     */
     inline value &
     operator =(const array & a)
-    { return _assign (a); }
+    { return _parent ? _parent->_assign (this, new array (a)) : *(_clone (a)); }
 
    /**
     * @brief iterator
@@ -264,8 +264,8 @@ namespace format
     * @param nv
     * @return
     */
-    value &
-    _assign (const array & nv);
+//    value &
+//    _assign (const array & nv);
 
    /**
     * @brief assign

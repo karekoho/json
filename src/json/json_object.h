@@ -94,7 +94,7 @@ namespace format
      */
     inline value &
     operator =(const object & o)
-    { return _assign (o); }
+    { return _parent ? _parent->_assign (this, new object (o)) : *(_clone (o)); }
 
     /**
      * @brief iterator
@@ -286,8 +286,8 @@ namespace format
      * @param nv
      * @return
      */
-    value &
-    _assign (const object & nv);
+//    value &
+//    _assign (const object & nv);
 
     /**
      * @brief _at
