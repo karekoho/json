@@ -350,11 +350,10 @@ namespace format
       for (size_t pidx = 0; pidx < 2; pidx++)
         {
           this->_idx[0] = 0;
-
           for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
             {
               try
-                  {
+                {
                     if ((*it).assert_status[pidx] == SKIP) { continue; }\
                     if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
 
@@ -369,16 +368,21 @@ namespace format
                     else
                       *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
 
-                    json *parent = old_value->parent ();
+                    json *parent = parents[pidx];
 
                     if (parent)
                       {
-                        ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
-                        ASSERT_EQUAL_IDX ("obj_parent[key].type", object_parent[(*it).key].type (), (*it).type);
+                        ASSERT_EQUAL_IDX ("parent->count ()",
+                                          (*it).count,
+                                          parent->count ());
+
+                        ASSERT_EQUAL_IDX ("(*parent)[(*it).key].type ()",
+                                          (*parent)[(*it).key].type (),
+                                          (*it).type);
                       }
                     else if ((*it).new_value->type () == value::number_t)
                       {
-                        ASSERT_EQUAL_IDX ("old_value.value ()", (double) 10, old_value->get ());
+                        ASSERT_EQUAL_IDX ("old_value->get ()", (double) 10, old_value->get ());
                         delete old_value;
                       }
                   }
@@ -387,11 +391,11 @@ namespace format
                     this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl;
                     delete old_value;
                   }
-              }
-            (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]); \
-            CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
-          }
-    }
+            }
+          (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]); \
+          CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
+        }
+      }
 
     virtual void
     test_str_value () override

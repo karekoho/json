@@ -90,10 +90,10 @@ namespace format
 
                   *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
 
-                  if (old_value->parent ())
-                    {
-                      json *parent = old_value->parent ();
+                  json *parent = parents[pidx];
 
+                  if (parent)
+                    {
                       ASSERT_EQUAL_IDX ("parent->count ()",
                                         (*it).count,
                                         parent->count ());

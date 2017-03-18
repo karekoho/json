@@ -185,13 +185,19 @@ namespace format
 
                     if (parent)
                       {
-                        ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
+                        ASSERT_EQUAL_IDX ("parent->count ()",
+                                          (*it).count,
+                                          parent->count ());
 
-                            ASSERT_EQUAL_IDX ("obj_parent[key].type", object_parent[(*it).key].type (), (*it).type);
+                        ASSERT_EQUAL_IDX ("(*parent)[(*it).key].type ()",
+                                          (*parent)[(*it).key].type (),
+                                          (*it).type);
                       }
                     else if ((*it).new_value->type () == value::string_t)
                       {
-                        CPPUNIT_ASSERT_MESSAGE ("old_value.value ()", wcscmp (L"xxx", old_value->get ()) == 0);
+                        CPPUNIT_ASSERT_MESSAGE ("old_value->get ()",
+                                                wcscmp (L"xxx",
+                                                old_value->get ()) == 0);
                         delete old_value;
                       }
                   }
@@ -200,11 +206,10 @@ namespace format
                     this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl;
                     delete old_value;
                   }
-                }
-
-              (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);
-              CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
-            }
+              }
+            (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);
+            CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
+        }
       }
 
       virtual void

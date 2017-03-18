@@ -87,15 +87,15 @@ public:
                 else
                   *(static_cast<value *>(old_value)) = *(*it).new_value;
 
-                if (old_value->parent ())
-                  {
-                    json *parent = old_value->parent ();
+                json *parent = parents[pidx];
 
-                    ASSERT_EQUAL_IDX ("old_value.parent.count ()",
+                if (parent)
+                  {
+                    ASSERT_EQUAL_IDX ("parent->count ()",
                                       (*it).count,
                                       parent->count ());
 
-                    ASSERT_EQUAL_IDX ("obj_parent[key].type",
+                    ASSERT_EQUAL_IDX ("(*parent)[(*it).key].type ()",
                                       (*parent)[(*it).key].type (),
                                       (*it).type);
                   }

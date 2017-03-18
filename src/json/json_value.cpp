@@ -157,5 +157,3 @@ format::value::operator =(std::nullptr_t)
 {
   return _assign (new null ());
 }
-
-
