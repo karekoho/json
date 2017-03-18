@@ -16,26 +16,35 @@ namespace format
     virtual void
     test_ctor_dtor () override
     {
-      json *p[] = { 0, new json () };
+      json parent;
 
-      for (size_t pidx = 0; pidx < 2; pidx++)
-        {
-          object o[] = {
-            object (),
-            object (L"{}"),
-            object (p[pidx]),
-            object {{L"1", new number (1)}}
-          };
-        }
-
-      delete p[1];
+      object o[] = {
+        object (),
+        object (L"{}"),
+        object (& parent),
+        object {{ L"0", new object {{ L"0", new number () }} }} // {"0":{"0":0}}
+      };
 
       object src  = L"{\"key\":true}";
       object copy = src;
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("object::type ()", json::object_t, src.type ());
-      CPPUNIT_ASSERT_MESSAGE ("object", & copy != & src);
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("object._member_list.size ()", (size_t) 1, copy._member_list.size ());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("object::type ()",
+                                    json::object_t, src.type ());
+
+      CPPUNIT_ASSERT_MESSAGE ("object",
+                              & copy != & src);
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.count ()",
+                                    (size_t) 1,
+                                    copy.count ());
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("object::count ()",
+                                    (size_t) 1,
+                                    o[3].count ());
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("object[key][key].type ()",
+                                    value::number_t,
+                                    o[3][L"0"][L"0"].type ());
     }
 
     virtual

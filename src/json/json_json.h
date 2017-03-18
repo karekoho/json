@@ -11,6 +11,7 @@
 #include <vector>
 #include <initializer_list>
 
+
 namespace format
 {
   #ifdef UNIT_TEST
@@ -22,6 +23,8 @@ namespace format
 
   typedef value * (* reviver)(const wchar_t *, value *);
 
+  class array;
+  class object;
   /**
    * @brief The json class
    */
@@ -50,6 +53,18 @@ namespace format
      * @param parent
      */
     json (json *parent);
+
+    /**
+     * @brief json
+     * @param o
+     */
+    json (object *o);
+
+    /**
+     * @brief json
+     * @param a
+     */
+    json (array *a);
 
     /**
      * @brief clone

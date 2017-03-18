@@ -53,6 +53,20 @@ format::json::json (json *parent)
     __reviver (parent ? parent->__reviver : 0)
 {}
 
+format::json::json (format::object *o)
+  : value (),
+  _str_value { 0, 0 },
+  __root (o),
+  __reviver (0)
+{}
+
+format::json::json (format::array *a)
+  : value (),
+  _str_value { 0, 0 },
+  __root (a),
+  __reviver (0)
+{}
+
 format::json::json (const json &other)
   : value (other),
     _str_value { 0, 0 },
