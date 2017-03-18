@@ -132,7 +132,7 @@ format::object::_pair ()
 }
 
 format::json_iterator *
-format::object::iterator () const
+format::object::__iterator__ () const
 {
   return new object_iterator (_member_list);
 }

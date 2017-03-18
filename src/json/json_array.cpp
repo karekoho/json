@@ -172,7 +172,7 @@ format::array::_clone (const value &other)
 }
 
 format::json_iterator *
-format::array::iterator () const
+format::array::__iterator__ () const
 {
   return new array_iterator (_element_list);
 }

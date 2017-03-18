@@ -152,8 +152,8 @@ namespace format
      * @return
      */
     virtual json_iterator *
-    iterator () const override
-    { return __root ? __root->iterator () : 0; }
+    __iterator__ () const override
+    { return __root ? __root->__iterator__ () : 0; }
 
     /**
      * @brief strLength

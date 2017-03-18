@@ -103,7 +103,7 @@ namespace format
      * @return
      */
     virtual json_iterator *
-    iterator () const final override;
+    __iterator__ () const final override;
 
     /**
      * @brief erase

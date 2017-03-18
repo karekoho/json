@@ -114,7 +114,7 @@ namespace format
     * @return
     */
     virtual json_iterator *
-    iterator () const override;
+    __iterator__ () const override;
 
    /**
     * @brief strLength
@@ -141,7 +141,7 @@ namespace format
    /**
     * @brief The Iterator class
     */
-    class Iterator : public std::iterator<
+    class iterator : public std::iterator<
         std::input_iterator_tag,
         value *,  // Type
         value *,  // Distance
@@ -153,13 +153,14 @@ namespace format
      /**
       * @brief Iterator
       */
-      Iterator () {}
+      iterator ()
+      {}
 
      /**
       * @brief Iterator
       * @param it
       */
-      Iterator (element_list::iterator it)
+      iterator (element_list::iterator it)
         : _it (it)
       {}
 
@@ -167,20 +168,20 @@ namespace format
       * @brief Iterator
       * @param other
       */
-      Iterator (const Iterator & other)
+      iterator (const iterator & other)
         : _it (other._it)
       {}
 
      /**
       * @brief ~Iterator
       */
-      virtual ~Iterator () = default;
+      virtual ~iterator () = default;
 
      /**
       * @brief operator ++
       * @return
       */
-      Iterator &
+      iterator &
       operator ++()
       {
         ++_it;
@@ -191,10 +192,10 @@ namespace format
       * @brief operator ++
       * @return
       */
-      Iterator
+      iterator
       operator ++(int)
       {
-        Iterator it (*this);
+        iterator it (*this);
         ++(*this);
         return it;
       }
@@ -205,7 +206,7 @@ namespace format
       * @return
       */
       inline bool
-      operator ==(const Iterator &rhs)
+      operator ==(const iterator &rhs)
       { return _it == rhs._it; }
 
      /**
@@ -214,7 +215,7 @@ namespace format
       * @return
       */
       inline bool
-      operator !=(const Iterator &rhs)
+      operator !=(const iterator &rhs)
       { return ! operator ==(rhs); }
 
      /**
@@ -232,6 +233,22 @@ namespace format
        */
       element_list::iterator _it;
     }; // Iterator
+
+    /**
+     * @brief begin
+     * @return
+     */
+    iterator
+    begin ()
+    { return iterator (_element_list.begin ()); }
+
+    /**
+     * @brief end
+     * @return
+     */
+    iterator
+    end ()
+    { return iterator (_element_list.end ()); }
 
   protected:
 

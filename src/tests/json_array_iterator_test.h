@@ -57,12 +57,12 @@ public:
   {
     array::element_list list = { new boolean };
 
-    array::Iterator *it[] = {
-      new array::Iterator,
-      new array::Iterator (list.begin ()),
+    array::iterator *it[] = {
+      new array::iterator,
+      new array::iterator (list.begin ()),
     };
 
-    array::Iterator copy = array::Iterator (*it[1]);
+    array::iterator copy = array::iterator (*it[1]);
 
     CPPUNIT_ASSERT_MESSAGE ("& copy != it[1]", & copy != it[1]);
 
@@ -77,11 +77,11 @@ public:
   {
     array::element_list list = { new boolean };
 
-    array::Iterator it (list.begin ());
-    array::Iterator copy = array::Iterator (it);
+    array::iterator it (list.begin ());
+    array::iterator copy = array::iterator (it);
 
     struct assert {
-      array::Iterator *itp;
+      array::iterator *itp;
       value::value_t type;
       int assert_status;
     };
@@ -107,8 +107,8 @@ public:
   {
     array::element_list list = { new boolean, new boolean };
 
-    array::Iterator begin (list.begin ());
-    array::Iterator end (list.end ());
+    array::iterator begin (list.begin ());
+    array::iterator end (list.end ());
 
     size_t count = 0;
 
@@ -125,13 +125,25 @@ public:
   {
     array::element_list list = { new boolean };
 
-    array::Iterator begin (list.begin ());
-    array::Iterator current = begin;
+    array::iterator begin (list.begin ());
+    array::iterator current = begin;
 
     CPPUNIT_ASSERT_MESSAGE ("current++ == begin", current++ == begin);
     CPPUNIT_ASSERT_MESSAGE ("current != begin", current != begin);
 
     (void) element_list_clear (list);
+  }
+
+  void
+  test_begin_end ()
+  {
+    array_accessor a = L"[0,1]";
+
+    array::iterator begin (a.begin ());
+    array::iterator end (a.end ());
+
+    CPPUNIT_ASSERT_MESSAGE ("array::begin ()", begin == a.begin ());
+    CPPUNIT_ASSERT_MESSAGE ("array::end ()", end == a.end ());
   }
 
   /**
@@ -146,11 +158,11 @@ public:
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json array iterator test");
 
      s->addTest (new CppUnit::TestCaller<json_array_iterator_test> ("test_hasNext", &json_array_iterator_test::test_hasNext));
-
      s->addTest (new CppUnit::TestCaller<json_array_iterator_test> ("test_construct_assign_destruct", &json_array_iterator_test::test_construct_assign_destruct));
      s->addTest (new CppUnit::TestCaller<json_array_iterator_test> ("test_dereference", &json_array_iterator_test::test_dereference));
      s->addTest (new CppUnit::TestCaller<json_array_iterator_test> ("test_pre_increment", &json_array_iterator_test::test_pre_increment));
      s->addTest (new CppUnit::TestCaller<json_array_iterator_test> ("test_post_increment", &json_array_iterator_test::test_post_increment));
+     s->addTest (new CppUnit::TestCaller<json_array_iterator_test> ("test_begin_end", &json_array_iterator_test::test_begin_end));
 
     return s;
   }

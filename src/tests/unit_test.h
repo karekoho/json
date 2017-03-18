@@ -141,18 +141,8 @@ protected:
 
   char _sz_idx[300];
 
-//  static format::no_value   *__NO_VALUE;
-//  static format::undefined  *__UNDEFINED;
-//  static format::object   *__OBJECT;
-//  static format::array    *__ARRAY;
-
-//  static format::string   *__STRING;
-//  static format::number   *__NUMBER;
-//  static format::boolean  *__BOOLEAN;
-//  static format::null     *__NULL;
-  static format::json     *__JSON;
-
-  static format::value    *__VALUE[];
+  static format::json   *__JSON;
+  static format::value  *__VALUE[];
 }; // Class unit_test
 
 /**
@@ -192,10 +182,15 @@ public:
   /**
    * @brief clear
    */
-  void clear ()
+  void
+  clear ()
   { _clear (); }
 
-  void _clear ()
+  /**
+   * @brief _clear
+   */
+  void
+  _clear ()
   { _member_list.clear (); }
 
   /**
@@ -215,6 +210,18 @@ public:
 class array_accessor : public format::array
 {
   public:
+
+  /**
+   * @brief array_accessor
+   */
+  array_accessor () : array () {}
+
+  /**
+   * @brief array_accessor
+   * @param input
+   */
+  array_accessor (const wchar_t *input) : array (input){}
+
   /**
    * @brief push
    * @param v
@@ -237,12 +244,32 @@ class array_accessor : public format::array
   /**
    * @brief clear
    */
-  void clear ()
+  void
+  clear ()
   { _clear (); }
 
-  void _clear ()
+  /**
+   * @brief _clear
+   */
+  void
+  _clear ()
   { _element_list.clear (); }
 
+  /**
+   * @brief begin
+   * @return
+   */
+  std::vector<value *>::iterator
+  begin ()
+  { return _element_list.begin (); }
+
+  /**
+   * @brief end
+   * @return
+   */
+  std::vector<value *>::iterator
+  end ()
+  { return _element_list.end (); }
 };  // Class array_accessor
 
 class value_accessor : public format::value

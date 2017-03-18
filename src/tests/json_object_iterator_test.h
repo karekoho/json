@@ -55,12 +55,12 @@ public:
   {
     object::member_list list = { { L"1", new boolean } };
 
-    object::Iterator *it[] = {
-      new object::Iterator,
-      new object::Iterator (list.begin ()),
+    object::iterator *it[] = {
+      new object::iterator,
+      new object::iterator (list.begin ()),
     };
 
-    object::Iterator copy = object::Iterator (*it[1]);
+    object::iterator copy = object::iterator (*it[1]);
 
     CPPUNIT_ASSERT_MESSAGE ("v.type ()", & copy != it[1]);
 
@@ -75,11 +75,11 @@ public:
   {
     object::member_list list = { { L"1", new boolean } };
 
-    object::Iterator it (list.begin ());
-    object::Iterator copy = object::Iterator (it);
+    object::iterator it (list.begin ());
+    object::iterator copy = object::iterator (it);
 
     struct assert {
-      object::Iterator *itp;
+      object::iterator *itp;
       value::value_t type;
       int assert_status;
     };
@@ -105,8 +105,8 @@ public:
   {
     object::member_list list = { { L"1", new boolean }, { L"2", new boolean } };
 
-    object::Iterator begin (list.begin ());
-    object::Iterator end (list.end ());
+    object::iterator begin (list.begin ());
+    object::iterator end (list.end ());
 
     size_t count = 0;
 
@@ -123,8 +123,8 @@ public:
   {
     object::member_list list = { { L"1", new boolean } };
 
-    object::Iterator begin (list.begin ());
-    object::Iterator current = begin;
+    object::iterator begin (list.begin ());
+    object::iterator current = begin;
 
     CPPUNIT_ASSERT_MESSAGE ("current++ == begin", current++ == begin);
     CPPUNIT_ASSERT_MESSAGE ("current != begin", current != begin);
@@ -140,8 +140,8 @@ public:
     // object::Iterator begin (o._member_list.begin ());
     // object::Iterator end (o._member_list.end ());
 
-    object::Iterator begin (o.begin ());
-    object::Iterator end (o.end ());
+    object::iterator begin (o.begin ());
+    object::iterator end (o.end ());
 
     CPPUNIT_ASSERT_MESSAGE ("Object::begin ()", begin == o.begin ());
     CPPUNIT_ASSERT_MESSAGE ("Object::end ()", end == o.end ());

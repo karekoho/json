@@ -226,7 +226,7 @@ namespace format
      * @return
      */
     virtual json_iterator *
-    iterator () const = 0;
+    __iterator__ () const = 0;
 
     /**
      * @brief isLeaf

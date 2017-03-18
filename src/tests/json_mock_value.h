@@ -46,7 +46,7 @@ namespace format
       { return *this; }
 
       virtual json_iterator *
-      iterator () const override
+      __iterator__ () const override
       { return new leaf_iterator (this); }
 
       virtual size_t
