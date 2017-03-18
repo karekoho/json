@@ -20,9 +20,9 @@ namespace format
 
       for (size_t pidx = 0; pidx < 2; pidx++)
         {
-          format::unique_undefined *uu[] = {
-            new format::unique_undefined (),
-            new format::unique_undefined (p[pidx]),
+          format::unique_undefined uu[] = {
+            format::unique_undefined (),
+            format::unique_undefined (p[pidx]),
           };
         }
 
@@ -53,11 +53,9 @@ namespace format
     test_assign_all_values () override
     {
       object_accessor object_parent;
-      array_accessor array_parent;
 
       json *parents[] = {
         & object_parent,
-        & array_parent,
         0
       };
 
@@ -66,27 +64,19 @@ namespace format
         value *new_value;
         value::value_t type;
         const wchar_t *key;
-        size_t index;
         size_t count;
-        int assert_status[3];
+        int assert_status[2];
       };
 
       std::vector<struct assert > test = {
-        { new array (L"[true,false]"), value::array_t, L"key_1",  0, 1,  { PASS, PASS, FAIL } },
-        { new object (L"{\"k1\":true,\"k2\":false}"), value::object_t, L"key_2",  0, 2, { PASS, PASS, FAIL } },
-        { new string (L"xxx"), value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
-        { new number (10), value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
-        { new boolean (true), value::boolean_t, L"key_6",  0, 5, { PASS, PASS, FAIL } },
-        { new null, value::null_t, L"key_7",  0, 6, { PASS, PASS, FAIL } }
+        { __VALUE[value::null_t], value::null_t, L"key_7", 1, { PASS, FAIL } }
       };
 
-      for (size_t pidx = 0; pidx < 3; pidx++)
+      unique_undefined *old_value = 0;
+
+      for (size_t pidx = 0; pidx < 2; pidx++)
         {
-          object_parent.clear ();
-          array_parent.clear ();
-
           this->_idx[0] = 0;
-
           for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
             {\
               try
@@ -95,35 +85,33 @@ namespace format
                   if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
 
                   /** old_value: value from value[key] */
-                  format::unique_undefined *old_value = new format::unique_undefined ();
-                  old_value->_parent = parents[pidx];
-
-                  (*it).index  = array_parent.push (new format::unique_undefined ());
-                  old_value->_set_index ((*it).index);
+                  old_value = new format::unique_undefined (parents[pidx]);
                   old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                   *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
 
-                  json *parent = old_value->_parent;
-
-                  if (parent)
+                  if (old_value->parent ())
                     {
-                      ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
+                      json *parent = old_value->parent ();
 
-                      if (parent->type () == value::object_t)
-                        {
-                          ASSERT_EQUAL_IDX ("obj_parent[key].type", object_parent[(*it).key].type (), (*it).type);
-                        }
-                      else
-                        {
-                          ASSERT_EQUAL_IDX ("arr_parent[key].type", array_parent[(*it).index].type (), (*it).type);
-                        }
+                      ASSERT_EQUAL_IDX ("parent->count ()",
+                                        (*it).count,
+                                        parent->count ());
+
+                      ASSERT_EQUAL_IDX ("(*parent)[(*it).key].type ()",
+                                        (*parent)[(*it).key].type (),
+                                        (*it).type);
                     }
-              TEST_IT_END;
-            }
-
-          for (auto it = test.begin (); it != test.end (); ++it)
-            delete (*it).new_value;
+              }
+            catch (format::json_error & e)
+              {
+                this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl;
+                delete old_value;
+              }
+            (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);
+            CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
+          }
+        }
     }
 
     /* void
