@@ -55,4 +55,7 @@ unix:!symbian {
 
 DESTDIR = ../../build/debug
 
+DISTFILES += \
+    properties
+
 
