@@ -56,7 +56,7 @@ public:
     object::member_list list = { { L"1", new boolean } };
 
     object::iterator *it[] = {
-      new object::iterator,
+      new object::iterator (),
       new object::iterator (list.begin ()),
     };
 
@@ -73,9 +73,9 @@ public:
   void
   test_dereference ()
   {
-    object::member_list list = { { L"1", new boolean } };
+    object o = { { L"1", new boolean } };
 
-    object::iterator it (list.begin ());
+    object::iterator it = o.begin ();
     object::iterator copy = object::iterator (it);
 
     struct assert {
@@ -96,17 +96,15 @@ public:
         ASSERT_EQUAL_IDX ("v.type ()", value::value_t::boolean_t, v.type ());
 
     TEST_IT_END;
-
-    (void) member_list_clear (list);
   }
 
   void
   test_pre_increment ()
   {
-    object::member_list list = { { L"1", new boolean }, { L"2", new boolean } };
+    object o = { { L"1", new boolean }, { L"2", new boolean } };
 
-    object::iterator begin (list.begin ());
-    object::iterator end (list.end ());
+    object::iterator begin = o.begin ();
+    object::iterator end = o.end ();
 
     size_t count = 0;
 
@@ -114,31 +112,24 @@ public:
       count++;
 
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("count", (size_t) 2, count);
-
-    (void) member_list_clear (list);
   }
 
   void
   test_post_increment ()
   {
-    object::member_list list = { { L"1", new boolean } };
+    object o = { { L"1", new boolean } };
 
-    object::iterator begin (list.begin ());
+    object::iterator begin = o.begin ();
     object::iterator current = begin;
 
     CPPUNIT_ASSERT_MESSAGE ("current++ == begin", current++ == begin);
     CPPUNIT_ASSERT_MESSAGE ("current != begin", current != begin);
-
-    (void) member_list_clear (list);
   }
 
   void
   test_begin_end ()
   {
-    object_accessor o = L"{\"1\":true,\"2\":false}";
-
-    // object::Iterator begin (o._member_list.begin ());
-    // object::Iterator end (o._member_list.end ());
+    object o = L"{\"1\":true,\"2\":false}";
 
     object::iterator begin (o.begin ());
     object::iterator end (o.end ());

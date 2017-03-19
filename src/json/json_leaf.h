@@ -116,7 +116,7 @@ namespace format
     /**
      * @brief The Iterator class
      */
-    class Iterator : public std::iterator<
+    class iterator : public std::iterator<
         std::input_iterator_tag,
         value *,        // Type
         value *,        // Distance
@@ -130,7 +130,7 @@ namespace format
        * @brief Iterator
        * @param value
        */
-      Iterator (leaf *value = 0)
+      iterator (leaf *value = 0)
         : _value (value)
       {}
 
@@ -138,18 +138,18 @@ namespace format
        * @brief Iterator
        * @param other
        */
-      Iterator (const Iterator &other) = default;
+      iterator (const iterator &other) = default;
 
       /**
         * @brief ~Iterator
         */
-      ~Iterator () = default;
+      ~iterator () = default;
 
       /**
        * @brief operator ++
        * @return
        */
-      Iterator &
+      iterator &
       operator ++()
       {
         _value++;
@@ -160,10 +160,10 @@ namespace format
        * @brief operator ++
        * @return
        */
-      Iterator
+      iterator
       operator ++(int)
       {
-        Iterator it (*this);
+        iterator it (*this);
         ++(*this);
         return it;
       }
@@ -174,7 +174,7 @@ namespace format
        * @return
        */
       inline bool
-      operator ==(const Iterator &rhs)
+      operator ==(const iterator &rhs)
       { return _value == rhs._value; }
 
       /**
@@ -183,7 +183,7 @@ namespace format
        * @return
        */
       inline bool
-      operator !=(const Iterator &rhs)
+      operator !=(const iterator &rhs)
       { return ! operator ==(rhs); }
 
       /**
@@ -212,17 +212,17 @@ namespace format
      * @brief begin
      * @return
      */
-    Iterator
+    iterator
     begin ()
-    { return Iterator (this); }
+    { return iterator (this); }
 
     /**
      * @brief end
      * @return
      */
-    Iterator
+    iterator
     end ()
-    { return Iterator (this + 1); }
+    { return iterator (this + 1); }
 
   protected:
 

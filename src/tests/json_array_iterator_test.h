@@ -60,7 +60,7 @@ namespace format
       array::element_list list = { new boolean };
 
       array::iterator *it[] = {
-        new array::iterator,
+        new array::iterator (),
         new array::iterator (list.begin ()),
       };
 
@@ -127,6 +127,7 @@ namespace format
 
       CPPUNIT_ASSERT_MESSAGE ("current++ == begin", current++ == begin);
       CPPUNIT_ASSERT_MESSAGE ("current != begin", current != begin);
+
     }
 
     void

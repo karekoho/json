@@ -38,12 +38,12 @@ public:
     boolean b;
     leaf *l = & b;
 
-    leaf::Iterator *it[] = {
-      new leaf::Iterator,
-      new leaf::Iterator (l),
+    leaf::iterator *it[] = {
+      new leaf::iterator,
+      new leaf::iterator (l),
     };
 
-    leaf::Iterator copy = leaf::Iterator (*it[1]);
+    leaf::iterator copy = leaf::iterator (*it[1]);
 
     CPPUNIT_ASSERT_MESSAGE ("l.type ()", & copy != it[1]);
 
@@ -57,15 +57,15 @@ public:
     boolean b;
     leaf *l = & b;
 
-    leaf::Iterator it[] = {
-      leaf::Iterator (),
-      leaf::Iterator (l)
+    leaf::iterator it[] = {
+      leaf::iterator (),
+      leaf::iterator (l)
     };
 
-    leaf::Iterator copy = leaf::Iterator (it[1]);
+    leaf::iterator copy = leaf::iterator (it[1]);
 
     struct assert {
-      leaf::Iterator *itp;
+      leaf::iterator *itp;
       value::value_t type;
       int assert_status;
     };
@@ -91,8 +91,8 @@ public:
     boolean b;
     leaf *l = & b;
 
-    leaf::Iterator begin (l);
-    leaf::Iterator end (l + 1);
+    leaf::iterator begin (l);
+    leaf::iterator end (l + 1);
 
     size_t count = 0;
 
@@ -108,8 +108,8 @@ public:
     boolean b;
     leaf *l = & b;
 
-    leaf::Iterator begin (l);
-    leaf::Iterator current = begin;
+    leaf::iterator begin (l);
+    leaf::iterator current = begin;
 
     CPPUNIT_ASSERT_MESSAGE ("current++ == begin", current++ == begin);
     CPPUNIT_ASSERT_MESSAGE ("current != begin", current != begin);
@@ -121,8 +121,8 @@ public:
     boolean b;
     leaf *l = & b;
 
-    leaf::Iterator begin (l);
-    leaf::Iterator end (l + 1);
+    leaf::iterator begin (l);
+    leaf::iterator end (l + 1);
 
     CPPUNIT_ASSERT_MESSAGE ("Object::begin ()", begin == b.begin ());
     CPPUNIT_ASSERT_MESSAGE ("Object::end ()", end == b.end ());
