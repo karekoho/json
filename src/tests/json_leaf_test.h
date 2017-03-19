@@ -77,31 +77,43 @@ namespace format
         delete (*it).value;
     }
 
-    virtual void test_ctor_dtor () override {}
-    virtual void test_parse_1 () override {}
-    virtual void test_assign_all_values () override {}
-    virtual void test__clear () override {}
-    virtual void test_str_length () override {}
-
     virtual void
     test_operator_at_key () final override
     {
-
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("leaf[key]",
+                                    value::undefined_t,
+                                    undefined ()[L"0"].type ());
     }
+
     virtual void
     test_operator_at_index () final override
     {
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("leaf[index]",
+                                    value::undefined_t,
+                                    undefined ()[(size_t) 0].type ());
     }
 
     virtual void
     test_count () final override
     {
-      json j;
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("leaf::count ()", (size_t) 0, no_value::instance (& j)->count ());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("leaf::count ()",
+                                    (size_t) 0,
+                                    undefined ().count ());
     }
 
-    virtual void test_erase () final override {}
+    virtual void
+    test_erase () final override
+    {
+      CPPUNIT_ASSERT_MESSAGE ("leaf::erase ()",
+                              undefined ().erase (undefined ()).type () == value::undefined_t);
+    }
+
     virtual void test_type () override {}
+    virtual void test_ctor_dtor () override {}
+    virtual void test_parse_1 () override {}
+    virtual void test_assign_all_values () override {}
+    virtual void test__clear () override {}
+    virtual void test_str_length () override {}
 
     /**
      * 12.
@@ -115,7 +127,10 @@ namespace format
 
       /* 0. */ s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_assign_all_values", &json_leaf_test::test_str_value));
       /* 1. */ s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_count", &json_leaf_test::test_count));
-      /* 2. */ s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_erase", &json_leaf_test::test_erase));
+      /* 2. */ s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_operator_at_key", &json_leaf_test::test_operator_at_key));
+      /* 3. */ s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_operator_at_index", &json_leaf_test::test_operator_at_index));
+      /* 4. */ s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_count", &json_leaf_test::test_count));
+      /* 5. */ s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_erase", &json_leaf_test::test_erase));
 
       return s;
     }
