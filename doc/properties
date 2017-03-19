@@ -3,6 +3,8 @@ PUBLIC INTERFACE:
 value = 0:
 value & = value[key]
 value & = value[index]
+const wchar_t * = value.get ()
+const wchar_t * = value.stringify ()
 
 value = value &                         // assignment
 value = value *                         // assignment
@@ -16,6 +18,8 @@ json > value:
 json (const wchar_t *json_input)
 json (object *)
 json (array *)
+json (const object &)                   // copy
+json (const array &)                    // copy
 json (const json &)                     // copy
 
 json = const wchar_t *json_input        // assignment
