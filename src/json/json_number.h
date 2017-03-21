@@ -115,15 +115,6 @@ namespace format
     { return _assign (n);  }
 
     /**
-     * @brief operator =
-     * @param v
-     * @return
-     */
-//    inline value &
-//    operator =(const value & v)
-//    { return value::_assign (v);  }
-
-    /**
      * @brief value
      * @return
      */
