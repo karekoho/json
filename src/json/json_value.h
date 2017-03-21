@@ -443,11 +443,6 @@ namespace format
     size_t _index;
 
     /**
-     * @brief _old
-     */
-    mutable const value *_old_value;
-
-    /**
      * @brief json_value
      * @param endp
      * @param parent
@@ -456,6 +451,8 @@ namespace format
     value (json *parent);
 
     /**
+     * TODO: remove
+     *
      * @brief Value
      * @param ov
      * @param nv
