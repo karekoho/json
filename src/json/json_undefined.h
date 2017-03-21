@@ -111,8 +111,8 @@ namespace format
      * @return
      */
     virtual value *
-    _clone (const value *ov) const override
-    { return new undefined (ov, *this); }
+    _clone (const value *) const override
+    { return new undefined (*this); }
 
     /**
      * TODO: return nullptr

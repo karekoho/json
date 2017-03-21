@@ -71,8 +71,8 @@ namespace format
      * @return
      */
     virtual value *
-    _clone (const value *ov) const override
-    { return new string (ov, *this); }
+    _clone (const value *) const override
+    { return new string (*this); }
 
     /**
      * @brief type
@@ -90,15 +90,6 @@ namespace format
     inline value &
     operator =(const string & s)
     { return _assign (s); }
-
-    /**
-     * @brief operator =
-     * @param v
-     * @return
-     */
-//    inline value &
-//    operator =(const value & v)
-//    { return value::_assign (v); }
 
     /**
      * @brief assign

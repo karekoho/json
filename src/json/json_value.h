@@ -418,6 +418,8 @@ namespace format
     };
 
     /**
+     * TODO: move to string
+     *
      * @brief _startp
      */
     const wchar_t *_startp;
@@ -433,6 +435,7 @@ namespace format
     json *_parent;
 
     /**
+     * TODO: union { key, index }
      * @brief _key
      */
     const wchar_t * _key;

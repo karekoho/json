@@ -75,8 +75,8 @@ namespace format
     * @return
     */
     virtual value *
-    _clone (const value *ov) const override
-    { return new array (ov, *this); }
+    _clone (const value *) const override
+    { return new array (*this); }
 
    /**
     * @brief ~Array

@@ -80,8 +80,8 @@ namespace format
       * @return
       */
       virtual value *
-      _clone (const value *ov) const override
-      { return new boolean (ov, *this); }
+      _clone (const value *) const override
+      { return new boolean (*this); }
 
      /**
       * @brief strLength
@@ -115,15 +115,6 @@ namespace format
       inline value &
       operator =(boolean & b)
       { return _assign (b); }
-
-     /**
-      * @brief operator =
-      * @param v
-      * @return
-      */
-//      inline value &
-//      operator =(const value & v)
-//      { return value::_assign (v); }
 
      /**
       * @brief assign

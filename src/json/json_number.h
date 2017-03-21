@@ -86,8 +86,8 @@ namespace format
      * @return
      */
     virtual value *
-    _clone (const value *ov) const override
-    { return new number (ov, *this); }
+    _clone (const value *) const override
+    { return new number (*this); }
 
     /**
      * @brief parse
