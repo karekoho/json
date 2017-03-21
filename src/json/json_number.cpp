@@ -73,9 +73,7 @@ format::number::_parse (const wchar_t *json)
   _readp = json;
 
   if (_parent == 0)
-    {
-      _look_ahead ();
-    }
+    _look_ahead ();
   else
     _startp = json;
 

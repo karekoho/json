@@ -104,20 +104,20 @@ format::object::_pair ()
     }
 
   if (charc < 0)   // No closing "
-    throw json_syntax_error ("Unexpected token ", *_readp);
+    throw json_syntax_error (UNEX_TOKEN, *_readp);
 
   const wchar_t *keyp = _readp + 1;
   _readp += charc;
 
   if (*(_look_ahead ()) != _sc::name_separator)   // Expect ':'
-    throw json_syntax_error ("Unexpected token ", *_readp);   // TODO: throw syntax error: unexpected character '%c'
+    throw json_syntax_error (UNEX_TOKEN, *_readp);   // TODO: throw syntax error: unexpected character '%c'
 
   _readp++;
 
   value * v = _make_value ();
 
   if (v->type () == value::no_value_t)
-    throw json_syntax_error ("Unexpected token ", *_readp);
+    throw json_syntax_error (UNEX_TOKEN, *_readp);
 
   std::wstring key (keyp, charc - 2);
 
@@ -136,12 +136,6 @@ format::object::__iterator__ () const
 {
   return new object_iterator (_member_list);
 }
-
-//format::value &
-//format::object::_assign (const object &nv)
-//{
-//  return _parent ? _parent->_assign (this, new object (/*this,*/ nv)) : *(_clone (nv));
-//}
 
 format::value &
 format::object::_at (const wchar_t *key)
@@ -181,9 +175,7 @@ void
 format::object::_clear ()
 {
   for (auto it = _member_list.begin (); it != _member_list.end (); it = _member_list.erase (it))
-    {
-      delete static_cast <std::pair<std::wstring, value *>>(*it).second;
-    }
+    delete static_cast <std::pair<std::wstring, value *>>(*it).second;
 }
 
 format::value *
