@@ -18,8 +18,8 @@ format::value::value ()
       _readp (0),
       _parent (0),
       _key (0),
-      _index (0),
-      _old_value (0)
+      _index (0)
+      //_old_value (0)
 {}
 
 format::value::value (const wchar_t *)
@@ -27,8 +27,8 @@ format::value::value (const wchar_t *)
       _readp (0),
       _parent (0),
       _key (0),
-      _index (0),
-      _old_value (0)
+      _index (0)
+      //_old_value (0)
 {}
 
 format::value::value (json *parent)
@@ -36,8 +36,8 @@ format::value::value (json *parent)
       _readp (0),
       _parent (parent),
       _key (0),
-      _index (0),
-      _old_value (0)
+      _index (0)
+      //_old_value (0)
 {}
 
 format::value::value (const value &other)
@@ -45,8 +45,8 @@ format::value::value (const value &other)
     _readp (other._readp),
     _parent (0),
     _key (other._key ? new wchar_t [wcslen (other._key) + 1] () : 0),
-    _index (other._index),
-    _old_value (0)
+    _index (other._index)
+    //_old_value (0)
 {}
 
 format::value::value (const value *ov, const value &nv)
@@ -54,8 +54,8 @@ format::value::value (const value *ov, const value &nv)
     _readp (nv._readp),
     _parent (0),
     _key (nv._key ? new wchar_t [wcslen (nv._key) + 1] () : 0),
-    _index (nv._index),
-    _old_value (0)
+    _index (nv._index)
+    //_old_value (0)
 {
   //delete nv._old_value;
   //nv._old_value = ov;
@@ -65,8 +65,8 @@ format::value::
 ~value ()
 {
   delete[] _key;
-  delete _old_value;
-  _old_value = 0;
+  //delete _old_value;
+  //_old_value = 0;
 }
 
 long int

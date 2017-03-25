@@ -445,7 +445,7 @@ namespace format
     /**
      * @brief _old
      */
-    mutable const value *_old_value;
+    //mutable const value *_old_value;
 
     /**
      * @brief json_value
