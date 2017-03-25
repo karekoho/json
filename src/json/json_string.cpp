@@ -22,8 +22,7 @@ format::string::string (json *parent, size_t charc)
   : leaf (parent),
     _startp (0),
     _charc (charc)
-{
-}
+{}
 
 format::string::string (const string &other)
   : leaf (other),

@@ -38,10 +38,7 @@ format::array::~array ()
 
 const wchar_t *
 format::array::_parse (const wchar_t *json)
-{
-  if (json == 0)
-    throw json_syntax_error (UNEX_END);
-
+{  
   if (_parent == 0)   // 1. Array (), 2. Array (const char *json)
     {
       _readp = json;

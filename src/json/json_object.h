@@ -276,14 +276,6 @@ namespace format
     _pair ();
 
     /**
-     * @brief _assign
-     * @param nv
-     * @return
-     */
-//    value &
-//    _assign (const object & nv);
-
-    /**
      * @brief _at
      * @param key
      * @return
@@ -311,14 +303,6 @@ namespace format
      */
     virtual void
     _clear () override;
-
-    /**
-     * @brief _sizeof
-     * @return
-     *
-    virtual size_t
-    _sizeof () const noexcept override
-    { return sizeof (object); }*/
   };
 } // Namespace format
 

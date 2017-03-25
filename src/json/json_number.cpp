@@ -8,8 +8,7 @@ format::number::number ()
     _double_valuep (& _double_value),
     _digitp {{ 0, 0 }, { 0, 0 }},
     _is_double (false)
-{
-}
+{}
 
 format::number::number (double d)
   : leaf (),
@@ -17,8 +16,7 @@ format::number::number (double d)
     _double_valuep (& _double_value),
     _digitp {{ 0, 0 }, { 0, 0 }},
     _is_double (true)
-{
-}
+{}
 
 format::number::number (const wchar_t *json)
   : leaf (json),
@@ -39,8 +37,7 @@ format::number::number (json *parent)
     _double_valuep (0),
     _digitp {{ 0, 0 }, { 0, 0 }},
    _is_double (false)
-{
-}
+{}
 
 format::number::number (const number &other)
  : leaf (other),

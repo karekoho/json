@@ -33,15 +33,12 @@ format::object::object (const value *ov, const object &nv)
 
 format::object::~object ()
 {
- _clear ();
+  _clear ();
 }
 
 const wchar_t *
 format::object::_parse (const wchar_t *json)
 {
-  if (json == 0)
-    throw json_syntax_error (UNEX_END);
-
   if (_parent == 0)   // 1. Object (), 2. Object (const char *json)
     {
       _readp = json;
