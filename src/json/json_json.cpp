@@ -107,6 +107,24 @@ format::json::json::_parse (const wchar_t *readp)
 }
 
 format::value &
+format::json::_at (const wchar_t *key)
+{
+  if (! __hasRoot ())
+    __root = new object ();
+
+  return (*__root)[key];
+}
+
+format::value &
+format::json::_at (size_t index)
+{
+  if (! __hasRoot ())
+    __root = new array ();
+
+  return (*__root)[index];
+}
+
+format::value &
 format::json::_assign (const json &j)
 {
   if (j.__hasRoot ())

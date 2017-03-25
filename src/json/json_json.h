@@ -205,8 +205,8 @@ namespace format
      * @return
      */
     virtual value &
-    _at (const wchar_t *key) override
-    { return __hasRoot() ? (*__root)[key] : *(new format::undefined ()); }
+    _at (const wchar_t *key) override;
+    //{ return __hasRoot () ? (*__root)[key] : *(new format::undefined ()); }
 
     /**
      * @brief _at
@@ -214,8 +214,8 @@ namespace format
      * @return
      */
     virtual value &
-    _at (size_t index) override
-    { return __hasRoot() ? (*__root)[index] : *(new format::undefined ()); }
+    _at (size_t index) override;
+    //{ return __hasRoot () ? (*__root)[index] : *(new format::undefined ()); }
 
     /**
      * @brief _make_value
