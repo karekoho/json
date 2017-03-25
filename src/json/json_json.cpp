@@ -15,6 +15,18 @@ format::json::json ()
     __reviver (0)
 {}
 
+format::json::json (const wchar_t *json)
+  : value (json),
+    _str_value { 0, 0 },
+    __root (0),
+    __reviver (0)
+{
+  if (json == 0)
+    throw json_syntax_error (UNEX_END);
+
+  (void) _parse (json);
+}
+
 format::json::json (const wchar_t *json, const bool _call_parse)
   : value (json),
     _str_value { 0, 0 },

@@ -44,9 +44,8 @@ namespace format
     /**
      * @brief json
      * @param json
-     * @param _call_parse
      */
-    json (const wchar_t *json, const bool _call_parse = true);
+    json (const wchar_t *json);
 
     /**
      * @brief json
@@ -190,6 +189,12 @@ namespace format
     { return new json (*this); }
 
   protected:
+    /**
+     * @brief json
+     * @param json
+     * @param _call_parse
+     */
+    json (const wchar_t *json, const bool _call_parse);
 
     /**
      * @brief parse
@@ -246,14 +251,6 @@ namespace format
      */
     value *
     _call_reviver (value *v, const wchar_t *key, size_t index = 0) const;
-
-    /**
-     * @brief _sizeof
-     * @return
-     *
-    virtual size_t
-    _sizeof () const noexcept
-    { return sizeof (json); }*/
 
     /**
      * @brief _str_value
