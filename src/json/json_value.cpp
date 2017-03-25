@@ -14,59 +14,44 @@ const struct format::value::literal_value format::value::__ltr_value[3] = {
 };
 
 format::value::value ()
-    : //__startp (0),
-      _readp (0),
+    : _readp (0),
       _parent (0),
       _key (0),
       _index (0)
-      //_old_value (0)
 {}
 
 format::value::value (const wchar_t *)
-    : //__startp (0),
-      _readp (0),
+    : _readp (0),
       _parent (0),
       _key (0),
       _index (0)
-      //_old_value (0)
 {}
 
 format::value::value (json *parent)
-    : //__startp (0),
-      _readp (0),
+    : _readp (0),
       _parent (parent),
       _key (0),
       _index (0)
-      //_old_value (0)
 {}
 
 format::value::value (const value &other)
-  : //__startp (other.__startp),
-    _readp (other._readp),
+  : _readp (other._readp),
     _parent (0),
     _key (other._key ? new wchar_t [wcslen (other._key) + 1] () : 0),
-    _index (other._index)
-    //_old_value (0)
+    _index (other._index)    
 {}
 
 format::value::value (const value *ov, const value &nv)
-  : //__startp (nv.__startp),
-    _readp (nv._readp),
+  : _readp (nv._readp),
     _parent (0),
     _key (nv._key ? new wchar_t [wcslen (nv._key) + 1] () : 0),
-    _index (nv._index)
-    //_old_value (0)
-{
-  //delete nv._old_value;
-  //nv._old_value = ov;
-}
+    _index (nv._index)    
+{  }
 
 format::value::
 ~value ()
 {
-  delete[] _key;
-  //delete _old_value;
-  //_old_value = 0;
+  delete[] _key;  
 }
 
 long int

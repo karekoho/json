@@ -418,11 +418,6 @@ namespace format
     };
 
     /**
-     * @brief _startp
-     */
-    //const wchar_t *__startp;
-
-    /**
      * @brief _readp
      */
     const wchar_t *_readp;
@@ -441,11 +436,6 @@ namespace format
      * @brief _index
      */
     size_t _index;
-
-    /**
-     * @brief _old
-     */
-    //mutable const value *_old_value;
 
     /**
      * @brief json_value

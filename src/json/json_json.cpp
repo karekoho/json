@@ -24,8 +24,6 @@ format::json::json (const wchar_t *json, const bool _call_parse)
   if (json == 0)
     throw json_syntax_error (UNEX_END);
 
-  //__startp = json;
-
   if (_call_parse)
     (void) _parse (json);
 }
@@ -38,8 +36,6 @@ format::json::json (const wchar_t *json, reviver r)
 {
   if (json == 0)
     throw json_syntax_error (UNEX_END);
-
-  //__startp = json;
 
   (void) _parse (json);
 
