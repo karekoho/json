@@ -165,10 +165,10 @@ namespace format
     /**
      * @brief _sizeof
      * @return
-     */
+     *
     virtual size_t
     _sizeof () const noexcept
-    { return sizeof (null); }
+    { return sizeof (null); }*/
   };
 } // Namespace format
 

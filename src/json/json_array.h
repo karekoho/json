@@ -302,10 +302,10 @@ namespace format
     /**
      * @brief _sizeof
      * @return
-     */
+     *
     virtual size_t
     _sizeof () const noexcept override
-    { return sizeof (array); }
+    { return sizeof (array); }*/
   };
 } // Namespace format
 

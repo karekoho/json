@@ -558,7 +558,7 @@ namespace format
      * @brief _sizeof
      * @return
      */
-    virtual size_t _sizeof () const noexcept = 0;
+    //virtual size_t _sizeof () const noexcept = 0;
 
     /**
      * @brief _literal_value
@@ -575,10 +575,10 @@ namespace format
     /**
      * @brief _size
      * @return
-     */
+     *
     inline size_t
     __sizeof () const noexcept
-    { return _sizeof (); }
+    { return _sizeof (); }*/
   };  // Class value
 
   /**

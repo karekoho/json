@@ -250,10 +250,10 @@ namespace format
     /**
      * @brief _sizeof
      * @return
-     */
+     *
     virtual size_t
     _sizeof () const noexcept
-    { return sizeof (json); }
+    { return sizeof (json); }*/
 
     /**
      * @brief _str_value

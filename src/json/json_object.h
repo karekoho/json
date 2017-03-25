@@ -315,10 +315,10 @@ namespace format
     /**
      * @brief _sizeof
      * @return
-     */
+     *
     virtual size_t
     _sizeof () const noexcept override
-    { return sizeof (object); }
+    { return sizeof (object); }*/
   };
 } // Namespace format
 

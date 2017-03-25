@@ -257,10 +257,10 @@ namespace format
     /**
      * @brief _sizeof
      * @return
-     */
+     *
     virtual size_t
     _sizeof () const noexcept
-    { return sizeof (number); }
+    { return sizeof (number); }*/
   };
 } // Namespace Format
 #endif // NUMBER_H
