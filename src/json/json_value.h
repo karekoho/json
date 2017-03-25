@@ -546,21 +546,6 @@ namespace format
     _clear () = 0;
 
     /**
-     * @brief _clone
-     * @param v
-     * @return
-     */
-    static inline value *
-    _clone_cb (value *v)
-    { return v->clone (); }
-
-    /**
-     * @brief _sizeof
-     * @return
-     */
-    //virtual size_t _sizeof () const noexcept = 0;
-
-    /**
      * @brief _literal_value
      */
     static const struct literal_value

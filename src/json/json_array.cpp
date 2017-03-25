@@ -154,7 +154,9 @@ format::array::_clone (const value &other)
 
   _element_list.reserve (nv._element_list.size ());
 
-  std::transform (nv._element_list.begin (), nv._element_list.end (), std::back_inserter (_element_list), _clone_cb);
+  std::transform (nv._element_list.begin (),
+                  nv._element_list.end (),
+                  std::back_inserter (_element_list), [] (value *v) -> value * { return v->clone (); });
 
   return this;
 }
