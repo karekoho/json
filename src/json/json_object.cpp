@@ -52,10 +52,7 @@ format::object::_parse (const wchar_t *json)
       _readp++;
     }
   else
-    {
-      _startp = json;
-      _readp = json + 1;
-    }
+    _readp = json + 1;
 
   if (*_readp == 0)
     throw json_syntax_error (UNEX_END);

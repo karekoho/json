@@ -133,6 +133,11 @@ namespace format
   protected:
 
     /**
+     * @brief _startp
+     */
+    const wchar_t *_startp;
+
+    /**
      * @brief _charc
      */
     size_t _charc;

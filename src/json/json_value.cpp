@@ -14,7 +14,7 @@ const struct format::value::literal_value format::value::__ltr_value[3] = {
 };
 
 format::value::value ()
-    : _startp (0),
+    : //__startp (0),
       _readp (0),
       _parent (0),
       _key (0),
@@ -23,7 +23,7 @@ format::value::value ()
 {}
 
 format::value::value (const wchar_t *)
-    : _startp (0),
+    : //__startp (0),
       _readp (0),
       _parent (0),
       _key (0),
@@ -32,7 +32,7 @@ format::value::value (const wchar_t *)
 {}
 
 format::value::value (json *parent)
-    : _startp (0),
+    : //__startp (0),
       _readp (0),
       _parent (parent),
       _key (0),
@@ -41,7 +41,7 @@ format::value::value (json *parent)
 {}
 
 format::value::value (const value &other)
-  : _startp (other._startp),
+  : //__startp (other.__startp),
     _readp (other._readp),
     _parent (0),
     _key (other._key ? new wchar_t [wcslen (other._key) + 1] () : 0),
@@ -50,7 +50,7 @@ format::value::value (const value &other)
 {}
 
 format::value::value (const value *ov, const value &nv)
-  : _startp (nv._startp),
+  : //__startp (nv.__startp),
     _readp (nv._readp),
     _parent (0),
     _key (nv._key ? new wchar_t [wcslen (nv._key) + 1] () : 0),

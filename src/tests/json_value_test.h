@@ -40,7 +40,7 @@ namespace format
 
           format::json_mock_value *m  = new format::json_mock_value ();
 
-          m->_startp = m->_readp = startp;
+          /*m->__startp =*/ m->_readp = startp;
 
           m->_look_ahead ();
 
@@ -82,7 +82,7 @@ namespace format
 
             json_mock_value *m  = new json_mock_value ();
 
-            m->_startp = m->_readp = startp;
+            /*m->__startp =*/ m->_readp = startp;
 
             m->_look_ahead ();
 
@@ -120,7 +120,7 @@ namespace format
 
             json_mock_value *m  = new json_mock_value ();
 
-            m->_startp = m->_readp = startp;
+            /*m->__startp =*/ m->_readp = startp;
 
             value::_literal ltr = m->_is_literal ();
 
@@ -347,36 +347,29 @@ namespace format
       virtual void test_type () override {}
 
       void
-      test___sizeof ()
+      test_sizeof ()
       {
-        json parent;
-
         struct assert
         {
-          value *val;
+          const char *name;
           size_t size;
           int assert_status;
         };
 
         std::vector<struct assert> test = {
-          { new json (), sizeof (json), PASS },
-          { new object (), sizeof (object), PASS },
-          { new array (), sizeof (array), PASS },
-          { new string (), sizeof (string), PASS },
-          { new number (), sizeof (number), PASS },
-          { new boolean (), sizeof (boolean), PASS },
-          { new null (), sizeof (null), PASS },
-          { new undefined (), sizeof (undefined), PASS },
-          { no_value::instance (& parent), sizeof (no_value), PASS }
+          { "json", sizeof (json), PASS },
+          { "object", sizeof (object), PASS },
+          { "array", sizeof (array), PASS },
+          { "string", sizeof (string), PASS },
+          { "number", sizeof (number), PASS },
+          { "boolean", sizeof (boolean), PASS },
+          { "null", sizeof (null), PASS },
+          { "undefined", sizeof (undefined), PASS },
         };
 
         TEST_IT_START
-            // std::cout << (*it).size << std::endl;
-            ASSERT_EQUAL_IDX ("value::__sizeof ()", (*it).size, (*it).val->__sizeof ());
+            std::cout << (*it).name << ": " << (*it).size << std::endl;
         TEST_IT_END;
-
-        for (auto it = test.begin (); it != test.end () - 2; ++it)
-          delete (*it).val;
       }
 
       /**
@@ -397,14 +390,12 @@ namespace format
         /* 5. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__str_append", &json_value_test::test__str_append));
         /* 6. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value_t", &json_value_test::test_operator_equal_value_t));
         /* 7. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value", &json_value_test::test_operator_equal_value));
-        /* 8. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_size", &json_value_test::test___sizeof));
-
-        /* 9. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("", &json_value_test::test_operator_assign_wchar_t_ptr));
-        /* 10. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("", &json_value_test::test_operator_assign_double));
-        /* 11. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("", &json_value_test::test_operator_assign_bool));
-        /* 12. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("", &json_value_test::test_operator_assign_nullptr));
-
-        /* 13. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_ptr", &json_value_test::test_assign_ptr));
+        /* 8. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_wchar_t_ptr", &json_value_test::test_operator_assign_wchar_t_ptr));
+        /* 9. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_double", &json_value_test::test_operator_assign_double));
+        /* 10. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_bool", &json_value_test::test_operator_assign_bool));
+        /* 11. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_nullptr", &json_value_test::test_operator_assign_nullptr));
+        /* 12. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_ptr", &json_value_test::test_assign_ptr));
+        /* 13. */  //s->addTest (new CppUnit::TestCaller<json_value_test> ("test_size", &json_value_test::test_sizeof));
 
         return s;
       }

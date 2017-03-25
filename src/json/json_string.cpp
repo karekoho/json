@@ -3,11 +3,13 @@
 
 format::string::string ()
   : leaf (),
+    _startp (0),
     _charc (0)
 {}
 
 format::string::string (const wchar_t *json)
   : leaf (json),
+    _startp (0),
     _charc (0)
 {
   if (json == 0)
@@ -18,12 +20,14 @@ format::string::string (const wchar_t *json)
 
 format::string::string (json *parent, size_t charc)
   : leaf (parent),
+    _startp (0),
     _charc (charc)
 {
 }
 
 format::string::string (const string &other)
   : leaf (other),
+    _startp (other._startp),
     _charc (other._charc)
 {
   _clone (other);
@@ -31,6 +35,7 @@ format::string::string (const string &other)
 
 format::string::string (const value *ov, const string &nv)
   : leaf (ov, nv),
+    _startp (nv._startp),
     _charc (nv._charc)
 {
   _clone (nv);
@@ -90,7 +95,7 @@ format::string::str_value (wchar_t *) const
           wchar_t *s =  (wchar_t *) alloca (sizeof (wchar_t) * _charc + 2);
 
           *s = L'"';
-          *(wcsncpy (s + 1,_startp, _charc) +_charc) = L'"';
+          *(wcsncpy (s + 1, _startp, _charc) +_charc) = L'"';
 
           _string_value[1].assign (s, _charc + 2);
         }

@@ -420,7 +420,7 @@ namespace format
     /**
      * @brief _startp
      */
-    const wchar_t *_startp;
+    //const wchar_t *__startp;
 
     /**
      * @brief _readp

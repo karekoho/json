@@ -53,7 +53,7 @@ format::array::_parse (const wchar_t *json)
     }
   else
     {
-      _startp = json;
+      //__startp = json;
       _readp  = json + 1;
     }
 

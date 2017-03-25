@@ -31,7 +31,7 @@ namespace format
      * @param json
      */
     leaf (const wchar_t *json) : value (json)
-    { _startp = json; }
+    { /*__startp = json;*/ }
 
     /**
      * @brief Leaf

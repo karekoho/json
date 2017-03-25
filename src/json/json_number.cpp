@@ -77,7 +77,7 @@ format::number::_parse (const wchar_t *json)
       _look_ahead ();
     }
   else
-    _startp = json;
+    //__startp = json;
 
   if (*_readp == 0)
     throw json_syntax_error (UNEX_TOKEN, *_readp);
