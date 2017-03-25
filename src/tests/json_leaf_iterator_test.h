@@ -126,8 +126,6 @@ public:
 
     CPPUNIT_ASSERT_MESSAGE ("Object::begin ()", begin == b.begin ());
     CPPUNIT_ASSERT_MESSAGE ("Object::end ()", end == b.end ());
-
-    // CPPUNIT_ASSERT_EQUAL_MESSAGE ("(*b.begin ()).type ()", Value::boolean, (*b.begin ()).type ());
   }
 
   /**
@@ -140,8 +138,7 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json leaf iterator test");
 
-     s->addTest (new CppUnit::TestCaller<json_leaf_iterator_test> ("test_hasNext", &json_leaf_iterator_test::test_hasNext));
-
+     //s->addTest (new CppUnit::TestCaller<json_leaf_iterator_test> ("test_hasNext", &json_leaf_iterator_test::test_hasNext));
      s->addTest (new CppUnit::TestCaller<json_leaf_iterator_test> ("test_construct_assign_destruct", &json_leaf_iterator_test::test_construct_assign_destruct));
      s->addTest (new CppUnit::TestCaller<json_leaf_iterator_test> ("test_dereference", &json_leaf_iterator_test::test_dereference));
      s->addTest (new CppUnit::TestCaller<json_leaf_iterator_test> ("test_pre_increment", &json_leaf_iterator_test::test_pre_increment));

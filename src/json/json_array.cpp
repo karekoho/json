@@ -105,12 +105,6 @@ format::array::_parse (const wchar_t *json)
   return _readp;
 }
 
-//format::value &
-//format::array::_assign (const array &nv)
-//{
-//  return _parent ? _parent->_assign (this, new array (/*this,*/ nv)) : *(_clone (nv));
-//}
-
 format::value &
 format::array::_at (size_t index)
 {
@@ -166,12 +160,6 @@ format::array::_clone (const value &other)
   std::transform (nv._element_list.begin (), nv._element_list.end (), std::back_inserter (_element_list), _clone_cb);
 
   return this;
-}
-
-format::json_iterator *
-format::array::__iterator__ () const
-{
-  return new array_iterator (_element_list);
 }
 
 size_t

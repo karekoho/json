@@ -150,10 +150,10 @@ namespace format
     /**
      * @brief iterator
      * @return
-     */
+     *
     virtual json_iterator *
     __iterator__ () const override
-    { return __root ? __root->__iterator__ () : 0; }
+    { return __root ? __root->__iterator__ () : 0; } */
 
     /**
      * @brief strLength
@@ -206,7 +206,6 @@ namespace format
      */
     virtual value &
     _at (const wchar_t *key) override;
-    //{ return __hasRoot () ? (*__root)[key] : *(new format::undefined ()); }
 
     /**
      * @brief _at
@@ -215,7 +214,6 @@ namespace format
      */
     virtual value &
     _at (size_t index) override;
-    //{ return __hasRoot () ? (*__root)[index] : *(new format::undefined ()); }
 
     /**
      * @brief _make_value

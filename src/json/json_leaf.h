@@ -99,13 +99,6 @@ namespace format
     { return true; }
 
     /**
-     * @brief iterator
-     * @return
-     */
-    virtual json_iterator *
-    __iterator__ () const final override;
-
-    /**
      * @brief erase
      * @return
      */

@@ -110,13 +110,6 @@ namespace format
     { return _parent ? _parent->_assign (this, new array (a)) : *(_clone (a)); }
 
    /**
-    * @brief iterator
-    * @return
-    */
-    virtual json_iterator *
-    __iterator__ () const override;
-
-   /**
     * @brief strLength
     * @return
     */
@@ -275,14 +268,6 @@ namespace format
       wchar_t *end = 0;
       return _at (std::wcstoll (key, & end, 10));
     }
-
-    /**
-    * @brief _assign
-    * @param nv
-    * @return
-    */
-//    value &
-//    _assign (const array & nv);
 
    /**
     * @brief assign

@@ -128,18 +128,6 @@ format::object::_pair ()
   return true;
 }
 
-format::json_iterator *
-format::object::__iterator__ () const
-{
-  return new object_iterator (_member_list);
-}
-
-//format::value &
-//format::object::_assign (const object &nv)
-//{
-//  return _parent ? _parent->_assign (this, new object (/*this,*/ nv)) : *(_clone (nv));
-//}
-
 format::value &
 format::object::_at (const wchar_t *key)
 {

@@ -97,13 +97,6 @@ namespace format
     { return _parent ? _parent->_assign (this, new object (o)) : *(_clone (o)); }
 
     /**
-     * @brief iterator
-     * @return
-     */
-    virtual json_iterator *
-    __iterator__ () const override;
-
-    /**
      * @brief strLength
      * @return
      */

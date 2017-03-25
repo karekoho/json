@@ -148,8 +148,7 @@ public:
   {
     CppUnit::TestSuite *s = new CppUnit::TestSuite ("json object iterator test");
 
-     s->addTest (new CppUnit::TestCaller<json_object_iterator_test> ("test_hasNext", &json_object_iterator_test::test_hasNext));
-
+     //s->addTest (new CppUnit::TestCaller<json_object_iterator_test> ("test_hasNext", &json_object_iterator_test::test_hasNext));
      s->addTest (new CppUnit::TestCaller<json_object_iterator_test> ("test_construct_assign_destruct", &json_object_iterator_test::test_construct_assign_destruct));
      s->addTest (new CppUnit::TestCaller<json_object_iterator_test> ("test_dereference", &json_object_iterator_test::test_dereference));
      s->addTest (new CppUnit::TestCaller<json_object_iterator_test> ("test_pre_increment", &json_object_iterator_test::test_pre_increment));

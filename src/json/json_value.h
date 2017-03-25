@@ -224,9 +224,9 @@ namespace format
     /**
      * @brief iterator
      * @return
-     */
+     *
     virtual json_iterator *
-    __iterator__ () const = 0;
+    __iterator__ () const = 0; */
 
     /**
      * @brief isLeaf

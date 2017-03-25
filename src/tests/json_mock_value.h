@@ -45,10 +45,6 @@ namespace format
       _assign (value *, value *) override
       { return *this; }
 
-      virtual json_iterator *
-      __iterator__ () const override
-      { return new leaf_iterator (this); }
-
       virtual size_t
       str_length () const noexcept override
       { return 0; }
