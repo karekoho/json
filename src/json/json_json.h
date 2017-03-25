@@ -147,14 +147,6 @@ namespace format
     { return *this; }
 
     /**
-     * @brief iterator
-     * @return
-     *
-    virtual json_iterator *
-    __iterator__ () const override
-    { return __root ? __root->__iterator__ () : 0; } */
-
-    /**
      * @brief strLength
      * @return
      */

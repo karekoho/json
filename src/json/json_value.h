@@ -554,16 +554,7 @@ namespace format
       const size_t len;
       const value::_literal ltr_value;
 
-    } __ltr_value[3];
-
-  private:
-    /**
-     * @brief _size
-     * @return
-     *
-    inline size_t
-    __sizeof () const noexcept
-    { return _sizeof (); }*/
+    } __ltr_value[3]; 
   };  // Class value
 
   /**
