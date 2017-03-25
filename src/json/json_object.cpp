@@ -166,9 +166,7 @@ void
 format::object::_clear ()
 {
   for (auto it = _member_list.begin (); it != _member_list.end (); it = _member_list.erase (it))
-    {
-      delete static_cast <std::pair<std::wstring, value *>>(*it).second;
-    }
+    delete static_cast <std::pair<std::wstring, value *>>(*it).second;
 }
 
 format::value *
