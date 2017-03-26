@@ -32,6 +32,10 @@ namespace format
       CPPUNIT_ASSERT_MESSAGE ("json",
                               & copy != & j[1]);
 
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("value::type ()",
+                                    value::boolean_t,
+                                    (j[(size_t) 0][L"0"] = boolean ())[L"0"].type ());
+
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.count ()",
                                     (size_t) 1,
                                     copy.count ());
