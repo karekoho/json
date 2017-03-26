@@ -109,7 +109,7 @@ namespace format
     /**
      * @brief The Iterator class
      */
-    class iterator : public std::iterator<
+    class iterator : public value::iterator<value *,
         std::input_iterator_tag,
         value *,        // Type
         value *,        // Distance
@@ -124,7 +124,12 @@ namespace format
        * @param value
        */
       iterator (leaf *value = 0)
-        : _value (value)
+        : value::iterator<format::value *,
+          std::input_iterator_tag,
+          format::value *,
+          format::value *,
+          format::value *,
+          format::value &>::iterator (value)
       {}
 
       /**
@@ -141,7 +146,7 @@ namespace format
       /**
        * @brief operator ++
        * @return
-       */
+       *
       iterator &
       operator ++()
       {
@@ -149,10 +154,10 @@ namespace format
         return *this;
       }
 
-      /**
+      **
        * @brief operator ++
        * @return
-       */
+       *
       iterator
       operator ++(int)
       {
@@ -161,23 +166,23 @@ namespace format
         return it;
       }
 
-      /**
+      **
        * @brief operator ==
        * @param rhs
        * @return
-       */
+       *
       inline bool
       operator ==(const iterator &rhs)
       { return _value == rhs._value; }
 
-      /**
+      **
        * @brief operator !=
        * @param rhs
        * @return
-       */
+       *
       inline bool
       operator !=(const iterator &rhs)
-      { return ! operator ==(rhs); }
+      { return ! operator ==(rhs); }*/
 
       /**
        * @brief operator *
@@ -186,18 +191,17 @@ namespace format
       reference
       operator *()
       {
-        if (_value == 0)
+        if (__it == 0)
           throw json_out_of_range ("Iterator not derefenceable");
 
-        return *_value;
+        return *__it;
       }
 
     protected:
-
       /**
        * @brief _value
-       */
-      leaf *_value;
+       *
+      leaf *_value;*/
 
     }; // Iterator
 
