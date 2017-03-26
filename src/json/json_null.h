@@ -45,15 +45,6 @@ namespace format
     null (const null &other) = default;
 
     /**
-     * @brief Null
-     * @param ov
-     * @param nv
-     */
-    null (const value *ov, const null &nv)
-      : leaf (ov, nv)
-    {}
-
-    /**
      * @brief ~null
      */
     virtual ~null () override = default;
@@ -73,8 +64,8 @@ namespace format
      * @return
      */
     virtual value *
-    _clone (const value *ov) const override
-    { return new null (ov, *this); }
+    _clone (const value *) const override
+    { return new null (*this); }
 
     /**
      * @brief parse
