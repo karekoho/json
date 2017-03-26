@@ -32,14 +32,6 @@ format::string::string (const string &other)
   _clone (other);
 }
 
-format::string::string (const value *ov, const string &nv)
-  : leaf (ov, nv),
-    _startp (nv._startp),
-    _charc (nv._charc)
-{
-  _clone (nv);
-}
-
 const wchar_t *
 format::string::_parse (const wchar_t *json)
 {
