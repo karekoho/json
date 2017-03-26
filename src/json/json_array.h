@@ -132,9 +132,9 @@ namespace format
     erase (const value &v) noexcept override;
 
    /**
-    * @brief The Iterator class
+    * @brief The iterator class
     */
-    class iterator : public std::iterator<
+    class iterator : public value::iterator<element_list::iterator,
         std::input_iterator_tag,
         value *,  // Type
         value *,  // Distance
@@ -144,25 +144,26 @@ namespace format
     public:
 
      /**
-      * @brief Iterator
+      * @brief iterator
       */
       iterator ()
+        : value::iterator<element_list::iterator, std::input_iterator_tag, value *, value *, value *, value &>::iterator ()
       {}
 
      /**
-      * @brief Iterator
+      * @brief iterator
       * @param it
       */
       iterator (element_list::iterator it)
-        : _it (it)
+        : value::iterator<element_list::iterator, std::input_iterator_tag, value *, value *, value *, value &>::iterator (it)
       {}
 
      /**
-      * @brief Iterator
+      * @brief iterator
       * @param other
       */
       iterator (const iterator & other)
-        : _it (other._it)
+        : value::iterator<element_list::iterator, std::input_iterator_tag, value *, value *, value *, value &>::iterator (other)
       {}
 
      /**
@@ -173,7 +174,7 @@ namespace format
      /**
       * @brief operator ++
       * @return
-      */
+      *
       iterator &
       operator ++()
       {
@@ -181,10 +182,10 @@ namespace format
         return *this;
       }
 
-     /**
+     **
       * @brief operator ++
       * @return
-      */
+      *
       iterator
       operator ++(int)
       {
@@ -193,23 +194,23 @@ namespace format
         return it;
       }
 
-     /**
+     **
       * @brief operator ==
       * @param rhs
       * @return
-      */
+      *
       inline bool
       operator ==(const iterator &rhs)
       { return _it == rhs._it; }
 
-     /**
+     **
       * @brief operator !=
       * @param rhs
       * @return
-      */
+      *
       inline bool
       operator !=(const iterator &rhs)
-      { return ! operator ==(rhs); }
+      { return ! operator ==(rhs); }*/
 
      /**
       * @brief operator *
@@ -217,14 +218,13 @@ namespace format
       */
       reference
       operator *()
-      { return **_it; }
+      { return **__it; }
 
     protected:
-
       /**
        * @brief _it
-       */
-      element_list::iterator _it;
+       *
+      element_list::iterator _it;*/
     }; // Iterator
 
     /**

@@ -222,13 +222,6 @@ namespace format
     { return _index; }
 
     /**
-     * @brief iterator
-     * @return
-     *
-    virtual json_iterator *
-    __iterator__ () const = 0; */
-
-    /**
      * @brief isLeaf
      * @return
      */
@@ -295,8 +288,99 @@ namespace format
     parent () const
     { return _parent; }
 
-  protected:
+    /**
+     * @brief The iterator class
+     */
+    template <class Iterator,
+              class Category,
+              class T,
+              class Distance = std::ptrdiff_t,
+              class Pointer = T*,
+              class Reference = T& > class iterator
+        : public std::iterator<Category, T, Distance, Pointer, Reference>
+    {
+    public:
+      /**
+       * @brief iterator
+       */
+      iterator (){}
 
+      /**
+       * @brief iterator
+       */
+      iterator (Iterator it)
+        : __it (it)
+      {}
+
+      /**
+       * @brief iterator
+       * @param other
+       */
+      iterator (const iterator & other)
+        : __it (other.__it)
+      {}
+
+      /**
+       * @brief ~iterator
+       */
+      virtual ~iterator () = default;
+
+      /**
+       * @brief operator ++
+       * @return
+       */
+      iterator &
+      operator ++()
+      {
+        ++__it;
+        return *this;
+      }
+
+      /**
+       * @brief operator ++
+       * @return
+       */
+      iterator
+      operator ++(int)
+      {
+        iterator it (*this);
+        ++(*this);
+        return it;
+      }
+
+      /**
+       * @brief operator ==
+       * @param rhs
+       * @return
+       */
+       inline bool
+       operator ==(const iterator &rhs)
+       { return __it == rhs.__it; }
+
+      /**
+       * @brief operator !=
+       * @param rhs
+       * @return
+       */
+       inline bool
+       operator !=(const iterator &rhs)
+       { return ! operator ==(rhs); }
+
+      /**
+       * @brief operator *
+       * @return
+       *
+       virtual Reference
+       operator *() = 0;*/
+
+    protected:
+       /**
+        * @brief __it
+        */
+       Iterator __it;
+    };  // Class iterator
+
+  protected:
     /**
      * @brief parse
      * @param json

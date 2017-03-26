@@ -127,7 +127,6 @@ namespace format
 
       CPPUNIT_ASSERT_MESSAGE ("current++ == begin", current++ == begin);
       CPPUNIT_ASSERT_MESSAGE ("current != begin", current != begin);
-
     }
 
     void
