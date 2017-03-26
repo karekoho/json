@@ -59,13 +59,6 @@ namespace format
     number (const number &other);
 
     /**
-     * @brief Number
-     * @param ov
-     * @param nv
-     */
-    number (const value *ov, const number &nv);
-
-    /**
      * @brief ~number
      * @return
      */
@@ -79,7 +72,6 @@ namespace format
     virtual value *
     clone () const
     { return new number (*this); }
-
 
     /**
      * @brief type
@@ -97,15 +89,6 @@ namespace format
     inline value &
     operator =(const number & n)
     { return _assign (n);  }
-
-    /**
-     * @brief operator =
-     * @param v
-     * @return
-     */
-//    inline value &
-//    operator =(const value & v)
-//    { return value::_assign (v);  }
 
     /**
      * @brief value

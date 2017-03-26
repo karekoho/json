@@ -49,16 +49,6 @@ format::number::number (const number &other)
   (void) _clone (other);
 }
 
-format::number::number (const value *ov, const number &nv)
-: leaf (ov, nv),
-  _double_value (0),
-  _double_valuep (0),
-  _digitp {{ 0, 0 }, { 0, 0 }},
-  _is_double (false)
-{
-  (void) _clone (nv);
-}
-
 const wchar_t *
 format::number::_parse (const wchar_t *json)
 {
