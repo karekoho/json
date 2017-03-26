@@ -211,7 +211,7 @@ namespace format
      */
     inline const wchar_t *
     key () const noexcept
-    { return _key; }
+    { return _ident.key; /*return _key;*/ }
 
     /**
      * @brief index
@@ -219,7 +219,7 @@ namespace format
      */
     inline size_t
     index () const noexcept
-    { return _index; }
+    { return _ident.index; /*return _index;*/ }
 
     /**
      * @brief isLeaf
@@ -443,9 +443,13 @@ namespace format
     inline void
     _set_key (const wchar_t *key, size_t charc) noexcept
     {
-       delete[] _key;
+//       delete[] _key;
+//       wchar_t *dest_ = new wchar_t[charc + 1] ();
+//       _key = wcsncpy (dest_, key, charc);
+
+       delete[] _ident.key;
        wchar_t *dest_ = new wchar_t[charc + 1] ();
-       _key = wcsncpy (dest_, key, charc);
+       _ident.key = wcsncpy (dest_, key, charc);
     }
 
     /**
@@ -455,7 +459,7 @@ namespace format
      */
     inline void
     _set_index (const size_t & index) noexcept
-    { _index = index; }
+    { _ident.index = index; /*_index = index;*/ }
 
     /**
      * @brief setParent
@@ -514,12 +518,21 @@ namespace format
     /**
      * @brief _key
      */
-    const wchar_t * _key;
+    //const wchar_t *_key;
 
     /**
      * @brief _index
      */
-    size_t _index;
+    //size_t _index;
+
+    /**
+     * @brief The Anonymous:1 union
+     */
+    union
+    {
+     const wchar_t *key;
+     size_t index;
+    } _ident;
 
     /**
      * @brief json_value
