@@ -58,7 +58,7 @@ namespace format
     * @param ov
     * @param nv
     */
-    array (const value *ov, const array &nv);
+    //array (const value *ov, const array &nv);
 
    /**
     * @brief clone
@@ -75,8 +75,8 @@ namespace format
     * @return
     */
     virtual value *
-    _clone (const value *ov) const override
-    { return new array (ov, *this); }
+    _clone (const value *) const override
+    { return new array (*this); }
 
    /**
     * @brief ~Array

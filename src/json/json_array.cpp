@@ -25,11 +25,11 @@ format::array::array (const array &other)
   (void) _clone (other);
 }
 
-format::array::array (const value *ov, const array &nv)
+/* format::array::array (const value *ov, const array &nv)
   : json (ov, nv)
 {
   (void) _clone (nv);
-}
+}*/
 
 format::array::~array ()
 {

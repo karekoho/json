@@ -80,22 +80,6 @@ namespace format
     clone () const
     { return new number (*this); }
 
-    /**
-     * @brief clone
-     * @param ov
-     * @return
-     */
-    virtual value *
-    _clone (const value *ov) const override
-    { return new number (ov, *this); }
-
-    /**
-     * @brief parse
-     * @param json
-     * @return
-     */
-    virtual const wchar_t *
-    _parse (const wchar_t *json) override;
 
     /**
      * @brief type
@@ -171,6 +155,23 @@ namespace format
      * @brief _double_str
      */
     mutable std::wstring _double_str;
+
+    /**
+     * @brief parse
+     * @param json
+     * @return
+     */
+    virtual const wchar_t *
+    _parse (const wchar_t *json) override;
+
+    /**
+     * @brief clone
+     * @param ov
+     * @return
+     */
+    virtual value *
+    _clone (const value *) const override
+    { return new number (*this); }
 
     /**
      * @brief _digits If >= 1 digits found, return first non-digit character.
