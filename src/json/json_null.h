@@ -145,7 +145,7 @@ namespace format
      */
     value &
     _assign (const null &)
-    { return _parent ? _parent->_assign (this, new null (this, *this)) : *this; }
+    { return _parent ? _parent->_assign (this, new null (*this)) : *this; }
 
     /**
      * @brief _clear

@@ -424,8 +424,8 @@ namespace format
     {
       CppUnit::TestSuite *s = new CppUnit::TestSuite ("json test");
 
-      /* 0. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_strValue", &json_test::test_str_value));
-      /* 1. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_smoke", &json_test::test_ctor_dtor));
+      /* 0. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_ctor_dtor", &json_test::test_ctor_dtor));
+      /* 1. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_str_value", &json_test::test_str_value));
       /* 2. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_1", &json_test::test_parse_1));
       /* 3. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_make_value", &json_test::test_make_value));
       /* 4. */  s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_to_parent", &json_test::test__assign_to_parent));

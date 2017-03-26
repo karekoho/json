@@ -107,7 +107,7 @@ format::value::_assign (const value &nv)
   if (_parent == 0)
     throw json_error (BAD_ASSIGN);
 
-  return _parent->_assign (this, nv._clone (this));
+  return _parent->_assign (this, nv.clone () /*nv._clone (this)*/);
 }
 
 format::value &

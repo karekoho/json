@@ -20,15 +20,9 @@ format::object::object (json *parent)
 {}
 
 format::object::object (const object &other)
-  : json(other)
+  : json (other)
 {
   (void) _clone (other);
-}
-
-format::object::object (const value *ov, const object &nv)
-  : json (ov, nv)
-{
-  (void) _clone (nv);
 }
 
 format::object::~object ()
