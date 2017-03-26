@@ -142,7 +142,6 @@ namespace format
         value &>
     {
     public:
-
      /**
       * @brief iterator
       */
@@ -172,60 +171,13 @@ namespace format
       virtual ~iterator () = default;
 
      /**
-      * @brief operator ++
-      * @return
-      *
-      iterator &
-      operator ++()
-      {
-        ++_it;
-        return *this;
-      }
-
-     **
-      * @brief operator ++
-      * @return
-      *
-      iterator
-      operator ++(int)
-      {
-        iterator it (*this);
-        ++(*this);
-        return it;
-      }
-
-     **
-      * @brief operator ==
-      * @param rhs
-      * @return
-      *
-      inline bool
-      operator ==(const iterator &rhs)
-      { return _it == rhs._it; }
-
-     **
-      * @brief operator !=
-      * @param rhs
-      * @return
-      *
-      inline bool
-      operator !=(const iterator &rhs)
-      { return ! operator ==(rhs); }*/
-
-     /**
       * @brief operator *
       * @return
       */
       reference
       operator *()
       { return **__it; }
-
-    protected:
-      /**
-       * @brief _it
-       *
-      element_list::iterator _it;*/
-    }; // Iterator
+    }; // Class iterator
 
     /**
      * @brief begin
@@ -244,7 +196,6 @@ namespace format
     { return iterator (_element_list.end ()); }
 
   protected:
-
    /**
     * @brief _element_list
     */
@@ -298,14 +249,6 @@ namespace format
     */
     virtual value *
     _clone (const value &other) override;
-
-    /**
-     * @brief _sizeof
-     * @return
-     *
-    virtual size_t
-    _sizeof () const noexcept override
-    { return sizeof (array); }*/
   };
 } // Namespace format
 
