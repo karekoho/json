@@ -107,20 +107,18 @@ namespace format
     { return *this; }
 
     /**
-     * @brief The Iterator class
+     * @brief The iterator class
      */
     class iterator : public value::iterator<value *,
         std::input_iterator_tag,
         value *,        // Type
         value *,        // Distance
         value *,
-        value &
-        >
+        value &>
     {
     public:
-
       /**
-       * @brief Iterator
+       * @brief iterator
        * @param value
        */
       iterator (leaf *value = 0)
@@ -133,56 +131,15 @@ namespace format
       {}
 
       /**
-       * @brief Iterator
+       * @brief iterator
        * @param other
        */
       iterator (const iterator &other) = default;
 
       /**
-        * @brief ~Iterator
-        */
+       * @brief ~iterator
+       */
       ~iterator () = default;
-
-      /**
-       * @brief operator ++
-       * @return
-       *
-      iterator &
-      operator ++()
-      {
-        _value++;
-        return *this;
-      }
-
-      **
-       * @brief operator ++
-       * @return
-       *
-      iterator
-      operator ++(int)
-      {
-        iterator it (*this);
-        ++(*this);
-        return it;
-      }
-
-      **
-       * @brief operator ==
-       * @param rhs
-       * @return
-       *
-      inline bool
-      operator ==(const iterator &rhs)
-      { return _value == rhs._value; }
-
-      **
-       * @brief operator !=
-       * @param rhs
-       * @return
-       *
-      inline bool
-      operator !=(const iterator &rhs)
-      { return ! operator ==(rhs); }*/
 
       /**
        * @brief operator *
@@ -191,19 +148,12 @@ namespace format
       reference
       operator *()
       {
-        if (__it == 0)
+        if (_it == 0)
           throw json_out_of_range ("Iterator not derefenceable");
 
-        return *__it;
+        return *_it;
       }
-
-    protected:
-      /**
-       * @brief _value
-       *
-      leaf *_value;*/
-
-    }; // Iterator
+    }; // Class iterator
 
     /**
      * @brief begin

@@ -146,7 +146,12 @@ namespace format
       * @brief iterator
       */
       iterator ()
-        : value::iterator<element_list::iterator, std::input_iterator_tag, value *, value *, value *, value &>::iterator ()
+        : value::iterator<element_list::iterator,
+          std::input_iterator_tag,
+          value *,
+          value *,
+          value *,
+          value &>::iterator ()
       {}
 
      /**
@@ -154,7 +159,12 @@ namespace format
       * @param it
       */
       iterator (element_list::iterator it)
-        : value::iterator<element_list::iterator, std::input_iterator_tag, value *, value *, value *, value &>::iterator (it)
+        : value::iterator<element_list::iterator,
+          std::input_iterator_tag,
+          value *,
+          value *,
+          value *,
+          value &>::iterator (it)
       {}
 
      /**
@@ -162,7 +172,12 @@ namespace format
       * @param other
       */
       iterator (const iterator & other)
-        : value::iterator<element_list::iterator, std::input_iterator_tag, value *, value *, value *, value &>::iterator (other)
+        : value::iterator<element_list::iterator,
+          std::input_iterator_tag,
+          value *,
+          value *,
+          value *,
+          value &>::iterator (other)
       {}
 
      /**
@@ -176,7 +191,7 @@ namespace format
       */
       reference
       operator *()
-      { return **__it; }
+      { return **_it; }
     }; // Class iterator
 
     /**
@@ -228,8 +243,8 @@ namespace format
     virtual value &
     _assign (value *ov, value *nv) override;
 
-    /**
-     * @brief _at
+   /**
+    * @brief _at
     * @param index
     * @return
     */

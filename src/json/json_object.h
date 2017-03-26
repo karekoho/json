@@ -119,84 +119,58 @@ namespace format
     erase (const value &v) noexcept override;
 
     /**
-     * @brief The Iterator class
+     * @brief The iterator class
      */
-    class iterator : public std::iterator<
-          std::input_iterator_tag,
-          std::pair<std::string, value *>,  // Type
-          std::pair<std::string, value *>,  // Distance
-          value *,
-          value &>
+    class iterator : public value::iterator<member_list::iterator,
+        std::input_iterator_tag,
+        std::pair<std::string, value *>,  // Type
+        std::pair<std::string, value *>,  // Distance
+        value *,
+        value &>
     {
     public:
-
       /**
-       * @brief Iterator
+       * @brief iterator
        */
       iterator ()
+        : value::iterator<member_list::iterator,
+          std::input_iterator_tag,
+          std::pair<std::string, value *>,
+          std::pair<std::string, value *>,
+          value *,
+          value &>::iterator ()
       {}
 
       /**
-       * @brief Iterator
+       * @brief iterator
        * @param it
        */
       iterator (member_list::iterator it)
-       : _it (it)
+        : value::iterator<member_list::iterator,
+          std::input_iterator_tag,
+          std::pair<std::string, value *>,
+          std::pair<std::string, value *>,
+          value *,
+          value &>::iterator (it)
       {}
 
       /**
-       * @brief Iterator
+       * @brief iterator
        * @param other
        */
       iterator (const iterator & other)
-        : _it (other._it)
+        : value::iterator<member_list::iterator,
+          std::input_iterator_tag,
+          std::pair<std::string, value *>,
+          std::pair<std::string, value *>,
+          value *,
+          value &>::iterator (other)
       {}
 
       /**
-       * @brief ~Iterator
+       * @brief ~iterator
        */
       virtual ~iterator () = default;
-
-      /**
-       * @brief operator ++
-       * @return
-       */
-      iterator &
-      operator ++()
-      {
-        ++_it;
-        return *this;
-      }
-
-      /**
-       * @brief operator ++
-       * @return
-       */
-      iterator
-      operator ++(int)
-      {
-        iterator it (*this);
-        ++(*this);
-        return it;
-      }
-
-      /**
-       * @brief operator ==
-       * @param rhs
-       * @return
-       */
-      inline bool
-      operator ==(const iterator &rhs)
-      { return _it == rhs._it; }
-
-      /**
-       * @brief operator !=
-       * @param rhs
-       * @return
-       */
-      inline bool
-      operator !=(const iterator &rhs)
-      { return ! operator ==(rhs); }
 
       /**
        * @brief operator *
@@ -205,14 +179,7 @@ namespace format
       reference
       operator *()
       { return *(*_it).second; }
-
-    protected:
-
-        /**
-         * @brief _it
-         */
-        member_list::iterator _it;
-    }; // Iterator
+    }; // Class iterator
 
     /**
      * @brief begin

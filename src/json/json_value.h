@@ -309,7 +309,7 @@ namespace format
        * @brief iterator
        */
       iterator (Iterator it)
-        : __it (it)
+        : _it (it)
       {}
 
       /**
@@ -317,7 +317,7 @@ namespace format
        * @param other
        */
       iterator (const iterator & other)
-        : __it (other.__it)
+        : _it (other._it)
       {}
 
       /**
@@ -332,7 +332,7 @@ namespace format
       iterator &
       operator ++()
       {
-        ++__it;
+        ++_it;
         return *this;
       }
 
@@ -355,7 +355,7 @@ namespace format
        */
        inline bool
        operator ==(const iterator &rhs)
-       { return __it == rhs.__it; }
+       { return _it == rhs._it; }
 
       /**
        * @brief operator !=
@@ -377,7 +377,7 @@ namespace format
        /**
         * @brief __it
         */
-       Iterator __it;
+       Iterator _it;
     };  // Class iterator
 
   protected:
