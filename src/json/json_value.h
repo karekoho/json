@@ -444,8 +444,7 @@ namespace format
     _set_key (const wchar_t *key, size_t charc) noexcept
     {
        delete[] _key;
-       wchar_t *dest_ = new wchar_t[charc + 1] ();
-       _key = wcsncpy (dest_, key, charc);
+       _key = wcsncpy (new wchar_t[charc + 1] (), key, charc);
     }
 
     /**
