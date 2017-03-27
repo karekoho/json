@@ -23,12 +23,13 @@ namespace format
    */
   class number : public leaf
   {
+    friend number * __call_number (json *parent);
+
   #ifdef UNIT_TEST
     friend class json_number_test;
   #endif
 
   public:
-
     /**
      * @brief Number
      */
@@ -45,12 +46,6 @@ namespace format
      * @param json
      */
     number (const wchar_t *json);
-
-    /**
-     * @brief Number
-     * @param parent
-     */
-    number (json *parent);
 
     /**
      * @brief Number
@@ -137,6 +132,12 @@ namespace format
      * @brief _double_str
      */
     mutable std::wstring _double_str;
+
+    /**
+     * @brief number
+     * @param parent
+     */
+    number (json *parent);
 
     /**
      * @brief parse
@@ -228,5 +229,9 @@ namespace format
     virtual value *
     _clone (const value &other);
   }; // Class boolean
+
+  inline number *
+  __call_number (json *parent)
+  { return new number (parent); }
 } // Namespace Format
 #endif // NUMBER_H

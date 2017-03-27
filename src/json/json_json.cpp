@@ -170,7 +170,7 @@ format::json::_make_value ()
     value_ = __call_array (this);
 
   else if (isdigit (readc) || readc == '-') // number
-    value_ = new number (this);
+    value_ = __call_number (this);
 
   else
      {  // literal or udefined

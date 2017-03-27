@@ -220,7 +220,6 @@ public:
    */
   value & assign (value *ov, value *nv)
   { return _assign (ov, nv); }
-
 };  // Class object_accessor
 
 /**
@@ -310,6 +309,19 @@ public:
    */
   string_accessor (format::json *parent, size_t charc)
     : string (parent,charc){}
+};
+
+/**
+ * @brief The number_accessor class
+ */
+class number_accessor : public format::number
+{
+public:
+  /**
+   * @brief number_accessor
+   * @param parent
+   */
+  number_accessor (format::json *parent) : number (parent){}
 };
 
 format::json * unit_test::__JSON = new format::json ();
