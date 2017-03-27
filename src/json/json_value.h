@@ -536,15 +536,6 @@ namespace format
     value (const value *ov, const value &nv);
 
     /**
-     * @brief clone Call object copy constructor from Value interface: Value *v->clone ().
-     * Store previous key|index=>value for deletion.
-     * @param ov  previous key|index=>value
-     * @return
-     */
-    virtual value *
-    _clone (const value *ov) const = 0;
-
-    /**
      * @brief _clone  Called by copy constructor
      * @param other
      * @return

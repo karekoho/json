@@ -171,15 +171,6 @@ namespace format
     erase (const value &v) noexcept override
     { return __hasRoot() ? __root->erase (v) : *this; }
 
-    /**
-     * @brief clone
-     * @param old
-     * @return
-     */
-    virtual value *
-    _clone (const value *) const override
-    { return new json (*this); }
-
   protected:
     /**
      * @brief json

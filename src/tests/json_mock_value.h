@@ -57,9 +57,9 @@ namespace format
       erase (const value &) noexcept override
       { return *this; }
 
-      virtual value *
-      _clone (const value *) const override
-      { return new json_mock_value (*this); }
+//      virtual value *
+//      _clone (const value *) const override
+//      { return new json_mock_value (*this); }
 
   protected:
 

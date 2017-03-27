@@ -20,7 +20,6 @@ namespace format
     #endif
 
     public:
-
      /**
       * @brief Boolean
       */
@@ -75,15 +74,6 @@ namespace format
       { return new boolean (*this); }
 
      /**
-      * @brief clone
-      * @param ov
-      * @return
-      */
-      virtual value *
-      _clone (const value *ov) const override
-      { return new boolean (ov, *this); }
-
-     /**
       * @brief strLength
       * @return
       */
@@ -115,15 +105,6 @@ namespace format
       inline value &
       operator =(boolean & b)
       { return _assign (b); }
-
-     /**
-      * @brief operator =
-      * @param v
-      * @return
-      */
-//      inline value &
-//      operator =(const value & v)
-//      { return value::_assign (v); }
 
      /**
       * @brief assign
@@ -160,9 +141,9 @@ namespace format
        * @param json
        * @return
        */
-       virtual const wchar_t *
-       _parse (const wchar_t *json) override
-       { return json + (_boolean_value == true ? 4 : 5); }
+      virtual const wchar_t *
+      _parse (const wchar_t *json) override
+      { return json + (_boolean_value == true ? 4 : 5); }
 
      /**
       * @brief _clear
@@ -181,15 +162,7 @@ namespace format
         _boolean_value = dynamic_cast<const boolean &>(other)._boolean_value;
         return this;
       }
-
-      /**
-       * @brief _sizeof
-       * @return
-       *
-      virtual size_t
-      _sizeof () const noexcept
-      { return sizeof (boolean); }*/
-    };
+    }; // Class boolean
   } // Namespace Format
 
 #endif // BOOLEAN_H

@@ -54,28 +54,12 @@ namespace format
     array (const array &other);
 
    /**
-    * @brief Array
-    * @param ov
-    * @param nv
-    */
-    //array (const value *ov, const array &nv);
-
-   /**
     * @brief clone
     * @param other
     * @return
     */
     virtual value *
     clone () const override
-    { return new array (*this); }
-
-   /**
-    * @brief clone
-    * @param ov
-    * @return
-    */
-    virtual value *
-    _clone (const value *) const override
     { return new array (*this); }
 
    /**
@@ -264,7 +248,7 @@ namespace format
     */
     virtual value *
     _clone (const value &other) override;
-  };
+  }; // Class array
 } // Namespace format
 
 #endif // ARRAY

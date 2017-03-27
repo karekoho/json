@@ -110,9 +110,9 @@ namespace format
      * @param ov
      * @return
      */
-    virtual value *
-    _clone (const value *ov) const override
-    { return new undefined (ov, *this); }
+//    virtual value *
+//    _clone (const value *ov) const override
+//    { return new undefined (ov, *this); }
 
     /**
      * TODO: return nullptr
@@ -263,17 +263,7 @@ namespace format
      */
     void
     operator delete[] (void *ptr)
-    { ::operator delete (ptr); }
-
-    protected:
-    /**
-     * @brief clone
-     * @param ov
-     * @return
-     */
-    virtual value *
-    _clone (const value *ov) const override
-    { return new unique_undefined (ov, *this); }
+    { ::operator delete (ptr); }  
   };
 
   /**

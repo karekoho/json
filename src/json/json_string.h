@@ -59,15 +59,6 @@ namespace format
     { return new string (*this); }
 
     /**
-     * @brief clone
-     * @param ov
-     * @return
-     */
-    virtual value *
-    _clone (const value *) const override
-    { return new string (*this); }
-
-    /**
      * @brief type
      * @return
      */

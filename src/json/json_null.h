@@ -63,9 +63,9 @@ namespace format
      * @param ov
      * @return
      */
-    virtual value *
-    _clone (const value *) const override
-    { return new null (*this); }
+//    virtual value *
+//    _clone (const value *) const override
+//    { return new null (*this); }
 
     /**
      * @brief parse

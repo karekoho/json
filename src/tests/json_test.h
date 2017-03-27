@@ -434,7 +434,7 @@ namespace format
       /* 6. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_revive", &json_test::test_parse_revive));
       /* 7. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_count", &json_test::test_count));
 
-      /* 8. */   s->addTest (new CppUnit::TestCaller<json_test> ("example_1", &json_test::example_1));
+      /* 8. */  //s->addTest (new CppUnit::TestCaller<json_test> ("example_1", &json_test::example_1));
 
       return s;
     }

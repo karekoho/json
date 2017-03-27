@@ -113,7 +113,6 @@ namespace format
     str_value (wchar_t * = 0) const override;
 
   protected:
-
     /**
      * @brief _value
      */
@@ -146,15 +145,6 @@ namespace format
      */
     virtual const wchar_t *
     _parse (const wchar_t *json) override;
-
-    /**
-     * @brief clone
-     * @param ov
-     * @return
-     */
-    virtual value *
-    _clone (const value *) const override
-    { return new number (*this); }
 
     /**
      * @brief _digits If >= 1 digits found, return first non-digit character.
@@ -237,14 +227,6 @@ namespace format
      */
     virtual value *
     _clone (const value &other);
-
-    /**
-     * @brief _sizeof
-     * @return
-     *
-    virtual size_t
-    _sizeof () const noexcept
-    { return sizeof (number); }*/
-  };
+  }; // Class boolean
 } // Namespace Format
 #endif // NUMBER_H
