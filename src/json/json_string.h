@@ -13,7 +13,7 @@ namespace format
    */
   class string : public leaf
   {
-    friend string * call_string__ (json *parent, size_t charc);
+    friend string * __call_string (json *parent, size_t charc);
 
   #ifdef UNIT_TEST
     friend class json_string_test;
@@ -167,7 +167,7 @@ namespace format
    * @return
    */
   inline string *
-  call_string__ (json *parent, size_t charc)
+  __call_string (json *parent, size_t charc)
   { return new string (parent, charc); }
 } // Namespace format
 #endif // STRING

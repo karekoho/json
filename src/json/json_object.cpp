@@ -114,7 +114,7 @@ format::object::_pair ()
 
   (void) _member_list.emplace (key, v);
 
-  call__set_key__ (v, keyp, charc - 2);
+  __call__set_key (v, keyp, charc - 2);
 
   return true;
 }
@@ -130,7 +130,7 @@ format::object::_at (const wchar_t *key)
     {
       value *v = new unique_undefined (this);
 
-      call__set_key__ (v, key, wcslen (key));
+      __call__set_key (v, key, wcslen (key));
       _member_list.emplace (key, v);
 
       return *v;
@@ -144,8 +144,8 @@ format::object::_assign (value *ov, value *nv)
 
   _member_list[key] = nv;
 
-  call__set_key__ (nv, key, wcslen (key));
-  call__set_parent__ (nv, this);
+  __call__set_key (nv, key, wcslen (key));
+  __call__set_parent (nv, this);
 
   delete ov;
   ov = 0;

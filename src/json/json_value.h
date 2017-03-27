@@ -27,10 +27,10 @@ namespace format
       friend class json_value_test;
     #endif
 
-    friend const wchar_t * call__parse__ (value *, const wchar_t *);
-    friend void call__set_key__ (value *, const wchar_t *, size_t);
-    friend void call__set_index__ (value *, const size_t &);
-    friend void call__set_parent__(value *, json *);
+    friend const wchar_t * __call__parse (value *, const wchar_t *);
+    friend void __call__set_key (value *, const wchar_t *, size_t);
+    friend void __call__set_index (value *, const size_t &);
+    friend void __call__set_parent (value *, json *);
 
     public:
 
@@ -638,7 +638,7 @@ namespace format
    * @return
    */
    inline
-   const wchar_t * call__parse__ (value *v, const wchar_t *readp)
+   const wchar_t * __call__parse (value *v, const wchar_t *readp)
    { return v->_parse (readp); }
 
    /**
@@ -648,7 +648,7 @@ namespace format
     * @param charc
     */
    inline void
-   call__set_key__ (value *v, const wchar_t *keyp, size_t charc)
+   __call__set_key (value *v, const wchar_t *keyp, size_t charc)
    { v->_set_key (keyp, charc); }
 
    /**
@@ -657,7 +657,7 @@ namespace format
     * @param index
     */
    inline void
-   call__set_index__ (value *v, const size_t & index)
+   __call__set_index (value *v, const size_t & index)
    { v->_set_index (index); }
 
    /**
@@ -666,7 +666,7 @@ namespace format
     * @param parent
     */
    inline void
-   call__set_parent__ (value *v, json *parent)
+   __call__set_parent (value *v, json *parent)
    { v->_set_parent (parent); }
 } // Namespace format
 

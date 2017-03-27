@@ -401,9 +401,9 @@ namespace format
         new boolean ()
       };
 
-      call__set_index__ (v[0], 0);
-      call__set_index__ (v[1], 1);
-      call__set_index__ (v[2], 2);
+      __call__set_index (v[0], 0);
+      __call__set_index (v[1], 1);
+      __call__set_index (v[2], 2);
 
       a._element_list = { v[0], v[1] };
 
