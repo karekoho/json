@@ -391,9 +391,10 @@ namespace format
       std::wcout << j[L"Image"][L"Animated"].get () << std::endl;
       std::wcout << j[L"Image"][L"IDs"].get () << std::endl;
 
-      j[L"Image"] = string (L"foo bar quux");
+      object & o = static_cast<object &> (j[L"Image"]);
 
-      std::wcout << j[L"Image"].get () << std::endl;
+      for (auto it = o.begin (); it != o.end (); ++it)
+        std::wcout << dynamic_cast<value &> (*(it)).get () << std::endl;
     }
 
     virtual void
@@ -433,7 +434,7 @@ namespace format
       /* 6. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_revive", &json_test::test_parse_revive));
       /* 7. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_count", &json_test::test_count));
 
-      /* 8.   s->addTest (new CppUnit::TestCaller<json_test> ("example_1", &json_test::example_1)); */
+      /* 8. */   s->addTest (new CppUnit::TestCaller<json_test> ("example_1", &json_test::example_1));
 
       return s;
     }
