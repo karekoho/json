@@ -533,7 +533,7 @@ namespace format
      * @param ov
      * @param nv
      */
-    value (const value *ov, const value &nv);
+    //value (const value *ov, const value &nv);
 
     /**
      * @brief _clone  Called by copy constructor

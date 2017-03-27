@@ -55,9 +55,9 @@ namespace format
       * @param ov
       * @param nv
       */
-      boolean (const value *ov, const boolean &nv)
-        : leaf (ov, nv), _boolean_value (nv._boolean_value)
-      {}
+//      boolean (const value *ov, const boolean &nv)
+//        : leaf (ov, nv), _boolean_value (nv._boolean_value)
+//      {}
 
      /**
       * @brief ~Boolean

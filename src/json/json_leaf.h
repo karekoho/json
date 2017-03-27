@@ -51,9 +51,9 @@ namespace format
      * @param ov
      * @param nv
      */
-    leaf (const value *ov, const leaf &nv)
-      : value (ov, nv)
-    {}
+//    leaf (const value *ov, const leaf &nv)
+//      : value (ov, nv)
+//    {}
 
     /**
      * @brief ~Leaf

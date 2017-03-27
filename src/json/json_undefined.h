@@ -43,9 +43,9 @@ namespace format
      * @param ov
      * @param nv
      */
-    undefined (const value *ov, const undefined &nv)
-      : leaf (ov, nv)
-    {}
+//    undefined (const value *ov, const undefined &nv)
+//      : leaf (ov, nv)
+//    {}
 
     /**
      * @brief ~undefined
@@ -219,9 +219,9 @@ namespace format
      * @param ov
      * @param nv
      */
-    unique_undefined (const value *ov, const unique_undefined &nv)
-      : undefined (ov, nv)
-    {}
+//    unique_undefined (const value *ov, const unique_undefined &nv)
+//      : undefined (ov, nv)
+//    {}
 
     virtual ~unique_undefined () override = default;
 

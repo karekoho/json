@@ -41,12 +41,12 @@ format::value::value (const value &other)
     _index (other._index)    
 {}
 
-format::value::value (const value *ov, const value &nv)
-  : _readp (nv._readp),
-    _parent (0),
-    _key (nv._key ? new wchar_t [wcslen (nv._key) + 1] () : 0),
-    _index (nv._index)    
-{  }
+//format::value::value (const value *ov, const value &nv)
+//  : _readp (nv._readp),
+//    _parent (0),
+//    _key (nv._key ? new wchar_t [wcslen (nv._key) + 1] () : 0),
+//    _index (nv._index)
+//{}
 
 format::value::
 ~value ()
