@@ -164,7 +164,7 @@ format::json::_make_value ()
       value_ = __call_string (this, charc);
     }
   else if (readc == _sc::begin_object)      // Object
-    value_ = new object (this);
+    value_ = __call_object (this);// new object (this);
 
   else if (readc == _sc::begin_array)       // Array
     value_ = new array (this);

@@ -9,56 +9,48 @@ namespace format
   #ifdef UNIT_TEST
     class json_object_test;
   #endif
-
   /**
    * @brief The object class
    */
   class object : public json
   {
+    friend object * __call_object (json *parent);
+
     #ifdef UNIT_TEST
       friend class json_object_test;
     #endif
 
   public:
-
+    /**
+     * @brief member_list
+     */
     typedef std::unordered_map<std::wstring, value *> member_list;
 
     /**
-     * @brief Object
+     * @brief object
      */
     object ();
 
     /**
-     * @brief Object
-     * @param JSON
+     * @brief object
+     * @param json
      */
     object (const wchar_t *json);
 
     /**
-     * @brief Object
+     * @brief object
      * @param il
      */
     object (std::initializer_list<std::pair<std::wstring, value *>> il);
 
     /**
-     * TODO: protected
-     *
-     * @brief Object
-     * @param endp
-     * @param parent
-     * @param charc
-     */
-    object (json *parent);
-
-    /**
-     * @brief Object
+     * @brief object
      * @param other
      */
     object (const object &other);
 
     /**
      * @brief clone
-     * @param other
      * @return
      */
     virtual value *
@@ -66,7 +58,7 @@ namespace format
     { return new object (*this); }
 
     /**
-     * @brief ~Object
+     * @brief ~object
      */
     virtual
     ~object () override;
@@ -80,7 +72,7 @@ namespace format
     { return value::value_t::object_t; }
 
     /**
-     * @brief size
+     * @brief count
      * @return
      */
     virtual inline size_t
@@ -97,14 +89,15 @@ namespace format
     { return _parent ? _parent->_assign (this, new object (o)) : *(_clone (o)); }
 
     /**
-     * @brief strLength
+     * @brief str_length
      * @return
      */
     virtual size_t
     str_length () const noexcept override;
 
     /**
-     * @brief strValue
+     * @brief str_value
+     * @param offset
      * @return
      */
     virtual const wchar_t *
@@ -205,6 +198,12 @@ namespace format
     mutable member_list _member_list;
 
     /**
+     * @brief object
+     * @param parent
+     */
+    object (json *parent);
+
+    /**
      * @brief _clone
      * @return
      */
@@ -213,7 +212,7 @@ namespace format
 
     /**
      * @brief parse
-     * @param JSON
+     * @param json
      * @return
      */
     virtual const wchar_t *
@@ -254,7 +253,11 @@ namespace format
      */
     virtual void
     _clear () override;
-  };
+  }; // Class object
+
+  inline
+  object * __call_object (json *parent)
+  { return new object (parent); }
 } // Namespace format
 
 #endif // OBJECT_H

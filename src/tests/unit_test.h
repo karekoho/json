@@ -146,12 +146,25 @@ protected:
 }; // Class unit_test
 
 /**
+ * @brief The value_accessor class
+ */
+class value_accessor : public format::value
+{
+public:
+  /**
+   * @brief set_parent
+   * @param parent
+   */
+  void set_parent (format::json *parent)
+  { _set_parent (parent); }
+};
+
+/**
  * @brief The object_accessor class
  */
 class object_accessor : public format::object
 {
 public:
-
   /**
    * @brief object_accessor
    */
@@ -162,6 +175,12 @@ public:
    * @param input
    */
   object_accessor (const wchar_t *input) : object (input) {}
+
+  /**
+   * @brief object_accessor
+   * @param parent
+   */
+  object_accessor (json *parent) : object (parent){}
 
   /**
    * @brief begin
@@ -220,7 +239,7 @@ class array_accessor : public format::array
    * @brief array_accessor
    * @param input
    */
-  array_accessor (const wchar_t *input) : array (input){}
+  array_accessor (const wchar_t *input) : array (input) {}
 
   /**
    * @brief push
@@ -272,18 +291,19 @@ class array_accessor : public format::array
   { return _element_list.end (); }
 };  // Class array_accessor
 
+/**
+ * @brief The string_accessor class
+ */
 class string_accessor : public format::string
 {
 public:
+  /**
+   * @brief string_accessor
+   * @param parent
+   * @param charc
+   */
   string_accessor (format::json *parent, size_t charc)
     : string (parent,charc){}
-};
-
-class value_accessor : public format::value
-{
-public:
-  void set_parent (format::json *parent)
-  { _set_parent (parent); }
 };
 
 format::json * unit_test::__JSON = new format::json ();
