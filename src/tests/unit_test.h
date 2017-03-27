@@ -237,6 +237,12 @@ class array_accessor : public format::array
 
   /**
    * @brief array_accessor
+   * @param parent
+   */
+  array_accessor (json *parent) : array (parent) {}
+
+  /**
+   * @brief array_accessor
    * @param input
    */
   array_accessor (const wchar_t *input) : array (input) {}

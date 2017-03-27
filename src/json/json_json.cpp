@@ -156,24 +156,24 @@ format::json::_make_value ()
   wchar_t endc = 0;
   wchar_t readc = *(_look_ahead ());
 
-  if (readc == _sc::double_quote)           // String
+  if (readc == _sc::double_quote)           // string
     {
       if ((charc = _string (endc)) < 0)
         throw json_syntax_error (UNEX_TOKEN, *_readp);
 
       value_ = __call_string (this, charc);
     }
-  else if (readc == _sc::begin_object)      // Object
-    value_ = __call_object (this);// new object (this);
+  else if (readc == _sc::begin_object)      // object
+    value_ = __call_object (this);
 
-  else if (readc == _sc::begin_array)       // Array
-    value_ = new array (this);
+  else if (readc == _sc::begin_array)       // array
+    value_ = __call_array (this);
 
-  else if (isdigit (readc) || readc == '-') // Number
+  else if (isdigit (readc) || readc == '-') // number
     value_ = new number (this);
 
   else
-     {  // Literal or Undefined
+     {  // literal or udefined
       switch (_is_literal ())
         {
           case value::_literal::null_value:

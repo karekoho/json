@@ -23,14 +23,14 @@ namespace format
   class undefined;
   class value
   {
-    #ifdef UNIT_TEST
-      friend class json_value_test;
-    #endif
-
     friend const wchar_t * __call__parse (value *, const wchar_t *);
     friend void __call__set_key (value *, const wchar_t *, size_t);
     friend void __call__set_index (value *, const size_t &);
     friend void __call__set_parent (value *, json *);
+
+    #ifdef UNIT_TEST
+      friend class json_value_test;
+    #endif
 
     public:
 
@@ -199,7 +199,7 @@ namespace format
     { return operator ==(v.type ()); }
 
     /**
-     * @brief size
+     * @brief count
      * @return
      */
     virtual size_t
@@ -222,7 +222,7 @@ namespace format
     { return _index; }
 
     /**
-     * @brief isLeaf
+     * @brief is_leaf
      * @return
      */
     virtual bool
@@ -230,7 +230,7 @@ namespace format
     { return false; }
 
     /**
-     * @brief isNode
+     * @brief is_node
      * @return
      */
     inline bool
@@ -257,7 +257,7 @@ namespace format
     /**
      * TODO: protected
      *
-     * @brief strValue
+     * @brief str_value
      * @return
      */
     virtual const wchar_t *
@@ -265,6 +265,7 @@ namespace format
 
     /**
      * TODO: REMOVE
+     *
      * @brief erase
      * @param v
      * @return
@@ -303,7 +304,8 @@ namespace format
       /**
        * @brief iterator
        */
-      iterator (){}
+      iterator ()
+      {}
 
       /**
        * @brief iterator
@@ -366,23 +368,16 @@ namespace format
        operator !=(const iterator &rhs)
        { return ! operator ==(rhs); }
 
-      /**
-       * @brief operator *
-       * @return
-       *
-       virtual Reference
-       operator *() = 0;*/
-
     protected:
        /**
-        * @brief __it
+        * @brief _it
         */
        Iterator _it;
     };  // Class iterator
 
   protected:
     /**
-     * @brief parse
+     * @brief _parse
      * @param json
      * @return
      * @see https://tools.ietf.org/html/rfc7159
@@ -436,7 +431,7 @@ namespace format
     _assign (const undefined &) noexcept;
 
     /**
-     * @brief setKey
+     * @brief _set_key
      * @param key
      * @param charc
      */
@@ -448,8 +443,7 @@ namespace format
     }
 
     /**
-     *
-     * @brief setIndex
+     * @brief _set_index
      * @param index
      */
     inline void
@@ -521,19 +515,10 @@ namespace format
     size_t _index;
 
     /**
-     * @brief json_value
-     * @param endp
+     * @brief value
      * @param parent
-     * @paran charc
      */
     value (json *parent);
-
-    /**
-     * @brief Value
-     * @param ov
-     * @param nv
-     */
-    //value (const value *ov, const value &nv);
 
     /**
      * @brief _clone  Called by copy constructor
@@ -631,40 +616,18 @@ namespace format
     } __ltr_value[3]; 
   };  // Class value
 
-  /**
-   * @brief call_parse
-   * @param v
-   * @param readp
-   * @return
-   */
    inline
    const wchar_t * __call__parse (value *v, const wchar_t *readp)
    { return v->_parse (readp); }
 
-   /**
-    * @brief call_set_key__
-    * @param v
-    * @param keyp
-    * @param charc
-    */
    inline void
    __call__set_key (value *v, const wchar_t *keyp, size_t charc)
    { v->_set_key (keyp, charc); }
 
-   /**
-    * @brief call_set_index
-    * @param v
-    * @param index
-    */
    inline void
    __call__set_index (value *v, const size_t & index)
    { v->_set_index (index); }
 
-   /**
-    * @brief call_set_parent__
-    * @param v
-    * @param parent
-    */
    inline void
    __call__set_parent (value *v, json *parent)
    { v->_set_parent (parent); }

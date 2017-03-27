@@ -14,57 +14,52 @@ namespace format
   */
   class array : public json
   {
+    friend array * __call_array (json *parent);
+
   #ifdef UNIT_TEST
     friend class json_array_test;
   #endif
 
   public:
-
+   /**
+    * @brief element_list
+    */
    typedef std::vector<value *> element_list;
 
-   /**
-    * @brief Array
-    */
+    /**
+     * @brief array
+     */
     array ();
 
-   /**
-    * @brief Array
-    * @param json
-    */
+    /**
+     * @brief array
+     * @param json
+     */
     array (const wchar_t *json);
 
-   /**
-    * @brief Array
-    * @param l elements
-    */
+    /**
+     * @brief array
+     * @param il
+     */
     array (std::initializer_list<value *> il);
 
-   /**
-    * @brief Array
-    * @param endp
-    * @param parent
-    * @param charc
-    */
-    array (json *parent);
-
-   /**
-    * @brief Array
-    * @param other
-    */
+    /**
+     * @brief array
+     * @param other
+     */
     array (const array &other);
 
-   /**
-    * @brief clone
-    * @param other
-    * @return
-    */
+    /**
+     * @brief clone
+     * @return
+     */
     virtual value *
     clone () const override
     { return new array (*this); }
 
-   /**
-    * @brief ~Array
-    */
+    /**
+     * @brief ~array
+     */
     virtual
     ~array () override;
 
@@ -76,10 +71,10 @@ namespace format
     type () const noexcept override
     { return value::value_t::array_t; }
 
-   /**
-    * @brief size
-    * @return
-    */
+    /**
+     * @brief count
+     * @return
+     */
     virtual size_t
     count () const noexcept override
     { return _element_list.size (); }
@@ -94,14 +89,14 @@ namespace format
     { return _parent ? _parent->_assign (this, new array (a)) : *(_clone (a)); }
 
    /**
-    * @brief strLength
+    * @brief str_length
     * @return
     */
     virtual size_t
     str_length () const noexcept override;
 
    /**
-    * @brief strValue
+    * @brief str_value
     * @return
     */
     virtual const wchar_t *
@@ -200,18 +195,25 @@ namespace format
     */
     element_list _element_list;
 
-   /**
-    * @brief parse
-    * @param json
-    * @return
-    */
+    /**
+     * @brief array
+     * @param parent
+     */
+    array (json *parent);
+
+    /**
+     * @brief _parse
+     * @param json
+     * @return
+     */
     virtual const wchar_t *
     _parse ( const wchar_t *json) override;
 
-   /**
-    * @brief _at
-    * @return
-    */
+    /**
+     * @brief _at
+     * @param key
+     * @return
+     */
     virtual value &
     _at (const wchar_t *key) override
     {
@@ -249,6 +251,10 @@ namespace format
     virtual value *
     _clone (const value &other) override;
   }; // Class array
+
+  inline array *
+  __call_array (json *parent)
+  { return new array (parent); }
 } // Namespace format
 
 #endif // ARRAY
