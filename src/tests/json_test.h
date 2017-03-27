@@ -170,7 +170,7 @@ namespace format
       std::vector<struct assert > test = {
         { L"ok", 0, { new object (&object_parent), new object (&array_parent) }, value::object_t, PASS },
         { L"ak", 1, { new array (&object_parent), new array (&array_parent) }, value::array_t, PASS },
-        { L"sk", 2, { new string (&object_parent, 3), new string (&array_parent, 3) }, value::string_t, PASS },
+        { L"sk", 2, { new string_accessor (&object_parent, 3), new string_accessor (&array_parent, 3) }, value::string_t, PASS },
         { L"dk", 3, { new number (&object_parent), new number (&array_parent) }, value::number_t, PASS },
         { L"bk", 4, { new boolean (&object_parent, true), new boolean (&array_parent, true) }, value::boolean_t, PASS },
         { L"nk", 5, { new null (&object_parent), new null (&array_parent) }, value::null_t, PASS },

@@ -8,18 +8,18 @@ namespace format
 #ifdef UNIT_TEST
   class json_string_test;
 #endif
-
   /**
    * @brief The string class
    */
   class string : public leaf
   {
+    friend string * call_string (json *parent, size_t charc);
+
   #ifdef UNIT_TEST
     friend class json_string_test;
   #endif
 
     public:
-
     /**
      * @brief String
      */
@@ -30,13 +30,6 @@ namespace format
      * @param json
      */
     string (const wchar_t *json);
-
-    /**
-     * @brief String
-     * @param parent
-     * @param charc
-     */
-    string (json *parent, size_t charc);
 
     /**
      * @brief String
@@ -76,14 +69,6 @@ namespace format
     { return _assign (s); }
 
     /**
-     * @brief assign
-     * @param nv
-     * @return
-     */
-    value &
-    _assign (const string & nv);
-
-    /**
      * @brief value
      * @return
      */
@@ -106,7 +91,6 @@ namespace format
     str_value (wchar_t * = 0) const override;
 
   protected:
-
     /**
      * @brief _startp
      */
@@ -121,6 +105,13 @@ namespace format
      * @brief _value
      */
     mutable std::wstring _string_value[2];
+
+    /**
+     * @brief string
+     * @param parent
+     * @param charc
+     */
+    string (json *parent, size_t charc);
 
     /**
      * @brief parse
@@ -151,15 +142,14 @@ namespace format
     _clone (const value &nv) override;
 
     /**
-     * @brief _sizeof
+     * @brief assign
+     * @param nv
      * @return
-     *
-    virtual size_t
-    _sizeof () const noexcept
-    { return sizeof (string); }*/
+     */
+    value &
+    _assign (const string & nv);
 
   private:
-
     /**
      * @brief __string Read characters until character is < 32 or \".
      * If last charater is \0, return string length,
@@ -168,7 +158,17 @@ namespace format
      */
     long
     __string (wchar_t & endc) const noexcept;
-  }; // Namespace format
-}
+  }; // Class string
+
+  /**
+   * @brief call_string
+   * @param parent
+   * @param charc
+   * @return
+   */
+  inline string *
+  call_string (json *parent, size_t charc)
+  { return new string (parent, charc); }
+} // Namespace format
 #endif // STRING
 

@@ -161,7 +161,7 @@ format::json::_make_value ()
       if ((charc = _string (endc)) < 0)
         throw json_syntax_error (UNEX_TOKEN, *_readp);
 
-      value_ = new string (this, charc);
+      value_ = call_string (this, charc);
     }
   else if (readc == _sc::begin_object)      // Object
     value_ = new object (this);

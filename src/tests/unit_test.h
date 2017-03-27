@@ -272,6 +272,13 @@ class array_accessor : public format::array
   { return _element_list.end (); }
 };  // Class array_accessor
 
+class string_accessor : public format::string
+{
+public:
+  string_accessor (format::json *parent, size_t charc)
+    : string (parent,charc){}
+};
+
 class value_accessor : public format::value
 {
 public:

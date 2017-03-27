@@ -668,7 +668,6 @@ namespace format
    inline void
    call__set_parent__ (value *v, json *parent)
    { v->_set_parent (parent); }
-
 } // Namespace format
 
 #endif // JSON_VALUE_H
