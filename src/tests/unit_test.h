@@ -324,6 +324,19 @@ public:
   number_accessor (format::json *parent) : number (parent){}
 };
 
+/**
+ * @brief The null_accessor class
+ */
+class null_accessor: public format::null
+{
+public:
+  /**
+   * @brief null_accessor
+   * @param parent
+   */
+  null_accessor (format::json *parent): null (parent){}
+};
+
 format::json * unit_test::__JSON = new format::json ();
 
 format::value * unit_test::__VALUE[] = {

@@ -173,7 +173,7 @@ namespace format
         { L"sk", 2, { new string_accessor (& object_parent, 3), new string_accessor (& array_parent, 3) }, value::string_t, PASS },
         { L"dk", 3, { new number_accessor (& object_parent), new number_accessor (& array_parent) }, value::number_t, PASS },
         { L"bk", 4, { new boolean (& object_parent, true), new boolean (& array_parent, true) }, value::boolean_t, PASS },
-        { L"nk", 5, { new null (& object_parent), new null (& array_parent) }, value::null_t, PASS },
+        { L"nk", 5, { new null_accessor (& object_parent), new null_accessor (& array_parent) }, value::null_t, PASS },
       };
 
       size_t x = 0;

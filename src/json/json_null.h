@@ -15,6 +15,8 @@ namespace format
    */
   class null : public leaf
   {
+    friend null * __call_null (json *);
+
     #ifdef UNIT_TEST
       friend class json_null_test;
     #endif
@@ -22,20 +24,9 @@ namespace format
     public:
 
     /**
-     * @brief Null
+     * @brief null
      */
-    null ()
-      : leaf ()
-    {}
-
-    /**
-     * @brief Null
-     * @param endp
-     * @param parent
-     * @param charc
-     */
-    null (json *parent)
-      : leaf (parent)
+    null (): leaf ()
     {}
 
     /**
@@ -59,16 +50,7 @@ namespace format
     { return new null (*this); }
 
     /**
-     * @brief clone
-     * @param ov
-     * @return
-     */
-//    virtual value *
-//    _clone (const value *) const override
-//    { return new null (*this); }
-
-    /**
-     * @brief parse
+     * @brief _parse
      * @param json
      * @return
      */
@@ -85,7 +67,6 @@ namespace format
     { return value::value_t::null_t; }
 
     /**
-     * TODO: return nullptr
      * @brief Value
      * @return
      */
@@ -101,15 +82,6 @@ namespace format
     inline value &
     operator =(const null & n)
     { return _assign (n); }
-
-    /**
-     * @brief operator =
-     * @param v
-     * @return
-     */
-//    inline value &
-//    operator =(const value & v)
-//    { return value::_assign (v); }
 
     /**
      * @brief strValue
@@ -128,6 +100,14 @@ namespace format
     { return 4; }
 
   protected:
+
+    /**
+     * @brief null
+     * @param parent
+     */
+    null (json *parent)
+      : leaf (parent)
+    {}
 
     /**
      * @brief assign
@@ -152,15 +132,11 @@ namespace format
     virtual value *
     _clone (const value &) override
     { return this; }
+  };  // Class null
 
-    /**
-     * @brief _sizeof
-     * @return
-     *
-    virtual size_t
-    _sizeof () const noexcept
-    { return sizeof (null); }*/
-  };
+  inline
+  null * __call_null (json *parent)
+  { return new null (parent); }
 } // Namespace format
 
 #endif // NULL_H
