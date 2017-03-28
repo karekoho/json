@@ -337,6 +337,21 @@ public:
   null_accessor (format::json *parent): null (parent){}
 };
 
+/**
+ * @brief The boolean_accessor class
+ */
+class boolean_accessor: public format::boolean
+{
+public:
+  /**
+   * @brief boolean_accessor
+   * @param parent
+   * @param b
+   */
+  boolean_accessor (format::json *parent, bool b): boolean (parent, b)
+  {}
+};
+
 format::json * unit_test::__JSON = new format::json ();
 
 format::value * unit_test::__VALUE[] = {

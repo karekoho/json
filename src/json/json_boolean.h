@@ -9,12 +9,12 @@ namespace format
 #ifdef UNIT_TEST
   class json_boolean_test;
 #endif
-
-  /**
+   /**
     * @brief The boolean class
     */
     class boolean : public leaf
     {
+      friend boolean * __call_boolean (json *parent, bool b);
     #ifdef UNIT_TEST
       friend class json_boolean_test;
     #endif
@@ -37,27 +37,9 @@ namespace format
 
      /**
       * @brief Boolean
-      * @param parent
-      * @param value
-      */
-      boolean (json *parent, const bool value)
-        : leaf (parent), _boolean_value (value)
-      {}
-
-     /**
-      * @brief Boolean
       * @param other
       */
       boolean (const boolean &other) = default;
-
-     /**
-      * @brief Boolean
-      * @param ov
-      * @param nv
-      */
-//      boolean (const value *ov, const boolean &nv)
-//        : leaf (ov, nv), _boolean_value (nv._boolean_value)
-//      {}
 
      /**
       * @brief ~Boolean
@@ -137,6 +119,15 @@ namespace format
       bool _boolean_value;
 
       /**
+       * @brief boolean
+       * @param parent
+       * @param value
+       */
+      boolean (json *parent, const bool value)
+        : leaf (parent), _boolean_value (value)
+      {}
+
+      /**
        * @brief parse
        * @param json
        * @return
@@ -163,6 +154,10 @@ namespace format
         return this;
       }
     }; // Class boolean
+
+    inline
+    boolean * __call_boolean (json *parent, bool b)
+    { return new boolean (parent, b); }
   } // Namespace Format
 
 #endif // BOOLEAN_H

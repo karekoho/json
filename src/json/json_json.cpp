@@ -177,13 +177,13 @@ format::json::_make_value ()
       switch (_is_literal ())
         {
           case value::_literal::null_value:
-            value_ = __call_null (this); // new null (this);
+            value_ = __call_null (this);
             break;
           case value::_literal::true_value :
-            value_ = new boolean (this, true);
+            value_ = __call_boolean (this, true);
             break;
           case value::_literal::false_value:
-            value_ = new boolean (this, false);
+            value_ = __call_boolean (this, false);
             break;
           default:
             value_ = no_value::instance (this);
