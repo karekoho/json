@@ -23,8 +23,13 @@ namespace format
         json (),
         json (L"{\"0\":0}"),
         json (parent),
+
         json (new object {{}}),
-        json (new array {})
+        json (new array {}),
+
+        //json (object {{}}),
+        //json (array {}),
+        //json (json ())
       };
 
       json copy = j[1];
@@ -47,6 +52,14 @@ namespace format
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::type () (2)",
                                     value::array_t,
                                     j[4].type ());
+
+      /*CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::type () (3)",
+                                    value::object_t,
+                                    j[5].type ());
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::type () (4)",
+                                    value::array_t,
+                                    j[6].type ());*/
 
       delete json::parse (L"{}");
     }

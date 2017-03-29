@@ -82,13 +82,6 @@ format::json::json (const json &other)
     __reviver (0)
 {}
 
-//format::json::json (const value *ov, const json &nv)
-//  : value (ov, nv),
-//    _str_value { 0, 0 },
-//    __root (nv.__hasRoot () ? nv.__root->clone () : 0),
-//    __reviver (0)
-//{}
-
 format::json::~json ()
 {
   delete[] _str_value[BEGIN];

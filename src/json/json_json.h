@@ -1,10 +1,8 @@
 #ifndef JSON_JSON_H
 #define JSON_JSON_H
 
-#include "json_value.h"
 #include "json_leaf.h"
 #include "json_exception.h"
-// #include "json_shared_undefined.h"
 #include "json_undefined.h"
 
 #include <unordered_map>
@@ -35,7 +33,6 @@ namespace format
     #endif
 
   public:
-
     /**
      * @brief json
      */
@@ -46,12 +43,6 @@ namespace format
      * @param json
      */
     json (const wchar_t *json);
-
-    /**
-     * @brief json
-     * @param parent
-     */
-    json (json *parent);
 
     /**
      * @brief json
@@ -66,31 +57,24 @@ namespace format
     json (array *a);
 
     /**
-     * @brief clone
-     * @return
-     */
-    virtual value *
-    clone () const
-    { return new json (*this);  }
-
-    /**
      * @brief json
      * @param other
      */
     json (const json &other);
 
     /**
-     * @brief json
-     * @param ov
-     * @param nv
-     */
-    json (const value *ov, const json &nv);
-
-    /**
      * @brief ~json
      */
     virtual
     ~json () override;
+
+    /**
+     * @brief clone
+     * @return
+     */
+    virtual value *
+    clone () const
+    { return new json (*this); }
 
     /**
      * @brief parse
@@ -174,6 +158,12 @@ namespace format
   protected:
     /**
      * @brief json
+     * @param parent
+     */
+    json (json *parent);
+
+    /**
+     * @brief json
      * @param json
      * @param _call_parse
      */
@@ -241,7 +231,6 @@ namespace format
     mutable wchar_t *_str_value[2];
 
   private:
-
     /**
      * @brief __value
      */
