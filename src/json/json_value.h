@@ -514,9 +514,8 @@ namespace format
     value (json *parent);
 
     /**
-     * TODO: protected
-     *
      * @brief str_value
+     * @param offset
      * @return
      */
     virtual const wchar_t *
