@@ -22,23 +22,125 @@ parse ()
         \"IDs\": [116, 943, 234, 38793]\
       }\
   }";
-
-  // std::wcout << j.get  () << std::endl;
 }
 
 void
-assing ()
+construct ()
 {
+  json j = new object {
+            { L"Image",
+              new object {
+                { L"Width",new number (800) },
+                { L"Height",new number (600) },
+                { L"Title", new string (L"View from 15th Floor") },
+                { L"Thumbnail", new object {
+                    { L"Url",new string (L"http://www.example.com/image/481989943") },
+                    { L"Height",new number (125) },
+                    { L"Width", new number (100) },
+                  }
+                },
+                { L"Animated", new boolean (false) },
+                { L"IDs", new array { new number (116), new number (943), new number (234), new number (38793) } }
+              }
+            }
+          };
+}
+
+void
+assign ()
+{
+  json j;
+}
+
+void
+erase ()
+{
+  json j = new object {
+            { L"Image",
+              new object {
+                { L"Width",new number (800) },
+                { L"Height",new number (600) },
+                { L"Title", new string (L"View from 15th Floor") },
+                { L"Thumbnail", new object {
+                    { L"Url",new string (L"http://www.example.com/image/481989943") },
+                    { L"Height",new number (125) },
+                    { L"Width", new number (100) },
+                  }
+                },
+                { L"Animated", new boolean (false) },
+                { L"IDs", new array { new number (116), new number (943), new number (234), new number (38793) } }
+              }
+            }
+          };
+
+  j[L"Image"][L"Thumbnail"][L"Url"] = undefined ();
+  j[L"Image"][L"Thumbnail"][L"Height"] = undefined ();
+  j[L"Image"][L"Thumbnail"][L"Width"] = undefined ();
+
+  j[L"Image"][L"Width"] = undefined ();
+  j[L"Image"][L"Height"] = undefined ();
+  j[L"Image"][L"Title"] = undefined ();
+
+  j[L"Image"][L"Animated"] = undefined ();
+  j[L"Image"][L"IDs"] = undefined ();
 }
 
 void
 get ()
 {
+  json j = new object {
+            { L"Image",
+              new object {
+                { L"Width",new number (800) },
+                { L"Height",new number (600) },
+                { L"Title", new string (L"View from 15th Floor") },
+                { L"Thumbnail", new object {
+                    { L"Url",new string (L"http://www.example.com/image/481989943") },
+                    { L"Height",new number (125) },
+                    { L"Width", new number (100) },
+                  }
+                },
+                { L"Animated", new boolean (false) },
+                { L"IDs", new array { new number (116), new number (943), new number (234), new number (38793) } }
+              }
+            }
+          };
+
+  dynamic_cast<number &> (j[L"Image"][L"Width"]).get ();
+  dynamic_cast<number &> (j[L"Image"][L"Height"]).get ();
+  dynamic_cast<string &> (j[L"Image"][L"Title"]).get ();
+  dynamic_cast<string &> (j[L"Image"][L"Thumbnail"][L"Url"]).get ();
+  dynamic_cast<number &> (j[L"Image"][L"Thumbnail"][L"Height"]).get ();
+  dynamic_cast<number &> (j[L"Image"][L"Thumbnail"][L"Width"]).get ();
+  dynamic_cast<boolean &> (j[L"Image"][L"Animated"]).get ();
+  dynamic_cast<number &> (j[L"Image"][L"IDs"][(size_t) 0]).get ();
 }
 
 void
 iterate ()
 {
+  json j = new object {
+            { L"Image",
+              new object {
+                { L"Width",new number (800) },
+                { L"Height",new number (600) },
+                { L"Title", new string (L"View from 15th Floor") },
+                { L"Thumbnail", new object {
+                    { L"Url",new string (L"http://www.example.com/image/481989943") },
+                    { L"Height",new number (125) },
+                    { L"Width", new number (100) },
+                  }
+                },
+                { L"Animated", new boolean (false) },
+                { L"IDs", new array { new number (116), new number (943), new number (234), new number (38793) } }
+              }
+            }
+          };
+
+  object & o = dynamic_cast<object &> (j[L"Image"]);
+
+  for (auto it = o.begin (); it != o.end (); ++it)
+    (*it);
 }
 
 void
@@ -52,12 +154,14 @@ main (int argc, char *argv[])
 
   typedef void  (*Benchmark) ();
 
-  std::array<Benchmark, 5> task = {
-    & nop ,
-    & parse ,
-    & assing ,
-    & get ,
-    & iterate
+  std::array<Benchmark, 7> task = {
+    & nop,        // 0
+    & parse,      // 1
+    & construct,  // 2
+    & assign,     // 3
+    & erase,      // 4
+    & get,        // 5
+    & iterate     // 6
   };
 
   unsigned int n =  argc > 1 ? atoi (argv[1]) : 0;

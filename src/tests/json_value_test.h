@@ -188,6 +188,36 @@ namespace format
                               (*it).size,
                               a.count ());
         TEST_IT_END;
+
+        json j = new object {
+                  { L"Image",
+                    new object {
+                      { L"Width",new number (800) },
+                      { L"Height",new number (600) },
+                      { L"Title", new string (L"View from 15th Floor") },
+                      { L"Thumbnail", new object {
+                          { L"Url",new string (L"http://www.example.com/image/481989943") },
+                          { L"Height",new number (125) },
+                          { L"Width", new number (100) },
+                        }
+                      },
+                      { L"Animated", new boolean (false) },
+                      { L"IDs", new array { new number (116), new number (943), new number (234), new number (38793) } }
+                    }
+                  }
+                };
+
+        j[L"Image"][L"Thumbnail"][L"Url"] = undefined ();
+        j[L"Image"][L"Thumbnail"][L"Height"] = undefined ();
+        j[L"Image"][L"Thumbnail"][L"Width"] = undefined ();
+
+        j[L"Image"][L"Width"] = undefined ();
+        j[L"Image"][L"Height"] = undefined ();
+        j[L"Image"][L"Title"] = undefined ();
+
+        j[L"Image"][L"Animated"] = undefined ();
+        j[L"Image"][L"IDs"] = undefined ();
+
       }
 
       void
