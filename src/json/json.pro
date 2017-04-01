@@ -19,9 +19,9 @@ SOURCES += \
     json_json.cpp \
     json_boolean.cpp \
     json_array.cpp \
-    json_object_iterator.cpp \
-    json_array_iterator.cpp \
-    json_leaf_iterator.cpp \
+    #json_object_iterator.cpp \
+    #json_array_iterator.cpp \
+    #json_leaf_iterator.cpp \
     json_leaf.cpp
     #json_leaf.cpp
 
@@ -37,11 +37,11 @@ HEADERS += \
     json_boolean.h \
     json_array.h \
     json_leaf.h \
-    json_iterator.h \
-    json_object_iterator.h \
-    json_array_iterator.h \
-    json_leaf_iterator.h \
-    json_shared_undefined.h \
+    #json_iterator.h \
+    #json_object_iterator.h \
+    #json_array_iterator.h \
+    #json_leaf_iterator.h \
+    #json_shared_undefined.h \
     json_exception.h
 
 unix:!symbian {
