@@ -24,7 +24,7 @@ namespace format
         json (L"{\"0\":0}"),
         json (parent),
 
-        json (new object {{}}),
+        json (new object {}),
         json (new array {}),
 
         //json (object {{}}),

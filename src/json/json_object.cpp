@@ -11,9 +11,17 @@ format::object::object (const wchar_t *text)
   (void) _parse (text);
 }
 
-format::object::object (std::initializer_list<std::pair<std::__cxx11::wstring, value *> > il)
-  : json(), _member_list (il.begin (), il.end ())
-{}
+format::object::object (std::initializer_list<std::pair<std::wstring, value *>> il)
+  : json (),
+    _member_list (il.begin (), il.end ())
+{
+  for (auto it = il.begin (); it != il.end (); ++it)
+    {
+      std::pair<std::wstring, value *> p = *it;
+      __call__set_key (p.second, p.first.c_str (), wcslen (p.first.c_str ()));
+      __call__set_parent (p.second, this);
+    }
+}
 
 format::object::object (json *parent)
   : json::json (parent)

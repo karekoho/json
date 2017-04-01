@@ -45,6 +45,13 @@ namespace format
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("object[key][key].type ()",
                                     value::number_t,
                                     o[3][L"0"][L"0"].type ());
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("o[3][L\"0\"].parent ()",
+                                    dynamic_cast<json *> (& o[3]),
+                                    o[3][L"0"].parent ());
+
+      CPPUNIT_ASSERT_MESSAGE ("o[3][L\"0\"].key ()",
+                              o[3][L"0"].key () == std::wstring (L"0"));
     }
 
     virtual

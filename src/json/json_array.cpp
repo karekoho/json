@@ -13,7 +13,11 @@ format::array::array (const wchar_t *text)
 
 format::array::array(std::initializer_list<value *> il)
   : json (), _element_list (il)
-{}
+{
+  //std::transform (_element_list.begin (), _element_list.end (), [] (value *v) -> value * { /*__call__set_parent (v, this);*/ return v; });
+
+  for (auto it = _element_list.begin (); it != _element_list.end (); ++it)__call__set_parent (*it, this);
+}
 
 format::array::array (json *parent)
   : json (parent)

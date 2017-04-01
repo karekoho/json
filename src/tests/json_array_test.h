@@ -45,6 +45,10 @@ namespace format
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("array[index][index].type ()",
                                     value::number_t,
                                     a[3][(size_t) 0][(size_t) 0].type ());
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("a[3][(size_t) 0].parent ()",
+                                    dynamic_cast<json *> (& a[3]),
+                                    a[3][(size_t) 0].parent ());
     }
 
     virtual void
