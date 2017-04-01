@@ -27,6 +27,7 @@ namespace format
     friend void __call__set_key (value *, const wchar_t *, size_t);
     friend void __call__set_index (value *, const size_t &);
     friend void __call__set_parent (value *, json *);
+    friend const wchar_t * __call_str_value (value *, wchar_t *);
 
     #ifdef UNIT_TEST
       friend class json_value_test;
@@ -254,14 +255,6 @@ namespace format
     virtual size_t
     str_length () const noexcept = 0;
 
-    /**
-     * TODO: protected
-     *
-     * @brief str_value
-     * @return
-     */
-    virtual const wchar_t *
-    str_value (wchar_t *offset = 0) /* TODO: noexcept */ const = 0;
 
     /**
      * TODO: REMOVE
@@ -521,6 +514,15 @@ namespace format
     value (json *parent);
 
     /**
+     * TODO: protected
+     *
+     * @brief str_value
+     * @return
+     */
+    virtual const wchar_t *
+    str_value (wchar_t *offset = 0) /* TODO: noexcept */ const = 0;
+
+    /**
      * @brief _clone  Called by copy constructor
      * @param other
      * @return
@@ -616,8 +618,8 @@ namespace format
     } __ltr_value[3]; 
   };  // Class value
 
-   inline
-   const wchar_t * __call__parse (value *v, const wchar_t *readp)
+   inline const wchar_t *
+   __call__parse (value *v, const wchar_t *readp)
    { return v->_parse (readp); }
 
    inline void
@@ -631,6 +633,10 @@ namespace format
    inline void
    __call__set_parent (value *v, json *parent)
    { v->_set_parent (parent); }
+
+   inline const wchar_t *
+   __call_str_value (value *v, wchar_t *offset)
+   { return v->str_value (offset); }
 } // Namespace format
 
 #endif // JSON_VALUE_H

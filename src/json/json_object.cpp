@@ -244,7 +244,7 @@ format::object::str_value (wchar_t *offset) const
 
       str_value[OFFSET] = _str_append (_str_append (str_value[OFFSET], L"\"", 1), p.first.c_str (), p.first.size ());   // Key
       str_value[OFFSET] = _str_append (str_value[OFFSET], L"\":", 2);
-      str_value[OFFSET] = _str_append (str_value[OFFSET], p.second->str_value (str_value[OFFSET]), p.second->str_length ()); // Value
+      str_value[OFFSET] = _str_append (str_value[OFFSET], __call_str_value (p.second, str_value[OFFSET]), p.second->str_length ()); // Value
 
       if (++cur != end)
         *(str_value[OFFSET]++) = _sc::value_separator;
