@@ -201,6 +201,14 @@ namespace format
     _make_value ();
 
     /**
+     * @brief _from_initializer_list
+     */
+    template<typename T>
+    void
+    _from_initializer_list ()
+    {}
+
+    /**
      * @brief _clear
      */
     virtual void

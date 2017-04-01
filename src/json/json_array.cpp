@@ -11,15 +11,14 @@ format::array::array (const wchar_t *text)
   (void) _parse (text);
 }
 
-format::array::array(std::initializer_list<value *> il)
-  : json (), _element_list (il)
+format::array::array (std::initializer_list<value *> il)
+  : json (),
+    _element_list (il)
 {
-  std::transform (_element_list.begin (),
-                  _element_list.end (),
-                  _element_list.begin (),
-                  [this] (value *v) -> value * { __call__set_parent (v, this); return v; });
-
-  // for (auto it = _element_list.begin (); it != _element_list.end (); ++it)__call__set_parent (*it, this);
+  (void) std::transform ( _element_list.begin (),
+                          _element_list.end (),
+                          _element_list.begin (),
+                          [this] (value *v) -> value * { __call__set_parent (v, this); return v; });
 }
 
 format::array::array (json *parent)

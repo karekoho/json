@@ -1,6 +1,6 @@
 #include "json_object.h"
 #include "json_object_iterator.h"
-
+#include <algorithm>
 format::object::object ()
   : json ()
 {}
@@ -12,13 +12,16 @@ format::object::object (const wchar_t *text)
 }
 
 format::object::object (std::initializer_list<std::pair<std::wstring, value *>> il)
-  : json (),
-    _member_list (il.begin (), il.end ())
+  : json ()
 {
-  for (auto it = il.begin (); it != il.end (); ++it)
+  auto cur = il.begin ();
+  auto end = il.end ();
+
+  while (cur != end)
     {
-      std::pair<std::wstring, value *> p = *it;
-      __call__set_key (p.second, p.first.c_str (), wcslen (p.first.c_str ()));
+      std::pair<std::wstring, value *> p = *(cur++);
+      (void) _member_list.emplace (p);
+      __call__set_key (p.second, p.first.c_str (), p.first.length ());
       __call__set_parent (p.second, this);
     }
 }
