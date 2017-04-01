@@ -14,6 +14,8 @@ format::array::array (const wchar_t *text)
 format::array::array (std::initializer_list<value *> il)
   : json ()
 {
+  _element_list.reserve (il.size ());
+
   auto cur = il.begin ();
   auto end = il.end ();
 
