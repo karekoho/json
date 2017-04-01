@@ -186,7 +186,7 @@ namespace format
             *(*it).val = format::undefined ();
             ASSERT_EQUAL_IDX ("array::count ()",
                               (*it).size,
-                              a.count ());
+                              a.length ());
         TEST_IT_END;
 
 //        json j = new object {

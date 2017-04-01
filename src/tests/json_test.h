@@ -43,7 +43,7 @@ namespace format
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.count ()",
                                     (size_t) 1,
-                                    copy.count ());
+                                    copy.length ());
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::type () (1)",
                                     value::object_t,
@@ -351,7 +351,7 @@ namespace format
 
                 CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->count ()",
                                               output_size,
-                                              jv->count ());
+                                              jv->length ());
 
                 CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->at ().type ()",
                                               ov->type (),
@@ -419,7 +419,7 @@ namespace format
       };
 
       for (size_t idx = 0; idx < 2; idx++)
-        CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::count ()", (size_t) 0, j[idx].count ());
+        CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::count ()", (size_t) 0, j[idx].length ());
     }
 
     virtual void test_operator_at_index () override {}

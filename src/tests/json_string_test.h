@@ -187,7 +187,7 @@ namespace format
                       {
                         ASSERT_EQUAL_IDX ("parent->count ()",
                                           (*it).count,
-                                          parent->count ());
+                                          parent->length ());
 
                         ASSERT_EQUAL_IDX ("(*parent)[(*it).key].type ()",
                                           (*parent)[(*it).key].type (),

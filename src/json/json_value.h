@@ -203,7 +203,7 @@ namespace format
      * @return
      */
     virtual size_t
-    count () const noexcept = 0;
+    length () const noexcept = 0;
 
     /**
      * @brief key

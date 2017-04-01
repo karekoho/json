@@ -79,7 +79,7 @@ namespace format
      * @return
      */
     virtual size_t
-    count () const noexcept final override
+    length () const noexcept final override
     { return 0; }
 
     /**

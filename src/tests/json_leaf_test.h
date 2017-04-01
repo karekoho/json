@@ -97,7 +97,7 @@ namespace format
     test_count () final override
     {
       json j;
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("leaf::count ()", (size_t) 0, no_value::instance (& j)->count ());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("leaf::count ()", (size_t) 0, no_value::instance (& j)->length ());
     }
 
     virtual void test_erase () final override {}
