@@ -144,7 +144,7 @@ namespace format
      */
     virtual const wchar_t *
     str_value (wchar_t *offset = 0) const override
-    { return __hasRoot () ? /*__root->str_value (offset)*/ __call_str_value (__root, offset) : L""; }
+    { return __hasRoot () ? __call_str_value (__root, offset) : L""; }
 
     /**
      * @brief erase
