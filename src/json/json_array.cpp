@@ -12,13 +12,16 @@ format::array::array (const wchar_t *text)
 }
 
 format::array::array (std::initializer_list<value *> il)
-  : json (),
-    _element_list (il)
+  : json ()
 {
-  (void) std::transform ( _element_list.begin (),
-                          _element_list.end (),
-                          _element_list.begin (),
-                          [this] (value *v) -> value * { __call__set_parent (v, this); return v; });
+  auto cur = il.begin ();
+  auto end = il.end ();
+
+  while (cur != end)
+    {
+      (void) _element_list.push_back (*cur);
+      __call__set_parent (*(cur++), this);
+    }
 }
 
 format::array::array (json *parent)
