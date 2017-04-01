@@ -14,9 +14,12 @@ format::array::array (const wchar_t *text)
 format::array::array(std::initializer_list<value *> il)
   : json (), _element_list (il)
 {
-  //std::transform (_element_list.begin (), _element_list.end (), [] (value *v) -> value * { /*__call__set_parent (v, this);*/ return v; });
+  std::transform (_element_list.begin (),
+                  _element_list.end (),
+                  _element_list.begin (),
+                  [this] (value *v) -> value * { __call__set_parent (v, this); return v; });
 
-  for (auto it = _element_list.begin (); it != _element_list.end (); ++it)__call__set_parent (*it, this);
+  // for (auto it = _element_list.begin (); it != _element_list.end (); ++it)__call__set_parent (*it, this);
 }
 
 format::array::array (json *parent)
@@ -28,12 +31,6 @@ format::array::array (const array &other)
 {
   (void) _clone (other);
 }
-
-/* format::array::array (const value *ov, const array &nv)
-  : json (ov, nv)
-{
-  (void) _clone (nv);
-}*/
 
 format::array::~array ()
 {
