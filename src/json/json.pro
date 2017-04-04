@@ -22,7 +22,7 @@ SOURCES += \
     json_leaf.cpp
 
 HEADERS += \
-    json.h \
+    #json.h \
     json_value.h \
     json_undefined.h \
     json_string.h \
