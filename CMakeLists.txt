@@ -27,7 +27,7 @@ set(SOURCES
 
 add_library(json SHARED ${SOURCES})
 install(TARGETS json DESTINATION lib)
-install(FILES json.h DESTINATION include)
+install(DIRECTORY src/json/ DESTINATION include/format FILES_MATCHING PATTERN "*.h")
 
 # If “make install” is invoked or INSTALL is built, this directory is prepended onto all install directories. 
 # This variable defaults to /usr/local on UNIX and c:/Program Files on Windows

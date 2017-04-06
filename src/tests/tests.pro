@@ -2,11 +2,9 @@ QT += core
 QT -= gui
 
 LIBS += -lcppunit
-# LIBS += -lutil -L/usr/local/lib
 
 #QMAKE_CXXFLAGS+= -std=c++11
 #QMAKE_LFLAGS +=  -std=c++11
-
 QMAKE_CXXFLAGS+= -std=c++14
 QMAKE_LFLAGS +=  -std=c++14
 
@@ -22,7 +20,6 @@ SOURCES += main.cpp \
     ../json/json_string.cpp \
     ../json/json_object.cpp \
     ../json/json_number.cpp \
-    #../json/json_null.cpp \
     ../json/json_json.cpp \
     ../json/json_boolean.cpp \
     ../json/json_array.cpp \
@@ -30,7 +27,6 @@ SOURCES += main.cpp \
     ../json/json_object_iterator.cpp \
     ../json/json_leaf_iterator.cpp \
     ../json/json_array_iterator.cpp \
-    #../json/json_shared_undefined.cpp
 
 HEADERS += \
     json_value_test_interface.h \

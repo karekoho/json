@@ -4,10 +4,6 @@ CONFIG -= qt
 QMAKE_CXXFLAGS+= -std=c++14
 QMAKE_LFLAGS +=  -std=c++14
 
-#TARGET = json
-#CONFIG += console
-#CONFIG -= app_bundle
-
 TEMPLATE = lib
 
 SOURCES += \
@@ -22,7 +18,6 @@ SOURCES += \
     json_leaf.cpp
 
 HEADERS += \
-    #json.h \
     json_value.h \
     json_undefined.h \
     json_string.h \

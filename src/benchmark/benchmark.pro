@@ -4,7 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 LIBS += -L/usr/local/lib -ljson
-QMAKE_CXX += -static
+#QMAKE_CXX += -static
 
 SOURCES += main.cpp
 
