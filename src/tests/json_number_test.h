@@ -420,9 +420,9 @@ namespace format
           number ((*it).s[1]),
         };
 
-        CPPUNIT_ASSERT_MESSAGE ("n[0].strValue ()", wcscmp((*it).output[0], n[0].str_value ()) == 0);
-        CPPUNIT_ASSERT_MESSAGE ("n[1].strValue ()", wcscmp((*it).output[1], n[1].str_value ()) == 0);
-        CPPUNIT_ASSERT_MESSAGE ("n[2].strValue ()", wcscmp((*it).output[2], n[2].str_value ()) == 0);
+        CPPUNIT_ASSERT_MESSAGE ("n[0].strValue ()", wcscmp((*it).output[0], n[0]._to_str ()) == 0);
+        CPPUNIT_ASSERT_MESSAGE ("n[1].strValue ()", wcscmp((*it).output[1], n[1]._to_str ()) == 0);
+        CPPUNIT_ASSERT_MESSAGE ("n[2].strValue ()", wcscmp((*it).output[2], n[2]._to_str ()) == 0);
 
       TEST_IT_END;
     }

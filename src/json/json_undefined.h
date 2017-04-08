@@ -153,7 +153,7 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    str_value (wchar_t * = 0) const override
+    _to_str (wchar_t * = 0) const override
     { return L""; }
 
   protected:

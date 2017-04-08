@@ -100,7 +100,7 @@ namespace format
     * @return
     */
     virtual const wchar_t *
-    str_value (wchar_t *offset = 0) const override;
+    _to_str (wchar_t *offset = 0) const override;
 
 
    /**

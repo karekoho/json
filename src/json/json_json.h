@@ -143,7 +143,7 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    str_value (wchar_t *offset = 0) const override
+    _to_str (wchar_t *offset = 0) const override
     { return __hasRoot () ? __call_str_value (__root, offset) : L""; }
 
     /**

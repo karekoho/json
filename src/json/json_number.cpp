@@ -211,7 +211,7 @@ format::number::str_length () const noexcept
 }
 
 const wchar_t *
-format::number::str_value (wchar_t *) const
+format::number::_to_str (wchar_t *) const
 {
   (void) get ();
   _to_string ();

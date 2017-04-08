@@ -88,7 +88,7 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    str_value (wchar_t *) const noexcept override
+    _to_str (wchar_t *) const noexcept override
     { return L"null"; }
 
     /**

@@ -265,7 +265,7 @@ namespace format
 
         for (uint mdx = 0; mdx < 2; mdx++)
           {
-            const wchar_t *value[2] = { j.str_value (),
+            const wchar_t *value[2] = { j._to_str (),
                                         j[L"1"][L"2"].stringify ()
                                       };
 
