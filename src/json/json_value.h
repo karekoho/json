@@ -223,22 +223,6 @@ namespace format
     { return _index; }
 
     /**
-     * @brief is_leaf
-     * @return
-     */
-    virtual bool
-    is_leaf () const noexcept
-    { return false; }
-
-    /**
-     * @brief is_node
-     * @return
-     */
-    inline bool
-    is_node () const noexcept
-    { return ! is_leaf (); }
-
-    /**
      * @brief stringify
      * @return
      */

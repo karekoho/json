@@ -93,7 +93,6 @@ format::array::_parse (const wchar_t *json)
               && *_readp != value::_ws::lf
               && *_readp != value::_ws::cr)
             throw json_syntax_error (UNEX_TOKEN, *_readp);
-
           // Empty array
         }
       else if ((v = _call_reviver (v, 0, next_idx))->type () != value::undefined_t)  // Value found
@@ -132,7 +131,7 @@ format::array::_assign (value *ov, value *nv)
   _element_list.at (index) = nv;
 
   __call__set_index (nv, index);
-  __call__set_parent(nv, this);
+  __call__set_parent (nv, this);
 
   delete ov;
 

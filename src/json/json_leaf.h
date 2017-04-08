@@ -19,7 +19,6 @@ namespace format
     friend class json_leaf_test;
   #endif
   public:
-
     /**
      * @brief Leaf
      */
@@ -72,14 +71,6 @@ namespace format
     virtual size_t
     length () const noexcept final override
     { return 0; }
-
-    /**
-     * @brief isLeaf
-     * @return
-     */
-    virtual bool
-    is_leaf () const noexcept final override
-    { return true; }
 
     /**
      * @brief The iterator class
