@@ -152,8 +152,8 @@ namespace format
      * @return
      */
     virtual value &
-    erase (const value &v) noexcept override
-    { return __hasRoot() ? __root->erase (v) : *this; }
+    _erase (const value &v) noexcept override
+    { return __hasRoot () ? /*__root->erase (v)*/ __call__erase (__root, v) : *this; }
 
   protected:
     /**

@@ -98,7 +98,7 @@ format::value::_is_literal (const int _try) const noexcept
 format::value &
 format::value::_assign (const undefined &) noexcept
 {
-  return  _parent ? _parent->erase (*this) : *this;
+  return  _parent ? _parent->_erase (*this) : *this;
 }
 
 format::value &

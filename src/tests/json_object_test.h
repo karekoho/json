@@ -482,7 +482,7 @@ namespace format
 
       TEST_IT_START
 
-        (void) o.erase (*(*it).val);
+        (void) o._erase (*(*it).val);
         size_t size = o.length ();
 
         ASSERT_EQUAL_IDX ("o.count ()", (*it).size, size);

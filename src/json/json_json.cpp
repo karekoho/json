@@ -6,7 +6,6 @@
 #include "json_null.h"
 #include "json_undefined.h"
 #include "json_boolean.h"
-#include "json_leaf_iterator.h"
 
 format::json::json ()
   : value (),

@@ -425,7 +425,7 @@ namespace format
        };
 
        TEST_IT_START
-           (void) a.erase (*(*it).val);
+           (void) a._erase (*(*it).val);
            size_t size = a.length ();
 
            ASSERT_EQUAL_IDX ("array::count ()", (*it).size, size);

@@ -19,7 +19,6 @@ namespace format
     friend class json_leaf_test;
   #endif
   public:
-
     /**
      * @brief Leaf
      */
@@ -47,15 +46,6 @@ namespace format
     leaf (const leaf &other) = default;
 
     /**
-     * @brief Leaf
-     * @param ov
-     * @param nv
-     */
-//    leaf (const value *ov, const leaf &nv)
-//      : value (ov, nv)
-//    {}
-
-    /**
      * @brief ~Leaf
      */
     virtual ~leaf () override = default;
@@ -81,30 +71,6 @@ namespace format
     virtual size_t
     length () const noexcept final override
     { return 0; }
-
-    /**
-     * @brief assign
-     * @return
-     */
-    virtual value &
-    _assign (value *, value *) final override
-    { return *this; }
-
-    /**
-     * @brief isLeaf
-     * @return
-     */
-    virtual bool
-    is_leaf () const noexcept final override
-    { return true; }
-
-    /**
-     * @brief erase
-     * @return
-     */
-    virtual value &
-    erase (const value &) noexcept final override
-    { return *this; }
 
     /**
      * @brief The iterator class
@@ -190,10 +156,26 @@ namespace format
     { return *this; }
 
     /**
+     * @brief assign
+     * @return
+     */
+    virtual value &
+    _assign (value *, value *) final override
+    { return *this; }
+
+    /**
      * @brief _clear
      */
     virtual void
     _clear () = 0;
+
+    /**
+     * @brief _erase
+     * @return
+     */
+    virtual value &
+    _erase (const value &) noexcept final override
+    { return *this; }
 
     /**
      * @brief _clone

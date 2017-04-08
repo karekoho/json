@@ -28,6 +28,7 @@ namespace format
     friend void __call__set_index (value *, const size_t &);
     friend void __call__set_parent (value *, json *);
     friend const wchar_t * __call_str_value (value *, wchar_t *);
+    friend value & __call__erase (value *, const value &);
 
     #ifdef UNIT_TEST
       friend class json_value_test;
@@ -223,22 +224,6 @@ namespace format
     { return _index; }
 
     /**
-     * @brief is_leaf
-     * @return
-     */
-    virtual bool
-    is_leaf () const noexcept
-    { return false; }
-
-    /**
-     * @brief is_node
-     * @return
-     */
-    inline bool
-    is_node () const noexcept
-    { return ! is_leaf (); }
-
-    /**
      * @brief stringify
      * @return
      */
@@ -255,16 +240,6 @@ namespace format
     virtual size_t
     str_length () const noexcept = 0;
 
-
-    /**
-     * TODO: REMOVE
-     *
-     * @brief erase
-     * @param v
-     * @return
-     */
-    virtual value &
-    erase (const value &v) noexcept = 0;
 
     /**
      * @brief value
@@ -606,6 +581,14 @@ namespace format
     _clear () = 0;
 
     /**
+     * @brief _erase
+     * @param v
+     * @return
+     */
+    virtual value &
+    _erase (const value &v) noexcept = 0;
+
+    /**
      * @brief _literal_value
      */
     static const struct literal_value
@@ -636,6 +619,10 @@ namespace format
    inline const wchar_t *
    __call_str_value (value *v, wchar_t *offset)
    { return v->str_value (offset); }
+
+   inline value &
+   __call__erase (value *parent, const value & v)
+   {  return parent->_erase (v); }
 } // Namespace format
 
 #endif // JSON_VALUE_H
