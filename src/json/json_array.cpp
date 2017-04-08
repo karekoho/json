@@ -1,5 +1,4 @@
 #include "json_array.h"
-#include "json_array_iterator.h"
 
 #include <algorithm>
 
