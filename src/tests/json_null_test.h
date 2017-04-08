@@ -110,9 +110,9 @@ namespace format
         }
     }
 
-    virtual void test_parse_1 () override {}
+    virtual void test__parse_1 () override {}
     virtual void test_str_length () override {}
-    virtual void test_str_value () override {}
+    virtual void test__to_string () override {}
     virtual void test__clear () override {}
     virtual void test_type () override {}
 
