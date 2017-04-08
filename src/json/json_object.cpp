@@ -258,7 +258,7 @@ format::object::str_value (wchar_t *offset) const
 }
 
 format::value &
-format::object::erase (const value & v) noexcept
+format::object::_erase (const value & v) noexcept
 {
   auto it = _member_list.find (v.key ());
 

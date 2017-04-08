@@ -103,13 +103,6 @@ namespace format
     virtual const wchar_t *
     str_value (wchar_t *offset = 0) const override;
 
-    /**
-     * @brief erase
-     * @param v
-     * @return
-     */
-    virtual value &
-    erase (const value &v) noexcept override;
 
     /**
      * @brief The iterator class
@@ -253,6 +246,14 @@ namespace format
      */
     virtual void
     _clear () override;
+
+    /**
+     * @brief _erase
+     * @param v
+     * @return
+     */
+    virtual value &
+    _erase (const value &v) noexcept override;
   }; // Class object
 
   inline

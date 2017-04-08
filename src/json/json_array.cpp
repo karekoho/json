@@ -221,7 +221,7 @@ format::array::str_value (wchar_t *offset) const
 }
 
 format::value &
-format::array::erase (const value &v) noexcept
+format::array::_erase (const value &v) noexcept
 {
   size_t index = v.index ();
 

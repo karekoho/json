@@ -265,17 +265,6 @@ namespace format
     str_value (wchar_t *offset = 0) /* TODO: noexcept */ const = 0;
 
     /**
-     * TODO: REMOVE
-     *
-     * @brief erase
-     * @param v
-     * @return
-     */
-  protected:
-    virtual value &
-    erase (const value &v) noexcept = 0;
-public:
-    /**
      * @brief value
      * @return
      */
@@ -607,6 +596,14 @@ public:
     _clear () = 0;
 
     /**
+     * @brief _erase
+     * @param v
+     * @return
+     */
+    virtual value &
+    _erase (const value &v) noexcept = 0;
+
+    /**
      * @brief _literal_value
      */
     static const struct literal_value
@@ -636,7 +633,7 @@ public:
 
    inline value &
    __call__erase (value *parent, const value & v)
-   {  return parent->erase (v); }
+   {  return parent->_erase (v); }
 } // Namespace format
 
 #endif // JSON_VALUE_H

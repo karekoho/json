@@ -54,7 +54,7 @@ namespace format
       { return L""; }
 
       virtual value &
-      erase (const value &) noexcept override
+      _erase (const value &) noexcept override
       { return *this; }
 
 //      virtual value *
