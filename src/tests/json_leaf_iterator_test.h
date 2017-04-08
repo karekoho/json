@@ -13,7 +13,7 @@ class json_leaf_iterator_test : public unit_test
 {
 public:
 
-  void
+  /*void
   test_hasNext ()
   {
     size_t c = 0;
@@ -30,7 +30,7 @@ public:
     CPPUNIT_ASSERT_EQUAL_MESSAGE ("count", (size_t) 1, c);
 
     delete iit;
-  }
+  }*/
 
   void
   test_construct_assign_destruct ()

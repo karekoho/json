@@ -11,7 +11,6 @@ set(SOURCES
     src/json/json_json.cpp
     src/json/json_boolean.cpp
     src/json/json_array.cpp
-    src/json/json_leaf.cpp
 # headers
     src/json/json_value.h
     src/json/json_undefined.h

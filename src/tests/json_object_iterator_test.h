@@ -11,7 +11,7 @@ class json_object_iterator_test : public unit_test
 {
 public:
 
-  void
+  /*void
   test_hasNext ()
   {
     object::member_list list;
@@ -48,7 +48,7 @@ public:
         delete oit;
 
     TEST_IT_END;
-  }
+  }*/
 
   void
   test_construct_assign_destruct ()
