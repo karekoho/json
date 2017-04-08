@@ -14,7 +14,7 @@ namespace format
   {
   public:
 
-    void
+    /*void
     test_hasNext ()
     {
       std::vector<value *> vector;
@@ -52,7 +52,7 @@ namespace format
           delete vit;
 
       TEST_IT_END;
-    }
+    }*/
 
     void
     test_construct_assign_destruct ()
