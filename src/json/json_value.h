@@ -27,6 +27,7 @@ namespace format
     friend void __call__set_key (value *, const wchar_t *, size_t);
     friend void __call__set_index (value *, const size_t &);
     friend void __call__set_parent (value *, json *);
+    friend value & __call__erase (value *, const value &);
 
     #ifdef UNIT_TEST
       friend class json_value_test;
@@ -270,9 +271,10 @@ namespace format
      * @param v
      * @return
      */
+  protected:
     virtual value &
     erase (const value &v) noexcept = 0;
-
+public:
     /**
      * @brief value
      * @return
@@ -631,6 +633,10 @@ namespace format
    inline void
    __call__set_parent (value *v, json *parent)
    { v->_set_parent (parent); }
+
+   inline value &
+   __call__erase (value *parent, const value & v)
+   {  return parent->erase (v); }
 } // Namespace format
 
 #endif // JSON_VALUE_H
