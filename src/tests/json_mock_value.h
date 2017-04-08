@@ -50,7 +50,7 @@ namespace format
       { return 0; }
 
       virtual const wchar_t *
-      _to_str (wchar_t *) const
+      _to_string (wchar_t *) const
       { return L""; }
 
       virtual value &

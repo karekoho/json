@@ -145,7 +145,7 @@ namespace format
     test_str_value () override
     {
       undefined u;
-      CPPUNIT_ASSERT_MESSAGE ("undefined::str_value ()", wcslen (u._to_str ()) == 0);
+      CPPUNIT_ASSERT_MESSAGE ("undefined::str_value ()", wcslen (u._to_string ()) == 0);
     }
 
     virtual void test__clear () override {}

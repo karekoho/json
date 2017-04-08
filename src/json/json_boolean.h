@@ -63,13 +63,6 @@ namespace format
       str_length () const noexcept override
       { return _boolean_value == true ? 4 : 5; }
 
-     /**
-      * @brief strValue
-      * @return
-      */
-      virtual const wchar_t *
-      _to_str (wchar_t * = 0) const override
-      { return _boolean_value == true ? L"true" : L"false"; }
 
      /**
       * @brief type
@@ -104,15 +97,7 @@ namespace format
       inline bool get () const
       { return _boolean_value; }
 
-     /**
-      * @brief setValue
-      * @param value
-      */
-      void setValue (bool value)
-      { _boolean_value = value; }
-
     protected:
-
      /**
       * @brief _boolean_value
       */
@@ -153,6 +138,14 @@ namespace format
         _boolean_value = dynamic_cast<const boolean &>(other)._boolean_value;
         return this;
       }
+
+      /**
+       * @brief strValue
+       * @return
+       */
+       virtual const wchar_t *
+       _to_string (wchar_t * = 0) const override
+       { return _boolean_value == true ? L"true" : L"false"; }
     }; // Class boolean
 
     inline

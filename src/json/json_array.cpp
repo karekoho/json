@@ -182,7 +182,7 @@ format::array::str_length () const noexcept
 }
 
 const wchar_t *
-format::array::_to_str (wchar_t *offset) const
+format::array::_to_string (wchar_t *offset) const
 {
   wchar_t *str_value[2] = { 0, 0 };
 

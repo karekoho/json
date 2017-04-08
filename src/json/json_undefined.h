@@ -39,15 +39,6 @@ namespace format
     undefined (const undefined &other) = default;
 
     /**
-     * @brief Undefined
-     * @param ov
-     * @param nv
-     */
-//    undefined (const value *ov, const undefined &nv)
-//      : leaf (ov, nv)
-//    {}
-
-    /**
      * @brief ~undefined
      */
     virtual ~undefined () override = default;
@@ -106,17 +97,7 @@ namespace format
     { return new undefined (*this); }
 
     /**
-     * @brief clone
-     * @param ov
-     * @return
-     */
-//    virtual value *
-//    _clone (const value *ov) const override
-//    { return new undefined (ov, *this); }
-
-    /**
-     * TODO: return nullptr
-     * @brief value
+     * @brief get
      * @return
      */
     inline std::nullptr_t
@@ -148,14 +129,6 @@ namespace format
     str_length () const noexcept override
     { return 0; }
 
-    /**
-     * @brief strValue
-     * @return
-     */
-    virtual const wchar_t *
-    _to_str (wchar_t * = 0) const override
-    { return L""; }
-
   protected:
     /**
      * @brief _clear
@@ -173,12 +146,12 @@ namespace format
     { return new undefined (*this); }
 
     /**
-     * @brief _sizeof
+     * @brief strValue
      * @return
-     *
-    virtual size_t
-    _sizeof () const noexcept
-    { return sizeof (undefined); }*/
+     */
+    virtual const wchar_t *
+    _to_string (wchar_t * = 0) const override
+    { return L""; }
 
   private:
     /**
@@ -209,20 +182,14 @@ namespace format
     {}
 
     /**
-     * @brief Undefined
+     * @brief unique_undefined
      * @param other
      */
     unique_undefined (const unique_undefined &other) = default;
 
     /**
-     * @brief Undefined
-     * @param ov
-     * @param nv
+     * @brief ~unique_undefined
      */
-//    unique_undefined (const value *ov, const unique_undefined &nv)
-//      : undefined (ov, nv)
-//    {}
-
     virtual ~unique_undefined () override = default;
 
     /**
@@ -267,7 +234,7 @@ namespace format
   };
 
   /**
-   * @brief The No_Value class
+   * @brief The no_value class
    */
   class no_value : public unique_undefined
   {
@@ -308,7 +275,6 @@ namespace format
     {}
 
   private:
-
     /**
      * @brief __instance
      */

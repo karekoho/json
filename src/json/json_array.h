@@ -96,14 +96,6 @@ namespace format
     str_length () const noexcept override;
 
    /**
-    * @brief str_value
-    * @return
-    */
-    virtual const wchar_t *
-    _to_str (wchar_t *offset = 0) const override;
-
-
-   /**
     * @brief The iterator class
     */
     class iterator : public value::iterator<element_list::iterator,
@@ -251,6 +243,14 @@ namespace format
     */
     virtual value *
     _clone (const value &other) override;
+
+    /**
+     * @brief str_value
+     * @return
+     */
+     virtual const wchar_t *
+     _to_string (wchar_t *offset = 0) const override;
+
   }; // Class array
 
   inline array *

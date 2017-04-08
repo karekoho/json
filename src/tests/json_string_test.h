@@ -79,7 +79,7 @@ namespace format
         ASSERT_EQUAL_IDX ("string.readp", readp, (*it).startp + (*it).charc);
         ASSERT_EQUAL_IDX ("*(string.readp)", (wchar_t) *readp, (*it).endc);
         ASSERT_EQUAL_IDX ("s->strLength ()", (*it).charc, s->str_length ());
-        CPPUNIT_ASSERT_MESSAGE ("s->strValue ()", wcscmp ((*it).str_value, s->_to_str ()) == 0);
+        CPPUNIT_ASSERT_MESSAGE ("s->strValue ()", wcscmp ((*it).str_value, s->_to_string ()) == 0);
 
         delete s;
 
@@ -116,7 +116,7 @@ namespace format
             s = new string ((*it).startp);
 
             ASSERT_EQUAL_IDX ("s->strLength ()", (*it).charc, s->str_length ());
-            CPPUNIT_ASSERT_MESSAGE ("s->strValue ()", wcscmp ((*it).str_value, s->_to_str ()) == 0);
+            CPPUNIT_ASSERT_MESSAGE ("s->strValue ()", wcscmp ((*it).str_value, s->_to_string ()) == 0);
 
             delete s;
           }

@@ -229,7 +229,7 @@ namespace format
      */
     const wchar_t *
     stringify () noexcept
-    { return _to_str (); }
+    { return _to_string (); }
 
     /**
      * TODO: protected
@@ -247,7 +247,7 @@ namespace format
      */
     inline const wchar_t *
     get () const
-    { return _to_str (); }
+    { return _to_string (); }
 
     /**
      * @brief parent
@@ -494,7 +494,7 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    _to_str (wchar_t *offset = 0) /* TODO: noexcept */ const = 0;
+    _to_string (wchar_t *offset = 0) /* TODO: noexcept */ const = 0;
 
     /**
      * @brief _clone  Called by copy constructor
@@ -618,7 +618,7 @@ namespace format
 
    inline const wchar_t *
    __call_str_value (value *v, wchar_t *offset)
-   { return v->_to_str (offset); }
+   { return v->_to_string (offset); }
 
    inline value &
    __call__erase (value *parent, const value & v)

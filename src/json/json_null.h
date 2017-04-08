@@ -11,7 +11,7 @@ namespace format
   #endif
 
   /**
-   * @brief The Null class
+   * @brief The null class
    */
   class null : public leaf
   {
@@ -22,11 +22,11 @@ namespace format
     #endif
 
     public:
-
     /**
      * @brief null
      */
-    null (): leaf ()
+    null ()
+      : leaf ()
     {}
 
     /**
@@ -84,14 +84,6 @@ namespace format
     { return _assign (n); }
 
     /**
-     * @brief strValue
-     * @return
-     */
-    virtual const wchar_t *
-    _to_str (wchar_t *) const noexcept override
-    { return L"null"; }
-
-    /**
      * @brief strLength
      * @return
      */
@@ -132,6 +124,14 @@ namespace format
     virtual value *
     _clone (const value &) override
     { return this; }
+
+    /**
+     * @brief strValue
+     * @return
+     */
+    virtual const wchar_t *
+    _to_string (wchar_t *) const noexcept override
+    { return L"null"; }
   };  // Class null
 
   inline

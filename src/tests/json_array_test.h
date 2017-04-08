@@ -372,7 +372,7 @@ namespace format
 
               (void) a._parse ((*it).input);
 
-              const wchar_t *output = a._to_str (a._parent ? p._str_value[OFFSET] : 0);
+              const wchar_t *output = a._to_string (a._parent ? p._str_value[OFFSET] : 0);
 
               if (a._parent == 0)
                 {

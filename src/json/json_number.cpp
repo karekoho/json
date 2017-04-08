@@ -205,16 +205,16 @@ size_t
 format::number::str_length () const noexcept
 {
  (void) get ();
- _to_string ();
+ __to_string ();
 
   return _double_str.length ();
 }
 
 const wchar_t *
-format::number::_to_str (wchar_t *) const
+format::number::_to_string (wchar_t *) const
 {
   (void) get ();
-  _to_string ();
+  __to_string ();
 
   return _double_str.c_str ();
 }

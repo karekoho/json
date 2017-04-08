@@ -83,13 +83,6 @@ namespace format
     str_length () const noexcept override
     { return _charc == 0 || *_startp == _sc::double_quote ? _charc : _charc + 2; }
 
-    /**
-     * @brief strValue
-     * @return
-     */
-    virtual const wchar_t *
-    _to_str (wchar_t * = 0) const override;
-
   protected:
     /**
      * @brief _startp
@@ -148,6 +141,13 @@ namespace format
      */
     value &
     _assign (const string & nv);
+
+    /**
+     * @brief strValue
+     * @return
+     */
+    virtual const wchar_t *
+    _to_string (wchar_t * = 0) const override;
 
   private:
     /**

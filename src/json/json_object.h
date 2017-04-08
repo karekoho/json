@@ -96,15 +96,6 @@ namespace format
     str_length () const noexcept override;
 
     /**
-     * @brief str_value
-     * @param offset
-     * @return
-     */
-    virtual const wchar_t *
-    _to_str (wchar_t *offset = 0) const override;
-
-
-    /**
      * @brief The iterator class
      */
     class iterator : public value::iterator<member_list::iterator,
@@ -254,6 +245,14 @@ namespace format
      */
     virtual value &
     _erase (const value &v) noexcept override;
+
+    /**
+     * @brief _to_str
+     * @param offset
+     * @return
+     */
+    virtual const wchar_t *
+    _to_string (wchar_t *offset = 0) const override;
   }; // Class object
 
   inline

@@ -138,24 +138,13 @@ namespace format
     str_length () const noexcept override
     { return __hasRoot () ? __root->str_length () : 0; }
 
-    /**
-     * @brief strValue
-     * @return
-     */
-    virtual const wchar_t *
-    _to_str (wchar_t *offset = 0) const override
-    { return __hasRoot () ? __call_str_value (__root, offset) : L""; }
-
-    /**
-     * @brief erase
-     * @param v
-     * @return
-     */
-    virtual value &
-    _erase (const value &v) noexcept override
-    { return __hasRoot () ? /*__root->erase (v)*/ __call__erase (__root, v) : *this; }
 
   protected:
+    /**
+     * @brief _str_value
+     */
+    mutable wchar_t *_str_value[2];
+
     /**
      * @brief json
      * @param parent
@@ -224,6 +213,23 @@ namespace format
     { return this; }
 
     /**
+     * @brief strValue
+     * @return
+     */
+    virtual const wchar_t *
+    _to_string (wchar_t *offset = 0) const override
+    { return __hasRoot () ? __call_str_value (__root, offset) : L""; }
+
+    /**
+     * @brief erase
+     * @param v
+     * @return
+     */
+    virtual value &
+    _erase (const value &v) noexcept override
+    { return __hasRoot () ? /*__root->erase (v)*/ __call__erase (__root, v) : *this; }
+
+    /**
      * @brief _call_reviver
      * @param v
      * @param key
@@ -232,11 +238,6 @@ namespace format
      */
     value *
     _call_reviver (value *v, const wchar_t *key, size_t index = 0) const;
-
-    /**
-     * @brief _str_value
-     */
-    mutable wchar_t *_str_value[2];
 
   private:
     /**

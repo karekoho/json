@@ -100,13 +100,6 @@ namespace format
     virtual size_t
     str_length () const noexcept override;
 
-    /**
-     * @brief strValue
-     * @return
-     */
-    virtual const wchar_t *
-    _to_str (wchar_t * = 0) const override;
-
   protected:
     /**
      * @brief _value
@@ -211,16 +204,11 @@ namespace format
     _clear ();
 
     /**
-     * @brief _to_string
+     * @brief strValue
+     * @return
      */
-    inline void
-    _to_string () const noexcept
-    {
-      if (_double_str.empty ())
-        _double_str = _is_double
-            ? std::to_wstring (_double_value)
-            : std::to_wstring ((long) _double_value);
-    }
+    virtual const wchar_t *
+    _to_string (wchar_t * = 0) const override;
 
     /**
      * @brief _clone
@@ -228,6 +216,19 @@ namespace format
      */
     virtual value *
     _clone (const value &other);
+
+  private:
+    /**
+     * @brief _to_string
+     */
+    inline void
+    __to_string () const noexcept
+    {
+      if (_double_str.empty ())
+        _double_str = _is_double
+            ? std::to_wstring (_double_value)
+            : std::to_wstring ((long) _double_value);
+    }
   }; // Class boolean
 
   inline number *

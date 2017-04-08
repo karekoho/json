@@ -1,0 +1,973 @@
+\hypertarget{classformat_1_1value}{}\section{format\+:\+:value Class Reference}
+\label{classformat_1_1value}\index{format\+::value@{format\+::value}}
+
+
+Inheritance diagram for format\+:\+:value\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classformat_1_1value__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for format\+:\+:value\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=183pt]{classformat_1_1value__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classformat_1_1value_1_1iterator}{iterator}
+\begin{DoxyCompactList}\small\item\em The iterator class. \end{DoxyCompactList}\item 
+struct {\bfseries literal\+\_\+value}
+\begin{DoxyCompactList}\small\item\em \+\_\+literal\+\_\+value \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classformat_1_1value_aa0334be06389a7b14af485fa0cd3aa21}{value\+\_\+t} \{ \\*
+{\bfseries no\+\_\+value\+\_\+t} = 0, 
+{\bfseries undefined\+\_\+t}, 
+{\bfseries object\+\_\+t}, 
+{\bfseries array\+\_\+t}, 
+\\*
+{\bfseries string\+\_\+t}, 
+{\bfseries number\+\_\+t}, 
+{\bfseries boolean\+\_\+t}, 
+{\bfseries null\+\_\+t}
+ \}\hypertarget{classformat_1_1value_aa0334be06389a7b14af485fa0cd3aa21}{}\label{classformat_1_1value_aa0334be06389a7b14af485fa0cd3aa21}
+\begin{DoxyCompactList}\small\item\em The otype enum. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classformat_1_1value_aa6b85823936bf7b8ab78d3f8d443c00d}{value} ()\hypertarget{classformat_1_1value_aa6b85823936bf7b8ab78d3f8d443c00d}{}\label{classformat_1_1value_aa6b85823936bf7b8ab78d3f8d443c00d}
+
+\begin{DoxyCompactList}\small\item\em Value. \end{DoxyCompactList}\item 
+\hyperlink{classformat_1_1value_a3c21663a87408a066b93bc41a099f1d8}{value} (const wchar\+\_\+t $\ast$)
+\begin{DoxyCompactList}\small\item\em json\+\_\+value \end{DoxyCompactList}\item 
+\hyperlink{classformat_1_1value_a6519ed65370e658a185a0a0db0152554}{value} (const \hyperlink{classformat_1_1value}{value} \&other)
+\begin{DoxyCompactList}\small\item\em value \end{DoxyCompactList}\item 
+virtual \hyperlink{classformat_1_1value}{value} $\ast$ \hyperlink{classformat_1_1value_a8756eb79e41851859d83ae46069dc400}{clone} () const =0
+\begin{DoxyCompactList}\small\item\em clone Call object copy constructor when derived type in not known \end{DoxyCompactList}\item 
+virtual \hyperlink{classformat_1_1value_a909766075c9375317ef5e842741f666d}{$\sim$value} ()\hypertarget{classformat_1_1value_a909766075c9375317ef5e842741f666d}{}\label{classformat_1_1value_a909766075c9375317ef5e842741f666d}
+
+\begin{DoxyCompactList}\small\item\em $\sim$\+Value \end{DoxyCompactList}\item 
+\hyperlink{classformat_1_1value}{value} \& \hyperlink{classformat_1_1value_a59a729393bc6137e6782ea96f89bf18a}{operator\mbox{[}$\,$\mbox{]}} (const wchar\+\_\+t $\ast$\hyperlink{classformat_1_1value_ad4865e7984fc9f3b5ce7c17fd7ac740c}{key})
+\begin{DoxyCompactList}\small\item\em operator \mbox{[}\mbox{]} \end{DoxyCompactList}\item 
+\hyperlink{classformat_1_1value}{value} \& \hyperlink{classformat_1_1value_a68e009d6421f7a127978e9b48adcf200}{operator\mbox{[}$\,$\mbox{]}} (size\+\_\+t \hyperlink{classformat_1_1value_aaa429b28cc0edf5a3589b89a1820ad62}{index})
+\begin{DoxyCompactList}\small\item\em operator \mbox{[}\mbox{]} \end{DoxyCompactList}\item 
+\hyperlink{classformat_1_1value}{value} \& \hyperlink{classformat_1_1value_aae4cf62ca68a4df00a31a66c1c576c3e}{operator=} (\hyperlink{classformat_1_1value}{value} $\ast$v)
+\begin{DoxyCompactList}\small\item\em operator = \end{DoxyCompactList}\item 
+\hyperlink{classformat_1_1value}{value} \& \hyperlink{classformat_1_1value_a711e2949ae310096a9e429c52574fffc}{operator=} (const \hyperlink{classformat_1_1value}{value} \&v)
+\begin{DoxyCompactList}\small\item\em operator = \end{DoxyCompactList}\item 
+\hyperlink{classformat_1_1value}{value} \& \hyperlink{classformat_1_1value_a126201c87fd63a093fecc2e16735ac52}{operator=} (const undefined \&u)
+\begin{DoxyCompactList}\small\item\em operator = \end{DoxyCompactList}\item 
+\hyperlink{classformat_1_1value}{value} \& \hyperlink{classformat_1_1value_a0a17ba9f3d99be0c1d86d91adac0bb60}{operator=} (const wchar\+\_\+t $\ast$json\+\_\+text)
+\begin{DoxyCompactList}\small\item\em operator = \end{DoxyCompactList}\item 
+\hyperlink{classformat_1_1value}{value} \& \hyperlink{classformat_1_1value_a1636e6762c97584eb15b85b6a6422055}{operator=} (double d)
+\begin{DoxyCompactList}\small\item\em operator = \end{DoxyCompactList}\item 
+\hyperlink{classformat_1_1value}{value} \& \hyperlink{classformat_1_1value_a017ba8a51e1005652ab3113c6b0951ec}{operator=} (bool b)
+\begin{DoxyCompactList}\small\item\em operator = \end{DoxyCompactList}\item 
+\hyperlink{classformat_1_1value}{value} \& \hyperlink{classformat_1_1value_a0c62128d9917513e97068a267b4543ca}{operator=} (std\+::nullptr\+\_\+t)
+\begin{DoxyCompactList}\small\item\em operator = \end{DoxyCompactList}\item 
+virtual \hyperlink{classformat_1_1value_aa0334be06389a7b14af485fa0cd3aa21}{value\+\_\+t} \hyperlink{classformat_1_1value_a7112d0f83cf61aa9e1cdde90fc444996}{type} () const noexcept=0
+\begin{DoxyCompactList}\small\item\em type \end{DoxyCompactList}\item 
+bool \hyperlink{classformat_1_1value_a3bd4d42103322d1c6940e04554405a8e}{operator==} (\hyperlink{classformat_1_1value_aa0334be06389a7b14af485fa0cd3aa21}{value\+\_\+t} t) const noexcept
+\begin{DoxyCompactList}\small\item\em operator == \end{DoxyCompactList}\item 
+bool \hyperlink{classformat_1_1value_ad18cb4b5aef50630f5fab8a6d52816b7}{operator==} (const \hyperlink{classformat_1_1value}{value} \&v) const noexcept
+\begin{DoxyCompactList}\small\item\em operator == \end{DoxyCompactList}\item 
+virtual size\+\_\+t \hyperlink{classformat_1_1value_a406a9553c4d83a0613aa54d77f6c462d}{length} () const noexcept=0
+\begin{DoxyCompactList}\small\item\em count \end{DoxyCompactList}\item 
+const wchar\+\_\+t $\ast$ \hyperlink{classformat_1_1value_ad4865e7984fc9f3b5ce7c17fd7ac740c}{key} () const noexcept
+\begin{DoxyCompactList}\small\item\em key \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{classformat_1_1value_aaa429b28cc0edf5a3589b89a1820ad62}{index} () const noexcept
+\begin{DoxyCompactList}\small\item\em index \end{DoxyCompactList}\item 
+const wchar\+\_\+t $\ast$ \hyperlink{classformat_1_1value_a7fb73377471f5ed99695846340130348}{stringify} () noexcept
+\begin{DoxyCompactList}\small\item\em stringify \end{DoxyCompactList}\item 
+virtual size\+\_\+t \hyperlink{classformat_1_1value_a399280e27e629db0582b5781b90ca58b}{str\+\_\+length} () const noexcept=0
+\begin{DoxyCompactList}\small\item\em str\+\_\+length \end{DoxyCompactList}\item 
+const wchar\+\_\+t $\ast$ \hyperlink{classformat_1_1value_af89058b38ae886a02713b5a556f7fe17}{get} () const 
+\begin{DoxyCompactList}\small\item\em value \end{DoxyCompactList}\item 
+json $\ast$ \hyperlink{classformat_1_1value_a86c03ec8810bfd0d60ec49095120040d}{parent} () const 
+\begin{DoxyCompactList}\small\item\em parent \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classformat_1_1value_a048b1ae29385f7eb708899eebddd1e59}{\+\_\+sc} \{ \\*
+{\bfseries begin\+\_\+object} = \textquotesingle{}\{\textquotesingle{}, 
+{\bfseries end\+\_\+object} = \textquotesingle{}\}\textquotesingle{}, 
+{\bfseries begin\+\_\+array} = \textquotesingle{}\mbox{[}\textquotesingle{}, 
+{\bfseries end\+\_\+array} = \textquotesingle{}\mbox{]}\textquotesingle{}, 
+\\*
+{\bfseries name\+\_\+separator} = \textquotesingle{}\+:\textquotesingle{}, 
+{\bfseries value\+\_\+separator} = \textquotesingle{},\textquotesingle{}, 
+{\bfseries double\+\_\+quote} = 34
+ \}\hypertarget{classformat_1_1value_a048b1ae29385f7eb708899eebddd1e59}{}\label{classformat_1_1value_a048b1ae29385f7eb708899eebddd1e59}
+\begin{DoxyCompactList}\small\item\em The \+\_\+sc enum Structural characters. \end{DoxyCompactList}
+\item 
+enum \hyperlink{classformat_1_1value_a6720d6d39ff203499cfd97747487320b}{\+\_\+ws} \{ {\bfseries tab} = 9, 
+{\bfseries lf} = 10, 
+{\bfseries cr} = 13, 
+{\bfseries space} = 32
+ \}\hypertarget{classformat_1_1value_a6720d6d39ff203499cfd97747487320b}{}\label{classformat_1_1value_a6720d6d39ff203499cfd97747487320b}
+\begin{DoxyCompactList}\small\item\em The \+\_\+ws enum White space characters. \end{DoxyCompactList}
+\item 
+enum \hyperlink{classformat_1_1value_a953390030c22a816b7c9b2b54d4992a8}{\+\_\+literal} \{ {\bfseries no\+\_\+literal} = 0, 
+{\bfseries true\+\_\+value} = 1, 
+{\bfseries false\+\_\+value} = 2, 
+{\bfseries null\+\_\+value} = 3
+ \}\hypertarget{classformat_1_1value_a953390030c22a816b7c9b2b54d4992a8}{}\label{classformat_1_1value_a953390030c22a816b7c9b2b54d4992a8}
+\begin{DoxyCompactList}\small\item\em The literal enum. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual const wchar\+\_\+t $\ast$ \hyperlink{classformat_1_1value_a7859b1aa48f667a83e091f0eba22d4a1}{\+\_\+parse} (const wchar\+\_\+t $\ast$json)=0
+\begin{DoxyCompactList}\small\item\em \+\_\+parse \end{DoxyCompactList}\item 
+\hyperlink{classformat_1_1value}{value} \& \hyperlink{classformat_1_1value_ab791aabbee3a4a415a62910c150b0a82}{\+\_\+assign} (\hyperlink{classformat_1_1value}{value} $\ast$nv)
+\begin{DoxyCompactList}\small\item\em \+\_\+assign \end{DoxyCompactList}\item 
+\hyperlink{classformat_1_1value}{value} \& \hyperlink{classformat_1_1value_a0e07a062f2925491a1a148cc77ae2e86}{\+\_\+assign} (const \hyperlink{classformat_1_1value}{value} \&nv)
+\begin{DoxyCompactList}\small\item\em assign \end{DoxyCompactList}\item 
+virtual \hyperlink{classformat_1_1value}{value} \& \hyperlink{classformat_1_1value_a2432012e597ef7a5c853c184c77f8310}{\+\_\+assign} (\hyperlink{classformat_1_1value}{value} $\ast$, \hyperlink{classformat_1_1value}{value} $\ast$)=0
+\begin{DoxyCompactList}\small\item\em \+\_\+assign \end{DoxyCompactList}\item 
+\hyperlink{classformat_1_1value}{value} \& \hyperlink{classformat_1_1value_adf5e3905bcb7b8616981831de01e3555}{\+\_\+assign} (const undefined \&) noexcept
+\begin{DoxyCompactList}\small\item\em \+\_\+assign \end{DoxyCompactList}\item 
+void \hyperlink{classformat_1_1value_a473256bcee74e255df322920d250aac0}{\+\_\+set\+\_\+key} (const wchar\+\_\+t $\ast$\hyperlink{classformat_1_1value_ad4865e7984fc9f3b5ce7c17fd7ac740c}{key}, size\+\_\+t charc) noexcept
+\begin{DoxyCompactList}\small\item\em \+\_\+set\+\_\+key \end{DoxyCompactList}\item 
+void \hyperlink{classformat_1_1value_a6b16897991f5e9166924d644b213dad6}{\+\_\+set\+\_\+index} (const size\+\_\+t \&\hyperlink{classformat_1_1value_aaa429b28cc0edf5a3589b89a1820ad62}{index}) noexcept
+\begin{DoxyCompactList}\small\item\em \+\_\+set\+\_\+index \end{DoxyCompactList}\item 
+void \hyperlink{classformat_1_1value_a1be7f20ce6fd552089771422dc28b695}{\+\_\+set\+\_\+parent} (json $\ast$\hyperlink{classformat_1_1value_a86c03ec8810bfd0d60ec49095120040d}{parent}) noexcept
+\begin{DoxyCompactList}\small\item\em set\+Parent \end{DoxyCompactList}\item 
+\hyperlink{classformat_1_1value_a2d4230f4fa939f6f5c451dbebc7fffba}{value} (json $\ast$\hyperlink{classformat_1_1value_a86c03ec8810bfd0d60ec49095120040d}{parent})
+\begin{DoxyCompactList}\small\item\em value \end{DoxyCompactList}\item 
+virtual const wchar\+\_\+t $\ast$ \hyperlink{classformat_1_1value_a94ed31f07b19866495297472accd33a8}{\+\_\+to\+\_\+string} (wchar\+\_\+t $\ast$offset=0) const =0
+\begin{DoxyCompactList}\small\item\em str\+\_\+value \end{DoxyCompactList}\item 
+virtual \hyperlink{classformat_1_1value}{value} $\ast$ \hyperlink{classformat_1_1value_a5d0a94cbdaf98d5420c5d55bd4345663}{\+\_\+clone} (const \hyperlink{classformat_1_1value}{value} \&other)=0
+\begin{DoxyCompactList}\small\item\em \+\_\+clone Called by copy constructor \end{DoxyCompactList}\item 
+const wchar\+\_\+t $\ast$ \hyperlink{classformat_1_1value_aea0aec2d465431ca45d20ff0a18f6ea6}{\+\_\+look\+\_\+ahead} () noexcept\hypertarget{classformat_1_1value_aea0aec2d465431ca45d20ff0a18f6ea6}{}\label{classformat_1_1value_aea0aec2d465431ca45d20ff0a18f6ea6}
+
+\begin{DoxyCompactList}\small\item\em \+\_\+look\+\_\+ahead Move read pointer to next non-\/white space character \end{DoxyCompactList}\item 
+long int \hyperlink{classformat_1_1value_aab0e0227afa4e70d382608b4d75a9140}{\+\_\+string} (wchar\+\_\+t \&endc) const noexcept
+\begin{DoxyCompactList}\small\item\em \+\_\+string Read in string. If no opening quote, return 0. If no closing quote or unescaped unicode control character (0-\/31) met, return number characters read as a negative value. For example \char`\"{}\textbackslash{}\char`\"{}xx"\char`\"{} = -\/3
+\+Else return number of characters read + 2 (quotes). For example \char`\"{}"xxx"" = 5 \end{DoxyCompactList}\item 
+\hyperlink{classformat_1_1value_a953390030c22a816b7c9b2b54d4992a8}{value\+::\+\_\+literal} \hyperlink{classformat_1_1value_ada2428d6e7f55e46096912fdec16a17d}{\+\_\+is\+\_\+literal} (const int \+\_\+try=0) const noexcept
+\begin{DoxyCompactList}\small\item\em \+\_\+is\+\_\+literal Detect if \+\_\+readp points to \char`\"{}true\char`\"{}, \char`\"{}false\char`\"{} or \char`\"{}null\char`\"{}. \end{DoxyCompactList}\item 
+virtual \hyperlink{classformat_1_1value}{value} \& \hyperlink{classformat_1_1value_a3f67662acb201f2ab8a768f8cb670678}{\+\_\+at} (const wchar\+\_\+t $\ast$\hyperlink{classformat_1_1value_ad4865e7984fc9f3b5ce7c17fd7ac740c}{key})=0
+\begin{DoxyCompactList}\small\item\em \+\_\+at json\+::object behavior\+: if key does not exist, assign key with value of type undefined. \end{DoxyCompactList}\item 
+virtual \hyperlink{classformat_1_1value}{value} \& \hyperlink{classformat_1_1value_ab94a7f0af8ea5c60fd0e59ccde8d0371}{\+\_\+at} (size\+\_\+t \hyperlink{classformat_1_1value_aaa429b28cc0edf5a3589b89a1820ad62}{index})=0
+\begin{DoxyCompactList}\small\item\em \+\_\+at \end{DoxyCompactList}\item 
+virtual void \hyperlink{classformat_1_1value_a9924ec6809a88b2fc59b1be7a4835127}{\+\_\+clear} ()=0\hypertarget{classformat_1_1value_a9924ec6809a88b2fc59b1be7a4835127}{}\label{classformat_1_1value_a9924ec6809a88b2fc59b1be7a4835127}
+
+\begin{DoxyCompactList}\small\item\em \+\_\+clear \end{DoxyCompactList}\item 
+virtual \hyperlink{classformat_1_1value}{value} \& \hyperlink{classformat_1_1value_a75537c78ab53ac7657eea750b94259b3}{\+\_\+erase} (const \hyperlink{classformat_1_1value}{value} \&v) noexcept=0
+\begin{DoxyCompactList}\small\item\em \+\_\+erase \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static wchar\+\_\+t $\ast$ \hyperlink{classformat_1_1value_a5d029f82ccef1f9df32f617baf32e41d}{\+\_\+str\+\_\+append} (wchar\+\_\+t $\ast$dst, const wchar\+\_\+t $\ast$src, size\+\_\+t charc) noexcept
+\begin{DoxyCompactList}\small\item\em \+\_\+str\+\_\+append Copy src to dst. Move dst right after the last copied character. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const wchar\+\_\+t $\ast$ \hyperlink{classformat_1_1value_a1bbc05a0a601228e7282dc748cbe3d01}{\+\_\+readp}\hypertarget{classformat_1_1value_a1bbc05a0a601228e7282dc748cbe3d01}{}\label{classformat_1_1value_a1bbc05a0a601228e7282dc748cbe3d01}
+
+\begin{DoxyCompactList}\small\item\em \+\_\+readp \end{DoxyCompactList}\item 
+json $\ast$ \hyperlink{classformat_1_1value_a933c180828081a6b7582fca1b268b389}{\+\_\+parent}\hypertarget{classformat_1_1value_a933c180828081a6b7582fca1b268b389}{}\label{classformat_1_1value_a933c180828081a6b7582fca1b268b389}
+
+\begin{DoxyCompactList}\small\item\em \+\_\+parent \end{DoxyCompactList}\item 
+const wchar\+\_\+t $\ast$ \hyperlink{classformat_1_1value_af4f315a1f5b893f57b533117102938dd}{\+\_\+key}\hypertarget{classformat_1_1value_af4f315a1f5b893f57b533117102938dd}{}\label{classformat_1_1value_af4f315a1f5b893f57b533117102938dd}
+
+\begin{DoxyCompactList}\small\item\em \+\_\+key \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{classformat_1_1value_af86a1855af003b54881a284a99463f37}{\+\_\+index}\hypertarget{classformat_1_1value_af86a1855af003b54881a284a99463f37}{}\label{classformat_1_1value_af86a1855af003b54881a284a99463f37}
+
+\begin{DoxyCompactList}\small\item\em \+\_\+index \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const struct format\+::value\+::literal\+\_\+value {\bfseries \+\_\+\+\_\+ltr\+\_\+value} \mbox{[}3\mbox{]}\hypertarget{classformat_1_1value_afb89a1ddf5bf430f6fe26adc263abe2d}{}\label{classformat_1_1value_afb89a1ddf5bf430f6fe26adc263abe2d}
+
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+const wchar\+\_\+t $\ast$ {\bfseries \+\_\+\+\_\+call\+\_\+\+\_\+parse} (\hyperlink{classformat_1_1value}{value} $\ast$, const wchar\+\_\+t $\ast$)\hypertarget{classformat_1_1value_a91e0ce1b19bc26c2887f0321e7c5c2e8}{}\label{classformat_1_1value_a91e0ce1b19bc26c2887f0321e7c5c2e8}
+
+\item 
+void {\bfseries \+\_\+\+\_\+call\+\_\+\+\_\+set\+\_\+key} (\hyperlink{classformat_1_1value}{value} $\ast$, const wchar\+\_\+t $\ast$, size\+\_\+t)\hypertarget{classformat_1_1value_a1891a795b58e455d457f20cc5b36705f}{}\label{classformat_1_1value_a1891a795b58e455d457f20cc5b36705f}
+
+\item 
+void {\bfseries \+\_\+\+\_\+call\+\_\+\+\_\+set\+\_\+index} (\hyperlink{classformat_1_1value}{value} $\ast$, const size\+\_\+t \&)\hypertarget{classformat_1_1value_a0a25629ae14bd56c2583fe7b7a2e9397}{}\label{classformat_1_1value_a0a25629ae14bd56c2583fe7b7a2e9397}
+
+\item 
+void {\bfseries \+\_\+\+\_\+call\+\_\+\+\_\+set\+\_\+parent} (\hyperlink{classformat_1_1value}{value} $\ast$, json $\ast$)\hypertarget{classformat_1_1value_a43fc53d952c0f7fa94f2926bbc7700f2}{}\label{classformat_1_1value_a43fc53d952c0f7fa94f2926bbc7700f2}
+
+\item 
+const wchar\+\_\+t $\ast$ {\bfseries \+\_\+\+\_\+call\+\_\+str\+\_\+value} (\hyperlink{classformat_1_1value}{value} $\ast$, wchar\+\_\+t $\ast$)\hypertarget{classformat_1_1value_a7c14f855473e8ae2783404baaeb77ef3}{}\label{classformat_1_1value_a7c14f855473e8ae2783404baaeb77ef3}
+
+\item 
+\hyperlink{classformat_1_1value}{value} \& {\bfseries \+\_\+\+\_\+call\+\_\+\+\_\+erase} (\hyperlink{classformat_1_1value}{value} $\ast$, const \hyperlink{classformat_1_1value}{value} \&)\hypertarget{classformat_1_1value_adeaa91cfb33848f060cc7ebccd228ecb}{}\label{classformat_1_1value_adeaa91cfb33848f060cc7ebccd228ecb}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{format\+::value@{format\+::value}!value@{value}}
+\index{value@{value}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{value(const wchar\+\_\+t $\ast$)}{value(const wchar_t *)}}]{\setlength{\rightskip}{0pt plus 5cm}format\+::value\+::value (
+\begin{DoxyParamCaption}
+\item[{const wchar\+\_\+t $\ast$}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{classformat_1_1value_a3c21663a87408a066b93bc41a099f1d8}{}\label{classformat_1_1value_a3c21663a87408a066b93bc41a099f1d8}
+
+
+json\+\_\+value 
+
+
+\begin{DoxyParams}{Parameters}
+{\em json} & \\
+\hline
+\end{DoxyParams}
+\index{format\+::value@{format\+::value}!value@{value}}
+\index{value@{value}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{value(const value \&other)}{value(const value &other)}}]{\setlength{\rightskip}{0pt plus 5cm}format\+::value\+::value (
+\begin{DoxyParamCaption}
+\item[{const {\bf value} \&}]{other}
+\end{DoxyParamCaption}
+)}\hypertarget{classformat_1_1value_a6519ed65370e658a185a0a0db0152554}{}\label{classformat_1_1value_a6519ed65370e658a185a0a0db0152554}
+
+
+value 
+
+
+\begin{DoxyParams}{Parameters}
+{\em d} & value \\
+\hline
+{\em b} & value \\
+\hline
+{\em Value} & \\
+\hline
+{\em other} & \\
+\hline
+\end{DoxyParams}
+\index{format\+::value@{format\+::value}!value@{value}}
+\index{value@{value}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{value(json $\ast$parent)}{value(json *parent)}}]{\setlength{\rightskip}{0pt plus 5cm}format\+::value\+::value (
+\begin{DoxyParamCaption}
+\item[{json $\ast$}]{parent}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classformat_1_1value_a2d4230f4fa939f6f5c451dbebc7fffba}{}\label{classformat_1_1value_a2d4230f4fa939f6f5c451dbebc7fffba}
+
+
+value 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\index{format\+::value@{format\+::value}!\+\_\+assign@{\+\_\+assign}}
+\index{\+\_\+assign@{\+\_\+assign}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{\+\_\+assign(value $\ast$nv)}{_assign(value *nv)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf format\+::value} \& format\+::value\+::\+\_\+assign (
+\begin{DoxyParamCaption}
+\item[{{\bf value} $\ast$}]{nv}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classformat_1_1value_ab791aabbee3a4a415a62910c150b0a82}{}\label{classformat_1_1value_ab791aabbee3a4a415a62910c150b0a82}
+
+
+\+\_\+assign 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nv} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!\+\_\+assign@{\+\_\+assign}}
+\index{\+\_\+assign@{\+\_\+assign}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{\+\_\+assign(const value \&nv)}{_assign(const value &nv)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf format\+::value} \& format\+::value\+::\+\_\+assign (
+\begin{DoxyParamCaption}
+\item[{const {\bf value} \&}]{nv}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classformat_1_1value_a0e07a062f2925491a1a148cc77ae2e86}{}\label{classformat_1_1value_a0e07a062f2925491a1a148cc77ae2e86}
+
+
+assign 
+
+If value has parent object, assign to new value to this-\/$>$\+\_\+parent-\/$>$\mbox{[}key\mbox{]}, otherwise assign new value to Value object itself.
+
+
+\begin{DoxyParams}{Parameters}
+{\em nv} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!\+\_\+assign@{\+\_\+assign}}
+\index{\+\_\+assign@{\+\_\+assign}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{\+\_\+assign(value $\ast$, value $\ast$)=0}{_assign(value *, value *)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf value}\& format\+::value\+::\+\_\+assign (
+\begin{DoxyParamCaption}
+\item[{{\bf value} $\ast$}]{, }
+\item[{{\bf value} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}\hypertarget{classformat_1_1value_a2432012e597ef7a5c853c184c77f8310}{}\label{classformat_1_1value_a2432012e597ef7a5c853c184c77f8310}
+
+
+\+\_\+assign 
+
+Assign Value object to member\+\_\+list or element\+\_\+list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Old} & value \\
+\hline
+{\em New} & value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!\+\_\+assign@{\+\_\+assign}}
+\index{\+\_\+assign@{\+\_\+assign}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{\+\_\+assign(const undefined \&) noexcept}{_assign(const undefined &) noexcept}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf format\+::value} \& format\+::value\+::\+\_\+assign (
+\begin{DoxyParamCaption}
+\item[{const undefined \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [noexcept]}}\hypertarget{classformat_1_1value_adf5e3905bcb7b8616981831de01e3555}{}\label{classformat_1_1value_adf5e3905bcb7b8616981831de01e3555}
+
+
+\+\_\+assign 
+
+If value has parent object, remove value from it\textquotesingle{}s parent, otherwise do nothing.
+
+
+\begin{DoxyParams}{Parameters}
+{\em u} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!\+\_\+at@{\+\_\+at}}
+\index{\+\_\+at@{\+\_\+at}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{\+\_\+at(const wchar\+\_\+t $\ast$key)=0}{_at(const wchar_t *key)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf value}\& format\+::value\+::\+\_\+at (
+\begin{DoxyParamCaption}
+\item[{const wchar\+\_\+t $\ast$}]{key}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}\hypertarget{classformat_1_1value_a3f67662acb201f2ab8a768f8cb670678}{}\label{classformat_1_1value_a3f67662acb201f2ab8a768f8cb670678}
+
+
+\+\_\+at json\+::object behavior\+: if key does not exist, assign key with value of type undefined. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classformat_1_1object_a91e3027c7786c2e24ca3e001f648542d}{format\+::object}, \hyperlink{classformat_1_1array_a6e6822294f55273f657732d048aa38f8}{format\+::array}, \hyperlink{classformat_1_1json_afcb78dfb597d7d609c66a4d5b6575082}{format\+::json}, and \hyperlink{classformat_1_1leaf_aa92aad1668dce02132ca0920b8803f1f}{format\+::leaf}.
+
+\index{format\+::value@{format\+::value}!\+\_\+at@{\+\_\+at}}
+\index{\+\_\+at@{\+\_\+at}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{\+\_\+at(size\+\_\+t index)=0}{_at(size_t index)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf value}\& format\+::value\+::\+\_\+at (
+\begin{DoxyParamCaption}
+\item[{size\+\_\+t}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}\hypertarget{classformat_1_1value_ab94a7f0af8ea5c60fd0e59ccde8d0371}{}\label{classformat_1_1value_ab94a7f0af8ea5c60fd0e59ccde8d0371}
+
+
+\+\_\+at 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classformat_1_1object_a525bdfa2db22cd6bc21a868a695fe752}{format\+::object}, \hyperlink{classformat_1_1array_a386fd4c0f2556459186db7f22df4128e}{format\+::array}, \hyperlink{classformat_1_1json_a4a3924d5a112cda2bcee45ddf92a3d52}{format\+::json}, and \hyperlink{classformat_1_1leaf_a629bf52297b80f099b6477ff88761a2b}{format\+::leaf}.
+
+\index{format\+::value@{format\+::value}!\+\_\+clone@{\+\_\+clone}}
+\index{\+\_\+clone@{\+\_\+clone}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{\+\_\+clone(const value \&other)=0}{_clone(const value &other)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf value}$\ast$ format\+::value\+::\+\_\+clone (
+\begin{DoxyParamCaption}
+\item[{const {\bf value} \&}]{other}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}\hypertarget{classformat_1_1value_a5d0a94cbdaf98d5420c5d55bd4345663}{}\label{classformat_1_1value_a5d0a94cbdaf98d5420c5d55bd4345663}
+
+
+\+\_\+clone Called by copy constructor 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!\+\_\+erase@{\+\_\+erase}}
+\index{\+\_\+erase@{\+\_\+erase}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{\+\_\+erase(const value \&v) noexcept=0}{_erase(const value &v) noexcept=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf value}\& format\+::value\+::\+\_\+erase (
+\begin{DoxyParamCaption}
+\item[{const {\bf value} \&}]{v}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}, {\ttfamily [noexcept]}}\hypertarget{classformat_1_1value_a75537c78ab53ac7657eea750b94259b3}{}\label{classformat_1_1value_a75537c78ab53ac7657eea750b94259b3}
+
+
+\+\_\+erase 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!\+\_\+is\+\_\+literal@{\+\_\+is\+\_\+literal}}
+\index{\+\_\+is\+\_\+literal@{\+\_\+is\+\_\+literal}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{\+\_\+is\+\_\+literal(const int \+\_\+try=0) const noexcept}{_is_literal(const int _try=0) const noexcept}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf format\+::value\+::\+\_\+literal} format\+::value\+::\+\_\+is\+\_\+literal (
+\begin{DoxyParamCaption}
+\item[{const int}]{\+\_\+try = {\ttfamily 0}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [noexcept]}}\hypertarget{classformat_1_1value_ada2428d6e7f55e46096912fdec16a17d}{}\label{classformat_1_1value_ada2428d6e7f55e46096912fdec16a17d}
+
+
+\+\_\+is\+\_\+literal Detect if \+\_\+readp points to \char`\"{}true\char`\"{}, \char`\"{}false\char`\"{} or \char`\"{}null\char`\"{}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em try\+\_\+} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!\+\_\+parse@{\+\_\+parse}}
+\index{\+\_\+parse@{\+\_\+parse}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{\+\_\+parse(const wchar\+\_\+t $\ast$json)=0}{_parse(const wchar_t *json)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual const wchar\+\_\+t$\ast$ format\+::value\+::\+\_\+parse (
+\begin{DoxyParamCaption}
+\item[{const wchar\+\_\+t $\ast$}]{json}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}\hypertarget{classformat_1_1value_a7859b1aa48f667a83e091f0eba22d4a1}{}\label{classformat_1_1value_a7859b1aa48f667a83e091f0eba22d4a1}
+
+
+\+\_\+parse 
+
+
+\begin{DoxyParams}{Parameters}
+{\em json} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\href{https://tools.ietf.org/html/rfc7159}{\tt https\+://tools.\+ietf.\+org/html/rfc7159} 
+
+\href{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse}{\tt https\+://developer.\+mozilla.\+org/en-\/\+U\+S/docs/\+Web/\+Java\+Script/\+Reference/\+Global\+\_\+\+Objects/\+J\+S\+O\+N/parse} 
+
+\href{http://www.ecma-international.org/ecma-262/5.1/#sec-15.12.2}{\tt http\+://www.\+ecma-\/international.\+org/ecma-\/262/5.\+1/\#sec-\/15.\+12.\+2} 
+
+\href{https://en.wikipedia.org/wiki/List_of_Unicode_characters}{\tt https\+://en.\+wikipedia.\+org/wiki/\+List\+\_\+of\+\_\+\+Unicode\+\_\+characters} 
+
+\href{http://en.cppreference.com/w/cpp/language/types}{\tt http\+://en.\+cppreference.\+com/w/cpp/language/types} 
+\end{DoxySeeAlso}
+
+
+Implemented in \hyperlink{classformat_1_1object_a6680c7e4b32da5a29d89f2289bb63ee1}{format\+::object}, \hyperlink{classformat_1_1array_a7bd1454afcf365128e2a5db112b2895f}{format\+::array}, \hyperlink{classformat_1_1json_ab316c1d4c585610a60d634605a4b871e}{format\+::json}, \hyperlink{classformat_1_1number_a4f6d13dea49376a8fdc9d7fabdca2ae8}{format\+::number}, \hyperlink{classformat_1_1boolean_a6c3d3fc4e0a046f2070c5513ce61b12b}{format\+::boolean}, \hyperlink{classformat_1_1string_a1a3b05c60c4cc387d4a37956f20a56f3}{format\+::string}, \hyperlink{classformat_1_1undefined_a407a10b3bfa670b2a8b1e3b8ef6cf698}{format\+::undefined}, and \hyperlink{classformat_1_1null_a7cb0c2e0582c244746f2dafb8712e19a}{format\+::null}.
+
+\index{format\+::value@{format\+::value}!\+\_\+set\+\_\+index@{\+\_\+set\+\_\+index}}
+\index{\+\_\+set\+\_\+index@{\+\_\+set\+\_\+index}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{\+\_\+set\+\_\+index(const size\+\_\+t \&index) noexcept}{_set_index(const size_t &index) noexcept}}]{\setlength{\rightskip}{0pt plus 5cm}void format\+::value\+::\+\_\+set\+\_\+index (
+\begin{DoxyParamCaption}
+\item[{const size\+\_\+t \&}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [noexcept]}}\hypertarget{classformat_1_1value_a6b16897991f5e9166924d644b213dad6}{}\label{classformat_1_1value_a6b16897991f5e9166924d644b213dad6}
+
+
+\+\_\+set\+\_\+index 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & \\
+\hline
+\end{DoxyParams}
+\index{format\+::value@{format\+::value}!\+\_\+set\+\_\+key@{\+\_\+set\+\_\+key}}
+\index{\+\_\+set\+\_\+key@{\+\_\+set\+\_\+key}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{\+\_\+set\+\_\+key(const wchar\+\_\+t $\ast$key, size\+\_\+t charc) noexcept}{_set_key(const wchar_t *key, size_t charc) noexcept}}]{\setlength{\rightskip}{0pt plus 5cm}void format\+::value\+::\+\_\+set\+\_\+key (
+\begin{DoxyParamCaption}
+\item[{const wchar\+\_\+t $\ast$}]{key, }
+\item[{size\+\_\+t}]{charc}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [noexcept]}}\hypertarget{classformat_1_1value_a473256bcee74e255df322920d250aac0}{}\label{classformat_1_1value_a473256bcee74e255df322920d250aac0}
+
+
+\+\_\+set\+\_\+key 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \\
+\hline
+{\em charc} & \\
+\hline
+\end{DoxyParams}
+\index{format\+::value@{format\+::value}!\+\_\+set\+\_\+parent@{\+\_\+set\+\_\+parent}}
+\index{\+\_\+set\+\_\+parent@{\+\_\+set\+\_\+parent}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{\+\_\+set\+\_\+parent(json $\ast$parent) noexcept}{_set_parent(json *parent) noexcept}}]{\setlength{\rightskip}{0pt plus 5cm}void format\+::value\+::\+\_\+set\+\_\+parent (
+\begin{DoxyParamCaption}
+\item[{json $\ast$}]{parent}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [noexcept]}}\hypertarget{classformat_1_1value_a1be7f20ce6fd552089771422dc28b695}{}\label{classformat_1_1value_a1be7f20ce6fd552089771422dc28b695}
+
+
+set\+Parent 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & \\
+\hline
+\end{DoxyParams}
+\index{format\+::value@{format\+::value}!\+\_\+str\+\_\+append@{\+\_\+str\+\_\+append}}
+\index{\+\_\+str\+\_\+append@{\+\_\+str\+\_\+append}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{\+\_\+str\+\_\+append(wchar\+\_\+t $\ast$dst, const wchar\+\_\+t $\ast$src, size\+\_\+t charc) noexcept}{_str_append(wchar_t *dst, const wchar_t *src, size_t charc) noexcept}}]{\setlength{\rightskip}{0pt plus 5cm}static wchar\+\_\+t$\ast$ format\+::value\+::\+\_\+str\+\_\+append (
+\begin{DoxyParamCaption}
+\item[{wchar\+\_\+t $\ast$}]{dst, }
+\item[{const wchar\+\_\+t $\ast$}]{src, }
+\item[{size\+\_\+t}]{charc}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [protected]}, {\ttfamily [noexcept]}}\hypertarget{classformat_1_1value_a5d029f82ccef1f9df32f617baf32e41d}{}\label{classformat_1_1value_a5d029f82ccef1f9df32f617baf32e41d}
+
+
+\+\_\+str\+\_\+append Copy src to dst. Move dst right after the last copied character. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & Destination string \\
+\hline
+{\em src} & Source string \\
+\hline
+{\em charc} & Number of characters to copy \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!\+\_\+string@{\+\_\+string}}
+\index{\+\_\+string@{\+\_\+string}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{\+\_\+string(wchar\+\_\+t \&endc) const noexcept}{_string(wchar_t &endc) const noexcept}}]{\setlength{\rightskip}{0pt plus 5cm}long int format\+::value\+::\+\_\+string (
+\begin{DoxyParamCaption}
+\item[{wchar\+\_\+t \&}]{endc}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [noexcept]}}\hypertarget{classformat_1_1value_aab0e0227afa4e70d382608b4d75a9140}{}\label{classformat_1_1value_aab0e0227afa4e70d382608b4d75a9140}
+
+
+\+\_\+string Read in string. If no opening quote, return 0. If no closing quote or unescaped unicode control character (0-\/31) met, return number characters read as a negative value. For example \char`\"{}\textbackslash{}\char`\"{}xx"\char`\"{} = -\/3
+\+Else return number of characters read + 2 (quotes). For example \char`\"{}"xxx"" = 5 
+
+
+\begin{DoxyParams}{Parameters}
+{\em endc} & Last character read \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of characters read, including quotes 
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!\+\_\+to\+\_\+string@{\+\_\+to\+\_\+string}}
+\index{\+\_\+to\+\_\+string@{\+\_\+to\+\_\+string}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{\+\_\+to\+\_\+string(wchar\+\_\+t $\ast$offset=0) const =0}{_to_string(wchar_t *offset=0) const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual const wchar\+\_\+t$\ast$ format\+::value\+::\+\_\+to\+\_\+string (
+\begin{DoxyParamCaption}
+\item[{wchar\+\_\+t $\ast$}]{offset = {\ttfamily 0}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}\hypertarget{classformat_1_1value_a94ed31f07b19866495297472accd33a8}{}\label{classformat_1_1value_a94ed31f07b19866495297472accd33a8}
+
+
+str\+\_\+value 
+
+
+\begin{DoxyParams}{Parameters}
+{\em offset} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classformat_1_1object_ade521091c997a1a61e15122364c32e99}{format\+::object}, \hyperlink{classformat_1_1array_a3a8da80fceac963967b0d6d08a69ed18}{format\+::array}, \hyperlink{classformat_1_1json_afbb5d88bc2005d89b287e05d89fb2e06}{format\+::json}, \hyperlink{classformat_1_1number_a19023252f46d9589a4fc5b960b7c8b2b}{format\+::number}, \hyperlink{classformat_1_1undefined_af546183275e15e270dca846623a2d2c1}{format\+::undefined}, \hyperlink{classformat_1_1string_a4522fce4f8002088bccdcb7b2aba53b6}{format\+::string}, \hyperlink{classformat_1_1boolean_a8ca18cfd6036fe8d0255b08c91eb3e30}{format\+::boolean}, and \hyperlink{classformat_1_1null_a8c85176815e031702c5487573b07ffac}{format\+::null}.
+
+\index{format\+::value@{format\+::value}!clone@{clone}}
+\index{clone@{clone}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{clone() const =0}{clone() const =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf value}$\ast$ format\+::value\+::clone (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classformat_1_1value_a8756eb79e41851859d83ae46069dc400}{}\label{classformat_1_1value_a8756eb79e41851859d83ae46069dc400}
+
+
+clone Call object copy constructor when derived type in not known 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classformat_1_1unique__undefined_af69057a00374c21c5cd73dc77efffb0e}{format\+::unique\+\_\+undefined}, \hyperlink{classformat_1_1undefined_af418bdce70e2d41131ac640fcf6dc121}{format\+::undefined}, \hyperlink{classformat_1_1json_a49534b733831b2dae879d7407f7cfba5}{format\+::json}, \hyperlink{classformat_1_1number_aa4c1aec4e42a504ea16f6b09c2223d9e}{format\+::number}, \hyperlink{classformat_1_1leaf_a861972c1866ab17d00e4b950d33d4ced}{format\+::leaf}, \hyperlink{classformat_1_1array_a456f53d9b5049e9af8d28b9588fc61c4}{format\+::array}, \hyperlink{classformat_1_1object_a3e6550914c83ba0796877e5da8a511bd}{format\+::object}, \hyperlink{classformat_1_1boolean_aed9485ecc21695be4ef8f03cd1034b1e}{format\+::boolean}, \hyperlink{classformat_1_1string_a41b0ffc3e1c686bc07fbe911942a0a4f}{format\+::string}, and \hyperlink{classformat_1_1null_a5a36484f97cd8795e42981f8c30181c2}{format\+::null}.
+
+\index{format\+::value@{format\+::value}!get@{get}}
+\index{get@{get}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{get() const }{get() const }}]{\setlength{\rightskip}{0pt plus 5cm}const wchar\+\_\+t$\ast$ format\+::value\+::get (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classformat_1_1value_af89058b38ae886a02713b5a556f7fe17}{}\label{classformat_1_1value_af89058b38ae886a02713b5a556f7fe17}
+
+
+value 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!index@{index}}
+\index{index@{index}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{index() const noexcept}{index() const noexcept}}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t format\+::value\+::index (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}\hypertarget{classformat_1_1value_aaa429b28cc0edf5a3589b89a1820ad62}{}\label{classformat_1_1value_aaa429b28cc0edf5a3589b89a1820ad62}
+
+
+index 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!key@{key}}
+\index{key@{key}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{key() const noexcept}{key() const noexcept}}]{\setlength{\rightskip}{0pt plus 5cm}const wchar\+\_\+t$\ast$ format\+::value\+::key (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}\hypertarget{classformat_1_1value_ad4865e7984fc9f3b5ce7c17fd7ac740c}{}\label{classformat_1_1value_ad4865e7984fc9f3b5ce7c17fd7ac740c}
+
+
+key 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!length@{length}}
+\index{length@{length}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{length() const noexcept=0}{length() const noexcept=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual size\+\_\+t format\+::value\+::length (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}, {\ttfamily [noexcept]}}\hypertarget{classformat_1_1value_a406a9553c4d83a0613aa54d77f6c462d}{}\label{classformat_1_1value_a406a9553c4d83a0613aa54d77f6c462d}
+
+
+count 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classformat_1_1json_a792f3755d148f250ae60e4bbb35fbc6b}{format\+::json}, \hyperlink{classformat_1_1array_af15910f0535e266984f3f745efae5397}{format\+::array}, \hyperlink{classformat_1_1object_a29be05a1b87c2d6263f15fc3280e3b6f}{format\+::object}, and \hyperlink{classformat_1_1leaf_ab14acf7466a4a603d4558419d36fe75a}{format\+::leaf}.
+
+\index{format\+::value@{format\+::value}!operator=@{operator=}}
+\index{operator=@{operator=}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{operator=(value $\ast$v)}{operator=(value *v)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf value}\& format\+::value\+::operator= (
+\begin{DoxyParamCaption}
+\item[{{\bf value} $\ast$}]{v}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classformat_1_1value_aae4cf62ca68a4df00a31a66c1c576c3e}{}\label{classformat_1_1value_aae4cf62ca68a4df00a31a66c1c576c3e}
+
+
+operator = 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!operator=@{operator=}}
+\index{operator=@{operator=}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{operator=(const value \&v)}{operator=(const value &v)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf value}\& format\+::value\+::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf value} \&}]{v}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classformat_1_1value_a711e2949ae310096a9e429c52574fffc}{}\label{classformat_1_1value_a711e2949ae310096a9e429c52574fffc}
+
+
+operator = 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & \\
+\hline
+\end{DoxyParams}
+\index{format\+::value@{format\+::value}!operator=@{operator=}}
+\index{operator=@{operator=}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{operator=(const undefined \&u)}{operator=(const undefined &u)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf value}\& format\+::value\+::operator= (
+\begin{DoxyParamCaption}
+\item[{const undefined \&}]{u}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classformat_1_1value_a126201c87fd63a093fecc2e16735ac52}{}\label{classformat_1_1value_a126201c87fd63a093fecc2e16735ac52}
+
+
+operator = 
+
+
+\begin{DoxyParams}{Parameters}
+{\em u} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!operator=@{operator=}}
+\index{operator=@{operator=}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{operator=(const wchar\+\_\+t $\ast$json\+\_\+text)}{operator=(const wchar_t *json_text)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf format\+::value} \& format\+::value\+::operator= (
+\begin{DoxyParamCaption}
+\item[{const wchar\+\_\+t $\ast$}]{json\+\_\+text}
+\end{DoxyParamCaption}
+)}\hypertarget{classformat_1_1value_a0a17ba9f3d99be0c1d86d91adac0bb60}{}\label{classformat_1_1value_a0a17ba9f3d99be0c1d86d91adac0bb60}
+
+
+operator = 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!operator=@{operator=}}
+\index{operator=@{operator=}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{operator=(double d)}{operator=(double d)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf format\+::value} \& format\+::value\+::operator= (
+\begin{DoxyParamCaption}
+\item[{double}]{d}
+\end{DoxyParamCaption}
+)}\hypertarget{classformat_1_1value_a1636e6762c97584eb15b85b6a6422055}{}\label{classformat_1_1value_a1636e6762c97584eb15b85b6a6422055}
+
+
+operator = 
+
+
+\begin{DoxyParams}{Parameters}
+{\em d} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!operator=@{operator=}}
+\index{operator=@{operator=}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{operator=(bool b)}{operator=(bool b)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf format\+::value} \& format\+::value\+::operator= (
+\begin{DoxyParamCaption}
+\item[{bool}]{b}
+\end{DoxyParamCaption}
+)}\hypertarget{classformat_1_1value_a017ba8a51e1005652ab3113c6b0951ec}{}\label{classformat_1_1value_a017ba8a51e1005652ab3113c6b0951ec}
+
+
+operator = 
+
+
+\begin{DoxyParams}{Parameters}
+{\em b} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!operator=@{operator=}}
+\index{operator=@{operator=}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{operator=(std\+::nullptr\+\_\+t)}{operator=(std::nullptr_t)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf format\+::value} \& format\+::value\+::operator= (
+\begin{DoxyParamCaption}
+\item[{std\+::nullptr\+\_\+t}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{classformat_1_1value_a0c62128d9917513e97068a267b4543ca}{}\label{classformat_1_1value_a0c62128d9917513e97068a267b4543ca}
+
+
+operator = 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!operator==@{operator==}}
+\index{operator==@{operator==}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{operator==(value\+\_\+t t) const noexcept}{operator==(value_t t) const noexcept}}]{\setlength{\rightskip}{0pt plus 5cm}bool format\+::value\+::operator== (
+\begin{DoxyParamCaption}
+\item[{{\bf value\+\_\+t}}]{t}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}\hypertarget{classformat_1_1value_a3bd4d42103322d1c6940e04554405a8e}{}\label{classformat_1_1value_a3bd4d42103322d1c6940e04554405a8e}
+
+
+operator == 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!operator==@{operator==}}
+\index{operator==@{operator==}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{operator==(const value \&v) const noexcept}{operator==(const value &v) const noexcept}}]{\setlength{\rightskip}{0pt plus 5cm}bool format\+::value\+::operator== (
+\begin{DoxyParamCaption}
+\item[{const {\bf value} \&}]{v}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}\hypertarget{classformat_1_1value_ad18cb4b5aef50630f5fab8a6d52816b7}{}\label{classformat_1_1value_ad18cb4b5aef50630f5fab8a6d52816b7}
+
+
+operator == 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!operator\mbox{[}$\,$\mbox{]}@{operator[]}}
+\index{operator\mbox{[}$\,$\mbox{]}@{operator[]}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{operator[](const wchar\+\_\+t $\ast$key)}{operator[](const wchar_t *key)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf value}\& format\+::value\+::operator\mbox{[}$\,$\mbox{]} (
+\begin{DoxyParamCaption}
+\item[{const wchar\+\_\+t $\ast$}]{key}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classformat_1_1value_a59a729393bc6137e6782ea96f89bf18a}{}\label{classformat_1_1value_a59a729393bc6137e6782ea96f89bf18a}
+
+
+operator \mbox{[}\mbox{]} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!operator\mbox{[}$\,$\mbox{]}@{operator[]}}
+\index{operator\mbox{[}$\,$\mbox{]}@{operator[]}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{operator[](size\+\_\+t index)}{operator[](size_t index)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf value}\& format\+::value\+::operator\mbox{[}$\,$\mbox{]} (
+\begin{DoxyParamCaption}
+\item[{size\+\_\+t}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classformat_1_1value_a68e009d6421f7a127978e9b48adcf200}{}\label{classformat_1_1value_a68e009d6421f7a127978e9b48adcf200}
+
+
+operator \mbox{[}\mbox{]} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!parent@{parent}}
+\index{parent@{parent}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{parent() const }{parent() const }}]{\setlength{\rightskip}{0pt plus 5cm}json$\ast$ format\+::value\+::parent (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classformat_1_1value_a86c03ec8810bfd0d60ec49095120040d}{}\label{classformat_1_1value_a86c03ec8810bfd0d60ec49095120040d}
+
+
+parent 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!str\+\_\+length@{str\+\_\+length}}
+\index{str\+\_\+length@{str\+\_\+length}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{str\+\_\+length() const noexcept=0}{str_length() const noexcept=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual size\+\_\+t format\+::value\+::str\+\_\+length (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}, {\ttfamily [noexcept]}}\hypertarget{classformat_1_1value_a399280e27e629db0582b5781b90ca58b}{}\label{classformat_1_1value_a399280e27e629db0582b5781b90ca58b}
+
+
+str\+\_\+length 
+
+T\+O\+DO\+: protected
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classformat_1_1json_a1110e453dd28d55ed9b6b196d04d1c7e}{format\+::json}, \hyperlink{classformat_1_1undefined_a94e5461ec5938de5aae6de2e0e9ea604}{format\+::undefined}, \hyperlink{classformat_1_1number_ab7c3bce51e57bc20f3443b74e360e14a}{format\+::number}, \hyperlink{classformat_1_1array_a579c320809545c627af0cbf9d8365080}{format\+::array}, \hyperlink{classformat_1_1object_a866a470f6092172fcde8307882236a50}{format\+::object}, \hyperlink{classformat_1_1null_ae5df2937bf5677e5894685ff47654642}{format\+::null}, \hyperlink{classformat_1_1string_a6447b6867f08a78e0bd82cc7c63d2f6e}{format\+::string}, and \hyperlink{classformat_1_1boolean_a3524e3f55c14f667563774b51aa3ffa5}{format\+::boolean}.
+
+\index{format\+::value@{format\+::value}!stringify@{stringify}}
+\index{stringify@{stringify}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{stringify() noexcept}{stringify() noexcept}}]{\setlength{\rightskip}{0pt plus 5cm}const wchar\+\_\+t$\ast$ format\+::value\+::stringify (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}\hypertarget{classformat_1_1value_a7fb73377471f5ed99695846340130348}{}\label{classformat_1_1value_a7fb73377471f5ed99695846340130348}
+
+
+stringify 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{format\+::value@{format\+::value}!type@{type}}
+\index{type@{type}!format\+::value@{format\+::value}}
+\subsubsection[{\texorpdfstring{type() const noexcept=0}{type() const noexcept=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf value\+\_\+t} format\+::value\+::type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}, {\ttfamily [noexcept]}}\hypertarget{classformat_1_1value_a7112d0f83cf61aa9e1cdde90fc444996}{}\label{classformat_1_1value_a7112d0f83cf61aa9e1cdde90fc444996}
+
+
+type 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classformat_1_1no__value_a2819b3ce13265c40a74d4f11c2577bf5}{format\+::no\+\_\+value}, \hyperlink{classformat_1_1undefined_a72e4ff819514b2a4126be1969d5bbabe}{format\+::undefined}, \hyperlink{classformat_1_1json_a970027799aac71bf99e3f1d7264364dc}{format\+::json}, \hyperlink{classformat_1_1number_a1934b4d3cf603de3afd5eb6329be7fba}{format\+::number}, \hyperlink{classformat_1_1boolean_a91dccd7986764af76b70627a348f27a4}{format\+::boolean}, \hyperlink{classformat_1_1array_a0fe16076f81ccc66e8208fe6dd4d2b1a}{format\+::array}, \hyperlink{classformat_1_1object_aea7eb835fcbec62a85d078a7fa33cea7}{format\+::object}, \hyperlink{classformat_1_1null_a3878d16875e190e0f319bf6f600883c9}{format\+::null}, \hyperlink{classformat_1_1leaf_ac29de88719f2da4d262255ef8a234ced}{format\+::leaf}, and \hyperlink{classformat_1_1string_a247e17aaf8cb8e0afdc29e943d492232}{format\+::string}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+json\+\_\+value.\+h\item 
+json\+\_\+value.\+cpp\end{DoxyCompactItemize}
