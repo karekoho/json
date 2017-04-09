@@ -1,4 +1,3 @@
-
 // OBJECT:
 //  {
 //          "Image": {
@@ -61,23 +60,32 @@ main ()
       }\
   }";
 
+  // Get the whole structure  as wchar_t *
   std::wcout << j.get () << std::endl;
 
-  value & v = j[L"Image"];
+  // Cast to object
+  object & image = static_cast<object &> (j[L"Image"]);
 
-  std::wcout << v.get () << std::endl;
+  // Get the object as wchar_t *
+  std::wcout << image[L"Thumbnail"].get () << std::endl;
 
-  boolean & b = static_cast<boolean &> (j[L"Image"][L"Animated"]);
+  // Cast to boolean
+  boolean & animated = static_cast<boolean &> (image[L"Animated"]);
 
-  std::cout << b.get () << std::endl;
+  // Get value as bool
+  std::wcout << animated.get () << std::endl;
 
-  array & a = static_cast<array &> (j[L"IDs"]);
+  // Cast to array
+  array & ids = static_cast<array &> (image[L"IDs"]);
 
-  std::wcout << a[(size_t) 0].get () << std::endl;
-
-  double d = static_cast<number &> (a[(size_t) 0]).get ();
-
-  std::cout << d << std::endl;
+  // Iterate the array
+  for (auto it = ids.begin (); it != ids.end (); ++it)
+    {
+      // Cast to number and get the value as double
+      number & id = static_cast<number &> (*it);
+      double d = id.get ();
+      std::wcout << d << std::endl;
+    }
 
   return 0;
 }
