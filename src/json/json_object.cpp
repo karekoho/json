@@ -177,8 +177,8 @@ format::object::_clear ()
       begin = _member_list.erase (begin);
     }
 
-  //for (auto it = _member_list.begin (); it != end; it = _member_list.erase (it))
-  //  delete static_cast <std::pair<std::wstring, value *>>(*it).second;
+//  for (auto it = _member_list.begin (); it != end; it = _member_list.erase (it))
+//    delete static_cast <std::pair<std::wstring, value *>>(*it).second;
 }
 
 format::value *
@@ -187,7 +187,7 @@ format::object::_clone (const value &other)
   const object & nv = static_cast<const object &>(other);
 
   if (! _member_list.empty ())
-    _clear ();
+    _clear ();  // TODO: Need ?
 
   if (nv._member_list.empty ())
     return this;
