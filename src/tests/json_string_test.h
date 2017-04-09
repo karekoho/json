@@ -259,6 +259,19 @@ namespace format
 
       virtual void test__clear () override {}
 
+      virtual void
+      test__clone_const_value_ref () override
+      {
+        string src = L"xxx";
+        string copy;
+
+        (void) copy._clone (src);
+
+        CPPUNIT_ASSERT_MESSAGE ("string", & copy != & src);
+        CPPUNIT_ASSERT_EQUAL_MESSAGE ("src._string_value.empty ()", true, src._string_value[0].empty () );
+        CPPUNIT_ASSERT_MESSAGE ("copy.get ()", wcscmp (L"xxx", copy.get ()) == 0);
+      }
+
       /**
        * 4.
        * @brief suite
@@ -273,8 +286,8 @@ namespace format
         /* 1. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_parse_1", &json_string_test::test__parse_1));
         /* 2. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_assign_all_values", &json_string_test::test_assign_all_values));
         /* 3. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__string", &json_string_test::test__string));
-
-        /* 4.   s->addTest (new CppUnit::TestCaller<json_string_test> ("test__clear", &json_string_test::test__clear)); */
+        /* 4. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__clone_const_value_ref", &json_string_test::test__clone_const_value_ref));
+        /* 5.   s->addTest (new CppUnit::TestCaller<json_string_test> ("test__clear", &json_string_test::test__clear)); */
 
         return s;
       }
