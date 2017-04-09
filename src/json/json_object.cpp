@@ -168,7 +168,9 @@ format::object::_assign (value *ov, value *nv)
 void
 format::object::_clear ()
 {
-  for (auto it = _member_list.begin (); it != _member_list.end (); it = _member_list.erase (it))
+  auto end = _member_list.end ();
+
+  for (auto it = _member_list.begin (); it != end; it = _member_list.erase (it))
     delete static_cast <std::pair<std::wstring, value *>>(*it).second;
 }
 
@@ -177,7 +179,8 @@ format::object::_clone (const value &other)
 {
   const object & nv = static_cast<const object &>(other);
 
-  _clear ();
+  if (! _member_list.empty ())
+    _clear ();
 
   if (nv._member_list.empty ())
     return this;
@@ -190,7 +193,9 @@ format::object::_clone (const value &other)
   while (cur != end)
     {
       std::pair<std::wstring, value *> p = *cur++;
-      _member_list.emplace (p.first, p.second->clone ());
+      value *v = p.second->clone ();
+      __call__set_parent (v, this);
+      _member_list.emplace (p.first, v);
     }
 
   return this;

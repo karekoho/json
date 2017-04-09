@@ -505,8 +505,40 @@ namespace format
                                     o.length ());
     }
 
-    virtual void test__assign_value_ptr_value_ptr () override { CPPUNIT_ASSERT_MESSAGE ("Not implemented !!!", false); }
-    virtual void test__clone_const_value_ref () override { CPPUNIT_ASSERT_MESSAGE ("Not implemented !!!", false); }
+    virtual void
+    test__assign_value_ptr_value_ptr () override
+    {
+      object o = L"{\"0\":false}";
+
+      boolean *nv = new boolean (true);
+
+      o._assign (& o[L"0"], nv);
+
+      CPPUNIT_ASSERT_MESSAGE ("nv->key () == std::wstring (L\"0\")",
+                              nv->key () == std::wstring (L"0"));
+
+      CPPUNIT_ASSERT_MESSAGE ("o[L\"0\"] == nv",
+                              & o[L"0"] == nv);
+
+      CPPUNIT_ASSERT_MESSAGE ("o[L\"0\"].parent () == & o",
+                              o[L"0"].parent () == & o);
+    }
+
+    virtual void
+    test__clone_const_value_ref () override
+    {
+      object src = L"{\"2\":2}";
+      object copy = L"{\"0\":0,\"1\":1}";
+
+      copy._clone (src);
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.length ()",
+                                    (size_t) 1,
+                                    copy.length ());
+
+      CPPUNIT_ASSERT_MESSAGE ("copy[L\"2\"].parent () == & copy",
+                              copy[L"2"].parent () == & copy);
+    }
 
     /**
      * 2.
