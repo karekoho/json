@@ -168,10 +168,17 @@ format::object::_assign (value *ov, value *nv)
 void
 format::object::_clear ()
 {
+  auto begin = _member_list.begin ();
   auto end = _member_list.end ();
 
-  for (auto it = _member_list.begin (); it != end; it = _member_list.erase (it))
-    delete static_cast <std::pair<std::wstring, value *>>(*it).second;
+  while (begin != end)
+    {
+      delete static_cast <std::pair<std::wstring, value *>>(*begin).second;
+      begin = _member_list.erase (begin);
+    }
+
+  //for (auto it = _member_list.begin (); it != end; it = _member_list.erase (it))
+  //  delete static_cast <std::pair<std::wstring, value *>>(*it).second;
 }
 
 format::value *
