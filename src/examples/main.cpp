@@ -1,5 +1,3 @@
-#include <iostream>
-#include <json/json.h>
 
 // OBJECT:
 //  {
@@ -40,11 +38,15 @@
 //        }
 //      ]
 
+#include <iostream>
+#include <format/json.h>
+
+using namespace format;
+
 int
 main ()
 {
-
-  JSON j = L"{\
+  json j = L"{\
     \"Image\": {\
         \"Width\":  800,\
         \"Height\": 600,\
@@ -54,22 +56,28 @@ main ()
             \"Height\": 125,\
             \"Width\":  100\
         },\
-        \"Animated\" : false,\
+        \"Animated\" : true,\
         \"IDs\": [116, 943, 234, 38793]\
       }\
   }";
 
-  // std::wcout << j.value () << std::endl;
+  std::wcout << j.get () << std::endl;
 
-  std::wcout << j[L"Image"].value () << std::endl;
+  value & v = j[L"Image"];
 
-  Number & n = static_cast<Number &> (j[L"Image"][L"Width"]);
+  std::wcout << v.get () << std::endl;
 
-  std::cout << n.value () << std::endl;
+  boolean & b = static_cast<boolean &> (j[L"Image"][L"Animated"]);
 
-  std::wcout << j[L"Image"][L"Thumbnail"][L"Url"].value () << std::endl;
+  std::cout << b.get () << std::endl;
 
-  std::wcout << j[L"Image"][L"IDs"][L"2"].value () << std::endl;
+  array & a = static_cast<array &> (j[L"IDs"]);
+
+  std::wcout << a[(size_t) 0].get () << std::endl;
+
+  double d = static_cast<number &> (a[(size_t) 0]).get ();
+
+  std::cout << d << std::endl;
 
   return 0;
 }
