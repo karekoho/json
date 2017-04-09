@@ -36,9 +36,9 @@
 //           "Country":   "US"
 //        }
 //      ]
-
-#include <iostream>
 #include <format/json.h>
+#include <iostream>
+#include <algorithm>
 
 using namespace format;
 
@@ -60,7 +60,7 @@ main ()
       }\
   }";
 
-  // Get the whole structure  as wchar_t *
+  // Get the whole structure as wchar_t *
   std::wcout << j.get () << std::endl;
 
   // Cast to object
@@ -79,13 +79,15 @@ main ()
   array & ids = static_cast<array &> (image[L"IDs"]);
 
   // Iterate the array
-  for (auto it = ids.begin (); it != ids.end (); ++it)
-    {
-      // Cast to number and get the value as double
-      number & id = static_cast<number &> (*it);
-      double d = id.get ();
-      std::wcout << d << std::endl;
-    }
+  std::for_each (ids.begin (),
+                 ids.end (),
+                 [] (value & v)
+  {
+    // Cast to number and get the value as double
+    number & id = static_cast<number &> (v);
+    double d = id.get ();
+    std::wcout << d << std::endl;
+  });
 
   return 0;
 }
