@@ -431,6 +431,26 @@ namespace format
     virtual void test__clear () override {}
     virtual void test_type () override {}
 
+    virtual void
+    test__clone_const_value_ref () override
+    {
+      number src[] = {
+        number (10),
+        number (L"100")
+      };
+
+      number copy[] = {
+          number (src[0]),  // calls _clone (const value &)
+          number (src[1])   // calls _clone (const value &)
+      };
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("number::type ()", json::number_t, src[0].type ());
+      CPPUNIT_ASSERT_MESSAGE ("number", & copy[0] != & src[0]);
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("src[1]._double_value", (double) 0, src[1]._double_value);
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[0].value ()", (double) 10, copy[0].get ());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[1].value ()", (double) 100, copy[1].get ());
+    }
+
     /**
      * 5.
      * @brief suite
@@ -451,9 +471,9 @@ namespace format
       /* 7. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_atoll", &json_number_test::test_atoll));
       /* 8. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_calculate", &json_number_test::test_calculate));
       /* 9. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_all_values", &json_number_test::test_assign_all_values));
-
-      /* 10.   s->addTest (new CppUnit::TestCaller<json_number_test> ("", &json_number_test::test_str_length));
-         11.   s->addTest (new CppUnit::TestCaller<json_number_test> ("", &json_number_test::test__clear)); */
+      /* 10. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test__clone_const_value_ref", &json_number_test::test__clone_const_value_ref));
+      /* 11. */ //s->addTest (new CppUnit::TestCaller<json_number_test> ("", &json_number_test::test_str_length));
+      /* 12. */ //s->addTest (new CppUnit::TestCaller<json_number_test> ("", &json_number_test::test__clear));
 
       return s;
     }
