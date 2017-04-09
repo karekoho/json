@@ -442,12 +442,45 @@ namespace format
     test_length () override
     {
       array a (L"[1]");
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("array::count ()", (size_t) 1, a.length ());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("array::count ()",
+                                    (size_t) 1,
+                                    a.length ());
     }
 
     virtual void test_type () override {}
-    virtual void test__assign_value_ptr_value_ptr () override { CPPUNIT_ASSERT_MESSAGE ("Not implemented !!!", false); }
-    virtual void test__clone_const_value_ref () override { CPPUNIT_ASSERT_MESSAGE ("Not implemented !!!", false); }
+
+    virtual void test__assign_value_ptr_value_ptr () override
+    {
+      array a = L"[false]";
+
+      boolean *nv = new boolean (true);
+
+      a._assign (& a[(size_t) 0], nv);
+
+      CPPUNIT_ASSERT_MESSAGE ("nv->index () == 0",
+                              nv->index () == 0);
+
+      CPPUNIT_ASSERT_MESSAGE ("& a[(size_t) 0] == nv",
+                              & a[(size_t) 0] == nv);
+
+      CPPUNIT_ASSERT_MESSAGE ("a[(size_t) 0].parent () == & a",
+                              a[(size_t) 0].parent () == & a);
+    }
+
+    virtual void test__clone_const_value_ref () override
+    {
+      array src = L"[2]";
+      array copy = L"[0,1]";
+
+      copy._clone (src);
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.length ()",
+                                    (size_t) 1,
+                                    copy.length ());
+
+      CPPUNIT_ASSERT_MESSAGE ("copy[(size_t) 0].parent () == & copy",
+                              copy[(size_t) 0].parent () == & copy);
+    }
 
     /**
      * 3.

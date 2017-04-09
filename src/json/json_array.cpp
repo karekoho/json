@@ -141,7 +141,7 @@ format::array::_assign (value *ov, value *nv)
 void
 format::array::_clear ()
 {
-  for (auto it = _element_list.begin (); it != _element_list.end (); it = _element_list.erase (it))
+  for (auto it = _element_list.begin (); it !=_element_list.end (); it = _element_list.erase (it))
     delete *it;
 }
 
@@ -150,7 +150,8 @@ format::array::_clone (const value &other)
 {
   const array & nv = dynamic_cast<const array &> (other);
 
-  _clear ();
+  if (! _element_list.empty ())
+    _clear ();  // TODO: need this ?
 
   if (nv._element_list.empty ())
     return this;
@@ -159,7 +160,12 @@ format::array::_clone (const value &other)
 
   std::transform (nv._element_list.begin (),
                   nv._element_list.end (),
-                  std::back_inserter (_element_list), [] (value *v) -> value * { return v->clone (); });
+                  std::back_inserter (_element_list), [this] (value *v) -> value *
+  {
+    value *nv = v->clone ();
+    __call__set_parent (nv, this);
+    return nv;
+  });
 
   return this;
 }
