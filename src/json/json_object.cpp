@@ -187,7 +187,7 @@ format::object::_clone (const value &other)
   const object & nv = static_cast<const object &>(other);
 
   if (! _member_list.empty ())
-    _clear ();  // TODO: Need ?
+    _clear ();  // TODO: need this ?
 
   if (nv._member_list.empty ())
     return this;
