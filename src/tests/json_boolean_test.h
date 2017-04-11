@@ -17,25 +17,13 @@ public:
   virtual void
   test_ctor_dtor ()
   {
-    json *p[] = { 0, new json () };
+    json parent;
 
-    for (size_t pidx = 0; pidx < 2; pidx++)
-      {
-        boolean b[] = {
-        boolean (),
-        boolean (true),
-        boolean (p[pidx])};
-      }
-
-    delete p[1];
-
-    boolean src = true;
-    boolean copy = src;
-
-    CPPUNIT_ASSERT_EQUAL_MESSAGE ("boolean::type ()", json::boolean_t, src.type ());
-    CPPUNIT_ASSERT_MESSAGE ("src != copy", & src != & copy);
-    CPPUNIT_ASSERT_MESSAGE ("src.get () == copy.get ()", src.get () == copy.get ());
-    CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.value ()", true, copy.get ());
+    boolean b[] = {
+      boolean (),
+      boolean (true),
+      boolean (& parent)
+    };
   }
 
   virtual void
@@ -121,6 +109,20 @@ public:
   virtual void test__to_string () override {}
   virtual void test__clear () override {}
 
+  virtual void
+  test__clone_const_value_ref () override
+  {
+    boolean src = true;
+    boolean copy;
+
+    (void) copy._clone (src);
+
+    CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.get ()",
+                                  true,
+                                  copy.get ());
+  }
+
+
   /**
    * 6.
    * @brief suite
@@ -133,11 +135,11 @@ public:
 
     /* 0.*/ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_ctor_dtor", &json_boolean_test::test_ctor_dtor));
     /* 1.*/ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_assign_all_values", &json_boolean_test::test_assign_all_values));
-
-    /* 2. s->addTest (new CppUnit::TestCaller<json_boolean_test> ("", &json_boolean_test::test_parse_1));
-       3. s->addTest (new CppUnit::TestCaller<json_boolean_test> ("", &json_boolean_test::test_str_length));
-       4. s->addTest (new CppUnit::TestCaller<json_boolean_test> ("", &json_boolean_test::test_str_value));
-       5. s->addTest (new CppUnit::TestCaller<json_boolean_test> ("", &json_boolean_test::test__clear)); */
+    /* 2.*/ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test__clone_const_value_ref", &json_boolean_test::test__clone_const_value_ref));
+    /* 3. */ //s->addTest (new CppUnit::TestCaller<json_boolean_test> ("", &json_boolean_test::test_parse_1));
+    /* 4. */ //s->addTest (new CppUnit::TestCaller<json_boolean_test> ("", &json_boolean_test::test_str_length));
+    /* 5. */ //s->addTest (new CppUnit::TestCaller<json_boolean_test> ("", &json_boolean_test::test_str_value));
+    /* 6. */ //s->addTest (new CppUnit::TestCaller<json_boolean_test> ("", &json_boolean_test::test__clear));
 
     return s;
   }
