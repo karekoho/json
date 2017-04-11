@@ -16,37 +16,29 @@ namespace format
     virtual void
     test_ctor_dtor () override
     {
-      json *p[] = { 0, new json () };
+      json parent;
 
-      for (size_t pidx = 0; pidx < 2; pidx++)
-        {
-          format::unique_undefined uu[] = {
-            format::unique_undefined (),
-            format::unique_undefined (p[pidx]),
-          };
-        }
-
-      delete p[1];
-
-      format::unique_undefined src;
-      format::unique_undefined copy = src;
+      format::unique_undefined uu[] = {
+        format::unique_undefined (),
+        format::unique_undefined (& parent),
+      };
 
       format::undefined *u[] = {
         new format::undefined (),
         new format::undefined (),
-        no_value::instance (p[1])
+        no_value::instance (& parent)
       };
 
       delete u[0];
       u[0] = new format::undefined ();
 
-      delete no_value::instance (p[1]);
+      delete no_value::instance (& parent);
 
-      CPPUNIT_ASSERT_MESSAGE ("new () == new ()", u[0] == u[1]);
-      CPPUNIT_ASSERT_MESSAGE ("new () == new ()", no_value::instance (p[1]) == no_value::instance (p[1]));
+      CPPUNIT_ASSERT_MESSAGE ("new () == new ()",
+                              u[0] == u[1]);
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("undefined::type ()", json::undefined_t, src.type ());
-      CPPUNIT_ASSERT_MESSAGE ("undefined", & copy != & src);
+      CPPUNIT_ASSERT_MESSAGE ("new () == new ()",
+                              no_value::instance (& parent) == no_value::instance (& parent));
     }
 
     virtual void
@@ -114,18 +106,6 @@ namespace format
         }
     }
 
-    /* void
-    test_shared_undefined ()
-    {
-      shared_undefined & u = shared_undefined::instance ();
-      shared_undefined *pu = & u;
-
-      delete pu;
-
-      CPPUNIT_ASSERT_MESSAGE ("instance () > 0", (& shared_undefined::instance ()));
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("instance () == instance ()",  & shared_undefined::instance (), & shared_undefined::instance ());
-    } */
-
     virtual void
     test__parse_1 () override
     {
@@ -151,6 +131,13 @@ namespace format
     virtual void test__clear () override {}
     virtual void test_type () override {}
 
+    virtual void
+    test__clone_const_value_ref () override
+    {
+      CPPUNIT_ASSERT_ASSERTION_PASS ();
+    }
+
+
     /**
      * 8.
      * @brief suite
@@ -163,11 +150,12 @@ namespace format
 
       /* 0. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_ctor_dtor", &json_undefined_test::test_ctor_dtor));
       /* 1. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_assign_all_values", &json_undefined_test::test_assign_all_values));
-      /* 2. */  // s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_shared_undefined", &json_undefined_test::test_shared_undefined));
+      /* 2. */  //s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_shared_undefined", &json_undefined_test::test_shared_undefined));
       /* 2. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_parse_1", &json_undefined_test::test__parse_1));
       /* 3. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_str_length", &json_undefined_test::test_str_length));
       /* 4. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test_str_value", &json_undefined_test::test__to_string));
       /* 5. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test__clear", &json_undefined_test::test__clear));
+      /* 6. */  s->addTest (new CppUnit::TestCaller<json_undefined_test> ("test__clone_const_value_ref", &json_undefined_test::test__clone_const_value_ref));
 
       return s;
     }
