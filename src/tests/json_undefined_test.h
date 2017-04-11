@@ -133,10 +133,7 @@ namespace format
 
     virtual void
     test__clone_const_value_ref () override
-    {
-      CPPUNIT_ASSERT_ASSERTION_PASS ();
-    }
-
+    { CPPUNIT_ASSERT_ASSERTION_PASS (); }
 
     /**
      * 8.

@@ -22,21 +22,21 @@ namespace format
         array (),
         array (L"[]"),
         array (& parent),
-        array {new array {new number ()}}, // [[0]]
+        array { new array { new number () } }, // [[0]]
       };
 
-      array src = L"[true]";
-      array copy = src;
+//      array src = L"[true]";
+//      array copy = src;
 
-      CPPUNIT_ASSERT_MESSAGE ("array",
-                              & copy != & src);
+//      CPPUNIT_ASSERT_MESSAGE ("array",
+//                              & copy != & src);
 
-      CPPUNIT_ASSERT_MESSAGE ("array",
-                              & copy[(size_t) 0] != & src[(size_t) 0]);
+//      CPPUNIT_ASSERT_MESSAGE ("array",
+//                              & copy[(size_t) 0] != & src[(size_t) 0]);
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("array::count ()",
-                                    (size_t) 1,
-                                    copy.length ());
+//      CPPUNIT_ASSERT_EQUAL_MESSAGE ("array::count ()",
+//                                    (size_t) 1,
+//                                    copy.length ());
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("array::count ()",
                                     (size_t) 1,
@@ -472,7 +472,7 @@ namespace format
       array src = L"[2]";
       array copy = L"[0,1]";
 
-      copy._clone (src);
+      (void) copy._clone (src);
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.length ()",
                                     (size_t) 1,

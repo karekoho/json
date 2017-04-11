@@ -25,18 +25,18 @@ namespace format
         object {{ L"0", new object {{ L"0", new number () }} }} // {"0":{"0":0}}
       };
 
-      object src  = L"{\"key\":true}";
-      object copy = src;
+//      object src  = L"{\"key\":true}";
+//      object copy = src;
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("object::type ()",
-                                    json::object_t, src.type ());
+//      CPPUNIT_ASSERT_EQUAL_MESSAGE ("object::type ()",
+//                                    json::object_t, src.type ());
 
-      CPPUNIT_ASSERT_MESSAGE ("object",
-                              & copy != & src);
+//      CPPUNIT_ASSERT_MESSAGE ("object",
+//                              & copy != & src);
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.count ()",
-                                    (size_t) 1,
-                                    copy.length ());
+//      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.count ()",
+//                                    (size_t) 1,
+//                                    copy.length ());
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("object::count ()",
                                     (size_t) 1,
@@ -530,7 +530,7 @@ namespace format
       object src = L"{\"2\":2}";
       object copy = L"{\"0\":0,\"1\":1}";
 
-      copy._clone (src);
+      (void) copy._clone (src);
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.length ()",
                                     (size_t) 1,

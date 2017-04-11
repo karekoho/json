@@ -17,13 +17,15 @@ public:
   virtual void
   test_ctor_dtor ()
   {
-    json parent;
+    json *parent = new json ();
 
     boolean b[] = {
       boolean (),
       boolean (true),
-      boolean (& parent)
+      boolean (parent)
     };
+
+    delete parent;
   }
 
   virtual void
