@@ -16,22 +16,12 @@ namespace format
     virtual void
     test_ctor_dtor ()
     {
-      json *p[] = { 0, new json () };
+      json parent;
 
-      for (size_t pidx = 0; pidx < 2; pidx++)
-        {
-          null n[] = {
-          null (),
-          null (p[pidx])};
-        }
-
-      delete p[1];
-
-      null src;
-      null copy = src;
-
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("null::type ()", json::null_t, src.type ());
-      CPPUNIT_ASSERT_MESSAGE ("null", & copy != & src);
+      null n[] = {
+        null (),
+        null (& parent)
+      };
     }
 
     virtual void
@@ -116,6 +106,13 @@ namespace format
     virtual void test__clear () override {}
     virtual void test_type () override {}
 
+    virtual void
+    test__clone_const_value_ref () override
+    {
+      CPPUNIT_ASSERT_ASSERTION_PASS ();
+    }
+
+
     /**
      * 7.
      * @brief suite
@@ -128,11 +125,11 @@ namespace format
 
       /* 0. */  s->addTest (new CppUnit::TestCaller<json_null_test> ("test_ctor_dtor", &json_null_test::test_ctor_dtor));
       /* 1. */  s->addTest (new CppUnit::TestCaller<json_null_test> ("test_assign_all_values", &json_null_test::test_assign_all_values));
-
-      /* 2.   s->addTest (new CppUnit::TestCaller<json_null_test> ("", &json_null_test::test_parse_1));
-         3.   s->addTest (new CppUnit::TestCaller<json_null_test> ("", &json_null_test::test_str_length));
-         4.   s->addTest (new CppUnit::TestCaller<json_null_test> ("", &json_null_test::test_str_value));
-         5.   s->addTest (new CppUnit::TestCaller<json_null_test> ("", &json_null_test::test__clear)); */
+      /* 2. */  s->addTest (new CppUnit::TestCaller<json_null_test> ("test__clone_const_value_ref", &json_null_test::test__clone_const_value_ref));
+      /* 3. */  //s->addTest (new CppUnit::TestCaller<json_null_test> ("", &json_null_test::test_parse_1));
+      /* 4. */  //s->addTest (new CppUnit::TestCaller<json_null_test> ("", &json_null_test::test_str_length));
+      /* 5. */  //s->addTest (new CppUnit::TestCaller<json_null_test> ("", &json_null_test::test_str_value));
+      /* 6. */  //s->addTest (new CppUnit::TestCaller<json_null_test> ("", &json_null_test::test__clear));
 
       return s;
     }
