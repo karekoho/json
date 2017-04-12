@@ -447,7 +447,9 @@ namespace format
                                     a.length ());
     }
 
-    virtual void test_type () override {}
+    virtual void
+    test_type () override
+    { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
 
     virtual void test__assign_value_ptr_value_ptr () override
     {
@@ -505,6 +507,7 @@ namespace format
       /* 10. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_count", &json_array_test::test_length));
       /* 11. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test__assign_value_ptr_value_ptr", &json_array_test::test__assign_value_ptr_value_ptr));
       /* 12. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test__clone_const_value_ref", &json_array_test::test__clone_const_value_ref));
+      /* 13. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_type", &json_array_test::test_type));
 
       return s;
     }

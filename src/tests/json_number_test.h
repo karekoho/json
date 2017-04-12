@@ -427,9 +427,9 @@ namespace format
       TEST_IT_END;
     }
 
-    virtual void test_str_length () override {}
-    virtual void test__clear () override {}
-    virtual void test_type () override {}
+    virtual void test_str_length () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
+    virtual void test__clear () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
+    virtual void test_type () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!");}
 
     virtual void
     test__clone_const_value_ref () override
@@ -472,8 +472,9 @@ namespace format
       /* 8. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_calculate", &json_number_test::test_calculate));
       /* 9. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_all_values", &json_number_test::test_assign_all_values));
       /* 10. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test__clone_const_value_ref", &json_number_test::test__clone_const_value_ref));
-      /* 11. */ //s->addTest (new CppUnit::TestCaller<json_number_test> ("", &json_number_test::test_str_length));
-      /* 12. */ //s->addTest (new CppUnit::TestCaller<json_number_test> ("", &json_number_test::test__clear));
+      /* 11. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test_str_length", &json_number_test::test_str_length));
+      /* 12. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test__clear", &json_number_test::test__clear));
+      /* 13. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test_type", &json_number_test::test_type));
 
       return s;
     }

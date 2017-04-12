@@ -100,11 +100,11 @@ namespace format
         }
     }
 
-    virtual void test__parse () override {}
-    virtual void test_str_length () override {}
-    virtual void test__to_string () override {}
-    virtual void test__clear () override {}
-    virtual void test_type () override {}
+    virtual void test__parse () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
+    virtual void test_str_length () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
+    virtual void test__to_string () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
+    virtual void test__clear () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
+    virtual void test_type () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
 
     virtual void
     test__clone_const_value_ref () override
@@ -123,10 +123,11 @@ namespace format
       /* 0. */  s->addTest (new CppUnit::TestCaller<json_null_test> ("test_ctor_dtor", &json_null_test::test_ctor_dtor));
       /* 1. */  s->addTest (new CppUnit::TestCaller<json_null_test> ("test_assign_all_values", &json_null_test::test_assign_all_values));
       /* 2. */  s->addTest (new CppUnit::TestCaller<json_null_test> ("test__clone_const_value_ref", &json_null_test::test__clone_const_value_ref));
-      /* 3. */  //s->addTest (new CppUnit::TestCaller<json_null_test> ("", &json_null_test::test_parse_1));
-      /* 4. */  //s->addTest (new CppUnit::TestCaller<json_null_test> ("", &json_null_test::test_str_length));
-      /* 5. */  //s->addTest (new CppUnit::TestCaller<json_null_test> ("", &json_null_test::test_str_value));
-      /* 6. */  //s->addTest (new CppUnit::TestCaller<json_null_test> ("", &json_null_test::test__clear));
+      /* 3. */  s->addTest (new CppUnit::TestCaller<json_null_test> ("test__parse", &json_null_test::test__parse));
+      /* 4. */  s->addTest (new CppUnit::TestCaller<json_null_test> ("test_str_length", &json_null_test::test_str_length));
+      /* 5. */  s->addTest (new CppUnit::TestCaller<json_null_test> ("test__to_string", &json_null_test::test__to_string));
+      /* 6. */  s->addTest (new CppUnit::TestCaller<json_null_test> ("test__clear", &json_null_test::test__clear));
+      /* 7. */  s->addTest (new CppUnit::TestCaller<json_null_test> ("test_type", &json_null_test::test_type));
 
       return s;
     }

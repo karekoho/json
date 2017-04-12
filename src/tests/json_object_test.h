@@ -540,6 +540,11 @@ namespace format
                               copy[L"2"].parent () == & copy);
     }
 
+    virtual void
+    test_type () override
+    { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
+
+
     /**
      * 2.
      *
@@ -563,8 +568,9 @@ namespace format
       /* 9. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strLength", &json_object_test::test_str_length));
       /* 10. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strvalue", &json_object_test::test__to_string));
       /* 11. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_count", &json_object_test::test_length));
-      /* 12. */  s->addTest (new CppUnit::TestCaller<json_object_test> ("test__assign_value_ptr_value_ptr", &json_object_test::test__assign_value_ptr_value_ptr));
-      /* 13. */  s->addTest (new CppUnit::TestCaller<json_object_test> ("test__clone_const_value_ref", &json_object_test::test__clone_const_value_ref));
+      /* 12. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__assign_value_ptr_value_ptr", &json_object_test::test__assign_value_ptr_value_ptr));
+      /* 13. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__clone_const_value_ref", &json_object_test::test__clone_const_value_ref));
+      /* 14. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_type", &json_object_test::test_type));
 
        return s;
     }

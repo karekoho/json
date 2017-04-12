@@ -92,7 +92,6 @@ namespace format
     { return 4; }
 
   protected:
-
     /**
      * @brief null
      * @param parent

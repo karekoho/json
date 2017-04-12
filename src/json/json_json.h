@@ -138,7 +138,6 @@ namespace format
     str_length () const noexcept override
     { return __hasRoot () ? __root->str_length () : 0; }
 
-
   protected:
     /**
      * @brief _str_value
@@ -190,14 +189,6 @@ namespace format
     _make_value ();
 
     /**
-     * @brief _from_initializer_list
-     */
-    template<typename T>
-    void
-    _from_initializer_list ()
-    {}
-
-    /**
      * @brief _clear
      */
     virtual void
@@ -227,7 +218,7 @@ namespace format
      */
     virtual value &
     _erase (const value &v) noexcept override
-    { return __hasRoot () ? /*__root->erase (v)*/ __call__erase (__root, v) : *this; }
+    { return __hasRoot () ? __call__erase (__root, v) : *this; }
 
     /**
      * @brief _call_reviver

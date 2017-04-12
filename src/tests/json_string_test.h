@@ -257,7 +257,9 @@ namespace format
         TEST_IT_END;
       }
 
-      virtual void test__clear () override {}
+      virtual void
+      test__clear () override
+      { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
 
       virtual void
       test__clone_const_value_ref () override
@@ -287,7 +289,7 @@ namespace format
         /* 2. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_assign_all_values", &json_string_test::test_assign_all_values));
         /* 3. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__string", &json_string_test::test__string));
         /* 4. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__clone_const_value_ref", &json_string_test::test__clone_const_value_ref));
-        /* 5.   s->addTest (new CppUnit::TestCaller<json_string_test> ("test__clear", &json_string_test::test__clear)); */
+        /* 5. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__clear", &json_string_test::test__clear));
 
         return s;
       }

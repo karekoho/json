@@ -274,26 +274,7 @@ namespace format
       TEST_IT_END;
     }
 
-    virtual void
-    test_operator_at_key () override  // TODO
-    {
-      struct assert
-      {
-        const wchar_t *input;
-        value::value_t type;
-        int assert_status;
-      };
 
-      std::vector<struct assert> test = {
-        { L"{}", value::value_t::boolean_t, PASS },
-        { L"[]", value::value_t::boolean_t, PASS }
-       };
-
-       TEST_IT_START
-        // TODO: object[key]
-        // TODO: object[index]
-       TEST_IT_END;
-    }
 
     void
     test_parse_revive ()
@@ -308,18 +289,6 @@ namespace format
         std::vector<value *> output[2];
         int assert_status;
       };
-
-      /* std::vector<struct assert> test = {
-        { L"{\"0\":{},\"1\":[],\"2\":\"2\",\"3\":3,\"4\":false,\"5\":null}", {
-            { new object, new array, new string, new number, new boolean , new null },
-            { new null, new null, new string, new number, new boolean }
-          }, PASS },
-
-        { L"[{},\[],\"2\",3,false,null]", {
-            { new object, new array, new string, new number, new boolean, new null },
-            { new null, new null, new string, new number, new boolean }
-          }, PASS },
-        }; */
 
       std::vector<struct assert> test = {
         { L"{\"0\":{},\"1\":[],\"2\":\"2\",\"3\":3,\"4\":false,\"5\":null}", {
@@ -418,14 +387,48 @@ namespace format
       };
 
       for (size_t idx = 0; idx < 2; idx++)
-        CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::count ()", (size_t) 0, j[idx].length ());
+        CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::count ()",
+                                      (size_t) 0,
+                                      j[idx].length ());
     }
 
-    virtual void test_operator_at_index () override {}
-    virtual void test_str_length () override {}
-    virtual void test__clear () override {}
-    virtual void test__erase () override {}
-    virtual void test_type () override {}
+    virtual void
+    test_operator_at_key () override  // TODO
+    {
+      struct assert
+      {
+        const wchar_t *input;
+        value::value_t type;
+        int assert_status;
+      };
+
+      std::vector<struct assert> test = {
+        { L"{}", value::value_t::boolean_t, PASS },
+        { L"[]", value::value_t::boolean_t, PASS }
+      };
+
+      TEST_IT_START
+        // TODO: object[key]
+        // TODO: object[index]
+      TEST_IT_END;
+
+      CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!");
+    }
+
+    virtual void test_operator_at_index () override
+    { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
+
+    virtual void test_str_length () override
+    { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
+
+    virtual void test__clear () override
+    { CPPUNIT_ASSERT_ASSERTION_PASS (); }
+
+    virtual void test__erase () override
+    { CPPUNIT_ASSERT_ASSERTION_PASS (); }
+
+    virtual void test_type () override
+    { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
 
     virtual void
     test__assign_value_ptr_value_ptr () override
@@ -455,6 +458,13 @@ namespace format
       /* 7. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_count", &json_test::test_length));
       /* 8. */  s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_value_ptr_value_ptr", &json_test::test__assign_value_ptr_value_ptr));
       /* 9. */  s->addTest (new CppUnit::TestCaller<json_test> ("test__clone_const_value_ref", &json_test::test__clone_const_value_ref));
+      /* 10. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_operator_at_key", &json_test::test_operator_at_key));
+      /* 11. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_operator_at_index", &json_test::test_operator_at_index));
+      /* 12. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_str_length", &json_test::test_str_length));
+      /* 13. */  s->addTest (new CppUnit::TestCaller<json_test> ("test__clear", &json_test::test__clear));
+      /* 14. */  s->addTest (new CppUnit::TestCaller<json_test> ("test__erase", &json_test::test__erase));
+      /* 15. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_type", &json_test::test_type));
+
       /* 10. */  //s->addTest (new CppUnit::TestCaller<json_test> ("example_1", &json_test::example_1));
 
       return s;
