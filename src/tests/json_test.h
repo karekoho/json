@@ -64,7 +64,7 @@ namespace format
     }
 
     virtual void
-    test__parse_1 () override
+    test__parse () override
     {
       struct assert
       {
@@ -447,7 +447,7 @@ namespace format
 
       /* 0. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_ctor_dtor", &json_test::test_ctor_dtor));
       /* 1. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_str_value", &json_test::test__to_string));
-      /* 2. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_1", &json_test::test__parse_1));
+      /* 2. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_1", &json_test::test__parse));
       /* 3. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_make_value", &json_test::test_make_value));
       /* 4. */  s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_to_parent", &json_test::test__assign_to_parent));
       /* 5. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_assign_all_values", &json_test::test_assign_all_values));

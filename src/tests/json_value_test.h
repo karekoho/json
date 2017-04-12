@@ -40,7 +40,7 @@ namespace format
 
           format::json_mock_value *m  = new format::json_mock_value ();
 
-          /*m->__startp =*/ m->_readp = startp;
+          m->_readp = startp;
 
           m->_look_ahead ();
 
@@ -50,8 +50,6 @@ namespace format
 
         TEST_IT_END;
       }
-
-      // void test_lexeme ();
 
       void
       test__string () // Moved to json_test
@@ -82,7 +80,7 @@ namespace format
 
             json_mock_value *m  = new json_mock_value ();
 
-            /*m->__startp =*/ m->_readp = startp;
+            m->_readp = startp;
 
             m->_look_ahead ();
 
@@ -120,7 +118,7 @@ namespace format
 
             json_mock_value *m  = new json_mock_value ();
 
-            /*m->__startp =*/ m->_readp = startp;
+            m->_readp = startp;
 
             value::_literal ltr = m->_is_literal ();
 
@@ -306,26 +304,18 @@ namespace format
           }
       }
 
-      virtual void
-      test_operator_at_index () override
-      {
-      }
-
-      virtual void
-      test_length () override
-      {
-      }
-
       void
       test_operator_equal_value_t ()
       {
-        CPPUNIT_ASSERT_MESSAGE ("value == value_t", boolean () == value::boolean_t);
+        CPPUNIT_ASSERT_MESSAGE ("value == value_t",
+                                boolean () == value::boolean_t);
       }
 
       void
       test_operator_equal_value ()
       {
-        CPPUNIT_ASSERT_MESSAGE ("value == value", boolean () == boolean ());
+        CPPUNIT_ASSERT_MESSAGE ("value == value",
+                                boolean () == boolean ());
       }
 
       void
@@ -370,21 +360,45 @@ namespace format
                                       (j[L"0"] = nullptr)[L"0"].type ());
       }
 
-      virtual void test_str_length () override {}
-      virtual void test__to_string () override {}
-      virtual void test_assign_all_values () override {}
-      virtual void test__clear () override {}
-      virtual void test__erase () override {}
+      virtual void
+      test_operator_at_index () override
+      { CPPUNIT_ASSERT_ASSERTION_PASS (); }
+
+      virtual void
+      test_length () override
+      { CPPUNIT_ASSERT_ASSERTION_PASS (); }
+
+      virtual void
+      test_str_length () override
+      { CPPUNIT_ASSERT_ASSERTION_PASS (); }
+
+      virtual void
+      test__to_string () override
+      { CPPUNIT_ASSERT_ASSERTION_PASS (); }
+
+      virtual void
+      test_assign_all_values () override
+      { CPPUNIT_ASSERT_ASSERTION_PASS (); }
+
+      virtual void
+      test__clear () override
+      { CPPUNIT_ASSERT_ASSERTION_PASS (); }
+
+      virtual void
+      test__erase () override
+      { CPPUNIT_ASSERT_ASSERTION_PASS (); }
 
       virtual void
       test_ctor_dtor () override
       { CPPUNIT_ASSERT_ASSERTION_PASS (); }
 
       virtual void
-      test__parse_1 () override
+      test__parse () override
       { CPPUNIT_ASSERT_ASSERTION_PASS (); }
 
-      virtual void test_operator_at_key () override {}
+      virtual void
+      test_operator_at_key () override
+      { CPPUNIT_ASSERT_ASSERTION_PASS (); }
 
       virtual void
       test_type () override

@@ -39,7 +39,7 @@ namespace format
     }
 
     virtual void
-    test__parse_1 () override
+    test__parse () override
     {
       test_parse_parent ();
       test_parse_no_parent ();
@@ -283,7 +283,7 @@ namespace format
         CppUnit::TestSuite *s = new CppUnit::TestSuite ("json string test");
 
         /* 0. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_ctor_dtor", &json_string_test::test_ctor_dtor));
-        /* 1. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_parse_1", &json_string_test::test__parse_1));
+        /* 1. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_parse_1", &json_string_test::test__parse));
         /* 2. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_assign_all_values", &json_string_test::test_assign_all_values));
         /* 3. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__string", &json_string_test::test__string));
         /* 4. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__clone_const_value_ref", &json_string_test::test__clone_const_value_ref));

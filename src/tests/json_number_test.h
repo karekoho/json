@@ -50,7 +50,7 @@ namespace format
     }
 
     virtual void
-    test__parse_1 ()
+    test__parse ()
     {
       number n;
 
@@ -463,7 +463,7 @@ namespace format
 
       /* 0. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_strValue", &json_number_test::test__to_string));
       /* 1. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_ctor_dtor", &json_number_test::test_ctor_dtor));
-      /* 2. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_parse_1", &json_number_test::test__parse_1));
+      /* 2. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_parse_1", &json_number_test::test__parse));
       /* 3. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_digits", &json_number_test::test_digits));
       /* 4. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_frag", &json_number_test::test_frag));
       /* 5. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_exp", &json_number_test::test_exp));

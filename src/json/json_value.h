@@ -240,7 +240,6 @@ namespace format
     virtual size_t
     str_length () const noexcept = 0;
 
-
     /**
      * @brief value
      * @return

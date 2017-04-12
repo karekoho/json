@@ -96,7 +96,7 @@ namespace format
     }
 
     virtual void test_ctor_dtor () override { CPPUNIT_ASSERT_ASSERTION_PASS (); }
-    virtual void test__parse_1 () override { CPPUNIT_ASSERT_ASSERTION_PASS (); }
+    virtual void test__parse () override { CPPUNIT_ASSERT_ASSERTION_PASS (); }
     virtual void test_assign_all_values () override { CPPUNIT_ASSERT_ASSERTION_PASS (); }
     virtual void test__clear () override { CPPUNIT_ASSERT_ASSERTION_PASS (); }
     virtual void test_str_length () override { CPPUNIT_ASSERT_ASSERTION_PASS (); }
