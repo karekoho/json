@@ -269,9 +269,17 @@ namespace format
 
         (void) copy._clone (src);
 
-        CPPUNIT_ASSERT_MESSAGE ("string", & copy != & src);
+        //CPPUNIT_ASSERT_MESSAGE ("string", & copy != & src);
         CPPUNIT_ASSERT_EQUAL_MESSAGE ("src._string_value.empty ()", true, src._string_value[0].empty () );
         CPPUNIT_ASSERT_MESSAGE ("copy.get ()", wcscmp (L"xxx", copy.get ()) == 0);
+      }
+
+      virtual void
+      test_type () override
+      {
+        CPPUNIT_ASSERT_EQUAL_MESSAGE ("value::type ()",
+                                      value::string_t,
+                                      string ().type ());
       }
 
       /**
@@ -290,6 +298,7 @@ namespace format
         /* 3. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__string", &json_string_test::test__string));
         /* 4. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__clone_const_value_ref", &json_string_test::test__clone_const_value_ref));
         /* 5. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__clear", &json_string_test::test__clear));
+        /* 6. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_type", &json_string_test::test_type));
 
         return s;
       }

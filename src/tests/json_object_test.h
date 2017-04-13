@@ -542,7 +542,11 @@ namespace format
 
     virtual void
     test_type () override
-    { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
+    {
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("value::type ()",
+                                    value::object_t,
+                                    object ().type ());
+    }
 
 
     /**

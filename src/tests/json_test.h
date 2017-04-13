@@ -415,20 +415,43 @@ namespace format
       CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!");
     }
 
-    virtual void test_operator_at_index () override
-    { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
+    virtual void
+    test_operator_at_index () override
+    {
+      CPPUNIT_ASSERT_EQUAL_MESSAGE (  "json[index]::type ()",
+                                      value::undefined_t,
+                                      json ()[(size_t) 0].type ());
 
-    virtual void test_str_length () override
-    { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
+      CPPUNIT_ASSERT_EQUAL_MESSAGE (  "json[index]::type ()",
+                                      value::boolean_t,
+                                      json (L"[true]")[(size_t) 0].type ());
+    }
+
+    virtual void
+    test_str_length () override
+    {
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("json[index]::str_length ()",
+                                    (size_t) 3,
+                                    json (L"{\"0\":\"x\"}")[L"0"].str_length ());
+    }
 
     virtual void test__clear () override
-    { CPPUNIT_ASSERT_ASSERTION_PASS (); }
+    { CPPUNIT_ASSERT_ASSERTION_PASS ("json::_clear is nop"); }
 
     virtual void test__erase () override
-    { CPPUNIT_ASSERT_ASSERTION_PASS (); }
-
-    virtual void test_type () override
     { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
+
+    virtual void
+    test_type () override
+    {
+        CPPUNIT_ASSERT_EQUAL_MESSAGE ("value::type ()",
+                                      value::undefined_t,
+                                      json ().type ());
+
+        CPPUNIT_ASSERT_EQUAL_MESSAGE ("value::type ()",
+                                      value::object_t,
+                                      json (L"{}").type ());
+    }
 
     virtual void
     test__assign_value_ptr_value_ptr () override

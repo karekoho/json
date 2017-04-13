@@ -429,7 +429,14 @@ namespace format
 
     virtual void test_str_length () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
     virtual void test__clear () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
-    virtual void test_type () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!");}
+
+    virtual void
+    test_type () override
+    {
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("value::type ()",
+                                    value::number_t,
+                                    number ().type ());
+    }
 
     virtual void
     test__clone_const_value_ref () override
