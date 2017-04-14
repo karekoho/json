@@ -86,7 +86,8 @@ namespace format
     */
     inline value &
     operator =(const array & a)
-    { return _parent ? _parent->_assign (this, new array (a)) : *(_clone (a)); }
+    //{ return _parent ? _parent->_assign (this, new array (a)) : *(_clone (a)); }
+    { return _parent ? __call__assign (_parent, this, new array (a)) : *(_clone (a)); }
 
    /**
     * @brief str_length

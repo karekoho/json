@@ -88,7 +88,8 @@ namespace format
       */
       value &
       _assign (const boolean & nv)
-      { return _parent ? _parent->_assign (this, new boolean (nv)) : *(_clone (nv)); }
+      //{ return _parent ? _parent->_assign (this, new boolean (nv)) : *(_clone (nv)); }
+      { return _parent ? __call__assign (_parent, this, new boolean (nv)) : *(_clone (nv)); }
 
      /**
       * @brief value

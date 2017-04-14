@@ -195,7 +195,8 @@ namespace format
      */
     value &
     _assign (const number & nv)
-    { return _parent  ? _parent->_assign (this, new number (nv)) : *(_clone (nv)); }
+    //{ return _parent  ? _parent->_assign (this, new number (nv)) : *(_clone (nv)); }
+    { return _parent  ? __call__assign (_parent, this, new number (nv)) : *(_clone (nv)); }
 
     /**
      * @brief _clear

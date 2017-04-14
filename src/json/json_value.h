@@ -29,13 +29,13 @@ namespace format
     friend void __call__set_parent (value *, json *);
     friend const wchar_t * __call_str_value (value *, wchar_t *);
     friend value & __call__erase (value *, const value &);
+    friend value & __call__assign (value *, value *, value *);
 
     #ifdef UNIT_TEST
       friend class json_value_test;
     #endif
 
     public:
-
     /**
      * @brief The otype enum
      */
@@ -622,6 +622,10 @@ namespace format
    inline value &
    __call__erase (value *parent, const value & v)
    {  return parent->_erase (v); }
+
+    inline value &
+    __call__assign (value *parent, value *ov, value*nv)
+    { return parent->_assign (ov, nv); }
 } // Namespace format
 
 #endif // JSON_VALUE_H

@@ -393,26 +393,15 @@ namespace format
     }
 
     virtual void
-    test_operator_at_key () override  // TODO
+    test_operator_at_key () override
     {
-      struct assert
-      {
-        const wchar_t *input;
-        value::value_t type;
-        int assert_status;
-      };
+      CPPUNIT_ASSERT_EQUAL_MESSAGE (  "json[key]::type ()",
+                                      value::undefined_t,
+                                      json ()[L"0"].type ());
 
-      std::vector<struct assert> test = {
-        { L"{}", value::value_t::boolean_t, PASS },
-        { L"[]", value::value_t::boolean_t, PASS }
-      };
-
-      TEST_IT_START
-        // TODO: object[key]
-        // TODO: object[index]
-      TEST_IT_END;
-
-      CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!");
+      CPPUNIT_ASSERT_EQUAL_MESSAGE (  "json[key]::type ()",
+                                      value::boolean_t,
+                                      json (L"{\"0\":true}")[L"0"].type ());
     }
 
     virtual void
@@ -435,11 +424,13 @@ namespace format
                                     json (L"{\"0\":\"x\"}")[L"0"].str_length ());
     }
 
-    virtual void test__clear () override
+    virtual void
+    test__clear () override
     { CPPUNIT_ASSERT_ASSERTION_PASS ("json::_clear is nop"); }
 
-    virtual void test__erase () override
-    { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
+    virtual void
+    test__erase () override
+    { CPPUNIT_ASSERT_ASSERTION_PASS ("json::_erase is nop"); }
 
     virtual void
     test_type () override

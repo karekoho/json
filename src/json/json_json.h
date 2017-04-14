@@ -120,7 +120,7 @@ namespace format
     str_length () const noexcept override
     { return __hasRoot () ? __root->str_length () : 0; }
 
-    virtual value & _assign (value *, value *) override { return *this; }
+    //virtual value & _assign (value *, value *) override { return *this; }
 
   protected:
     /**
@@ -178,10 +178,10 @@ namespace format
      * @param ov Old value
      * @param nv New value
      * @return
-     *
+     **/
     virtual value &
     _assign (value *, value *) override
-    { return *this; }*/
+    { return *this; }
 
     /**
      * @brief _make_value
