@@ -411,7 +411,7 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-      { 100, { L"200", L"200.5" }, { L"100", L"100.000000", L"200", L"200.500000" }, PASS }
+        { 100, { L"200", L"200.5" }, { L"100", L"100.000000", L"200", L"200.500000" }, PASS }
       };
 
       TEST_IT_START
@@ -452,6 +452,7 @@ namespace format
           ASSERT_EQUAL_IDX ("number::str_length ()",
                             (*it).len,
                             (*it).n->str_length ());
+          delete (*it).n;
       TEST_IT_END;
     }
 
