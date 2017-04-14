@@ -37,15 +37,15 @@ namespace format
 
     /**
      * @brief number
+     * @param l
+     */
+    number (long l);
+
+    /**
+     * @brief number
      * @param d
      */
     number (double d);
-
-    /**
-     * @brief Number
-     * @param json
-     */
-    number (const wchar_t *json);
 
     /**
      * @brief Number
@@ -128,6 +128,12 @@ namespace format
 
     /**
      * @brief number
+     * @param json
+     */
+    number (const wchar_t *json);
+
+    /**
+     * @brief number
      * @param parent
      */
     number (json *parent);
@@ -195,7 +201,6 @@ namespace format
      */
     value &
     _assign (const number & nv)
-    //{ return _parent  ? _parent->_assign (this, new number (nv)) : *(_clone (nv)); }
     { return _parent  ? __call__assign (_parent, this, new number (nv)) : *(_clone (nv)); }
 
     /**

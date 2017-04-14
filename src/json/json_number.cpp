@@ -10,6 +10,14 @@ format::number::number ()
     _is_double (false)
 {}
 
+format::number::number (long l)
+  : leaf (),
+    _double_value (l),
+    _double_valuep (& _double_value),
+    _digitp {{ 0, 0 }, { 0, 0 }},
+    _is_double (false)
+{}
+
 format::number::number (double d)
   : leaf (),
     _double_value (d),

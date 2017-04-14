@@ -16,22 +16,24 @@ namespace format
     virtual void
     test_ctor_dtor ()
     {
-      json *p[] = { 0, new json };
+      json parent;
+      // json *p[] = { 0, new json };
 
-      for (size_t pidx = 0; pidx < 2; pidx++)
-        {
+      //for (size_t pidx = 0; pidx < 2; pidx++)
+        //{
           number n[] = {
             number (),
-            number (10),
+            number ((long) 10),
+            number (10.10),
             number (L"10"),
-            number (p[pidx]),
+            number (& parent),
           };
-        }
+        //}
 
-      delete p[1];
+      //delete p[1];
 
       number src[] = {
-        number (10),
+        number ((long)10),
         number (L"100")
       };
 
@@ -338,7 +340,7 @@ namespace format
         int assert_status[3];
       };
 
-      number n (10);
+      number n ((long)10);
 
       std::vector<struct assert > test = {
         { & n, value::number_t, L"0",  0, 1, { PASS, PASS } },
@@ -404,31 +406,58 @@ namespace format
       {
         double d;
         const wchar_t *s[2];
-        const wchar_t *output[3];
+        const wchar_t *output[4];
         int assert_status;
       };
 
       std::vector<struct assert > test = {
-      { 100, { L"200", L"200.5" }, { L"100.000000", L"200", L"200.500000" }, PASS }
+      { 100, { L"200", L"200.5" }, { L"100", L"100.000000", L"200", L"200.500000" }, PASS }
       };
 
       TEST_IT_START
 
-        number n[3] = {
+        number n[4] = {
+          number ((long) (*it).d),
           number ((*it).d),
           number ((*it).s[0]),
           number ((*it).s[1]),
         };
 
-        CPPUNIT_ASSERT_MESSAGE ("n[0].strValue ()", wcscmp((*it).output[0], n[0]._to_string ()) == 0);
-        CPPUNIT_ASSERT_MESSAGE ("n[1].strValue ()", wcscmp((*it).output[1], n[1]._to_string ()) == 0);
-        CPPUNIT_ASSERT_MESSAGE ("n[2].strValue ()", wcscmp((*it).output[2], n[2]._to_string ()) == 0);
+        CPPUNIT_ASSERT_MESSAGE ("n[0]._to_string ()", wcscmp((*it).output[0], n[0]._to_string ()) == 0);
+        CPPUNIT_ASSERT_MESSAGE ("n[1]._to_string ()", wcscmp((*it).output[1], n[1]._to_string ()) == 0);
+        CPPUNIT_ASSERT_MESSAGE ("n[2]._to_string ()", wcscmp((*it).output[2], n[2]._to_string ()) == 0);
+        CPPUNIT_ASSERT_MESSAGE ("n[3]._to_string ()", wcscmp((*it).output[3], n[3]._to_string ()) == 0);
 
       TEST_IT_END;
     }
 
-    virtual void test_str_length () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
-    virtual void test__clear () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
+    virtual void
+    test_str_length () override
+    {
+      struct assert
+      {
+        number *n;
+        size_t len;
+        int assert_status;
+      };
+
+      std::vector<struct assert > test = {
+        { new number ((long) 100), 3, PASS },
+        { new number (100.10), 10, PASS },
+        { new number (L"100"), 3, PASS },
+        { new number (L"100.10"), 10, PASS } // TODO: should be 5
+      };
+
+      TEST_IT_START
+          ASSERT_EQUAL_IDX ("number::str_length ()",
+                            (*it).len,
+                            (*it).n->str_length ());
+      TEST_IT_END;
+    }
+
+    virtual void
+    test__clear () override
+    { number ((long) 100)._clear (); }
 
     virtual void
     test_type () override
@@ -442,7 +471,7 @@ namespace format
     test__clone_const_value_ref () override
     {
       number src[] = {
-        number (10),
+        number ((long) 10),
         number (L"100")
       };
 
