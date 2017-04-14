@@ -130,7 +130,7 @@ namespace format
 
     virtual void
     test__clone_const_value_ref () override
-    { CPPUNIT_ASSERT_ASSERTION_PASS (); }
+    { CPPUNIT_ASSERT_ASSERTION_PASS ("null::_clone (const value &) return value is fixed (this)"); }
 
     /**
      * 7.
