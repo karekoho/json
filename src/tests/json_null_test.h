@@ -100,10 +100,25 @@ namespace format
         }
     }
 
-    virtual void test__parse () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
-    virtual void test_str_length () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
-    virtual void test__to_string () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
-    virtual void test__clear () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
+    virtual void
+    test__parse () override
+    {
+      null n;
+      const wchar_t *input = L"null ";
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("endp", input + 4, n._parse (input));
+    }
+
+    virtual void
+    test_str_length () override
+    { CPPUNIT_ASSERT_ASSERTION_PASS ("null::str_length () return value is fixed"); }
+
+    virtual void
+    test__to_string () override
+    { CPPUNIT_ASSERT_ASSERTION_PASS ("null::_to_string () return value is fixed"); }
+
+    virtual void
+    test__clear () override
+    { CPPUNIT_ASSERT_ASSERTION_PASS ("null::_clear () is nop"); }
 
     virtual void
     test_type () override

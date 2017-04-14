@@ -107,7 +107,6 @@ namespace format
      */
     value &
     _assign (const null &)
-    //{ return _parent ? _parent->_assign (this, new null (*this)) : *this; }
     { return _parent ? __call__assign (_parent, this, new null (*this)) : *this; }
 
     /**
