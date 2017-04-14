@@ -35,7 +35,8 @@ namespace format
 
       std::vector<struct assert > test = {
         { new string (L"x"), { 3, 4 }, { L"\"x\"", L"x\"x\"" }, PASS },
-        { new number ((long) 100), { 10, 11 }, { L"100.000000", L"x100.000000" }, PASS },
+        //{ new number ((long) 100), { 10, 11 }, { L"100.000000", L"x100.000000" }, PASS },
+        { new number ((long) 100), { 3, 4 }, { L"100", L"x100" }, PASS },
         { new boolean (), { 5, 6 }, { L"false", L"xfalse" }, PASS },
         { new null (), { 4, 5 }, { L"null", L"xnull" }, PASS },
       };
