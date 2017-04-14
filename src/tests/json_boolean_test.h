@@ -106,10 +106,55 @@ namespace format
           }
     }
 
-    virtual void test__parse () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented"); }
-    virtual void test_str_length () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented"); }
-    virtual void test__to_string () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented"); }
-    virtual void test__clear () override { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented"); }
+    virtual void
+    test__parse () override
+    {
+      struct assert
+      {
+        const wchar_t *input;
+        bool value;
+        size_t charc;
+        int assert_status;
+      };
+
+      std::vector<struct assert > test = {
+        { L"false ", false, 5, PASS },
+        { L"true ", true, 4, PASS }
+      };
+
+      TEST_IT_START
+          boolean b ((*it).value);
+          ASSERT_EQUAL_IDX ("readp",
+                            (*it).input + (*it).charc,
+                            b._parse ((*it).input));
+      TEST_IT_END;
+    }
+
+    virtual void
+    test_str_length () override
+    {
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("boolean::str_length ()",
+                                    (size_t) 5,
+                                    boolean (false).str_length ());
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("boolean::str_length ()",
+                                    (size_t) 4,
+                                    boolean (true).str_length ());
+    }
+
+    virtual void
+    test__to_string () override
+    {
+      CPPUNIT_ASSERT_MESSAGE ("boolean::_to_string ()",
+                              boolean (false)._to_string () == std::wstring (L"false"));
+
+      CPPUNIT_ASSERT_MESSAGE ("boolean::_to_string ()",
+                              boolean (true)._to_string () == std::wstring (L"true"));
+    }
+
+    virtual void
+    test__clear () override
+    { CPPUNIT_ASSERT_ASSERTION_PASS ("boolean::_clear is nop"); }
 
     virtual void
     test_type () override
@@ -118,7 +163,6 @@ namespace format
                                     value::boolean_t,
                                     boolean ().type ());
     }
-
 
     virtual void
     test__clone_const_value_ref () override

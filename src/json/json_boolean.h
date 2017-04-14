@@ -63,7 +63,6 @@ namespace format
       str_length () const noexcept override
       { return _boolean_value == true ? 4 : 5; }
 
-
      /**
       * @brief type
       * @return
@@ -88,7 +87,6 @@ namespace format
       */
       value &
       _assign (const boolean & nv)
-      //{ return _parent ? _parent->_assign (this, new boolean (nv)) : *(_clone (nv)); }
       { return _parent ? __call__assign (_parent, this, new boolean (nv)) : *(_clone (nv)); }
 
      /**
