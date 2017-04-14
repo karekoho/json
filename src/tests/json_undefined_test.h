@@ -130,7 +130,7 @@ namespace format
 
     virtual void
     test__clear () override
-    { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!");}
+    { CPPUNIT_ASSERT_ASSERTION_PASS ("undefined::_clear () is nop");}
 
     virtual void
     test_type () override
