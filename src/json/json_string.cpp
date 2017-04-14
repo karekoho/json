@@ -40,8 +40,7 @@ format::string::_parse (const wchar_t *json)
 
   _startp =_readp = json;
 
-  _string_value[0].clear ();
-  _string_value[1].clear ();
+  _clear ();
 
   if (_parent == 0)   // 2. ctor
     {
@@ -57,7 +56,6 @@ format::string::_parse (const wchar_t *json)
 format::value &
 format::string::_assign (const string &nv)
 {
-  //return _parent ? _parent->_assign (this, new string (nv)) : *(_clone (nv));
   return _parent ? __call__assign (_parent, this, new string (nv)) : *(_clone (nv));
 }
 

@@ -125,7 +125,10 @@ namespace format
      */
     virtual void
     _clear () override
-    {}
+    {
+      _string_value[0].clear ();
+      _string_value[1].clear ();
+    }
 
     /**
      * @brief _clone

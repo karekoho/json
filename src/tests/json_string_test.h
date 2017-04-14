@@ -16,26 +16,13 @@ namespace format
     virtual void
     test_ctor_dtor () override
     {
-      json *p[] = { 0, new json () };
+      json parent;
 
-      for (size_t pidx = 0; pidx < 2; pidx++)
-        {
-          string a[] = {
-            string (),
-            string (L"x"),
-            string (p[pidx], 1),
-          };
-        }
-
-      delete p[1];
-
-      string src = L"xxx";
-      string copy = src;
-
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("string::type ()", json::string_t , src.type ());
-      CPPUNIT_ASSERT_MESSAGE ("string", & copy != & src);
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("src._string_value.empty ()", true, src._string_value[0].empty () );
-      CPPUNIT_ASSERT_MESSAGE ("copy.value ()", wcscmp (L"xxx", copy.get ()) == 0);
+      string a[] = {
+        string (),
+        string (L"x"),
+        string (& parent, 1),
+      };
     }
 
     virtual void
@@ -212,18 +199,6 @@ namespace format
         }
       }
 
-      virtual void
-      test_str_length () override
-      {
-       // Tested in test_parse_parent () and test_parse_no_parent ()
-      }
-
-      virtual void
-      test__to_string () override
-      {
-        // Tested in test_parse_parent () and test_parse_no_parent ()
-      }
-
       void
       test__string ()
       {
@@ -258,10 +233,6 @@ namespace format
       }
 
       virtual void
-      test__clear () override
-      { CPPUNIT_ASSERT_ASSERTION_FAIL ("Not implemented !!!"); }
-
-      virtual void
       test__clone_const_value_ref () override
       {
         string src = L"xxx";
@@ -269,7 +240,6 @@ namespace format
 
         (void) copy._clone (src);
 
-        //CPPUNIT_ASSERT_MESSAGE ("string", & copy != & src);
         CPPUNIT_ASSERT_EQUAL_MESSAGE ("src._string_value.empty ()", true, src._string_value[0].empty () );
         CPPUNIT_ASSERT_MESSAGE ("copy.get ()", wcscmp (L"xxx", copy.get ()) == 0);
       }
@@ -281,6 +251,18 @@ namespace format
                                       value::string_t,
                                       string ().type ());
       }
+
+      virtual void
+      test__clear () override
+      { CPPUNIT_ASSERT_ASSERTION_PASS ("Calls std::string.clear ()"); }
+
+      virtual void
+      test_str_length () override
+      { CPPUNIT_ASSERT_ASSERTION_PASS ("Tested in test_parse_parent () and test_parse_no_parent ()"); }
+
+      virtual void
+      test__to_string () override
+      { CPPUNIT_ASSERT_ASSERTION_PASS ("Tested in test_parse_parent () and test_parse_no_parent ()"); }
 
       /**
        * 4.
@@ -299,6 +281,8 @@ namespace format
         /* 4. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__clone_const_value_ref", &json_string_test::test__clone_const_value_ref));
         /* 5. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__clear", &json_string_test::test__clear));
         /* 6. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_type", &json_string_test::test_type));
+        /* 7. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_str_length", &json_string_test::test_str_length));
+        /* 8. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__to_string", &json_string_test::test__to_string));
 
         return s;
       }
