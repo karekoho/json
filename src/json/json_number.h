@@ -86,6 +86,34 @@ namespace format
     { return _assign (n);  }
 
     /**
+     * @brief operator =
+     * @param d
+     * @return
+     */
+    inline value &
+    operator =(double d) noexcept
+    {
+      _double_value   = d;
+      _double_valuep  = & _double_value;
+      _is_double = true;
+      return __clear_strp ();
+    }
+
+    /**
+     * @brief operator =
+     * @param l
+     * @return
+     */
+    inline value &
+    operator =(long l) noexcept
+    {
+      _double_value   = l;
+      _double_valuep  = & _double_value;
+      _is_double = false;
+      return __clear_strp ();
+    }
+
+    /**
      * @brief value
      * @return
      */
@@ -235,7 +263,31 @@ namespace format
             ? std::to_wstring (_double_value)
             : std::to_wstring ((long) _double_value);
     }
-  }; // Class boolean
+
+    /**
+     * @brief __clear__digitp
+     */
+    inline void
+    __clear__digitp () noexcept
+    {
+      _digitp[DOUBLE][START]  = 0;
+      _digitp[DOUBLE][END]    = 0;
+      _digitp[EXP][START]     = 0;
+      _digitp[EXP][END]       = 0;
+    }
+
+    /**
+     * @brief __clear__strp Clear all string related pointers
+     * @return
+     */
+    inline value &
+    __clear_strp () noexcept
+    {
+      _double_str.clear ();
+      __clear__digitp ();
+      return *this;
+    }
+  }; // Class number
 
   inline number *
   __call_number (json *parent)

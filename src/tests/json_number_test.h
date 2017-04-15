@@ -472,8 +472,8 @@ namespace format
     test__clone_const_value_ref () override
     {
       number src[] = {
-        number ((long) 10),
-        number (L"100")
+        number (100.1),
+        number (L"100.1")
       };
 
       number copy[] = {
@@ -481,11 +481,68 @@ namespace format
           number (src[1])   // calls _clone (const value &)
       };
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("number::type ()", json::number_t, src[0].type ());
-      CPPUNIT_ASSERT_MESSAGE ("number", & copy[0] != & src[0]);
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("src[1]._double_value", (double) 0, src[1]._double_value);
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[0].value ()", (double) 10, copy[0].get ());
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[1].value ()", (double) 100, copy[1].get ());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("src[1]._double_value",
+                                    (double) 0,
+                                    src[1]._double_value);
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[0].get ()",
+                                    100.1,
+                                    copy[0].get ());
+
+      CPPUNIT_ASSERT_MESSAGE ("copy[]._is_double",
+                              copy[0]._is_double == true
+                              && copy[0]._is_double == copy[1]._is_double);
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("(long) copy[1].get ()",
+                                    100.1,
+                                    copy[1].get ());
+
+      CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",
+                              copy[1].stringify () == std::wstring (L"100.100000"));
+    }
+
+    void
+    test_assign_operator_long ()
+    {
+      json parent;
+
+      number n = (long) 100;
+      n = (long) 101;
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("(long) number::get ()",
+                                    (long) 101,
+                                    (long) n.get ());
+
+      static_cast<number &> ((parent[L"0"] = n)[L"0"]) = (long) 102;
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("(long) number::get ()",
+                                    (long) 102,
+                                    (long) static_cast<number &> (parent[L"0"]).get ());
+
+      CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",
+                              parent[L"0"].get () == std::wstring (L"102"));
+    }
+
+    void
+    test_assign_operator_double ()
+    {
+      json parent;
+
+      number n = 100.0;
+      n = 101.1;
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("(double) number::get ()",
+                                    101.1,
+                                    n.get ());
+
+      static_cast<number &> ((parent[L"0"] = n)[L"0"]) = 102.2;
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("(double) number::get ()",
+                                    102.2,
+                                    static_cast<number &> (parent[L"0"]).get ());
+
+      CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",
+                              parent[L"0"].get () == std::wstring (L"102.200000"));
     }
 
     /**
@@ -512,6 +569,8 @@ namespace format
       /* 11. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test_str_length", &json_number_test::test_str_length));
       /* 12. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test__clear", &json_number_test::test__clear));
       /* 13. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test_type", &json_number_test::test_type));
+      /* 14. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_operator_long", &json_number_test::test_assign_operator_long));
+      /* 15. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_operator_double", &json_number_test::test_assign_operator_double));
 
       return s;
     }

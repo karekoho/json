@@ -181,24 +181,22 @@ format::number::_clear ()
 {
   _double_value   = 0;
   _double_valuep  = 0;
-
-  _digitp[DOUBLE][START]  = 0;
-  _digitp[DOUBLE][END]    = 0;
-  _digitp[EXP][START]     = 0;
-  _digitp[EXP][END]       = 0;
+  (void) __clear_strp ();
 }
 
 format::value *
 format::number::_clone (const value &other)
 {
-  const number & nv = dynamic_cast<const number &>(other);
+  const number & nv = dynamic_cast<const number &> (other);
 
-  if (nv._double_valuep)
+  _is_double = nv._is_double;
+
+  if (nv._double_valuep)  // nv._calculate () is called or number is assigned with long|double
     {
       _double_value = nv._double_value;
       _double_valuep = &_double_value;
     }
-  else
+  else  // nv._calculate () not yet called
     {
       _digitp[DOUBLE][START]  = nv._digitp[DOUBLE][START];
       _digitp[DOUBLE][END]    = nv._digitp[DOUBLE][END];
