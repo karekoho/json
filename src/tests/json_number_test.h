@@ -481,13 +481,9 @@ namespace format
           number (src[1])   // calls _clone (const value &)
       };
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("src[1]._double_value",
-                                    (double) 0,
-                                    src[1]._double_value);
-
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[0].get ()",
                                     100.1,
-                                    copy[0].get ());
+                                    copy[0].get ()); // _double_value && _double_valuep are set
 
       CPPUNIT_ASSERT_MESSAGE ("copy[]._is_double",
                               copy[0]._is_double == true
@@ -496,6 +492,13 @@ namespace format
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("(long) copy[1].get ()",
                                     100.1,
                                     copy[1].get ());
+
+      CPPUNIT_ASSERT_MESSAGE ("src[1]._double_value",
+                              src[1]._double_valuep == 0);  // _parse () called but not _calculate ()
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("src[1]._double_value",
+                                    (double) 0,
+                                    src[1]._double_value);  // _parse () called but not _calculate ()
 
       CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",
                               copy[1].stringify () == std::wstring (L"100.100000"));
