@@ -40,7 +40,7 @@ format::string::_parse (const wchar_t *json)
 
   _startp =_readp = json;
 
-  _clear ();
+  //_clear ();
 
   if (_parent == 0)   // 2. ctor
     {

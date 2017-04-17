@@ -69,6 +69,26 @@ namespace format
     { return _assign (s); }
 
     /**
+     * @brief operator =
+     * @param s
+     * @return
+     */
+    value &
+    operator =(const wchar_t *s)
+    {
+      json *p = _parent;
+      _parent = 0;
+
+      _clear ();
+
+      (void) _parse (s);
+
+      _parent = p;
+
+      return *this;
+    }
+
+    /**
      * @brief value
      * @return
      */

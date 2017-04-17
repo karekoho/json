@@ -232,6 +232,27 @@ namespace format
         TEST_IT_END;
       }
 
+      /**
+       * @brief test_operator_assign_const_wchar_t_ptr
+       */
+      void
+      test_operator_assign_const_wchar_t_ptr ()
+      {
+        json parent;
+
+        string *s = new string (L"xx");
+        *s = L"x";
+
+        CPPUNIT_ASSERT_MESSAGE ("s.get () == \"x\"",
+                                s->get () == std::wstring (L"x"));
+
+        parent[L"0"] = s;   // s->_parent == parent
+        static_cast<string &> (parent[L"0"]) = L"xxx";
+
+        CPPUNIT_ASSERT_MESSAGE ("(parent[L\"0\"] == \"xxx\"",
+                                s->get () == std::wstring (L"xxx"));
+      }
+
       virtual void
       test__clone_const_value_ref () override
       {
@@ -283,6 +304,7 @@ namespace format
         /* 6. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_type", &json_string_test::test_type));
         /* 7. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_str_length", &json_string_test::test_str_length));
         /* 8. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__to_string", &json_string_test::test__to_string));
+        /* 9. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_operator_assign_const_wchar_t_ptr", &json_string_test::test_operator_assign_const_wchar_t_ptr));
 
         return s;
       }
