@@ -505,7 +505,7 @@ namespace format
     }
 
     void
-    test_assign_operator_long ()
+    test_operator_assign_long ()  // TODO: rename test_operator_assign_long
     {
       json parent;
 
@@ -529,7 +529,7 @@ namespace format
     }
 
     void
-    test_assign_operator_double ()
+    test_operator_assign_double ()  // TODO: rename test_operator_assign_double
     {
       json parent;
 
@@ -576,8 +576,8 @@ namespace format
       /* 11. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test_str_length", &json_number_test::test_str_length));
       /* 12. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test__clear", &json_number_test::test__clear));
       /* 13. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test_type", &json_number_test::test_type));
-      /* 14. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_operator_long", &json_number_test::test_assign_operator_long));
-      /* 15. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_operator_double", &json_number_test::test_assign_operator_double));
+      /* 14. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_operator_long", &json_number_test::test_operator_assign_long));
+      /* 15. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_operator_double", &json_number_test::test_operator_assign_double));
 
       return s;
     }
