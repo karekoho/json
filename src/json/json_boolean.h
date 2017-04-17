@@ -80,6 +80,18 @@ namespace format
       operator =(boolean & b)
       { return _assign (b); }
 
+      /**
+       * @brief operator =
+       * @param b
+       * @return
+       */
+      inline value &
+      operator =(bool b)
+      {
+        _boolean_value = b;
+        return *this;
+      }
+
      /**
       * @brief assign
       * @param nv

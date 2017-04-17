@@ -177,6 +177,26 @@ namespace format
                                     copy.get ());
     }
 
+    void
+    test_operator_assign_bool ()
+    {
+      json parent;
+
+      boolean *b = new boolean (false);
+      *b = true;
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("boolean::get ()",
+                                    true,
+                                    b->get ());
+
+      parent[L"0"] = b; // b._parent == parent
+      static_cast<boolean &> (parent[L"0"]) = false;
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("boolean::get ()",
+                                    false,
+                                    b->get ());
+    }
+
     /**
      * 6.
      * @brief suite
@@ -195,6 +215,7 @@ namespace format
       /* 5. */ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test__to_string", &json_boolean_test::test__to_string));
       /* 6. */ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test__clear", &json_boolean_test::test__clear));
       /* 7. */ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_type", &json_boolean_test::test_type));
+      /* 8. */ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_operator_assign_bool", &json_boolean_test::test_operator_assign_bool));
 
       return s;
     }
