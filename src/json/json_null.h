@@ -84,6 +84,14 @@ namespace format
     { return _assign (n); }
 
     /**
+     * @brief operator =
+     * @return
+     */
+    inline value &
+    operator =(std::nullptr_t)
+    { return *this; }
+
+    /**
      * @brief strLength
      * @return
      */
