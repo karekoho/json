@@ -331,13 +331,23 @@ namespace format
       }
 
       void
+      test_operator_assign_long ()
+      {
+        json j = L"{}";
+
+        CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[\"0\"].type ()",
+                                      value::number_t,
+                                      (j[L"0"] = (long) 100)[L"0"].type ());
+      }
+
+      void
       test_operator_assign_double ()
       {
         json j = L"{}";
 
         CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[\"0\"].type ()",
                                       value::number_t,
-                                      (j[L"0"] = (double) 100)[L"0"].type ());
+                                      (j[L"0"] = 100.0)[L"0"].type ());
       }
 
       void
@@ -462,6 +472,7 @@ namespace format
         /* 12. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_ptr", &json_value_test::test_assign_ptr));
         /* 13. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__assign_value_ptr_value_ptr", &json_value_test::test__assign_value_ptr_value_ptr));
         /* 14. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__clone_const_value_ref", &json_value_test::test__clone_const_value_ref));
+        /* 15. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_long", &json_value_test::test_operator_assign_long));
 
         return s;
       }

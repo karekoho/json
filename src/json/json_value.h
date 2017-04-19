@@ -154,6 +154,14 @@ namespace format
 
     /**
      * @brief operator =
+     * @param l
+     * @return
+     */
+    value &
+    operator =(long l);
+
+    /**
+     * @brief operator =
      * @param d
      * @return
      */

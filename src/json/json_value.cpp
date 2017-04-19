@@ -41,18 +41,12 @@ format::value::value (const value &other)
     _index (other._index)    
 {}
 
-//format::value::value (const value *ov, const value &nv)
-//  : _readp (nv._readp),
-//    _parent (0),
-//    _key (nv._key ? new wchar_t [wcslen (nv._key) + 1] () : 0),
-//    _index (nv._index)
-//{}
-
 format::value::
 ~value ()
 {
-  delete[] _key;  
+  delete[] _key;
 }
+
 
 long int
 format::value::_string (wchar_t &endc) const noexcept
@@ -97,8 +91,7 @@ format::value::_is_literal (const int _try) const noexcept
 
 format::value &
 format::value::_assign (const undefined &) noexcept
-{
-  // return  _parent ? _parent->_erase (*this) : *this;
+{  
   return _parent ? __call__erase (_parent, *this) : *this;
 }
 
@@ -108,8 +101,7 @@ format::value::_assign (const value &nv)
   if (_parent == 0)
     throw json_error (BAD_ASSIGN);
 
-  //return _parent->_assign (this, nv.clone () /*nv._clone (this)*/);
-  return __call__assign (_parent, this, nv.clone () /*nv._clone (this)*/);
+  return __call__assign (_parent, this, nv.clone ());
 }
 
 format::value &
@@ -118,7 +110,6 @@ format::value::_assign (value *nv)
   if (_parent == 0)
     throw json_error (BAD_ASSIGN);
 
-  //return _parent->_assign (this, nv);
   return __call__assign (_parent, this, nv);
 }
 
@@ -132,6 +123,12 @@ format::value &
 format::value::operator =(const wchar_t *json_text)
 {
   return _assign (new json (json_text));
+}
+
+format::value &
+format::value::operator =(long l)
+{
+  return _assign (new number ((long) l));
 }
 
 format::value &
