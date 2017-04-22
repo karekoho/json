@@ -86,8 +86,10 @@ namespace format
      */
     inline value &
     operator =(const object & o)
-    //{ return _parent ? _parent->_assign (this, new object (o)) : *(_clone (o)); }
-    { return _parent ? __call__assign (_parent, this, new object (o)) : *(_clone (o)); }
+    {
+      _clear ();
+      return _parent ? __call__assign (_parent, this, new object (o)) : *(_clone (o));
+    }
 
     /**
      * @brief str_length

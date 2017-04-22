@@ -60,9 +60,6 @@ format::object::_parse (const wchar_t *json)
   if (*_readp == 0)
     throw json_syntax_error (UNEX_END);
 
-  if (! _member_list.empty ())
-    _clear ();
-
   while (*_readp != 0)
     {
       (void) _look_ahead ();
@@ -176,18 +173,12 @@ format::object::_clear ()
       delete static_cast <std::pair<std::wstring, value *>>(*begin).second;
       begin = _member_list.erase (begin);
     }
-
-//  for (auto it = _member_list.begin (); it != end; it = _member_list.erase (it))
-//    delete static_cast <std::pair<std::wstring, value *>>(*it).second;
 }
 
 format::value *
 format::object::_clone (const value &other)
 {
   const object & nv = static_cast<const object &>(other);
-
-  if (! _member_list.empty ())
-    _clear ();  // TODO: need this ?
 
   if (nv._member_list.empty ())
     return this;

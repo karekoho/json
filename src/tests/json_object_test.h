@@ -530,6 +530,7 @@ namespace format
       object src = L"{\"2\":2}";
       object copy = L"{\"0\":0,\"1\":1}";
 
+      copy._clear ();
       (void) copy._clone (src);
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.length ()",
