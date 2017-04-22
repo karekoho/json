@@ -47,7 +47,6 @@ format::value::
   delete[] _key;
 }
 
-
 long int
 format::value::_string (wchar_t &endc) const noexcept
 {

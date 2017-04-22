@@ -63,24 +63,6 @@ namespace format
     value (const wchar_t *);
 
     /**
-     * @brief value
-     * @param d
-     */
-    //TODO: value (double d);
-
-    /**
-     * @brief value
-     * @param b
-     */
-    //TODO: value (bool b);
-
-    /**
-     * @brief value
-     * @param
-     */
-    //TODO: value (std::nullptr_t);
-
-    /**
      * @brief Value
      * @param other
      */
