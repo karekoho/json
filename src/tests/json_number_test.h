@@ -516,7 +516,7 @@ namespace format
                                     (long) 101,
                                     (long) n->get ());
 
-      static_cast<number &> ((parent[L"0"] = n)[L"0"]) = (long) 102;
+      (parent[L"0"] = n)[L"0"] = (long) 102;
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("(long) number::get ()",
                                     (long) 102,
@@ -540,7 +540,7 @@ namespace format
                                     101.1,
                                     n->get ());
 
-      static_cast<number &> ((parent[L"0"] = n)[L"0"]) = 102.2;
+      (parent[L"0"] = n)[L"0"] = 102.2;
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("(double) number::get ()",
                                     102.2,

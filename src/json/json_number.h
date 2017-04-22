@@ -90,8 +90,8 @@ namespace format
      * @param d
      * @return
      */
-    inline value &
-    operator =(double d) noexcept
+    virtual inline value &
+    operator =(double d) noexcept override
     {
       _double_value   = d;
       _double_valuep  = & _double_value;
@@ -104,8 +104,8 @@ namespace format
      * @param l
      * @return
      */
-    inline value &
-    operator =(long l) noexcept
+    virtual inline value &
+    operator =(long l) noexcept override
     {
       _double_value   = l;
       _double_valuep  = & _double_value;

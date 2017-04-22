@@ -157,7 +157,7 @@ namespace format
      * @param l
      * @return
      */
-    value &
+    virtual value &
     operator =(long l);
 
     /**
@@ -165,7 +165,7 @@ namespace format
      * @param d
      * @return
      */
-    value &
+    virtual value &
     operator =(double d);
 
     /**
