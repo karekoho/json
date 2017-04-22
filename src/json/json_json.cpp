@@ -92,17 +92,10 @@ format::json::~json ()
 const wchar_t *
 format::json::json::_parse (const wchar_t *readp)
 {
-  if (readp == 0 || *readp == 0)
-    throw json_syntax_error (UNEX_END);
-
   _readp = readp;
-
-  value * old_root = __root;
 
   if ((__root = _make_value ())->type () == value::no_value_t)
     __root = 0;
-
-  delete old_root;
 
   if (*(_look_ahead ()) != 0)
     throw json_syntax_error (UNEX_TOKEN, *_readp);
