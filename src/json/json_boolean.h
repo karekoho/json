@@ -85,8 +85,8 @@ namespace format
        * @param b
        * @return
        */
-      inline value &
-      operator =(bool b)
+      virtual inline value &
+      operator =(bool b) override
       {
         _boolean_value = b;
         return *this;

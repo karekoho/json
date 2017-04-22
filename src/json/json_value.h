@@ -173,7 +173,7 @@ namespace format
      * @param b
      * @return
      */
-    value &
+    virtual value &
     operator =(bool b);
 
     /**

@@ -190,7 +190,7 @@ namespace format
                                     b->get ());
 
       parent[L"0"] = b; // b._parent == parent
-      static_cast<boolean &> (parent[L"0"]) = false;
+      parent[L"0"] = false;
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("boolean::get ()",
                                     false,
