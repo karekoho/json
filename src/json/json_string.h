@@ -73,8 +73,8 @@ namespace format
      * @param s
      * @return
      */
-    value &
-    operator =(const wchar_t *s)
+    virtual value &
+    operator =(const wchar_t *s) override
     {
       json *p = _parent;
       _parent = 0;

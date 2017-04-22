@@ -247,7 +247,7 @@ namespace format
                                 s->get () == std::wstring (L"x"));
 
         parent[L"0"] = s;   // s->_parent == parent
-        static_cast<string &> (parent[L"0"]) = L"xxx";
+        parent[L"0"] = L"xxx";
 
         CPPUNIT_ASSERT_MESSAGE ("(parent[L\"0\"] == \"xxx\"",
                                 s->get () == std::wstring (L"xxx"));

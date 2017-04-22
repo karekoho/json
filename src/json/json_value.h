@@ -149,7 +149,7 @@ namespace format
      * @param s
      * @return
      */
-    value &
+    virtual value &
     operator =(const wchar_t *json_text);
 
     /**
