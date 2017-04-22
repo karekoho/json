@@ -58,9 +58,6 @@ format::array::_parse (const wchar_t *json)
   if (*_readp == 0)
     throw json_syntax_error (UNEX_END);
 
-  if (! _element_list.empty ())
-    _clear ();
-
   value *v = 0;
   size_t next_idx = 0;
 
@@ -149,9 +146,6 @@ format::value *
 format::array::_clone (const value &other)
 {
   const array & nv = dynamic_cast<const array &> (other);
-
-  if (! _element_list.empty ())
-    _clear ();  // TODO: need this ?
 
   if (nv._element_list.empty ())
     return this;

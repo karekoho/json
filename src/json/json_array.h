@@ -86,8 +86,10 @@ namespace format
     */
     inline value &
     operator =(const array & a)
-    //{ return _parent ? _parent->_assign (this, new array (a)) : *(_clone (a)); }
-    { return _parent ? __call__assign (_parent, this, new array (a)) : *(_clone (a)); }
+    {
+      _clear ();
+      return _parent ? __call__assign (_parent, this, new array (a)) : *(_clone (a));
+    }
 
    /**
     * @brief str_length
@@ -251,7 +253,6 @@ namespace format
      */
      virtual const wchar_t *
      _to_string (wchar_t *offset = 0) const override;
-
   }; // Class array
 
   inline array *

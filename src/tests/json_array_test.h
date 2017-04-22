@@ -455,7 +455,8 @@ namespace format
                                     array ().type ());
     }
 
-    virtual void test__assign_value_ptr_value_ptr () override
+    virtual void
+    test__assign_value_ptr_value_ptr () override
     {
       array a = L"[false]";
 
@@ -473,11 +474,13 @@ namespace format
                               a[(size_t) 0].parent () == & a);
     }
 
-    virtual void test__clone_const_value_ref () override
+    virtual void
+    test__clone_const_value_ref () override
     {
       array src = L"[2]";
       array copy = L"[0,1]";
 
+      copy._clear ();
       (void) copy._clone (src);
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.length ()",
