@@ -40,8 +40,6 @@ format::string::_parse (const wchar_t *json)
 
   _startp =_readp = json;
 
-  //_clear ();
-
   if (_parent == 0)   // 2. ctor
     {
       if ((charc = __string (endc)) < 0 )
