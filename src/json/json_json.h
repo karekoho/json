@@ -84,8 +84,8 @@ namespace format
      * @see http://stackoverflow.com/questions/1174169/function-passed-as-template-argument
      */
     static inline value *
-    parse (const wchar_t *text, reviver r = 0)
-    { return new json (text, r); }
+    parse (const wchar_t *json_text, reviver r = 0)
+    { return new json (json_text, r); }
 
     /**
      * @brief type
@@ -105,6 +105,19 @@ namespace format
 
     /**
      * @brief operator =
+     * @param json
+     * @return
+     */
+    virtual value &
+    operator =(const wchar_t *json_text) override
+    {
+      delete __root;
+      (void) _parse (json_text);
+      return *this;
+    }
+
+    /**
+     * @brief operator =
      * @param j
      * @return
      */
@@ -119,8 +132,6 @@ namespace format
     virtual size_t
     str_length () const noexcept override
     { return __hasRoot () ? __root->str_length () : 0; }
-
-    //virtual value & _assign (value *, value *) override { return *this; }
 
   protected:
     /**

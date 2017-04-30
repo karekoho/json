@@ -16,7 +16,7 @@ namespace format
 
     virtual void
     test_ctor_dtor () override
-    {
+    {      
       json parent;
 
       json j[] = {
@@ -33,8 +33,6 @@ namespace format
       };
 
       json copy = j[1];
-
-//      CPPUNIT_ASSERT_MESSAGE ("json", & copy != & j[1]);
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("value::type ()",
                                     value::boolean_t,
@@ -61,6 +59,16 @@ namespace format
 //                                    j[6].type ());
 
       delete json::parse (L"{}");
+
+      copy = L"[]";
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.type ()",
+                                    value::array_t,
+                                    copy.type ());
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.length ()",
+                                    (size_t) 0,
+                                    copy.length());
     }
 
     virtual void
