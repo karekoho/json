@@ -1,68 +1,79 @@
 PUBLIC INTERFACE:
 
 value = 0:
-value & = value[key]
-value & = value[index]
-const wchar_t * = value.get ()
-const wchar_t * = value.stringify ()
+value & = value[key]                                            : impl, json_test::test_operator_at_key
+value & = value[index]                                          : impl, json_test::test_operator_at_index
+const wchar_t * = value.get ()                                  : impl
+const wchar_t * = value.stringify ()                            : impl
 
-value = value &                         // assignment
-value = value *                         // assignment
-value = double                          // assignment
-value = const wchar_t *json_input       // assignment
-value = boolean                         // assignment
-value = nullptr                         // assignment
-value = undefined                       // deletion
+value = const value &                                           : impl, json_value_test_interface::assign_all_values
+value = value *                                                 : impl  json_value_test::test_assign_value_ptr
+value = double                                                  : impl, json_test
+value = const wchar_t *json_input                               : impl, json_test
+value = boolean                                                 : impl, json_test
+value = nullptr                                                 : impl, json_test
+value = undefined                                               : impl, json_test
+
 
 json > value:
-json (const wchar_t *json_input)
-json (object *)
-json (array *)
-json (const object &)                   // copy
-json (const array &)                    // copy
-json (const json &)                     // copy
+json (const wchar_t *json_input)                                : impl
+json (object *)                                                 : impl
+json (array *)s                                                 : impl
+json (const json &)                                             : impl
 
-json = const wchar_t *json_input        // assignment
-json = const object &                   // assignment
-json = array *                          // assignment
+json = const json &                                             : impl
+json = const wchar_t *json_input                                : impl
+json = object *                                                 : ?
+json = array *                                                  : ?
+
 
 object > json:
-object (const wchar_t *json_input)
-object (const object &)                 // copy
-object {{std::wstring, value *},{std::wstring, value *}}
+object (const wchar_t *json_input)                              : impl
+object (const object &)                                         : impl
+object {{std::wstring, value *},{std::wstring, value *}}        : impl
+
+object = const object &                                         : impl
+object = const wchar_t *json_input                              :
+object = {{std::wstring, value *},{std::wstring, value *}}      : ?
 
 array > json:
-array (const wchar_t *json_input)
-array (const object &)                  // copy
-array {value*, value*...}
+array (const wchar_t *json_input)                               : impl
+array (const array &)                                           : impl
+array {value*, value*...}                                       : impl
 
-array = const array &                   // copy
+array = const array &                                           : impl
+array = const wchar_t *json_input                               :
+array = {value*, value*...}                                     : ?
 
 number > leaf > value:
-number (double)
-number (float)
+number (double)                                                 : impl
+number (float)                                                  : impl
+number (const number &)                                         : impl
 
-number (const number &)
-number = double                 // assignment
-number = float                  // assignment
-number = const number &         // copy
+number = double                                                 : impl
+number = float                                                  : impl
+number = const number &                                         : impl
+
 
 string > leaf:
-string (const wchar_t *)
-string (const number &)         // copy
+string (const wchar_t *)                                        : impl
+string (const number &)                                         : impl
 
-string  = const wchar_t *       // assignment
-string  = const string &        // copy
+string  = const wchar_t *                                       : impl
+string  = const string &                                        : impl
+
 
 boolean > leaf:
-boolean (bool)
-boolean (const boolean &)       // copy
+boolean (bool)                                                  : impl
+boolean (const boolean &)                                       : impl
 
-boolean = bool                  // assignment
-boolean = const boolean &       // copy
+boolean = bool                                                  : impl
+boolean = const boolean &                                       : impl
+
 
 null > leaf:
-null
+null                                                            : impl
+
 
 undefined > leaf:
-undefined
+undefined                                                       : impl
