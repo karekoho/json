@@ -35,7 +35,7 @@ namespace format
      * @brief object
      * @param json
      */
-    object (const wchar_t *json);
+    object (const wchar_t *json_text);
 
     /**
      * @brief object
@@ -86,8 +86,21 @@ namespace format
      */
     inline value &
     operator =(const object & o)
-    //{ return _parent ? _parent->_assign (this, new object (o)) : *(_clone (o)); }
     { return _parent ? __call__assign (_parent, this, new object (o)) : *(_clone (o)); }
+
+    /**
+     * @brief operator =
+     * @param json_text
+     * @return
+     */
+    inline value &
+    operator =(const wchar_t *json_text)
+    {
+      if (! _member_list.empty ())
+        _clear ();
+      (void) _parse (json_text);
+      return *this;
+    }
 
     /**
      * @brief str_length
@@ -201,7 +214,7 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    _parse (const wchar_t *json) override;
+    _parse (const wchar_t *json_text) override;
 
     /**
      * @brief _pair

@@ -16,13 +16,13 @@ value = undefined                                               : impl, json_tes
 
 
 json > value:
-json (const wchar_t *json_input)                                : impl
-json (object *)                                                 : impl
-json (array *)s                                                 : impl
-json (const json &)                                             : impl
+json (const wchar_t *json_input)                                : impl, json_test::test_ctor_dtor
+json (object *)                                                 : impl, json_test::test_ctor_dtor
+json (array *)s                                                 : impl, json_test::test_ctor_dtor
+json (const json &)                                             : impl, json_test::test_ctor_dtor
 
-json = const json &                                             : impl
-json = const wchar_t *json_input                                : impl
+json = const json &                                             : impl, json_value_test::test__clone_const_value_ref
+json = const wchar_t *json_input                                : impl, no test
 json = object *                                                 : ?
 json = array *                                                  : ?
 
@@ -33,7 +33,7 @@ object (const object &)                                         : impl
 object {{std::wstring, value *},{std::wstring, value *}}        : impl
 
 object = const object &                                         : impl
-object = const wchar_t *json_input                              :
+object = const wchar_t *json_input                              : impl
 object = {{std::wstring, value *},{std::wstring, value *}}      : ?
 
 array > json:

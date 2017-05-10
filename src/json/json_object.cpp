@@ -4,10 +4,10 @@ format::object::object ()
   : json ()
 {}
 
-format::object::object (const wchar_t *text)
-  : json (text, false)
+format::object::object (const wchar_t *json_text)
+  : json (json_text, false)
 {
-  (void) _parse (text);
+  (void) _parse (json_text);
 }
 
 format::object::object (std::initializer_list<std::pair<std::wstring, value *>> il)
@@ -43,11 +43,11 @@ format::object::~object ()
 }
 
 const wchar_t *
-format::object::_parse (const wchar_t *json)
+format::object::_parse (const wchar_t *json_text)
 {
   if (_parent == 0)   // 1. Object (), 2. Object (const char *json)
     {
-      _readp = json;
+      _readp = json_text;
 
       if (*(_look_ahead ()) != _sc::begin_object)
         throw json_syntax_error (UNEX_END);
@@ -55,13 +55,10 @@ format::object::_parse (const wchar_t *json)
       _readp++;
     }
   else
-    _readp = json + 1;
+    _readp = json_text + 1;
 
   if (*_readp == 0)
     throw json_syntax_error (UNEX_END);
-
-  if (! _member_list.empty ())
-    _clear ();
 
   while (*_readp != 0)
     {
@@ -176,9 +173,6 @@ format::object::_clear ()
       delete static_cast <std::pair<std::wstring, value *>>(*begin).second;
       begin = _member_list.erase (begin);
     }
-
-//  for (auto it = _member_list.begin (); it != end; it = _member_list.erase (it))
-//    delete static_cast <std::pair<std::wstring, value *>>(*it).second;
 }
 
 format::value *
