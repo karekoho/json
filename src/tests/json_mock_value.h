@@ -18,7 +18,7 @@ namespace format
       {}
 
       virtual const wchar_t *
-      _parse (const wchar_t *readp)
+      _parse (const wchar_t *readp) override
       { return readp; }
 
       virtual value &
@@ -30,11 +30,11 @@ namespace format
       { return *(new format::undefined ()); }
 
       virtual value::value_t
-      type () const noexcept
+      type () const noexcept override
       { return value::value_t::undefined_t; }
 
       virtual size_t
-      length () const noexcept
+      length () const noexcept override
       { return 0; }
 
       virtual value *
@@ -50,7 +50,7 @@ namespace format
       { return 0; }
 
       virtual const wchar_t *
-      _to_string (wchar_t *) const
+      _to_string (wchar_t *) const override
       { return L""; }
 
       virtual value &
@@ -64,11 +64,11 @@ namespace format
   protected:
 
       virtual  value &
-      _at (const wchar_t *)
+      _at (const wchar_t *) override
       { return *(new format::undefined ()); }
 
       virtual  value &
-      _at (size_t)
+      _at (size_t) override
       { return *(new format::undefined ()); }
 
       virtual void _clear () override

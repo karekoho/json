@@ -73,7 +73,7 @@ namespace format
      * @return
      */
     virtual value *
-    clone () const
+    clone () const override
     { return new json (*this); }
 
     /**
@@ -267,7 +267,7 @@ namespace format
      */
     inline bool
     __hasRoot () const noexcept
-    { return ! __root == 0; }
+    { return ! (__root == 0); }
   };
 } // Namespace format
 

@@ -65,7 +65,7 @@ namespace format
      * @return
      */
     virtual value *
-    clone () const
+    clone () const override
     { return new number (*this); }
 
     /**
@@ -235,7 +235,7 @@ namespace format
      * @brief _clear
      */
     virtual void
-    _clear ();
+    _clear () override;
 
     /**
      * @brief strValue
@@ -249,7 +249,7 @@ namespace format
      * @return
      */
     virtual value *
-    _clone (const value &other);
+    _clone (const value &other) override;
 
   private:
     /**

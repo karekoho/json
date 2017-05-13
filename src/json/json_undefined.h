@@ -93,7 +93,7 @@ namespace format
      * @return
      */
     virtual value *
-    clone () const
+    clone () const override
     { return new undefined (*this); }
 
     /**
@@ -134,7 +134,7 @@ namespace format
      * @brief _clear
      */
     virtual void
-    _clear ()
+    _clear () override
     {}
 
     /**
@@ -197,7 +197,7 @@ namespace format
      * @return
      */
     virtual value *
-    clone () const
+    clone () const override
     { return new unique_undefined (*this); }
 
     /**

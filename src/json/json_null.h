@@ -46,7 +46,7 @@ namespace format
      * @return
      */
     virtual value *
-    clone () const
+    clone () const override
     { return new null (*this); }
 
     /**
@@ -121,7 +121,7 @@ namespace format
      * @brief _clear
      */
     virtual void
-    _clear ()
+    _clear () override
     {}
 
     /**

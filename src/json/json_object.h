@@ -93,8 +93,8 @@ namespace format
      * @param json_text
      * @return
      */
-    inline value &
-    operator =(const wchar_t *json_text)
+    virtual inline value &
+    operator =(const wchar_t *json_text) override
     {
       if (! _member_list.empty ())
         _clear ();

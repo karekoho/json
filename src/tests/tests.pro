@@ -1,7 +1,8 @@
 QT += core
 QT -= gui
 
-LIBS += -lcppunit
+INCLUDEPATH += /usr/local/include
+LIBS += -L/usr/local/lib -lcppunit
 
 #QMAKE_CXXFLAGS+= -std=c++11
 #QMAKE_LFLAGS +=  -std=c++11

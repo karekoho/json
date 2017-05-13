@@ -23,7 +23,8 @@ struct test_selector
 
     std::vector<int> *idxv = new std::vector<int> ();
 
-    char *token = strtok_r (strdupa (list), ",", & saveptr);
+    char *listcopy = strdup (list);
+    char *token = strtok_r (listcopy, ",", & saveptr);
 
     while (token)
       {
@@ -31,6 +32,7 @@ struct test_selector
         token = strtok_r (0, ",", & saveptr);
       }
 
+    free (listcopy);
     return idxv;
   }
 

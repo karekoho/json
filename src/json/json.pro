@@ -15,7 +15,7 @@ SOURCES += \
     json_json.cpp \
     json_boolean.cpp \
     json_array.cpp \
-    json_leaf.cpp
+    #json_leaf.cpp
 
 HEADERS += \
     json_value.h \

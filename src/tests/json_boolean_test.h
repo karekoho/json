@@ -15,7 +15,7 @@ namespace format
   public:
 
     virtual void
-    test_ctor_dtor ()
+    test_ctor_dtor () override
     {
       json *parent = new json ();
 
@@ -29,7 +29,7 @@ namespace format
     }
 
     virtual void
-    test_assign_all_values ()
+    test_assign_all_values () override
     {
       object_accessor object_parent;
 

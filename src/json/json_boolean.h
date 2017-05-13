@@ -136,7 +136,7 @@ namespace format
       * @brief _clear
       */
       virtual void
-      _clear ()
+      _clear () override
       {}
 
      /**

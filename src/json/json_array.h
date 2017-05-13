@@ -227,7 +227,7 @@ namespace format
     * @brief _clear
     */
     virtual void
-    _clear ();
+    _clear () override;
 
     /**
      * @brief _erase

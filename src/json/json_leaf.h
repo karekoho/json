@@ -62,7 +62,7 @@ namespace format
      * @return
      */
     virtual value_t
-    type () const noexcept = 0;
+    type () const noexcept override = 0;
 
     /**
      * @brief size
@@ -167,7 +167,7 @@ namespace format
      * @brief _clear
      */
     virtual void
-    _clear () = 0;
+    _clear () override = 0;
 
     /**
      * @brief _erase
@@ -182,7 +182,7 @@ namespace format
      * @return
      */
     virtual value *
-    _clone (const value &) = 0;
+    _clone (const value &) override = 0;
   };
 }
 #endif // LEAF_H
