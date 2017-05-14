@@ -559,6 +559,17 @@ namespace format
                                     o.length ());
     }
 
+    void
+    test_operator_assign_initializer_list ()
+    {
+      object o (L"{\"0\":0,\"1\":1}");
+      o = {{L"3", new number ((long) 3)}};
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("o.length ()",
+                                    (size_t) 1,
+                                    o.length ());
+    }
+
 
     /**
      * 2.
@@ -587,6 +598,7 @@ namespace format
       /* 13. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__clone_const_value_ref", &json_object_test::test__clone_const_value_ref));
       /* 14. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_type", &json_object_test::test_type));
       /* 15. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_operator_assign_wchar_t_ptr", &json_object_test::test_operator_assign_wchar_t_ptr));
+      /* 16. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_operator_assign_initializer_list", &json_object_test::test_operator_assign_initializer_list));
 
        return s;
     }

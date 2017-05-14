@@ -103,6 +103,20 @@ namespace format
     }
 
     /**
+     * @brief operator =
+     * @param il
+     * @return
+     */
+    inline value &
+    operator =(std::initializer_list<std::pair<std::wstring, value *>> il)
+    {
+      if (! _member_list.empty ())
+        _clear ();
+      _initializer_list (il);
+      return *this;
+    }
+
+    /**
      * @brief str_length
      * @return
      */
@@ -267,6 +281,13 @@ namespace format
      */
     virtual const wchar_t *
     _to_string (wchar_t *offset = 0) const override;
+
+    /**
+     * @brief _initializer_list
+     * @param il
+     */
+    void
+    _initializer_list (std::initializer_list<std::pair<std::wstring, value *>> il);
   }; // Class object
 
   inline

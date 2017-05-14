@@ -13,18 +13,7 @@ format::object::object (const wchar_t *json_text)
 format::object::object (std::initializer_list<std::pair<std::wstring, value *>> il)
   : json ()
 {
-  _member_list.reserve (il.size ());
-
-  auto cur = il.begin ();
-  auto end = il.end ();
-
-  while (cur != end)
-    {
-      std::pair<std::wstring, value *> p = *(cur++);
-      (void) _member_list.emplace (p);
-      __call__set_key (p.second, p.first.c_str (), p.first.length ());
-      __call__set_parent (p.second, this);
-    }
+  _initializer_list (il);
 }
 
 format::object::object (json *parent)
@@ -276,3 +265,24 @@ format::object::_erase (const value & v) noexcept
 
   return *this;
 }
+
+void
+format::object::_initializer_list (std::initializer_list<std::pair<std::wstring, format::value *> > il)
+{
+  if (il.size () == 0)
+    return;
+
+  _member_list.reserve (il.size ());
+
+  auto cur = il.begin ();
+  auto end = il.end ();
+
+  while (cur != end)
+    {
+      std::pair<std::wstring, value *> p = *(cur++);
+      (void) _member_list.emplace (p);
+      __call__set_key (p.second, p.first.c_str (), p.first.length ());
+      __call__set_parent (p.second, this);
+    }
+}
+
