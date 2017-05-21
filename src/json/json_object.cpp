@@ -13,7 +13,7 @@ format::object::object (const wchar_t *json_text)
 format::object::object (std::initializer_list<std::pair<std::wstring, value *>> il)
   : json ()
 {
-  _initializer_list (il);
+  _set_initializer_list (il);
 }
 
 format::object::object (json *parent)
@@ -267,7 +267,7 @@ format::object::_erase (const value & v) noexcept
 }
 
 void
-format::object::_initializer_list (std::initializer_list<std::pair<std::wstring, format::value *> > il)
+format::object::_set_initializer_list (std::initializer_list<std::pair<std::wstring, format::value *> > il)
 {
   if (il.size () == 0)
     return;

@@ -34,7 +34,7 @@ object {{std::wstring, value *},{std::wstring, value *}}        : impl
 
 object = const object &                                         : impl
 object = const wchar_t *json_input                              : impl
-object = {{std::wstring, value *},{std::wstring, value *}}      : ?
+object = {{std::wstring, value *},{std::wstring, value *}}      : impl, json_object_test::test_operator_assign_initializer_list
 
 array > json:
 array (const wchar_t *json_input)                               : impl
