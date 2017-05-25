@@ -455,7 +455,8 @@ namespace format
                                     array ().type ());
     }
 
-    virtual void test__assign_value_ptr_value_ptr () override
+    virtual void
+    test__assign_value_ptr_value_ptr () override
     {
       array a = L"[false]";
 
@@ -473,11 +474,13 @@ namespace format
                               a[(size_t) 0].parent () == & a);
     }
 
-    virtual void test__clone_const_value_ref () override
+    virtual void
+    test__clone_const_value_ref () override
     {
       array src = L"[2]";
       array copy = L"[0,1]";
 
+      copy._clear ();
       (void) copy._clone (src);
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.length ()",
@@ -486,6 +489,28 @@ namespace format
 
       CPPUNIT_ASSERT_MESSAGE ("copy[(size_t) 0].parent () == & copy",
                               copy[(size_t) 0].parent () == & copy);
+    }
+
+    void
+    test_operator_assign_wchar_t_ptr ()
+    {
+      array a (L"[0,1]");
+      a = L"[2]";
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("a.length ()",
+                                    (size_t) 1,
+                                    a.length ());
+    }
+
+    void
+    test_operator_assign_initializer_list ()
+    {
+      array a (L"[0,1]");
+      a = L"[2]";
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("a.length ()",
+                                    (size_t) 1,
+                                    a.length ());
     }
 
     /**
@@ -512,6 +537,8 @@ namespace format
       /* 11. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test__assign_value_ptr_value_ptr", &json_array_test::test__assign_value_ptr_value_ptr));
       /* 12. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test__clone_const_value_ref", &json_array_test::test__clone_const_value_ref));
       /* 13. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_type", &json_array_test::test_type));
+      /* 14. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_operator_assign_wchar_t_ptr", &json_array_test::test_operator_assign_wchar_t_ptr));
+      /* 15. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_operator_assign_initializer_list", &json_array_test::test_operator_assign_initializer_list));
 
       return s;
     }

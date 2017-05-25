@@ -33,17 +33,17 @@ object (const object &)                                         : impl
 object {{std::wstring, value *},{std::wstring, value *}}        : impl
 
 object = const object &                                         : impl
-object = const wchar_t *json_input                              : impl
+object = const wchar_t *json_input                              : impl, json_object_test::test_operator_assign_wchar_t_ptr
 object = {{std::wstring, value *},{std::wstring, value *}}      : impl, json_object_test::test_operator_assign_initializer_list
 
 array > json:
 array (const wchar_t *json_input)                               : impl
-array (const array &)                                           : impl
-array {value*, value*...}                                       : impl
+array (const array &)                                           : impl, json_array_test::test_operator_assign_wchar_t_ptr
+array {value*, value*...}                                       : impl, json_array_test::test_operator_assign_initializer_list
 
 array = const array &                                           : impl
-array = const wchar_t *json_input                               :
-array = {value*, value*...}                                     : ?
+array = const wchar_t *json_input                               : impl
+array = {value*, value*...}                                     : impl
 
 number > leaf > value:
 number (double)                                                 : impl

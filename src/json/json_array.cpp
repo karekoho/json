@@ -13,16 +13,7 @@ format::array::array (const wchar_t *text)
 format::array::array (std::initializer_list<value *> il)
   : json ()
 {
-  _element_list.reserve (il.size ());
-
-  auto cur = il.begin ();
-  auto end = il.end ();
-
-  while (cur != end)
-    {
-      (void) _element_list.push_back (*cur);
-      __call__set_parent (*(cur++), this);
-    }
+  _set_initializer_list (il);
 }
 
 format::array::array (json *parent)
@@ -57,9 +48,6 @@ format::array::_parse (const wchar_t *json)
 
   if (*_readp == 0)
     throw json_syntax_error (UNEX_END);
-
-  if (! _element_list.empty ())
-    _clear ();
 
   value *v = 0;
   size_t next_idx = 0;
@@ -124,6 +112,18 @@ format::array::_at (size_t index)
 }
 
 format::value &
+format::array::operator =(const format::array &a)
+{
+  if (_parent)
+    return __call__assign (_parent, this, new array (a));
+
+  if (! _element_list.empty ())
+    _clear ();
+
+  return *(_clone (a));
+}
+
+format::value &
 format::array::_assign (value *ov, value *nv)
 {
   size_t index = ov->index ();
@@ -149,9 +149,6 @@ format::value *
 format::array::_clone (const value &other)
 {
   const array & nv = dynamic_cast<const array &> (other);
-
-  if (! _element_list.empty ())
-    _clear ();  // TODO: need this ?
 
   if (nv._element_list.empty ())
     return this;
@@ -237,4 +234,22 @@ format::array::_erase (const value &v) noexcept
   delete & v;
 
   return *this;
+}
+
+void
+format::array::_set_initializer_list (std::initializer_list<format::value *> il)
+{
+  if (il.size () == 0)
+    return;
+
+  _element_list.reserve (il.size ());
+
+  auto cur = il.begin ();
+  auto end = il.end ();
+
+  while (cur != end)
+    {
+      (void) _element_list.push_back (*cur);
+      __call__set_parent (*(cur++), this);
+    }
 }

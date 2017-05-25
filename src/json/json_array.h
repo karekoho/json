@@ -79,15 +79,41 @@ namespace format
     length () const noexcept override
     { return _element_list.size (); }
 
+    /**
+     * @brief operator =
+     * @param json_text
+     * @return
+     */
+    inline value &
+    operator =(const wchar_t *json_text) override
+    {
+      if (! _element_list.empty ())
+        _clear ();
+      (void) _parse (json_text);
+      return *this;
+    }
+
+    /**
+     * @brief operator =
+     * @param il
+     * @return
+     */
+    inline value &
+    operator =(std::initializer_list<value *> il)
+    {
+      if (! _element_list.empty ())
+        _clear ();
+      _set_initializer_list (il);
+      return *this;
+    }
+
    /**
     * @brief operator =
     * @param a
     * @return
     */
-    inline value &
-    operator =(const array & a)
-    //{ return _parent ? _parent->_assign (this, new array (a)) : *(_clone (a)); }
-    { return _parent ? __call__assign (_parent, this, new array (a)) : *(_clone (a)); }
+    value &
+    operator =(const array & a);
 
    /**
     * @brief str_length
@@ -252,6 +278,12 @@ namespace format
      virtual const wchar_t *
      _to_string (wchar_t *offset = 0) const override;
 
+    /**
+     * @brief _set_initializer_list
+     * @param il
+     */
+    void
+    _set_initializer_list (std::initializer_list<value *> il);
   }; // Class array
 
   inline array *
