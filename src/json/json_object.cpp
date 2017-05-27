@@ -31,6 +31,7 @@ format::object::~object ()
   _clear ();
 }
 
+
 const wchar_t *
 format::object::_parse (const wchar_t *json_text)
 {
@@ -136,6 +137,18 @@ format::object::_at (const wchar_t *key)
 }
 
 format::value &
+format::object::operator =(const format::object &o)
+{
+  if (_parent)
+    return __call__assign (_parent, this, new object (o));
+
+  if (! _member_list.empty ())
+    _clear ();
+
+  return *(_clone (o));
+}
+
+format::value &
 format::object::_assign (value *ov, value *nv)
 {
   const wchar_t *key = ov->key ();
@@ -168,9 +181,6 @@ format::value *
 format::object::_clone (const value &other)
 {
   const object & nv = static_cast<const object &>(other);
-
-  if (! _member_list.empty ())
-    _clear ();  // TODO: need this ?
 
   if (nv._member_list.empty ())
     return this;

@@ -84,9 +84,8 @@ namespace format
      * @param o
      * @return
      */
-    inline value &
-    operator =(const object & o)
-    { return _parent ? __call__assign (_parent, this, new object (o)) : *(_clone (o)); }
+    value &
+    operator =(const object & o);
 
     /**
      * @brief operator =
@@ -98,6 +97,7 @@ namespace format
     {
       if (! _member_list.empty ())
         _clear ();
+
       (void) _parse (json_text);
       return *this;
     }
@@ -112,6 +112,7 @@ namespace format
     {
       if (! _member_list.empty ())
         _clear ();
+
       _set_initializer_list (il);
       return *this;
     }
