@@ -118,6 +118,22 @@ namespace format
 
     /**
      * @brief operator =
+     * @param o
+     * @return
+     */
+    value &
+    operator =(object *o);
+
+    /**
+     * @brief operator =
+     * @param a
+     * @return
+     */
+    value &
+    operator =(array *a);
+
+    /**
+     * @brief operator =
      * @param j
      * @return
      */

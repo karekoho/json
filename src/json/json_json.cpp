@@ -132,6 +132,22 @@ format::json::_assign (const json &j)
   return *this;
 }
 
+format::value &
+format::json::operator =(format::array *a)
+{
+  delete __root;
+  __root = a;
+  return *this;
+}
+
+format::value &
+format::json::operator =(format::object *o)
+{
+  delete __root;
+  __root = o;
+  return *this;
+}
+
 format::value *
 format::json::_make_value ()
 {
@@ -194,5 +210,3 @@ format::json::_call_reviver (value *v, const wchar_t *key, size_t index) const
 
   return r;
 }
-
-

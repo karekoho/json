@@ -571,7 +571,6 @@ namespace format
                                     o.length ());
     }
 
-
     /**
      * 2.
      *

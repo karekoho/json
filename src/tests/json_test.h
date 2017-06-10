@@ -460,6 +460,28 @@ namespace format
     test__clone_const_value_ref () override
     { CPPUNIT_ASSERT_ASSERTION_PASS (); }
 
+    void
+    test_operator_assign_object_ptr ()
+    {
+      object *o[] = { 0, new object () };
+
+      json j (o[0]);
+      j = o[1];
+
+      CPPUNIT_ASSERT_MESSAGE ("o[1] == j.__root", o[1] == j.__root);
+    }
+
+    void
+    test_operator_assign_array_ptr ()
+    {
+      array *a[] = { 0, new array () };
+
+      json j (a[0]);
+      j = a[1];
+
+      CPPUNIT_ASSERT_MESSAGE ("a[1] == j.__root", a[1] == j.__root);
+    }
+
     /**
      * 1.
      * @brief suite
@@ -486,6 +508,8 @@ namespace format
       /* 13. */  s->addTest (new CppUnit::TestCaller<json_test> ("test__clear", &json_test::test__clear));
       /* 14. */  s->addTest (new CppUnit::TestCaller<json_test> ("test__erase", &json_test::test__erase));
       /* 15. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_type", &json_test::test_type));
+      /* 16. */ s->addTest (new CppUnit::TestCaller<json_test> ("test_operator_assign_object_ptr", &json_test::test_operator_assign_object_ptr));
+      /* 17. */ s->addTest (new CppUnit::TestCaller<json_test> ("test_operator_assign_array_ptr", &json_test::test_operator_assign_array_ptr));
 
       /* 10. */  //s->addTest (new CppUnit::TestCaller<json_test> ("example_1", &json_test::example_1));
 
