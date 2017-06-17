@@ -11,7 +11,7 @@ It's goal is to be simple and self-explanatory, so getting started is easy and n
 ## Installation
 Get the source code:
 ```
-git clone https://github.com/karekoho/json.git`
+git clone https://github.com/karekoho/json.git
 ```
 or download and extract the zip archive.
 
