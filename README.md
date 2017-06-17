@@ -13,6 +13,7 @@ Get the source code:
 ```
 git clone https://github.com/karekoho/json.git`
 ```
+or download and extract the zip archive.
 
 Go to the root of the repository and run: 
 ```
