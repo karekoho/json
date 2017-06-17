@@ -11,19 +11,20 @@ It's goal is to be simple and self-explanatory, so getting started is easy and n
 ## Installation
 Checkout out the repository.
 
-Go to the directory you want the compilation output to be placed.
-
-For example, if you are at the top of the repository, then run: 
+Go to the root of the repositor and run: 
 ```
 cmake . 
-make
 make install
 ```
-The single dot after `cmake` refers to the location of the `CMakeLists.txt` 
+If you want the cmake and compilation output to go to a different directory, 
 
-Thus if you are two directories below the root of the repo,
+such as `/path/to/repo_root/build`
 
-then the cmake command will be `cmake ../..`
+then run `cmake ..` in `build`
+
+The double dot after `cmake` refers to the location of `CMakeLists.txt`, 
+
+which is now located one level below the root of the repository.
 
 If no problems occur,
 
