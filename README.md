@@ -19,7 +19,7 @@ cmake .
 make
 make install
 ```
-The single dot after `cmake` refers to the location of the CMakeLists.txt. 
+The single dot after `cmake` refers to the location of the `CMakeLists.txt` 
 
 Thus if you are two directories below the root of the repo,
 
@@ -27,7 +27,7 @@ then the cmake command will be `cmake ../..`
 
 If no problems occur,
 
-shared library will be created in `/usr/local/lib`
+a shared library called `libjson` will be created in `/usr/local/lib`
 
 Headers will be copied to `/usr/local/include/format`
 
@@ -35,7 +35,7 @@ Include
 ```c++
 <format/json.h> 
 ```
-in your source code to use json support.
+in your source code to use JSON support.
 
 
 # Usage
