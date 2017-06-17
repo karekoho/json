@@ -22,9 +22,7 @@ such as `/path/to/repo_root/build`
 
 then run `cmake ..` in `build`
 
-The double dot after `cmake` refers to the location of `CMakeLists.txt`, 
-
-which is now located one level below the root of the repository.
+The double dot after `cmake` refers to the location of `CMakeLists.txt`
 
 If no problems occur,
 
