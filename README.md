@@ -28,9 +28,7 @@ then run `cmake ..` in `build`
 
 The double dot after `cmake` refers to the location of `CMakeLists.txt`
 
-If no problems occur,
-
-a shared library called `libjson` will be created in `/usr/local/lib`
+A shared library called `libjson` will be created in `/usr/local/lib`
 
 Headers will be copied to `/usr/local/include/format`
 
