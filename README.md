@@ -3,7 +3,6 @@
 
 ## Installation
 Checkout out the repository.
-
 Go to the directory you want the compilation output to be placed.
 
 For example, if you are at the top of the repository, then run: 
