@@ -1,5 +1,12 @@
 # JSON support for C++
+
 ## Introduction
+JSON support for C++ is a library to parse JSON unicode input, 
+
+create and modify JSON objects and stringify them back to characters.
+
+It's goal is to be simple and self-explanatory, so getting started is easy and no in-depth guides are needed.
+
 
 ## Installation
 Checkout out the repository.
