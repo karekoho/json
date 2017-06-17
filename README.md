@@ -9,9 +9,11 @@ It's goal is to be simple and self-explanatory, so getting started is easy and n
 
 
 ## Installation
-Checkout out the repository.
+Get the source code:
 
-Go to the root of the repositor and run: 
+`git clone https://github.com/karekoho/json.git`
+
+Go to the root of the repository and run: 
 ```
 cmake . 
 make install
