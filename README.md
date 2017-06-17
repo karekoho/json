@@ -30,7 +30,7 @@ The double dot after `cmake` refers to the location of `CMakeLists.txt`
 
 A shared library called `libjson` will be created in `/usr/local/lib`
 
-Headers will be copied to `/usr/local/include/format`
+The development headers will be found in `/usr/local/include/format`
 
 Include 
 ```c++
