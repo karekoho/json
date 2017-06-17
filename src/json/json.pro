@@ -41,6 +41,7 @@ unix:!symbian {
 
 DESTDIR = ../../build/debug
 
-DISTFILES +=
+DISTFILES += \
+    ../../README.md
 
 
