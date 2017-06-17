@@ -1,22 +1,35 @@
-# json
-JSON support for C++
+# JSON support for C++
+## Introduction
 
 ## Installation
 Checkout out the repository.
+
 Go to the directory you want the compilation output to be placed.
-For example, if you are in the root of the repository, run: 
+
+For example, if you are at the top of the repository, then run: 
 ```
-cmake .
+cmake . 
 make
 make install
 ```
-Shared library will be created in /usr/local/lib
-Headers will be copied to /usr/local/include/format
+The single dot after `cmake` refers to the location of the CMakeLists.txt. 
+
+Thus if you are two directories below the root of the repo,
+
+then the cmake command will be `cmake ../..`
+
+If no problems occur,
+
+shared library will be created in `/usr/local/lib`
+
+Headers will be copied to `/usr/local/include/format`
+
 Include 
 ```c++
 <format/json.h> 
 ```
 in your source code to use json support.
+
 
 # Usage
 ```c++
