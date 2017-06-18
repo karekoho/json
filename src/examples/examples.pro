@@ -10,4 +10,8 @@ LIBS += -L/usr/local/lib -ljson
 QMAKE_CXXFLAGS+= -std=c++11
 
 SOURCES += \
-    parse.cpp
+    main.cpp
+
+HEADERS += \
+    parse.h \
+    create_modify.h

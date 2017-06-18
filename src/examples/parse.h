@@ -1,3 +1,5 @@
+#ifndef PARSE_H
+#define PARSE_H
 // OBJECT:
 //  {
 //          "Image": {
@@ -42,9 +44,11 @@
 
 using namespace format;
 
-int
-main ()
+void
+parse ()
 {
+  std::wcout << std::endl << "Parse and read" << std::endl;
+
   json j = L"{\
     \"Image\": {\
         \"Width\":  800,\
@@ -80,6 +84,7 @@ main ()
 
   // Cast to array
   array & ids = static_cast<array &> (image[L"IDs"]);
+  //ids[(size_t) 3] = undefined ();
 
   // Iterate the array
   std::for_each (ids.begin (),
@@ -92,7 +97,5 @@ main ()
     std::wcout << d << L" ";
   });
   // ouput: 116 943 234 38793
-
-  return 0;
 }
-
+#endif // PARSE_H

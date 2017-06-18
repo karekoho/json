@@ -187,39 +187,40 @@ namespace format
                               a.length ());
         TEST_IT_END;
 
-//        json j = new object {
-//                  { L"Image",
-//                    new object {
-//                      { L"Width", new number (800) },
-//                      { L"Height", new number (600) },
-//                      { L"Title", new string (L"View from 15th Floor") },
-//                      { L"Thumbnail", new object {
-//                          { L"Url", new string (L"http://www.example.com/image/481989943") },
-//                          { L"Height", new number (125) },
-//                          { L"Width", new number (100) },
-//                        }
-//                      },
-//                      { L"Animated", new boolean (false) },
-//                      { L"IDs", new array { new number (116), new number (943), new number (234), new number (38793) } }
-//                    }
-//                  }
-//                };
+        json j = new object {
+                  { L"Image",
+                    new object {
+                      { L"Width", new number ((long) 800) },
+                      { L"Height", new number ((long) 600) },
+                      { L"Title", new string (L"View from 15th Floor") },
+                      { L"Thumbnail", new object {
+                          { L"Url", new string (L"http://www.example.com/image/481989943") },
+                          { L"Height", new number ((long) 125) },
+                          { L"Width", new number ((long) 100) },
+                        }
+                      },
+                      { L"Animated", new boolean (false) },
+                      { L"IDs", new array { new number ((long) 116), new number ((long) 943), new number ((long) 234), new number ((long) 38793) } }
+                    }
+                  }
+                };
 
-//        j[L"Image"][L"Thumbnail"][L"Url"] = undefined ();
-//        j[L"Image"][L"Thumbnail"][L"Height"] = undefined ();
-//        j[L"Image"][L"Thumbnail"][L"Width"] = undefined ();
-//        j[L"Image"][L"Thumbnail"] = undefined ();
+        j[L"Image"][L"Thumbnail"][L"Url"] = undefined ();
+        j[L"Image"][L"Thumbnail"][L"Height"] = undefined ();
+        j[L"Image"][L"Thumbnail"][L"Width"] = undefined ();
+        j[L"Image"][L"Thumbnail"] = undefined ();
 
-//        j[L"Image"][L"Width"] = undefined ();
-//        j[L"Image"][L"Height"] = undefined ();
-//        j[L"Image"][L"Title"] = undefined ();
+        j[L"Image"][L"Width"] = undefined ();
+        j[L"Image"][L"Height"] = undefined ();
+        j[L"Image"][L"Title"] = undefined ();
 
-//        j[L"Image"][L"Animated"] = undefined ();
-//        j[L"Image"][L"IDs"] = undefined ();
+        j[L"Image"][L"Animated"] = undefined ();
+        //j[L"Image"][L"IDs"][(size_t) 3] = undefined (); // FIXME: .Segmentation fault: 11
+        j[L"Image"][L"IDs"] = undefined ();
 
-//        CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[L\"Image\"].count ()",
-//                                      (size_t) 0,
-//                                      j[L"Image"].count ());
+        CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[L\"Image\"].count ()",
+                                      (size_t) 0,
+                                      j[L"Image"].length ());
       }
 
       void
