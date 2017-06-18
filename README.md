@@ -15,9 +15,12 @@ git clone https://github.com/karekoho/json.git
 ```
 or download and extract the zip archive.
 
-Go to the root of the repository and run: 
+Go to the root of the repository, make sure that you are on banch `master`
+
+and run commands:
 ```
 cmake . 
+make 
 make install
 ```
 If you want the cmake and compilation output to go to a different directory, 
