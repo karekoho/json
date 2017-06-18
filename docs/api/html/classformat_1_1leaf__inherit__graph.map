@@ -1,0 +1,10 @@
+<map id="format::leaf" name="format::leaf">
+<area shape="rect" id="node3" href="$classformat_1_1boolean.html" title="The boolean class. " alt="" coords="5,155,117,181"/>
+<area shape="rect" id="node4" href="$classformat_1_1null.html" title="The null class. " alt="" coords="142,155,229,181"/>
+<area shape="rect" id="node5" href="$classformat_1_1number.html" title="The number class. " alt="" coords="253,155,363,181"/>
+<area shape="rect" id="node6" href="$classformat_1_1string.html" title="The string class. " alt="" coords="388,155,487,181"/>
+<area shape="rect" id="node7" href="$classformat_1_1undefined.html" title="The undefined class. " alt="" coords="511,155,633,181"/>
+<area shape="rect" id="node2" href="$classformat_1_1value.html" title="format::value" alt="" coords="259,5,357,32"/>
+<area shape="rect" id="node8" href="$classformat_1_1unique__undefined.html" title="The unique_undefined class. " alt="" coords="488,229,656,256"/>
+<area shape="rect" id="node9" href="$classformat_1_1no__value.html" title="The no_value class. " alt="" coords="513,304,631,331"/>
+</map>
