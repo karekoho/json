@@ -43,17 +43,78 @@ in your source code to use JSON support.
 
 
 # Usage
+## Parsing and reading JSON text input
 ```c++
-#include <iostream>
-#include <algorithm>
 #include <format/json.h>
 
 using namespace format;
 
-int
-main ()
+json j = L"{\
+  \"Image\": {\
+      \"Width\":  800,\
+      \"Height\": 600,\
+      \"Title\":  \"View from 15th Floor\",\
+      \"Thumbnail\": {\
+          \"Url\":    \"http://www.example.com/image/481989943\",\
+          \"Height\": 125,\
+          \"Width\":  100\
+      },\
+      \"Animated\" : true,\
+      \"IDs\": [116, 943, 234, 38793]\
+    }\
+}";
+
+// Get the Image object
+value & v = j[L"Image"];
+
+// Cast to format::object
+object & image = static_cast<object &> (v);
+
+// Get the object as wchar_t *
+std::wcout << image[L"Thumbnail"].get () << std::endl;
+// output: {"Width":100,"Height":125,"Url":"http://www.example.com/image/481989943"}
+
+// Cast to format::boolean
+boolean & animated = static_cast<boolean &> (image[L"Animated"]);
+
+// Get value as bool
+std::wcout << animated.get () << std::endl;
+// output: 1
+
+// Cast to format::array
+array & ids = static_cast<array &> (image[L"IDs"]);
+
+// Elements of array are accessed with integer indexes as well
+value & n = ids[(size_t) 3];
+
+// Iterate the array
+std::for_each (ids.begin (),
+               ids.end (),
+               [] (value & v)
 {
-  json j = L"{\
+  // Cast to format::number and get the value as double
+  number & id = static_cast<number &> (v);
+  double d = id.get ();
+  std::wcout << d << L" ";
+});
+// ouput: 116 943 234 38793
+```
+# Reviving JSON text input
+```c++
+#include <format/json.h>
+
+using namespace format;
+
+value *
+fn_reviver (const wchar_t *key, value *val)
+{
+  if (wcscmp (key, L"Thumbnail") == 0) // Remove the Thumbnail object
+    return new undefined ();
+
+  return val;
+}
+
+value *v = json::parse ( L"{\
     \"Image\": {\
         \"Width\":  800,\
         \"Height\": 600,\
@@ -66,41 +127,54 @@ main ()
         \"Animated\" : true,\
         \"IDs\": [116, 943, 234, 38793]\
       }\
-  }";
+  }", fn_reviver);
 
-  // Get the whole structure as wchar_t *
-  std::wcout << j.get () << std::endl;
-  // ouput: {"Image":{"IDs":[116,943,234,38793],"Height":600,"Animated":true, etc... 
-  
-  // Cast to object
-  object & image = static_cast<object &> (j[L"Image"]);
+std::wcout << v->stringify () << std::endl;
+// output: {"Image":{"Animated":true,"Title":"View from 15th Floor","Height":600,"IDs":[116,943,234,38793],"Width":800}}
+```
+## Contructing and modifying JSON object
+```c++
+#include <format/json.h>
 
-  // Get the object as wchar_t *
-  std::wcout << image[L"Thumbnail"].get () << std::endl;
-  // output: {"Width":100,"Height":125,"Url":"http://www.example.com/image/481989943"}
+using namespace format;
 
-  // Cast to boolean
-  boolean & animated = static_cast<boolean &> (image[L"Animated"]);
+// Construct a json object
+// Assign a pointer to an object
+// Objects and arrays are constructed using initializer lists
+json j = new object {
+          { L"Image",
+            new object {
+              { L"Width",new number (800.0) },
+              { L"Height",new number (600.0) },
+              { L"Title", new string (L"View from 15th Floor") },
+              { L"Thumbnail", new object {
+                  { L"Url",new string (L"http://www.example.com/image/481989943") },
+                  { L"Height",new number ((long) 125) },
+                  { L"Width", new number ((long) 100) },
+                }
+              },
+              { L"Animated", new boolean (false) },
+              { L"IDs", new array { new number ((long) 116), new number ((long) 943), new number ((long) 234), new number ((long) 38793) } }
+            }
+          }
+        };
 
-  // Get value as bool
-  std::wcout << animated.get () << std::endl;
-  // output: 1
+array & ids = static_cast<array &> (j[L"Image"][L"IDs"]);
 
-  // Cast to array
-  array & ids = static_cast<array &> (image[L"IDs"]);
+// Modify value
+ids[(size_t) 1] = (long) 100;
 
-  // Iterate the array
-  std::for_each (ids.begin (),
-                 ids.end (),
-                 [] (value & v)
-  {
-    // Cast to number and get the value as double
-    number & id = static_cast<number &> (v);
-    double d = id.get ();
-    std::wcout << d << L" ";
-  });
-  // ouput: 116 943 234 38793
+// Assigning format::undefined removes the value
+ids[(size_t) 3] = undefined ();
 
-  return 0;
-}
+// Iterate the array
+std::for_each (ids.begin (),
+               ids.end (),
+               [] (value & v)
+{
+  number & id = static_cast<number &> (v);
+  long l = id.get ();
+  std::wcout << l << L" ";
+});
+// output: 116 100 234
 ```

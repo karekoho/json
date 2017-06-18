@@ -13,6 +13,8 @@ create_modify ()
   std::wcout << std::endl << "Create and modify" << std::endl;
 
   // Construct a json object
+  // Assign a pointer to an object
+  // Objects and arrays are constructed using initializer lists
   json j = new object {
             { L"Image",
               new object {
@@ -34,12 +36,10 @@ create_modify ()
   array & ids = static_cast<array &> (j[L"Image"][L"IDs"]);
 
   // Modify value
-  ids[L"1"] = (long) 100;
+  ids[(size_t) 1] = (long) 100;
 
-  // Remove value
-  //ids[(size_t) 3] = undefined (); // FIXME: crash, ok when object is parse
-  //value & v = ids[(size_t) 3];
-  //v = undefined (); // FIXME: crash
+  // Assigning format::undefined removes the value
+  ids[(size_t) 3] = undefined ();
 
   // Iterate the array
   std::for_each (ids.begin (),
@@ -50,6 +50,6 @@ create_modify ()
     long l = id.get ();
     std::wcout << l << L" ";
   });
-  // output: 116 100 234 38793
+  // output: 116 100 234
 }
 #endif // CREATE_MODIFY_H

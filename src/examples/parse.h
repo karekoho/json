@@ -65,33 +65,38 @@ parse ()
   }";
 
   // Get the whole structure as wchar_t *
-  std::wcout << j.get () << std::endl;
+  //std::wcout << j.get () << std::endl;
   // output: {"Image":{"IDs":[116,943,234,38793],"Height":600,"Animated":true,"Title":"View from 15th Floor","Thumbnail":{"Width":100,"Height":125,"Url":"http://www.example.com/image/481989943"},"Width":800}}
 
-  // Cast to object
-  object & image = static_cast<object &> (j[L"Image"]);
+  // Get the image object
+  value & v = j[L"Image"];
+
+  // Cast to format::object
+  object & image = static_cast<object &> (v);
 
   // Get the object as wchar_t *
   std::wcout << image[L"Thumbnail"].get () << std::endl;
   // output: {"Width":100,"Height":125,"Url":"http://www.example.com/image/481989943"}
 
-  // Cast to boolean
+  // Cast to format::boolean
   boolean & animated = static_cast<boolean &> (image[L"Animated"]);
 
   // Get value as bool
   std::wcout << animated.get () << std::endl;
   // output: 1
 
-  // Cast to array
+  // Cast to format::array
   array & ids = static_cast<array &> (image[L"IDs"]);
-  //ids[(size_t) 3] = undefined ();
+
+  // Arrays are accessed with integer indexes as well
+  value & n = ids[(size_t) 3];
 
   // Iterate the array
   std::for_each (ids.begin (),
                  ids.end (),
                  [] (value & v)
   {
-    // Cast to number and get the value as double
+    // Cast to format::number and get the value as double
     number & id = static_cast<number &> (v);
     double d = id.get ();
     std::wcout << d << L" ";

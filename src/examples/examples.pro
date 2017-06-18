@@ -14,4 +14,5 @@ SOURCES += \
 
 HEADERS += \
     parse.h \
-    create_modify.h
+    create_modify.h \
+    revive.h
