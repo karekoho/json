@@ -89,7 +89,7 @@ main ()
     // Cast to number and get the value as double
     number & id = static_cast<number &> (v);
     double d = id.get ();
-    std::wcout << d << std::endl;
+    std::wcout << d << L" ";
   });
   // ouput: 116 943 234 38793
 
