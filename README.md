@@ -15,7 +15,7 @@ git clone https://github.com/karekoho/json.git
 ```
 or download and extract the zip archive.
 
-Go to the root of the repository, make sure that you are on banch `master`
+Go to the root of the repository, make sure that you are on branch `master`
 
 and run commands:
 ```
