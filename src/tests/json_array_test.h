@@ -24,7 +24,6 @@ namespace format
         array (& parent),
         array { new array { new number () } }, // [[0]]
       };
-
 //      array src = L"[true]";
 //      array copy = src;
 

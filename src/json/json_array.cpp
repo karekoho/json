@@ -247,9 +247,13 @@ format::array::_set_initializer_list (std::initializer_list<format::value *> il)
   auto cur = il.begin ();
   auto end = il.end ();
 
+  size_t next_idx = 0;
+
   while (cur != end)
     {
-      (void) _element_list.push_back (*cur);
-      __call__set_parent (*(cur++), this);
+      value *v = *(cur++);
+      (void) _element_list.push_back (v);
+      __call__set_index (v, next_idx++);
+      __call__set_parent (v, this);
     }
 }
