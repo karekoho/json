@@ -1,12 +1,11 @@
-# JSON support for C++
+# JSON for C++
 
 ## Introduction
-JSON support for C++ is a library to parse JSON unicode input, 
+JSON for C++ is a library to parse JSON Unicode text input,
 
-create and modify JSON objects and stringify them back to characters.
+create and modify JSON objects and stringify them back to text.
 
 It's goal is to be simple and self-explanatory, so getting started is easy and no in-depth guides are needed.
-
 
 ## Installation
 Get the source code:
@@ -133,15 +132,14 @@ std::wcout << v->stringify () << std::endl;
 // output: {"Image":{"Animated":true,"Title":"View from 15th Floor",
 // "Height":600,"IDs":[116,943,234,38793],"Width":800}}
 ```
-## Contructing and modifying an object
+## Contructing and modifying objects
 ```c++
 #include <format/json.h>
 
 using namespace format;
 
-// Construct a json object
-// Assign a pointer to an object
-json j = new object {
+// Construct a format::json object
+json j = new object { // Assign a pointer to format::object
           { L"Image",
             new object {
               { L"Width",new number (800.0) },
