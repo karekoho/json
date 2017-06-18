@@ -43,7 +43,7 @@ in your source code to use JSON support.
 
 
 # Usage
-## Parsing and reading JSON text input
+## Parsing and reading text input
 ```c++
 #include <format/json.h>
 
@@ -99,7 +99,7 @@ std::for_each (ids.begin (),
 });
 // ouput: 116 943 234 38793
 ```
-# Reviving JSON text input
+## Reviving text input
 ```c++
 #include <format/json.h>
 
@@ -130,9 +130,10 @@ value *v = json::parse ( L"{\
   }", fn_reviver);
 
 std::wcout << v->stringify () << std::endl;
-// output: {"Image":{"Animated":true,"Title":"View from 15th Floor","Height":600,"IDs":[116,943,234,38793],"Width":800}}
+// output: {"Image":{"Animated":true,"Title":"View from 15th Floor",
+// "Height":600,"IDs":[116,943,234,38793],"Width":800}}
 ```
-## Contructing and modifying JSON object
+## Contructing and modifying an object
 ```c++
 #include <format/json.h>
 
@@ -140,7 +141,6 @@ using namespace format;
 
 // Construct a json object
 // Assign a pointer to an object
-// Objects and arrays are constructed using initializer lists
 json j = new object {
           { L"Image",
             new object {
@@ -154,7 +154,8 @@ json j = new object {
                 }
               },
               { L"Animated", new boolean (false) },
-              { L"IDs", new array { new number ((long) 116), new number ((long) 943), new number ((long) 234), new number ((long) 38793) } }
+              { L"IDs", new array { new number ((long) 116), new number ((long) 943),
+                new number ((long) 234), new number ((long) 38793) } }
             }
           }
         };
