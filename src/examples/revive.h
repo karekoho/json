@@ -37,7 +37,8 @@ revive ()
     }", fn_reviver);
 
   std::wcout << v->stringify () << std::endl;
-  // output: {"Image":{"Animated":true,"Title":"View from 15th Floor","Height":600,"IDs":[116,943,234,38793],"Width":800}}
+  // output: {"Image":{"Animated":true,"Title":"View from 15th Floor",
+  // "Height":600,"IDs":[116,943,234,38793],"Width":800}}
 }
 
 #endif // REVIVE_H

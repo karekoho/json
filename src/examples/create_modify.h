@@ -28,7 +28,8 @@ create_modify ()
                   }
                 },
                 { L"Animated", new boolean (false) },
-                { L"IDs", new array { new number ((long) 116), new number ((long) 943), new number ((long) 234), new number ((long) 38793) } }
+                { L"IDs", new array { new number ((long) 116), new number ((long) 943),
+                  new number ((long) 234), new number ((long) 38793) } }
               }
             }
           };
