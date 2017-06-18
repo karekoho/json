@@ -67,8 +67,8 @@ main ()
 
   // Get the whole structure as wchar_t *
   std::wcout << j.get () << std::endl;
-  // output: {"Image":{"IDs":[116,943,234,38793],"Height":600,"Animated":true,"Title":"View from 15th Floor","Thumbnail":{"Width":100,"Height":125,"Url":"http://www.example.com/image/481989943"},"Width":800}}
-
+  // ouput: {"Image":{"IDs":[116,943,234,38793],"Height":600,"Animated":true, etc... 
+  
   // Cast to object
   object & image = static_cast<object &> (j[L"Image"]);
 
@@ -94,7 +94,7 @@ main ()
     // Cast to number and get the value as double
     number & id = static_cast<number &> (v);
     double d = id.get ();
-    std::wcout << d << std::endl;
+    std::wcout << d << L" ";
   });
   // ouput: 116 943 234 38793
 
