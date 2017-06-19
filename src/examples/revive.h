@@ -19,9 +19,9 @@ fn_reviver (const wchar_t *key, value *val)
 void
 revive ()
 {
-  std::wcout << std::endl << "Revive" << std::endl;
+  std::wcout << std::endl << "Revive:" << std::endl;
 
-  value *v = json::parse ( L"{\
+  json *j = json::parse ( L"{\
       \"Image\": {\
           \"Width\":  800,\
           \"Height\": 600,\
@@ -36,7 +36,7 @@ revive ()
         }\
     }", fn_reviver);
 
-  std::wcout << v->stringify () << std::endl;
+  std::wcout << j->stringify () << std::endl;
   // output: {"Image":{"Animated":true,"Title":"View from 15th Floor",
   // "Height":600,"IDs":[116,943,234,38793],"Width":800}}
 }
