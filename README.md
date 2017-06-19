@@ -174,9 +174,4 @@ ids[(size_t) 1] = (long) 100;
 
 // Assigning format::undefined removes the value
 ids[(size_t) 3] = undefined ();
-
-// Iterate the array
-std::for_each (ids.begin (),
-               ids.end (),
-               [] (value & v)
 ```
