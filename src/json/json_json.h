@@ -77,14 +77,13 @@ namespace format
     { return new json (*this); }
 
     /**
-     * TODO: return json *
      * @brief parse
      * @param json
      * @param reviver
      * @return
      * @see http://stackoverflow.com/questions/1174169/function-passed-as-template-argument
      */
-    static inline value *
+    static inline json *
     parse (const wchar_t *json_text, reviver r = 0)
     { return new json (json_text, r); }
 
