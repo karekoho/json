@@ -107,7 +107,7 @@ std::for_each (ids.begin (),
 });
 // output: 116 943 234 38793
 ```
-## Transforming parsed output
+## Filtering and transforming parsing results
 ```c++
 #include <format/json.h>
 
@@ -116,7 +116,7 @@ using namespace format;
 value *
 fn_reviver (const wchar_t *key, value *val)
 {
-  if (wcscmp (key, L"Thumbnail") == 0) // Remove the Thumbnail object
+  if (wcscmp (key, L"Thumbnail") == 0) // "Thumbnail" object is removed
     return new undefined ();
 
   return val;
