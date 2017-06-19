@@ -42,7 +42,7 @@ in your source code to use JSON support.
 
 
 # Usage
-## Parsing and reading text input
+## Parsing and reading JSON text input
 ```c++
 #include <format/json.h>
 
@@ -98,7 +98,7 @@ std::for_each (ids.begin (),
 });
 // ouput: 116 943 234 38793
 ```
-## Reviving text input
+## Reviving input
 ```c++
 #include <format/json.h>
 
@@ -113,7 +113,7 @@ fn_reviver (const wchar_t *key, value *val)
   return val;
 }
 
-value *v = json::parse ( L"{\
+json *j = json::parse ( L"{\
     \"Image\": {\
         \"Width\":  800,\
         \"Height\": 600,\
@@ -128,11 +128,11 @@ value *v = json::parse ( L"{\
       }\
   }", fn_reviver);
 
-std::wcout << v->stringify () << std::endl;
+std::wcout << j->stringify () << std::endl;
 // output: {"Image":{"Animated":true,"Title":"View from 15th Floor",
 // "Height":600,"IDs":[116,943,234,38793],"Width":800}}
 ```
-## Contructing and modifying objects
+## Contructing and modifying JSON-like objects
 ```c++
 #include <format/json.h>
 

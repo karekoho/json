@@ -10,7 +10,7 @@ using namespace format;
 void
 create_modify ()
 {
-  std::wcout << std::endl << "Create and modify" << std::endl;
+  std::wcout << std::endl << "Create and modify:" << std::endl;
 
   // Construct a json object
   // Assign a pointer to an object
