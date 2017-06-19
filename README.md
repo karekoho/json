@@ -53,6 +53,7 @@ json j = L"{\
       \"Width\":  800,\
       \"Height\": 600,\
       \"Title\":  \"View from 15th Floor\",\
+      \"Description\": null,\
       \"Thumbnail\": {\
           \"Url\":    \"http://www.example.com/image/481989943\",\
           \"Height\": 125,\
@@ -63,42 +64,50 @@ json j = L"{\
     }\
 }";
 
-// Get the Image object
-value & v = j[L"Image"];
+// Get the image object.
+value & val = j[L"Image"];
 
-// Cast to format::object
-object & image = static_cast<object &> (v);
+// format::value is the interface for all JSON values.
+// format::value.get () returns value the object is holding, but in the JSON text format.
+std::wcout << val[L"Title"].get () << std::endl;
+// output: "View from 15th Floor"
 
-// Get the object as wchar_t *
-std::wcout << image[L"Thumbnail"].get () << std::endl;
-// output: {"Width":100,"Height":125,"Url":"http://www.example.com/image/481989943"}
+std::wcout << val[L"Width"].get () << std::endl;
+// output: 800
 
-// Cast to format::boolean
-boolean & animated = static_cast<boolean &> (image[L"Animated"]);
+std::wcout << val[L"Animated"].get () << std::endl;
+// output: true
 
-// Get value as bool
+std::wcout << val[L"Description"].get () << std::endl;
+// output: null
+
+// To get the value as the actual C++ data type, format::value must be cast to the concrete type.
+string & title = static_cast<string &> (val[L"Title"]);         // Holds const wchar_t *
+number & width = static_cast<number &> (val[L"Width"]);         // Holds long or double
+boolean & animated = static_cast<boolean &> (val[L"Animated"]); // Holds bool
+null & description = static_cast<null &> (val[L"Description"]); // Holds nullptr_t
+
 std::wcout << animated.get () << std::endl;
 // output: 1
 
-// Cast to format::array
-array & ids = static_cast<array &> (image[L"IDs"]);
+// However, format::object and format::array return their value as JSON text.
+object & image = static_cast<object &> (val);
+array & ids = static_cast<array &> (val[L"IDs"]);
 
-// Elements of array are accessed with integer indexes as well
-value & n = ids[(size_t) 3];
+std::wcout << ids.get () << std::endl;
+// output: [116,943,234,38793]
 
-// Iterate the array
+// All values can be iterated.
+// Iterate the array.
 std::for_each (ids.begin (),
                ids.end (),
                [] (value & v)
 {
-  // Cast to format::number and get the value as double
-  number & id = static_cast<number &> (v);
-  double d = id.get ();
-  std::wcout << d << L" ";
+  std::wcout << v.get () << L" ";
 });
-// ouput: 116 943 234 38793
+// output: 116 943 234 38793
 ```
-## Reviving input
+## Transforming parsed output
 ```c++
 #include <format/json.h>
 
@@ -132,7 +141,7 @@ std::wcout << j->stringify () << std::endl;
 // output: {"Image":{"Animated":true,"Title":"View from 15th Floor",
 // "Height":600,"IDs":[116,943,234,38793],"Width":800}}
 ```
-## Contructing and modifying JSON-like objects
+## Contructing and modifying a JSON-like object
 ```c++
 #include <format/json.h>
 
@@ -170,10 +179,4 @@ ids[(size_t) 3] = undefined ();
 std::for_each (ids.begin (),
                ids.end (),
                [] (value & v)
-{
-  number & id = static_cast<number &> (v);
-  long l = id.get ();
-  std::wcout << l << L" ";
-});
-// output: 116 100 234
 ```
