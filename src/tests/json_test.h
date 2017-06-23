@@ -84,11 +84,11 @@ namespace format
       std::vector<struct assert > test = {
           { L" {} ", value::value_t::object_t, PASS },
           { L" [] ", value::value_t::array_t, PASS },
-          { L" \"x\" ", value::value_t::string_t, FAIL },
-          { L" 100 ", value::value_t::number_t, FAIL },
-          { L" null ", value::value_t::null_t, FAIL },
-          { L" true ", value::value_t::boolean_t, FAIL },
-          { L" false ", value::value_t::boolean_t, FAIL },
+          { L" \"x\" ", value::value_t::string_t, PASS },
+          { L" 100 ", value::value_t::number_t, PASS },
+          { L" null ", value::value_t::null_t, PASS },
+          { L" true ", value::value_t::boolean_t, PASS },
+          { L" false ", value::value_t::boolean_t, PASS },
 
           { L"{\"k\":\"v\"} ", value::value_t::object_t, PASS },
           { L" { \"k\" : \"v\" } ", value::value_t::object_t, PASS },
