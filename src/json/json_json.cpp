@@ -94,8 +94,19 @@ format::json::json::_parse (const wchar_t *readp)
 {
   _readp = readp;
 
-  if ((__root = _make_value ())->type () == value::no_value_t)
-    __root = 0;
+//  if ((__root = _make_value ())->type () == value::no_value_t)
+//    __root = 0;
+
+  if ((__root = _make_value ())->type () > value::array_t)
+    {
+      if (__root->type () < value::no_value_t)
+        {
+          delete __root;
+          __root = 0;
+          throw json_syntax_error ("Unexpected input");
+        }
+      __root = 0;
+    }
 
   if (*(_look_ahead ()) != 0)
     throw json_syntax_error (UNEX_TOKEN, *_readp);

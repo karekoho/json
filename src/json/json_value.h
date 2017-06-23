@@ -41,14 +41,14 @@ namespace format
      */
     enum value_t
     {
-      no_value_t = 0,
-      undefined_t,
       object_t,
       array_t,
       string_t,
       number_t,
       boolean_t,
-      null_t
+      null_t,
+      undefined_t,
+      no_value_t
     };
 
     /**
