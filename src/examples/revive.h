@@ -21,7 +21,7 @@ revive ()
 {
   std::wcout << std::endl << "Revive:" << std::endl;
 
-  json *j = json::parse ( L"{\
+  value *v = json::parse ( L"{\
       \"Image\": {\
           \"Width\":  800,\
           \"Height\": 600,\
@@ -36,7 +36,7 @@ revive ()
         }\
     }", fn_reviver);
 
-  std::wcout << j->stringify () << std::endl;
+  std::wcout << v->stringify () << std::endl;
   // output: {"Image":{"Animated":true,"Title":"View from 15th Floor",
   // "Height":600,"IDs":[116,943,234,38793],"Width":800}}
 }
