@@ -8,6 +8,7 @@
 namespace format
 {
   #define UNEX_END    "Unexpected end of JSON input"
+  #define UNEX_START  "Unexpected start of JSON input"
   #define UNEX_TOKEN  "Unexpected token "
   #define BAD_ASSIGN  "Bad assignment"
 
@@ -227,9 +228,10 @@ namespace format
      * @brief str_length
      * @return
      */
+    //protected:
     virtual size_t
     str_length () const noexcept = 0;
-
+    //public:
     /**
      * @brief value
      * @return

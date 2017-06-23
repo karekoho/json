@@ -91,13 +91,13 @@ format::object::_pair ()
     }
 
   if (charc < 0)   // No closing "
-    throw json_syntax_error ("Unexpected token ", *_readp);
+    throw json_syntax_error (UNEX_TOKEN, *_readp);
 
   const wchar_t *keyp = _readp + 1;
   _readp += charc;
 
   if (*(_look_ahead ()) != _sc::name_separator)   // Expect ':'
-    throw json_syntax_error ("Unexpected token ", *_readp);   // TODO: throw syntax error: unexpected character '%c'
+    throw json_syntax_error (UNEX_TOKEN, *_readp);   // TODO: throw syntax error: unexpected character '%c'
 
   _readp++;
 
