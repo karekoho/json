@@ -184,7 +184,7 @@ namespace format
             *(*it).val = format::undefined ();
             ASSERT_EQUAL_IDX ("array::count ()",
                               (*it).size,
-                              a.length ());
+                              a.count ());
         TEST_IT_END;
 
         json j = new object {
@@ -220,7 +220,7 @@ namespace format
 
         CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[L\"Image\"].count ()",
                                       (size_t) 0,
-                                      j[L"Image"].length ());
+                                      j[L"Image"].count ());
       }
 
       void

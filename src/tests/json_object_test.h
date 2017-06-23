@@ -40,7 +40,7 @@ namespace format
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("object::count ()",
                                     (size_t) 1,
-                                    o[3].length ());
+                                    o[3].count ());
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("object[key][key].type ()",
                                     value::number_t,
@@ -106,9 +106,9 @@ namespace format
 
             ASSERT_EQUAL_IDX ("value.readp", (startp + charc) - (*it).moveback, readp);
             ASSERT_EQUAL_IDX ("*(value.readp -1)", L'}', *(readp - 1));
-            ASSERT_EQUAL_IDX ("value.size", (*it).size, o->length ());
+            ASSERT_EQUAL_IDX ("value.size", (*it).size, o->count ());
 
-            if (o->length () > 0)
+            if (o->count () > 0)
               {
                 object & oo = *o;
 
@@ -153,7 +153,7 @@ namespace format
 
         (void) o->_parse (startp);
 
-        if (o->length () > 0)
+        if (o->count () > 0)
           {
             size_t idx= 0;
 
@@ -315,12 +315,12 @@ namespace format
 
                   if (parent)
                     {
-                      ASSERT_EQUAL_IDX ("parent->count ()", (*it).count, parent->length ());
+                      ASSERT_EQUAL_IDX ("parent->count ()", (*it).count, parent->count ());
                       ASSERT_EQUAL_IDX ("obj_parent[key].type", object_parent[(*it).key].type (), (*it).type);
                     }
                   else
                     {
-                      ASSERT_EQUAL_IDX ("old_value.size ()", (size_t) 2, old_value->length ());
+                      ASSERT_EQUAL_IDX ("old_value.size ()", (size_t) 2, old_value->count ());
                       delete old_value;
                     }
                 }
@@ -483,7 +483,7 @@ namespace format
       TEST_IT_START
 
         (void) o._erase (*(*it).val);
-        size_t size = o.length ();
+        size_t size = o.count ();
 
         ASSERT_EQUAL_IDX ("o.count ()", (*it).size, size);
 
@@ -492,7 +492,7 @@ namespace format
       // TODO: move to test_operator_assign_undefined
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("object.count ()",
                                     (size_t) 1,
-                                    (object (L"{\"0\":0,\"1\":1}") [L"0"] = undefined ()).length ());
+                                    (object (L"{\"0\":0,\"1\":1}") [L"0"] = undefined ()).count ());
       delete v[2];
     }
 
@@ -502,7 +502,7 @@ namespace format
       object o = L"{\"1\":1}";
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("object::count ()",
                                     (size_t) 1,
-                                    o.length ());
+                                    o.count ());
     }
 
     virtual void
@@ -535,7 +535,7 @@ namespace format
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.length ()",
                                     (size_t) 1,
-                                    copy.length ());
+                                    copy.count ());
 
       CPPUNIT_ASSERT_MESSAGE ("copy[L\"2\"].parent () == & copy",
                               copy[L"2"].parent () == & copy);
@@ -557,7 +557,7 @@ namespace format
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("o.length ()",
                                     (size_t) 1,
-                                    o.length ());
+                                    o.count ());
     }
 
     void
@@ -568,7 +568,7 @@ namespace format
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("o.length ()",
                                     (size_t) 1,
-                                    o.length ());
+                                    o.count ());
     }
 
     /**

@@ -93,7 +93,7 @@ namespace format
     test_length () final override
     {
       json j;
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("leaf::count ()", (size_t) 0, no_value::instance (& j)->length ());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("leaf::count ()", (size_t) 0, no_value::instance (& j)->count ());
     }
 
     virtual void test_ctor_dtor () override { CPPUNIT_ASSERT_ASSERTION_PASS (); }

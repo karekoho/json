@@ -100,8 +100,8 @@ namespace format
      * @return
      */
     virtual inline size_t
-    length () const noexcept override
-    { return __hasRoot () ? __root->length () : 0; }
+    count () const noexcept override
+    { return __hasRoot () ? __root->count () : 0; }
 
     /**
      * @brief operator =

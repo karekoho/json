@@ -76,7 +76,7 @@ namespace format
      * @return
      */
     virtual size_t
-    length () const noexcept override
+    count () const noexcept override
     { return _element_list.size (); }
 
     /**

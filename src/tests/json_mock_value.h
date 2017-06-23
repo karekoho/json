@@ -34,7 +34,7 @@ namespace format
       { return value::value_t::undefined_t; }
 
       virtual size_t
-      length () const noexcept override
+      count () const noexcept override
       { return 0; }
 
       virtual value *

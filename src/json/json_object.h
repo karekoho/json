@@ -76,7 +76,7 @@ namespace format
      * @return
      */
     virtual inline size_t
-    length () const noexcept override
+    count () const noexcept override
     { return _member_list.size (); }
 
     /**
