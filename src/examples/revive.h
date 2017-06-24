@@ -13,6 +13,11 @@ fn_reviver (const wchar_t *key, value *val)
   if (wcscmp (key, L"Thumbnail") == 0) // Remove the Thumbnail object
     return new undefined ();
 
+  if (wcscmp (key, L"Description") == 0
+      && val->type () == value::null_t)
+    // val = new string (L"n/a");
+    return new string (L"n/a");
+
   return val;
 }
 
@@ -26,6 +31,7 @@ revive ()
           \"Width\":  800,\
           \"Height\": 600,\
           \"Title\":  \"View from 15th Floor\",\
+          \"Description\": null,\
           \"Thumbnail\": {\
               \"Url\":    \"http://www.example.com/image/481989943\",\
               \"Height\": 125,\
