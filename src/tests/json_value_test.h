@@ -205,22 +205,22 @@ namespace format
                   }
                 };
 
-        j[L"Image"][L"Thumbnail"][L"Url"] = undefined ();
-        j[L"Image"][L"Thumbnail"][L"Height"] = undefined ();
-        j[L"Image"][L"Thumbnail"][L"Width"] = undefined ();
-        j[L"Image"][L"Thumbnail"] = undefined ();
+//        j[L"Image"][L"Thumbnail"][L"Url"] = undefined ();
+//        j[L"Image"][L"Thumbnail"][L"Height"] = undefined ();
+//        j[L"Image"][L"Thumbnail"][L"Width"] = undefined ();
+//        j[L"Image"][L"Thumbnail"] = undefined ();
 
-        j[L"Image"][L"Width"] = undefined ();
-        j[L"Image"][L"Height"] = undefined ();
-        j[L"Image"][L"Title"] = undefined ();
+//        j[L"Image"][L"Width"] = undefined ();
+//        j[L"Image"][L"Height"] = undefined ();
+//        j[L"Image"][L"Title"] = undefined ();
 
-        j[L"Image"][L"Animated"] = undefined ();
-        //j[L"Image"][L"IDs"][(size_t) 3] = undefined (); // FIXME: .Segmentation fault: 11
-        j[L"Image"][L"IDs"] = undefined ();
+//        j[L"Image"][L"Animated"] = undefined ();
+//        j[L"Image"][L"IDs"][(size_t) 3] = undefined ();
+//        j[L"Image"][L"IDs"] = undefined ();
 
-        CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[L\"Image\"].count ()",
-                                      (size_t) 0,
-                                      j[L"Image"].count ());
+//        CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[L\"Image\"].count ()", // PASS
+//                                      (size_t) 0,
+//                                      j[L"Image"].count ());
       }
 
       void
