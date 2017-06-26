@@ -40,8 +40,6 @@ format::string::_parse (const wchar_t *json)
 
   _startp =_readp = json;
 
-  //_clear ();
-
   if (_parent == 0)   // 2. ctor
     {
       if ((charc = __string (endc)) < 0 )
@@ -81,13 +79,14 @@ format::string::_to_string (wchar_t *) const
       if (*_startp == _sc::double_quote)
         _string_value[1].assign (_startp, _charc);
       else
-        {
-          wchar_t *s =  (wchar_t *) alloca (sizeof (wchar_t) * _charc + 2);
+        {          
+          size_t charc = _charc + 2;
+          wchar_t * s = (wchar_t *) memset (alloca (sizeof (wchar_t) * charc), 0, charc);
 
           *s = L'"';
           *(wcsncpy (s + 1, _startp, _charc) +_charc) = L'"';
 
-          _string_value[1].assign (s, _charc + 2);
+          _string_value[1].assign (s, _charc + 2);          
         }
     }
 

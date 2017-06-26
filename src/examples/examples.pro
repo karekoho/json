@@ -6,6 +6,7 @@ CONFIG -= qt
 INCLUDEPATH += /usr/local/include
 
 LIBS += -L/usr/local/lib -ljson
+#LIBS += /usr/local/lib/libjson.a
 
 QMAKE_CXXFLAGS+= -std=c++11
 

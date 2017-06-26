@@ -5,9 +5,9 @@
 int
 main ()
 {
-  parse ();
+  //parse ();
   revive ();
-  create_modify ();
+  //create_modify ();
   return 0;
 }
 
