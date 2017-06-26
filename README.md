@@ -121,7 +121,7 @@ fn_reviver (const wchar_t *key, value *val)
 
   if (wcscmp (key, L"Description") == 0
       && val->type () == value::null_t)  // Value of type format::null is replaced
-    return new string (L"Not available");
+    return new string (L"n/a");
 
   return val;
 }
@@ -143,7 +143,7 @@ value *v = json::parse ( L"{\
   }", fn_reviver);
 
 std::wcout << v->stringify () << std::endl;
-// output: {"Image":{"IDs":[116,943,234,38793],"Description":"Not available",
+// output: {"Image":{"IDs":[116,943,234,38793],"Description":"n/a",
 // "Height":600,"Animated":true,"Title":"View from 15th Floor","Width":800}}
 ```
 ## Contructing and modifying a JSON-like object
