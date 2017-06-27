@@ -118,13 +118,6 @@ namespace format
     }
 
     /**
-     * @brief str_length
-     * @return
-     */
-    virtual size_t
-    str_length () const noexcept override;
-
-    /**
      * @brief The iterator class
      */
     class iterator : public value::iterator<member_list::iterator,
@@ -282,6 +275,13 @@ namespace format
      */
     virtual const wchar_t *
     _to_string (wchar_t *offset = 0) const override;
+
+    /**
+     * @brief str_length
+     * @return
+     */
+    virtual size_t
+    str_length () const noexcept override;
 
     /**
      * @brief _initializer_list

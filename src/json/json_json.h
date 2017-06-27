@@ -141,13 +141,6 @@ namespace format
     operator =(const json & j)
     { return _assign (j); }
 
-    /**
-     * @brief strLength
-     * @return
-     */
-    virtual size_t
-    str_length () const noexcept override
-    { return __hasRoot () ? __root->str_length () : 0; }
 
   protected:
     /**
@@ -239,6 +232,14 @@ namespace format
     virtual const wchar_t *
     _to_string (wchar_t *offset = 0) const override
     { return __hasRoot () ? __call_str_value (__root, offset) : L""; }
+
+    /**
+     * @brief str_length
+     * @return
+     */
+    virtual size_t
+    str_length () const noexcept override
+    { return __hasRoot () ? __call__str_length (__root) : 0; }
 
     /**
      * @brief erase

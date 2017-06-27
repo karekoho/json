@@ -31,6 +31,7 @@ namespace format
     friend const wchar_t * __call_str_value (value *, wchar_t *);
     friend value & __call__erase (value *, const value &);
     friend value & __call__assign (value *, value *, value *);
+    friend size_t __call__str_length (value *);
 
     #ifdef UNIT_TEST
       friend class json_value_test;
@@ -223,16 +224,6 @@ namespace format
     { return _to_string (); }
 
     /**
-     * TODO: protected
-     *
-     * @brief str_length
-     * @return
-     */
-    //protected:
-    virtual size_t
-    str_length () const noexcept = 0;
-    //public:
-    /**
      * @brief value
      * @return
      */
@@ -416,6 +407,13 @@ namespace format
     inline void
     _set_parent (json *parent) noexcept
     { _parent = parent; }
+
+    /**
+     * @brief str_length
+     * @return
+     */
+    virtual size_t
+    str_length () const noexcept = 0;
 
     /**
      * @brief The _sc enum Structural characters.
@@ -618,6 +616,10 @@ namespace format
     inline value &
     __call__assign (value *parent, value *ov, value*nv)
     { return parent->_assign (ov, nv); }
+
+    inline size_t
+    __call__str_length (value *parent)
+    { return parent->str_length (); }
 } // Namespace format
 
 #endif // JSON_VALUE_H

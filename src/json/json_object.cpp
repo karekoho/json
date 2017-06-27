@@ -215,7 +215,8 @@ format::object::str_length () const noexcept
   while (cur != end)
     {
       std::pair<std::wstring, value *> p = *cur++;
-      len += p.first.size () + dynamic_cast<value *>(p.second)->str_length () + 4;   // " + key + " + : +  value + , or }
+      //len += p.first.size () + dynamic_cast<value *>(p.second)->str_length () + 4;   // " + key + " + : +  value + , or }
+      len += p.first.size () + __call__str_length (dynamic_cast<value *>(p.second)) + 4;   // " + key + " + : +  value + , or }
     }
 
   return len;
@@ -247,8 +248,8 @@ format::object::_to_string (wchar_t *offset) const
       std::pair<std::wstring, value *> p = *cur;
 
       str_value[OFFSET] = _str_append (_str_append (str_value[OFFSET], L"\"", 1), p.first.c_str (), p.first.size ());   // Key
-      str_value[OFFSET] = _str_append (str_value[OFFSET], L"\":", 2);
-      str_value[OFFSET] = _str_append (str_value[OFFSET], __call_str_value (p.second, str_value[OFFSET]), p.second->str_length ()); // Value
+      str_value[OFFSET] = _str_append (str_value[OFFSET], L"\":", 2);      
+      str_value[OFFSET] = _str_append (str_value[OFFSET], __call_str_value (p.second, str_value[OFFSET]), __call__str_length (p.second)); // Value
 
       if (++cur != end)
         *(str_value[OFFSET]++) = _sc::value_separator;

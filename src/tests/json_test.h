@@ -426,10 +426,12 @@ namespace format
 
     virtual void
     test_str_length () override
-    {
+    {        
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("json[index]::str_length ()",
                                     (size_t) 3,
-                                    json (L"{\"0\":\"x\"}")[L"0"].str_length ());
+                                    //json (L"{\"0\":\"x\"}")[L"0"].str_length ()
+                                    __call__str_length (& (json(L"{\"0\":\"x\"}")[L"0"]))
+          );
     }
 
     virtual void

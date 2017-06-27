@@ -56,14 +56,6 @@ namespace format
       { return new boolean (*this); }
 
      /**
-      * @brief strLength
-      * @return
-      */
-      virtual size_t
-      str_length () const noexcept override
-      { return _boolean_value == true ? 4 : 5; }
-
-     /**
       * @brief type
       * @return
       */
@@ -157,6 +149,14 @@ namespace format
        virtual const wchar_t *
        _to_string (wchar_t * = 0) const override
        { return _boolean_value == true ? L"true" : L"false"; }
+
+      /**
+       * @brief str_length
+       * @return
+       */
+       virtual size_t
+       str_length () const noexcept override
+       { return _boolean_value == true ? 4 : 5; }
     }; // Class boolean
 
     inline

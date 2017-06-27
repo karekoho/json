@@ -95,13 +95,6 @@ namespace format
     const wchar_t *
     get () const;
 
-    /**
-     * @brief strLength
-     * @return
-     */
-    virtual size_t
-    str_length () const noexcept override
-    { return _charc == 0 || *_startp == _sc::double_quote ? _charc : _charc + 2; }
 
   protected:
     /**
@@ -171,6 +164,14 @@ namespace format
      */
     virtual const wchar_t *
     _to_string (wchar_t * = 0) const override;
+
+    /**
+     * @brief str_length
+     * @return
+     */
+    virtual size_t
+    str_length () const noexcept override
+    { return _charc == 0 || *_startp == _sc::double_quote ? _charc : _charc + 2; }
 
   private:
     /**

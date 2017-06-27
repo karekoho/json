@@ -91,14 +91,6 @@ namespace format
     operator =(std::nullptr_t)
     { return *this; }
 
-    /**
-     * @brief strLength
-     * @return
-     */
-    virtual size_t
-    str_length () const noexcept override
-    { return 4; }
-
   protected:
     /**
      * @brief null
@@ -139,6 +131,14 @@ namespace format
     virtual const wchar_t *
     _to_string (wchar_t *) const noexcept override
     { return L"null"; }
+
+    /**
+     * @brief strLength
+     * @return
+     */
+    virtual size_t
+    str_length () const noexcept override
+    { return 4; }
   };  // Class null
 
   inline

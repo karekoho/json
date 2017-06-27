@@ -116,13 +116,6 @@ namespace format
     operator =(const array & a);
 
    /**
-    * @brief str_length
-    * @return
-    */
-    virtual size_t
-    str_length () const noexcept override;
-
-   /**
     * @brief The iterator class
     */
     class iterator : public value::iterator<element_list::iterator,
@@ -277,6 +270,13 @@ namespace format
      */
      virtual const wchar_t *
      _to_string (wchar_t *offset = 0) const override;
+
+    /**
+     * @brief str_length
+     * @return
+     */
+     virtual size_t
+     str_length () const noexcept override;
 
     /**
      * @brief _set_initializer_list

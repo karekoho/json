@@ -179,7 +179,8 @@ format::array::str_length () const noexcept
   auto cur = _element_list.cbegin ();
 
   while (cur != end)
-    len += ((*cur++)->str_length () + 1);   // , or ]
+    //len += ((*cur++)->str_length () + 1);   // , or ]
+  len += __call__str_length (*cur++) + 1;   // , or ]
 
   return len;
 }
@@ -207,8 +208,8 @@ format::array::_to_string (wchar_t *offset) const
 
   while (cur != end)
     {
-      value *v = *cur;
-      str_value[OFFSET] = _str_append (str_value[OFFSET], __call_str_value (v, str_value[OFFSET]), v->str_length ());
+      value *v = *cur;      
+      str_value[OFFSET] = _str_append (str_value[OFFSET], __call_str_value (v, str_value[OFFSET]), __call__str_length (v));
 
       if (++cur != end)
         *(str_value[OFFSET]++) = _sc::value_separator;

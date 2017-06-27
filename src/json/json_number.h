@@ -121,12 +121,6 @@ namespace format
     get () const
     { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
 
-    /**
-     * @brief strLength
-     * @return
-     */
-    virtual size_t
-    str_length () const noexcept override;
 
   protected:
     /**
@@ -250,6 +244,13 @@ namespace format
      */
     virtual value *
     _clone (const value &other) override;
+
+    /**
+     * @brief str_length
+     * @return
+     */
+    virtual size_t
+    str_length () const noexcept override;
 
   private:
     /**
