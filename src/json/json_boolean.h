@@ -155,7 +155,7 @@ namespace format
        * @return
        */
        virtual size_t
-       str_length () const noexcept override
+       _str_length () const noexcept override
        { return _boolean_value == true ? 4 : 5; }
     }; // Class boolean
 

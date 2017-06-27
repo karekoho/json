@@ -202,7 +202,7 @@ format::object::_clone (const value &other)
 }
 
 size_t
-format::object::str_length () const noexcept
+format::object::_str_length () const noexcept
 {
   if (_member_list.empty ())
     return 2;
@@ -234,7 +234,7 @@ format::object::_to_string (wchar_t *offset) const
     return _str_value[BEGIN];
 
   else
-    str_value[OFFSET] = new wchar_t[str_length () + 1] ();
+    str_value[OFFSET] = new wchar_t[_str_length () + 1] ();
 
   str_value[BEGIN] = str_value[OFFSET];
 

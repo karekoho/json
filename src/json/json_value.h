@@ -413,7 +413,7 @@ namespace format
      * @return
      */
     virtual size_t
-    str_length () const noexcept = 0;
+    _str_length () const noexcept = 0;
 
     /**
      * @brief The _sc enum Structural characters.
@@ -619,7 +619,7 @@ namespace format
 
     inline size_t
     __call__str_length (value *parent)
-    { return parent->str_length (); }
+    { return parent->_str_length (); }
 } // Namespace format
 
 #endif // JSON_VALUE_H

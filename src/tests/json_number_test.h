@@ -451,7 +451,7 @@ namespace format
       TEST_IT_START
           ASSERT_EQUAL_IDX ("number::str_length ()",
                             (*it).len,
-                            (*it).n->str_length ());
+                            (*it).n->_str_length ());
           delete (*it).n;
       TEST_IT_END;
     }

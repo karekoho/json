@@ -375,7 +375,7 @@ namespace format
 
           ASSERT_EQUAL_IDX ("object::str_length ()",
                             (*it).length,
-                            o.str_length ());
+                            o._str_length ());
       TEST_IT_END;
     }
 

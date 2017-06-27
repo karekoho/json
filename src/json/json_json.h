@@ -238,7 +238,7 @@ namespace format
      * @return
      */
     virtual size_t
-    str_length () const noexcept override
+    _str_length () const noexcept override
     { return __hasRoot () ? __call__str_length (__root) : 0; }
 
     /**

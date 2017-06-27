@@ -46,7 +46,7 @@ namespace format
       { return *this; }
 
       virtual size_t
-      str_length () const noexcept override
+      _str_length () const noexcept override
       { return 0; }
 
       virtual const wchar_t *

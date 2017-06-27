@@ -208,7 +208,7 @@ format::number::_clone (const value &other)
 }
 
 size_t
-format::number::str_length () const noexcept
+format::number::_str_length () const noexcept
 {
  (void) get ();
  __to_string ();

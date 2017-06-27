@@ -135,11 +135,11 @@ namespace format
     {
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("boolean::str_length ()",
                                     (size_t) 5,
-                                    boolean (false).str_length ());
+                                    boolean (false)._str_length ());
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("boolean::str_length ()",
                                     (size_t) 4,
-                                    boolean (true).str_length ());
+                                    boolean (true)._str_length ());
     }
 
     virtual void

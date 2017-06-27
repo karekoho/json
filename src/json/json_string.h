@@ -170,7 +170,7 @@ namespace format
      * @return
      */
     virtual size_t
-    str_length () const noexcept override
+    _str_length () const noexcept override
     { return _charc == 0 || *_startp == _sc::double_quote ? _charc : _charc + 2; }
 
   private:

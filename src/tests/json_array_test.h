@@ -318,7 +318,7 @@ namespace format
 
           array a = (*it).input;
 
-          ASSERT_EQUAL_IDX ("a.strLength ()", (*it).length, a.str_length ());
+          ASSERT_EQUAL_IDX ("a.strLength ()", (*it).length, a._str_length ());
 
       TEST_IT_END;
     }

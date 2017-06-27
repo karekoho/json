@@ -281,7 +281,7 @@ namespace format
      * @return
      */
     virtual size_t
-    str_length () const noexcept override;
+    _str_length () const noexcept override;
 
     /**
      * @brief _initializer_list

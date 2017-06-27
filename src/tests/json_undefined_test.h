@@ -118,7 +118,7 @@ namespace format
     test_str_length () override
     {
       undefined u;
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("undefined::str_length ()", (size_t) 0, u.str_length ()) ;
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("undefined::str_length ()", (size_t) 0, u._str_length ()) ;
     }
 
     virtual void
