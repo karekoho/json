@@ -26,7 +26,7 @@ namespace format
     string ();
 
     /**
-     * @brief String
+     * @brief string
      * @param json
      */
     string (const wchar_t *json);
@@ -95,6 +95,16 @@ namespace format
     const wchar_t *
     get () const;
 
+    /**
+     * @brief length
+     * @return
+     */
+    inline size_t
+    length () const noexcept
+    {
+      size_t length = _str_length ();
+      return length > 1 ? length - 2 : length;
+    }
 
   protected:
     /**
@@ -126,12 +136,6 @@ namespace format
      */
     virtual const wchar_t *
     _parse (const wchar_t *json) override;
-
-    /**
-     * @brief _copy
-     * @param nv
-     * void _copy (const String &nv);
-     */
 
     /**
      * @brief _clear

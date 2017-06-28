@@ -20,6 +20,7 @@ namespace format
 
       string a[] = {
         string (),
+        string (L""),
         string (L"x"),
         string (& parent, 1),
       };      
@@ -40,15 +41,16 @@ namespace format
         const wchar_t *startp;
         const wchar_t *str_value;
         size_t charc;
+        size_t length;
         wchar_t endc;
         int assert_status;
       };
 
       std::vector<struct assert > test = {
-          { L"\"\"", L"\"\"", 0 + 2, (wchar_t) 0, PASS },
-          { L"\"xxx\"", L"\"xxx\"", 3 + 2, (wchar_t) 0, PASS },
-          { L"\" xxx \"", L"\" xxx \"", 5 + 2, (wchar_t) 0, PASS },
-          { L"\" xxx \" ", L"\" xxx \"", 5 + 2, L' ', PASS },
+          { L"\"\"", L"\"\"", 0 + 2, 0, (wchar_t) 0, PASS },
+          { L"\"xxx\"", L"\"xxx\"", 3 + 2, 3, (wchar_t) 0, PASS },
+          { L"\" xxx \"", L"\" xxx \"", 5 + 2, 5, (wchar_t) 0, PASS },
+          { L"\" xxx \" ", L"\" xxx \"", 5 + 2, 5, L' ', PASS },
       };
 
       TEST_IT_START
@@ -65,8 +67,10 @@ namespace format
 
         ASSERT_EQUAL_IDX ("string.readp", readp, (*it).startp + (*it).charc);
         ASSERT_EQUAL_IDX ("*(string.readp)", (wchar_t) *readp, (*it).endc);
-        ASSERT_EQUAL_IDX ("s->strLength ()", (*it).charc, s->_str_length ());
-        CPPUNIT_ASSERT_MESSAGE ("s->strValue ()", wcscmp ((*it).str_value, s->_to_string ()) == 0);
+        ASSERT_EQUAL_IDX ("s->_str_length ()", (*it).charc, s->_str_length ());
+        ASSERT_EQUAL_IDX ("s->length ()", (*it).length, s->length ());
+
+        CPPUNIT_ASSERT_MESSAGE ("s->_to_string ()", wcscmp ((*it).str_value, s->_to_string ()) == 0);
 
         delete s;
 
@@ -81,19 +85,20 @@ namespace format
         const wchar_t *startp;
         const wchar_t *str_value;
         size_t charc;
+        size_t length;
         wchar_t endc;
         int assert_status;
       };
 
       std::vector<struct assert > test = {
-          { L"", L"", 0, (wchar_t) 0, PASS },
-          { L"xxx", L"\"xxx\"", 3 + 2, (wchar_t) 0, PASS },
+          { L"", L"", 0, 0, (wchar_t) 0, PASS },
+          { L"xxx", L"\"xxx\"", 3 + 2, 3, (wchar_t) 0, PASS },
 
-          { L"\"xxx", 0, 0, (wchar_t) 0, FAIL },
-          { L"xxx\"", 0, 0, (wchar_t) 0, FAIL },
-          { L"\"xxx\"", 0, 0, (wchar_t) 0, FAIL },
-          { L"\u001Fx", 0, 0, (wchar_t) 0, FAIL },
-          { L"x\u001F", 0, 0, (wchar_t) 0, FAIL }
+          { L"\"xxx", 0, 0, 0, (wchar_t) 0, FAIL },
+          { L"xxx\"", 0, 0, 0, (wchar_t) 0, FAIL },
+          { L"\"xxx\"", 0, 0, 0, (wchar_t) 0, FAIL },
+          { L"\u001Fx", 0, 0, 0, (wchar_t) 0, FAIL },
+          { L"x\u001F", 0, 0, 0, (wchar_t) 0, FAIL }
       };
 
       string *s = 0;
@@ -102,8 +107,10 @@ namespace format
 
             s = new string ((*it).startp);
 
-            ASSERT_EQUAL_IDX ("s->strLength ()", (*it).charc, s->_str_length ());
-            CPPUNIT_ASSERT_MESSAGE ("s->strValue ()", wcscmp ((*it).str_value, s->_to_string ()) == 0);
+            ASSERT_EQUAL_IDX ("s->_str_length ()", (*it).charc, s->_str_length ());
+            ASSERT_EQUAL_IDX ("s->length ()", (*it).length, s->length ());
+
+            CPPUNIT_ASSERT_MESSAGE ("s->_to_string ()", wcscmp ((*it).str_value, s->_to_string ()) == 0);
 
             delete s;
           }
@@ -285,6 +292,11 @@ namespace format
       test__to_string () override
       { CPPUNIT_ASSERT_ASSERTION_PASS ("Tested in test_parse_parent () and test_parse_no_parent ()"); }
 
+      // TODO: rename value_test_interface::test_lenght --> test_count
+      void
+      __test_length__ ()
+      { CPPUNIT_ASSERT_ASSERTION_PASS ("ASSERTED in test_parse_parent () AND test_parse_no_parent ()"); }
+
       /**
        * 4.
        * @brief suite
@@ -296,7 +308,7 @@ namespace format
         CppUnit::TestSuite *s = new CppUnit::TestSuite ("json string test");
 
         /* 0. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_ctor_dtor", &json_string_test::test_ctor_dtor));
-        /* 1. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_parse_1", &json_string_test::test__parse));
+        /* 1. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__parse", &json_string_test::test__parse));
         /* 2. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_assign_all_values", &json_string_test::test_assign_all_values));
         /* 3. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__string", &json_string_test::test__string));
         /* 4. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__clone_const_value_ref", &json_string_test::test__clone_const_value_ref));
@@ -305,6 +317,7 @@ namespace format
         /* 7. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_str_length", &json_string_test::test_str_length));
         /* 8. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__to_string", &json_string_test::test__to_string));
         /* 9. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_operator_assign_const_wchar_t_ptr", &json_string_test::test_operator_assign_const_wchar_t_ptr));
+        /* 10. */ s->addTest (new CppUnit::TestCaller<json_string_test> ("test_length", &json_string_test::__test_length__));
 
         return s;
       }
