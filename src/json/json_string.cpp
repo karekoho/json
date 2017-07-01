@@ -79,14 +79,22 @@ format::string::_to_string (wchar_t *) const
       if (*_startp == _sc::double_quote)
         _string_value[1].assign (_startp, _charc);
       else
-        {          
-          size_t charc = _charc + 2;
-          wchar_t * s = (wchar_t *) memset (alloca (sizeof (wchar_t) * charc), 0, charc);
+        {                   
+          try
+            {
+              size_t charc = _charc + 2;
+              wchar_t *s = new wchar_t[charc] ();
 
-          *s = L'"';
-          *(wcsncpy (s + 1, _startp, _charc) +_charc) = L'"';
+              *s = L'"';
+              *(wcsncpy (s + 1, _startp, _charc) +_charc) = L'"';
+              _string_value[1].assign (s, _charc + 2);
 
-          _string_value[1].assign (s, _charc + 2);          
+              delete[] s;
+            }
+          catch (std::bad_alloc & ba)
+            {
+              throw json_error (ba.what ());
+            }
         }
     }
 
