@@ -497,7 +497,7 @@ namespace format
     }
 
     virtual void
-    test_length () override
+    test_count () override
     {
       object o = L"{\"1\":1}";
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("object::count ()",
@@ -593,7 +593,7 @@ namespace format
       /* 8. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__clear", &json_object_test::test__clear));
       /* 9. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strLength", &json_object_test::test_str_length));
       /* 10. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strvalue", &json_object_test::test__to_string));
-      /* 11. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_count", &json_object_test::test_length));
+      /* 11. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_count", &json_object_test::test_count));
       /* 12. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__assign_value_ptr_value_ptr", &json_object_test::test__assign_value_ptr_value_ptr));
       /* 13. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__clone_const_value_ref", &json_object_test::test__clone_const_value_ref));
       /* 14. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_type", &json_object_test::test_type));

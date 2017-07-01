@@ -285,16 +285,16 @@ namespace format
 
       virtual void
       test_str_length () override
-      { CPPUNIT_ASSERT_ASSERTION_PASS ("Tested in test_parse_parent () and test_parse_no_parent ()"); }
+      { CPPUNIT_ASSERT_ASSERTION_PASS ("Asserted in test_parse_parent (), test_parse_no_parent ()"); }
 
       virtual void
       test__to_string () override
-      { CPPUNIT_ASSERT_ASSERTION_PASS ("Tested in test_parse_parent () and test_parse_no_parent ()"); }
+      { CPPUNIT_ASSERT_ASSERTION_PASS ("Asserted in test_parse_parent (), test_parse_no_parent ()"); }
 
       // TODO: rename value_test_interface::test_lenght --> test_count
       void
-      __test_length__ ()
-      { CPPUNIT_ASSERT_ASSERTION_PASS ("ASSERTED in test_parse_parent () AND test_parse_no_parent ()"); }
+      test_length ()
+      { CPPUNIT_ASSERT_ASSERTION_PASS ("Asserted in test_parse_parent (), test_parse_no_parent ()"); }
 
       /**
        * 4.
@@ -316,7 +316,7 @@ namespace format
         /* 7. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_str_length", &json_string_test::test_str_length));
         /* 8. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__to_string", &json_string_test::test__to_string));
         /* 9. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_operator_assign_const_wchar_t_ptr", &json_string_test::test_operator_assign_const_wchar_t_ptr));
-        /* 10. */ s->addTest (new CppUnit::TestCaller<json_string_test> ("test_length", &json_string_test::__test_length__));
+        /* 10. */ s->addTest (new CppUnit::TestCaller<json_string_test> ("test_length", &json_string_test::test_length));
 
         return s;
       }

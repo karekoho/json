@@ -45,7 +45,7 @@ public:
     *
     * virtual size_t length () const noexcept = 0
     */
-    virtual void test_length () = 0;
+    virtual void test_count() = 0;
 
     /**
      * @brief test_str_length

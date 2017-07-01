@@ -376,7 +376,7 @@ namespace format
       { CPPUNIT_ASSERT_ASSERTION_PASS (); }
 
       virtual void
-      test_length () override
+      test_count () override
       { CPPUNIT_ASSERT_ASSERTION_PASS (); }
 
       virtual void
