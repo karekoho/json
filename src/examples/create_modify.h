@@ -42,6 +42,9 @@ create_modify ()
   // Assigning format::undefined removes the value
   ids[(size_t) 3] = undefined ();
 
+  std::wcout << ids.stringify () << std::endl;
+  // output: [116,100,234]
+
   // Iterate the array
   std::for_each (ids.begin (),
                  ids.end (),

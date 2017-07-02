@@ -1,12 +1,15 @@
 # JSON for C++
 
 ## Introduction
-JSON for C++ is a library to parse JSON Unicode text input,
+JSON for C++ is a library to parse Unicode JSON text input,
 
 create and modify JSON objects and stringify them back to text.
 
 It's goal is to be simple and self-explanatory, so getting started is easy and no in-depth guides are needed.
+## Requirements
+C++ compiler supporting the C++11 standard,
 
+such as GCC >= 4.5 or Clang >= 3.3
 ## Installation
 Get the source code:
 ```
@@ -14,22 +17,12 @@ git clone https://github.com/karekoho/json.git
 ```
 or download and extract the zip archive.
 
-Go to the root of the repository, make sure that you are on branch `master`
-
-and run commands:
+In the root of the repository run the following commands:
 ```
 cmake . 
 make 
 make install
 ```
-If you want the cmake and compilation output to go to a different directory, 
-
-such as `/path/to/repo_root/build`
-
-then run `cmake ..` in `build`
-
-The double dot after `cmake` refers to the location of `CMakeLists.txt`
-
 A shared library called `libjson` will be created in `/usr/local/lib`
 
 The development headers will be found in `/usr/local/include/format`
@@ -146,7 +139,7 @@ std::wcout << v->stringify () << std::endl;
 // output: {"Image":{"IDs":[116,943,234,38793],"Description":"n/a",
 // "Height":600,"Animated":true,"Title":"View from 15th Floor","Width":800}}
 ```
-## Contructing and modifying a JSON-like object
+## Constructing and modifying JSON-like objects
 ```c++
 #include <format/json.h>
 
@@ -179,4 +172,7 @@ ids[(size_t) 1] = (long) 100;
 
 // Assigning format::undefined removes the value
 ids[(size_t) 3] = undefined ();
+
+std::wcout << ids.stringify () << std::endl;
+// output: [116,100,234]
 ```
