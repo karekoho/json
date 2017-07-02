@@ -31,7 +31,7 @@ Include
 ```c++
 <format/json.h> 
 ```
-in your source code to use JSON support.
+in your source code to use JSON for C++.
 
 
 # Usage
