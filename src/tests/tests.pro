@@ -4,12 +4,12 @@ QT -= gui
 INCLUDEPATH += /usr/local/include
 LIBS += -L/usr/local/lib -lcppunit
 
-#QMAKE_CXXFLAGS+= -std=c++11
-#QMAKE_LFLAGS +=  -std=c++11
-QMAKE_CXXFLAGS+= -std=c++14
-QMAKE_LFLAGS +=  -std=c++14
+QMAKE_CXXFLAGS+= -std=c++11
+QMAKE_LFLAGS +=  -std=c++11
+#QMAKE_CXXFLAGS+= -std=c++14
+#QMAKE_LFLAGS +=  -std=c++14
 
-TARGET = tests
+TARGET = tests_development
 CONFIG += console
 CONFIG -= app_bundle
 

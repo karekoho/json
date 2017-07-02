@@ -1,8 +1,8 @@
 CONFIG += staticlib
 CONFIG -= qt
 
-QMAKE_CXXFLAGS+= -std=c++14
-QMAKE_LFLAGS +=  -std=c++14
+QMAKE_CXXFLAGS+= -std=c++11
+QMAKE_LFLAGS +=  -std=c++11
 
 TEMPLATE = lib
 
@@ -42,6 +42,7 @@ unix:!symbian {
 DESTDIR = ../../build/debug
 
 DISTFILES += \
-    ../../README.md
+    ../../README.md \
+    ../../CMakeLists.txt
 
 
