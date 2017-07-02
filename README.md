@@ -3,9 +3,9 @@
 ## Introduction
 JSON for C++ is a library to parse Unicode JSON text input, create and modify JSON objects
 
-and stringify them back to text.
+and stringify them back to text. It's goal is to be simple and self-explanatory,
 
-It's goal is to be simple and self-explanatory, so getting started is easy and no in-depth guides are needed.
+so getting started is easy and no in-depth guides are needed.
 ## Requirements
 C++ compiler supporting the C++11 standard,
 such as GCC >= 4.5 or Clang >= 3.3
