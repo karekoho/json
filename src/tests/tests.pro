@@ -6,8 +6,6 @@ LIBS += -L/usr/local/lib -lcppunit
 
 QMAKE_CXXFLAGS+= -std=c++11
 QMAKE_LFLAGS +=  -std=c++11
-#QMAKE_CXXFLAGS+= -std=c++14
-#QMAKE_LFLAGS +=  -std=c++14
 
 TARGET = tests_development
 CONFIG += console
@@ -60,6 +58,9 @@ HEADERS += \
 
 SUBDIRS += \
     ../json/json.pro
+
+DISTFILES += \
+    ../../build/tests/CMakeLists.txt
 
 
 

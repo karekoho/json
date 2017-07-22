@@ -1,7 +1,7 @@
 #ifndef JSON_TEST_H
 #define JSON_TEST_H
 
-#include <json_value_test_interface.h>
+#include "json_value_test_interface.h"
 #include "json_mock_value.h"
 
 namespace format
