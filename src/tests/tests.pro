@@ -20,7 +20,6 @@ SOURCES += main.cpp \
     ../json/json_object.cpp \
     ../json/json_number.cpp \
     ../json/json_json.cpp \
-    ../json/json_boolean.cpp \
     ../json/json_array.cpp \
 
 HEADERS += \

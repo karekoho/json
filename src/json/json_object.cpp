@@ -31,7 +31,6 @@ format::object::~object ()
   _clear ();
 }
 
-
 const wchar_t *
 format::object::_parse (const wchar_t *json_text)
 {
@@ -214,8 +213,7 @@ format::object::_str_length () const noexcept
 
   while (cur != end)
     {
-      std::pair<std::wstring, value *> p = *cur++;
-      //len += p.first.size () + dynamic_cast<value *>(p.second)->str_length () + 4;   // " + key + " + : +  value + , or }
+      std::pair<std::wstring, value *> p = *cur++;      
       len += p.first.size () + __call__str_length (dynamic_cast<value *>(p.second)) + 4;   // " + key + " + : +  value + , or }
     }
 
@@ -296,4 +294,3 @@ format::object::_set_initializer_list (std::initializer_list<std::pair<std::wstr
       __call__set_parent (p.second, this);
     }
 }
-

@@ -178,8 +178,7 @@ format::array::_str_length () const noexcept
   auto end = _element_list.cend ();
   auto cur = _element_list.cbegin ();
 
-  while (cur != end)
-    //len += ((*cur++)->str_length () + 1);   // , or ]
+  while (cur != end)    
   len += __call__str_length (*cur++) + 1;   // , or ]
 
   return len;
