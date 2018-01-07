@@ -34,13 +34,13 @@ in your source code to use JSON for C++.
 
 
 # Usage
-## Parsing and reading JSON text input
+## Decoding JSON
 ```c++
 #include <format/json.h>
 
 using namespace format;
 
-json j = L"{\
+json j (L"{\    // Construct a format::json object with a wide character string
   \"Image\": {\
       \"Width\":  800,\
       \"Height\": 600,\
@@ -54,7 +54,7 @@ json j = L"{\
       \"Animated\" : true,\
       \"IDs\": [116, 943, 234, 38793]\
     }\
-}";
+})";
 
 // Get the image object.
 value & val = j[L"Image"];
@@ -99,7 +99,44 @@ std::for_each (ids.begin (),
 });
 // output: 116 943 234 38793
 ```
-## Filtering and transforming parsing results
+## Decoding JSON
+```c++
+#include <format/json.h>
+
+using namespace format;
+
+// Construct a format::json object
+json j (new object { // Construct a format::json with to format::object
+        { L"Image",
+            new object {
+              { L"Width",new number (800.0) },
+              { L"Height",new number (600.0) },
+              { L"Title", new string (L"View from 15th Floor") },
+              { L"Thumbnail", new object {
+                  { L"Url",new string (L"http://www.example.com/image/481989943") },
+                  { L"Height",new number ((long) 125) },
+                  { L"Width", new number ((long) 100) },
+                }
+              },
+              { L"Animated", new boolean (false) },
+              { L"IDs", new array { new number ((long) 116), new number ((long) 943),
+                new number ((long) 234), new number ((long) 38793) } }
+            }
+          }
+        });
+
+array & ids = static_cast<array &> (j[L"Image"][L"IDs"]);
+
+// Modify value
+ids[(size_t) 1] = (long) 100;
+
+// Assigning format::undefined removes the value
+ids[(size_t) 3] = undefined ();
+
+std::wcout << ids.stringify () << std::endl;
+// output: [116,100,234]
+```
+## Altering the decoded JSON
 ```c++
 #include <format/json.h>
 
@@ -137,41 +174,4 @@ value *v = json::parse ( L"{\
 std::wcout << v->stringify () << std::endl;
 // output: {"Image":{"IDs":[116,943,234,38793],"Description":"n/a",
 // "Height":600,"Animated":true,"Title":"View from 15th Floor","Width":800}}
-```
-## Constructing and modifying JSON-like objects
-```c++
-#include <format/json.h>
-
-using namespace format;
-
-// Construct a format::json object
-json j = new object { // Assign a pointer to format::object
-          { L"Image",
-            new object {
-              { L"Width",new number (800.0) },
-              { L"Height",new number (600.0) },
-              { L"Title", new string (L"View from 15th Floor") },
-              { L"Thumbnail", new object {
-                  { L"Url",new string (L"http://www.example.com/image/481989943") },
-                  { L"Height",new number ((long) 125) },
-                  { L"Width", new number ((long) 100) },
-                }
-              },
-              { L"Animated", new boolean (false) },
-              { L"IDs", new array { new number ((long) 116), new number ((long) 943),
-                new number ((long) 234), new number ((long) 38793) } }
-            }
-          }
-        };
-
-array & ids = static_cast<array &> (j[L"Image"][L"IDs"]);
-
-// Modify value
-ids[(size_t) 1] = (long) 100;
-
-// Assigning format::undefined removes the value
-ids[(size_t) 3] = undefined ();
-
-std::wcout << ids.stringify () << std::endl;
-// output: [116,100,234]
 ```
