@@ -1,11 +1,15 @@
 # JSON for C++
 
 ## Introduction
-JSON for C++ is a library to parse Unicode JSON text input, create and modify JSON objects
+JSON for C++ is a library for encoding and decoding JSON in C++ applications.
 
-and stringify them back to text. It's goal is to be simple and self-explanatory,
+The result of decoding JSON encoded text input is a *format::json* object, an associative container such as *std::map* or an EcmaScript object.
+The elements of *format::json* object are accessed and assigned via the *format::json::operator[]* member function.
 
-so getting started is easy and no in-depth guides are needed.
+Encoding a *format::json* object is done by the *format::json::stringify()* method.
+
+JSON for C++ also supports transforming the computed value using the *reviver* callback function 
+for *format::json::parse(text [,reviver])*, as with *JSON.parse()* in EcmaScript.
 ## Requirements
 C++ compiler supporting the C++11 standard,
 such as GCC >= 4.5 or Clang >= 3.3
@@ -56,11 +60,11 @@ json j (L"{\    // Construct a format::json object with a wide character string
     }\
 })";
 
-// Get the image object.
+// Access an element, the "Image" object
 value & val = j[L"Image"];
 
 // format::value is the interface for all JSON values.
-// format::value.get () returns value the object is holding, but in the JSON text format.
+// format::value.get() returns value the object is holding
 std::wcout << val[L"Title"].get () << std::endl;
 // output: "View from 15th Floor"
 
@@ -73,6 +77,7 @@ std::wcout << val[L"Animated"].get () << std::endl;
 std::wcout << val[L"Description"].get () << std::endl;
 // output: null
 
+// format::value.get() returns the value as const wchar_t *
 // To get the value as the actual C++ data type, format::value must be cast to the concrete type.
 string & title = static_cast<string &> (val[L"Title"]);         // Holds const wchar_t *
 number & width = static_cast<number &> (val[L"Width"]);         // Holds long or double
@@ -135,7 +140,7 @@ ids[(size_t) 3] = undefined ();
 std::wcout << ids.stringify () << std::endl;
 // output: [116,100,234]
 ```
-## Altering the decoded JSON
+## Transforming computed values
 ```c++
 #include <format/json.h>
 
