@@ -99,14 +99,13 @@ std::for_each (ids.begin (),
 });
 // output: 116 943 234 38793
 ```
-## Decoding JSON
+## Encoding JSON
 ```c++
 #include <format/json.h>
 
 using namespace format;
 
-// Construct a format::json object
-json j (new object { // Construct a format::json with to format::object
+json j (new object {    // Construct a format::json object with to format::object object
         { L"Image",
             new object {
               { L"Width",new number (800.0) },
