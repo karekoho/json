@@ -105,7 +105,7 @@ std::for_each (ids.begin (),
 
 using namespace format;
 
-json j (new object {    // Construct a format::json object with to format::object object
+json j (new object {    // Construct a format::json object with a format::object object
         { L"Image",
             new object {
               { L"Width",new number (800.0) },
