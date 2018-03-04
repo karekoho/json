@@ -2,6 +2,7 @@
 
 ## Introduction
 JSON for C++ is a library for encoding and decoding JSON in C++ applications.
+Since JSON has a context-free and unambiguous grammar, the implementation is a non-backtracking recursive-descent LL(1) parser.
 
 The result of decoding JSON encoded text input is a *format::json* object, an associative container such as *std::map* or an EcmaScript object.
 The elements of *format::json* object are accessed and assigned with the *[]* and *=* operators.
