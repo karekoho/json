@@ -327,6 +327,38 @@ namespace format
 
   protected:
     /**
+     * @brief The reference_token struct
+     */
+    struct reference_token
+    {
+      /**
+       * @brief path_pointer
+       */
+      const wchar_t * path_pointer;
+      /**
+       * @brief key
+       */
+      wchar_t * key;
+      /**
+       * @brief is_array_index
+       */
+      bool is_array_index;
+      /**
+       * @brief reference_token
+       * @param _path_pointer
+       * @param _key
+       * @param _is_array_index
+       */
+      reference_token (const wchar_t * _path_pointer)
+        : path_pointer(_path_pointer),
+          key (new wchar_t[wcslen (_path_pointer) + 1] ()),
+          is_array_index (false)
+      {
+      }
+      ~reference_token ()
+      { delete[] key; }
+    };
+    /**
      * @brief _parse
      * @param json
      * @return
