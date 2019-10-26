@@ -240,6 +240,13 @@ namespace format
     { return _parent; }
 
     /**
+     * @brief point
+     * @param json_pointer
+     * @return
+     */
+    virtual value & point (const wchar_t *json_pointer) = 0;
+
+    /**
      * @brief The iterator class
      */
     template <class Iterator,
@@ -357,7 +364,7 @@ namespace format
       }
       ~reference_token ()
       { delete[] key; }
-    };
+    }; // Struct refence_token
     /**
      * @brief _parse
      * @param json
@@ -608,6 +615,20 @@ namespace format
      */
     virtual value &
     _erase (const value &v) noexcept = 0;
+
+    /**
+     * @brief _point
+     * @param t
+     * @param v
+     * @return
+     */
+    value & _point (reference_token *t, const value &v);
+
+    /**
+     * @brief _unescape
+     * @return
+     */
+    const reference_token * _unescape (reference_token *t);
 
     /**
      * @brief _literal_value

@@ -141,6 +141,15 @@ namespace format
     operator =(const json & j)
     { return _assign (j); }
 
+    /**
+     * @brief point
+     * @param json_pointer
+     * @return
+     */
+    virtual value & point (const wchar_t *json_pointer) override {
+      // value & _point (reference_token *t, const value &v);
+      return *this;
+    }
 
   protected:
     /**
