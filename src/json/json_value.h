@@ -39,7 +39,7 @@ namespace format
 
     public:
     /**
-     * @brief The otype enum
+     * @brief The value_t enum
      */
     enum value_t
     {
@@ -339,32 +339,94 @@ namespace format
     struct reference_token
     {
       /**
-       * @brief path_pointer
+       * @brief key_len
        */
-      const wchar_t * path_pointer;
+      std::size_t key_len;
+
       /**
        * @brief key
        */
       wchar_t * key;
+
+      /**
+       * @brief path_pointer
+       */
+      const wchar_t * path_pointer;
+
       /**
        * @brief is_array_index
        */
-      bool is_array_index;
+      // bool is_array_index;
+
       /**
        * @brief reference_token
        * @param _path_pointer
        * @param _key
        * @param _is_array_index
        */
-      reference_token (const wchar_t * _path_pointer)
-        : path_pointer(_path_pointer),
-          key (new wchar_t[wcslen (_path_pointer) + 1] ()),
-          is_array_index (false)
+      reference_token (const wchar_t * path_pointer_)
+        : key_len (wcslen (path_pointer_) + 1),
+          // key (new wchar_t[key_len] ()),
+          key (0),
+          path_pointer (path_pointer_)
+           // is_array_index (false)
       {
       }
+
+      /**
+       * @brief destructor
+       */
       ~reference_token ()
-      { delete[] key; }
+      { delete []key; }
+
+      /**
+       * escape "~" ( "0" / "1" ) --> '~' and '/'
+       *
+       * @brief escape
+       * @param key_
+       * @param path_pointer_
+       * @return
+       */
+      static wchar_t *
+      unescape (wchar_t *key_, const wchar_t ** path_pointer_)
+      {
+        const wchar_t *pp = *path_pointer_;
+
+        // TODO: escape: ~0 --> ~
+        // TODO: escape: ~1 --> /
+        *key_ = *pp;
+
+        pp++;
+        key_++;
+
+       *path_pointer_ = pp;
+
+        return key_;
+      }
+
+      /**
+       * @brief path_next
+       * @return
+       */
+      const wchar_t *
+      path_next ()
+      {
+        wchar_t *key_cursor = key == 0
+          ? new wchar_t[key_len] ()
+          : (wchar_t *) memset (key, 0, key_len);
+
+        wchar_t * const key_begin = key_cursor;
+
+        if (*path_pointer == _sc::path_separator)
+          path_pointer++; // Skip leading '/'
+
+        while (*path_pointer != 0 && *path_pointer != _sc::path_separator)
+          key_cursor = unescape (key_cursor, & path_pointer);
+
+        return key_begin; // path_pointer;
+      }
     }; // Struct refence_token
+
     /**
      * @brief _parse
      * @param json
@@ -465,6 +527,7 @@ namespace format
       end_array       = ']',
       name_separator  = ':',
       value_separator = ',',
+      path_separator  = 47,
       double_quote    = 34
     };
 
@@ -622,13 +685,13 @@ namespace format
      * @param v
      * @return
      */
-    value & _point (reference_token *t, const value &v);
+    static value & _point (reference_token *t, value &v);
 
     /**
      * @brief _unescape
      * @return
      */
-    const reference_token * _unescape (reference_token *t);
+    // const reference_token * _unescape (reference_token *t);
 
     /**
      * @brief _literal_value

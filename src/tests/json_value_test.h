@@ -448,6 +448,39 @@ namespace format
         TEST_IT_END;
       }
 
+      void
+      test_reference_token ()
+      {
+        //const wchar_t *key[] = { L"foo", L"bar" };
+        struct assert
+        {
+          const wchar_t *ref_token;
+          std::vector<const wchar_t *> key_vec;
+          int assert_status;
+        };
+
+        std::vector<struct assert > test = {
+          { L"", { L"" } , PASS },
+          { L"/foo", { L"foo" } , PASS },
+          { L"/foo/0", { L"foo", L"0" } , PASS },
+          { L"/1/0123/foo", { L"1", L"0123", L"foo" } , PASS },
+        };
+
+        TEST_IT_START
+
+            value::reference_token rt ((*it).ref_token);
+
+            for (auto exp_it = (*it).key_vec.begin (); exp_it != (*it).key_vec.end (); ++exp_it)
+              {
+                const wchar_t *act_key = rt.path_next ();
+                const wchar_t *exp_key = (*exp_it);
+
+                ASSERT_EQUAL_IDX ("path next", 0, wcscmp (act_key, exp_key));
+              }
+
+        TEST_IT_END
+      }
+
       /**
        * 0.
        * @brief suite
@@ -474,6 +507,7 @@ namespace format
         /* 13. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__assign_value_ptr_value_ptr", &json_value_test::test__assign_value_ptr_value_ptr));
         /* 14. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__clone_const_value_ref", &json_value_test::test__clone_const_value_ref));
         /* 15. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_long", &json_value_test::test_operator_assign_long));
+        /* 16. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_reference_token", &json_value_test::test_reference_token));
 
         return s;
       }

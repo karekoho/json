@@ -14,8 +14,8 @@
 #include <array>
 #include <wchar.h>
 
-//#include "../json/json.h"
-#include <format/json.h>
+#include "../json/json.h"
+// #include <format/json.h>
 
 #define PASS  0
 #define FAIL  1
@@ -92,13 +92,13 @@
 CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
 #endif
 
-class test_selector;
+struct test_selector;
 /**
  * @brief The unit_test class
  */
 class unit_test : public CppUnit::TestFixture
 {
-  friend class test_selector;
+  friend struct test_selector;
 
 public:
   unit_test ()

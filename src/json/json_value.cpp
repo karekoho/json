@@ -141,3 +141,9 @@ format::value::operator =(std::nullptr_t)
 {
   return _assign (new null ());
 }
+
+format::value &
+format::value::_point (format::value::reference_token *t, value & v)
+{
+  return v;
+}

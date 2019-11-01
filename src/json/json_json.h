@@ -146,9 +146,16 @@ namespace format
      * @param json_pointer
      * @return
      */
-    virtual value & point (const wchar_t *json_pointer) override {
-      // value & _point (reference_token *t, const value &v);
-      return *this;
+    virtual value &
+    point (const wchar_t *json_pointer) override
+    {
+      if (json_pointer == 0)
+        throw json_error ("Null as JSON pointer");
+
+      // if (wcslen (json_pointer) == 0) return *this;
+
+      reference_token *t = new reference_token (json_pointer);
+      return _point (t, *this);
     }
 
   protected:
