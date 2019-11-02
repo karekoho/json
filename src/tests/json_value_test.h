@@ -449,7 +449,38 @@ namespace format
       }
 
       void
-      test_reference_token ()
+      test_decode ()
+      {
+        struct assert
+        {
+          const wchar_t *endoced;
+          const wchar_t *dedoced;
+          int assert_status;
+        };
+
+        std::vector<struct assert > test = {
+          { L"~0", L"~", PASS },
+          { L"~1", L"/", PASS },
+          { L"~01", L"~1", PASS },
+        };
+
+        TEST_IT_START
+
+          wchar_t *key_begin = 0;
+          wchar_t *key_cursor = key_begin;
+
+          const wchar_t *encoded = (*it).endoced;
+
+          while(*(encoded++) != 0)
+            key_cursor = value::reference_token::decode (key_cursor, & encoded);
+
+          ASSERT_EQUAL_IDX ("key decoded", 0, wcscmp (key_begin, (*it).dedoced));
+
+        TEST_IT_END
+      }
+
+      void
+      test_path_next ()
       {
         struct assert
         {
@@ -481,10 +512,8 @@ namespace format
       }
 
       void
-      test_reference_point ()
+      test__point ()
       {
-
-
         format::json j (  L"{ \"foo\": [\"bar\", \"baz\"],\
                           \"\": 0,\
                           \"a/b\": 1,\
@@ -521,12 +550,12 @@ namespace format
         TEST_IT_START
 
             format::value & v = j._point (new value::reference_token ((*it).ref_token), static_cast<value &> (j));
-            ASSERT_EQUAL_IDX ("type", (*it).type, v.type ());
+            ASSERT_EQUAL_IDX ("point type", (*it).type, v.type ());
 
             if (v.type () == value::number_t)
               {
                 format::number & n = static_cast<format::number &> (v);
-                ASSERT_EQUAL_IDX ("numeric value", (*it).num_val, (long) n.get ());
+                ASSERT_EQUAL_IDX ("point numeric value", (*it).num_val, (long) n.get ());
               }
 
         TEST_IT_END
@@ -558,8 +587,9 @@ namespace format
         /* 13. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__assign_value_ptr_value_ptr", &json_value_test::test__assign_value_ptr_value_ptr));
         /* 14. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__clone_const_value_ref", &json_value_test::test__clone_const_value_ref));
         /* 15. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_long", &json_value_test::test_operator_assign_long));
-        /* 16. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_reference_token", &json_value_test::test_reference_token));
-        /* 17. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_reference_point", &json_value_test::test_reference_point));
+        /* 16. */  //s->addTest (new CppUnit::TestCaller<json_value_test> ("test_decode", &json_value_test::test_decode));
+        /* 17. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_path_next", &json_value_test::test_path_next));
+        /* 18. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__point", &json_value_test::test__point));
 
         return s;
       }

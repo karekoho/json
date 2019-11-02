@@ -334,42 +334,34 @@ namespace format
 
   protected:
     /**
-     * @brief The reference_token struct
+     * @brief The reference_token class
      */
-    struct reference_token
+    class reference_token
     {
       /**
-       * @brief key_len
+       * @brief __key_len
        */
-      std::size_t key_len;
+      std::size_t __key_len;
 
       /**
-       * @brief key
+       * @brief __key
        */
-      wchar_t * key;
+      wchar_t * __key;
 
       /**
-       * @brief path_pointer
+       * @brief __path_pointer
        */
-      const wchar_t * path_pointer;
+      const wchar_t * __path_pointer;
 
-      /**
-       * @brief is_array_index
-       */
-      // bool is_array_index;
-
+    public:
       /**
        * @brief reference_token
-       * @param _path_pointer
-       * @param _key
-       * @param _is_array_index
+       * @param path_pointer
        */
-      reference_token (const wchar_t * path_pointer_)
-        : key_len (wcslen (path_pointer_) + 1),
-          // key (new wchar_t[key_len] ()),
-          key (0),
-          path_pointer (path_pointer_)
-           // is_array_index (false)
+      reference_token (const wchar_t * path_pointer)
+        : __key_len (wcslen (path_pointer) + 1),
+          __key (0),
+          __path_pointer (path_pointer)
       {
       }
 
@@ -377,31 +369,31 @@ namespace format
        * @brief destructor
        */
       ~reference_token ()
-      { delete []key; }
+      { delete []__key; }
 
       /**
-       * escape "~" ( "0" / "1" ) --> '~' and '/'
-       *
-       * @brief escape
-       * @param key_
-       * @param path_pointer_
+       * @brief __decode
+       * @param key
+       * @param path_pointer
+       * @param r
        * @return
        */
       static wchar_t *
-      unescape (wchar_t *key_, const wchar_t ** path_pointer_)
+      decode (wchar_t *key, const wchar_t **path_pointer, short unsigned int r = 0)
       {
-        const wchar_t *pp = *path_pointer_;
+        const wchar_t *pp = *path_pointer;
 
         // TODO: escape: ~0 --> ~
         // TODO: escape: ~1 --> /
-        *key_ = *pp;
+
+        *key = *pp;
 
         pp++;
-        key_++;
+        key++;
 
-       *path_pointer_ = pp;
+       *path_pointer = pp;
 
-        return key_;
+        return key;
       }
 
       /**
@@ -411,26 +403,26 @@ namespace format
       const wchar_t *
       path_next ()
       {
-        wchar_t *key_cursor = key == 0
-          ? new wchar_t[key_len] ()
-          : (wchar_t *) memset (key, 0, key_len);
+        wchar_t *key_cursor = __key == 0
+          ? new wchar_t[__key_len] ()
+          : (wchar_t *) memset (__key, 0, __key_len);
 
         wchar_t * const key_begin = key_cursor;
 
-        if (*path_pointer == _sc::path_separator /* && *(path_pointer + 1) != 0*/)
+        if (*__path_pointer == _sc::path_separator)
           {
-            if (*(path_pointer + 1) == 0)
+            if (*(__path_pointer + 1) == 0)
               return L"/";
 
-            path_pointer++; // Skip leading '/'
+            __path_pointer++; // Skip leading '/'
           }
 
-        while (*path_pointer != 0 && *path_pointer != _sc::path_separator)
-          key_cursor = unescape (key_cursor, & path_pointer);
+        while (*__path_pointer != 0 && *__path_pointer != _sc::path_separator)
+          key_cursor = decode (key_cursor, & __path_pointer);
 
         return key_begin;
       }
-    }; // Struct refence_token
+    }; // Class refence_token
 
     /**
      * @brief _parse
