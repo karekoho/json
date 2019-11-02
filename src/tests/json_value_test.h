@@ -451,7 +451,6 @@ namespace format
       void
       test_reference_token ()
       {
-        //const wchar_t *key[] = { L"foo", L"bar" };
         struct assert
         {
           const wchar_t *ref_token;
@@ -476,6 +475,58 @@ namespace format
                 const wchar_t *exp_key = (*exp_it);
 
                 ASSERT_EQUAL_IDX ("path next", 0, wcscmp (act_key, exp_key));
+              }
+
+        TEST_IT_END
+      }
+
+      void
+      test_reference_point ()
+      {
+
+
+        format::json j (  L"{ \"foo\": [\"bar\", \"baz\"],\
+                          \"\": 0,\
+                          \"a/b\": 1,\
+                          \"c%d\": 2,\
+                          \"e^f\": 3,\
+                          \"g|h\": 4,\
+                          \"i\\j\": 5,\
+                          \" \": 7,\
+                          \"m~n\": 8 }" );
+
+        // FIXME: \"k\"l\": 6 parse error
+
+        struct assert
+        {
+          const wchar_t *ref_token;
+          value::value_t type;
+          long num_val;
+          int assert_status;
+        };
+
+        std::vector<struct assert > test = {
+          { L"", value::value_t::object_t, 0, PASS },
+          { L"/foo", value::value_t::array_t, 0, PASS },
+          { L"/foo/1", value::value_t::string_t, 0, PASS },
+          { L"/", value::value_t::number_t, 0, PASS },
+          //{ L"a/b", value::value_t::number_t, 1, PASS },    // FIXME: key a
+          { L"c%d", value::value_t::number_t, 2, PASS },
+          { L"g|h", value::value_t::number_t, 4, PASS },
+          //{ L"j\\j", value::value_t::number_t, 5, PASS },   // FIXME: key j\j
+          { L"/ ", value::value_t::number_t, 7, PASS },
+          { L"m~n", value::value_t::number_t, 8, PASS },
+        };
+
+        TEST_IT_START
+
+            format::value & v = j._point (new value::reference_token ((*it).ref_token), static_cast<value &> (j));
+            ASSERT_EQUAL_IDX ("type", (*it).type, v.type ());
+
+            if (v.type () == value::number_t)
+              {
+                format::number & n = static_cast<format::number &> (v);
+                ASSERT_EQUAL_IDX ("numeric value", (*it).num_val, (long) n.get ());
               }
 
         TEST_IT_END
@@ -508,6 +559,7 @@ namespace format
         /* 14. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__clone_const_value_ref", &json_value_test::test__clone_const_value_ref));
         /* 15. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_long", &json_value_test::test_operator_assign_long));
         /* 16. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_reference_token", &json_value_test::test_reference_token));
+        /* 17. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_reference_point", &json_value_test::test_reference_point));
 
         return s;
       }
