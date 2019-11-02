@@ -417,13 +417,18 @@ namespace format
 
         wchar_t * const key_begin = key_cursor;
 
-        if (*path_pointer == _sc::path_separator)
-          path_pointer++; // Skip leading '/'
+        if (*path_pointer == _sc::path_separator /* && *(path_pointer + 1) != 0*/)
+          {
+            if (*(path_pointer + 1) == 0)
+              return L"/";
+
+            path_pointer++; // Skip leading '/'
+          }
 
         while (*path_pointer != 0 && *path_pointer != _sc::path_separator)
           key_cursor = unescape (key_cursor, & path_pointer);
 
-        return key_begin; // path_pointer;
+        return key_begin;
       }
     }; // Struct refence_token
 

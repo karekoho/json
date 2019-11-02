@@ -152,10 +152,7 @@ namespace format
       if (json_pointer == 0)
         throw json_error ("Null as JSON pointer");
 
-      // if (wcslen (json_pointer) == 0) return *this;
-
-      reference_token *t = new reference_token (json_pointer);
-      return _point (t, *this);
+      return _point (new reference_token (json_pointer), *this);
     }
 
   protected:
