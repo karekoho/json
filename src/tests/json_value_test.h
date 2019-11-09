@@ -466,15 +466,17 @@ namespace format
 
         TEST_IT_START
 
-          wchar_t *key_begin = 0;
-          wchar_t *key_cursor = key_begin;
-
           const wchar_t *encoded = (*it).endoced;
 
-          while(*(encoded++) != 0)
+          wchar_t *key_cursor = new wchar_t[wcslen (encoded) + 1] ();
+          const wchar_t * const key_begin = key_cursor;
+
+          while(*encoded != 0)
             key_cursor = value::reference_token::decode (key_cursor, & encoded);
 
           ASSERT_EQUAL_IDX ("key decoded", 0, wcscmp (key_begin, (*it).dedoced));
+
+          delete [] key_begin;
 
         TEST_IT_END
       }
@@ -571,6 +573,9 @@ namespace format
       {
         CppUnit::TestSuite *s = new CppUnit::TestSuite ("json value test");
 
+        //s->addTest (new CppUnit::TestCaller<json_value_test> ("test__point", &json_value_test::test_decode));
+        //return s;
+
         /* 0. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_copy", &json_value_test::test_assign_copy));
         /* 1. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_undefined", &json_value_test::test_operator_assign_undefined));
         /* 2. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lookahead", &json_value_test::test__lookahead));
@@ -587,7 +592,7 @@ namespace format
         /* 13. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__assign_value_ptr_value_ptr", &json_value_test::test__assign_value_ptr_value_ptr));
         /* 14. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__clone_const_value_ref", &json_value_test::test__clone_const_value_ref));
         /* 15. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_long", &json_value_test::test_operator_assign_long));
-        /* 16. */  //s->addTest (new CppUnit::TestCaller<json_value_test> ("test_decode", &json_value_test::test_decode));
+        /* 16. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_decode", &json_value_test::test_decode));
         /* 17. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_path_next", &json_value_test::test_path_next));
         /* 18. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__point", &json_value_test::test__point));
 
