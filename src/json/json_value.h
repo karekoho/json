@@ -421,10 +421,10 @@ namespace format
              return key + 1;
           }
 
-       *key = *pp; // Only ~
+       // Single ~, no escape characters
        *path_pointer = pp + 1;
 
-        return key + 1;
+        return key;
       }
 
       /**

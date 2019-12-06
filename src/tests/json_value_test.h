@@ -460,8 +460,8 @@ namespace format
 
         std::vector<struct assert > test = {
           { L"012", L"012", PASS },
-          { L"~", L"~", PASS },
-          { L"~2", L"~2", PASS },
+          { L"~", L"", PASS },
+          { L"~2", L"2", PASS },
           { L"~0", L"~", PASS },
           { L"~1", L"/", PASS },
           { L"~01", L"~1", PASS },
@@ -545,12 +545,12 @@ namespace format
           { L"/foo", value::value_t::array_t, 0, PASS },
           { L"/foo/1", value::value_t::string_t, 0, PASS },
           { L"/", value::value_t::number_t, 0, PASS },
-          //{ L"a~1b", value::value_t::number_t, 1, PASS },    // TODO: decode "/a~1b"
+          { L"a~1b", value::value_t::number_t, 1, PASS },    // TODO: decode "/a~1b"
           { L"c%d", value::value_t::number_t, 2, PASS },
           { L"g|h", value::value_t::number_t, 4, PASS },
           { L"i\\j", value::value_t::number_t, 5, PASS },
           { L"/ ", value::value_t::number_t, 7, PASS },
-          //{ L"m~0n", value::value_t::number_t, 8, PASS },   // TODO: decode "/a~0n"
+          { L"m~0n", value::value_t::number_t, 8, PASS },   // TODO: decode "/a~0n"
         };
 
         TEST_IT_START
