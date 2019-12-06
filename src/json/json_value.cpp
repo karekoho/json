@@ -143,21 +143,24 @@ format::value::operator =(std::nullptr_t)
 }
 
 format::value &
-format::value::_point (format::value::reference_token *t, value & v)
+format::value::_point (format::value::reference_token *rt, value & v)
 {
-  const wchar_t * const key = t->path_next ();
+  if (v.type () == value::value_t::undefined_t)
+    return v;
+
+  const wchar_t * const key = rt->path_next ();
 
   if (*key == 0)
     {
-      delete t;
+      delete rt;
       return v;
     }
 
   if (*key == _sc::path_separator)
     {
-      delete t;
+      delete rt;
       return v._at (L"");
     }
 
-  return _point (t, v._at (key));
+  return _point (rt, v._at (key));
 }

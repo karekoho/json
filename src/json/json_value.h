@@ -360,7 +360,7 @@ namespace format
        */
       reference_token (const wchar_t * path_pointer)
         : __key_len (wcslen (path_pointer) + 1),
-          __key (0),
+          __key (nullptr),
           __path_pointer (path_pointer)
       {
       }
@@ -725,7 +725,7 @@ namespace format
      * @param v
      * @return
      */
-    static value & _point (reference_token *t, value &v);
+    static value & _point (reference_token *rt, value & v);
 
     /**
      * @brief _literal_value
@@ -736,7 +736,7 @@ namespace format
       const size_t len;
       const value::_literal ltr_value;
 
-    } __ltr_value[3]; 
+    } __ltr_value[3];
   };  // Class value
 
    inline const wchar_t *
