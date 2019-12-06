@@ -412,7 +412,8 @@ namespace format
 
             return key + 1;
           }
-        else if (*(pp + 1) == _pesc::one) // ~1
+
+        if (*(pp + 1) == _pesc::one) // ~1
           {
             *key = _pesc::slash;
             *path_pointer = pp + 2;
