@@ -372,6 +372,7 @@ namespace format
       { delete []__key; }
 
       /**
+       * decode: ~    --> ''
        * decode: ~0   --> ~
        * decode: ~1   --> /
        * decode: ~01  --> ~1
@@ -725,12 +726,6 @@ namespace format
      * @return
      */
     static value & _point (reference_token *t, value &v);
-
-    /**
-     * @brief _unescape
-     * @return
-     */
-    // const reference_token * _unescape (reference_token *t);
 
     /**
      * @brief _literal_value
