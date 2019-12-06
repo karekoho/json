@@ -149,7 +149,7 @@ namespace format
     virtual value &
     point (const wchar_t *json_pointer) override
     {
-      if (json_pointer == 0)
+      if (json_pointer == nullptr)
         throw json_error ("Null as JSON pointer");
 
       return _point (new reference_token (json_pointer), *this);

@@ -372,28 +372,58 @@ namespace format
       { delete []__key; }
 
       /**
-       * @brief __decode
+       * decode: ~0   --> ~
+       * decode: ~1   --> /
+       * decode: ~01  --> ~1
+       *
+       * @brief decode
        * @param key
        * @param path_pointer
-       * @param r
        * @return
        */
       static wchar_t *
-      decode (wchar_t *key, const wchar_t **path_pointer, short unsigned int r = 0)
+      decode (wchar_t *key, const wchar_t **path_pointer)
       {
         const wchar_t *pp = *path_pointer;
 
-        // TODO: escape: ~0 --> ~
-        // TODO: escape: ~1 --> /
+        if (*pp != _pesc::tilde) // Just copy the character
+          {
+            *key = *pp;
+            *path_pointer = pp + 1;
 
-        *key = *pp;
+            return key + 1;
+          }
 
-        pp++;
-        key++;
+        if (*(pp + 1) == _pesc::zero) // ~0
+          {
+            if (*(pp + 2) == _pesc::one)  // ~01
+              {
+                // Copy ~1 to key
+                *key = _pesc::tilde;
+                *(key + 1) = _pesc::one;
 
-       *path_pointer = pp;
+                *path_pointer = pp + 3;
 
-        return key;
+                return key + 2;
+              }
+
+           *key = _pesc::tilde;
+           *path_pointer = pp + 2;
+
+            return key + 1;
+          }
+        else if (*(pp + 1) == _pesc::one) // ~1
+          {
+            *key = _pesc::slash;
+            *path_pointer = pp + 2;
+
+             return key + 1;
+          }
+
+       *key = *pp; // Only ~
+       *path_pointer = pp + 1;
+
+        return key + 1;
       }
 
       /**
@@ -403,9 +433,9 @@ namespace format
       const wchar_t *
       path_next ()
       {
-        wchar_t *key_cursor = __key == 0
+        wchar_t *key_cursor = __key == nullptr
           ? new wchar_t[__key_len] ()
-          : (wchar_t *) memset (__key, 0, __key_len);
+          : static_cast<wchar_t *>(memset (__key, 0, __key_len));
 
         wchar_t * const key_begin = key_cursor;
 
@@ -526,6 +556,17 @@ namespace format
       value_separator = ',',
       path_separator  = 47,
       double_quote    = 34
+    };
+
+    /**
+     * @brief The _pesc enum JSON path escape characters
+     */
+    enum _pesc
+    {
+      slash   = 47,   // /
+      zero    = 48,   // 0
+      one     = 49,   // 1
+      tilde   = 126   // ~
     };
 
     /**

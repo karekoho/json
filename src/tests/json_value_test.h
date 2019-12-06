@@ -459,9 +459,13 @@ namespace format
         };
 
         std::vector<struct assert > test = {
+          { L"012", L"012", PASS },
+          { L"~", L"~", PASS },
+          { L"~2", L"~2", PASS },
           { L"~0", L"~", PASS },
           { L"~1", L"/", PASS },
           { L"~01", L"~1", PASS },
+          { L"~012", L"~12", PASS }
         };
 
         TEST_IT_START
