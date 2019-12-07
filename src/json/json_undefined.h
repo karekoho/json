@@ -51,7 +51,7 @@ namespace format
     static void *
     operator new (std::size_t size)
     {
-      if (__instance == 0)
+      if (__instance == nullptr)
         __instance = ::operator new (size);
 
       return __instance;
@@ -65,7 +65,7 @@ namespace format
     static void *
     operator new[] (std::size_t size)
     {
-      if (__instance == 0)
+      if (__instance == nullptr)
         __instance = ::operator new[] (size);
 
       return __instance;
@@ -143,7 +143,7 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    _to_string (wchar_t * = 0) const override
+    _to_string (wchar_t * = nullptr) const override
     { return L""; }
 
     /**

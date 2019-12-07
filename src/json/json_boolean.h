@@ -147,7 +147,7 @@ namespace format
        * @return
        */
        virtual const wchar_t *
-       _to_string (wchar_t * = 0) const override
+       _to_string (wchar_t * = nullptr) const override
        { return _boolean_value == true ? L"true" : L"false"; }
 
       /**

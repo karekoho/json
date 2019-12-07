@@ -222,7 +222,7 @@ namespace format
     virtual value &
     _at (const wchar_t *key) override
     {
-      wchar_t *end = 0;
+      wchar_t *end = nullptr;
       return _at (std::wcstoll (key, & end, 10));
     }
 
@@ -269,7 +269,7 @@ namespace format
      * @return
      */
      virtual const wchar_t *
-     _to_string (wchar_t *offset = 0) const override;
+     _to_string (wchar_t *offset = nullptr) const override;
 
     /**
      * @brief str_length

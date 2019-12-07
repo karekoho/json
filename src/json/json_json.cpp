@@ -9,18 +9,18 @@
 
 format::json::json ()
   : value (),
-    _str_value { 0, 0 },
-    __root (0),
-    __reviver (0)
+    _str_value { nullptr, nullptr },
+    __root (nullptr),
+    __reviver (nullptr)
 {}
 
 format::json::json (const wchar_t *json)
   : value (json),
-    _str_value { 0, 0 },
-    __root (0),
-    __reviver (0)
+    _str_value { nullptr, nullptr },
+    __root (nullptr),
+    __reviver (nullptr)
 {
-  if (json == 0)
+  if (json == nullptr)
     throw json_syntax_error (UNEX_END);
 
   (void) _parse (json);
@@ -28,11 +28,11 @@ format::json::json (const wchar_t *json)
 
 format::json::json (const wchar_t *json, const bool _call_parse)
   : value (json),
-    _str_value { 0, 0 },
-    __root (0),
-    __reviver (0)
+    _str_value { nullptr, nullptr },
+    __root (nullptr),
+    __reviver (nullptr)
 {
-  if (json == 0)
+  if (json == nullptr)
     throw json_syntax_error (UNEX_END);
 
   if (_call_parse)
@@ -41,50 +41,50 @@ format::json::json (const wchar_t *json, const bool _call_parse)
 
 format::json::json (const wchar_t *json, reviver r)
   : value (json),
-    _str_value { 0, 0 },
-    __root (0),
+    _str_value { nullptr, nullptr },
+    __root (nullptr),
     __reviver (r)
 {
-  if (json == 0)
+  if (json == nullptr)
     throw json_syntax_error (UNEX_END);
 
   (void) _parse (json);
 
-  __reviver = 0;
+  __reviver = nullptr;
 }
 
 format::json::json (json *parent)
   : value (parent),
-    _str_value { 0, 0 },
-    __root (0),
-    __reviver (parent ? parent->__reviver : 0)
+    _str_value { nullptr, nullptr },
+    __root (nullptr),
+    __reviver (parent ? parent->__reviver : nullptr)
 {}
 
 format::json::json (object *o)
   : value (),
-  _str_value { 0, 0 },
+  _str_value { nullptr, nullptr },
   __root (o),
-  __reviver (0)
+  __reviver (nullptr)
 {}
 
 format::json::json (array *a)
   : value (),
-  _str_value { 0, 0 },
+  _str_value { nullptr, nullptr },
   __root (a),
-  __reviver (0)
+  __reviver (nullptr)
 {}
 
 format::json::json (const json &other)
   : value (other),
-    _str_value { 0, 0 },
-    __root (other.__root ? other.__root->clone () : 0),
-    __reviver (0)
+    _str_value { nullptr, nullptr },
+    __root (other.__root ? other.__root->clone () : nullptr),
+    __reviver (nullptr)
 {}
 
 format::json::~json ()
 {
   delete[] _str_value[BEGIN];
-  _str_value[BEGIN] = 0;
+  _str_value[BEGIN] = nullptr;
 
   delete __root;
 }
@@ -95,7 +95,7 @@ format::json::json::_parse (const wchar_t *readp)
   _readp = readp;
 
   if ((__root = _make_value ())->type () == value::no_value_t)
-    __root = 0;
+    __root = nullptr;
 
   if (*(_look_ahead ()) != 0)
     throw json_syntax_error (UNEX_TOKEN, *_readp);
@@ -151,7 +151,7 @@ format::json::operator =(format::object *o)
 format::value *
 format::json::_make_value ()
 {
-  value *value_  = 0;
+  value *value_  = nullptr;
   long int charc = 0;
 
   wchar_t endc = 0;
@@ -200,10 +200,10 @@ format::json::_make_value ()
 format::value *
 format::json::_call_reviver (value *v, const wchar_t *key, size_t index) const
 {
-  if (__reviver == 0)
+  if (__reviver == nullptr)
     return v;
 
-  value *r = (__reviver) (key == 0 ? std::to_wstring (index).c_str () : key, v);
+  value *r = (__reviver) (key == nullptr ? std::to_wstring (index).c_str () : key, v);
 
   if (r != v)
     delete v;

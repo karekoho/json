@@ -35,7 +35,7 @@ namespace format
 
       json *parents[] = {
         & object_parent,
-        0
+        nullptr
       };
 
       struct assert
@@ -55,7 +55,7 @@ namespace format
         { __VALUE[value::null_t], value::null_t, L"1",  0, 2, { PASS, FAIL } }
       };
 
-      boolean *old_value = 0;
+      boolean *old_value = nullptr;
 
       for (size_t pidx = 0; pidx < 2; pidx++)
         {

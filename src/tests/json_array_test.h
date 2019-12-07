@@ -352,7 +352,7 @@ namespace format
 
           for (size_t pidx = 0; pidx < 2; pidx++)
             {
-              wchar_t *str_value = 0;
+              wchar_t *str_value = nullptr;
 
               size_t len = wcslen ((*it).output[pidx]);
 
@@ -371,9 +371,9 @@ namespace format
 
               (void) a._parse ((*it).input);
 
-              const wchar_t *output = a._to_string (a._parent ? p._str_value[OFFSET] : 0);
+              const wchar_t *output = a._to_string (a._parent ? p._str_value[OFFSET] : nullptr);
 
-              if (a._parent == 0)
+              if (a._parent == nullptr)
                 {
                   ASSERT_EQUAL_IDX ("strlen (output)", len, wcslen (output));
                   CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[0])", wcscmp (output, (*it).output[0]) == 0);
@@ -387,7 +387,7 @@ namespace format
               if (a._parent)
                 {
                   delete[] str_value;
-                  p._str_value[BEGIN] = 0;
+                  p._str_value[BEGIN] = nullptr;
                 }
             }
       TEST_IT_END;

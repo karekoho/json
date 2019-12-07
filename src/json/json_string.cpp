@@ -3,16 +3,16 @@
 
 format::string::string ()
   : leaf (),
-    _startp (0),
+    _startp (nullptr),
     _charc (0)
 {}
 
 format::string::string (const wchar_t *json)
   : leaf (json),
-    _startp (0),
+    _startp (nullptr),
     _charc (0)
 {
-  if (json == 0)
+  if (json == nullptr)
     throw json_syntax_error (UNEX_END);
 
   (void) _parse (json);
@@ -20,7 +20,7 @@ format::string::string (const wchar_t *json)
 
 format::string::string (json *parent, size_t charc)
   : leaf (parent),
-    _startp (0),
+    _startp (nullptr),
     _charc (charc)
 {}
 
@@ -40,7 +40,7 @@ format::string::_parse (const wchar_t *json)
 
   _startp =_readp = json;
 
-  if (_parent == 0)   // 2. ctor
+  if (_parent == nullptr)   // 2. ctor
     {
       if ((charc = __string (endc)) < 0 )
         throw json_syntax_error (UNEX_TOKEN, endc);
@@ -71,7 +71,7 @@ format::string::get () const
 const wchar_t *
 format::string::_to_string (wchar_t *) const
 {
-  if (_startp == 0 || _charc == 0)
+  if (_startp == nullptr || _charc == 0)
     return L"";
 
   if (_string_value[1].empty ())

@@ -34,7 +34,7 @@ format::object::~object ()
 const wchar_t *
 format::object::_parse (const wchar_t *json_text)
 {
-  if (_parent == 0)   // 1. Object (), 2. Object (const char *json)
+  if (_parent == nullptr)   // 1. Object (), 2. Object (const char *json)
     {
       _readp = json_text;
 
@@ -158,7 +158,7 @@ format::object::_assign (value *ov, value *nv)
   __call__set_parent (nv, this);
 
   delete ov;
-  ov = 0;
+  ov = nullptr;
 
   return *this;
 }
@@ -223,7 +223,7 @@ format::object::_str_length () const noexcept
 const wchar_t *
 format::object::_to_string (wchar_t *offset) const
 {
-  wchar_t *str_value[2] = { 0, 0 };
+  wchar_t *str_value[2] = { nullptr, nullptr };
 
   if (offset)
     str_value[OFFSET] = offset;
@@ -255,7 +255,7 @@ format::object::_to_string (wchar_t *offset) const
 
   *(str_value[OFFSET]++) = _sc::end_object;
 
-  if (offset == 0)
+  if (offset == nullptr)
     _str_value[BEGIN] = str_value[BEGIN];
 
   return str_value[BEGIN];

@@ -93,14 +93,14 @@ namespace format
           { L"", L"", 0, 0, (wchar_t) 0, PASS },
           { L"xxx", L"\"xxx\"", 3 + 2, 3, (wchar_t) 0, PASS },
 
-          { L"\"xxx", 0, 0, 0, (wchar_t) 0, FAIL },
-          { L"xxx\"", 0, 0, 0, (wchar_t) 0, FAIL },
-          { L"\"xxx\"", 0, 0, 0, (wchar_t) 0, FAIL },
-          { L"\u001Fx", 0, 0, 0, (wchar_t) 0, FAIL },
-          { L"x\u001F", 0, 0, 0, (wchar_t) 0, FAIL }
+          { L"\"xxx", nullptr, 0, 0, (wchar_t) 0, FAIL },
+          { L"xxx\"", nullptr, 0, 0, (wchar_t) 0, FAIL },
+          { L"\"xxx\"", nullptr, 0, 0, (wchar_t) 0, FAIL },
+          { L"\u001Fx", nullptr, 0, 0, (wchar_t) 0, FAIL },
+          { L"x\u001F", nullptr, 0, 0, (wchar_t) 0, FAIL }
       };
 
-      string *s = 0;
+      string *s = nullptr;
 
       TEST_IT_START
 
@@ -131,7 +131,7 @@ namespace format
 
       std::array<json *, 2> parents = {
         & object_parent,
-        0
+        nullptr
       };
 
       struct assert
@@ -151,7 +151,7 @@ namespace format
         { __VALUE[value::number_t], value::number_t, L"1",  0, 2, { PASS, FAIL } },
        };
 
-       string *old_value = 0;
+       string *old_value = nullptr;
 
        for (size_t pidx = 0; pidx < parents.size () ; pidx++)
           {

@@ -84,7 +84,7 @@ namespace format
      * @see http://stackoverflow.com/questions/1174169/function-passed-as-template-argument
      */
     static inline value *
-    parse (const wchar_t *json_text, reviver r = 0)
+    parse (const wchar_t *json_text, reviver r = nullptr)
     { return new json (json_text, r); }
 
     /**

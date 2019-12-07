@@ -102,7 +102,7 @@ namespace format
           { L" truee ", value::value_t::undefined_t, FAIL },
       };
 
-      json *j = 0;
+      json *j = nullptr;
 
       TEST_IT_START
             const wchar_t *startp = (*it).starp;
@@ -310,7 +310,7 @@ namespace format
           }, PASS },
         };
 
-       reviver reviver[2] = { 0, fn_reviver };
+       reviver reviver[2] = { nullptr, fn_reviver };
 
        TEST_IT_START
 
@@ -465,7 +465,7 @@ namespace format
     void
     test_operator_assign_object_ptr ()
     {
-      object *o[] = { 0, new object () };
+      object *o[] = { nullptr, new object () };
 
       json j (o[0]);
       j = o[1];
@@ -476,7 +476,7 @@ namespace format
     void
     test_operator_assign_array_ptr ()
     {
-      array *a[] = { 0, new array () };
+      array *a[] = { nullptr, new array () };
 
       json j (a[0]);
       j = a[1];

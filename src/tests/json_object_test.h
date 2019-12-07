@@ -65,7 +65,7 @@ namespace format
         int assert_status;
       };
 
-      json *p[] = { 0, new json () };
+      json *p[] = { nullptr, new json () };
 
       std::vector<struct assert > test = {
         { L"{}", 0, value::undefined_t, 0, PASS },
@@ -91,7 +91,7 @@ namespace format
         { L"{ : }", 0, value::undefined_t, 0, FAIL },   // json::syntax_error
       };
 
-      object *o = 0;
+      object *o = nullptr;
 
       TEST_IT_START;
         for (int pidx = 0; pidx < 2; pidx++)
@@ -231,7 +231,7 @@ namespace format
         { L" \"foo\" : ", false, SKIP }, // FAIL: json::syntax_error
       };
 
-      object *o = 0;
+      object *o = nullptr;
 
       TEST_IT_START;
           const wchar_t *startp = (*it).startp;
@@ -264,7 +264,7 @@ namespace format
 
       json *parents[] = {
         & object_parent,
-        0
+        nullptr
       };
 
       struct assert
@@ -288,7 +288,7 @@ namespace format
 //        { __VALUE[value::null_t], value::null_t, L"5",  0, 6, { PASS, FAIL } }
       };
 
-      object *old_value = 0;
+      object *old_value = nullptr;
 
       for (size_t pidx = 0; pidx < 2; pidx++)
         {
@@ -385,7 +385,7 @@ namespace format
       object p;
 
       json *parent[] = {
-        0, &p
+        nullptr, &p
       };
 
       struct assert
@@ -411,7 +411,7 @@ namespace format
 
         for (size_t pidx = 0; pidx < 2; pidx++)
           {
-            wchar_t *str_value = 0;
+            wchar_t *str_value = nullptr;
 
             size_t len = wcslen ((*it).output[pidx]);
 
@@ -430,7 +430,7 @@ namespace format
 
             const wchar_t *output = o._to_string (o._parent ? p._str_value[OFFSET] : 0);
 
-            if (o._parent == 0)
+            if (o._parent == nullptr)
               {
                 ASSERT_EQUAL_IDX ("strlen (output)", len, wcslen (output));
                 CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[0])", wcscmp (output, (*it).output[0]) == 0);
@@ -443,7 +443,7 @@ namespace format
             if (o._parent)
               {
                 delete[] str_value;
-                p._str_value[BEGIN] = 0;
+                p._str_value[BEGIN] = nullptr;
               }
         }
 

@@ -119,7 +119,7 @@ namespace format
      */
     inline double
     get () const
-    { return _double_valuep == 0 ?  _calculate (_digitp) : _double_value; }
+    { return _double_valuep == nullptr ?  _calculate (_digitp) : _double_value; }
 
 
   protected:
@@ -236,7 +236,7 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    _to_string (wchar_t * = 0) const override;
+    _to_string (wchar_t * = nullptr) const override;
 
     /**
      * @brief _clone
@@ -271,10 +271,10 @@ namespace format
     inline void
     __clear__digitp () noexcept
     {
-      _digitp[DOUBLE][START]  = 0;
-      _digitp[DOUBLE][END]    = 0;
-      _digitp[EXP][START]     = 0;
-      _digitp[EXP][END]       = 0;
+      _digitp[DOUBLE][START]  = nullptr;
+      _digitp[DOUBLE][END]    = nullptr;
+      _digitp[EXP][START]     = nullptr;
+      _digitp[EXP][END]       = nullptr;
     }
 
     /**

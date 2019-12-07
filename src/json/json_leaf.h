@@ -94,7 +94,7 @@ namespace format
        * @brief iterator
        * @param value
        */
-      iterator (leaf *value = 0)
+      iterator (leaf *value = nullptr)
         : value::iterator<format::value *,
           std::input_iterator_tag,
           format::value *,
@@ -121,7 +121,7 @@ namespace format
       reference
       operator *()
       {
-        if (_it == 0)
+        if (_it == nullptr)
           throw json_out_of_range ("Iterator not derefenceable");
 
         return *_it;

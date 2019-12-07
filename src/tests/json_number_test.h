@@ -91,7 +91,7 @@ namespace format
         const wchar_t *startp = (*it).starp;
         const wchar_t *readp = n._parse (startp);
 
-        n._double_valuep = 0;
+        n._double_valuep = nullptr;
 
         ASSERT_EQUAL_IDX ("n._readp", startp + (*it).move, readp);
         ASSERT_EQUAL_IDX ("n.value ()", (*it).dval, n.get ());
@@ -240,7 +240,7 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-        { { 0, 0 }, { 0, 0 }, 0, PASS },
+        { { nullptr, nullptr }, { 0, 0 }, 0, PASS },
         { { L"", L"" }, { 0, 0 }, 0, PASS },
         { { L"5", L"" }, { 1, 1 }, 5, PASS },
         { { L"5", L"0" }, { 1, 1 }, 5, PASS },
@@ -327,7 +327,7 @@ namespace format
 
       json *parents[] = {
         & object_parent,
-        0
+        nullptr
       };
 
       struct assert
@@ -347,7 +347,7 @@ namespace format
         { __VALUE[value::boolean_t], value::boolean_t, L"1",  0, 2, { PASS, FAIL } },
       };
 
-      number *old_value = 0;
+      number *old_value = nullptr;
 
       for (size_t pidx = 0; pidx < 2; pidx++)
         {
@@ -361,7 +361,7 @@ namespace format
 
                     /** old_value: value from value[key] */
                     old_value = new number (parents[pidx]);
-                    old_value->_double_valuep = 0;
+                    old_value->_double_valuep = nullptr;
 
                     old_value->_set_key ((*it).key, wcslen ((*it).key));
 

@@ -9,7 +9,7 @@ namespace format
   {
   public:
 
-      json_mock_value (json *parent = 0)
+      json_mock_value (json *parent = nullptr)
         : value (parent)
       {}
 
@@ -39,7 +39,7 @@ namespace format
 
       virtual value *
       clone () const override
-      { return 0; }
+      { return nullptr; }
 
       virtual value &
       _assign (value *, value *) override

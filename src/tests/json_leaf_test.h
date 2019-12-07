@@ -22,7 +22,7 @@ namespace format
       object op;
 
       json *parent[2] = {
-        0, & op,
+        nullptr, & op,
       };
 
       struct assert
@@ -45,7 +45,7 @@ namespace format
         {
           this->_idx[0] = 0;
           TEST_IT_START
-            if (parent[pidx] == 0)   // No parent
+            if (parent[pidx] == nullptr)   // No parent
               {
                 const wchar_t *output = (*it).value->stringify ();
 

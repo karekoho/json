@@ -19,7 +19,7 @@ struct test_selector
   static std::vector<int> *
   indexes (const char *list)
   {
-    char *saveptr = 0;
+    char *saveptr = nullptr;
 
     std::vector<int> *idxv = new std::vector<int> ();
 
@@ -29,7 +29,7 @@ struct test_selector
     while (token)
       {
         idxv->push_back (atoi (token));
-        token = strtok_r (0, ",", & saveptr);
+        token = strtok_r (nullptr, ",", & saveptr);
       }
 
     free (listcopy);

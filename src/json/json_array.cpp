@@ -34,7 +34,7 @@ format::array::~array ()
 const wchar_t *
 format::array::_parse (const wchar_t *json)
 {  
-  if (_parent == 0)   // 1. Array (), 2. Array (const char *json)
+  if (_parent == nullptr)   // 1. Array (), 2. Array (const char *json)
     {
       _readp = json;
 
@@ -49,7 +49,7 @@ format::array::_parse (const wchar_t *json)
   if (*_readp == 0)
     throw json_syntax_error (UNEX_END);
 
-  value *v = 0;
+  value *v = nullptr;
   size_t next_idx = 0;
 
   while (*_readp != 0)
@@ -65,7 +65,7 @@ format::array::_parse (const wchar_t *json)
 
           next_idx = _element_list.size ();
 
-          if ((v = _call_reviver (v, 0, next_idx))->type () != value::undefined_t)
+          if ((v = _call_reviver (v, nullptr, next_idx))->type () != value::undefined_t)
             {
               _element_list.push_back (v);
               __call__set_index (v, next_idx);
@@ -83,7 +83,7 @@ format::array::_parse (const wchar_t *json)
             throw json_syntax_error (UNEX_TOKEN, *_readp);
           // Empty array
         }
-      else if ((v = _call_reviver (v, 0, next_idx))->type () != value::undefined_t)  // Value found
+      else if ((v = _call_reviver (v, nullptr, next_idx))->type () != value::undefined_t)  // Value found
         {
           _element_list.push_back (v);
           __call__set_index (v, next_idx);
@@ -187,7 +187,7 @@ format::array::_str_length () const noexcept
 const wchar_t *
 format::array::_to_string (wchar_t *offset) const
 {
-  wchar_t *str_value[2] = { 0, 0 };
+  wchar_t *str_value[2] = { nullptr, nullptr };
 
   if (offset)
     str_value[OFFSET] = offset;
@@ -216,7 +216,7 @@ format::array::_to_string (wchar_t *offset) const
 
   *(str_value[OFFSET]++) = _sc::end_array;
 
-  if (offset == 0)
+  if (offset == nullptr)
     _str_value[BEGIN] = str_value[BEGIN];
 
   return str_value[BEGIN];

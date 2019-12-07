@@ -6,7 +6,7 @@ format::number::number ()
   : leaf (),
     _double_value (0),
     _double_valuep (& _double_value),
-    _digitp {{ 0, 0 }, { 0, 0 }},
+    _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_double (false)
 {}
 
@@ -14,7 +14,7 @@ format::number::number (long l)
   : leaf (),
     _double_value (l),
     _double_valuep (& _double_value),
-    _digitp {{ 0, 0 }, { 0, 0 }},
+    _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_double (false)
 {}
 
@@ -22,18 +22,18 @@ format::number::number (double d)
   : leaf (),
     _double_value (d),
     _double_valuep (& _double_value),
-    _digitp {{ 0, 0 }, { 0, 0 }},
+    _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_double (true)
 {}
 
 format::number::number (const wchar_t *json)
   : leaf (json),
     _double_value (0),
-    _double_valuep (0),
-    _digitp {{ 0, 0 }, { 0, 0 }},
+    _double_valuep (nullptr),
+    _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_double (false)
 {
-  if (json == 0)
+  if (json == nullptr)
     throw json_error (UNEX_END);
 
   (void) _parse (json);
@@ -42,16 +42,16 @@ format::number::number (const wchar_t *json)
 format::number::number (json *parent)
   : leaf (parent),
     _double_value (0),
-    _double_valuep (0),
-    _digitp {{ 0, 0 }, { 0, 0 }},
+    _double_valuep (nullptr),
+    _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
    _is_double (false)
 {}
 
 format::number::number (const number &other)
  : leaf (other),
    _double_value (0),
-   _double_valuep (0),
-   _digitp {{ 0, 0 }, { 0, 0 }},
+   _double_valuep (nullptr),
+   _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
    _is_double (false)
 {
   (void) _clone (other);
@@ -62,12 +62,12 @@ format::number::_parse (const wchar_t *json)
 {
   wchar_t peek = 0;
 
-  if (json == 0)
+  if (json == nullptr)
     throw json_error (UNEX_END);
 
   _readp = json;
 
-  if (_parent == 0)
+  if (_parent == nullptr)
     _look_ahead ();
 
   if (*_readp == 0)
@@ -158,12 +158,12 @@ format::number::_calculate (const wchar_t * const digitp[2][2]) const
 {
   _double_valuep = & _double_value;
 
-  if (digitp[DOUBLE][START] == 0 || digitp[DOUBLE][END] == 0)
+  if (digitp[DOUBLE][START] == nullptr || digitp[DOUBLE][END] == nullptr)
     return (_double_value = 0);
 
   _double_value = _atof (digitp[DOUBLE]);
 
-  if (digitp[EXP][START] == 0 || digitp[EXP][END] == 0)
+  if (digitp[EXP][START] == nullptr || digitp[EXP][END] == nullptr)
     return _double_value;
 
   long long exp = _atoll (digitp[EXP]);
@@ -180,7 +180,7 @@ void
 format::number::_clear ()
 {
   _double_value   = 0;
-  _double_valuep  = 0;
+  _double_valuep  = nullptr;
   (void) __clear_strp ();
 }
 

@@ -77,7 +77,7 @@ namespace format
     operator =(const wchar_t *s) override
     {
       json *p = _parent;
-      _parent = 0;
+      _parent = nullptr;
 
       _clear ();
 
@@ -167,7 +167,7 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    _to_string (wchar_t * = 0) const override;
+    _to_string (wchar_t * = nullptr) const override;
 
     /**
      * @brief str_length

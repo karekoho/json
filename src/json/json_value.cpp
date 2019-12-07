@@ -14,30 +14,30 @@ const struct format::value::literal_value format::value::__ltr_value[3] = {
 };
 
 format::value::value ()
-    : _readp (0),
-      _parent (0),
-      _key (0),
+    : _readp (nullptr),
+      _parent (nullptr),
+      _key (nullptr),
       _index (0)
 {}
 
 format::value::value (const wchar_t *)
-    : _readp (0),
-      _parent (0),
-      _key (0),
+    : _readp (nullptr),
+      _parent (nullptr),
+      _key (nullptr),
       _index (0)
 {}
 
 format::value::value (json *parent)
-    : _readp (0),
+    : _readp (nullptr),
       _parent (parent),
-      _key (0),
+      _key (nullptr),
       _index (0)
 {}
 
 format::value::value (const value &other)
   : _readp (other._readp),
-    _parent (0),
-    _key (other._key ? new wchar_t [wcslen (other._key) + 1] () : 0),
+    _parent (nullptr),
+    _key (other._key ? new wchar_t [wcslen (other._key) + 1] () : nullptr),
     _index (other._index)    
 {}
 
@@ -97,7 +97,7 @@ format::value::_assign (const undefined &) noexcept
 format::value &
 format::value::_assign (const value &nv)
 {
-  if (_parent == 0)
+  if (_parent == nullptr)
     throw json_error (BAD_ASSIGN);
 
   return __call__assign (_parent, this, nv.clone ());
@@ -106,7 +106,7 @@ format::value::_assign (const value &nv)
 format::value &
 format::value::_assign (value *nv)
 {
-  if (_parent == 0)
+  if (_parent == nullptr)
     throw json_error (BAD_ASSIGN);
 
   return __call__assign (_parent, this, nv);

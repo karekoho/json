@@ -587,7 +587,7 @@ namespace format
      */
     enum _literal
     {
-      no_literal    = 0,
+      no_literal  = 0,
       true_value  = 1,
       false_value = 2,
       null_value  = 3
@@ -625,7 +625,7 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    _to_string (wchar_t *offset = 0) /* TODO: noexcept */ const = 0;
+    _to_string (wchar_t *offset = nullptr) /* TODO: noexcept */ const = 0;
 
     /**
      * @brief _clone  Called by copy constructor
@@ -736,7 +736,7 @@ namespace format
       const size_t len;
       const value::_literal ltr_value;
 
-    } __ltr_value[3];
+    } __ltr_value[];
   };  // Class value
 
    inline const wchar_t *
