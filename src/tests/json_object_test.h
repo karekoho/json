@@ -39,7 +39,7 @@ namespace format
 //                                    copy.length ());
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("object::count ()",
-                                    (size_t) 1,
+                                    static_cast<size_t> (1),
                                     o[3].count ());
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("object[key][key].type ()",
@@ -93,7 +93,7 @@ namespace format
 
       object *o = nullptr;
 
-      TEST_IT_START;
+      TEST_IT_START
         for (int pidx = 0; pidx < 2; pidx++)
           {
             const wchar_t *startp = (*it).startp;
@@ -113,7 +113,7 @@ namespace format
                 object & oo = *o;
 
                 ASSERT_EQUAL_IDX ("value.type", (*it).type, oo[L"k"].type ());
-                ASSERT_EQUAL_IDX ("*(value.key)", (wchar_t) L'k', *(oo[(L"k")].key ()));
+                ASSERT_EQUAL_IDX ("*(value.key)", static_cast<wchar_t> (L'k'), *(oo[(L"k")].key ()));
               }
             delete o;
           }
@@ -146,7 +146,7 @@ namespace format
         { L"{\"key1\":\"v\",\"key2\":\"v\",\"key3\":\"v\"} ", PASS },
       };
 
-      TEST_IT_START;
+      TEST_IT_START
         const wchar_t *startp = (*it).startp;
 
         object *o = new object ();
@@ -198,14 +198,14 @@ namespace format
                           (*it).type,
                           v.type ());
 
-      TEST_IT_END;
+      TEST_IT_END
     }
 
     virtual void
     test_operator_at_index () override
     {
       object o;
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("o[size_t].type ()", value::undefined_t, o[(size_t) 0].type ());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("o[size_t].type ()", value::undefined_t, o[static_cast<size_t> (0)].type ());
     }
 
     void
@@ -233,7 +233,7 @@ namespace format
 
       object *o = nullptr;
 
-      TEST_IT_START;
+      TEST_IT_START
           const wchar_t *startp = (*it).startp;
 
           o = new object (& p);
@@ -320,7 +320,7 @@ namespace format
                     }
                   else
                     {
-                      ASSERT_EQUAL_IDX ("old_value.size ()", (size_t) 2, old_value->count ());
+                      ASSERT_EQUAL_IDX ("old_value.size ()", static_cast<size_t> (2), old_value->count ());
                       delete old_value;
                     }
                 }
@@ -343,7 +343,7 @@ namespace format
       o._clear ();
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("object::_member_list.size ()",
-                                    (size_t) 0,
+                                    static_cast<size_t> (0),
                                     o._member_list.size ());
     }
 
@@ -376,7 +376,7 @@ namespace format
           ASSERT_EQUAL_IDX ("object::str_length ()",
                             (*it).length,
                             o._str_length ());
-      TEST_IT_END;
+      TEST_IT_END
     }
 
     virtual void
@@ -428,7 +428,7 @@ namespace format
 
             (void) o._parse ((*it).input);
 
-            const wchar_t *output = o._to_string (o._parent ? p._str_value[OFFSET] : 0);
+            const wchar_t *output = o._to_string (o._parent ? p._str_value[OFFSET] : nullptr);
 
             if (o._parent == nullptr)
               {
@@ -447,7 +447,7 @@ namespace format
               }
         }
 
-      TEST_IT_END;
+      TEST_IT_END
     }
 
     virtual void
@@ -487,11 +487,11 @@ namespace format
 
         ASSERT_EQUAL_IDX ("o.count ()", (*it).size, size);
 
-      TEST_IT_END;
+      TEST_IT_END
 
       // TODO: move to test_operator_assign_undefined
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("object.count ()",
-                                    (size_t) 1,
+                                    static_cast<size_t> (1),
                                     (object (L"{\"0\":0,\"1\":1}") [L"0"] = undefined ()).count ());
       delete v[2];
     }
@@ -501,7 +501,7 @@ namespace format
     {
       object o = L"{\"1\":1}";
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("object::count ()",
-                                    (size_t) 1,
+                                    static_cast<size_t> (1),
                                     o.count ());
     }
 
@@ -534,7 +534,7 @@ namespace format
       (void) copy._clone (src);
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.length ()",
-                                    (size_t) 1,
+                                    static_cast<size_t> (1),
                                     copy.count ());
 
       CPPUNIT_ASSERT_MESSAGE ("copy[L\"2\"].parent () == & copy",
@@ -556,7 +556,7 @@ namespace format
       o = L"{\"3\":3}";
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("o.length ()",
-                                    (size_t) 1,
+                                    static_cast<size_t> (1),
                                     o.count ());
     }
 
@@ -564,10 +564,10 @@ namespace format
     test_operator_assign_initializer_list ()
     {
       object o (L"{\"0\":0,\"1\":1}");
-      o = {{L"3", new number ((long) 3)}};
+      o = { { L"3", new number (static_cast<long> (3)) } };
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("o.length ()",
-                                    (size_t) 1,
+                                    static_cast<size_t> (1),
                                     o.count ());
     }
 

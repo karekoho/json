@@ -48,7 +48,7 @@ namespace format
 
           delete m;
 
-        TEST_IT_END;
+        TEST_IT_END
       }
 
       void
@@ -58,7 +58,7 @@ namespace format
 
         struct assert {
             const wchar_t *startp;
-            long int charc;
+            long charc;
             int assert_status;
         };
 
@@ -76,7 +76,7 @@ namespace format
         TEST_IT_START
 
             const wchar_t *startp = (*it).startp;
-            long int charc = wcslen (startp);
+            long charc = static_cast<long> (wcslen (startp));
 
             json_mock_value *m  = new json_mock_value ();
 
@@ -90,7 +90,7 @@ namespace format
 
             delete m;
 
-        TEST_IT_END;
+        TEST_IT_END
       }
 
       void
@@ -126,7 +126,7 @@ namespace format
 
             delete m;
 
-        TEST_IT_END;
+        TEST_IT_END
       }
 
       void
@@ -154,7 +154,7 @@ namespace format
 
             ASSERT_EQUAL_IDX ("dst", startp + (*it).charc[1], dst);
 
-        TEST_IT_END;
+        TEST_IT_END
 
         CPPUNIT_ASSERT_MESSAGE ("starp", wcscmp (L"abb\"ccc\"", startp) == 0);
 
@@ -185,7 +185,7 @@ namespace format
             ASSERT_EQUAL_IDX ("array::count ()",
                               (*it).size,
                               a.count ());
-        TEST_IT_END;
+        TEST_IT_END
 
         json j = new object {
                   { L"Image",
@@ -262,7 +262,7 @@ namespace format
                                       (*it).type,
                                       j[hdx][L"0"].type ());
                   }
-            TEST_IT_END;
+            TEST_IT_END
           }
       }
 
@@ -301,7 +301,7 @@ namespace format
                 ASSERT_EQUAL_IDX ("value::type ()",
                                   (*it).type,
                                   j[hdx][L"0"].type ());
-            TEST_IT_END;
+            TEST_IT_END
           }
       }
 
@@ -445,7 +445,7 @@ namespace format
 
         TEST_IT_START
             std::cout << (*it).name << ": " << (*it).size << std::endl;
-        TEST_IT_END;
+        TEST_IT_END
       }
 
       void
@@ -562,7 +562,7 @@ namespace format
             if (v.type () == value::number_t)
               {
                 format::number & n = static_cast<format::number &> (v);
-                ASSERT_EQUAL_IDX ("point numeric value", (*it).num_val, (long) n.get ());
+                ASSERT_EQUAL_IDX ("point numeric value", (*it).num_val, static_cast<long> (n.get ()));
               }
 
         TEST_IT_END
@@ -577,9 +577,6 @@ namespace format
       suite ()
       {
         CppUnit::TestSuite *s = new CppUnit::TestSuite ("json value test");
-
-        //s->addTest (new CppUnit::TestCaller<json_value_test> ("test__point", &json_value_test::test_decode));
-        //return s;
 
         /* 0. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_copy", &json_value_test::test_assign_copy));
         /* 1. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_undefined", &json_value_test::test_operator_assign_undefined));

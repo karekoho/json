@@ -112,7 +112,7 @@ namespace format
       /**
        * @brief ~iterator
        */
-      ~iterator () = default;
+      virtual ~iterator () = default;
 
       /**
        * @brief operator *

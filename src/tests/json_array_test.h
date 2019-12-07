@@ -38,16 +38,16 @@ namespace format
 //                                    copy.length ());
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("array::count ()",
-                                    (size_t) 1,
+                                    static_cast<size_t> (1),
                                     a[3].count ());
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("array[index][index].type ()",
                                     value::number_t,
-                                    a[3][(size_t) 0][(size_t) 0].type ());
+                                    a[3][static_cast<size_t> (0)][static_cast<size_t> (0)].type ());
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("a[3][(size_t) 0].parent ()",
                                     dynamic_cast<json *> (& a[3]),
-                                    a[3][(size_t) 0].parent ());
+                                    a[3][static_cast<size_t> (0)].parent ());
     }
 
     virtual void
@@ -82,8 +82,8 @@ namespace format
         { L"x", 0, value::value_t::undefined_t, 0, FAIL },
       };
 
-      json *p[] = { 0, new json () };
-      array *a = 0;
+      json *p[] = { nullptr, new json () };
+      array *a = nullptr;
 
       TEST_IT_START
           for (size_t pidx = 0; pidx < 2; pidx++)
@@ -128,7 +128,7 @@ namespace format
         { L"[\"a\",\"b\",\"c\"]", PASS },
       };
 
-      TEST_IT_START;
+      TEST_IT_START
         const wchar_t *startp = (*it).startp;
         array *a = new array ();
 
@@ -153,7 +153,7 @@ namespace format
 
       json *parents[] = {
         & object_parent,
-        0
+        nullptr
       };
 
       struct assert
@@ -177,7 +177,7 @@ namespace format
 //        { __VALUE[value::null_t], value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
       };
 
-        array *old_value = 0;
+        array *old_value = nullptr;
 
         for (size_t pidx = 0; pidx < 2; pidx++)
           {
@@ -209,7 +209,7 @@ namespace format
                       }
                     else
                       {
-                        ASSERT_EQUAL_IDX ("old_value.size ()", (size_t) 2, old_value->count ());
+                        ASSERT_EQUAL_IDX ("old_value.size ()", static_cast<size_t> (2), old_value->count ());
                         delete old_value;
                       }
                   }
@@ -251,7 +251,7 @@ namespace format
 
           ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v.type ());
 
-      TEST_IT_END;
+      TEST_IT_END
     }
 
     virtual void
@@ -279,7 +279,7 @@ namespace format
 
         ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v.type ());
 
-      TEST_IT_END;
+      TEST_IT_END
     }
 
     virtual void
@@ -288,7 +288,7 @@ namespace format
       array a = L"[true, false]";
       a._clear ();
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("array._element_list.size ()", (size_t) 0, a._element_list.size ());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("array._element_list.size ()", static_cast<size_t> (0), a._element_list.size ());
     }
 
 
@@ -320,7 +320,7 @@ namespace format
 
           ASSERT_EQUAL_IDX ("a.strLength ()", (*it).length, a._str_length ());
 
-      TEST_IT_END;
+      TEST_IT_END
     }
 
     virtual void
@@ -329,7 +329,7 @@ namespace format
       array p;
 
       json *parent[] = {
-        0, &p
+        nullptr, & p
       };
 
       struct assert
@@ -390,7 +390,7 @@ namespace format
                   p._str_value[BEGIN] = nullptr;
                 }
             }
-      TEST_IT_END;
+      TEST_IT_END
     }
 
     virtual void
@@ -428,12 +428,12 @@ namespace format
            size_t size = a.count ();
 
            ASSERT_EQUAL_IDX ("array::count ()", (*it).size, size);
-       TEST_IT_END;
+       TEST_IT_END
 
        // TODO: move to test_operator_assign_undefined
        CPPUNIT_ASSERT_EQUAL_MESSAGE ("array::count ()",
-                                     (size_t) 1,
-                                     (array (L"[0,1]") [(size_t) 0] = undefined ()).count ());
+                                     static_cast<size_t> (1),
+                                     (array (L"[0,1]") [static_cast<size_t> (0)] = undefined ()).count ());
        delete v[2];
     }
 
@@ -442,7 +442,7 @@ namespace format
     {
       array a (L"[1]");
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("array::count ()",
-                                    (size_t) 1,
+                                    static_cast<size_t> (1),
                                     a.count ());
     }
 
@@ -461,16 +461,16 @@ namespace format
 
       boolean *nv = new boolean (true);
 
-      a._assign (& a[(size_t) 0], nv);
+      a._assign (& a[static_cast<size_t> (0)], nv);
 
       CPPUNIT_ASSERT_MESSAGE ("nv->index () == 0",
                               nv->index () == 0);
 
       CPPUNIT_ASSERT_MESSAGE ("& a[(size_t) 0] == nv",
-                              & a[(size_t) 0] == nv);
+                              & a[static_cast<size_t> (0)] == nv);
 
       CPPUNIT_ASSERT_MESSAGE ("a[(size_t) 0].parent () == & a",
-                              a[(size_t) 0].parent () == & a);
+                              a[static_cast<size_t> (0)].parent () == & a);
     }
 
     virtual void
@@ -483,11 +483,11 @@ namespace format
       (void) copy._clone (src);
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.length ()",
-                                    (size_t) 1,
+                                    static_cast<size_t> (1),
                                     copy.count ());
 
       CPPUNIT_ASSERT_MESSAGE ("copy[(size_t) 0].parent () == & copy",
-                              copy[(size_t) 0].parent () == & copy);
+                              copy[static_cast<size_t> (0)].parent () == & copy);
     }
 
     void
@@ -497,7 +497,7 @@ namespace format
       a = L"[2]";
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("a.length ()",
-                                    (size_t) 1,
+                                    static_cast<size_t> (1),
                                     a.count ());
     }
 
@@ -508,7 +508,7 @@ namespace format
       a = L"[2]";
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("a.length ()",
-                                    (size_t) 1,
+                                    static_cast<size_t> (1),
                                     a.count ());
     }
 

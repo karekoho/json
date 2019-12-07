@@ -118,7 +118,7 @@ namespace format
     test_str_length () override
     {
       undefined u;
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("undefined::str_length ()", (size_t) 0, u._str_length ()) ;
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("undefined::str_length ()", static_cast<size_t> (0), u._str_length ()) ;
     }
 
     virtual void
@@ -130,7 +130,7 @@ namespace format
 
     virtual void
     test__clear () override
-    { CPPUNIT_ASSERT_ASSERTION_PASS ("undefined::_clear () is nop");}
+    { CPPUNIT_ASSERT_ASSERTION_PASS ("undefined::_clear () is nop"); }
 
     virtual void
     test_type () override

@@ -353,6 +353,17 @@ namespace format
        */
       const wchar_t * __path_pointer;
 
+      /**
+       * @brief The __esc enum JSON path escape characters
+       */
+      enum __esc
+      {
+        slash   = 47,   // /
+        zero    = 48,   // 0
+        one     = 49,   // 1
+        tilde   = 126   // ~
+      };
+
     public:
       /**
        * @brief reference_token
@@ -387,7 +398,7 @@ namespace format
       {
         const wchar_t *pp = *path_pointer;
 
-        if (*pp != _pesc::tilde) // Just copy the character
+        if (*pp != __esc::tilde) // Just copy the character
           {
             *key = *pp;
             *path_pointer = pp + 1;
@@ -395,28 +406,28 @@ namespace format
             return key + 1;
           }
 
-        if (*(pp + 1) == _pesc::zero) // ~0
+        if (*(pp + 1) == __esc::zero) // ~0
           {
-            if (*(pp + 2) == _pesc::one)  // ~01
+            if (*(pp + 2) == __esc::one)  // ~01
               {
                 // Copy ~1 to key
-                *key = _pesc::tilde;
-                *(key + 1) = _pesc::one;
+                *key = __esc::tilde;
+                *(key + 1) = __esc::one;
 
                 *path_pointer = pp + 3;
 
                 return key + 2;
               }
 
-           *key = _pesc::tilde;
+           *key = __esc::tilde;
            *path_pointer = pp + 2;
 
             return key + 1;
           }
 
-        if (*(pp + 1) == _pesc::one) // ~1
+        if (*(pp + 1) == __esc::one) // ~1
           {
-            *key = _pesc::slash;
+            *key = __esc::slash;
             *path_pointer = pp + 2;
 
              return key + 1;
@@ -550,25 +561,14 @@ namespace format
      */
     enum _sc
     {
-      begin_object    = '{',
-      end_object      = '}',
-      begin_array     = '[',
-      end_array       = ']',
-      name_separator  = ':',
-      value_separator = ',',
-      path_separator  = 47,
-      double_quote    = 34
-    };
-
-    /**
-     * @brief The _pesc enum JSON path escape characters
-     */
-    enum _pesc
-    {
-      slash   = 47,   // /
-      zero    = 48,   // 0
-      one     = 49,   // 1
-      tilde   = 126   // ~
+      begin_object    = 123,  // '{'
+      end_object      = 125,  // '}'
+      begin_array     = 91,   // '[',
+      end_array       = 93,   // ']',
+      name_separator  = 58,   // ':',
+      value_separator = 44,   // ',',
+      path_separator  = 47,   // /
+      double_quote    = 34    // "
     };
 
     /**

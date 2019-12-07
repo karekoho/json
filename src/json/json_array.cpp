@@ -179,7 +179,7 @@ format::array::_str_length () const noexcept
   auto cur = _element_list.cbegin ();
 
   while (cur != end)    
-  len += __call__str_length (*cur++) + 1;   // , or ]
+    len += __call__str_length (*cur++) + 1;   // , or ]
 
   return len;
 }
