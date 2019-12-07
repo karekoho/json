@@ -128,7 +128,7 @@ format::string::__string (wchar_t & endc) const noexcept
     readp++;
 
   endc = *readp;
-  size_t charc = readp - _readp;
+  long charc = readp - _readp;
 
   return *readp == 0
       ? charc

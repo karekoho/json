@@ -127,7 +127,7 @@ format::value::operator =(const wchar_t *json_text)
 format::value &
 format::value::operator =(long l)
 {
-  return _assign (new number ((long) l));
+  return _assign (new number (static_cast<long >(l)));
 }
 
 format::value &

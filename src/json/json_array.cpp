@@ -223,14 +223,14 @@ format::array::_to_string (wchar_t *offset) const
 }
 
 format::value &
-format::array::_erase (const value &v) noexcept
+format::array::_erase (const value & v) noexcept
 {
   size_t index = v.index ();
 
   if (index == _element_list.size ())
     return *this;
 
-  (void) _element_list.erase (_element_list.cbegin () + index);
+  (void) _element_list.erase (_element_list.cbegin () + static_cast<long> (index));
   delete & v;
 
   return *this;

@@ -152,7 +152,7 @@ format::value *
 format::json::_make_value ()
 {
   value *value_  = nullptr;
-  long int charc = 0;
+  long charc = 0;
 
   wchar_t endc = 0;
   wchar_t readc = *(_look_ahead ());
@@ -162,7 +162,7 @@ format::json::_make_value ()
       if ((charc = _string (endc)) < 0)
         throw json_syntax_error (UNEX_TOKEN, *_readp);
 
-      value_ = __call_string (this, charc);
+      value_ = __call_string (this, static_cast<size_t> (charc));
     }
   else if (readc == _sc::begin_object)      // object
     value_ = __call_object (this);

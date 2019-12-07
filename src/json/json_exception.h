@@ -2,10 +2,9 @@
 #define JSON_EXCEPTION
 
 #include <exception>
-#include <cstring>
 #include <cstdlib>
-#include <wchar.h>
 #include <alloca.h>
+#include <string>
 
 namespace format
 {
@@ -86,14 +85,18 @@ namespace format
       size_t bytec = 0;
       size_t token_len = charc == 0 ? wcslen (token) : charc;
 
-      char *src_buf = (char *) alloca (token_len + 1);
+      // char *src_buf = (char *) alloca (token_len + 1);
+      char *src_buf = static_cast<char *> (alloca (token_len + 1));
 
-      if ((bytec = wcstombs ((char *) memset (src_buf, 0, token_len + 1), token, token_len)) < token_len)
+      // if ((bytec = wcstombs ((char *) memset (src_buf, 0, token_len + 1), token, token_len)) < token_len)
+      if ((bytec = wcstombs (static_cast<char *> (memset (src_buf, 0, token_len + 1)), token, token_len)) < token_len)
         return bytec;
 
-      char *dst_buf = (char *) alloca (token_len + 3); // ' + token + ' + 0
+      // char *dst_buf = (char *) alloca (token_len + 3); // ' + token + ' + 0
+      char *dst_buf = static_cast<char *> (alloca (token_len + 3)); // ' + token + ' + 0
 
-      if ((bytec = std::snprintf (dst_buf, token_len + 3, "'%s'", src_buf)) < token_len + 2)
+      // if ((bytec = std::snprintf (dst_buf, token_len + 3, "'%s'", src_buf)) < token_len + 2)
+      if ((bytec = static_cast<size_t> (std::snprintf (dst_buf, token_len + 3, "'%s'", src_buf))) < token_len + 2)
         return bytec;
 
       _what.append (dst_buf);

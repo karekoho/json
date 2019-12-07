@@ -75,7 +75,7 @@ format::object::_pair ()
 {
   wchar_t endc = 0;
 
-  long int charc = 0;
+  long charc = 0;
 
   (void) _look_ahead ();
 
@@ -105,14 +105,14 @@ format::object::_pair ()
   if (v->type () == value::no_value_t)
     throw json_syntax_error ("Unexpected token ", *_readp);
 
-  std::wstring key (keyp, charc - 2);
+  std::wstring key (keyp, static_cast<size_t> (charc - 2));
 
   if ((v = _call_reviver (v, key.c_str ()))->type () == value::undefined_t)   // Reviver returned undefined, value is not added
     return true;
 
   (void) _member_list.emplace (key, v);
 
-  __call__set_key (v, keyp, charc - 2);
+  __call__set_key (v, keyp, static_cast<size_t> (charc - 2));
 
   return true;
 }

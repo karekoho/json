@@ -145,12 +145,13 @@ namespace format
      * @brief point
      * @param json_pointer
      * @return
+     * @todo json_pointer_error
      */
     virtual value &
     point (const wchar_t *json_pointer) override
     {
       if (json_pointer == nullptr)
-        throw json_error ("Null as JSON pointer");
+        throw json_error ("JSON pointer is null");
 
       return _point (new reference_token (json_pointer), *this);
     }
@@ -243,7 +244,7 @@ namespace format
      * @return
      */
     virtual const wchar_t *
-    _to_string (wchar_t *offset = 0) const override
+    _to_string (wchar_t *offset = nullptr) const override
     { return __hasRoot () ? __call_str_value (__root, offset) : L""; }
 
     /**
@@ -297,7 +298,7 @@ namespace format
      */
     inline bool
     __hasRoot () const noexcept
-    { return ! (__root == 0); }
+    { return ! (__root == nullptr); }
   };
 } // Namespace format
 

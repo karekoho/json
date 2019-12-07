@@ -243,7 +243,7 @@ namespace format
      * @return
      */
     virtual value *
-    _clone (const value &other) override;
+    _clone (const value & other) override;
 
     /**
      * @brief str_length
@@ -262,7 +262,7 @@ namespace format
       if (_double_str.empty ())
         _double_str = _is_double
             ? std::to_wstring (_double_value)
-            : std::to_wstring ((long) _double_value);
+            : std::to_wstring (static_cast<long> (_double_value));
     }
 
     /**
