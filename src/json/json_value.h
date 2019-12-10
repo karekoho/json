@@ -5,6 +5,8 @@
 #include <cstring>
 #include <string>
 
+#include "json_exception.h"
+
 namespace format
 {
   #define UNEX_END    "Unexpected end of JSON input"
@@ -433,10 +435,8 @@ namespace format
              return key + 1;
           }
 
-       // Single ~, no escape characters
-       *path_pointer = pp + 1;
-
-        return key;
+        // Unescaped '~'
+        throw json_pointer_error ("Character '~' must be escaped");
       }
 
       /**

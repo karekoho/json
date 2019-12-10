@@ -85,6 +85,7 @@
   \
 } catch (format::json_syntax_error & se) { this->_errorc[ACTUAL]++; std::cerr << se.what () << std::endl; }\
   catch (format::json_out_of_range & oor) { this->_errorc[ACTUAL]++; std::cerr << oor.what () << std::endl; }\
+  catch (format::json_pointer_error & pe) { this->_errorc[ACTUAL]++; std::cerr << pe.what () << std::endl; }\
   catch (format::json_error & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
   catch (const char *error) { this->_errorc[ACTUAL]++; std::cerr << error << std::endl; } \
   catch (const wchar_t *error) { this->_errorc[ACTUAL]++; std::cerr << error << std::endl; } }\

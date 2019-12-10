@@ -120,6 +120,17 @@ namespace format
       : json_error (what)
     {}
   };
+
+  /**
+   * @brief The json_pointer_error class
+   */
+  class json_pointer_error : public json_error
+  {
+  public:
+    json_pointer_error (const char * const what)
+     : json_error (what)
+    {}
+  };
 } // Namespace format
 
 #endif // JSON_EXCEPTION
