@@ -358,10 +358,10 @@ namespace format
        */
       enum __esc
       {
-        slash   = 47,   // /
-        zero    = 48,   // 0
-        one     = 49,   // 1
-        tilde   = 126   // ~
+        reverse_solidus   = 47,   // /
+        zero              = 48,   // 0
+        one               = 49,   // 1
+        tilde             = 126   // ~
       };
 
     public:
@@ -427,7 +427,7 @@ namespace format
 
         if (*(pp + 1) == __esc::one) // ~1
           {
-            *key = __esc::slash;
+            *key = __esc::reverse_solidus;
             *path_pointer = pp + 2;
 
              return key + 1;
@@ -442,13 +442,14 @@ namespace format
       /**
        * @brief path_next
        * @return
+       * @todo Return empty string if json pointer is "/" or "\0"
        */
       const wchar_t *
       path_next ()
       {
         wchar_t *key_cursor = __key == nullptr
           ? new wchar_t[__key_len] ()
-          : static_cast<wchar_t *>(memset (__key, 0, __key_len));
+          : static_cast<wchar_t *> (memset (__key, 0, __key_len));
 
         wchar_t * const key_begin = key_cursor;
 
