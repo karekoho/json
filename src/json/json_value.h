@@ -366,6 +366,15 @@ namespace format
         tilde             = 126   // ~
       };
 
+      /**
+       * @brief The __index enum
+       */
+      enum __index
+      {
+        first = 48,   // 0
+        dash  = 45    // -
+      };
+
     public:
       /**
        * @brief reference_token
@@ -440,6 +449,25 @@ namespace format
       }
 
       /**
+       * @brief is_index
+       * @param key
+       * @return
+       */
+      static bool
+      is_index (const wchar_t *key) noexcept
+      {
+        bool is_index = false;
+        const wchar_t * const begin = key;
+
+        while (*key > 0 && (is_index = isdigit (*key)))
+          key++;
+
+        return *begin == __index::first || *begin == __index::dash
+            ? key - begin == 1
+            : is_index;
+      }
+
+      /**
        * @brief path_next
        * @return
        * @todo Return empty string if json pointer is "/" or "\0"
@@ -464,7 +492,7 @@ namespace format
         while (*__path_pointer != 0 && *__path_pointer != _sc::path_separator)
           key_cursor = decode (key_cursor, & __path_pointer);
 
-        return key_begin;
+       return key_begin;
       }
     }; // Class refence_token
 

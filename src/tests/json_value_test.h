@@ -568,6 +568,34 @@ namespace format
         TEST_IT_END
       }
 
+      void
+      test_is_index ()
+      {
+        struct assert
+        {
+          const wchar_t *key;
+          bool is_index;
+          int assert_status;
+        };
+
+        std::vector<struct assert > test = {
+          { L"0", true, PASS },
+          { L"1", true, PASS },
+          { L"123", true, PASS },
+          { L"", false, PASS },
+          { L"01", false, PASS },
+          { L"a", false, PASS },
+          { L"1a", false, PASS },
+        };
+
+        TEST_IT_START
+
+          bool is_index = value::reference_token::is_index ((*it).key);
+          ASSERT_EQUAL_IDX ("is_index", (*it).is_index, is_index);
+
+        TEST_IT_END
+      }
+
       /**
        * 0.
        * @brief suite
@@ -596,7 +624,8 @@ namespace format
         /* 15. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_long", &json_value_test::test_operator_assign_long));
         /* 16. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_decode", &json_value_test::test_decode));
         /* 17. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_path_next", &json_value_test::test_path_next));
-        /* 18. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__point", &json_value_test::test__point));
+        /* 18. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_index", &json_value_test::test_is_index));
+        /* 19. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__point", &json_value_test::test__point));
 
         return s;
       }

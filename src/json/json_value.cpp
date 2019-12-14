@@ -162,5 +162,11 @@ format::value::_point (format::value::reference_token *rt, value & v)
       return v._at (L"");
     }
 
+  if (v.type () == value::value_t::array_t)
+    {
+      // TODO: check if rt is numeric
+      // TODO: check if rt is '-'
+    }
+
   return _point (rt, v._at (key));
 }
