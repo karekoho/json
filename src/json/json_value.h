@@ -355,10 +355,11 @@ namespace format
        */
       const wchar_t * __path_pointer;
 
+      public:
       /**
        * @brief The __esc enum JSON path escape characters
        */
-      enum __esc
+      enum escape
       {
         reverse_solidus   = 47,   // /
         zero              = 48,   // 0
@@ -366,16 +367,17 @@ namespace format
         tilde             = 126   // ~
       };
 
+
       /**
        * @brief The __index enum
        */
-      enum __index
+      enum index
       {
-        first = 48,   // 0
-        dash  = 45    // -
+        first       = 48,   // 0
+        last        = 57,   // 9
+        new_index   = 45    // -
       };
 
-    public:
       /**
        * @brief reference_token
        * @param path_pointer
@@ -409,7 +411,7 @@ namespace format
       {
         const wchar_t *pp = *path_pointer;
 
-        if (*pp != __esc::tilde) // Just copy the character
+        if (*pp != escape::tilde) // Just copy the character
           {
             *key = *pp;
             *path_pointer = pp + 1;
@@ -417,28 +419,28 @@ namespace format
             return key + 1;
           }
 
-        if (*(pp + 1) == __esc::zero) // ~0
+        if (*(pp + 1) == escape::zero) // ~0
           {
-            if (*(pp + 2) == __esc::one)  // ~01
+            if (*(pp + 2) == escape::one)  // ~01
               {
                 // Copy ~1 to key
-                *key = __esc::tilde;
-                *(key + 1) = __esc::one;
+                *key = escape::tilde;
+                *(key + 1) = escape::one;
 
                 *path_pointer = pp + 3;
 
                 return key + 2;
               }
 
-           *key = __esc::tilde;
+           *key = escape::tilde;
            *path_pointer = pp + 2;
 
             return key + 1;
           }
 
-        if (*(pp + 1) == __esc::one) // ~1
+        if (*(pp + 1) == escape::one) // ~1
           {
-            *key = __esc::reverse_solidus;
+            *key = escape::reverse_solidus;
             *path_pointer = pp + 2;
 
              return key + 1;
@@ -459,10 +461,10 @@ namespace format
         bool is_index = false;
         const wchar_t * const begin = key;
 
-        while (*key > 0 && (is_index = isdigit (*key)))
+        while (*key > 0 && (is_index = ((*key >= index::first && *key <= index::last) || *key == index::new_index)))
           key++;
 
-        return *begin == __index::first || *begin == __index::dash
+        return *begin == index::first || *begin == index::new_index
             ? key - begin == 1
             : is_index;
       }

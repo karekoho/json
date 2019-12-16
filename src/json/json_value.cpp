@@ -164,8 +164,11 @@ format::value::_point (format::value::reference_token *rt, value & v)
 
   if (v.type () == value::value_t::array_t)
     {
-      // TODO: check if rt is numeric
-      // TODO: check if rt is '-'
+      if (! value::reference_token::is_index (key))
+        throw json_pointer_error ("Invalid array index");
+
+      if (*key == value::reference_token::index::new_index)
+        return v._at (v.count ());
     }
 
   return _point (rt, v._at (key));

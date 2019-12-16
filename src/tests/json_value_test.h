@@ -579,6 +579,7 @@ namespace format
         };
 
         std::vector<struct assert > test = {
+          { L"-", true, PASS },
           { L"0", true, PASS },
           { L"1", true, PASS },
           { L"123", true, PASS },

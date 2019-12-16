@@ -484,6 +484,50 @@ namespace format
       CPPUNIT_ASSERT_MESSAGE ("a[1] == j.__root", a[1] == j.__root);
     }
 
+    void
+    test_point ()
+    {
+      format::json j (  L"{ \"foo\": [\"bar\", \"baz\"],\
+                        \"\": 0,\
+                        \"a/b\": 1,\
+                        \"c%d\": 2,\
+                        \"e^f\": 3,\
+                        \"g|h\": 4,\
+                        \"i\\j\": 5,\
+                        \" \": 7,\
+                        \"m~n\": 8 }" );
+
+      // FIXME: \"k\"l\": 6 parse error
+
+      struct assert
+      {
+        const wchar_t *ref_token;
+        value::value_t type;
+        long num_val;
+        int assert_status;
+      };
+
+      std::vector<struct assert > test = {
+        { L"", value::value_t::object_t, 0, PASS },
+        { L"/foo", value::value_t::array_t, 0, PASS },
+        { L"/foo/-", value::value_t::undefined_t, 0, PASS },
+        { L"/not/found", value::value_t::undefined_t, 0, PASS },
+      };
+
+      TEST_IT_START
+
+          format::value & v = j.point ((*it).ref_token);
+          ASSERT_EQUAL_IDX ("point type", (*it).type, v.type ());
+
+          if (v.type () == value::number_t)
+            {
+              format::number & n = static_cast<format::number &> (v);
+              ASSERT_EQUAL_IDX ("point numeric value", (*it).num_val, static_cast<long> (n.get ()));
+            }
+
+      TEST_IT_END
+    }
+
     /**
      * 1.
      * @brief suite
@@ -512,8 +556,7 @@ namespace format
       /* 15. */  s->addTest (new CppUnit::TestCaller<json_test> ("test_type", &json_test::test_type));
       /* 16. */ s->addTest (new CppUnit::TestCaller<json_test> ("test_operator_assign_object_ptr", &json_test::test_operator_assign_object_ptr));
       /* 17. */ s->addTest (new CppUnit::TestCaller<json_test> ("test_operator_assign_array_ptr", &json_test::test_operator_assign_array_ptr));
-
-      /* 10. */  //s->addTest (new CppUnit::TestCaller<json_test> ("example_1", &json_test::example_1));
+      /* 18. */ s->addTest (new CppUnit::TestCaller<json_test> ("test_point", &json_test::test_point));
 
       return s;
     }
