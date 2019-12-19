@@ -511,7 +511,8 @@ namespace format
         { L"", value::value_t::object_t, 0, PASS },
         { L"/foo", value::value_t::array_t, 0, PASS },
         { L"/foo/-", value::value_t::undefined_t, 0, PASS },
-        { L"/not/found", value::value_t::undefined_t, 0, PASS },
+        { L"/not", value::value_t::undefined_t, 0, PASS },
+        { L"/not/found", value::value_t::undefined_t, 0, FAIL },
       };
 
       TEST_IT_START
@@ -523,6 +524,43 @@ namespace format
             {
               format::number & n = static_cast<format::number &> (v);
               ASSERT_EQUAL_IDX ("point numeric value", (*it).num_val, static_cast<long> (n.get ()));
+            }
+
+      TEST_IT_END
+    }
+
+    void
+    test_point_assign ()
+    {
+      format::json j (  L"{ \"foo\": [],\
+                        \"bar\": {} }" );
+
+      struct assert
+      {
+        const wchar_t *ref_token[2];
+        long new_val;
+        value::value_t type;
+        int assert_status;
+      };
+
+      std::vector<struct assert > test = {
+        { { L"/foo/-", L"/foo/0" }, 1, value::value_t::number_t, PASS },
+        { { L"/foo/0", L"/foo/0" }, 2, value::value_t::number_t, PASS },
+        { { L"/bar/quux", L"/bar/quux"  }, 3, value::value_t::number_t, PASS },
+        { { L"/not/found", L"/not/found" }, 4, value::value_t::undefined_t, FAIL },
+      };
+
+      TEST_IT_START
+
+          j.point ((*it).ref_token[0]) = (*it).new_val;
+          format::value & v = j.point ((*it).ref_token[1]);
+
+          ASSERT_EQUAL_IDX ("point type", (*it).type, v.type ());
+
+          if (v.type () == value::number_t)
+            {
+              format::number & n = static_cast<format::number &> (v);
+              ASSERT_EQUAL_IDX ("point numeric value", (*it).new_val, static_cast<long> (n.get ()));
             }
 
       TEST_IT_END
@@ -557,6 +595,7 @@ namespace format
       /* 16. */ s->addTest (new CppUnit::TestCaller<json_test> ("test_operator_assign_object_ptr", &json_test::test_operator_assign_object_ptr));
       /* 17. */ s->addTest (new CppUnit::TestCaller<json_test> ("test_operator_assign_array_ptr", &json_test::test_operator_assign_array_ptr));
       /* 18. */ s->addTest (new CppUnit::TestCaller<json_test> ("test_point", &json_test::test_point));
+      /* 19. */ s->addTest (new CppUnit::TestCaller<json_test> ("test_point_assign", &json_test::test_point_assign));
 
       return s;
     }

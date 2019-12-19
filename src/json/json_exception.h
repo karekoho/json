@@ -85,17 +85,13 @@ namespace format
       size_t bytec = 0;
       size_t token_len = charc == 0 ? wcslen (token) : charc;
 
-      // char *src_buf = (char *) alloca (token_len + 1);
       char *src_buf = static_cast<char *> (alloca (token_len + 1));
 
-      // if ((bytec = wcstombs ((char *) memset (src_buf, 0, token_len + 1), token, token_len)) < token_len)
       if ((bytec = wcstombs (static_cast<char *> (memset (src_buf, 0, token_len + 1)), token, token_len)) < token_len)
         return bytec;
 
-      // char *dst_buf = (char *) alloca (token_len + 3); // ' + token + ' + 0
       char *dst_buf = static_cast<char *> (alloca (token_len + 3)); // ' + token + ' + 0
 
-      // if ((bytec = std::snprintf (dst_buf, token_len + 3, "'%s'", src_buf)) < token_len + 2)
       if ((bytec = static_cast<size_t> (std::snprintf (dst_buf, token_len + 3, "'%s'", src_buf))) < token_len + 2)
         return bytec;
 
@@ -103,7 +99,6 @@ namespace format
 
       return bytec;
     }
-
   };
 
   /**
@@ -124,11 +119,15 @@ namespace format
   /**
    * @brief The json_pointer_error class
    */
-  class json_pointer_error : public json_error
+  class json_pointer_error : public json_syntax_error
   {
   public:
     json_pointer_error (const char * const what)
-     : json_error (what)
+     : json_syntax_error (what)
+    {}
+
+    json_pointer_error (const char * const what, const wchar_t *token, size_t charc = 0)
+     : json_syntax_error (what, token, charc)
     {}
   };
 } // Namespace format

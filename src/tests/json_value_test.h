@@ -551,7 +551,9 @@ namespace format
           { L"i\\j", value::value_t::number_t, 5, PASS },
           { L"/ ", value::value_t::number_t, 7, PASS },
           { L"m~0n", value::value_t::number_t, 8, PASS },
-          { L"/not/found", value::value_t::undefined_t, 0, PASS },
+          { L"/not", value::value_t::undefined_t, 0, PASS },
+          { L"/not/found", value::value_t::undefined_t, 0, FAIL },
+          { L"/foo/foo", value::value_t::string_t, 0, FAIL },
         };
 
         TEST_IT_START
