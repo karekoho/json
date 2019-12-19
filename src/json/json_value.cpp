@@ -155,7 +155,7 @@ format::value::_point (format::value::reference_token *rt, value & v)
   else if (v.type () == value::value_t::undefined_t)
     {
       delete rt;
-      throw json_pointer_error ("Key pointing elsewhere than the end of the path must exist. Invalid key: ", key);
+      throw json_pointer_error ("Key pointing elsewhere than the end of the path must exist. Non-existent key is preceding ", key);
     }
 
   if (*key == _sc::path_separator)
