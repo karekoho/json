@@ -39,7 +39,7 @@ namespace format
                                     (j[(size_t) 0][L"0"] = boolean ())[L"0"].type ());
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.count ()",
-                                    (size_t) 1,
+                                    static_cast<size_t> (1),
                                     copy.count ());
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::type () (1)",
@@ -67,7 +67,7 @@ namespace format
                                     copy.type ());
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.length ()",
-                                    (size_t) 0,
+                                    static_cast<size_t> (0),
                                     copy.count());
     }
 
@@ -113,7 +113,7 @@ namespace format
             const wchar_t * readp = j->_parse (startp);
 
             ASSERT_EQUAL_IDX ("json.readp", (*it).starp + (charc), readp);
-            ASSERT_EQUAL_IDX ("*(json.readp)", (wchar_t) 0, *readp);
+            ASSERT_EQUAL_IDX ("*(json.readp)", static_cast<wchar_t> (0), *readp);
             ASSERT_EQUAL_IDX ("json.type ()", (*it).type, j->type ());
 
             delete j;
@@ -169,7 +169,7 @@ namespace format
           if (v->type () != value::no_value_t)
             delete v;
 
-      TEST_IT_END;
+      TEST_IT_END
     }
 
     void
@@ -214,7 +214,7 @@ namespace format
 
           x++;
 
-      TEST_IT_END;
+      TEST_IT_END
     }
 
     virtual void
@@ -279,7 +279,7 @@ namespace format
             ASSERT_EQUAL_IDX ("wcslen (value[0])", len[0], wcslen (value[0]));
             ASSERT_EQUAL_IDX ("wcslen (value[1])", len[1], wcslen (value[1]));
           }
-      TEST_IT_END;
+      TEST_IT_END
     }
 
 
@@ -335,7 +335,7 @@ namespace format
               }
             delete jv;
           }
-       TEST_IT_END;
+       TEST_IT_END
     }
 
     static value *
@@ -396,7 +396,7 @@ namespace format
 
       for (size_t idx = 0; idx < 2; idx++)
         CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::count ()",
-                                      (size_t) 0,
+                                      static_cast<size_t> (0),
                                       j[idx].count ());
     }
 
@@ -417,18 +417,18 @@ namespace format
     {
       CPPUNIT_ASSERT_EQUAL_MESSAGE (  "json[index]::type ()",
                                       value::undefined_t,
-                                      json ()[(size_t) 0].type ());
+                                      json ()[static_cast<size_t> (0)].type ());
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE (  "json[index]::type ()",
                                       value::boolean_t,
-                                      json (L"[true]")[(size_t) 0].type ());
+                                      json (L"[true]")[static_cast<size_t> (0)].type ());
     }
 
     virtual void
     test_str_length () override
     {        
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("json[index]::str_length ()",
-                                    (size_t) 3,
+                                    static_cast<size_t> (3),
                                     //json (L"{\"0\":\"x\"}")[L"0"].str_length ()
                                     __call__str_length (& (json(L"{\"0\":\"x\"}")[L"0"]))
           );
