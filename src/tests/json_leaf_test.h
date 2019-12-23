@@ -36,7 +36,7 @@ namespace format
       std::vector<struct assert > test = {
         { new string (L"x"), { 3, 4 }, { L"\"x\"", L"x\"x\"" }, PASS },
         //{ new number ((long) 100), { 10, 11 }, { L"100.000000", L"x100.000000" }, PASS },
-        { new number ((long) 100), { 3, 4 }, { L"100", L"x100" }, PASS },
+        { new number (static_cast<long> (100)), { 3, 4 }, { L"100", L"x100" }, PASS },
         { new boolean (), { 5, 6 }, { L"false", L"xfalse" }, PASS },
         { new null (), { 4, 5 }, { L"null", L"xnull" }, PASS },
       };
@@ -72,8 +72,9 @@ namespace format
 
                     delete[]  p->_str_value[1];
               } */
-            TEST_IT_END;
+            TEST_IT_END
         }
+
       for (auto it = test.begin (); it != test.end (); it = test.erase (it))
         delete (*it).value;
     }
@@ -103,7 +104,7 @@ namespace format
     test_count () final override
     {
       json j;
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("leaf::count ()", (size_t) 0, no_value::instance (& j)->count ());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("leaf::count ()", static_cast<size_t> (0), no_value::instance (& j)->count ());
     }
 
     virtual void test_ctor_dtor () override { CPPUNIT_ASSERT_ASSERTION_PASS (); }
