@@ -754,8 +754,9 @@ namespace format
     _erase (const value &v) noexcept = 0;
 
     /**
+     * @todo reference_token * --> reference_token &
      * @brief _point
-     * @param t
+     * @param rt
      * @param v
      * @return
      */

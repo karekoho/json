@@ -558,7 +558,9 @@ namespace format
 
         TEST_IT_START
 
-            format::value & v = j._point (new value::reference_token ((*it).ref_token), static_cast<value &> (j));
+            value::reference_token rt = value::reference_token ((*it).ref_token);
+            format::value & v = j._point (& rt, static_cast<value &> (j));
+
             ASSERT_EQUAL_IDX ("point type", (*it).type, v.type ());
 
             if (v.type () == value::number_t)

@@ -148,18 +148,13 @@ format::value::_point (format::value::reference_token *rt, value & v)
   const wchar_t * const key = rt->path_next ();
 
   if (*key == 0)
-    {
-      delete rt;
-      return v;
-    }
+    return v;
+
   else if (v.type () == value::value_t::undefined_t)
     throw json_pointer_error ("Key pointing elsewhere than the end of the path must exist. Non-existent key is preceding ", key);
 
   if (*key == _sc::path_separator)
-    {
-      delete rt;
-      return v._at (L"");
-    }
+    return v._at (L"");
 
   if (v.type () == value::value_t::array_t)
     {
