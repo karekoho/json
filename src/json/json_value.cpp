@@ -153,10 +153,7 @@ format::value::_point (format::value::reference_token *rt, value & v)
       return v;
     }
   else if (v.type () == value::value_t::undefined_t)
-    {
-      delete rt;
-      throw json_pointer_error ("Key pointing elsewhere than the end of the path must exist. Non-existent key is preceding ", key);
-    }
+    throw json_pointer_error ("Key pointing elsewhere than the end of the path must exist. Non-existent key is preceding ", key);
 
   if (*key == _sc::path_separator)
     {
@@ -167,10 +164,7 @@ format::value::_point (format::value::reference_token *rt, value & v)
   if (v.type () == value::value_t::array_t)
     {
       if (! value::reference_token::is_index (key))
-        {
-          delete rt;
-          throw json_pointer_error ("Invalid array index: ", key);
-        }
+        throw json_pointer_error ("Invalid array index: ", key);
 
       if (*key == value::reference_token::index::new_index)
         return v._at (v.count ());

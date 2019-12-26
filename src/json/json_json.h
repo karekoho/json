@@ -148,13 +148,7 @@ namespace format
      * @todo json_pointer_error
      */
     virtual value &
-    point (const wchar_t *json_pointer) override
-    {
-      if (json_pointer == nullptr)
-        throw json_error ("JSON pointer is null");
-
-      return _point (new reference_token (json_pointer), *this);
-    }
+    point (const wchar_t *json_pointer) override;
 
   protected:
     /**

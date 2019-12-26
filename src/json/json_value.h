@@ -393,7 +393,9 @@ namespace format
        * @brief destructor
        */
       ~reference_token ()
-      { delete []__key; }
+      {
+        delete [] __key;
+      }
 
       /**
        * decode: ~    --> ''
@@ -477,10 +479,11 @@ namespace format
       const wchar_t *
       path_next ()
       {
-        wchar_t *key_cursor = __key == nullptr
+        __key = __key == nullptr
           ? new wchar_t[__key_len] ()
-          : static_cast<wchar_t *> (memset (__key, 0, __key_len));
+          : wmemset (__key, 0, __key_len);
 
+        wchar_t * key_cursor = __key;
         wchar_t * const key_begin = key_cursor;
 
         if (*__path_pointer == _sc::path_separator)
@@ -494,7 +497,7 @@ namespace format
         while (*__path_pointer != 0 && *__path_pointer != _sc::path_separator)
           key_cursor = decode (key_cursor, & __path_pointer);
 
-       return key_begin;
+        return key_begin;
       }
     }; // Class refence_token
 

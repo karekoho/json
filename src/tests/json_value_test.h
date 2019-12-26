@@ -464,8 +464,8 @@ namespace format
           { L"~1", L"/", PASS },
           { L"~01", L"~1", PASS },
           { L"~012", L"~12", PASS },
-          { L"~", L"~", FAIL },
-          { L"~2", L"~2", FAIL }
+          { L"~", L"~", FAIL }, // NOTE: throwing exception leak 8 bytes
+          { L"~2", L"~2", FAIL }  // NOTE: throwing exception leak 12 bytes
         };
 
         TEST_IT_START
@@ -475,7 +475,7 @@ namespace format
           wchar_t *key_cursor = new wchar_t[wcslen (encoded) + 1] ();
           const wchar_t * const key_begin = key_cursor;
 
-          while(*encoded != 0)
+          while (*encoded != 0)
             key_cursor = value::reference_token::decode (key_cursor, & encoded);
 
           ASSERT_EQUAL_IDX ("key decoded", 0, wcscmp (key_begin, (*it).dedoced));
