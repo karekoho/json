@@ -143,9 +143,9 @@ format::value::operator =(std::nullptr_t)
 }
 
 format::value &
-format::value::_point (format::value::reference_token *rt, value & v)
+format::value::_point (reference_token & rt, value & v)
 {
-  const wchar_t * const key = rt->path_next ();
+  const wchar_t * const key = rt.path_next ();
 
   if (*key == 0)
     return v;

@@ -760,7 +760,7 @@ namespace format
      * @param v
      * @return
      */
-    static value & _point (reference_token *rt, value & v);
+    static value & _point (reference_token & rt, value & v);
 
     /**
      * @brief _literal_value

@@ -96,7 +96,7 @@ format::json::point (const wchar_t *json_pointer)
     throw json_pointer_error ("JSON pointer is null");
 
   reference_token rt (json_pointer);
-  return _point (& rt, *this);
+  return _point (rt, *this);
 }
 
 const wchar_t *

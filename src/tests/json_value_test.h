@@ -464,25 +464,33 @@ namespace format
           { L"~1", L"/", PASS },
           { L"~01", L"~1", PASS },
           { L"~012", L"~12", PASS },
-          { L"~", L"~", FAIL }, // NOTE: throwing exception leak 8 bytes
+          { L"~", L"~", FAIL },   // NOTE: throwing exception leak 8 bytes
           { L"~2", L"~2", FAIL }  // NOTE: throwing exception leak 12 bytes
         };
+
+        const wchar_t * key_begin = nullptr;
 
         TEST_IT_START
 
           const wchar_t *encoded = (*it).endoced;
 
           wchar_t *key_cursor = new wchar_t[wcslen (encoded) + 1] ();
-          const wchar_t * const key_begin = key_cursor;
+          /* const wchar_t * const */ key_begin = key_cursor;
 
           while (*encoded != 0)
             key_cursor = value::reference_token::decode (key_cursor, & encoded);
 
           ASSERT_EQUAL_IDX ("key decoded", 0, wcscmp (key_begin, (*it).dedoced));
 
-          delete [] key_begin;
+          delete [] key_begin; // FIXME: not freed when json_pointer_error thrown
 
-        TEST_IT_END
+          }
+        catch (format::json_pointer_error & pe)
+          {
+            this->_errorc[ACTUAL]++; std::cerr << pe.what () << std::endl;
+            delete [] key_begin;
+          }
+        }
       }
 
       void
@@ -558,8 +566,8 @@ namespace format
 
         TEST_IT_START
 
-            value::reference_token rt = value::reference_token ((*it).ref_token);
-            format::value & v = j._point (& rt, static_cast<value &> (j));
+            format::value::reference_token rt ((*it).ref_token);  // value::reference_token ((*it).ref_token);
+            format::value & v = j._point (rt, static_cast<value &> (j));
 
             ASSERT_EQUAL_IDX ("point type", (*it).type, v.type ());
 
