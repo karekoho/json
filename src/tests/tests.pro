@@ -16,6 +16,7 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES += main.cpp \
+    ../json/json_exception.cpp \
     ../json/json_value.cpp \
     ../json/json_undefined.cpp \
     ../json/json_string.cpp \

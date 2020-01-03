@@ -586,13 +586,13 @@ namespace format
       /* 1. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_smoke", &json_object_test::test_ctor_dtor));
       /* 2. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_assign_all_values", &json_object_test::test_assign_all_values));
       /* 3. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_key", &json_object_test::test_key));
-      /* 4. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_parse_1", &json_object_test::test__parse));
+      /* 4. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__parse", &json_object_test::test__parse));
       /* 5. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_operator_at_key", &json_object_test::test_operator_at_key));
       /* 6. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_operator_at_index", &json_object_test::test_operator_at_index));
-      /* 7. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_pair_1", &json_object_test::test__pair));
+      /* 7. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__pair", &json_object_test::test__pair));
       /* 8. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__clear", &json_object_test::test__clear));
       /* 9. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strLength", &json_object_test::test_str_length));
-      /* 10. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strvalue", &json_object_test::test__to_string));
+      /* 10. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__to_string", &json_object_test::test__to_string));
       /* 11. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_count", &json_object_test::test_count));
       /* 12. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__assign_value_ptr_value_ptr", &json_object_test::test__assign_value_ptr_value_ptr));
       /* 13. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__clone_const_value_ref", &json_object_test::test__clone_const_value_ref));

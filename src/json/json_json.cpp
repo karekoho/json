@@ -108,7 +108,7 @@ format::json::json::_parse (const wchar_t *readp)
     __root = nullptr;
 
   if (*(_look_ahead ()) != 0)
-    throw json_syntax_error (UNEX_TOKEN, *_readp);
+    throw json_syntax_error (UNEX_TOKEN, _readp, 1);
 
   return _readp;
 }
@@ -170,7 +170,7 @@ format::json::_make_value ()
   if (readc == _sc::double_quote)           // string
     {
       if ((charc = _string (endc)) < 0)
-        throw json_syntax_error (UNEX_TOKEN, *_readp);
+        throw json_syntax_error (UNEX_TOKEN, _readp, 1);
 
       value_ = __call_string (this, static_cast<size_t> (charc));
     }

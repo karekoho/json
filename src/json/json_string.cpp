@@ -43,9 +43,9 @@ format::string::_parse (const wchar_t *json)
   if (_parent == nullptr)   // 2. ctor
     {
       if ((charc = __string (endc)) < 0 )
-        throw json_syntax_error (UNEX_TOKEN, endc);
+        throw json_syntax_error (UNEX_TOKEN, _readp, 1);
 
-      _charc = (size_t) charc;
+      _charc = static_cast<size_t> (charc);
     }
 
   return _readp += _charc;

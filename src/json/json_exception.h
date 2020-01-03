@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <alloca.h>
 #include <string>
+#include <cwchar>
 
 namespace format
 {
@@ -55,17 +56,6 @@ namespace format
     {}
 
     /**
-     * @brief Syntax_Error
-     * @param what
-     * @param token
-     */
-    json_syntax_error (const char * const what, wchar_t token)
-      : json_error (what)
-    {
-      _add_token (& token, 1);
-    }
-
-    /**
      * @see http://www.cplusplus.com/reference/cstdlib/wcstombs/
      * @brief Syntax_Error
      * @param what
@@ -77,28 +67,14 @@ namespace format
       _add_token (token, charc);
     }
 
-  protected:
-
-    size_t
-    _add_token (const wchar_t *token, size_t charc = 0)
-    {
-      size_t bytec = 0;
-      size_t token_len = charc == 0 ? wcslen (token) : charc;
-
-      char *src_buf = static_cast<char *> (alloca (token_len + 1));
-
-      if ((bytec = wcstombs (static_cast<char *> (memset (src_buf, 0, token_len + 1)), token, token_len)) < token_len)
-        return bytec;
-
-      char *dst_buf = static_cast<char *> (alloca (token_len + 3)); // ' + token + ' + 0
-
-      if ((bytec = static_cast<size_t> (std::snprintf (dst_buf, token_len + 3, "'%s'", src_buf))) < token_len + 2)
-        return bytec;
-
-      _what.append (dst_buf);
-
-      return bytec;
-    }
+  protected:    
+    /**
+     * @brief _add_token
+     * @param token
+     * @param charc
+     * @return
+     */
+    size_t _add_token (const wchar_t *token, size_t offset);
   };
 
   /**

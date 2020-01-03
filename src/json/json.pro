@@ -7,6 +7,7 @@ QMAKE_LFLAGS +=  -std=c++11
 TEMPLATE = lib
 
 SOURCES += \
+    json_exception.cpp \
     json_value.cpp \
     json_undefined.cpp \
     json_string.cpp \

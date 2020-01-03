@@ -13,6 +13,7 @@
 #include <cstring>
 #include <array>
 #include <wchar.h>
+#include <clocale>
 
 #include "../json/json.h"
 // #include <format/json.h>
@@ -112,7 +113,11 @@ public:
 
   void
   setUp ()
-  { _errorc[0] = _errorc[1] = _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0; }
+  {
+    // std::setlocale(LC_ALL, "en_US.UTF-8");
+    std::setlocale (LC_CTYPE, "");
+    _errorc[0] = _errorc[1] = _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0;
+  }
 
   void
   tearDown ()

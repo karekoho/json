@@ -61,7 +61,7 @@ format::array::_parse (const wchar_t *json)
           _readp++;
 
           if ((v = _make_value ())->type () == value::no_value_t)
-            throw json_syntax_error (UNEX_TOKEN, *_readp);
+            throw json_syntax_error (UNEX_TOKEN, _readp, 1);
 
           next_idx = _element_list.size ();
 
@@ -80,7 +80,7 @@ format::array::_parse (const wchar_t *json)
               && *_readp != value::_ws::tab
               && *_readp != value::_ws::lf
               && *_readp != value::_ws::cr)
-            throw json_syntax_error (UNEX_TOKEN, *_readp);
+            throw json_syntax_error (UNEX_TOKEN, _readp, 1);
           // Empty array
         }
       else if ((v = _call_reviver (v, nullptr, next_idx))->type () != value::undefined_t)  // Value found
