@@ -706,9 +706,10 @@ namespace format
     /**
      * @brief _string Read in string.
      * If no opening quote, return 0.
-     * If no closing quote or unescaped unicode control character (0-31) met,
-     * return number characters read as a negative value. For example "\"xx\u001F\"" = -3
-     * Else return number of characters read + 2 (quotes). For example "\"xxx\"" = 5
+     * If no closing quote met, return number characters read + 1 (opening quote) as a negative value.
+     *  For example: "\"abc" = -4
+     * Else return number of characters read + 2 (opening + closing quote).
+     *  For example: "\"abc\"" = 5
      * @param endc Last character read
      * @return Number of characters read, including quotes
      */

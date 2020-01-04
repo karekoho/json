@@ -60,7 +60,8 @@ format::value::_string (wchar_t &endc) const noexcept
 
   const wchar_t * readp = _readp + 1;
 
-  while (*readp > 31 && *readp != _sc::double_quote)
+  while (*readp > 0
+         && *readp != _sc::double_quote)
     readp++;
 
   endc = *readp;

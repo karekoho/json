@@ -222,13 +222,14 @@ namespace format
 
       std::vector<struct assert > test = {
         { L" \"foo\" : \"bar\" ", true, PASS },
+        // TODO: { L" \"k\"l\" : 6 ", true, PASS },
         { L" }" , false , PASS },
 
         // errors
         { L" ", false, FAIL},            // json::syntax_error
         { L" \"foo  ", false, FAIL },    // json::syntax_error
         { L" \"foo\" ", false, FAIL },   // json::syntax_error
-        { L" \"foo\" : ", false, SKIP }, // FAIL: json::syntax_error
+        { L" \"foo\" : ", false, FAIL }, // FAIL: json::syntax_error
       };
 
       object *o = nullptr;

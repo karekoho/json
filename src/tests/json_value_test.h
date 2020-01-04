@@ -54,8 +54,6 @@ namespace format
       void
       test__string () // Moved to json_test
       {
-        wchar_t endc;
-
         struct assert {
             const wchar_t *startp;
             long charc;
@@ -68,27 +66,21 @@ namespace format
             { L"\"x\"", 3, PASS },
             { L"\" x\"", 4, PASS },
             { L"\" xx", -4, PASS },
-
-            { L"\"\u001F\"", -1, PASS },
-            { L"\"xx\u001F\"", -3, PASS }
+            { L"\"\u0001\u10FFFF\"", 6, PASS },
+            { L"\"\u0000\u10FFFF\"", -1, PASS }
         };
 
         TEST_IT_START
 
-            const wchar_t *startp = (*it).startp;
-            long charc = static_cast<long> (wcslen (startp));
+            json_mock_value mv;
 
-            json_mock_value *m  = new json_mock_value ();
+            mv._readp = (*it).startp;
+            mv._look_ahead ();
 
-            m->_readp = startp;
-
-            m->_look_ahead ();
-
-            charc = m->_string (endc);
+            wchar_t endc;
+            long charc = mv._string (endc);
 
             ASSERT_EQUAL_IDX ("charc", (*it).charc , charc);
-
-            delete m;
 
         TEST_IT_END
       }
@@ -621,9 +613,9 @@ namespace format
 
         /* 0. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_copy", &json_value_test::test_assign_copy));
         /* 1. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_undefined", &json_value_test::test_operator_assign_undefined));
-        /* 2. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lookahead", &json_value_test::test__lookahead));
-        /* 3. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_literal", &json_value_test::test__is_literal));
-        /* 4. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_quoted", &json_value_test::test__string));
+        /* 2. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__lookahead", &json_value_test::test__lookahead));
+        /* 3. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__is_literal", &json_value_test::test__is_literal));
+        /* 4. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__quoted", &json_value_test::test__string));
         /* 5. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__str_append", &json_value_test::test__str_append));
         /* 6. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value_t", &json_value_test::test_operator_equal_value_t));
         /* 7. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value", &json_value_test::test_operator_equal_value));
