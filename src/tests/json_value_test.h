@@ -239,13 +239,13 @@ namespace format
         };
 
         std::vector<struct assert> test = {
+          { __VALUE[value::undefined_t], value::undefined_t, PASS },
           { __VALUE[value::object_t], value::object_t, PASS },
           { __VALUE[value::array_t], value::array_t, PASS },
           { __VALUE[value::string_t], value::string_t, PASS },
           { __VALUE[value::number_t], value::number_t, PASS },
           { __VALUE[value::boolean_t], value::boolean_t, PASS },
-          { __VALUE[value::null_t], value::null_t, PASS },
-          { __VALUE[value::undefined_t], value::undefined_t, PASS }
+          { __VALUE[value::null_t], value::null_t, PASS }
         };
 
         for (size_t hdx = 0; hdx < 2; hdx++)
@@ -609,6 +609,49 @@ namespace format
         TEST_IT_END
       }
 
+      void
+      test_as ()
+      {
+        struct assert
+        {
+          const wchar_t *json_text;
+          double      dval;
+          long        lval;
+          bool        bval;
+          const wchar_t *cval;
+          int assert_status;
+        };
+
+        std::vector<struct assert > test = {
+          { L"{ \"a\" : 101.1 }", 101.1, 101, true, L"", PASS },
+          { L"{ \"a\" : 101 }", 101.0, 101, true, L"", PASS },
+          { L"{ \"a\" : 0 }", 0.0, 0, false, L"", PASS },
+          { L"{ \"a\" : true }", 1.0, 1, true, L"", PASS },
+          { L"{ \"a\" : false }", 0.0, 0, false, L"", PASS },
+          { L"{ \"a\" : \"char\" }", 0.0, 0, false, L"char", PASS },
+          { L"{ \"a\" : null }", 0.0, 0, false, L"", PASS },
+          { L"{ \"a\" : {} }", 0.0, 0, false, L"", FAIL },
+          { L"{ \"notfound\" : {} }", 0.0, 0, false, L"", FAIL }
+        };
+
+        TEST_IT_START
+
+          json j ((*it).json_text);
+          value & v = j[L"a"];
+
+          double d = v.as<double> ();
+          long l = v.as<long> ();
+          bool b = v.as<bool> ();
+          const wchar_t * c = v.as<const wchar_t *> ();
+
+          CPPUNIT_ASSERT_MESSAGE ("as double", d == (*it).dval);
+          CPPUNIT_ASSERT_MESSAGE ("as long", l == (*it).lval);
+          CPPUNIT_ASSERT_MESSAGE ("as boolean", b == (*it).bval);
+          CPPUNIT_ASSERT_MESSAGE ("as wchar_t", wcscmp (c, (*it).cval) == 0);
+
+        TEST_IT_END
+      }
+
       /**
        * 0.
        * @brief suite
@@ -639,6 +682,7 @@ namespace format
         /* 17. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_path_next", &json_value_test::test_path_next));
         /* 18. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_index", &json_value_test::test_is_index));
         /* 19. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__point", &json_value_test::test__point));
+        /* 20. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_as", &json_value_test::test_as));
 
         return s;
       }

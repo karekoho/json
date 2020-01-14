@@ -119,8 +119,7 @@ namespace format
      */
     inline double
     get () const
-    { return _double_valuep == nullptr ?  _calculate (_digitp) : _double_value; }
-
+    { return _double_valuep == nullptr ? (_pval.dval = _calculate (_digitp)) : _double_value; }
 
   protected:
     /**
@@ -251,6 +250,10 @@ namespace format
      */
     virtual size_t
     _str_length () const noexcept override;
+
+    virtual void
+    _get () const override
+    { (void) get (); }
 
   private:
     /**

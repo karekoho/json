@@ -45,14 +45,14 @@ namespace format
      */
     enum value_t
     {
+      no_value_t,
+      undefined_t,
       object_t,
       array_t,
       string_t,
       number_t,
       boolean_t,
-      null_t,
-      undefined_t,
-      no_value_t
+      null_t
     };
 
     /**
@@ -232,6 +232,41 @@ namespace format
     inline const wchar_t *
     get () const
     { return _to_string (); }
+
+    /**
+     * @brief
+     * @return
+     */
+    template<typename T>
+    auto as () const -> typename std::enable_if<(not std::is_pointer<T>::value), T>::type
+    {
+      value_t t = type ();
+
+      if (t < value_t::string_t)
+        throw json_error ("Cannot convert object type to primitive type"); // TODO: json_conversion_error ()
+
+      _get ();
+      return t == value_t::number_t ? _pval.dval : _pval.bval;
+    }
+
+    /**
+     * @brief
+     * @return
+     */
+    template<typename T>
+    auto as () const -> typename std::enable_if<(std::is_same<T, const wchar_t *>::value), T>::type
+    {
+      value_t t = type ();
+
+      if (t < value_t::string_t)
+        throw json_error ("Cannot convert object type to primitive type");  // TODO: json_conversion_error ()
+
+      if (t > value_t::string_t)
+        return  L"";
+
+      _get ();
+      return _pval.cval;
+    }
 
     /**
      * @brief parent
@@ -591,6 +626,13 @@ namespace format
     _str_length () const noexcept = 0;
 
     /**
+     * @brief _get
+     */
+    virtual void
+    _get () const
+    { /* nop */ }
+
+    /**
      * @brief The _sc enum Structural characters.
      */
     enum _sc
@@ -646,6 +688,16 @@ namespace format
      * @brief _index
      */
     size_t _index;
+
+    /**
+     * @brief pval
+     */
+    mutable union pval
+    {
+      double      dval;
+      bool        bval;
+      const wchar_t *cval;
+    } _pval;
 
     /**
      * @brief value

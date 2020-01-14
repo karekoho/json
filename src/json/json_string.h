@@ -177,6 +177,13 @@ namespace format
     _str_length () const noexcept override
     { return _charc == 0 || *_startp == _sc::double_quote ? _charc : _charc + 2; }
 
+    /**
+     * @brief _get
+     */
+    virtual void
+    _get () const override
+    { _pval.cval = get (); }
+
   private:
     /**
      * @brief __string Read characters until character is < 32 or \".

@@ -24,22 +24,26 @@ namespace format
       * @brief Boolean
       */
       boolean ()
-        : leaf (), _boolean_value (false)
-      {}
+        : leaf ()
+      {
+        _pval.bval = false;
+      }
 
      /**
       * @brief Boolean
       * @param value
       */
       boolean (const bool value)
-        : leaf (), _boolean_value (value)
-      {}
+        : leaf ()
+      {
+        _pval.bval = value;
+      }
 
      /**
       * @brief Boolean
       * @param other
       */
-      boolean (const boolean &other) = default;
+      boolean (const boolean & other) = default;
 
      /**
       * @brief ~Boolean
@@ -80,7 +84,7 @@ namespace format
       virtual inline value &
       operator =(bool b) override
       {
-        _boolean_value = b;
+        _pval.bval = b;
         return *this;
       }
 
@@ -98,13 +102,12 @@ namespace format
       * @return
       */
       inline bool get () const
-      { return _boolean_value; }
+      { return _pval.bval; }
 
     protected:
      /**
       * @brief _boolean_value
       */
-      bool _boolean_value;
 
       /**
        * @brief boolean
@@ -112,8 +115,10 @@ namespace format
        * @param value
        */
       boolean (json *parent, const bool value)
-        : leaf (parent), _boolean_value (value)
-      {}
+        : leaf (parent)
+      {
+        _pval.bval = value;
+      }
 
       /**
        * @brief parse
@@ -122,7 +127,7 @@ namespace format
        */
       virtual const wchar_t *
       _parse (const wchar_t *json) override
-      { return json + (_boolean_value == true ? 4 : 5); }
+      { return json + (_pval.bval == true ? 4 : 5); }
 
      /**
       * @brief _clear
@@ -138,7 +143,7 @@ namespace format
       virtual value *
       _clone (const value &other) override
       {
-        _boolean_value = dynamic_cast<const boolean &>(other)._boolean_value;
+        _pval.bval = dynamic_cast<const boolean &>(other)._pval.bval;
         return this;
       }
 
@@ -148,7 +153,7 @@ namespace format
        */
        virtual const wchar_t *
        _to_string (wchar_t * = nullptr) const override
-       { return _boolean_value == true ? L"true" : L"false"; }
+       { return _pval.bval == true ? L"true" : L"false"; }
 
       /**
        * @brief str_length
@@ -156,7 +161,7 @@ namespace format
        */
        virtual size_t
        _str_length () const noexcept override
-       { return _boolean_value == true ? 4 : 5; }
+       { return _pval.bval == true ? 4 : 5; }
     }; // Class boolean
 
     inline

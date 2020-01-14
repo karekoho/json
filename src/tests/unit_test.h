@@ -362,16 +362,14 @@ public:
 format::json * unit_test::__JSON = new format::json ();
 
 format::value * unit_test::__VALUE[] = {
-      //format::no_value::instance (unit_test::__JSON),
-      //new format::unique_undefined (),
+      format::no_value::instance (unit_test::__JSON),
+      new format::unique_undefined (),
       new format::object (),
       new format::array (),
       new format::string (),
       new format::number (),
       new format::boolean (),
-      new format::null (),
-      new format::unique_undefined (),
-      format::no_value::instance (unit_test::__JSON)
+      new format::null ()
 };
 
 #endif // UNIT_TEST
