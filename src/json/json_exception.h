@@ -30,7 +30,7 @@ namespace format
      * @return
      */
     virtual const char *
-    what () const noexcept
+    what () const noexcept override
     { return _what.c_str (); }
 
   protected:
@@ -88,6 +88,21 @@ namespace format
      * @param what
      */
     json_out_of_range (const char * const what)
+      : json_error (what)
+    {}
+  };
+
+  /**
+   * @brief The json_conversion_error class
+   */
+  class json_conversion_error : public json_error
+  {
+    public:
+    /**
+     * @brief json_conversion_error
+     * @param what
+     */
+    json_conversion_error (const char * const what)
       : json_error (what)
     {}
   };

@@ -13,6 +13,7 @@ namespace format
   #define UNEX_START  "Unexpected start of JSON input"
   #define UNEX_TOKEN  "Unexpected token "
   #define BAD_ASSIGN  "Bad assignment"
+  #define BAD_CONVERSION "Cannot convert from structural type to primitive type"
 
   #ifdef UNIT_TEST
     class json_value_test;
@@ -243,7 +244,7 @@ namespace format
       value_t t = type ();
 
       if (t < value_t::string_t)
-        throw json_error ("Cannot convert object type to primitive type"); // TODO: json_conversion_error ()
+        throw json_conversion_error (BAD_CONVERSION);
 
       _get ();
       return t == value_t::number_t ? _pval.dval : _pval.bval;
@@ -259,7 +260,7 @@ namespace format
       value_t t = type ();
 
       if (t < value_t::string_t)
-        throw json_error ("Cannot convert object type to primitive type");  // TODO: json_conversion_error ()
+        throw json_conversion_error (BAD_CONVERSION);
 
       if (t > value_t::string_t)
         return  L"";
