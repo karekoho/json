@@ -119,7 +119,7 @@ namespace format
      */
     inline double
     get () const
-    { return _double_valuep == nullptr ? (_pval.dval = _calculate (_digitp)) : _double_value; }
+    { return _double_valuep == nullptr ? (_primitive.double_value = _calculate (_digitp)) : _double_value; }
 
   protected:
     /**

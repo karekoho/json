@@ -182,7 +182,7 @@ namespace format
      */
     virtual void
     _get () const override
-    { _pval.cval = get (); }
+    { _primitive.string_value = get (); }
 
   private:
     /**

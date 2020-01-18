@@ -26,7 +26,7 @@ namespace format
       boolean ()
         : leaf ()
       {
-        _pval.bval = false;
+        _primitive.boolean_value = false;
       }
 
      /**
@@ -36,7 +36,7 @@ namespace format
       boolean (const bool value)
         : leaf ()
       {
-        _pval.bval = value;
+        _primitive.boolean_value = value;
       }
 
      /**
@@ -84,7 +84,7 @@ namespace format
       virtual inline value &
       operator =(bool b) override
       {
-        _pval.bval = b;
+        _primitive.boolean_value = b;
         return *this;
       }
 
@@ -102,7 +102,7 @@ namespace format
       * @return
       */
       inline bool get () const
-      { return _pval.bval; }
+      { return _primitive.boolean_value; }
 
     protected:
      /**
@@ -117,7 +117,7 @@ namespace format
       boolean (json *parent, const bool value)
         : leaf (parent)
       {
-        _pval.bval = value;
+        _primitive.boolean_value = value;
       }
 
       /**
@@ -127,7 +127,7 @@ namespace format
        */
       virtual const wchar_t *
       _parse (const wchar_t *json) override
-      { return json + (_pval.bval == true ? 4 : 5); }
+      { return json + (_primitive.boolean_value == true ? 4 : 5); }
 
      /**
       * @brief _clear
@@ -143,7 +143,7 @@ namespace format
       virtual value *
       _clone (const value &other) override
       {
-        _pval.bval = dynamic_cast<const boolean &>(other)._pval.bval;
+        _primitive.boolean_value = dynamic_cast<const boolean &>(other)._primitive.boolean_value;
         return this;
       }
 
@@ -153,7 +153,7 @@ namespace format
        */
        virtual const wchar_t *
        _to_string (wchar_t * = nullptr) const override
-       { return _pval.bval == true ? L"true" : L"false"; }
+       { return _primitive.boolean_value == true ? L"true" : L"false"; }
 
       /**
        * @brief str_length
@@ -161,7 +161,7 @@ namespace format
        */
        virtual size_t
        _str_length () const noexcept override
-       { return _pval.bval == true ? 4 : 5; }
+       { return _primitive.boolean_value == true ? 4 : 5; }
     }; // Class boolean
 
     inline

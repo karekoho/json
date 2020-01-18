@@ -247,7 +247,7 @@ namespace format
         throw json_conversion_error (BAD_CONVERSION);
 
       _get ();
-      return t == value_t::number_t ? _pval.dval : _pval.bval;
+      return t == value_t::number_t ? _primitive.double_value : _primitive.boolean_value;
     }
 
     /**
@@ -266,7 +266,7 @@ namespace format
         return  L"";
 
       _get ();
-      return _pval.cval;
+      return _primitive.string_value;
     }
 
     /**
@@ -691,14 +691,14 @@ namespace format
     size_t _index;
 
     /**
-     * @brief pval
+     * @brief primitive_value
      */
-    mutable union pval
+    mutable union primitive_value
     {
-      double      dval;
-      bool        bval;
-      const wchar_t *cval;
-    } _pval;
+      double      double_value;
+      bool        boolean_value;
+      const wchar_t *string_value;
+    } _primitive;
 
     /**
      * @brief value
