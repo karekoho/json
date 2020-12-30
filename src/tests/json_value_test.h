@@ -491,6 +491,9 @@ namespace format
             delete [] key_begin;
           }
         }
+
+        std::size_t errorc = 2;
+        ASSERT_ERRORC (2);
       }
 
       void
