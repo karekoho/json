@@ -22,8 +22,7 @@ In the _root of the repository_ run the following commands:
 cmake . 
 make & make install
 ```
-A shared library called `libjson` will be created in `/usr/local/lib`
-The development headers will be found in `/usr/local/include/format`
+A shared library called `libjson` will be created in `/usr/local/lib`. The development headers will be found in `/usr/local/include/format`.
 #### Include 
 ```c++
 <format/json.h> 
