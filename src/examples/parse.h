@@ -66,7 +66,7 @@ parse ()
   }";
 
   // Get the image object.
-  value & val = j[L"Image"];
+  json::value & val = j[L"Image"];
 
   // format::value is the interface for all JSON values.
   // format::value.get () returns value the object is holding, but in the JSON text format.
@@ -97,6 +97,18 @@ parse ()
 
   std::wcout << ids.get () << std::endl;
   // output: [116,943,234,38793]
+
+  // Get the primitive values with value::as<T>
+  const wchar_t * char_title = val[L"Title"].as<const wchar_t *>();
+  const wchar_t * null_description = val[L"Description"].as<const wchar_t *>();
+  long long_width = val[L"Width"].as<long>();
+  bool bool_animated = val[L"Animated"].as<bool>();
+
+  std::wcout << char_title << std::endl;
+  // output: "View from 15th Floor"
+
+  std::wcout << null_description << std::endl;
+  // output: ""
 
   // All values can be iterated.
   // Iterate the array.
