@@ -1,5 +1,4 @@
 # JSON for C++
-
 ## Introduction
 JSON for C++ is a library for encoding and decoding JSON in C++ applications.
 Since JSON has a context-free and unambiguous grammar, the implementation is a non-backtracking, recursive-descent LL(1) parser.
@@ -12,32 +11,24 @@ Encoding a *format::json* object is done by the *format::json::stringify()* meth
 JSON for C++ also supports transforming the computed value using the *reviver* callback function 
 for *format::json::parse(text [,reviver])*, as with *JSON.parse()* in EcmaScript.
 ## Requirements
-C++ compiler supporting the C++11 standard,
-such as GCC >= 4.5 or Clang >= 3.3
+- C++ compiler supporting the C++11 standard, such as GCC >= 4.5 or Clang >= 3.3
 ## Installation
 Get the source code:
 ```
 git clone https://github.com/karekoho/json.git
 ```
-or download and extract the zip archive.
-
-In the root of the repository run the following commands:
+In the _root of the repository_ run the following commands:
 ```
 cmake . 
-make 
-make install
+make & make install
 ```
 A shared library called `libjson` will be created in `/usr/local/lib`
-
 The development headers will be found in `/usr/local/include/format`
-
-Include 
+#### Include 
 ```c++
 <format/json.h> 
 ```
 in your source code to use JSON for C++.
-
-
 # Usage
 ## Decoding JSON
 ```c++
@@ -94,6 +85,18 @@ array & ids = static_cast<array &> (val[L"IDs"]);
 
 std::wcout << ids.get () << std::endl;
 // output: [116,943,234,38793]
+
+// Get the primitive values with value::as<T>
+const wchar_t * char_title = val[L"Title"].as<const wchar_t *>();
+const wchar_t * null_description = val[L"Description"].as<const wchar_t *>();
+long long_width = val[L"Width"].as<long>();
+bool bool_animated = val[L"Animated"].as<bool>();
+
+std::wcout << char_title << std::endl;
+// output: "View from 15th Floor"
+
+std::wcout << null_description << std::endl;
+// output: ""
 
 // All values can be iterated.
 // Iterate the array.
