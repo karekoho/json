@@ -5,7 +5,7 @@ QT -= gui
 
 INCLUDEPATH += /usr/local/include
 LIBS += -L/usr/local/lib -lcppunit
-LIBS += /usr/local/lib/libjson.a
+# LIBS += /usr/local/lib/libjson.a
 
 QMAKE_CXXFLAGS+= -std=c++11
 QMAKE_LFLAGS +=  -std=c++11
@@ -17,14 +17,14 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES += main.cpp \
-#    ../json/json_exception.cpp \
-#    ../json/json_value.cpp \
-#    ../json/json_undefined.cpp \
-#    ../json/json_string.cpp \
-#    ../json/json_object.cpp \
-#    ../json/json_number.cpp \
-#    ../json/json_json.cpp \
-#    ../json/json_array.cpp \
+    ../json/json_exception.cpp \
+    ../json/json_value.cpp \
+    ../json/json_undefined.cpp \
+    ../json/json_string.cpp \
+    ../json/json_object.cpp \
+    ../json/json_number.cpp \
+    ../json/json_json.cpp \
+    ../json/json_array.cpp \
 
 HEADERS += \
     json_value_test_interface.h \
@@ -46,18 +46,18 @@ HEADERS += \
     test_selector_test.h \
     json_exception_test.h \
     json_mock_value.h \
-#    ../json/json.h \
-#    ../json/json_value.h \
-#    ../json/json_undefined.h \
-#    ../json/json_string.h \
-#    ../json/json_object.h \
-#    ../json/json_number.h \
-#    ../json/json_null.h \
-#    ../json/json_json.h \
-#    ../json/json_boolean.h \
-#    ../json/json_array.h \
-#   ../json/json_leaf.h \
-#    ../json/json_exception.h \
+    ../json/json.h \
+    ../json/json_value.h \
+    ../json/json_undefined.h \
+    ../json/json_string.h \
+    ../json/json_object.h \
+    ../json/json_number.h \
+    ../json/json_null.h \
+    ../json/json_json.h \
+    ../json/json_boolean.h \
+    ../json/json_array.h \
+   ../json/json_leaf.h \
+    ../json/json_exception.h \
 
 SUBDIRS += \
     ../json/json.pro

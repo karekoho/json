@@ -141,29 +141,3 @@ format::value::operator =(std::nullptr_t)
 {
   return _assign (new null ());
 }
-
-format::value &
-format::value::_point (reference_token & rt, value & v)
-{
-  const wchar_t * const key = rt.path_next ();
-
-  if (*key == 0)
-    return v;
-
-  else if (v.type () == value::value_t::undefined_t)
-    throw json_pointer_error ("Key pointing elsewhere than the end of the path must exist. Non-existent key is preceding ", key);
-
-  if (*key == _sc::path_separator)
-    return v._at (L"");
-
-  if (v.type () == value::value_t::array_t)
-    {
-      if (! value::reference_token::is_index (key))
-        throw json_pointer_error ("Invalid array index: ", key);
-
-      if (*key == value::reference_token::index::new_index)
-        return v._at (v.count ());
-    }
-
-  return _point (rt, v._at (key));
-}

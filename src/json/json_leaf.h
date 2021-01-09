@@ -73,13 +73,6 @@ namespace format
     { return 0; }
 
     /**
-     * @brief point
-     * @return
-     */
-    virtual value & point (const wchar_t *) final override
-    { return *this; }
-
-    /**
      * @brief The iterator class
      */
     class iterator : public value::iterator<value *,

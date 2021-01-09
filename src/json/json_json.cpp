@@ -89,16 +89,6 @@ format::json::~json ()
   delete __root;
 }
 
-format::value &
-format::json::point (const wchar_t *json_pointer)
-{
-  if (json_pointer == nullptr)
-    throw json_pointer_error ("JSON pointer is null");
-
-  reference_token rt (json_pointer);
-  return _point (rt, *this);
-}
-
 const wchar_t *
 format::json::json::_parse (const wchar_t *readp)
 {

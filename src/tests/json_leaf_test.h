@@ -93,13 +93,6 @@ namespace format
                              number ()[static_cast<size_t> (0)].type () == value::number_t);
     }
 
-    void
-    test_point ()
-    {
-      CPPUNIT_ASSERT_MESSAGE("leaf point",
-                             number ().point (L"/").type () == value::number_t);
-    }
-
     virtual void
     test_count () final override
     {
@@ -134,7 +127,6 @@ namespace format
       /* 4. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test__clone_const_value_ref", &json_leaf_test::test__clone_const_value_ref));
       /* 5. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_operator_at_key", &json_leaf_test::test_operator_at_key));
       /* 6. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_operator_at_index", &json_leaf_test::test_operator_at_index));
-      /* 7. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_point", &json_leaf_test::test_point));
 
       return s;
     }

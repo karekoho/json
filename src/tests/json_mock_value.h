@@ -83,10 +83,6 @@ namespace format
 //      { return sizeof (json_mock_value); }
 
       // value interface
-  public:
-      virtual value & point (const wchar_t *) override {
-        return  *this;
-      }
   };
 }
 
