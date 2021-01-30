@@ -16,8 +16,11 @@ HEADERS += \
     parse.h \
     revive.h
 
-# macx: LIBS += -L/usr/local/lib/ -ljson
-LIBS += /usr/local/lib/libjson.a
+macx: LIBS += -L/usr/local/lib/ -ljson
+# LIBS += /usr/local/lib/libjson.a
 
 INCLUDEPATH += /usr/local/include
 DEPENDPATH += /usr/local/include
+
+DISTFILES += \
+    ../../../json_pointer/build/test/debug/CMakeLists.txt

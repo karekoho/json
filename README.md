@@ -51,36 +51,16 @@ json j (L"{\    // Construct a format::json object with a wide character string
     }\
 })";
 
-// Access an element, the "Image" object
-value & val = j[L"Image"];
+// Get the primitive value using value::as<T> ()
+// Possible values are: const wchar_t *, long, bool
+const wchar_t * title = val[L"Title"].as<const wchar_t *> ();
 
-// format::value is the interface for all JSON values.
-// format::value.get() returns value the object is holding
-std::wcout << val[L"Title"].get () << std::endl;
-// output: "View from 15th Floor"
+long width = val[L"Title"].as<long> ();
 
-std::wcout << val[L"Width"].get () << std::endl;
-// output: 800
+bool animated = val[L"Animated"].as<bool> ();
 
-std::wcout << val[L"Animated"].get () << std::endl;
-// output: true
-
-std::wcout << val[L"Description"].get () << std::endl;
-// output: null
-
-// format::value.get() returns the value as const wchar_t *
-// To get the value as the actual C++ data type, format::value must be cast to the concrete type.
-string & title = static_cast<string &> (val[L"Title"]);         // Holds const wchar_t *
-number & width = static_cast<number &> (val[L"Width"]);         // Holds long or double
-boolean & animated = static_cast<boolean &> (val[L"Animated"]); // Holds bool
-null & description = static_cast<null &> (val[L"Description"]); // Holds nullptr_t
-
-std::wcout << animated.get () << std::endl;
-// output: 1
-
-// However, format::object and format::array return their value as JSON text.
-object & image = static_cast<object &> (val);
-array & ids = static_cast<array &> (val[L"IDs"]);
+// "Description" is empty string, because it's defined as null
+const wchar_t * description = val[L"Description"].as<const wchar_t *> ();
 
 std::wcout << ids.get () << std::endl;
 // output: [116,943,234,38793]
@@ -91,11 +71,20 @@ const wchar_t * null_description = val[L"Description"].as<const wchar_t *>();
 long long_width = val[L"Width"].as<long>();
 bool bool_animated = val[L"Animated"].as<bool>();
 
-std::wcout << char_title << std::endl;
-// output: "View from 15th Floor"
+// To get the internal JSON object, use static_cast<T>
+object & image = static_cast<object &> (val);
+array & ids = static_cast<array &> (val[L"IDs"]);
+string & title = static_cast<string &> (val[L"Title"]);
+number & width = static_cast<number &> (val[L"Width"]);
+boolean & animated = static_cast<boolean &> (val[L"Animated"]);
+null & description = static_cast<null &> (val[L"Description"]);
 
-std::wcout << null_description << std::endl;
-// output: ""
+// Get the primitive value of an object
+bool value = animated.get ();
+
+// Object and array values are represented as a string
+std::wcout << ids.get () << std::endl;
+// output: [116,943,234,38793]
 
 // All values can be iterated.
 // Iterate the array.
