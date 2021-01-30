@@ -54,9 +54,7 @@ json j (L"{\    // Construct a format::json object with a wide character string
 // Get the primitive value using value::as<T> ()
 // Possible values are: const wchar_t *, long, bool
 const wchar_t * title = val[L"Title"].as<const wchar_t *> ();
-
 long width = val[L"Title"].as<long> ();
-
 bool animated = val[L"Animated"].as<bool> ();
 
 // "Description" is empty string, because it's defined as null
@@ -64,12 +62,6 @@ const wchar_t * description = val[L"Description"].as<const wchar_t *> ();
 
 std::wcout << ids.get () << std::endl;
 // output: [116,943,234,38793]
-
-// Get the primitive values with value::as<T>
-const wchar_t * char_title = val[L"Title"].as<const wchar_t *>();
-const wchar_t * null_description = val[L"Description"].as<const wchar_t *>();
-long long_width = val[L"Width"].as<long>();
-bool bool_animated = val[L"Animated"].as<bool>();
 
 // To get the internal JSON object, use static_cast<T>
 object & image = static_cast<object &> (val);
