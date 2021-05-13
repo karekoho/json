@@ -51,7 +51,7 @@ parse ()
 {
   std::wcout << std::endl << "Parse and read:" << std::endl;
 
-  json j = L"{\
+  json::json j = L"{\
     \"Image\": {\
         \"Width\":  800,\
         \"Height\": 600,\
@@ -85,12 +85,12 @@ parse ()
 
   {
     // To get the internal JSON object, use static_cast<T>
-    object & image = static_cast<object &> (val);
-    array & ids = static_cast<array &> (val[L"IDs"]);
-    string & title = static_cast<string &> (val[L"Title"]);
-    number & width = static_cast<number &> (val[L"Width"]);
-    boolean & animated = static_cast<boolean &> (val[L"Animated"]);
-    null & description = static_cast<null &> (val[L"Description"]);
+    json::object & image = static_cast<json::object &> (val);
+    json::array & ids = static_cast<json::array &> (val[L"IDs"]);
+    json::string & title = static_cast<json::string &> (val[L"Title"]);
+    json::number & width = static_cast<json::number &> (val[L"Width"]);
+    json::boolean & animated = static_cast<json::boolean &> (val[L"Animated"]);
+    json::null & description = static_cast<json::null &> (val[L"Description"]);
 
     {
       // Get the primitive value of an object
@@ -105,7 +105,7 @@ parse ()
     // Iterate the array.
     std::for_each (ids.begin (),
                    ids.end (),
-                   [] (value & v)
+                   [] (json::value & v)
     {
       std::wcout << v.get () << L" ";
     });

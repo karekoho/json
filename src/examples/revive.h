@@ -7,18 +7,28 @@
 
 using namespace format;
 
-value *
-fn_reviver (const wchar_t *key, value *val)
+/**
+ * This function modifies the parsed json object
+ * by returning modified value
+ * @param key The key in json object
+ * @param val The value to modify
+ * @return
+ */
+json::value *
+fn_reviver (const wchar_t *key, json::value *val)
 {
-  value::value_t t = val->type ();
+  json::value::value_t type = val->type ();
 
-  if (wcscmp (key, L"Thumbnail") == 0) // Remove the Thumbnail object
-    return new undefined ();
-
+  // Replace null value with "n/a"
   if (wcscmp (key, L"Description") == 0
-      && val->type () == value::null_t) // Change the value
-      return new string (L"n/a");
+      && type == json::value::null_t)
+    return new json::string (L"n/a");
 
+  // Remove the Thumbnail object by returning undefined
+  if (wcscmp (key, L"Thumbnail") == 0)
+    return new json::undefined ();
+
+  // Otherwise return unchanged value
   return val;
 }
 
@@ -27,7 +37,8 @@ revive ()
 {
   std::wcout << std::endl << "Revive:" << std::endl;
 
-  value *v = json::parse ( L"{\
+  // Create json object and pass the reviver function
+  json::value *v = json::json::parse ( L"{\
       \"Image\": {\
           \"Width\":  800,\
           \"Height\": 600,\
@@ -41,7 +52,8 @@ revive ()
           \"Animated\" : true,\
           \"IDs\": [116, 943, 234, 38793]\
         }\
-    }", fn_reviver);
+    }",
+    fn_reviver); // The reviver
 
   std::wcout << v->stringify () << std::endl;
   // output: {"Image":{"IDs":[116,943,234,38793],"Description":"n/a",
