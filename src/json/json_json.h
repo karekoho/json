@@ -79,6 +79,7 @@ namespace format
       { return new json (*this); }
 
       /**
+       * TODO: return json * --> v2.0
        * @brief parse
        * @param json
        * @param reviver

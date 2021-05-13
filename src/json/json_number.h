@@ -125,11 +125,13 @@ namespace format
 
     protected:
       /**
+       * TODO: long double
        * @brief _value
        */
       mutable double _double_value;
 
       /**
+       * TODO: get rid of this --> v2.0
        * @brief _double_valuep
        */
       mutable double *_double_valuep;
@@ -140,11 +142,13 @@ namespace format
       const wchar_t *_digitp[2][2];
 
       /**
+       * TODO: _is_float
        * @brief _is_double
        */
       bool _is_double;
 
       /**
+       * TODO: get rid of this --> v2.0
        * @brief _double_str
        */
       mutable std::wstring _double_str;
