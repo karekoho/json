@@ -245,6 +245,7 @@ namespace format
       {
         value_t t = type ();
 
+        // Structural type
         if (t < value_t::string_t)
           throw json_conversion_error (BAD_CONVERSION);
 
@@ -261,9 +262,11 @@ namespace format
       {
         value_t t = type ();
 
+        // Structural type
         if (t < value_t::string_t)
           throw json_conversion_error (BAD_CONVERSION);
 
+        // Not string
         if (t > value_t::string_t)
           return  L"";
 

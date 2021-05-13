@@ -469,7 +469,25 @@ namespace format
           { L"{ \"a\" : 0 }", 0.0, 0, false, L"", PASS },
           { L"{ \"a\" : true }", 1.0, 1, true, L"", PASS },
           { L"{ \"a\" : false }", 0.0, 0, false, L"", PASS },
-          { L"{ \"a\" : \"char\" }", 0.0, 0, false, L"char", PASS },
+
+          /*
+          FIXME: test below ({ \"a\" : \"char\" }) fails with cmake CMAKE_BUILD_TYPE = Release:
+
+          1) test: test_as (F) line: 490 /Users/kare/devel/json/src/tests/json_value_test.h
+          assertion failed
+          - Expression: d == (*it).dval
+          - as double
+
+          values:
+            double > 0                correct = 0.0
+            long > 0                  correct = 0
+            bool = true               correct = false
+            const wchar_t * = "char"  correct
+
+            CMAKE_BUILD_TYPE = Debug passes
+          */
+
+          { L"{ \"a\" : \"char\" }", 0.0, 0, false, L"char", PASS }, // FIXME: fails with cmake CMAKE_BUILD_TYPE = Release
           { L"{ \"a\" : null }", 0.0, 0, false, L"", PASS },
           { L"{ \"a\" : {} }", 0.0, 0, false, L"", FAIL },
           { L"{ \"notfound\" : {} }", 0.0, 0, false, L"", FAIL }
@@ -484,6 +502,8 @@ namespace format
           long l = v.as<long> ();
           bool b = v.as<bool> ();
           const wchar_t * c = v.as<const wchar_t *> ();
+
+          // std::wcout << std::endl << d << std::endl << l << std::endl << b << std::endl << c << std::endl;
 
           CPPUNIT_ASSERT_MESSAGE ("as double", d == (*it).dval);
           CPPUNIT_ASSERT_MESSAGE ("as long", l == (*it).lval);
