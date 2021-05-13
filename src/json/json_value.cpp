@@ -7,48 +7,48 @@
 
 #include <stdlib.h>
 
-const struct format::value::literal_value format::value::__ltr_value[3] = {
-  { L"true", 4, format::value::_literal::true_value },
-  { L"false", 5, format::value::_literal::false_value },
-  { L"null", 4, format::value::_literal::null_value }
+const struct format::json::value::literal_value format::json::value::__ltr_value[3] = {
+  { L"true", 4, format::json::value::_literal::true_value },
+  { L"false", 5, format::json::value::_literal::false_value },
+  { L"null", 4, format::json::value::_literal::null_value }
 };
 
-format::value::value ()
+format::json::value::value ()
     : _readp (nullptr),
       _parent (nullptr),
       _key (nullptr),
       _index (0)
 {}
 
-format::value::value (const wchar_t *)
+format::json::value::value (const wchar_t *)
     : _readp (nullptr),
       _parent (nullptr),
       _key (nullptr),
       _index (0)
 {}
 
-format::value::value (json *parent)
+format::json::value::value (json *parent)
     : _readp (nullptr),
       _parent (parent),
       _key (nullptr),
       _index (0)
 {}
 
-format::value::value (const value &other)
+format::json::value::value (const value &other)
   : _readp (other._readp),
     _parent (nullptr),
     _key (other._key ? new wchar_t [wcslen (other._key) + 1] () : nullptr),
     _index (other._index)    
 {}
 
-format::value::
+format::json::value::
 ~value ()
 {
   delete[] _key;
 }
 
 long int
-format::value::_string (wchar_t &endc) const noexcept
+format::json::value::_string (wchar_t &endc) const noexcept
 {
   const wchar_t * const startp = _readp;
 
@@ -70,8 +70,8 @@ format::value::_string (wchar_t &endc) const noexcept
     : -1 * (readp - startp);
 }
 
-format::value::_literal
-format::value::_is_literal (const int _try) const noexcept
+format::json::value::_literal
+format::json::value::_is_literal (const int _try) const noexcept
 {
   const wchar_t *readp = _readp;
 
@@ -88,14 +88,14 @@ format::value::_is_literal (const int _try) const noexcept
   return _try < 2 ? _is_literal (_try + 1) :  value::_literal::no_literal;
 }
 
-format::value &
-format::value::_assign (const undefined &) noexcept
+format::json::value &
+format::json::value::_assign (const undefined &) noexcept
 {  
   return _parent ? __call__erase (_parent, *this) : *this;
 }
 
-format::value &
-format::value::_assign (const value &nv)
+format::json::value &
+format::json::value::_assign (const value &nv)
 {
   if (_parent == nullptr)
     throw json_error (BAD_ASSIGN);
@@ -103,8 +103,8 @@ format::value::_assign (const value &nv)
   return __call__assign (_parent, this, nv.clone ());
 }
 
-format::value &
-format::value::_assign (value *nv)
+format::json::value &
+format::json::value::_assign (value *nv)
 {
   if (_parent == nullptr)
     throw json_error (BAD_ASSIGN);
@@ -112,32 +112,32 @@ format::value::_assign (value *nv)
   return __call__assign (_parent, this, nv);
 }
 
-format::value &
-format::value::operator =(bool b)
+format::json::value &
+format::json::value::operator =(bool b)
 {
   return _assign (new boolean (b));
 }
 
-format::value &
-format::value::operator =(const wchar_t *json_text)
+format::json::value &
+format::json::value::operator =(const wchar_t *json_text)
 {
   return _assign (new json (json_text));
 }
 
-format::value &
-format::value::operator =(long l)
+format::json::value &
+format::json::value::operator =(long l)
 {
   return _assign (new number (static_cast<long >(l)));
 }
 
-format::value &
-format::value::operator =(double d)
+format::json::value &
+format::json::value::operator =(double d)
 {
   return _assign (new number (d));
 }
 
-format::value &
-format::value::operator =(std::nullptr_t)
+format::json::value &
+format::json::value::operator =(std::nullptr_t)
 {
   return _assign (new null ());
 }

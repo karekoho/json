@@ -2,7 +2,10 @@
 #define JSON_OBJECT_ITERATOR_TEST
 
 #include "unit_test.h"
-namespace format {
+namespace format
+{
+  namespace json
+  {
 /**
  * 9.
  * @brief The json_object_iterator_test class
@@ -158,6 +161,7 @@ public:
     return s;
   }
 };
-}
+} // Namespace json
+} // Namespace format
 #endif // JSON_OBJECT_ITERATOR_TEST
 

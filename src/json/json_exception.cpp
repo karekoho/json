@@ -3,7 +3,7 @@
 #include "json_exception.h"
 
 size_t
-format::json_syntax_error::_add_token (const wchar_t *token, size_t offset)
+format::json::json_syntax_error::_add_token (const wchar_t *token, size_t offset)
 {
   if (*token == 0)
     return 0;

@@ -1,13 +1,13 @@
 #include "json_string.h"
 #include "json_json.h"
 
-format::string::string ()
+format::json::string::string ()
   : leaf (),
     _startp (nullptr),
     _charc (0)
 {}
 
-format::string::string (const wchar_t *json)
+format::json::string::string (const wchar_t *json)
   : leaf (json),
     _startp (nullptr),
     _charc (0)
@@ -18,13 +18,13 @@ format::string::string (const wchar_t *json)
   (void) _parse (json);
 }
 
-format::string::string (json *parent, size_t charc)
+format::json::string::string (json *parent, size_t charc)
   : leaf (parent),
     _startp (nullptr),
     _charc (charc)
 {}
 
-format::string::string (const string &other)
+format::json::string::string (const string &other)
   : leaf (other),
     _startp (other._startp),
     _charc (other._charc)
@@ -33,7 +33,7 @@ format::string::string (const string &other)
 }
 
 const wchar_t *
-format::string::_parse (const wchar_t *json)
+format::json::string::_parse (const wchar_t *json)
 {
   wchar_t endc  = 0;
   long charc    = 0;
@@ -51,14 +51,14 @@ format::string::_parse (const wchar_t *json)
   return _readp += _charc;
 }
 
-format::value &
-format::string::_assign (const string &nv)
+format::json::value &
+format::json::string::_assign (const string &nv)
 {
   return _parent ? __call__assign (_parent, this, new string (nv)) : *(_clone (nv));
 }
 
 const wchar_t *
-format::string::get () const
+format::json::string::get () const
 {
   if (_string_value[0].empty () && _startp && _charc > 0)
     *_startp == _sc::double_quote
@@ -69,7 +69,7 @@ format::string::get () const
 }
 
 const wchar_t *
-format::string::_to_string (wchar_t *) const
+format::json::string::_to_string (wchar_t *) const
 {
   if (_startp == nullptr || _charc == 0)
     return L"";
@@ -101,8 +101,8 @@ format::string::_to_string (wchar_t *) const
   return _string_value[1].c_str ();
 }
 
-format::value *
-format::string::_clone (const value &nv)
+format::json::value *
+format::json::string::_clone (const value &nv)
 {
   const string & s = dynamic_cast<const string &> (nv);
 
@@ -117,7 +117,7 @@ format::string::_clone (const value &nv)
 }
 
 long
-format::string::__string (wchar_t & endc) const noexcept
+format::json::string::__string (wchar_t & endc) const noexcept
 {
   const wchar_t * readp = _readp;
 

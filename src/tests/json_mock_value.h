@@ -5,6 +5,8 @@
 
 namespace format
 {
+  namespace json
+  {
   class json_mock_value : public value
   {
   public:
@@ -23,11 +25,11 @@ namespace format
 
       virtual value &
       at (const wchar_t *) const
-      { return *(new format::undefined ()); }
+      { return *(new format::json::undefined ()); }
 
       virtual value &
       at (size_t) const
-      { return *(new format::undefined ()); }
+      { return *(new format::json::undefined ()); }
 
       virtual value::value_t
       type () const noexcept override
@@ -65,11 +67,11 @@ namespace format
 
       virtual  value &
       _at (const wchar_t *) override
-      { return *(new format::undefined ()); }
+      { return *(new format::json::undefined ()); }
 
       virtual  value &
       _at (size_t) override
-      { return *(new format::undefined ()); }
+      { return *(new format::json::undefined ()); }
 
       virtual void _clear () override
       {}
@@ -84,6 +86,7 @@ namespace format
 
       // value interface
   };
+ }
 }
 
 #endif // JSON_VALUE_PARSE_MOCK_H

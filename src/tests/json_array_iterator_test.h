@@ -5,6 +5,8 @@
 
 namespace format
 {
+  namespace json
+  {
   /**
    * 10.
    *
@@ -162,6 +164,7 @@ namespace format
       return s;
     }
   };
-}
+} // Namespace json
+} // Namespace format
 #endif // JSON_ARRAY_ITERATOR_TEST
 

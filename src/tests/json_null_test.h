@@ -5,6 +5,8 @@
 
 namespace format
 {
+  namespace json
+  {
   /**
    * 7.
    * @brief The json_null_test class
@@ -89,7 +91,7 @@ namespace format
                   else
                     delete old_value;
                 }
-               catch (format::json_error & e)
+               catch (format::json::json_error & e)
                 {
                   this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl;
                   delete old_value;
@@ -154,6 +156,7 @@ namespace format
       return s;
     }
   };
+}
 }
 #endif // JSON_NULL_TEST
 

@@ -6,6 +6,8 @@
 
 namespace format
 {
+  namespace json
+  {
   /**
    * 1.
    * @brief The json_test class
@@ -118,7 +120,7 @@ namespace format
 
             delete j;
           }
-        catch (format::json_syntax_error & se)
+        catch (format::json::json_syntax_error & se)
           {
             this->_errorc[ACTUAL]++; std::cerr << se.what () << std::endl;
             delete j;
@@ -344,7 +346,7 @@ namespace format
       switch (v->type ())
         {
           case  value::value_t::null_t:
-            return new format::undefined ();
+            return new format::json::undefined ();
 
           case value::value_t::object_t:
           case value::value_t::array_t:
@@ -516,5 +518,6 @@ namespace format
       return s;
     }
   };
-}
+} // Namespace json
+} // Namespace format
 #endif // JSON_TEST_H

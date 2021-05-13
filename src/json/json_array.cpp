@@ -2,37 +2,37 @@
 
 #include <algorithm>
 
-format::array::array () : json () {}
+format::json::array::array () : json () {}
 
-format::array::array (const wchar_t *text)
+format::json::array::array (const wchar_t *text)
   : json (text, false)
 {
   (void) _parse (text);
 }
 
-format::array::array (std::initializer_list<value *> il)
+format::json::array::array (std::initializer_list<value *> il)
   : json ()
 {
   _set_initializer_list (il);
 }
 
-format::array::array (json *parent)
+format::json::array::array (json *parent)
   : json (parent)
 {}
 
-format::array::array (const array &other)
+format::json::array::array (const array &other)
   : json (other)
 {
   (void) _clone (other);
 }
 
-format::array::~array ()
+format::json::array::~array ()
 {
   _clear ();
 }
 
 const wchar_t *
-format::array::_parse (const wchar_t *json)
+format::json::array::_parse (const wchar_t *json)
 {  
   if (_parent == nullptr)   // 1. Array (), 2. Array (const char *json)
     {
@@ -93,8 +93,8 @@ format::array::_parse (const wchar_t *json)
   return _readp;
 }
 
-format::value &
-format::array::_at (size_t index)
+format::json::value &
+format::json::array::_at (size_t index)
 {
   try
     {
@@ -111,8 +111,8 @@ format::array::_at (size_t index)
   }
 }
 
-format::value &
-format::array::operator =(const format::array &a)
+format::json::value &
+format::json::array::operator =(const format::json::array &a)
 {
   if (_parent)
     return __call__assign (_parent, this, new array (a));
@@ -123,8 +123,8 @@ format::array::operator =(const format::array &a)
   return *(_clone (a));
 }
 
-format::value &
-format::array::_assign (value *ov, value *nv)
+format::json::value &
+format::json::array::_assign (value *ov, value *nv)
 {
   size_t index = ov->index ();
 
@@ -139,14 +139,14 @@ format::array::_assign (value *ov, value *nv)
 }
 
 void
-format::array::_clear ()
+format::json::array::_clear ()
 {
   for (auto it = _element_list.begin (); it !=_element_list.end (); it = _element_list.erase (it))
     delete *it;
 }
 
-format::value *
-format::array::_clone (const value &other)
+format::json::value *
+format::json::array::_clone (const value &other)
 {
   const array & nv = dynamic_cast<const array &> (other);
 
@@ -168,7 +168,7 @@ format::array::_clone (const value &other)
 }
 
 size_t
-format::array::_str_length () const noexcept
+format::json::array::_str_length () const noexcept
 {
   if (_element_list.empty ())
     return 2;
@@ -185,7 +185,7 @@ format::array::_str_length () const noexcept
 }
 
 const wchar_t *
-format::array::_to_string (wchar_t *offset) const
+format::json::array::_to_string (wchar_t *offset) const
 {
   wchar_t *str_value[2] = { nullptr, nullptr };
 
@@ -222,8 +222,8 @@ format::array::_to_string (wchar_t *offset) const
   return str_value[BEGIN];
 }
 
-format::value &
-format::array::_erase (const value & v) noexcept
+format::json::value &
+format::json::array::_erase (const value & v) noexcept
 {
   size_t index = v.index ();
 
@@ -237,7 +237,7 @@ format::array::_erase (const value & v) noexcept
 }
 
 void
-format::array::_set_initializer_list (std::initializer_list<format::value *> il)
+format::json::array::_set_initializer_list (std::initializer_list<format::json::value *> il)
 {
   if (il.size () == 0)
     return;

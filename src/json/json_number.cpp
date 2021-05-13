@@ -2,7 +2,7 @@
 #include "json_json.h"
 #include <iostream>
 
-format::number::number ()
+format::json::number::number ()
   : leaf (),
     _double_value (0),
     _double_valuep (& _double_value),
@@ -10,7 +10,7 @@ format::number::number ()
     _is_double (false)
 {}
 
-format::number::number (long l)
+format::json::number::number (long l)
   : leaf (),
     _double_value (l),
     _double_valuep (& _double_value),
@@ -18,7 +18,7 @@ format::number::number (long l)
     _is_double (false)
 {}
 
-format::number::number (double d)
+format::json::number::number (double d)
   : leaf (),
     _double_value (d),
     _double_valuep (& _double_value),
@@ -26,7 +26,7 @@ format::number::number (double d)
     _is_double (true)
 {}
 
-format::number::number (const wchar_t *json)
+format::json::number::number (const wchar_t *json)
   : leaf (json),
     _double_value (0),
     _double_valuep (nullptr),
@@ -39,7 +39,7 @@ format::number::number (const wchar_t *json)
   (void) _parse (json);
 }
 
-format::number::number (json *parent)
+format::json::number::number (json *parent)
   : leaf (parent),
     _double_value (0),
     _double_valuep (nullptr),
@@ -47,7 +47,7 @@ format::number::number (json *parent)
    _is_double (false)
 {}
 
-format::number::number (const number &other)
+format::json::number::number (const number &other)
  : leaf (other),
    _double_value (0),
    _double_valuep (nullptr),
@@ -58,7 +58,7 @@ format::number::number (const number &other)
 }
 
 const wchar_t *
-format::number::_parse (const wchar_t *json)
+format::json::number::_parse (const wchar_t *json)
 {
   wchar_t peek = 0;
 
@@ -110,7 +110,7 @@ format::number::_parse (const wchar_t *json)
 }
 
 int
-format::number::_digits () noexcept
+format::json::number::_digits () noexcept
 {
   const wchar_t * const startp = _readp;
 
@@ -121,7 +121,7 @@ format::number::_digits () noexcept
 }
 
 const wchar_t *
-format::number::_frag ()
+format::json::number::_frag ()
 {
   _readp++; // Skip '.'
 
@@ -138,7 +138,7 @@ format::number::_frag ()
 }
 
 const wchar_t *
-format::number::_exp ()
+format::json::number::_exp ()
 {
   _digitp[EXP][START] = ++_readp; // Skip 'e|E'
 
@@ -154,7 +154,7 @@ format::number::_exp ()
 }
 
 double
-format::number::_calculate (const wchar_t * const digitp[2][2]) const
+format::json::number::_calculate (const wchar_t * const digitp[2][2]) const
 {
   _double_valuep = & _double_value;
 
@@ -177,15 +177,15 @@ format::number::_calculate (const wchar_t * const digitp[2][2]) const
 }
 
 void
-format::number::_clear ()
+format::json::number::_clear ()
 {
   _double_value   = 0;
   _double_valuep  = nullptr;
   (void) __clear_strp ();
 }
 
-format::value *
-format::number::_clone (const value &other)
+format::json::value *
+format::json::number::_clone (const value &other)
 {
   const number & nv = dynamic_cast<const number &> (other);
 
@@ -208,7 +208,7 @@ format::number::_clone (const value &other)
 }
 
 size_t
-format::number::_str_length () const noexcept
+format::json::number::_str_length () const noexcept
 {
  (void) get ();
  __to_string ();
@@ -217,7 +217,7 @@ format::number::_str_length () const noexcept
 }
 
 const wchar_t *
-format::number::_to_string (wchar_t *) const
+format::json::number::_to_string (wchar_t *) const
 {
   (void) get ();
   __to_string ();

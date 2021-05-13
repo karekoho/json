@@ -5,6 +5,8 @@
 
 namespace format
 {
+  namespace json
+  {
   /**
    * 12.
    * @brief The json_leaf_test class
@@ -131,6 +133,7 @@ namespace format
       return s;
     }
   };
+}
 }
 #endif // JSON_LEAF_TEST
 

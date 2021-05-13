@@ -5,6 +5,8 @@
 
 namespace format
 {
+  namespace json
+  {
   /**
    * 5.
    * @brief The json_number_test class
@@ -388,7 +390,7 @@ namespace format
                         delete old_value;
                       }
                   }
-                catch (format::json_error & e)
+                catch (format::json::json_error & e)
                   {
                     this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl;
                     delete old_value;
@@ -581,7 +583,8 @@ namespace format
 
       return s;
     }
-  }; // Namespace format
-}
+  };
+} // Namespace json
+} // Namespace format
 #endif // json_number_test
 

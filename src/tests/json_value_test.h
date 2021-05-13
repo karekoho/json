@@ -6,6 +6,8 @@
 
 namespace format
 {
+  namespace json
+  {
   /**
    * 0.
    * @brief The json_value_test class
@@ -38,7 +40,7 @@ namespace format
 
           const wchar_t *startp = (*it).startp;
 
-          format::json_mock_value *m  = new format::json_mock_value ();
+          format::json::json_mock_value *m  = new format::json::json_mock_value ();
 
           m->_readp = startp;
 
@@ -181,7 +183,7 @@ namespace format
         };
 
         TEST_IT_START
-            *(*it).val = format::undefined ();
+            *(*it).val = format::json::undefined ();
             ASSERT_EQUAL_IDX ("array::count ()",
                               (*it).size,
                               a.count ());
@@ -290,7 +292,7 @@ namespace format
               { new number (), value::number_t, PASS },
               { new boolean (), value::boolean_t, PASS },
               { new null (), value::null_t, PASS },
-              { new format::unique_undefined (), value::undefined_t, PASS }
+              { new format::json::unique_undefined (), value::undefined_t, PASS }
             };
 
             _idx[0] = 0;
@@ -522,5 +524,6 @@ namespace format
         return s;
       }
   };
+}
 }
 #endif // JSON_INTERFACE_TEST_H

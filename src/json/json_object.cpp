@@ -1,38 +1,38 @@
 #include "json_object.h"
 
-format::object::object ()
+format::json::object::object ()
   : json ()
 {}
 
-format::object::object (const wchar_t *json_text)
+format::json::object::object (const wchar_t *json_text)
   : json (json_text, false)
 {
   (void) _parse (json_text);
 }
 
-format::object::object (std::initializer_list<std::pair<std::wstring, value *>> il)
+format::json::object::object (std::initializer_list<std::pair<std::wstring, value *>> il)
   : json ()
 {
   _set_initializer_list (il);
 }
 
-format::object::object (json *parent)
+format::json::object::object (json *parent)
   : json::json (parent)
 {}
 
-format::object::object (const object &other)
+format::json::object::object (const object &other)
   : json (other)
 {
   (void) _clone (other);
 }
 
-format::object::~object ()
+format::json::object::~object ()
 {
   _clear ();
 }
 
 const wchar_t *
-format::object::_parse (const wchar_t *json_text)
+format::json::object::_parse (const wchar_t *json_text)
 {
   if (_parent == nullptr)   // 1. Object (), 2. Object (const char *json)
     {
@@ -71,7 +71,7 @@ format::object::_parse (const wchar_t *json_text)
 }
 
 bool
-format::object::_pair ()
+format::json::object::_pair ()
 {
   wchar_t endc = 0;
 
@@ -117,8 +117,8 @@ format::object::_pair ()
   return true;
 }
 
-format::value &
-format::object::_at (const wchar_t *key)
+format::json::value &
+format::json::object::_at (const wchar_t *key)
 {
   try
     {
@@ -135,8 +135,8 @@ format::object::_at (const wchar_t *key)
   }
 }
 
-format::value &
-format::object::operator =(const format::object &o)
+format::json::value &
+format::json::object::operator =(const format::json::object &o)
 {
   if (_parent)
     return __call__assign (_parent, this, new object (o));
@@ -147,8 +147,8 @@ format::object::operator =(const format::object &o)
   return *(_clone (o));
 }
 
-format::value &
-format::object::_assign (value *ov, value *nv)
+format::json::value &
+format::json::object::_assign (value *ov, value *nv)
 {
   const wchar_t *key = ov->key ();
 
@@ -164,7 +164,7 @@ format::object::_assign (value *ov, value *nv)
 }
 
 void
-format::object::_clear ()
+format::json::object::_clear ()
 {
   auto begin = _member_list.begin ();
   auto end = _member_list.end ();
@@ -176,8 +176,8 @@ format::object::_clear ()
     }
 }
 
-format::value *
-format::object::_clone (const value &other)
+format::json::value *
+format::json::object::_clone (const value &other)
 {
   const object & nv = static_cast<const object &>(other);
 
@@ -201,7 +201,7 @@ format::object::_clone (const value &other)
 }
 
 size_t
-format::object::_str_length () const noexcept
+format::json::object::_str_length () const noexcept
 {
   if (_member_list.empty ())
     return 2;
@@ -221,7 +221,7 @@ format::object::_str_length () const noexcept
 }
 
 const wchar_t *
-format::object::_to_string (wchar_t *offset) const
+format::json::object::_to_string (wchar_t *offset) const
 {
   wchar_t *str_value[2] = { nullptr, nullptr };
 
@@ -261,8 +261,8 @@ format::object::_to_string (wchar_t *offset) const
   return str_value[BEGIN];
 }
 
-format::value &
-format::object::_erase (const value & v) noexcept
+format::json::value &
+format::json::object::_erase (const value & v) noexcept
 {
   auto it = _member_list.find (v.key ());
 
@@ -276,7 +276,7 @@ format::object::_erase (const value & v) noexcept
 }
 
 void
-format::object::_set_initializer_list (std::initializer_list<std::pair<std::wstring, format::value *> > il)
+format::json::object::_set_initializer_list (std::initializer_list<std::pair<std::wstring, format::json::value *> > il)
 {
   if (il.size () == 0)
     return;

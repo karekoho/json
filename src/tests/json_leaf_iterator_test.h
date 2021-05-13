@@ -5,6 +5,8 @@
 
 namespace format
 {
+  namespace json
+  {
 /**
  * 11.
  * @brief The json_leaf_iterator_test class
@@ -148,6 +150,7 @@ public:
     return s;
   }
 };
+}
 }
 #endif // JSON_LEAF_ITERATOR_TEST
 

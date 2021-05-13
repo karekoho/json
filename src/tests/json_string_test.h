@@ -5,6 +5,8 @@
 
 namespace format
 {
+  namespace json
+  {
   /**
    * 4.
    * @brief The json_string_test class
@@ -113,7 +115,7 @@ namespace format
 
             delete s;
           }
-        catch (format::json_error & e)
+        catch (format::json::json_error & e)
           {
             this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl;
             // delete s; // Can't delete ???
@@ -194,7 +196,7 @@ namespace format
                         delete old_value;
                       }
                   }
-                 catch (format::json_error & e)
+                 catch (format::json::json_error & e)
                   {
                     this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl;
                     delete old_value;
@@ -321,5 +323,6 @@ namespace format
         return s;
       }
   };
+} // Namespace json
 } // Namespace format
 #endif // JSON_STRING_TEST_H

@@ -84,11 +84,11 @@
 #ifndef TEST_IT_END
   #define TEST_IT_END\
   \
-} catch (format::json_syntax_error & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
-  catch (format::json_out_of_range & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
-  catch (format::json_pointer_error & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
-  catch (format::json_conversion_error & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
-  catch (format::json_error & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
+} catch (format::json::json_syntax_error & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
+  catch (format::json::json_out_of_range & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
+  catch (format::json::json_pointer_error & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
+  catch (format::json::json_conversion_error & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
+  catch (format::json::json_error & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
   catch (const char *error) { this->_errorc[ACTUAL]++; std::cerr << error << std::endl; } \
   catch (const wchar_t *error) { this->_errorc[ACTUAL]++; std::cerr << error << std::endl; } }\
 (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]); \
@@ -124,17 +124,17 @@ public:
   tearDown ()
   { _errorc[0] =_errorc[1] = _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0; }
 
-  std::unordered_map<std::wstring, format::value *> &
-  member_list_clear (std::unordered_map<std::wstring, format::value *> & m)
+  std::unordered_map<std::wstring, format::json::value *> &
+  member_list_clear (std::unordered_map<std::wstring, format::json::value *> & m)
   {
     for (auto it = m.begin (); it != m.end (); it = m.erase (it))
-      delete static_cast <std::pair<std::wstring, format::value *>>(*it).second;
+      delete static_cast <std::pair<std::wstring, format::json::value *>>(*it).second;
 
     return m;
   }
 
-  std::vector<format::value *> &
-  element_list_clear (std::vector<format::value *> & v)
+  std::vector<format::json::value *> &
+  element_list_clear (std::vector<format::json::value *> & v)
   {
     for (auto it = v.begin (); it != v.end (); it = v.erase (it))
       delete *it;
@@ -149,28 +149,28 @@ protected:
 
   char _sz_idx[300];
 
-  static format::json   *__JSON;
-  static format::value  *__VALUE[];
+  static format::json::json   *__JSON;
+  static format::json::value  *__VALUE[];
 }; // Class unit_test
 
 /**
  * @brief The value_accessor class
  */
-class value_accessor : public format::value
+class value_accessor : public format::json::value
 {
 public:
   /**
    * @brief set_parent
    * @param parent
    */
-  void set_parent (format::json *parent)
+  void set_parent (format::json::json *parent)
   { _set_parent (parent); }
 };
 
 /**
  * @brief The object_accessor class
  */
-class object_accessor : public format::object
+class object_accessor : public format::json::object
 {
 public:
   /**
@@ -233,7 +233,7 @@ public:
 /**
  * @brief The array_accessor class
  */
-class array_accessor : public format::array
+class array_accessor : public format::json::array
 {
   public:
 
@@ -258,7 +258,7 @@ class array_accessor : public format::array
    * @brief push
    * @param v
    */
-  size_t push (format::value *v)
+  size_t push (format::json::value *v)
   {
     _element_list.push_back (v);
     return _element_list.size () - 1;
@@ -307,7 +307,7 @@ class array_accessor : public format::array
 /**
  * @brief The string_accessor class
  */
-class string_accessor : public format::string
+class string_accessor : public format::json::string
 {
 public:
   /**
@@ -315,40 +315,40 @@ public:
    * @param parent
    * @param charc
    */
-  string_accessor (format::json *parent, size_t charc)
+  string_accessor (format::json::json *parent, size_t charc)
     : string (parent,charc){}
 };
 
 /**
  * @brief The number_accessor class
  */
-class number_accessor : public format::number
+class number_accessor : public format::json::number
 {
 public:
   /**
    * @brief number_accessor
    * @param parent
    */
-  number_accessor (format::json *parent) : number (parent){}
+  number_accessor (format::json::json *parent) : number (parent){}
 };
 
 /**
  * @brief The null_accessor class
  */
-class null_accessor: public format::null
+class null_accessor: public format::json::null
 {
 public:
   /**
    * @brief null_accessor
    * @param parent
    */
-  null_accessor (format::json *parent): null (parent){}
+  null_accessor (format::json::json *parent): null (parent){}
 };
 
 /**
  * @brief The boolean_accessor class
  */
-class boolean_accessor: public format::boolean
+class boolean_accessor: public format::json::boolean
 {
 public:
   /**
@@ -356,21 +356,21 @@ public:
    * @param parent
    * @param b
    */
-  boolean_accessor (format::json *parent, bool b): boolean (parent, b)
+  boolean_accessor (format::json::json *parent, bool b): boolean (parent, b)
   {}
 };
 
-format::json * unit_test::__JSON = new format::json ();
+format::json::json * unit_test::__JSON = new format::json::json ();
 
-format::value * unit_test::__VALUE[] = {
-      format::no_value::instance (unit_test::__JSON),
-      new format::unique_undefined (),
-      new format::object (),
-      new format::array (),
-      new format::string (),
-      new format::number (),
-      new format::boolean (),
-      new format::null ()
+format::json::value * unit_test::__VALUE[] = {
+      format::json::no_value::instance (unit_test::__JSON),
+      new format::json::unique_undefined (),
+      new format::json::object (),
+      new format::json::array (),
+      new format::json::string (),
+      new format::json::number (),
+      new format::json::boolean (),
+      new format::json::null ()
 };
 
 #endif // UNIT_TEST

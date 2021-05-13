@@ -5,6 +5,8 @@
 
 namespace format
 {
+  namespace json
+  {
   /**
    * 8.
    * @brief The json_undefined_test class
@@ -18,19 +20,19 @@ namespace format
     {
       json parent;
 
-      format::unique_undefined uu[] = {
-        format::unique_undefined (),
-        format::unique_undefined (& parent),
+        unique_undefined uu[] = {
+        unique_undefined (),
+        unique_undefined (& parent),
       };
 
-      format::undefined *u[] = {
-        new format::undefined (),
-        new format::undefined (),
+      undefined *u[] = {
+        new undefined (),
+        new undefined (),
         no_value::instance (& parent)
       };
 
       delete u[0];
-      u[0] = new format::undefined ();
+      u[0] = new undefined ();
 
       delete no_value::instance (& parent);
 
@@ -77,7 +79,7 @@ namespace format
                   if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
 
                   /** old_value: value from value[key] */
-                  old_value = new format::unique_undefined (parents[pidx]);
+                  old_value = new unique_undefined (parents[pidx]);
                   old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                   *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
@@ -95,7 +97,7 @@ namespace format
                                         (*it).type);
                     }
               }
-            catch (format::json_error & e)
+            catch (json_error & e)
               {
                 this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl;
                 delete old_value;
@@ -165,8 +167,9 @@ namespace format
 
       return s;
     }
-  }; // Namespace format
-}
+  };
+} // Namespace json
+} // Namespace format
 
 #endif // JSON_UNDEFINED_TEST
 

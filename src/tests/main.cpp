@@ -40,21 +40,21 @@ struct _test_
 };
 
 std::vector<_test_> tests = {
-/* 0. */   { format::json_value_test::suite () },
-/* 1. */   { format::json_test::suite () },
-/* 2. */   { format::json_object_test::suite () },
-/* 3. */   { format::json_array_test::suite () },
-/* 4. */   { format::json_string_test::suite () },
-/* 5. */   { format::json_number_test::suite () },
-/* 6. */   { format::json_boolean_test::suite () },
-/* 7. */   { format::json_null_test::suite () },
-/* 8. */   { format::json_undefined_test::suite () },
-/* 9. */   { format::json_object_iterator_test::suite () },
-/* 10. */  { format::json_array_iterator_test::suite () },
-/* 11. */  { format::json_leaf_iterator_test::suite () },
-/* 12. */  { format::json_leaf_test::suite () },
+/* 0. */   { format::json::json_value_test::suite () },
+/* 1. */   { format::json::json_test::suite () },
+/* 2. */   { format::json::json_object_test::suite () },
+/* 3. */   { format::json::json_array_test::suite () },
+/* 4. */   { format::json::json_string_test::suite () },
+/* 5. */   { format::json::json_number_test::suite () },
+/* 6. */   { format::json::json_boolean_test::suite () },
+/* 7. */   { format::json::json_null_test::suite () },
+/* 8. */   { format::json::json_undefined_test::suite () },
+/* 9. */   { format::json::json_object_iterator_test::suite () },
+/* 10. */  { format::json::json_array_iterator_test::suite () },
+/* 11. */  { format::json::json_leaf_iterator_test::suite () },
+/* 12. */  { format::json::json_leaf_test::suite () },
 /* 13. */  { test_selector_test::suite () },
-/* 14. */  { json_syntax_error_test::suite () }
+/* 14. */  { format::json::json_syntax_error_test::suite () }
 };
 
 int
