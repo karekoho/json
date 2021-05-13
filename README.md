@@ -35,7 +35,8 @@ in your source code to use JSON for C++.
 
 using namespace format;
 
-json j (L"{\    // Construct a format::json object with a wide character string
+// Construct a JSON object with a wide character string
+json::json j = L"{\
   \"Image\": {\
       \"Width\":  800,\
       \"Height\": 600,\
@@ -49,44 +50,52 @@ json j (L"{\    // Construct a format::json object with a wide character string
       \"Animated\" : true,\
       \"IDs\": [116, 943, 234, 38793]\
     }\
-})";
+}";
 
-// Get the primitive value using value::as<T> ()
-// Possible values are: const wchar_t *, long, bool
-const wchar_t * title = val[L"Title"].as<const wchar_t *> ();
-long width = val[L"Title"].as<long> ();
-bool animated = val[L"Animated"].as<bool> ();
+// Get the image object.
+json::value & val = j[L"Image"];
 
-// "Description" is empty string, because it's defined as null
-const wchar_t * description = val[L"Description"].as<const wchar_t *> ();
-
-std::wcout << ids.get () << std::endl;
-// output: [116,943,234,38793]
-
-// To get the internal JSON object, use static_cast<T>
-object & image = static_cast<object &> (val);
-array & ids = static_cast<array &> (val[L"IDs"]);
-string & title = static_cast<string &> (val[L"Title"]);
-number & width = static_cast<number &> (val[L"Width"]);
-boolean & animated = static_cast<boolean &> (val[L"Animated"]);
-null & description = static_cast<null &> (val[L"Description"]);
-
-// Get the primitive value of an object
-bool value = animated.get ();
-
-// Object and array values are represented as a string
-std::wcout << ids.get () << std::endl;
-// output: [116,943,234,38793]
-
-// All values can be iterated.
-// Iterate the array.
-std::for_each (ids.begin (),
-               ids.end (),
-               [] (value & v)
 {
-  std::wcout << v.get () << L" ";
-});
-// output: 116 943 234 38793
+  // Get the primitive value using value::as<T> ()
+  // Possible values are: const wchar_t *, long, bool
+  const wchar_t * title = val[L"Title"].as<const wchar_t *> ();
+
+  long width = val[L"Title"].as<long> ();
+
+  bool animated = val[L"Animated"].as<bool> ();
+
+  // "Description" is empty string, because it's defined as null
+  const wchar_t * description = val[L"Description"].as<const wchar_t *> ();
+}
+
+{
+  // To get the internal JSON object, use static_cast<T>
+  json::object & image = static_cast<json::object &> (val);
+  json::array & ids = static_cast<json::array &> (val[L"IDs"]);
+  json::string & title = static_cast<json::string &> (val[L"Title"]);
+  json::number & width = static_cast<json::number &> (val[L"Width"]);
+  json::boolean & animated = static_cast<json::boolean &> (val[L"Animated"]);
+  json::null & description = static_cast<json::null &> (val[L"Description"]);
+
+  {
+    // Get the primitive value of an object
+    bool value = animated.get ();
+  }
+
+  // Object and array values are represented as a string
+  std::wcout << ids.get () << std::endl;
+  // output: [116,943,234,38793]
+
+  // All values can be iterated.
+  // Iterate the array.
+  std::for_each (ids.begin (),
+                 ids.end (),
+                 [] (json::value & v)
+  {
+    std::wcout << v.get () << L" ";
+  });
+  // output: 116 943 234 38793
+}
 ```
 ## Encoding JSON
 ```c++
@@ -94,35 +103,47 @@ std::for_each (ids.begin (),
 
 using namespace format;
 
-json j (new object {    // Construct a format::json object with a format::object object
-        { L"Image",
-            new object {
-              { L"Width",new number (800.0) },
-              { L"Height",new number (600.0) },
-              { L"Title", new string (L"View from 15th Floor") },
-              { L"Thumbnail", new object {
-                  { L"Url",new string (L"http://www.example.com/image/481989943") },
-                  { L"Height",new number ((long) 125) },
-                  { L"Width", new number ((long) 100) },
+// Construct a JSON object
+json::json j = new json::object {
+          { L"Image",
+            new json::object {
+              { L"Width",new json::number (800.0) },
+              { L"Height",new json::number (600.0) },
+              { L"Title", new json::string (L"View from 15th Floor") },
+              { L"Thumbnail", new json::object {
+                  { L"Url",new json::string (L"http://www.example.com/image/481989943") },
+                  { L"Height",new json::number (static_cast<long>(125) ) },
+                  { L"Width", new json::number (static_cast<long> (100)) },
                 }
               },
-              { L"Animated", new boolean (false) },
-              { L"IDs", new array { new number ((long) 116), new number ((long) 943),
-                new number ((long) 234), new number ((long) 38793) } }
+              { L"Animated", new json::boolean (false) },
+              { L"IDs", new json::array { new json::number (static_cast<long> (116)), new json::number (static_cast<long> (943)),
+                new json::number (static_cast<long> (234)), new json::number (static_cast<long> (38793)) } }
             }
           }
-        });
+        };
 
-array & ids = static_cast<array &> (j[L"Image"][L"IDs"]);
+json::array & ids = static_cast<json::array &> (j[L"Image"][L"IDs"]);
 
 // Modify value
-ids[(size_t) 1] = (long) 100;
+ids[static_cast<size_t> (1)] = static_cast<long> (100);
 
 // Assigning format::undefined removes the value
-ids[(size_t) 3] = undefined ();
+ids[static_cast<size_t> (3)] = json::undefined ();
 
 std::wcout << ids.stringify () << std::endl;
 // output: [116,100,234]
+
+// Iterate the array
+std::for_each (ids.begin (),
+               ids.end (),
+               [] (json::value & v)
+{
+  json::number & id = static_cast<json::number &> (v);
+  long l = static_cast<long> (id.get ());
+  std::wcout << l << L" ";
+});
+// output: 116 100 234
 ```
 ## Transforming computed values
 ```c++
@@ -130,25 +151,38 @@ std::wcout << ids.stringify () << std::endl;
 
 using namespace format;
 
-value *
-fn_reviver (const wchar_t *key, value *val)
+/**
+ * This function modifies the parsed JSON object
+ * by returning modified value
+ * @param key The key in JSON object
+ * @param val The value to modify
+ * @return modified or original value
+ */
+json::value *
+fn_reviver (const wchar_t *key, json::value *val)
 {
-  if (wcscmp (key, L"Thumbnail") == 0)  // "Thumbnail" object is removed
-    return new undefined ();
+  json::value::value_t type = val->type ();
 
+  // Replace null value with "n/a"
   if (wcscmp (key, L"Description") == 0
-      && val->type () == value::null_t)  // Value of type format::null is replaced
-    return new string (L"n/a");
+      && type == json::value::null_t)
+    return new json::string (L"n/a");
 
+  // Remove the Thumbnail object by returning undefined
+  if (wcscmp (key, L"Thumbnail") == 0)
+    return new json::undefined ();
+
+  // Otherwise return unchanged value
   return val;
 }
 
-value *v = json::parse ( L"{\
+// Create json object and pass the reviver function
+json::value *v = json::json::parse ( L"{\
     \"Image\": {\
         \"Width\":  800,\
         \"Height\": 600,\
         \"Title\":  \"View from 15th Floor\",\
-        \"Description\":null,\
+        \"Description\": null,\
         \"Thumbnail\": {\
             \"Url\":    \"http://www.example.com/image/481989943\",\
             \"Height\": 125,\
@@ -157,7 +191,8 @@ value *v = json::parse ( L"{\
         \"Animated\" : true,\
         \"IDs\": [116, 943, 234, 38793]\
       }\
-  }", fn_reviver);
+  }",
+  fn_reviver); // The reviver
 
 std::wcout << v->stringify () << std::endl;
 // output: {"Image":{"IDs":[116,943,234,38793],"Description":"n/a",

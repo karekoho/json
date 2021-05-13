@@ -12,7 +12,7 @@ create_modify ()
 {
   std::wcout << std::endl << "Create and modify:" << std::endl;
 
-  // Construct a json object
+  // Construct a JSON object
   // Assign a pointer to an object
   // Objects and arrays are constructed using initializer lists
   json::json j = new json::object {

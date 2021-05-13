@@ -51,6 +51,7 @@ parse ()
 {
   std::wcout << std::endl << "Parse and read:" << std::endl;
 
+  // Construct a JSON object with a wide character string
   json::json j = L"{\
     \"Image\": {\
         \"Width\":  800,\
