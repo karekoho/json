@@ -280,7 +280,7 @@ namespace format
         if (_double_str.empty ())
           _double_str = _is_floating_point
               ? std::to_wstring (_double_value)
-              : std::to_wstring (static_cast<long> (_double_value));
+              : std::to_wstring (static_cast<long long> (_double_value));
       }
 
       /**
