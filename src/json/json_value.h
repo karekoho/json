@@ -238,40 +238,52 @@ namespace format
 
       /**
        * @brief
-       * @return
+       * @return any numeric type or bool
        */
       template<typename T>
       auto as () const -> typename std::enable_if<(not std::is_pointer<T>::value), T>::type
       {
         value_t t = type ();
 
-        // Structural type
-        if (t < value_t::string_t)
-          throw json_conversion_error (BAD_CONVERSION);
+        if (t == value_t::number_t)
+          {
+            _get ();
+            return _primitive.double_value;
+          }
 
-        _get ();
-        return t == value_t::number_t ? _primitive.double_value : _primitive.boolean_value;
+        if (t == value_t::boolean_t)
+          {
+            _get ();
+            return _primitive.boolean_value;
+          }
+
+        // String to boolean
+        if (t == value_t::string_t)
+          return static_cast<bool>(_primitive.string_value);
+
+        throw json_conversion_error (BAD_CONVERSION);
       }
 
       /**
        * @brief
-       * @return
+       * @return const wchar_t *
        */
       template<typename T>
       auto as () const -> typename std::enable_if<(std::is_same<T, const wchar_t *>::value), T>::type
       {
         value_t t = type ();
 
-        // Structural type
-        if (t < value_t::string_t)
-          throw json_conversion_error (BAD_CONVERSION);
+        if (t == value_t::string_t)
+          {
+            _get ();
+            return _primitive.string_value;
+          }
 
-        // Not string
-        if (t > value_t::string_t)
-          return  L"";
+        // null to string
+        if (t == value_t::null_t)
+          return L"";
 
-        _get ();
-        return _primitive.string_value;
+        throw json_conversion_error (BAD_CONVERSION);
       }
 
       /**
