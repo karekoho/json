@@ -177,7 +177,7 @@ fn_reviver (const wchar_t *key, json::value *val)
 }
 
 // Create json object and pass the reviver function
-json::value *v = json::json::parse ( L"{\
+json::json *j = json::json::parse ( L"{\
     \"Image\": {\
         \"Width\":  800,\
         \"Height\": 600,\
@@ -194,7 +194,7 @@ json::value *v = json::json::parse ( L"{\
   }",
   fn_reviver); // The reviver
 
-std::wcout << v->stringify () << std::endl;
+std::wcout << j->stringify () << std::endl;
 // output: {"Image":{"IDs":[116,943,234,38793],"Description":"n/a",
 // "Height":600,"Animated":true,"Title":"View from 15th Floor","Width":800}}
 ```
