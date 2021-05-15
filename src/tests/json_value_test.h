@@ -192,17 +192,17 @@ namespace format
         json j = new object {
                   { L"Image",
                     new object {
-                      { L"Width", new number ((long) 800) },
-                      { L"Height", new number ((long) 600) },
+                      { L"Width", new number ((long long) 800) },
+                      { L"Height", new number ((long long) 600) },
                       { L"Title", new string (L"View from 15th Floor") },
                       { L"Thumbnail", new object {
                           { L"Url", new string (L"http://www.example.com/image/481989943") },
-                          { L"Height", new number ((long) 125) },
-                          { L"Width", new number ((long) 100) },
+                          { L"Height", new number ((long long) 125) },
+                          { L"Width", new number ((long long) 100) },
                         }
                       },
                       { L"Animated", new boolean (false) },
-                      { L"IDs", new array { new number ((long) 116), new number ((long) 943), new number ((long) 234), new number ((long) 38793) } }
+                      { L"IDs", new array { new number ((long long) 116), new number ((long long) 943), new number ((long long) 234), new number ((long long) 38793) } }
                     }
                   }
                 };
@@ -340,7 +340,7 @@ namespace format
 
         CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[\"0\"].type ()",
                                       value::number_t,
-                                      (j[L"0"] = (long) 100)[L"0"].type ());
+                                      (j[L"0"] = (long long) 100)[L"0"].type ());
       }
 
       void

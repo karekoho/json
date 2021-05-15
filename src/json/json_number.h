@@ -27,6 +27,16 @@ namespace format
     {
       friend number * __call_number (json *parent);
 
+      /**
+       * @brief integer_t
+       */
+      typedef long long integer_t ;
+
+      /**
+       * @brief float_t
+       */
+      typedef double float_t ;
+
     #ifdef UNIT_TEST
       friend class json_number_test;
     #endif
@@ -41,7 +51,7 @@ namespace format
        * @brief number
        * @param l
        */
-      number (long l);
+      number (long long l);
 
       /**
        * @brief number
@@ -97,7 +107,7 @@ namespace format
       {
         _double_value   = d;
         _double_valuep  = & _double_value;
-        _is_double = true;
+        _is_floating_point = true;
         return __clear_strp ();
       }
 
@@ -107,11 +117,11 @@ namespace format
        * @return
        */
       virtual inline value &
-      operator =(long l) noexcept override
+      operator =(long long l) noexcept override
       {
-        _double_value   = l;
+        _double_value   = l; // FIXME: store integer type in long long
         _double_valuep  = & _double_value;
-        _is_double = false;
+        _is_floating_point = false;
         return __clear_strp ();
       }
 
@@ -131,7 +141,7 @@ namespace format
       mutable double _double_value;
 
       /**
-       * TODO: get rid of this --> v2.0
+       * TODO: get rid of this --> v2.x
        * @brief _double_valuep
        */
       mutable double *_double_valuep;
@@ -145,10 +155,10 @@ namespace format
        * TODO: _is_float
        * @brief _is_double
        */
-      bool _is_double;
+      bool _is_floating_point;
 
       /**
-       * TODO: get rid of this --> v2.0
+       * TODO: get rid of this --> v2.x
        * @brief _double_str
        */
       mutable std::wstring _double_str;
@@ -200,8 +210,7 @@ namespace format
        * @param digitp
        * @return
        */
-      double
-      _calculate (const wchar_t * const digitp[2][2]) const;
+      double _calculate (const wchar_t * const digitp[2][2]) const;
 
       /**
        * @brief _atof
@@ -269,7 +278,7 @@ namespace format
       __to_string () const noexcept
       {
         if (_double_str.empty ())
-          _double_str = _is_double
+          _double_str = _is_floating_point
               ? std::to_wstring (_double_value)
               : std::to_wstring (static_cast<long> (_double_value));
       }

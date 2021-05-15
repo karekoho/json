@@ -76,7 +76,7 @@ parse ()
     // Possible values are: const wchar_t *, long, bool
     const wchar_t * title = val[L"Title"].as<const wchar_t *> ();
 
-    long width = val[L"Title"].as<long> ();
+    unsigned int width = val[L"Title"].as<unsigned int> ();
 
     bool animated = val[L"Animated"].as<bool> ();
 

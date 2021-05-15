@@ -125,9 +125,9 @@ format::json::value::operator =(const wchar_t *json_text)
 }
 
 format::json::value &
-format::json::value::operator =(long l)
+format::json::value::operator =(long long l)
 {
-  return _assign (new number (static_cast<long >(l)));
+  return _assign (new number (static_cast<long long>(l)));
 }
 
 format::json::value &

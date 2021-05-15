@@ -7,15 +7,15 @@ format::json::number::number ()
     _double_value (0),
     _double_valuep (& _double_value),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
-    _is_double (false)
+    _is_floating_point (false)
 {}
 
-format::json::number::number (long l)
+format::json::number::number (long long l)
   : leaf (),
-    _double_value (l),
+    _double_value (l),  // FIXME: store integer type in long long
     _double_valuep (& _double_value),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
-    _is_double (false)
+    _is_floating_point (false)
 {}
 
 format::json::number::number (double d)
@@ -23,7 +23,7 @@ format::json::number::number (double d)
     _double_value (d),
     _double_valuep (& _double_value),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
-    _is_double (true)
+    _is_floating_point (true)
 {}
 
 format::json::number::number (const wchar_t *json)
@@ -31,7 +31,7 @@ format::json::number::number (const wchar_t *json)
     _double_value (0),
     _double_valuep (nullptr),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
-    _is_double (false)
+    _is_floating_point (false)
 {
   if (json == nullptr)
     throw json_error (UNEX_END);
@@ -44,7 +44,7 @@ format::json::number::number (json *parent)
     _double_value (0),
     _double_valuep (nullptr),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
-   _is_double (false)
+   _is_floating_point (false)
 {}
 
 format::json::number::number (const number &other)
@@ -52,7 +52,7 @@ format::json::number::number (const number &other)
    _double_value (0),
    _double_valuep (nullptr),
    _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
-   _is_double (false)
+   _is_floating_point (false)
 {
   (void) _clone (other);
 }
@@ -132,7 +132,7 @@ format::json::number::_frag ()
 
   _digitp[DOUBLE][END] = _readp;
 
-  _is_double = true;
+  _is_floating_point = true;
 
   return peek == 'e' || peek == 'E' ? _exp () : _readp;
 }
@@ -189,7 +189,7 @@ format::json::number::_clone (const value &other)
 {
   const number & nv = dynamic_cast<const number &> (other);
 
-  _is_double = nv._is_double;
+  _is_floating_point = nv._is_floating_point;
 
   if (nv._double_valuep)  // nv._calculate () is called or number is assigned with long|double
     {

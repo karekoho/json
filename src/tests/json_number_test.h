@@ -25,7 +25,7 @@ namespace format
         //{
           number n[] = {
             number (),
-            number ((long) 10),
+            number ((long long) 10),
             number (10.10),
             number (L"10"),
             number (& parent),
@@ -35,7 +35,7 @@ namespace format
       //delete p[1];
 
       number src[] = {
-        number ((long)10),
+        number ((long long) 10),
         number (L"100")
       };
 
@@ -98,7 +98,7 @@ namespace format
         ASSERT_EQUAL_IDX ("n._readp", startp + (*it).move, readp);
         ASSERT_EQUAL_IDX ("n.value ()", (*it).dval, n.get ());
 
-      TEST_IT_END;
+      TEST_IT_END
     }
 
     void
@@ -136,7 +136,7 @@ namespace format
           ASSERT_EQUAL_IDX ("readp", startp + (*it).move, n._readp);
           ASSERT_EQUAL_IDX ("peek", (*it).peek, peek);
 
-      TEST_IT_END;
+      TEST_IT_END
     }
 
     void
@@ -177,7 +177,7 @@ namespace format
           ASSERT_EQUAL_IDX ("peek", (*it).peek, (int)*(n._readp));
           ASSERT_EQUAL_IDX ("digitp[0][1]", endp, n._digitp[0][1]);
 
-      TEST_IT_END;
+      TEST_IT_END
     }
 
     void
@@ -226,7 +226,7 @@ namespace format
 
           ASSERT_EQUAL_IDX ("n._llexp", (*it).atoll, atoll (s.c_str ()));
 
-      TEST_IT_END;
+      TEST_IT_END
     }
 
     void
@@ -248,7 +248,7 @@ namespace format
         { { L"5", L"0" }, { 1, 1 }, 5, PASS },
         { { L"2", L"1" }, { 1, 1 }, 20, PASS },
         { { L"2", L"2" }, { 1, 1 }, 200, PASS },
-        { { L"2", L"-2" }, { 1, 2 }, 0.02, PASS },
+        { { L"2", L"-2" }, { 1, 2 }, (long double) 0.02, PASS },
       };
 
       TEST_IT_START
@@ -264,7 +264,7 @@ namespace format
         ASSERT_EQUAL_IDX ("n._calculate ()", (*it).dval, d);
         ASSERT_EQUAL_IDX ("n._double_valuep", d, *(n._double_valuep));
 
-      TEST_IT_END;
+      TEST_IT_END
     }
 
     void
@@ -279,8 +279,8 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-          { L"5.5", 5.5, PASS },
-          { L"55.55", 55.55, PASS },
+          { L"5.5", (long double) 5.5, PASS },
+          { L"55.55", (long double) 55.55, PASS },
       };
 
 
@@ -292,7 +292,7 @@ namespace format
 
         ASSERT_EQUAL_IDX ("n._atof ()", (*it).dval, d);
 
-      TEST_IT_END;
+      TEST_IT_END
     }
 
     void
@@ -319,7 +319,7 @@ namespace format
 
         ASSERT_EQUAL_IDX ("n._atoll ()", (*it).llval, ll);
 
-      TEST_IT_END;
+      TEST_IT_END
     }
 
     virtual void
@@ -342,7 +342,7 @@ namespace format
         int assert_status[3];
       };
 
-      number n ((long)10);
+      number n ((long long) 10);
 
       std::vector<struct assert > test = {
         { & n, value::number_t, L"0",  0, 1, { PASS, PASS } },
@@ -419,8 +419,8 @@ namespace format
       TEST_IT_START
 
         number n[4] = {
-          number ((long) (*it).d),
-          number ((*it).d),
+          number ((long long) (*it).d),
+          number ((double)(*it).d),
           number ((*it).s[0]),
           number ((*it).s[1]),
         };
@@ -430,7 +430,7 @@ namespace format
         CPPUNIT_ASSERT_MESSAGE ("n[2]._to_string ()", wcscmp((*it).output[2], n[2]._to_string ()) == 0);
         CPPUNIT_ASSERT_MESSAGE ("n[3]._to_string ()", wcscmp((*it).output[3], n[3]._to_string ()) == 0);
 
-      TEST_IT_END;
+      TEST_IT_END
     }
 
     virtual void
@@ -444,8 +444,8 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-        { new number ((long) 100), 3, PASS },
-        { new number (100.10), 10, PASS },
+        { new number ((long long) 100), 3, PASS },
+        { new number ((double) 100.10), 10, PASS },
         { new number (L"100"), 3, PASS },
         { new number (L"100.10"), 10, PASS } // TODO: should be 5
       };
@@ -455,12 +455,12 @@ namespace format
                             (*it).len,
                             (*it).n->_str_length ());
           delete (*it).n;
-      TEST_IT_END;
+      TEST_IT_END
     }
 
     virtual void
     test__clear () override
-    { number ((long) 100)._clear (); }
+    { number ((long long) 100)._clear (); }
 
     virtual void
     test_type () override
@@ -474,7 +474,7 @@ namespace format
     test__clone_const_value_ref () override
     {
       number src[] = {
-        number (100.1),
+        number ((double) 100.1),
         number (L"100.1")
       };
 
@@ -484,19 +484,19 @@ namespace format
       };
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[0].get ()",
-                                    100.1,
+                                    (double) 100.1,
                                     copy[0].get ()); // _double_value && _double_valuep are set
 
       CPPUNIT_ASSERT_MESSAGE ("copy[]._is_double",
-                              copy[0]._is_double == true
-                              && copy[0]._is_double == copy[1]._is_double);
+                              copy[0]._is_floating_point == true
+                              && copy[0]._is_floating_point == copy[1]._is_floating_point);
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("(long) copy[1].get ()",
-                                    100.1,
+                                    (double) 100.1,
                                     copy[1].get ());
 
       CPPUNIT_ASSERT_MESSAGE ("src[1]._double_value",
-                              src[1]._double_valuep == 0);  // _parse () called but not _calculate ()
+                              src[1]._double_valuep == nullptr);  // _parse () called but not _calculate ()
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("src[1]._double_value",
                                     (double) 0,
@@ -511,19 +511,19 @@ namespace format
     {
       json parent;
 
-      number *n = new number ((long) 100);
-      *n = (long) 101;
+      number *n = new number ((number::integer_t) 100);
+      *n = (long long) 101;
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("(long) number::get ()",
-                                    (long) 101,
-                                    (long) n->get ());
+                                    (long long) 101,
+                                    (long long) n->get ());
 
-      (parent[L"0"] = n)[L"0"] = (long) 102;
+      (parent[L"0"] = n)[L"0"] = (long long) 102;
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("(long) number::get ()",
-                                    (long) 102,
+                                    (long long) 102,
                                     //(long) static_cast<number &> (parent[L"0"]).get ()
-                                    (long) n->get ());  // TODO: test n
+                                    (long long) n->get ());  // TODO: test n
 
       CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",
                               //parent[L"0"].get ()
@@ -535,17 +535,17 @@ namespace format
     {
       json parent;
 
-      number *n = new number (100.0);
-      *n = 101.1;
+      number *n = new number ((double)100.0);
+      *n = (double) 101.1;
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("(double) number::get ()",
-                                    101.1,
+                                    (double) 101.1,
                                     n->get ());
 
-      (parent[L"0"] = n)[L"0"] = 102.2;
+      (parent[L"0"] = n)[L"0"] = (double) 102.2;
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("(double) number::get ()",
-                                    102.2,
+                                    (double) 102.2,
                                     //static_cast<number &> (parent[L"0"]).get ()
                                     n->get ());
 

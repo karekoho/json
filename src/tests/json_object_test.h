@@ -566,7 +566,7 @@ namespace format
     test_operator_assign_initializer_list ()
     {
       object o (L"{\"0\":0,\"1\":1}");
-      o = { { L"3", new number (static_cast<long> (3)) } };
+      o = { { L"3", new number (static_cast<long long> (3)) } };
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("o.length ()",
                                     static_cast<size_t> (1),

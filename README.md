@@ -60,7 +60,7 @@ json::value & val = j[L"Image"];
   // Possible values are: const wchar_t *, long, bool
   const wchar_t * title = val[L"Title"].as<const wchar_t *> ();
 
-  long width = val[L"Title"].as<long> ();
+  unsigned int width = val[L"Title"].as<unsigned int> ();
 
   bool animated = val[L"Animated"].as<bool> ();
 
@@ -112,13 +112,13 @@ json::json j = new json::object {
               { L"Title", new json::string (L"View from 15th Floor") },
               { L"Thumbnail", new json::object {
                   { L"Url",new json::string (L"http://www.example.com/image/481989943") },
-                  { L"Height",new json::number (static_cast<long>(125) ) },
-                  { L"Width", new json::number (static_cast<long> (100)) },
+                  { L"Height",new json::number (static_cast<long long>(125) ) },
+                  { L"Width", new json::number (static_cast<long long> (100)) },
                 }
               },
               { L"Animated", new json::boolean (false) },
-              { L"IDs", new json::array { new json::number (static_cast<long> (116)), new json::number (static_cast<long> (943)),
-                new json::number (static_cast<long> (234)), new json::number (static_cast<long> (38793)) } }
+              { L"IDs", new json::array { new json::number (static_cast<long long> (116)), new json::number (static_cast<long long> (943)),
+                new json::number (static_cast<long long> (234)), new json::number (static_cast<long long> (38793)) } }
             }
           }
         };
@@ -126,7 +126,7 @@ json::json j = new json::object {
 json::array & ids = static_cast<json::array &> (j[L"Image"][L"IDs"]);
 
 // Modify value
-ids[static_cast<size_t> (1)] = static_cast<long> (100);
+ids[static_cast<size_t> (1)] = static_cast<long long> (100);
 
 // Assigning format::undefined removes the value
 ids[static_cast<size_t> (3)] = json::undefined ();

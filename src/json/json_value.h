@@ -152,7 +152,7 @@ namespace format
        * @return
        */
       virtual value &
-      operator =(long l);
+      operator =(long long l);
 
       /**
        * @brief operator =
