@@ -60,7 +60,7 @@ json::value & val = j[L"Image"];
   // Possible values are: const wchar_t *, long, bool
   const wchar_t * title = val[L"Title"].as<const wchar_t *> ();
 
-  unsigned int width = val[L"Title"].as<unsigned int> ();
+  unsigned int width = val[L"Width"].as<unsigned int> ();
 
   bool animated = val[L"Animated"].as<bool> ();
 
