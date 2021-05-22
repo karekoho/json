@@ -181,11 +181,27 @@ namespace format
 
       /**
        * @brief _at
+       * @param key
+       * @return
+       */
+      virtual const value &
+      _at (const wchar_t *key) const override;
+
+      /**
+       * @brief _at
        * @param index
        * @return
        */
       virtual value &
       _at (size_t index) override;
+
+      /**
+       * @brief _at
+       * @param index
+       * @return
+       */
+      virtual const value &
+      _at (size_t index) const override;
 
       /**
        * @brief _assign

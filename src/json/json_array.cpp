@@ -100,7 +100,7 @@ format::json::array::_at (size_t index)
     {
       return *_element_list.at (index);
     }
-  catch (std::out_of_range &)
+  catch (const std::out_of_range &)
     {
       value *v = new unique_undefined (this);
 
@@ -109,6 +109,19 @@ format::json::array::_at (size_t index)
 
       return *v;
   }
+}
+
+const format::json::value &
+format::json::array::_at (size_t index) const
+{
+  try
+    {
+      return *_element_list.at (index);
+    }
+  catch (const std::out_of_range &e)
+    {
+      throw json_out_of_range (e.what ());
+    }
 }
 
 format::json::value &

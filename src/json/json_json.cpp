@@ -112,6 +112,15 @@ format::json::json::_at (const wchar_t *key)
   return (*__root)[key];
 }
 
+const format::json::value &
+format::json::json::_at(const wchar_t *key) const
+{
+  if (__hasRoot ())
+    return (*__root)[key];
+
+  throw  json_out_of_range ("key not found");
+}
+
 format::json::value &
 format::json::json::_at (size_t index)
 {
@@ -119,6 +128,15 @@ format::json::json::_at (size_t index)
     __root = new array ();
 
   return (*__root)[index];
+}
+
+const format::json::value &
+format::json::json::_at (size_t index) const
+{
+  if (__hasRoot ())
+    return (*__root)[index];
+
+  throw  json_out_of_range ("index not found");
 }
 
 format::json::value &

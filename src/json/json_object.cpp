@@ -124,7 +124,7 @@ format::json::object::_at (const wchar_t *key)
     {
       return *(_member_list.at (key));
     }
-  catch (std::out_of_range &)
+  catch (const std::out_of_range &)
     {
       value *v = new unique_undefined (this);
 
@@ -133,6 +133,19 @@ format::json::object::_at (const wchar_t *key)
 
       return *v;
   }
+}
+
+const format::json::value &
+format::json::object::_at (const wchar_t *key) const
+{
+  try
+    {
+      return *(_member_list.at (key));
+    }
+  catch (const std::out_of_range & e)
+    {
+      throw json_out_of_range (e.what ());
+    }
 }
 
 format::json::value &

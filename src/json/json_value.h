@@ -105,11 +105,29 @@ namespace format
 
       /**
        * @brief operator []
+       * @param key
+       * @return
+       */
+      const inline value &
+      operator [](const wchar_t *key) const
+      { return _at (key); }
+
+      /**
+       * @brief operator []
        * @param index
        * @return
        */
       inline value &
       operator [](size_t index)
+      { return _at (index); }
+
+      /**
+       * @brief operator []
+       * @param index
+       * @return
+       */
+      inline const value &
+      operator [](size_t index) const
       { return _at (index); }
 
       /**
@@ -648,6 +666,9 @@ namespace format
       virtual value &
       _at (const wchar_t *key)  = 0;
 
+      const virtual value &
+      _at (const wchar_t *key) const  = 0;
+
       /**
        * @brief _at
        * @param index
@@ -655,6 +676,9 @@ namespace format
        */
       virtual value &
       _at (size_t index) = 0;
+
+      virtual const value &
+      _at (size_t index) const = 0;
 
       /**
        * @brief _clear

@@ -243,9 +243,24 @@ namespace format
 
       /**
        * @brief _at
+       * @param key
+       * @return
+       */
+      virtual const value &
+      _at (const wchar_t *key) const override;
+
+      /**
+       * @brief _at
        * @return
        */
       virtual value & _at (size_t) override
+      { return *(new format::json::undefined ()); }
+
+      /**
+       * @brief _at
+       * @return
+       */
+      virtual const value & _at (size_t) const override
       { return *(new format::json::undefined ()); }
 
       /**

@@ -73,6 +73,14 @@ namespace format
       _at (size_t) override
       { return *(new format::json::undefined ()); }
 
+      virtual  const value &
+      _at (const wchar_t *) const override
+      { return *(new format::json::undefined ()); }
+
+      virtual  const value &
+      _at (size_t) const override
+      { return *(new format::json::undefined ()); }
+
       virtual void _clear () override
       {}
 
