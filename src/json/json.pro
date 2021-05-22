@@ -46,4 +46,5 @@ DESTDIR = ../../build/debug
 
 DISTFILES += \
     ../../README.md \
-    ../../CMakeLists.txt
+    ../../CMakeLists.txt \
+    ../../doc/roadmap.txt
