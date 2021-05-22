@@ -25,12 +25,19 @@ public:
     virtual void test_operator_at_key () = 0;
 
     /**
+     * @brief test_const_operator_at_key
+     */
+    virtual void test_const_operator_at_key () = 0;
+
+    /**
      * @brief test_operator_at_index
      *
      * value & operator[] (size_t index)
      * virtual value & _at (size_t index) = 0
      */
     virtual void test_operator_at_index () = 0;
+
+    virtual void test_const_operator_at_index () = 0;
 
     /**
      * @brief test_assign_all_values

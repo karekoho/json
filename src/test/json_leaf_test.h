@@ -89,10 +89,30 @@ namespace format
     }
 
     virtual void
+    test_const_operator_at_key () final override
+    {
+      const number n;
+      const value & v = n[L""];
+
+      CPPUNIT_ASSERT_MESSAGE("leaf [const wchar_t *]",
+                              v.type () == value::number_t);
+    }
+
+    virtual void
     test_operator_at_index () final override
     {
       CPPUNIT_ASSERT_MESSAGE("leaf [size_t]",
                              number ()[static_cast<size_t> (0)].type () == value::number_t);
+    }
+
+    virtual void
+    test_const_operator_at_index () final override
+    {
+      const number n;
+      const value & v = n[static_cast<size_t> (0)];
+
+      CPPUNIT_ASSERT_MESSAGE("leaf [size_t]",
+                              v.type () == value::number_t);
     }
 
     virtual void
@@ -128,7 +148,9 @@ namespace format
       /* 3. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test__assign_value_ptr_value_ptr", &json_leaf_test::test__assign_value_ptr_value_ptr));
       /* 4. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test__clone_const_value_ref", &json_leaf_test::test__clone_const_value_ref));
       /* 5. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_operator_at_key", &json_leaf_test::test_operator_at_key));
-      /* 6. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_operator_at_index", &json_leaf_test::test_operator_at_index));
+      /* 6. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_const_operator_at_key", &json_leaf_test::test_const_operator_at_key));
+      /* 7. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_operator_at_index", &json_leaf_test::test_operator_at_index));
+      /* 8. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_const_operator_at_index", &json_leaf_test::test_const_operator_at_index));
 
       return s;
     }

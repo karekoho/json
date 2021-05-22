@@ -146,29 +146,29 @@ namespace format
     void
     test_debug ()
     {
-      json j = L"[\
+      array a = L"[\
            { \"op\": \"test\", \"path\": \"/a/b/c\", \"value\": \"foo\" },\
            { \"op\": \"remove\", \"path\": \"/a/b/c\" },\
            { \"op\": \"add\", \"path\": \"/a/b/c\", \"value\": [ \"foo\", \"bar\" ] },\
            { \"op\": \"replace\", \"path\": \"/a/b/c\", \"value\": 42 },\
            { \"op\": \"move\", \"from\": \"/a/b/c\", \"path\": \"/a/b/d\" },\
            { \"op\": \"copy\", \"from\": \"/a/b/d\", \"path\": \"/a/b/e\" }\
+           { \"pop\": \"copy\", \"from\": \"/a/b/d\", \"path\": \"/a/b/e\" }\
          ]";
-
-      array & a = static_cast<array &> (j); // --> std::bad_cast
-
-      value & v = a[(size_t) 0];
-      json::value_t type = v.type ();
-      json::value & op = v[L"op"];
 
       std::for_each ( a.begin (),
                       a.end (),
-                      [] (value & v)
+                      [] (const value & v)
         {
-          // json::value_t type = v.type ();
-          json::value & op = v[L"op"];
-          const wchar_t *str_op = op.as<const wchar_t *> ();
-          //std::wcout << type << ": " << str_op << std::endl;
+          try
+            {
+              const json::value & op = v[L"op"];
+              const wchar_t *str_op = op.as<const wchar_t *> ();
+              std::wcout << op.type () << ": " << str_op << std::endl;
+
+            } catch (const json_error & e) {
+              std::cerr << e.what () << std::endl;
+            }
         });
     }
 

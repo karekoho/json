@@ -415,6 +415,12 @@ namespace format
     }
 
     virtual void
+    test_const_operator_at_key () override
+    {
+      CPPUNIT_ASSERT_ASSERTION_FAIL ();
+    }
+
+    virtual void
     test_operator_at_index () override
     {
       CPPUNIT_ASSERT_EQUAL_MESSAGE (  "json[index]::type ()",
@@ -424,6 +430,12 @@ namespace format
       CPPUNIT_ASSERT_EQUAL_MESSAGE (  "json[index]::type ()",
                                       value::boolean_t,
                                       json (L"[true]")[static_cast<size_t> (0)].type ());
+    }
+
+    virtual void
+    test_const_operator_at_index () override
+    {
+      CPPUNIT_ASSERT_ASSERTION_FAIL ();
     }
 
     virtual void

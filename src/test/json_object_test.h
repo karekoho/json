@@ -194,6 +194,35 @@ namespace format
 
       TEST_IT_START
 
+        value & v = o[((*it).key)];
+
+        ASSERT_EQUAL_IDX ("value::type ()",
+                          (*it).type,
+                          v.type ());
+
+      TEST_IT_END
+    }
+
+    virtual void
+    test_const_operator_at_key () override
+    {
+      const object o;
+
+      o._member_list.emplace (L"0", new boolean (true));
+
+      struct assert {
+        const wchar_t *key;
+        value::value_t type;
+        int assert_status;
+      };
+
+      std::vector<struct assert> test = {
+        { L"0", value::value_t::boolean_t, PASS },
+        { L"1", value::value_t::undefined_t, FAIL }
+      };
+
+      TEST_IT_START
+
         const value & v = o[((*it).key)];
 
         ASSERT_EQUAL_IDX ("value::type ()",
@@ -208,6 +237,24 @@ namespace format
     {
       object o;
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("o[size_t].type ()", value::undefined_t, o[static_cast<size_t> (0)].type ());
+    }
+
+    virtual void
+    test_const_operator_at_index () override
+    {
+      bool actual = false;
+
+      try
+        {
+          const object o;
+          const value & v = o[static_cast<size_t> (0)];
+
+        } catch (const json_out_of_range & e) {
+          std::cerr << e.what () << std::endl;
+          actual = true;
+        }
+
+      CPPUNIT_ASSERT_EQUAL (true, actual);
     }
 
     void
@@ -590,17 +637,19 @@ namespace format
       /* 3. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_key", &json_object_test::test_key));
       /* 4. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__parse", &json_object_test::test__parse));
       /* 5. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_operator_at_key", &json_object_test::test_operator_at_key));
-      /* 6. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_operator_at_index", &json_object_test::test_operator_at_index));
-      /* 7. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__pair", &json_object_test::test__pair));
-      /* 8. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__clear", &json_object_test::test__clear));
-      /* 9. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strLength", &json_object_test::test_str_length));
-      /* 10. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__to_string", &json_object_test::test__to_string));
-      /* 11. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_count", &json_object_test::test_count));
-      /* 12. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__assign_value_ptr_value_ptr", &json_object_test::test__assign_value_ptr_value_ptr));
-      /* 13. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__clone_const_value_ref", &json_object_test::test__clone_const_value_ref));
-      /* 14. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_type", &json_object_test::test_type));
-      /* 15. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_operator_assign_wchar_t_ptr", &json_object_test::test_operator_assign_wchar_t_ptr));
-      /* 16. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_operator_assign_initializer_list", &json_object_test::test_operator_assign_initializer_list));
+      /* 7. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_const_operator_at_key", &json_object_test::test_const_operator_at_key));
+      /* 8. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_operator_at_index", &json_object_test::test_operator_at_index));
+      /* 9. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_const_operator_at_index", &json_object_test::test_const_operator_at_index));
+      /* 10. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__pair", &json_object_test::test__pair));
+      /* 11. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__clear", &json_object_test::test__clear));
+      /* 12. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_strLength", &json_object_test::test_str_length));
+      /* 13. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__to_string", &json_object_test::test__to_string));
+      /* 14. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_count", &json_object_test::test_count));
+      /* 15. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__assign_value_ptr_value_ptr", &json_object_test::test__assign_value_ptr_value_ptr));
+      /* 16. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test__clone_const_value_ref", &json_object_test::test__clone_const_value_ref));
+      /* 17. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_type", &json_object_test::test_type));
+      /* 18. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_operator_assign_wchar_t_ptr", &json_object_test::test_operator_assign_wchar_t_ptr));
+      /* 19. */ s->addTest (new CppUnit::TestCaller<json_object_test> ("test_operator_assign_initializer_list", &json_object_test::test_operator_assign_initializer_list));
 
        return s;
     }

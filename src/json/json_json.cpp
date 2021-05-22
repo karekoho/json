@@ -113,12 +113,12 @@ format::json::json::_at (const wchar_t *key)
 }
 
 const format::json::value &
-format::json::json::_at(const wchar_t *key) const
+format::json::json::_at (const wchar_t *key) const
 {
   if (__hasRoot ())
     return (*__root)[key];
 
-  throw  json_out_of_range ("key not found");
+  throw json_out_of_range ("key not found");
 }
 
 format::json::value &
@@ -136,7 +136,7 @@ format::json::json::_at (size_t index) const
   if (__hasRoot ())
     return (*__root)[index];
 
-  throw  json_out_of_range ("index not found");
+  throw json_out_of_range ("index not found");
 }
 
 format::json::value &

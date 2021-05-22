@@ -261,7 +261,7 @@ namespace format
        * @return
        */
       virtual const value & _at (size_t) const override
-      { return *(new format::json::undefined ()); }
+      { throw json_out_of_range ("key not found"); }
 
       /**
        * @brief assign

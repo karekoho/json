@@ -374,7 +374,15 @@ namespace format
       }
 
       virtual void
+      test_const_operator_at_key () override
+      { CPPUNIT_ASSERT_ASSERTION_PASS (); }
+
+      virtual void
       test_operator_at_index () override
+      { CPPUNIT_ASSERT_ASSERTION_PASS (); }
+
+      virtual void
+      test_const_operator_at_index () override
       { CPPUNIT_ASSERT_ASSERTION_PASS (); }
 
       virtual void

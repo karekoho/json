@@ -222,10 +222,7 @@ namespace format
        */
       virtual value &
       _at (const wchar_t *key) override
-      {
-        wchar_t *end = nullptr;
-        return _at (std::wcstoll (key, & end, 10));
-      }
+      { return _at (__to_index (key)); }
 
       /**
        * @brief _at
@@ -234,11 +231,7 @@ namespace format
        */
       virtual const value &
       _at (const wchar_t *key) const override
-      {
-        wchar_t *end = nullptr;
-        return _at (std::wcstoll (key, & end, 10));
-      }
-
+      { return _at (__to_index (key)); }
 
      /**
       * @brief assign
@@ -306,7 +299,19 @@ namespace format
        */
       void
       _set_initializer_list (std::initializer_list<value *> il);
+
     private:
+      /**
+       * @brief __to_index
+       * @param key
+       * @return
+       */
+      static inline size_t
+      __to_index (const wchar_t * const key)
+      {
+        wchar_t *end = nullptr;
+        return static_cast<size_t>(std::wcstoll (key, & end, 10));
+      }
     }; // Class array
 
     inline array *
