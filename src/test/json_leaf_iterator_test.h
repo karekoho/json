@@ -56,7 +56,7 @@ public:
   void
   test_dereference ()
   {
-    boolean b;
+    boolean b = true;
     leaf *l = & b;
 
     leaf::iterator it[] = {
@@ -80,11 +80,14 @@ public:
 
     TEST_IT_START
 
-        value & v = **(*it).itp;
+        const value & v = **(*it).itp;  // reference
+        auto const vp = *(*it).itp; // pointer
 
         ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v.type ());
+        ASSERT_EQUAL_IDX ("v.type ()", (*it).type, vp->type ());
+        ASSERT_EQUAL_IDX("v.type ()", true, static_cast<const boolean &> (v).get ());
 
-    TEST_IT_END;
+    TEST_IT_END
   }
 
   void

@@ -79,8 +79,8 @@ namespace format
        */
       class iterator : public value::iterator<value *,
           std::input_iterator_tag,
-          value *,        // Type
-          value *,        // Distance
+          value,        // Type
+          value,        // Distance
           value *,
           value &>
       {
@@ -92,8 +92,8 @@ namespace format
         iterator (leaf *value = nullptr)
           : value::iterator<format::json::value *,
             std::input_iterator_tag,
-            format::json::value *,
-            format::json::value *,
+            format::json::value,
+            format::json::value,
             format::json::value *,
             format::json::value &>::iterator (value)
         {}
@@ -110,17 +110,26 @@ namespace format
         virtual ~iterator () = default;
 
         /**
-         * @brief operator *
+         * @brief Get reference to the value pointed by iterator
          * @return
          */
         reference
-        operator *()
+        operator *() const
         {
           if (_it == nullptr)
             throw json_out_of_range ("Iterator not derefenceable");
 
           return *_it;
         }
+
+        /**
+         * @brief Get pointer to the value pointed by iterator
+         * @return
+         */
+        pointer
+        operator ->() const noexcept
+        { return _it; }
+
       }; // Class iterator
 
       /**
