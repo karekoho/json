@@ -128,7 +128,7 @@ namespace format
          * @return
          */
         virtual const wchar_t *
-        _parse (const wchar_t *json) override
+        _parse (const wchar_t * const json) override
         { return json + (_primitive.boolean_value == true ? 4 : 5); }
 
        /**

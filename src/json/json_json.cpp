@@ -14,7 +14,7 @@ format::json::json::json ()
     __reviver (nullptr)
 {}
 
-format::json::json::json (const wchar_t *json)
+format::json::json::json (const wchar_t *const json)
   : value (json),
     _str_value { nullptr, nullptr },
     __root (nullptr),
@@ -26,7 +26,7 @@ format::json::json::json (const wchar_t *json)
   (void) _parse (json);
 }
 
-format::json::json::json (const wchar_t *json, const bool _call_parse)
+format::json::json::json (const wchar_t * const json, const bool _call_parse)
   : value (json),
     _str_value { nullptr, nullptr },
     __root (nullptr),
@@ -39,7 +39,7 @@ format::json::json::json (const wchar_t *json, const bool _call_parse)
     (void) _parse (json);
 }
 
-format::json::json::json (const wchar_t *json, reviver r)
+format::json::json::json (const wchar_t * const json, reviver r)
   : value (json),
     _str_value { nullptr, nullptr },
     __root (nullptr),
@@ -90,7 +90,7 @@ format::json::json::~json ()
 }
 
 const wchar_t *
-format::json::json::_parse (const wchar_t *readp)
+format::json::json::_parse (const wchar_t * const readp)
 {
   _readp = readp;
 
@@ -104,7 +104,7 @@ format::json::json::_parse (const wchar_t *readp)
 }
 
 format::json::value &
-format::json::json::_at (const wchar_t *const key)
+format::json::json::_at (const wchar_t * const key)
 {
   if (! __hasRoot ())
     __root = new object ();
@@ -113,7 +113,7 @@ format::json::json::_at (const wchar_t *const key)
 }
 
 const format::json::value &
-format::json::json::_at (const wchar_t *const key) const
+format::json::json::_at (const wchar_t * const key) const
 {
   if (__hasRoot ())
     return (*__root)[key];
@@ -216,7 +216,7 @@ format::json::json::_make_value ()
 }
 
 format::json::value *
-format::json::json::_call_reviver (value *v, const wchar_t *key, size_t index) const
+format::json::json::_call_reviver (value *v, const wchar_t * const key, size_t index) const
 {
   if (__reviver == nullptr)
     return v;

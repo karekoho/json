@@ -26,7 +26,7 @@ format::json::number::number (double d)
     _is_floating_point (true)
 {}
 
-format::json::number::number (const wchar_t *json)
+format::json::number::number (const wchar_t * const json)
   : leaf (json),
     _double_value (0),
     _double_valuep (nullptr),
@@ -58,7 +58,7 @@ format::json::number::number (const number &other)
 }
 
 const wchar_t *
-format::json::number::_parse (const wchar_t *json)
+format::json::number::_parse (const wchar_t * const json)
 {
   wchar_t peek = 0;
 

@@ -4,7 +4,7 @@
 
 format::json::array::array () : json () {}
 
-format::json::array::array (const wchar_t *text)
+format::json::array::array (const wchar_t * const text)
   : json (text, false)
 {
   (void) _parse (text);
@@ -32,7 +32,7 @@ format::json::array::~array ()
 }
 
 const wchar_t *
-format::json::array::_parse (const wchar_t *json)
+format::json::array::_parse (const wchar_t *const json)
 {  
   if (_parent == nullptr)   // 1. Array (), 2. Array (const char *json)
     {

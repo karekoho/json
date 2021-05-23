@@ -31,7 +31,7 @@ namespace format
        * @brief string
        * @param json
        */
-      string (const wchar_t *json);
+      string (const wchar_t * const json);
 
       /**
        * @brief String
@@ -76,7 +76,7 @@ namespace format
        * @return
        */
       virtual value &
-      operator =(const wchar_t *s) override
+      operator =(const wchar_t * const s) override
       {
         json *p = _parent;
         _parent = nullptr;
@@ -137,7 +137,7 @@ namespace format
        * @return
        */
       virtual const wchar_t *
-      _parse (const wchar_t *json) override;
+      _parse (const wchar_t * const json) override;
 
       /**
        * @brief _clear

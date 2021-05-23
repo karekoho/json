@@ -7,7 +7,7 @@ format::json::string::string ()
     _charc (0)
 {}
 
-format::json::string::string (const wchar_t *json)
+format::json::string::string (const wchar_t *const json)
   : leaf (json),
     _startp (nullptr),
     _charc (0)
@@ -33,7 +33,7 @@ format::json::string::string (const string &other)
 }
 
 const wchar_t *
-format::json::string::_parse (const wchar_t *json)
+format::json::string::_parse (const wchar_t * const json)
 {
   wchar_t endc  = 0;
   long charc    = 0;

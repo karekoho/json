@@ -21,7 +21,7 @@ namespace format
     #define OFFSET  0
     #define BEGIN  1
 
-    typedef value * (* reviver)(const wchar_t *, value *);
+    typedef value * (* reviver)(const wchar_t * const, value *);
 
     class array;
     class object;
@@ -44,7 +44,7 @@ namespace format
        * @brief json
        * @param json
        */
-      json (const wchar_t *json);
+      json (const wchar_t * const json);
 
       /**
        * @brief json
@@ -87,7 +87,7 @@ namespace format
        * @see http://stackoverflow.com/questions/1174169/function-passed-as-template-argument
        */
       static inline json *
-      parse (const wchar_t *json_text, reviver r = nullptr)
+      parse (const wchar_t * const json_text, reviver r = nullptr)
       { return new json (json_text, r); }
 
       /**
@@ -112,7 +112,7 @@ namespace format
        * @return
        */
       virtual value &
-      operator =(const wchar_t *json_text) override
+      operator =(const wchar_t * const json_text) override
       {
         delete __root;
         (void) _parse (json_text);
@@ -161,7 +161,7 @@ namespace format
        * @param json
        * @param _call_parse
        */
-      json (const wchar_t *json, const bool _call_parse);
+      json (const wchar_t * const json, const bool _call_parse);
 
       /**
        * @brief parse
@@ -169,7 +169,7 @@ namespace format
        * @return
        */
       virtual const wchar_t *
-      _parse (const wchar_t *readp) override;
+      _parse (const wchar_t * const readp) override;
 
       /**
        * @brief _at
@@ -177,7 +177,7 @@ namespace format
        * @return
        */
       virtual value &
-      _at (const wchar_t *const key) override;
+      _at (const wchar_t * const key) override;
 
       /**
        * @brief _at
@@ -185,7 +185,7 @@ namespace format
        * @return
        */
       virtual const value &
-      _at (const wchar_t *const key) const override;
+      _at (const wchar_t * const key) const override;
 
       /**
        * @brief _at
@@ -276,7 +276,7 @@ namespace format
        * @return
        */
       value *
-      _call_reviver (value *v, const wchar_t *key, size_t index = 0) const;
+      _call_reviver (value *v, const wchar_t * const key, size_t index = 0) const;
 
     private:
       /**
@@ -294,7 +294,7 @@ namespace format
        * @param json
        * @param r
        */
-      json (const wchar_t *json, reviver r);
+      json (const wchar_t * const json, reviver r);
 
       /**
        * @brief __hasRoot

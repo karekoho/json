@@ -20,7 +20,7 @@ format::json::value::value ()
       _index (0)
 {}
 
-format::json::value::value (const wchar_t *)
+format::json::value::value (const wchar_t * const)
     : _readp (nullptr),
       _parent (nullptr),
       _key (nullptr),

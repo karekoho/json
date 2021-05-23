@@ -36,7 +36,7 @@ namespace format
        * @brief array
        * @param json
        */
-      array (const wchar_t *json);
+      array (const wchar_t * const json);
 
       /**
        * @brief array
@@ -213,7 +213,7 @@ namespace format
        * @return
        */
       virtual const wchar_t *
-      _parse ( const wchar_t *json) override;
+      _parse (const wchar_t * const json) override;
 
       /**
        * @brief _at
@@ -221,7 +221,7 @@ namespace format
        * @return
        */
       virtual value &
-      _at (const wchar_t *const key) override
+      _at (const wchar_t * const key) override
       { return _at (__to_index (key)); }
 
       /**
@@ -230,7 +230,7 @@ namespace format
        * @return
        */
       virtual const value &
-      _at (const wchar_t *const key) const override
+      _at (const wchar_t * const key) const override
       { return _at (__to_index (key)); }
 
      /**

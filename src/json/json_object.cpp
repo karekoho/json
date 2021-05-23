@@ -118,7 +118,7 @@ format::json::object::_pair ()
 }
 
 format::json::value &
-format::json::object::_at (const wchar_t *const key)
+format::json::object::_at (const wchar_t * const key)
 {
   try
     {
@@ -136,7 +136,7 @@ format::json::object::_at (const wchar_t *const key)
 }
 
 const format::json::value &
-format::json::object::_at (const wchar_t *const key) const
+format::json::object::_at (const wchar_t * const key) const
 {
   try
     {

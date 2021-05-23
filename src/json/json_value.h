@@ -34,11 +34,11 @@ namespace format
     class undefined;
     class value
     {
-      friend const wchar_t * __call__parse (value *, const wchar_t *);
-      friend void __call__set_key (value *, const wchar_t *, size_t);
+      friend const wchar_t * __call__parse (value *, const wchar_t * const);
+      friend void __call__set_key (value *, const wchar_t * const, size_t);
       friend void __call__set_index (value *, const size_t &);
       friend void __call__set_parent (value *, json *);
-      friend const wchar_t * __call_str_value (value *, wchar_t *);
+      friend const wchar_t * __call_str_value (value *, wchar_t * const);
       friend value & __call__erase (value *, const value &);
       friend value & __call__assign (value *, value *, value *);
       friend size_t __call__str_length (value *);
@@ -72,7 +72,7 @@ namespace format
        * @brief json_value
        * @param json
        */
-      value (const wchar_t *);
+      value (const wchar_t * const);
 
       /**
        * @brief Value

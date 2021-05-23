@@ -167,7 +167,7 @@ namespace format
        * @brief number
        * @param json
        */
-      number (const wchar_t *json);
+      number (const wchar_t * const json);
 
       /**
        * @brief number
@@ -181,7 +181,7 @@ namespace format
        * @return
        */
       virtual const wchar_t *
-      _parse (const wchar_t *json) override;
+      _parse (const wchar_t * const json) override;
 
       /**
        * @brief _digits If >= 1 digits found, return first non-digit character.
