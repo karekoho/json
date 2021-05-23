@@ -291,16 +291,16 @@ class array_accessor : public format::json::array
    * @brief begin
    * @return
    */
-  std::vector<value *>::iterator
-  begin ()
+  std::vector<value *>::const_iterator
+  begin () const
   { return _element_list.begin (); }
 
   /**
    * @brief end
    * @return
    */
-  std::vector<value *>::iterator
-  end ()
+  std::vector<value *>::const_iterator
+  end () const
   { return _element_list.end (); }
 };  // Class array_accessor
 

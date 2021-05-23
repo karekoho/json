@@ -119,7 +119,7 @@ namespace format
      /**
       * @brief The iterator class
       */
-      class iterator : public value::iterator<element_list::iterator,
+      class iterator : public value::iterator<element_list::const_iterator,
           std::input_iterator_tag,
           value *,  // Type
           value *,  // Distance
@@ -128,10 +128,10 @@ namespace format
       {
       public:
        /**
-        * @brief iterator
+        * @brief Read-only, forward iterator. Can be incremented one step forward.
         */
         iterator ()
-          : value::iterator<element_list::iterator,
+          : value::iterator<element_list::const_iterator,
             std::input_iterator_tag,
             value *,
             value *,
@@ -140,11 +140,11 @@ namespace format
         {}
 
        /**
-        * @brief iterator
+        * @brief Read-only, forward iterator. Can be incremented one step forward.
         * @param it
         */
-        iterator (element_list::iterator it)
-          : value::iterator<element_list::iterator,
+        iterator (element_list::const_iterator it)
+          : value::iterator<element_list::const_iterator,
             std::input_iterator_tag,
             value *,
             value *,
@@ -153,11 +153,11 @@ namespace format
         {}
 
        /**
-        * @brief iterator
+        * @brief Read-only, forward iterator. Can be incremented one step forward.
         * @param other
         */
         iterator (const iterator & other)
-          : value::iterator<element_list::iterator,
+          : value::iterator<element_list::const_iterator,
             std::input_iterator_tag,
             value *,
             value *,
@@ -166,34 +166,34 @@ namespace format
         {}
 
        /**
-        * @brief ~Iterator
+        * @brief Default destructor
         */
         virtual ~iterator () = default;
 
        /**
-        * @brief operator *
+        * @brief Get reference to json::value
         * @return
         */
         reference
-        operator *()
+        operator *() const noexcept
         { return **_it; }
       }; // Class iterator
 
       /**
-       * @brief begin
+       * @brief Get iterator to begin
        * @return
        */
       iterator
-      begin ()
-      { return iterator (_element_list.begin ()); }
+      begin () const noexcept
+      { return iterator (_element_list.cbegin ()); }
 
       /**
-       * @brief end
+       * @brief Get iterator to end
        * @return
        */
       iterator
-      end ()
-      { return iterator (_element_list.end ()); }
+      end () const noexcept
+      { return iterator (_element_list.cend ()); }
 
     protected:
      /**

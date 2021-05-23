@@ -332,7 +332,7 @@ namespace format
       { return _parent; }
 
       /**
-       * @brief The iterator class
+       * @brief Base class for iterators
        */
       template <class Iterator,
                 class Category,
@@ -344,36 +344,37 @@ namespace format
       {
       public:
         /**
-         * @brief iterator
+         * @brief Default constructor
          */
         iterator ()
         {}
 
         /**
-         * @brief iterator
-         */
+        * @brief Point constructor
+        * @param Set to iterator to start at the element pointed by parameter it
+        */
         iterator (Iterator it)
           : _it (it)
         {}
 
         /**
-         * @brief iterator
-         * @param other
+         * @brief Copy constructor
+         * @param Iterator to copy
          */
         iterator (const iterator & other)
           : _it (other._it)
         {}
 
         /**
-         * @brief ~iterator
+         * @brief Destructor
          */
         virtual ~iterator () = default;
 
         /**
-         * @brief operator ++
-         * @return
+         * @brief Pre increment
+         * @return iterator
          */
-        iterator &
+        const iterator &
         operator ++()
         {
           ++_it;
@@ -381,8 +382,8 @@ namespace format
         }
 
         /**
-         * @brief operator ++
-         * @return
+         * @brief Post increment
+         * @return iterator
          */
         iterator
         operator ++(int)
@@ -393,26 +394,26 @@ namespace format
         }
 
         /**
-         * @brief operator ==
-         * @param rhs
-         * @return
+         * @brief Is equal
+         * @param Iterator to compare
+         * @return iterator
          */
          inline bool
-         operator ==(const iterator &rhs)
+         operator ==(const iterator &rhs) const noexcept
          { return _it == rhs._it; }
 
         /**
-         * @brief operator !=
-         * @param rhs
-         * @return
+         * @brief Is not equal
+         * @param Iterator to compare
+         * @return iterator
          */
          inline bool
-         operator !=(const iterator &rhs)
+         operator !=(const iterator &rhs) const noexcept
          { return ! operator ==(rhs); }
 
       protected:
          /**
-          * @brief _it
+          * @brief Iterator
           */
          Iterator _it;
       };  // Class iterator
