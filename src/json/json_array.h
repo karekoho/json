@@ -121,8 +121,8 @@ namespace format
       */
       class const_iterator : public value::iterator<element_list::const_iterator,
           std::input_iterator_tag,
-          value *,  // Type
-          value *,  // Distance
+          value,  // Type
+          value,  // Distance
           value *,
           value &>
       {
@@ -133,8 +133,8 @@ namespace format
         const_iterator ()
           : value::iterator<element_list::const_iterator,
             std::input_iterator_tag,
-            value *,
-            value *,
+            value,
+            value,
             value *,
             value &>::iterator ()
         {}
@@ -146,8 +146,8 @@ namespace format
         const_iterator (element_list::const_iterator it)
           : value::iterator<element_list::const_iterator,
             std::input_iterator_tag,
-            value *,
-            value *,
+            value,
+            value,
             value *,
             value &>::iterator (it)
         {}
@@ -159,8 +159,8 @@ namespace format
         const_iterator (const iterator & other)
           : value::iterator<element_list::const_iterator,
             std::input_iterator_tag,
-            value *,
-            value *,
+            value,
+            value,
             value *,
             value &>::iterator (other)
         {}
