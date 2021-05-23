@@ -206,9 +206,7 @@ namespace format
     virtual void
     test_const_operator_at_key () override
     {
-      const object o;
-
-      o._member_list.emplace (L"0", new boolean (true));
+      const object o = L"{ \"0\": true }";
 
       struct assert {
         const wchar_t *key;

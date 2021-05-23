@@ -120,9 +120,9 @@ namespace format
       }
 
       /**
-       * @brief The iterator class
+       * @brief Read-only, forward iterator. Can be incremented one step forward.
        */
-      class iterator : public value::iterator<member_list::iterator,
+      class iterator : public value::iterator<member_list::const_iterator,
           std::input_iterator_tag,
           std::pair<std::string, value *>,  // Type
           std::pair<std::string, value *>,  // Distance
@@ -131,10 +131,10 @@ namespace format
       {
       public:
         /**
-         * @brief iterator
+         * @brief Default constructor
          */
         iterator ()
-          : value::iterator<member_list::iterator,
+          : value::iterator<member_list::const_iterator,
             std::input_iterator_tag,
             std::pair<std::string, value *>,
             std::pair<std::string, value *>,
@@ -143,11 +143,11 @@ namespace format
         {}
 
         /**
-         * @brief iterator
+         * @brief Point constructor
          * @param it
          */
-        iterator (member_list::iterator it)
-          : value::iterator<member_list::iterator,
+        iterator (member_list::const_iterator it)
+          : value::iterator<member_list::const_iterator,
             std::input_iterator_tag,
             std::pair<std::string, value *>,
             std::pair<std::string, value *>,
@@ -156,11 +156,11 @@ namespace format
         {}
 
         /**
-         * @brief iterator
+         * @brief Copy constructor
          * @param other
          */
         iterator (const iterator & other)
-          : value::iterator<member_list::iterator,
+          : value::iterator<member_list::const_iterator,
             std::input_iterator_tag,
             std::pair<std::string, value *>,
             std::pair<std::string, value *>,
@@ -169,41 +169,41 @@ namespace format
         {}
 
         /**
-         * @brief ~iterator
+         * @brief Destructor
          */
         virtual ~iterator () = default;
 
         /**
-         * @brief operator *
+         * @brief Get reference to the element pointer by iterator
          * @return
          */
         reference
-        operator *()
+        operator *() const noexcept
         { return *(*_it).second; }
       }; // Class iterator
 
       /**
-       * @brief begin
+       * @brief Get iterator to begin
        * @return
        */
       iterator
-      begin ()
-      { return iterator (_member_list.begin ()); }
+      begin () const noexcept
+      { return iterator (_member_list.cbegin ()); }
 
       /**
-       * @brief end
+       * @brief Get iterator to end
        * @return
        */
       iterator
-      end ()
-      { return iterator (_member_list.end ()); }
+      end () const  noexcept
+      { return iterator (_member_list.cend ()); }
 
     protected:
 
       /**
        * @brief _member_list
        */
-      mutable member_list _member_list;
+      member_list _member_list;
 
       /**
        * @brief object
