@@ -58,12 +58,12 @@ public:
   {
     object::member_list list = { { L"1", new boolean } };
 
-    object::iterator *it[] = {
-      new object::iterator (),
-      new object::iterator (list.begin ()),
+    object::const_iterator *it[] = {
+      new object::const_iterator (),
+      new object::const_iterator (list.begin ()),
     };
 
-    object::iterator copy = object::iterator (*it[1]);
+    object::const_iterator copy = object::const_iterator (*it[1]);
 
     CPPUNIT_ASSERT_MESSAGE ("v.type ()", & copy != it[1]);
 
@@ -78,11 +78,11 @@ public:
   {
     object o = { { L"1", new boolean } };
 
-    object::iterator it = o.begin ();
-    object::iterator copy = object::iterator (it);
+    object::const_iterator it = o.begin ();
+    object::const_iterator copy = object::const_iterator (it);
 
     struct assert {
-      object::iterator *itp;
+      object::const_iterator *itp;
       value::value_t type;
       int assert_status;
     };
@@ -106,8 +106,8 @@ public:
   {
     object o = { { L"1", new boolean }, { L"2", new boolean } };
 
-    object::iterator begin = o.begin ();
-    object::iterator end = o.end ();
+    object::const_iterator begin = o.begin ();
+    object::const_iterator end = o.end ();
 
     size_t count = 0;
 
@@ -122,8 +122,8 @@ public:
   {
     object o = { { L"1", new boolean } };
 
-    object::iterator begin = o.begin ();
-    object::iterator current = begin;
+    object::const_iterator begin = o.begin ();
+    object::const_iterator current = begin;
 
     CPPUNIT_ASSERT_MESSAGE ("current++ == begin", current++ == begin);
     CPPUNIT_ASSERT_MESSAGE ("current != begin", current != begin);
@@ -134,8 +134,8 @@ public:
   {
     object o = L"{\"1\":true,\"2\":false}";
 
-    object::iterator begin (o.begin ());
-    object::iterator end (o.end ());
+    object::const_iterator begin (o.begin ());
+    object::const_iterator end (o.end ());
 
     CPPUNIT_ASSERT_MESSAGE ("Object::begin ()", begin == o.begin ());
     CPPUNIT_ASSERT_MESSAGE ("Object::end ()", end == o.end ());

@@ -122,7 +122,7 @@ namespace format
       /**
        * @brief Read-only, forward iterator. Can be incremented one step forward.
        */
-      class iterator : public value::iterator<member_list::const_iterator,
+      class const_iterator : public value::iterator<member_list::const_iterator,
           std::input_iterator_tag,
           std::pair<std::string, value *>,  // Type
           std::pair<std::string, value *>,  // Distance
@@ -133,7 +133,7 @@ namespace format
         /**
          * @brief Default constructor
          */
-        iterator ()
+        const_iterator ()
           : value::iterator<member_list::const_iterator,
             std::input_iterator_tag,
             std::pair<std::string, value *>,
@@ -146,7 +146,7 @@ namespace format
          * @brief Point constructor
          * @param it
          */
-        iterator (member_list::const_iterator it)
+        const_iterator (member_list::const_iterator it)
           : value::iterator<member_list::const_iterator,
             std::input_iterator_tag,
             std::pair<std::string, value *>,
@@ -159,7 +159,7 @@ namespace format
          * @brief Copy constructor
          * @param other
          */
-        iterator (const iterator & other)
+        const_iterator (const iterator & other)
           : value::iterator<member_list::const_iterator,
             std::input_iterator_tag,
             std::pair<std::string, value *>,
@@ -171,7 +171,7 @@ namespace format
         /**
          * @brief Destructor
          */
-        virtual ~iterator () = default;
+        virtual ~const_iterator () = default;
 
         /**
          * @brief Get reference to the element pointer by iterator
@@ -186,17 +186,17 @@ namespace format
        * @brief Get iterator to begin
        * @return
        */
-      iterator
+      const_iterator
       begin () const noexcept
-      { return iterator (_member_list.cbegin ()); }
+      { return const_iterator (_member_list.cbegin ()); }
 
       /**
        * @brief Get iterator to end
        * @return
        */
-      iterator
+      const_iterator
       end () const  noexcept
-      { return iterator (_member_list.cend ()); }
+      { return const_iterator (_member_list.cend ()); }
 
     protected:
 

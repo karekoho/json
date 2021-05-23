@@ -117,9 +117,9 @@ namespace format
       operator =(const array & a);
 
      /**
-      * @brief The iterator class
+      * @brief Read-only, forward iterator. Can be incremented one step forward.
       */
-      class iterator : public value::iterator<element_list::const_iterator,
+      class const_iterator : public value::iterator<element_list::const_iterator,
           std::input_iterator_tag,
           value *,  // Type
           value *,  // Distance
@@ -128,9 +128,9 @@ namespace format
       {
       public:
        /**
-        * @brief Read-only, forward iterator. Can be incremented one step forward.
+        * @brief Default constructor
         */
-        iterator ()
+        const_iterator ()
           : value::iterator<element_list::const_iterator,
             std::input_iterator_tag,
             value *,
@@ -140,10 +140,10 @@ namespace format
         {}
 
        /**
-        * @brief Read-only, forward iterator. Can be incremented one step forward.
+        * @brief Point constructor
         * @param it
         */
-        iterator (element_list::const_iterator it)
+        const_iterator (element_list::const_iterator it)
           : value::iterator<element_list::const_iterator,
             std::input_iterator_tag,
             value *,
@@ -153,10 +153,10 @@ namespace format
         {}
 
        /**
-        * @brief Read-only, forward iterator. Can be incremented one step forward.
+        * @brief Copy constructor
         * @param other
         */
-        iterator (const iterator & other)
+        const_iterator (const iterator & other)
           : value::iterator<element_list::const_iterator,
             std::input_iterator_tag,
             value *,
@@ -166,12 +166,12 @@ namespace format
         {}
 
        /**
-        * @brief Default destructor
+        * @brief Destructor
         */
-        virtual ~iterator () = default;
+        virtual ~const_iterator () = default;
 
        /**
-        * @brief Get reference to json::value
+        * @brief Get reference to the element pointer by iterator
         * @return
         */
         reference
@@ -183,17 +183,17 @@ namespace format
        * @brief Get iterator to begin
        * @return
        */
-      iterator
+      const_iterator
       begin () const noexcept
-      { return iterator (_element_list.cbegin ()); }
+      { return const_iterator (_element_list.cbegin ()); }
 
       /**
        * @brief Get iterator to end
        * @return
        */
-      iterator
+      const_iterator
       end () const noexcept
-      { return iterator (_element_list.cend ()); }
+      { return const_iterator (_element_list.cend ()); }
 
     protected:
      /**

@@ -61,12 +61,12 @@ namespace format
     {
       array::element_list list = { new boolean };
 
-      array::iterator *it[] = {
-        new array::iterator (),
-        new array::iterator (list.begin ()),
+      array::const_iterator *it[] = {
+        new array::const_iterator (),
+        new array::const_iterator (list.begin ()),
       };
 
-      array::iterator copy = array::iterator (*it[1]);
+      array::const_iterator copy = array::const_iterator (*it[1]);
 
       CPPUNIT_ASSERT_MESSAGE ("& copy != it[1]", & copy != it[1]);
 
@@ -81,11 +81,11 @@ namespace format
     {
       array a = { new boolean };
 
-      array::iterator it = a.begin ();
-      array::iterator copy = array::iterator (it);
+      array::const_iterator it = a.begin ();
+      array::const_iterator copy = array::const_iterator (it);
 
       struct assert {
-        array::iterator *itp;
+        array::const_iterator *itp;
         value::value_t type;
         int assert_status;
       };
@@ -109,8 +109,8 @@ namespace format
     {
       array a = { new boolean, new boolean };
 
-      array::iterator begin = a.begin ();
-      array::iterator end = a.end ();
+      array::const_iterator begin = a.begin ();
+      array::const_iterator end = a.end ();
 
       size_t count = 0;
 
@@ -124,8 +124,8 @@ namespace format
     test_post_increment ()
     {
       array a = { new boolean };
-      array::iterator begin = a.begin ();
-      array::iterator current = begin;
+      array::const_iterator begin = a.begin ();
+      array::const_iterator current = begin;
 
       CPPUNIT_ASSERT_MESSAGE ("current++ == begin", current++ == begin);
       CPPUNIT_ASSERT_MESSAGE ("current != begin", current != begin);
@@ -136,8 +136,8 @@ namespace format
     {
       array_accessor a = L"[0,1]";
 
-      array::iterator begin (a.begin ());
-      array::iterator end (a.end ());
+      array::const_iterator begin (a.begin ());
+      array::const_iterator end (a.end ());
 
       CPPUNIT_ASSERT_MESSAGE ("array::begin ()", begin == a.begin ());
       CPPUNIT_ASSERT_MESSAGE ("array::end ()", end == a.end ());
