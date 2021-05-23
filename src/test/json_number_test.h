@@ -46,11 +46,26 @@ namespace format
 
       // double d[] = { copy[0].value (), copy[1].value () };
 
+      // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
+      double delta = std::numeric_limits<double>::epsilon ();
+
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("number::type ()", json::number_t, src[0].type ());
       CPPUNIT_ASSERT_MESSAGE ("number", & copy[0] != & src[0]);
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("src[1]._double_value", (double) 0, src[1]._double_value);
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[0].value ()", (double) 10, copy[0].get ());
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[1].value ()", (double) 100, copy[1].get ());
+      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("src[1]._double_value", (double) 0, src[1]._double_value, delta);
+      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("copy[0].value ()", (double) 10, copy[0].get (), delta);
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[0].value ()", (long long) 10, (long long) copy[0].get ());
+      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("copy[1].value ()", (double) 100, copy[1].get (), delta);
+
+      // TODO: what is the correct place for these?
+      json j = new object { { L"0", new number (10.101) },
+                            { L"1", new number ((long long) 10) }
+                          };
+
+      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("as double",
+                                            (double) 10.101, j[L"0"].as<double> (), delta);
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("as int",
+                                    (int) 10, j[L"1"].as<int> ());
     }
 
     virtual void
@@ -474,7 +489,7 @@ namespace format
     test__clone_const_value_ref () override
     {
       number src[] = {
-        number ((double) 100.1),
+        number (100.1),
         number (L"100.1")
       };
 
@@ -484,7 +499,7 @@ namespace format
       };
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[0].get ()",
-                                    (double) 100.1,
+                                    100.1,
                                     copy[0].get ()); // _double_value && _double_valuep are set
 
       CPPUNIT_ASSERT_MESSAGE ("copy[]._is_double",
@@ -492,7 +507,7 @@ namespace format
                               && copy[0]._is_floating_point == copy[1]._is_floating_point);
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("(long) copy[1].get ()",
-                                    (double) 100.1,
+                                    100.1,
                                     copy[1].get ());
 
       CPPUNIT_ASSERT_MESSAGE ("src[1]._double_value",
@@ -504,14 +519,28 @@ namespace format
 
       CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",
                               copy[1].stringify () == std::wstring (L"100.100000"));
+
+      // TODO: what is the correct place for these?
+      json j = new object { { L"0", new number (src[0]) },  // copy
+                            { L"1", new number (src[1]) },  // copy
+                          };
+
+      // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
+      double delta = std::numeric_limits<double>::epsilon ();
+
+      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("as double",
+                                            (double) 100.1, j[L"0"].as<double> (), delta);
+
+      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("as double",
+                                            (double) 100.1, j[L"1"].as<double> (), delta);
     }
 
     void
-    test_operator_assign_long ()  // TODO: rename test_operator_assign_long
+    test_operator_assign_long ()
     {
       json parent;
 
-      number *n = new number ((number::integer_t) 100);
+      number *n = new number ((long long) 100);
       *n = (long long) 101;
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("(long) number::get ()",
@@ -528,6 +557,17 @@ namespace format
       CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",
                               //parent[L"0"].get ()
                               n->stringify () == std::wstring (L"102"));
+
+      number *m = new number ((long long) 100);
+      *m = (long long) 103;
+
+      json j = new object { { L"0", m } };
+
+      // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
+      // double delta = std::numeric_limits<double>::epsilon ();
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("as int",
+                                            (int) 103, j[L"0"].as<int> ());
     }
 
     void
@@ -535,11 +575,11 @@ namespace format
     {
       json parent;
 
-      number *n = new number ((double)100.0);
+      number *n = new number ((double) 100.1);
       *n = (double) 101.1;
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("(double) number::get ()",
-                                    (double) 101.1,
+                                    101.1,
                                     n->get ());
 
       (parent[L"0"] = n)[L"0"] = (double) 102.2;
@@ -552,6 +592,18 @@ namespace format
       CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",
                               //parent[L"0"].get () == std::wstring (L"102.200000")
                               n->stringify () == std::wstring (L"102.200000"));
+
+      number *m = new number ((double) 100.0);
+      *m = (double) 103.1;
+
+      json j = new object { { L"0", m } };
+
+      // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
+      double delta = std::numeric_limits<double>::epsilon ();
+
+      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("as double",
+                                            (double) 103.1, j[L"0"].as<double> (), delta);
+
     }
 
     /**

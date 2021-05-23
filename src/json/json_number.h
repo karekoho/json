@@ -27,16 +27,6 @@ namespace format
     {
       friend number * __call_number (json *parent);
 
-      /**
-       * @brief integer_t
-       */
-      typedef long long integer_t ;
-
-      /**
-       * @brief float_t
-       */
-      typedef double float_t ;
-
     #ifdef UNIT_TEST
       friend class json_number_test;
     #endif
@@ -107,6 +97,7 @@ namespace format
       {
         _double_value   = d;
         _double_valuep  = & _double_value;
+        _primitive.double_value = d;
         _is_floating_point = true;
         return __clear_strp ();
       }
@@ -121,6 +112,7 @@ namespace format
       {
         _double_value   = l; // FIXME: store integer type in long long
         _double_valuep  = & _double_value;
+        _primitive.double_value = l;
         _is_floating_point = false;
         return __clear_strp ();
       }

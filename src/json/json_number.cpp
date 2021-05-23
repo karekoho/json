@@ -8,7 +8,9 @@ format::json::number::number ()
     _double_valuep (& _double_value),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (false)
-{}
+{
+  _primitive.double_value = 0;
+}
 
 format::json::number::number (long long l)
   : leaf (),
@@ -16,7 +18,9 @@ format::json::number::number (long long l)
     _double_valuep (& _double_value),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (false)
-{}
+{
+  _primitive.double_value = l;
+}
 
 format::json::number::number (double d)
   : leaf (),
@@ -24,7 +28,9 @@ format::json::number::number (double d)
     _double_valuep (& _double_value),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (true)
-{}
+{
+  _primitive.double_value = d;
+}
 
 format::json::number::number (const wchar_t * const json)
   : leaf (json),
@@ -45,7 +51,9 @@ format::json::number::number (json *parent)
     _double_valuep (nullptr),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
    _is_floating_point (false)
-{}
+{
+  _primitive.double_value = 0;
+}
 
 format::json::number::number (const number &other)
  : leaf (other),
@@ -181,6 +189,7 @@ format::json::number::_clear ()
 {
   _double_value   = 0;
   _double_valuep  = nullptr;
+  _primitive.double_value = 0;
   (void) __clear_strp ();
 }
 
@@ -190,6 +199,7 @@ format::json::number::_clone (const value &other)
   const number & nv = dynamic_cast<const number &> (other);
 
   _is_floating_point = nv._is_floating_point;
+  _primitive.double_value = nv._primitive.double_value;
 
   if (nv._double_valuep)  // nv._calculate () is called or number is assigned with long|double
     {
