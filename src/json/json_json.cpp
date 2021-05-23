@@ -104,7 +104,7 @@ format::json::json::_parse (const wchar_t *readp)
 }
 
 format::json::value &
-format::json::json::_at (const wchar_t *key)
+format::json::json::_at (const wchar_t *const key)
 {
   if (! __hasRoot ())
     __root = new object ();
@@ -113,7 +113,7 @@ format::json::json::_at (const wchar_t *key)
 }
 
 const format::json::value &
-format::json::json::_at (const wchar_t *key) const
+format::json::json::_at (const wchar_t *const key) const
 {
   if (__hasRoot ())
     return (*__root)[key];

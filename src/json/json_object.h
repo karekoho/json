@@ -239,7 +239,7 @@ namespace format
        * @return
        */
       virtual value &
-      _at (const wchar_t *key) override;
+      _at (const wchar_t *const key) override;
 
       /**
        * @brief _at
@@ -247,7 +247,7 @@ namespace format
        * @return
        */
       virtual const value &
-      _at (const wchar_t *key) const override;
+      _at (const wchar_t *const key) const override;
 
       /**
        * @brief _at

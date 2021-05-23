@@ -155,7 +155,7 @@ namespace format
        * @return
        */
       virtual value &
-      _at (const wchar_t *) final override
+      _at (const wchar_t *const) final override
       { return *this; }
 
       /**
@@ -163,7 +163,7 @@ namespace format
        * @return
        */
       virtual const value &
-      _at (const wchar_t *) const final override
+      _at (const wchar_t *const) const final override
       { return *this; }
 
       /**

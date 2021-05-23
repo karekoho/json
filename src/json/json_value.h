@@ -100,7 +100,7 @@ namespace format
        * @return
        */
       inline value &
-      operator [](const wchar_t *key)
+      operator [](const wchar_t *const key)
       { return _at (key); }
 
       /**
@@ -109,7 +109,7 @@ namespace format
        * @return
        */
       const inline value &
-      operator [](const wchar_t *key) const
+      operator [](const wchar_t *const key) const
       { return _at (key); }
 
       /**
@@ -480,7 +480,7 @@ namespace format
        * @param charc
        */
       inline void
-      _set_key (const wchar_t *key, size_t charc) noexcept
+      _set_key (const wchar_t *const key, size_t charc) noexcept
       {
          delete[] _key;
          _key = wcsncpy (new wchar_t[charc + 1] (), key, charc);
@@ -665,10 +665,10 @@ namespace format
        * @return
        */
       virtual value &
-      _at (const wchar_t *key)  = 0;
+      _at (const wchar_t *const key)  = 0;
 
       const virtual value &
-      _at (const wchar_t *key) const  = 0;
+      _at (const wchar_t *const key) const  = 0;
 
       /**
        * @brief _at

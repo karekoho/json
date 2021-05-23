@@ -221,7 +221,7 @@ namespace format
        * @return
        */
       virtual value &
-      _at (const wchar_t *key) override
+      _at (const wchar_t *const key) override
       { return _at (__to_index (key)); }
 
       /**
@@ -230,7 +230,7 @@ namespace format
        * @return
        */
       virtual const value &
-      _at (const wchar_t *key) const override
+      _at (const wchar_t *const key) const override
       { return _at (__to_index (key)); }
 
      /**
