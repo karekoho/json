@@ -52,31 +52,31 @@ parse ()
   std::wcout << std::endl << "Parse and read:" << std::endl;
 
   // Construct a JSON object with a wide character string
-  json::json j = L"{\
-    \"Image\": {\
-        \"Width\":  800,\
-        \"Height\": 600,\
-        \"Title\":  \"View from 15th Floor\",\
-        \"Description\": null,\
-        \"Thumbnail\": {\
-            \"Url\":    \"http://www.example.com/image/481989943\",\
-            \"Height\": 125,\
-            \"Width\":  100\
-        },\
-        \"Animated\" : true,\
-        \"IDs\": [116, 943, 234, 38793]\
-      }\
-  }";
+  const json::json j = L"{\
+      \"Image\": {\
+          \"Width\":  800,\
+          \"Height\": 600,\
+          \"Title\":  \"View from 15th Floor\",\
+          \"Description\": null,\
+          \"Thumbnail\": {\
+              \"Url\":    \"http://www.example.com/image/481989943\",\
+              \"Height\": 125,\
+              \"Width\":  100\
+          },\
+          \"Animated\" : true,\
+          \"IDs\": [116, 943, 234, 38793, {}]\
+        }\
+    }";
 
   // Get the image object.
-  json::value & val = j[L"Image"];
+  const json::value & val = j[L"Image"];
 
   {
     // Get the primitive value using value::as<T> ()
     // Possible values are: const wchar_t *, long, bool
     const wchar_t * title = val[L"Title"].as<const wchar_t *> ();
 
-    unsigned int width = val[L"Title"].as<unsigned int> ();
+    unsigned int width = val[L"Width"].as<unsigned int> ();
 
     bool animated = val[L"Animated"].as<bool> ();
 
@@ -86,12 +86,12 @@ parse ()
 
   {
     // To get the internal JSON object, use static_cast<T>
-    json::object & image = static_cast<json::object &> (val);
-    json::array & ids = static_cast<json::array &> (val[L"IDs"]);
-    json::string & title = static_cast<json::string &> (val[L"Title"]);
-    json::number & width = static_cast<json::number &> (val[L"Width"]);
-    json::boolean & animated = static_cast<json::boolean &> (val[L"Animated"]);
-    json::null & description = static_cast<json::null &> (val[L"Description"]);
+    const json::object & image = static_cast<const json::object &> (val);
+    const json::array & ids = static_cast<const json::array &> (val[L"IDs"]);
+    const json::string & title = static_cast<const json::string &> (val[L"Title"]);
+    const json::number & width = static_cast<const json::number &> (val[L"Width"]);
+    const json::boolean & animated = static_cast<const json::boolean &> (val[L"Animated"]);
+    const json::null & description = static_cast<const json::null &> (val[L"Description"]);
 
     {
       // Get the primitive value of an object
@@ -102,13 +102,22 @@ parse ()
     std::wcout << ids.get () << std::endl;
     // output: [116,943,234,38793]
 
-    // All values can be iterated.
-    // Iterate the array.
-    std::for_each (ids.begin (),
-                   ids.end (),
-                   [] (json::value & v)
+    // Array and object types are iterable.
+    std::for_each (ids.begin (), // Get const_iterator to begin
+                   ids.end (),  // Get const_iterator to end
+                   [] (const json::value & v)
     {
-      std::wcout << v.get () << L" ";
+        try
+          {
+            std::wcout << v.as<unsigned int> () << L" ";
+          }
+        catch (const json::json_conversion_error & e)
+          {
+            // Conversion error is thrown when type casting cannot be done
+            std::cerr << e.what () << std::endl;
+            // output: Cannot cast object to boolean or numeric type
+          }
+
     });
     // output: 116 943 234 38793
   }

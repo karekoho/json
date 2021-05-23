@@ -13,47 +13,54 @@ create_modify ()
   std::wcout << std::endl << "Create and modify:" << std::endl;
 
   // Construct a JSON object
-  // Assign a pointer to an object
   // Objects and arrays are constructed using initializer lists
-  json::json j = new json::object {
+  const json::json j ( new json::object {
             { L"Image",
               new json::object {
-                { L"Width",new json::number (800.0) },
-                { L"Height",new json::number (600.0) },
+                { L"Width", new json::number (800.0) },
+                { L"Height", new json::number (600.0) },
                 { L"Title", new json::string (L"View from 15th Floor") },
-                { L"Thumbnail", new json::object {
-                    { L"Url",new json::string (L"http://www.example.com/image/481989943") },
-                    { L"Height",new json::number (static_cast<long long>(125) ) },
-                    { L"Width", new json::number (static_cast<long long> (100)) },
-                  }
+                { L"Thumbnail", new json::object { { L"Url", new json::string (L"http://www.example.com/image/481989943") },
+                                                   { L"Height", new json::number (static_cast<long long>(125) ) },
+                                                   { L"Width", new json::number (static_cast<long long> (100)) } }
                 },
                 { L"Animated", new json::boolean (false) },
-                { L"IDs", new json::array { new json::number (static_cast<long long> (116)), new json::number (static_cast<long long> (943)),
-                  new json::number (static_cast<long long> (234)), new json::number (static_cast<long long> (38793)) } }
+                { L"IDs", new json::array { new json::number (static_cast<long long> (116)),
+                                            new json::number (static_cast<long long> (943)),
+                                            new json::number (static_cast<long long> (234)),
+                                            new json::number (static_cast<long long> (38793)) }
+                }
               }
             }
-          };
+          } );
 
-  json::array & ids = static_cast<json::array &> (j[L"Image"][L"IDs"]);
+  // Get the array
+  const json::array & ids = static_cast<const json::array &> (j[L"Image"][L"IDs"]);
 
-  // Modify value
-  ids[static_cast<size_t> (1)] = static_cast<long long> (100);
+  // Make a copy
+  json::array *copy_ids = new json::array (ids);
 
-  // Assigning format::undefined removes the value
-  ids[static_cast<size_t> (3)] = json::undefined ();
+  // Modify the value
+  (*copy_ids)[1] = static_cast<long long> (100);
 
-  std::wcout << ids.stringify () << std::endl;
+  // Assigning undefined removes the value
+  (*copy_ids)[3] = json::undefined ();
+
+  std::wcout << copy_ids->stringify () << std::endl;
   // output: [116,100,234]
 
-  // Iterate the array
+  delete copy_ids;
+
+  // Iterate the original values
   std::for_each (ids.begin (),
                  ids.end (),
-                 [] (json::value & v)
+                 [] (const json::value & v)
   {
-    json::number & id = static_cast<json::number &> (v);
-    long l = static_cast<long> (id.get ());
-    std::wcout << l << L" ";
+    // const json::number & id = static_cast<const json::number &> (v);
+    // std::wcout << id.get () << L" ";
+    // unsigned int uint_id = v.as<unsigned int> ();
+    std::wcout << v.as<unsigned int> () << L" ";
   });
-  // output: 116 100 234
+  // output: 116 943 234 38793
 }
 #endif // CREATE_MODIFY_H
