@@ -494,7 +494,10 @@ namespace format
           bool b = v.as<bool> ();
           //const wchar_t * c = v.as<const wchar_t *> ();
 
-          CPPUNIT_ASSERT_MESSAGE ("as double", d == (*it).dval);
+          //CPPUNIT_ASSERT_MESSAGE ("as double", d == (*it).dval);
+
+          // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
+          CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("as double", (*it).dval, d, std::numeric_limits<double>::epsilon());
           CPPUNIT_ASSERT_MESSAGE ("as long", l == (*it).lval);
           CPPUNIT_ASSERT_MESSAGE ("as boolean", b == (*it).bval);
           //CPPUNIT_ASSERT_MESSAGE ("as wchar_t", wcscmp (c, (*it).cval) == 0);
