@@ -58,6 +58,8 @@ revive ()
   std::wcout << j->stringify () << std::endl;
   // output: {"Image":{"IDs":[116,943,234,38793],"Description":"n/a",
   // "Height":600,"Animated":true,"Title":"View from 15th Floor","Width":800}}
+
+  delete j;
 }
 
 #endif // REVIVE_H

@@ -36,24 +36,24 @@ in your source code to use JSON for C++.
 using namespace format;
 
 // Construct a JSON object with a wide character string
-json::json j = L"{\
-  \"Image\": {\
-      \"Width\":  800,\
-      \"Height\": 600,\
-      \"Title\":  \"View from 15th Floor\",\
-      \"Description\": null,\
-      \"Thumbnail\": {\
-          \"Url\":    \"http://www.example.com/image/481989943\",\
-          \"Height\": 125,\
-          \"Width\":  100\
-      },\
-      \"Animated\" : true,\
-      \"IDs\": [116, 943, 234, 38793]\
-    }\
-}";
+const json::json j = L"{\
+    \"Image\": {\
+        \"Width\":  800,\
+        \"Height\": 600,\
+        \"Title\":  \"View from 15th Floor\",\
+        \"Description\": null,\
+        \"Thumbnail\": {\
+            \"Url\":    \"http://www.example.com/image/481989943\",\
+            \"Height\": 125,\
+            \"Width\":  100\
+        },\
+        \"Animated\" : true,\
+        \"IDs\": [116, 943, 234, 38793, {}]\
+      }\
+  }";
 
 // Get the image object.
-json::value & val = j[L"Image"];
+const json::value & val = j[L"Image"];
 
 {
   // Get the primitive value using value::as<T> ()
@@ -70,29 +70,44 @@ json::value & val = j[L"Image"];
 
 {
   // To get the internal JSON object, use static_cast<T>
-  json::object & image = static_cast<json::object &> (val);
-  json::array & ids = static_cast<json::array &> (val[L"IDs"]);
-  json::string & title = static_cast<json::string &> (val[L"Title"]);
-  json::number & width = static_cast<json::number &> (val[L"Width"]);
-  json::boolean & animated = static_cast<json::boolean &> (val[L"Animated"]);
-  json::null & description = static_cast<json::null &> (val[L"Description"]);
+  const json::object & image = static_cast<const json::object &> (val);
+  const json::array & ids = static_cast<const json::array &> (val[L"IDs"]);
+  const json::string & title = static_cast<const json::string &> (val[L"Title"]);
+  const json::number & width = static_cast<const json::number &> (val[L"Width"]);
+  const json::boolean & animated = static_cast<const json::boolean &> (val[L"Animated"]);
+  const json::null & description = static_cast<const json::null &> (val[L"Description"]);
 
   {
     // Get the primitive value of an object
     bool value = animated.get ();
+    
+    std::cout << value << ',' <<
+              // This get the same value
+              j[L"Image"][L"Animated"].as<bool> () << std::endl;
+    
+    // output: 1,1
   }
 
   // Object and array values are represented as a string
-  std::wcout << ids.get () << std::endl;
-  // output: [116,943,234,38793]
+  std::wcout << ids.get() << std::endl;
+  // output: [116,943,234,38793,{}]
 
-  // All values can be iterated.
-  // Iterate the array.
-  std::for_each (ids.begin (),
-                 ids.end (),
-                 [] (json::value & v)
+  // Array and object types are iterable.
+  std::for_each (ids.begin (), // Get const_iterator to begin
+                 ids.end (),  // Get const_iterator to end
+                 [] (const json::value & v)
   {
-    std::wcout << v.get () << L" ";
+      try
+        {
+          std::wcout << v.as<unsigned int> () << L" ";
+        }
+      catch (const json::json_conversion_error & e)
+        {
+          // Conversion error is thrown when type casting cannot be done
+          std::cerr << e.what () << std::endl;
+          // output: Cannot cast object to boolean or numeric type
+        }
+
   });
   // output: 116 943 234 38793
 }
@@ -104,46 +119,63 @@ json::value & val = j[L"Image"];
 using namespace format;
 
 // Construct a JSON object
-json::json j = new json::object {
+// Objects and arrays are constructed using initializer lists
+const json::json j ( new json::object {
           { L"Image",
             new json::object {
-              { L"Width",new json::number (800.0) },
-              { L"Height",new json::number (600.0) },
+              { L"Width", new json::number (800.0) },
+              { L"Height", new json::number (600.0) },
               { L"Title", new json::string (L"View from 15th Floor") },
-              { L"Thumbnail", new json::object {
-                  { L"Url",new json::string (L"http://www.example.com/image/481989943") },
-                  { L"Height",new json::number (static_cast<long long>(125) ) },
-                  { L"Width", new json::number (static_cast<long long> (100)) },
-                }
+              { L"Thumbnail", new json::object { { L"Url", new json::string (L"http://www.example.com/image/481989943") },
+                                                 { L"Height", new json::number (static_cast<long long>(125) ) },
+                                                 { L"Width", new json::number (static_cast<long long> (100)) } }
               },
               { L"Animated", new json::boolean (false) },
-              { L"IDs", new json::array { new json::number (static_cast<long long> (116)), new json::number (static_cast<long long> (943)),
-                new json::number (static_cast<long long> (234)), new json::number (static_cast<long long> (38793)) } }
+              { L"IDs", new json::array { new json::number (static_cast<long long> (116)),
+                                          new json::number (static_cast<long long> (943)),
+                                          new json::number (static_cast<long long> (234)),
+                                          new json::number (static_cast<long long> (38793)) }
+              }
             }
           }
-        };
+        } );
 
-json::array & ids = static_cast<json::array &> (j[L"Image"][L"IDs"]);
+// Get the array
+const json::array & ids = static_cast<const json::array &> (j[L"Image"][L"IDs"]);
 
-// Modify value
-ids[static_cast<size_t> (1)] = static_cast<long long> (100);
+// Make a copy via copy constructor
+json::array *copy_ids = new json::array (ids);
 
-// Assigning format::undefined removes the value
-ids[static_cast<size_t> (3)] = json::undefined ();
+// Modify existing value
+(*copy_ids)[1] = static_cast<long long> (100);
 
-std::wcout << ids.stringify () << std::endl;
-// output: [116,100,234]
+// Add a new value. If index is greater than array.size - 1,
+// new value goes at the end, i.e. array[array.size]
+(*copy_ids)[4] = static_cast<long long> (101);
 
-// Iterate the array
+// Remove value by assigning undefined to it
+(*copy_ids)[3] = json::undefined ();
+
+std::wcout << copy_ids->stringify () << std::endl;
+// output: [116,100,234,101]
+
+delete copy_ids;
+
+// Iterate the original values
 std::for_each (ids.begin (),
                ids.end (),
-               [] (json::value & v)
+               [] (const json::value & v)
 {
-  json::number & id = static_cast<json::number &> (v);
-  long l = static_cast<long> (id.get ());
-  std::wcout << l << L" ";
+    try
+      {
+        std::wcout << v.as<unsigned int> () << L" ";
+      }
+    catch (const json::json_conversion_error & e)
+      {
+        std::cerr << e.what () << std::endl;
+      }
 });
-// output: 116 100 234
+// output: 116 943 234 38793
 ```
 ## Transforming computed values
 ```c++

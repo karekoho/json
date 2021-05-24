@@ -96,11 +96,17 @@ parse ()
     {
       // Get the primitive value of an object
       bool value = animated.get ();
+
+      std::cout << value << ',' <<
+                // This get the same value
+                j[L"Image"][L"Animated"].as<bool> () << std::endl;
+
+      // output: 1,1
     }
 
     // Object and array values are represented as a string
-    std::wcout << ids.get () << std::endl;
-    // output: [116,943,234,38793]
+    std::wcout << ids.get() << std::endl;
+    // output: [116,943,234,38793,{}]
 
     // Array and object types are iterable.
     std::for_each (ids.begin (), // Get const_iterator to begin

@@ -37,17 +37,21 @@ create_modify ()
   // Get the array
   const json::array & ids = static_cast<const json::array &> (j[L"Image"][L"IDs"]);
 
-  // Make a copy
+  // Make a copy via copy constructor
   json::array *copy_ids = new json::array (ids);
 
-  // Modify the value
+  // Modify existing value
   (*copy_ids)[1] = static_cast<long long> (100);
 
-  // Assigning undefined removes the value
+  // Add a new value. If index is greater than array.size - 1,
+  // new value goes at the end, i.e. array[array.size]
+  (*copy_ids)[4] = static_cast<long long> (101);
+
+  // Remove value by assigning undefined to it
   (*copy_ids)[3] = json::undefined ();
 
   std::wcout << copy_ids->stringify () << std::endl;
-  // output: [116,100,234]
+  // output: [116,100,234,101]
 
   delete copy_ids;
 
@@ -56,10 +60,14 @@ create_modify ()
                  ids.end (),
                  [] (const json::value & v)
   {
-    // const json::number & id = static_cast<const json::number &> (v);
-    // std::wcout << id.get () << L" ";
-    // unsigned int uint_id = v.as<unsigned int> ();
-    std::wcout << v.as<unsigned int> () << L" ";
+      try
+        {
+          std::wcout << v.as<unsigned int> () << L" ";
+        }
+      catch (const json::json_conversion_error & e)
+        {
+          std::cerr << e.what () << std::endl;
+        }
   });
   // output: 116 943 234 38793
 }
