@@ -40,7 +40,7 @@ format::json::number::number (const wchar_t * const json)
     _is_floating_point (false)
 {
   if (json == nullptr)
-    throw json_error (UNEX_END);
+    throw json_error (UNEXPECTED_END_OF_INPUT);
 
   (void) _parse (json);
 }
@@ -71,7 +71,7 @@ format::json::number::_parse (const wchar_t * const json)
   wchar_t peek = 0;
 
   if (json == nullptr)
-    throw json_error (UNEX_END);
+    throw json_error (UNEXPECTED_END_OF_INPUT);
 
   _readp = json;
 
@@ -79,7 +79,7 @@ format::json::number::_parse (const wchar_t * const json)
     _look_ahead ();
 
   if (*_readp == 0)
-    throw json_syntax_error (UNEX_TOKEN, _readp, 1);
+    throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
 
   if (_double_valuep)
     _clear ();
@@ -110,7 +110,7 @@ format::json::number::_parse (const wchar_t * const json)
     }
 
   if (peek < 0)
-    throw json_syntax_error (UNEX_TOKEN, _readp, 1);
+    throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
 
   _digitp[DOUBLE][END] = _readp;
 
@@ -136,7 +136,7 @@ format::json::number::_frag ()
   int peek = _digits ();
 
   if (peek < 0) // No digits found
-    throw json_syntax_error (UNEX_TOKEN, _readp, 1);
+    throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
 
   _digitp[DOUBLE][END] = _readp;
 
@@ -154,7 +154,7 @@ format::json::number::_exp ()
     _readp++;
 
   if (_digits () < 0) // No digits found
-    throw json_syntax_error (UNEX_TOKEN, _readp, 1);
+    throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
 
   _digitp[EXP][END] = _readp;
 

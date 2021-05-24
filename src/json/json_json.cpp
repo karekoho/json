@@ -21,7 +21,7 @@ format::json::json::json (const wchar_t *const json)
     __reviver (nullptr)
 {
   if (json == nullptr)
-    throw json_syntax_error (UNEX_END);
+    throw json_syntax_error (UNEXPECTED_END_OF_INPUT);
 
   (void) _parse (json);
 }
@@ -33,7 +33,7 @@ format::json::json::json (const wchar_t * const json, const bool _call_parse)
     __reviver (nullptr)
 {
   if (json == nullptr)
-    throw json_syntax_error (UNEX_END);
+    throw json_syntax_error (UNEXPECTED_END_OF_INPUT);
 
   if (_call_parse)
     (void) _parse (json);
@@ -46,7 +46,7 @@ format::json::json::json (const wchar_t * const json, reviver r)
     __reviver (r)
 {
   if (json == nullptr)
-    throw json_syntax_error (UNEX_END);
+    throw json_syntax_error (UNEXPECTED_END_OF_INPUT);
 
   (void) _parse (json);
 
@@ -98,7 +98,7 @@ format::json::json::_parse (const wchar_t * const readp)
     __root = nullptr;
 
   if (*(_look_ahead ()) != 0)
-    throw json_syntax_error (UNEX_TOKEN, _readp, 1);
+    throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
 
   return _readp;
 }
@@ -178,7 +178,7 @@ format::json::json::_make_value ()
   if (readc == _sc::double_quote)           // string
     {
       if ((charc = _string (endc)) < 0)
-        throw json_syntax_error (UNEX_TOKEN, _readp, 1);
+        throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
 
       value_ = __call_string (this, static_cast<size_t> (charc));
     }
@@ -192,7 +192,7 @@ format::json::json::_make_value ()
     value_ = __call_number (this);
 
   else
-     {  // literal or udefined
+     {  // literal or undefined
       switch (_is_literal ())
         {
           case value::_literal::null_value:

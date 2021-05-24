@@ -17,6 +17,7 @@ namespace format
       class boolean : public leaf
       {
         friend boolean * __call_boolean (json *parent, bool b);
+
       #ifdef UNIT_TEST
         friend class json_boolean_test;
       #endif
@@ -45,7 +46,8 @@ namespace format
         * @brief Boolean
         * @param other
         */
-        boolean (const boolean & other) = default;
+        boolean (const boolean & other)
+        { _clone (other); }
 
        /**
         * @brief ~Boolean

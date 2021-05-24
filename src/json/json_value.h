@@ -11,10 +11,10 @@ namespace format
 {
   namespace json
   {
-    #define UNEX_END                        "Unexpected end of JSON input"
-    #define UNEX_START                      "Unexpected start of JSON input"
-    #define UNEX_TOKEN                      "Unexpected token "
-    #define BAD_ASSIGN                      "Bad assignment"
+    #define UNEXPECTED_END_OF_INPUT         "Unexpected end of JSON input"
+    #define UNEXPECTED_START_OF_INPUT       "Unexpected start of JSON input"
+    #define UNEXPECTED_TOKEN                "Unexpected token "
+    #define BAD_ASSIGNMENT                  "Bad assignment"
     #define BAD_CAST_NULL_TO_NUMERIC        "Cannot cast null to boolean or numeric type"
     #define BAD_CAST_OBJECT_TO_NUMERIC      "Cannot cast object to boolean or numeric type"
     #define BAD_CAST_NUMERIC_TO_STRING      "Cannot cast boolean or numeric type to string"

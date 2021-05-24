@@ -39,7 +39,7 @@ format::json::object::_parse (const wchar_t *json_text)
       _readp = json_text;
 
       if (*(_look_ahead ()) != _sc::begin_object)
-        throw json_syntax_error (UNEX_END);
+        throw json_syntax_error (UNEXPECTED_END_OF_INPUT);
 
       _readp++;
     }
@@ -47,7 +47,7 @@ format::json::object::_parse (const wchar_t *json_text)
     _readp = json_text + 1;
 
   if (*_readp == 0)
-    throw json_syntax_error (UNEX_END);
+    throw json_syntax_error (UNEXPECTED_END_OF_INPUT);
 
   while (*_readp != 0)
     {
@@ -58,7 +58,7 @@ format::json::object::_parse (const wchar_t *json_text)
           _readp++;
 
           if (! _pair ())
-            throw json_syntax_error (UNEX_END);
+            throw json_syntax_error (UNEXPECTED_END_OF_INPUT);
         }
       else if (*_readp == _sc::end_object)         // '}'
         return _readp + 1;
@@ -83,27 +83,27 @@ format::json::object::_pair ()
   if ((charc = _string (endc)) == 0)  // No opening \"
     {
       if (*_readp == 0)
-        throw json_syntax_error (UNEX_END);
+        throw json_syntax_error (UNEXPECTED_END_OF_INPUT);
 
       if (*_readp == _sc::end_object || *(_look_ahead ()) ==  _sc::end_object)  // Empty object
         return false;
     }
 
   if (charc < 0)   // No closing "
-    throw json_syntax_error (UNEX_TOKEN, _readp, 1);
+    throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
 
   const wchar_t *keyp = _readp + 1;
   _readp += charc;
 
   if (*(_look_ahead ()) != _sc::name_separator)   // Expect ':'
-    throw json_syntax_error (UNEX_TOKEN, _readp, 1);   // TODO: throw syntax error: unexpected character '%c'
+    throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);   // TODO: throw syntax error: unexpected character '%c'
 
   _readp++;
 
   value * v = _make_value ();
 
   if (v->type () == value::no_value_t)
-    throw json_syntax_error (UNEX_TOKEN, _readp, 1);
+    throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
 
   std::wstring key (keyp, static_cast<size_t> (charc - 2));
 

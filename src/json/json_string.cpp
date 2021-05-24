@@ -13,7 +13,7 @@ format::json::string::string (const wchar_t *const json)
     _charc (0)
 {
   if (json == nullptr)
-    throw json_syntax_error (UNEX_END);
+    throw json_syntax_error (UNEXPECTED_END_OF_INPUT);
 
   (void) _parse (json);
 }
@@ -43,7 +43,7 @@ format::json::string::_parse (const wchar_t * const json)
   if (_parent == nullptr)   // 2. ctor
     {
       if ((charc = __string (endc)) < 0 )
-        throw json_syntax_error (UNEX_TOKEN, _readp, 1);
+        throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
 
       _charc = static_cast<size_t> (charc);
     }

@@ -19,20 +19,14 @@ namespace format
     test_ctor_dtor () override
     {
       json parent;
-      // json *p[] = { 0, new json };
 
-      //for (size_t pidx = 0; pidx < 2; pidx++)
-        //{
-          number n[] = {
-            number (),
-            number ((long long) 10),
-            number (10.10),
-            number (L"10"),
-            number (& parent),
-          };
-        //}
-
-      //delete p[1];
+      number n[] = {
+        number (),
+        number ((long long) 10),
+        number (10.10),
+        number (L"10"),
+        number (& parent),
+      };
 
       number src[] = {
         number ((long long) 10),
@@ -43,8 +37,6 @@ namespace format
           number (src[0]),
           number (src[1])
       };
-
-      // double d[] = { copy[0].value (), copy[1].value () };
 
       // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
       double delta = std::numeric_limits<double>::epsilon ();
@@ -58,8 +50,7 @@ namespace format
 
       // TODO: what is the correct place for these?
       json j = new object { { L"0", new number (10.101) },
-                            { L"1", new number ((long long) 10) }
-                          };
+                            { L"1", new number ((long long) 10) } };
 
       CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("as double",
                                             (double) 10.101, j[L"0"].as<double> (), delta);
@@ -520,10 +511,9 @@ namespace format
       CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",
                               copy[1].stringify () == std::wstring (L"100.100000"));
 
-      // TODO: what is the correct place for these?
-      json j = new object { { L"0", new number (src[0]) },  // copy
-                            { L"1", new number (src[1]) },  // copy
-                          };
+      // Copies
+      json j = new object { { L"0", new number (src[0]) },
+                            { L"1", new number (src[1]) } };
 
       // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
       double delta = std::numeric_limits<double>::epsilon ();

@@ -24,8 +24,20 @@ namespace format
       boolean b[] = {
         boolean (),
         boolean (true),
-        boolean (parent)
+        boolean (parent, true)
       };
+
+      // TODO: what is the correct place for these?
+      json j = new object { { L"0", new boolean () },
+                            { L"1", new boolean (true) },
+                            { L"2", new boolean (parent, true) },
+                            { L"3", new boolean(b[2]) }, // copy
+                          };
+
+      CPPUNIT_ASSERT_MESSAGE ("as boolean", j[L"0"].as<bool> () == false);
+      CPPUNIT_ASSERT_MESSAGE ("as boolean", j[L"1"].as<bool> () == true);
+      CPPUNIT_ASSERT_MESSAGE ("as boolean", j[L"2"].as<bool> () == true);
+      CPPUNIT_ASSERT_MESSAGE ("as boolean", j[L"3"].as<bool> () == true);
 
       delete parent;
     }
@@ -170,13 +182,17 @@ namespace format
     test__clone_const_value_ref () override
     {
       boolean src = true;
-      boolean copy;
-
-      (void) copy._clone (src);
+      boolean copy (src);
+      // boolean copy;
+      // (void) copy._clone (src); // why?
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.get ()",
                                     true,
                                     copy.get ());
+
+      json j = new object { { L"0", new boolean (copy) } }; // copy of copy
+
+      CPPUNIT_ASSERT_MESSAGE ("as boolean", j[L"0"].as<bool> () == true);
     }
 
     void
@@ -191,12 +207,25 @@ namespace format
                                     true,
                                     b->get ());
 
+      {
+        // Testing assignment via copy, find out a direct way
+        json j = new object { { L"0", new boolean (*b) } };
+
+        CPPUNIT_ASSERT_MESSAGE ("as boolean", j[L"0"].as<bool> () == true);
+      }
+
       parent[L"0"] = b; // b._parent == parent
       parent[L"0"] = false;
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("boolean::get ()",
                                     false,
                                     b->get ());
+      {
+        // Testing assignment via copy, find out a direct way
+        json j = new object { { L"0", new boolean (*b) } };
+
+        CPPUNIT_ASSERT_MESSAGE ("as boolean", j[L"0"].as<bool> () == false);
+      }
     }
 
     /**

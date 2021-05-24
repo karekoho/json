@@ -98,7 +98,7 @@ format::json::value &
 format::json::value::_assign (const value &nv)
 {
   if (_parent == nullptr)
-    throw json_error (BAD_ASSIGN);
+    throw json_error (BAD_ASSIGNMENT);
 
   return __call__assign (_parent, this, nv.clone ());
 }
@@ -107,7 +107,7 @@ format::json::value &
 format::json::value::_assign (value *nv)
 {
   if (_parent == nullptr)
-    throw json_error (BAD_ASSIGN);
+    throw json_error (BAD_ASSIGNMENT);
 
   return __call__assign (_parent, this, nv);
 }

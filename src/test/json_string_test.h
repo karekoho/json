@@ -24,7 +24,26 @@ namespace format
         string (),        
         string (L"x"),
         string (& parent, 1),
-      };      
+      };
+
+      // TODO: what is the correct place for these?
+      json j = new object { { L"0", new string () },
+                            { L"1", new string (L"x") },
+                            { L"2", new string (& parent, 1) },
+                            { L"3", new string (a[1]) } // copy
+                          };
+
+      CPPUNIT_ASSERT_MESSAGE ("as string",
+                                wcscmp ( L"", j[L"0"].as<const wchar_t *> () ) == 0);
+
+      CPPUNIT_ASSERT_MESSAGE ("as string",
+                                wcscmp ( L"x", j[L"1"].as<const wchar_t *> () ) == 0);
+
+      CPPUNIT_ASSERT_MESSAGE ("as string",
+                                wcscmp ( L"", j[L"2"].as<const wchar_t *> () ) == 0);
+
+      CPPUNIT_ASSERT_MESSAGE ("as string",
+                                wcscmp ( L"x", j[L"3"].as<const wchar_t *> () ) == 0);
     }
 
     virtual void
@@ -75,7 +94,7 @@ namespace format
 
         delete s;
 
-       TEST_IT_END;
+       TEST_IT_END
     }
 
     void
@@ -237,7 +256,7 @@ namespace format
 
           ASSERT_EQUAL_IDX ("charc", (*it).charc, charc);
 
-        TEST_IT_END;
+        TEST_IT_END
       }
 
       /**
@@ -254,23 +273,44 @@ namespace format
         CPPUNIT_ASSERT_MESSAGE ("s.get () == \"x\"",
                                 s->get () == std::wstring (L"x"));
 
+        {
+          // Testing assignment via copy, find out a direct way... propably ok
+          json j = new object { { L"0", new string (*s) } };
+
+          CPPUNIT_ASSERT_MESSAGE ("s.get () == \"x\"",
+                                  j[L"0"].as<const wchar_t *> () == std::wstring (L"x"));
+        }
+
         parent[L"0"] = s;   // s->_parent == parent
         parent[L"0"] = L"xxx";
 
         CPPUNIT_ASSERT_MESSAGE ("(parent[L\"0\"] == \"xxx\"",
                                 s->get () == std::wstring (L"xxx"));
+
+        {
+          // Testing assignment via copy, find out a direct way... propably ok
+          json j = new object { { L"0", new string (*s) } };
+
+          CPPUNIT_ASSERT_MESSAGE ("s.get () == \"xxx\"",
+                                  j[L"0"].as<const wchar_t *> () == std::wstring (L"xxx"));
+        }
       }
 
       virtual void
       test__clone_const_value_ref () override
       {
         string src = L"xxx";
-        string copy;
-
-        (void) copy._clone (src);
+        string copy (src);
+        // string copy;
+        // (void) copy._clone (src); // will not work for test as string
 
         CPPUNIT_ASSERT_EQUAL_MESSAGE ("src._string_value.empty ()", true, src._string_value[0].empty () );
         CPPUNIT_ASSERT_MESSAGE ("copy.get ()", wcscmp (L"xxx", copy.get ()) == 0);
+
+        json j = new object { { L"0", new string (copy) } }; // copy of copy
+
+        CPPUNIT_ASSERT_MESSAGE ("as string == \"xxx\"",
+                                j[L"0"].as<const wchar_t *> () == std::wstring (L"xxx"));
       }
 
       virtual void

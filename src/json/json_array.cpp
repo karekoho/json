@@ -39,7 +39,7 @@ format::json::array::_parse (const wchar_t *const json)
       _readp = json;
 
       if (*(_look_ahead ()) != _sc::begin_array)  // Expecting '['
-        throw json_syntax_error (UNEX_END);
+        throw json_syntax_error (UNEXPECTED_END_OF_INPUT);
 
       _readp++;
     }
@@ -47,7 +47,7 @@ format::json::array::_parse (const wchar_t *const json)
     _readp  = json + 1;
 
   if (*_readp == 0)
-    throw json_syntax_error (UNEX_END);
+    throw json_syntax_error (UNEXPECTED_END_OF_INPUT);
 
   value *v = nullptr;
   size_t next_idx = 0;
@@ -61,7 +61,7 @@ format::json::array::_parse (const wchar_t *const json)
           _readp++;
 
           if ((v = _make_value ())->type () == value::no_value_t)
-            throw json_syntax_error (UNEX_TOKEN, _readp, 1);
+            throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
 
           next_idx = _element_list.size ();
 
@@ -80,7 +80,7 @@ format::json::array::_parse (const wchar_t *const json)
               && *_readp != value::_ws::tab
               && *_readp != value::_ws::lf
               && *_readp != value::_ws::cr)
-            throw json_syntax_error (UNEX_TOKEN, _readp, 1);
+            throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
           // Empty array
         }
       else if ((v = _call_reviver (v, nullptr, next_idx))->type () != value::undefined_t)  // Value found
