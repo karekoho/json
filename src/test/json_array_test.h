@@ -41,7 +41,7 @@ namespace format
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("array::count ()",
                                     static_cast<size_t> (1),
-                                    a[3].count ());
+                                    a[3].size ());
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("array[index][index].type ()",
                                     value::number_t,
@@ -98,7 +98,7 @@ namespace format
 
               ASSERT_EQUAL_IDX ("array.readp", (startp + charc) - (*it).moveback, readp);
               ASSERT_EQUAL_IDX ("*(array.readp - 1)", L']', *(readp - 1));
-              ASSERT_EQUAL_IDX ("array.size", (*it).size, a->count ());
+              ASSERT_EQUAL_IDX ("array.size", (*it).size, a->size ());
 
               delete a;
             }
@@ -136,7 +136,7 @@ namespace format
 
         (void) a->_parse (startp);
 
-        if (a->count () > 0)
+        if (a->size () > 0)
           {
             for (size_t idx = 0; idx < a->_element_list.size (); idx++)
               {
@@ -205,13 +205,13 @@ namespace format
 
                     if (parent)
                       {
-                        ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->count ());
+                        ASSERT_EQUAL_IDX ("old_value.parent.count ()", (*it).count, parent->size ());
                         value & ov =  object_parent[(*it).key];
                         ASSERT_EQUAL_IDX ("obj_parent[key].type", ov.type (), (*it).type);
                       }
                     else
                       {
-                        ASSERT_EQUAL_IDX ("old_value.size ()", static_cast<size_t> (2), old_value->count ());
+                        ASSERT_EQUAL_IDX ("old_value.size ()", static_cast<size_t> (2), old_value->size ());
                         delete old_value;
                       }
                   }
@@ -477,7 +477,7 @@ namespace format
 
        TEST_IT_START
            (void) a._erase (*(*it).val);
-           size_t size = a.count ();
+           size_t size = a.size ();
 
            ASSERT_EQUAL_IDX ("array::count ()", (*it).size, size);
        TEST_IT_END
@@ -485,7 +485,7 @@ namespace format
        // TODO: move to test_operator_assign_undefined
        CPPUNIT_ASSERT_EQUAL_MESSAGE ("array::count ()",
                                      static_cast<size_t> (1),
-                                     (array (L"[0,1]") [static_cast<size_t> (0)] = undefined ()).count ());
+                                     (array (L"[0,1]") [static_cast<size_t> (0)] = undefined ()).size ());
        delete v[2];
     }
 
@@ -495,7 +495,7 @@ namespace format
       array a (L"[1]");
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("array::count ()",
                                     static_cast<size_t> (1),
-                                    a.count ());
+                                    a.size ());
     }
 
     virtual void
@@ -536,7 +536,7 @@ namespace format
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.length ()",
                                     static_cast<size_t> (1),
-                                    copy.count ());
+                                    copy.size ());
 
       CPPUNIT_ASSERT_MESSAGE ("copy[(size_t) 0].parent () == & copy",
                               copy[static_cast<size_t> (0)].parent () == & copy);
@@ -550,7 +550,7 @@ namespace format
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("a.length ()",
                                     static_cast<size_t> (1),
-                                    a.count ());
+                                    a.size ());
     }
 
     void
@@ -561,7 +561,7 @@ namespace format
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("a.length ()",
                                     static_cast<size_t> (1),
-                                    a.count ());
+                                    a.size ());
     }
 
     /**

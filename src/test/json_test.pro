@@ -10,7 +10,7 @@ LIBS += -L/usr/local/lib -lcppunit
 QMAKE_CXXFLAGS+= -std=c++11
 QMAKE_LFLAGS +=  -std=c++11
 
-TARGET = tests_development
+TARGET = test_debug
 CONFIG += console
 CONFIG -= app_bundle
 

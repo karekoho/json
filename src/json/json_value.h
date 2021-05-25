@@ -89,6 +89,37 @@ namespace format
       clone () const = 0;
 
       /**
+       * @brief type
+       * @return
+       */
+      virtual value_t
+      type () const noexcept = 0;
+
+      /**
+       * @brief count
+       * @return
+       */
+      virtual size_t
+      size () const noexcept = 0;
+
+      /**
+       * @obsolete Use stringify instead
+       * @brief value
+       * @return
+       */
+      inline const wchar_t *
+      get () const
+      { return _to_string (); }
+
+      /**
+       * @brief stringify
+       * @return
+       */
+      const wchar_t *
+      stringify () noexcept
+      { return _to_string (); }
+
+      /**
        * @brief ~Value
        */
       virtual
@@ -196,13 +227,6 @@ namespace format
       operator =(std::nullptr_t);
 
       /**
-       * @brief type
-       * @return
-       */
-      virtual value_t
-      type () const noexcept = 0;
-
-      /**
        * @brief operator ==
        * @param t
        * @return
@@ -221,13 +245,6 @@ namespace format
       { return operator ==(v.type ()); }
 
       /**
-       * @brief count
-       * @return
-       */
-      virtual size_t
-      count () const noexcept = 0;
-
-      /**
        * @brief key
        * @return
        */
@@ -244,20 +261,12 @@ namespace format
       { return _index; }
 
       /**
-       * @brief stringify
+       * @brief parent
        * @return
        */
-      const wchar_t *
-      stringify () noexcept
-      { return _to_string (); }
-
-      /**
-       * @brief value
-       * @return
-       */
-      inline const wchar_t *
-      get () const
-      { return _to_string (); }
+      inline json *
+      parent () const
+      { return _parent; }
 
       /**
        * @brief
@@ -322,14 +331,6 @@ namespace format
         // Object
         throw json_conversion_error (BAD_CAST_OBJECT_TO_STRING);
       }
-
-      /**
-       * @brief parent
-       * @return
-       */
-      inline json *
-      parent () const
-      { return _parent; }
 
       /**
        * @brief Base class for iterators
