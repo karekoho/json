@@ -289,7 +289,7 @@ format::json::object::_erase (const value & v) noexcept
 }
 
 void
-format::json::object::_set_initializer_list (std::initializer_list<std::pair<std::wstring, format::json::value *> > il)
+format::json::object::_set_initializer_list (const std::initializer_list<std::pair<std::wstring, value *> > & il)
 {
   if (il.size () == 0)
     return;

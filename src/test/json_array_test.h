@@ -25,6 +25,9 @@ namespace format
         array (L"[]"),
         array (& parent),
         array { new array { new number () } }, // [[0]]
+
+        /// TODO: array { number (1), number (2) }
+        /// TODO: array { {1,2} }, //
       };
 //      array src = L"[true]";
 //      array copy = src;

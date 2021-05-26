@@ -25,6 +25,9 @@ namespace format
         object (L"{}"),
         object (& parent),
         object {{ L"0", new object {{ L"0", new number () }} }} // {"0":{"0":0}}
+
+        /// TODO: object {{ L"0", object {{ L"0", number<int> (100) }} }}
+        /// TODO: object {{ L"0", {{ L"0", 100 |"string"|true|null }} }}
       };
 
 //      object src  = L"{\"key\":true}";

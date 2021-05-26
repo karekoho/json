@@ -250,7 +250,7 @@ format::json::array::_erase (const value & v) noexcept
 }
 
 void
-format::json::array::_set_initializer_list (std::initializer_list<format::json::value *> il)
+format::json::array::_set_initializer_list (const std::initializer_list<value *> & il)
 {
   if (il.size () == 0)
     return;
