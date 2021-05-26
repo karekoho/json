@@ -86,8 +86,6 @@
   \
 } catch (format::json::json_syntax_error & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
   catch (format::json::json_out_of_range & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
-  catch (format::json::json_pointer_error & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
-  catch (format::json::json_conversion_error & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
   catch (format::json::json_error & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
   catch (const char *error) { this->_errorc[ACTUAL]++; std::cerr << error << std::endl; } \
   catch (const wchar_t *error) { this->_errorc[ACTUAL]++; std::cerr << error << std::endl; } }\

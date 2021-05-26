@@ -111,7 +111,7 @@ namespace format
 
     /**
      * @brief The json_pointer_error class
-     */
+     *
     class json_pointer_error : public json_syntax_error
     {
     public:
@@ -122,7 +122,7 @@ namespace format
       json_pointer_error (const char * const what, const wchar_t *token, size_t charc = 0)
        : json_syntax_error (what, token, charc)
       {}
-    };
+    }; */
   } // Namespace json
 } // Namespace format
 
