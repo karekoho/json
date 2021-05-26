@@ -36,7 +36,7 @@ namespace format
        * @brief array
        * @param json
        */
-      array (const wchar_t * const json);
+      array (const wchar_t * const json_text);
 
       /**
        * @brief array
@@ -213,7 +213,7 @@ namespace format
        * @return
        */
       virtual const wchar_t *
-      _parse (const wchar_t * const json) override;
+      _parse (const wchar_t * const json_text) override;
 
       /**
        * @brief _at

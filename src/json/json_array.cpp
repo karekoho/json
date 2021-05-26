@@ -4,10 +4,10 @@
 
 format::json::array::array () : json () {}
 
-format::json::array::array (const wchar_t * const text)
-  : json (text, false)
+format::json::array::array (const wchar_t * const json_text)
+  : json (json_text, false)
 {
-  (void) _parse (text);
+  (void) _parse (json_text);
 }
 
 format::json::array::array (std::initializer_list<value *> il)
@@ -32,11 +32,11 @@ format::json::array::~array ()
 }
 
 const wchar_t *
-format::json::array::_parse (const wchar_t *const json)
+format::json::array::_parse (const wchar_t *const json_text)
 {  
   if (_parent == nullptr)   // 1. Array (), 2. Array (const char *json)
     {
-      _readp = json;
+      _readp = json_text;
 
       if (*(_look_ahead ()) != _sc::begin_array)  // Expecting '['
         throw json_syntax_error (UNEXPECTED_END_OF_INPUT);
@@ -44,7 +44,7 @@ format::json::array::_parse (const wchar_t *const json)
       _readp++;
     }
   else
-    _readp  = json + 1;
+    _readp  = json_text + 1;
 
   if (*_readp == 0)
     throw json_syntax_error (UNEXPECTED_END_OF_INPUT);

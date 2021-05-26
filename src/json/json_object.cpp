@@ -4,7 +4,7 @@ format::json::object::object ()
   : json ()
 {}
 
-format::json::object::object (const wchar_t *json_text)
+format::json::object::object (const wchar_t * const json_text)
   : json (json_text, false)
 {
   (void) _parse (json_text);

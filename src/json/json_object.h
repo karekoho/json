@@ -37,7 +37,7 @@ namespace format
        * @brief object
        * @param json
        */
-      object (const wchar_t *json_text);
+      object (const wchar_t * const json_text);
 
       /**
        * @brief object
