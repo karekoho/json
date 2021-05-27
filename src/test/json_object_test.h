@@ -18,16 +18,18 @@ namespace format
     virtual void
     test_ctor_dtor () override
     {
+      const wchar_t * json_text = L"{ \"1\": { \"2\": 2 } }";
+      object src = json_text;
+
       json parent;
 
       object o[] = {
         object (),
         object (L"{}"),
         object (& parent),
-        object {{ L"0", new object {{ L"0", new number () }} }} // {"0":{"0":0}}
-
-        /// TODO: object {{ L"0", object {{ L"0", number<int> (100) }} }}
-        /// TODO: object {{ L"0", {{ L"0", 100 |"string"|true|null }} }}
+        object {{ L"0", new object {{ L"1", new number () }} }}, // { "0": { "1": 0 } }
+        object (json_text),
+        object (src) // 5.
       };
 
 //      object src  = L"{\"key\":true}";
@@ -49,7 +51,7 @@ namespace format
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("object[key][key].type ()",
                                     value::number_t,
-                                    o[3][L"0"][L"0"].type ());
+                                    o[3][L"0"][L"1"].type ());
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("o[3][L\"0\"].parent ()",
                                     dynamic_cast<json *> (& o[3]),
@@ -57,10 +59,16 @@ namespace format
 
       CPPUNIT_ASSERT_MESSAGE ("o[3][L\"0\"].key ()",
                               o[3][L"0"].key () == std::wstring (L"0"));
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("object at size",
+                                    (size_t) 1, o[4][L"1"].size ());
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("object copy at size",
+                                    (size_t) 1, o[5][L"1"].size ());
     }
 
     virtual
-    void test__parse () override
+    void test__parse () override // 4.
     {
       struct assert {
         const wchar_t *startp;
@@ -577,7 +585,8 @@ namespace format
     virtual void
     test__clone_const_value_ref () override
     {
-      object src = L"{\"2\":2}";
+      //object src = L"{\"2\":2}";
+      object src = L"{\"2\":{\"3\":3}}";
       object copy = L"{\"0\":0,\"1\":1}";
 
       copy._clear ();
@@ -586,6 +595,10 @@ namespace format
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.length ()",
                                     static_cast<size_t> (1),
                                     copy.size ());
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.at length ()",
+                                    static_cast<size_t> (1),
+                                    copy[L"2"].size ());
 
       CPPUNIT_ASSERT_MESSAGE ("copy[L\"2\"].parent () == & copy",
                               copy[L"2"].parent () == & copy);

@@ -34,7 +34,8 @@ namespace format
 //        json (json ())
       };
 
-      json copy = j[1];
+      // Copy
+      json copy (j[1]);
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("value::type ()",
                                     value::boolean_t,
@@ -60,8 +61,10 @@ namespace format
 //                                    value::array_t,
 //                                    j[6].type ());
 
+      // Delete
       delete json::parse (L"{}");
 
+      // Assing
       copy = L"[]";
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.type ()",
