@@ -18,6 +18,9 @@ namespace format
     virtual void
     test_ctor_dtor () override
     {
+      const wchar_t * json_text = L"[ 1, [ 2, 3 ] ]";
+      array src = json_text;
+
       json parent;
 
       array a[] = {
@@ -25,9 +28,8 @@ namespace format
         array (L"[]"),
         array (& parent),
         array { new array { new number () } }, // [[0]]
-
-        /// TODO: array { number (1), number (2) }
-        /// TODO: array { {1,2} }, //
+        array (json_text),
+        array (src) // 5.
       };
 //      array src = L"[true]";
 //      array copy = src;
@@ -53,6 +55,12 @@ namespace format
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("a[3][(size_t) 0].parent ()",
                                     dynamic_cast<json *> (& a[3]),
                                     a[3][static_cast<size_t> (0)].parent ());
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("array at size",
+                                    (size_t) 2, a[4][1].size ());
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("array copy at size",
+                                    (size_t) 2, a[5][1].size ());
     }
 
     virtual void
@@ -75,6 +83,7 @@ namespace format
         { L"[\"x\"]", 1, value::value_t::array_t, 0, PASS },
         { L"[\"x\",\"x\"] ", 2, value::value_t::array_t, 1, PASS },
         { L"[\"x\",\"x\",[\"x\"]] ", 3,  value::value_t::array_t, 1, PASS },
+        //{ L"[\"x\",\"x\",[\"x\"],\"x\"]", 4,  value::value_t::array_t, 0, PASS },
 
         // errors
         { L"[", 0, value::value_t::undefined_t, 0, FAIL },
@@ -531,15 +540,19 @@ namespace format
     virtual void
     test__clone_const_value_ref () override
     {
-      array src = L"[2]";
-      array copy = L"[0,1]";
+      array src = L"[1,[2,3]]";
+      array copy = L"[0,1,2]";
 
       copy._clear ();
       (void) copy._clone (src);
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.length ()",
-                                    static_cast<size_t> (1),
+                                    static_cast<size_t> (2),
                                     copy.size ());
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.at length ()",
+                                    static_cast<size_t> (2),
+                                    copy[1].size ());
 
       CPPUNIT_ASSERT_MESSAGE ("copy[(size_t) 0].parent () == & copy",
                               copy[static_cast<size_t> (0)].parent () == & copy);
@@ -580,7 +593,7 @@ namespace format
       /* 0. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test__to_string));
       /* 1. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test_str_length));
       /* 2. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_ctor_dtor", &json_array_test::test_ctor_dtor));
-      /* 3. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_parse_1", &json_array_test::test__parse));
+      /* 3. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_parse", &json_array_test::test__parse));
       /* 4. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_index", &json_array_test::test_index));
       /* 5. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_operator_at_key", &json_array_test::test_operator_at_key));
       /* 6. */  s->addTest (new CppUnit::TestCaller<json_array_test> ("test_const_operator_at_key", &json_array_test::test_const_operator_at_key));

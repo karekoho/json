@@ -99,6 +99,7 @@ namespace format
           { L" { \"k\" : \"v\" } ", value::value_t::object_t, PASS },
           { L"[\"v\"] ", value::value_t::array_t, PASS },
           { L" [ \"v\", [\"vv\"] ] ", value::value_t::array_t, PASS },
+          //{ L" [1,[2,3],4] ", value::value_t::array_t, PASS },
 
           /// errors
           { L" x ", value::value_t::undefined_t, FAIL },
