@@ -26,10 +26,25 @@ format::json::string::string (json *parent, size_t charc)
 
 format::json::string::string (const string &other)
   : leaf (other),
-    _startp (other._startp),
+    _startp (nullptr),
     _charc (other._charc)
 {
   _clone (other);
+}
+
+format::json::value &
+format::json::string::operator =(const wchar_t * const s)
+{
+  json *p = _parent;
+  _parent = nullptr;
+
+  _clear ();
+
+  (void) _parse (s);
+
+  _parent = p;
+
+  return *this;
 }
 
 const wchar_t *
@@ -48,7 +63,22 @@ format::json::string::_parse (const wchar_t * const json)
       _charc = static_cast<size_t> (charc);
     }
 
-  return _readp += _charc;
+  _readp += _charc;
+
+  // Make unquoted string
+  __assign_unquoted_string ();
+
+  // Make quoted string
+  __assign_quoted_string ();
+
+  return _readp;
+}
+
+void
+format::json::string::_clear ()
+{
+  _string_value[0].clear ();
+  _string_value[1].clear ();
 }
 
 format::json::value &
@@ -58,60 +88,33 @@ format::json::string::_assign (const string &nv)
 }
 
 const wchar_t *
-format::json::string::get () const
-{
-  if (_string_value[0].empty () && _startp && _charc > 0)
-    *_startp == _sc::double_quote
-      ? _string_value[0].assign (_startp + 1, _charc - 2)
-      : _string_value[0].assign (_startp, _charc);
-
-  return _string_value[0].c_str ();
-}
-
-const wchar_t *
 format::json::string::_to_string (wchar_t *) const
 {
-  if (_startp == nullptr || _charc == 0)
-    return L"";
+  return (_startp == nullptr || _charc == 0)
+      ? L""
+      : _string_value[1].c_str ();
+}
 
-  if (_string_value[1].empty ())
-    {
-      if (*_startp == _sc::double_quote)
-        _string_value[1].assign (_startp, _charc);
-      else
-        {                   
-          try
-            {
-              size_t charc = _charc + 2;
-              wchar_t *s = new wchar_t[charc] ();
-
-              *s = L'"';
-              *(wcsncpy (s + 1, _startp, _charc) +_charc) = L'"';
-              _string_value[1].assign (s, _charc + 2);
-
-              delete[] s;
-            }
-          catch (std::bad_alloc & ba)
-            {
-              throw json_error (ba.what ());
-            }
-        }
-    }
-
-  return _string_value[1].c_str ();
+size_t
+format::json::string::_str_length () const noexcept
+{
+  return _charc == 0 || *_startp == _sc::double_quote
+      ? _charc
+      : _charc + 2;
 }
 
 format::json::value *
 format::json::string::_clone (const value &nv)
 {
-  const string & s = dynamic_cast<const string &> (nv);
+  const string & other = dynamic_cast<const string &> (nv);
 
-  if (s._startp && s._charc > 0)
-    *s._startp == _sc::double_quote
-        ? _string_value[0].assign (s._startp + 1, s._charc - 2)
-        : _string_value[0].assign (s._startp, s._charc);
+  if (other._startp && other._charc > 0)
+    *other._startp == _sc::double_quote
+          ? _string_value[0].assign (other._startp + 1, other._charc - 2)
+          : _string_value[0].assign (other._startp, other._charc);
 
-  _startp = _string_value[0].c_str ();
+  _string_value[1] = other._string_value[1]; // Always at least ""
+  _startp = _string_value[0].c_str (); // if other is null or "", _startp points to itself
 
   return this;
 }
@@ -135,4 +138,37 @@ format::json::string::__string (wchar_t & endc) const noexcept
       : (*readp > 31 && *readp != _sc::double_quote
          ? charc
          : -1 * charc);
+}
+
+void
+format::json::string::__assign_unquoted_string ()
+{
+  *_startp == _sc::double_quote
+    ? _string_value[0].assign (_startp + 1, _charc - 2)
+    : _string_value[0].assign (_startp, _charc);
+}
+
+void
+format::json::string::__assign_quoted_string ()
+{
+  if (*_startp == _sc::double_quote)
+    _string_value[1].assign (_startp, _charc);
+  else
+    {
+      try
+        {
+          size_t charc = _charc + 2;
+          wchar_t *s = new wchar_t[charc] ();
+
+          *s = L'"';
+          *(wcsncpy (s + 1, _startp, _charc) +_charc) = L'"';
+          _string_value[1].assign (s, _charc + 2);
+
+          delete[] s;
+        }
+      catch (std::bad_alloc & ba)
+        {
+          throw json_error (ba.what ());
+        }
+    }
 }

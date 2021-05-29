@@ -76,26 +76,15 @@ namespace format
        * @return
        */
       virtual value &
-      operator =(const wchar_t * const s) override
-      {
-        json *p = _parent;
-        _parent = nullptr;
-
-        _clear ();
-
-        (void) _parse (s);
-
-        _parent = p;
-
-        return *this;
-      }
+      operator =(const wchar_t * const s) override;
 
       /**
        * @brief value
        * @return
        */
-      const wchar_t *
-      get () const;
+      inline const wchar_t *
+      get () const noexcept
+      { return _string_value[0].c_str (); }
 
       /**
        * @brief length
@@ -122,7 +111,7 @@ namespace format
       /**
        * @brief _value
        */
-      mutable std::wstring _string_value[2];
+      std::wstring _string_value[2];
 
       /**
        * @brief string
@@ -143,11 +132,7 @@ namespace format
        * @brief _clear
        */
       virtual void
-      _clear () override
-      {
-        _string_value[0].clear ();
-        _string_value[1].clear ();
-      }
+      _clear () override;
 
       /**
        * @brief _clone
@@ -176,8 +161,7 @@ namespace format
        * @return
        */
       virtual size_t
-      _str_length () const noexcept override
-      { return _charc == 0 || *_startp == _sc::double_quote ? _charc : _charc + 2; }
+      _str_length () const noexcept override;
 
       /**
        * @brief _get
@@ -195,6 +179,20 @@ namespace format
        */
       long /* TODO: long */
       __string (wchar_t & endc) const noexcept;
+
+      /**
+       * @note Temporary fix
+       * @brief __assign_unquoted_string
+       */
+      void
+      __assign_unquoted_string ();
+
+      /**
+       * @note Temporary fix
+       * @brief __assign_quoted_string
+       */
+      void
+      __assign_quoted_string ();
     }; // Class string
 
     /**

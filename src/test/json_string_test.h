@@ -42,7 +42,7 @@ namespace format
       CPPUNIT_ASSERT_MESSAGE ("as string",
                                 wcscmp ( L"", j[L"2"].as<const wchar_t *> () ) == 0);
 
-      CPPUNIT_ASSERT_MESSAGE ("as string",
+      CPPUNIT_ASSERT_MESSAGE ("copy as string",
                                 wcscmp ( L"x", j[L"3"].as<const wchar_t *> () ) == 0);
     }
 
@@ -304,12 +304,17 @@ namespace format
         // string copy;
         // (void) copy._clone (src); // will not work for test as string
 
-        CPPUNIT_ASSERT_EQUAL_MESSAGE ("src._string_value.empty ()", true, src._string_value[0].empty () );
-        CPPUNIT_ASSERT_MESSAGE ("copy.get ()", wcscmp (L"xxx", copy.get ()) == 0);
+        const wchar_t * startp = copy._string_value[0].c_str ();
 
+        CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._startp is set", true, copy._startp == startp);
+        CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._charc", src._charc, copy._charc);
+        CPPUNIT_ASSERT_MESSAGE ("copy.get ()", wcscmp (L"xxx", copy.get ()) == 0);
+        CPPUNIT_ASSERT_MESSAGE ("copy._to_string ()", wcscmp (L"\"xxx\"", copy._to_string ()) == 0);
+
+        // Test copy as<> ()
         json j = new object { { L"0", new string (copy) } }; // copy of copy
 
-        CPPUNIT_ASSERT_MESSAGE ("as string == \"xxx\"",
+        CPPUNIT_ASSERT_MESSAGE ("copy copy as string == \"xxx\"",
                                 j[L"0"].as<const wchar_t *> () == std::wstring (L"xxx"));
       }
 
