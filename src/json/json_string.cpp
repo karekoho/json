@@ -91,16 +91,19 @@ const wchar_t *
 format::json::string::_to_string (wchar_t *) const
 {
   return (_startp == nullptr || _charc == 0)
-      ? L""
+      ? L"\"\""
       : _string_value[1].c_str ();
 }
 
 size_t
 format::json::string::_str_length () const noexcept
 {
-  return _charc == 0 || *_startp == _sc::double_quote
-      ? _charc
-      : _charc + 2;
+  if (_startp == nullptr || _charc == 0)
+    return 2;
+
+  return *_startp == _sc::double_quote
+            ? _charc
+            : _charc + 2;
 }
 
 format::json::value *

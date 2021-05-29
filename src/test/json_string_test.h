@@ -21,7 +21,7 @@ namespace format
       json parent;
 
       string a[] = {
-        string (),        
+        string (),
         string (L"x"),
         string (& parent, 1),
       };
@@ -29,7 +29,7 @@ namespace format
       // TODO: what is the correct place for these?
       json j = new object { { L"0", new string () },
                             { L"1", new string (L"x") },
-                            { L"2", new string (& parent, 1) },
+                            { L"2", new string (& parent, 1) }, // stringify () --> Segmentation fault: 11
                             { L"3", new string (a[1]) } // copy
                           };
 
@@ -44,6 +44,7 @@ namespace format
 
       CPPUNIT_ASSERT_MESSAGE ("copy as string",
                                 wcscmp ( L"x", j[L"3"].as<const wchar_t *> () ) == 0);
+
     }
 
     virtual void
@@ -111,7 +112,8 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-          { L"", L"", 0, 0, (wchar_t) 0, PASS },
+          //{ L"", L"", 0, 0, (wchar_t) 0, PASS },
+          { L"", L"\"\"", 2, 0, (wchar_t) 0, PASS },
           { L"xxx", L"\"xxx\"", 3 + 2, 3, (wchar_t) 0, PASS },
 
           { L"\"xxx", nullptr, 0, 0, (wchar_t) 0, FAIL },
@@ -143,6 +145,13 @@ namespace format
 
       (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]); \
       CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
+
+      {
+        string s;
+        CPPUNIT_ASSERT_EQUAL_MESSAGE ("string length", (size_t) 2, s._str_length ());
+        CPPUNIT_ASSERT_EQUAL_MESSAGE ("string _str_length", (size_t) 0, s.length ());
+        CPPUNIT_ASSERT_MESSAGE ("string equal", wcscmp (L"\"\"", s._to_string ()) == 0);
+      }
     }
 
     virtual void
