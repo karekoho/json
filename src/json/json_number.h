@@ -95,8 +95,7 @@ namespace format
       virtual inline value &
       operator =(double d) noexcept override
       {
-        _double_value   = d;
-        _double_valuep  = & _double_value;
+        _double_value = d;
         _primitive.double_value = d;
         _is_floating_point = true;
         return __clear_strp ();
@@ -110,8 +109,7 @@ namespace format
       virtual inline value &
       operator =(long long l) noexcept override
       {
-        _double_value   = l; // FIXME: store integer type in long long
-        _double_valuep  = & _double_value;
+        _double_value = l; // FIXME: store integer type in long long
         _primitive.double_value = l;
         _is_floating_point = false;
         return __clear_strp ();
@@ -123,20 +121,13 @@ namespace format
        */
       inline double
       get () const
-      { return _double_valuep == nullptr ? (_primitive.double_value = _calculate (_digitp)) : _double_value; }
+      { return _double_value; }
 
     protected:
       /**
-       * TODO: long double
        * @brief _value
        */
-      mutable double _double_value;
-
-      /**
-       * TODO: get rid of this --> v2.x
-       * @brief _double_valuep
-       */
-      mutable double *_double_valuep;
+      double _double_value;
 
       /**
        * @brief _digitp
@@ -144,13 +135,12 @@ namespace format
       const wchar_t *_digitp[2][2];
 
       /**
-       * TODO: _is_float
        * @brief _is_double
        */
       bool _is_floating_point;
 
       /**
-       * TODO: get rid of this --> v2.x
+       * @todo: Get rid of this --> v2.0.1
        * @brief _double_str
        */
       mutable std::wstring _double_str;
@@ -202,15 +192,15 @@ namespace format
        * @param digitp
        * @return
        */
-      double _calculate (const wchar_t * const digitp[2][2]) const;
+      double _calculate (const wchar_t * const digitp[2][2]);
 
       /**
        * @brief _atof
        * @param digitp
        * @return
        */
-      inline double
-      _atof (const wchar_t * const digitp[2]) const
+      inline static double
+      _atof (const wchar_t * const digitp[2])
       { return std::atof (std::string (digitp[0], digitp[1]).c_str ()); }
 
       /**
@@ -218,11 +208,12 @@ namespace format
        * @param digitp
        * @return
        */
-      inline long long
-      _atoll (const wchar_t * const digitp[2]) const
+      inline static long long
+      _atoll (const wchar_t * const digitp[2])
       { return std::atoll (std::string (digitp[0], digitp[1]).c_str ()); }
 
       /**
+       * @todo To be removed
        * @brief _assign
        * @param nv
        * @return
@@ -238,7 +229,7 @@ namespace format
       _clear () override;
 
       /**
-       * @brief strValue
+       * @brief _to_string
        * @return
        */
       virtual const wchar_t *
@@ -258,13 +249,17 @@ namespace format
       virtual size_t
       _str_length () const noexcept override;
 
+      /**
+       * @todo To be removed
+       * @brief _get
+       */
       virtual void
       _get () const override
-      { (void) get (); }
+      { _primitive.double_value = get (); }
 
     private:
       /**
-       * @brief _to_string
+       * @brief __to_string
        */
       inline void
       __to_string () const noexcept

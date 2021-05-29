@@ -43,7 +43,7 @@ namespace format
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("number::type ()", json::number_t, src[0].type ());
       CPPUNIT_ASSERT_MESSAGE ("number", & copy[0] != & src[0]);
-      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("src[1]._double_value", (double) 0, src[1]._double_value, delta);
+      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("src[1]._double_value", (double) 100, src[1]._double_value, delta);
       CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("copy[0].value ()", (double) 10, copy[0].get (), delta);
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[0].value ()", (long long) 10, (long long) copy[0].get ());
       CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("copy[1].value ()", (double) 100, copy[1].get (), delta);
@@ -98,8 +98,6 @@ namespace format
       TEST_IT_START
         const wchar_t *startp = (*it).starp;
         const wchar_t *readp = n._parse (startp);
-
-        n._double_valuep = nullptr;
 
         ASSERT_EQUAL_IDX ("n._readp", startp + (*it).move, readp);
         ASSERT_EQUAL_IDX ("n.value ()", (*it).dval, n.get ());
@@ -268,7 +266,7 @@ namespace format
         // std::cerr << d << " " << *(n._double_valuep) << std::endl;
 
         ASSERT_EQUAL_IDX ("n._calculate ()", (*it).dval, d);
-        ASSERT_EQUAL_IDX ("n._double_valuep", d, *(n._double_valuep));
+        //ASSERT_EQUAL_IDX ("n._double_valuep", d, *(n._double_valuep));
 
       TEST_IT_END
     }
@@ -369,7 +367,7 @@ namespace format
 
                     /** old_value: value from value[key] */
                     old_value = new number (parents[pidx]);
-                    old_value->_double_valuep = nullptr;
+                    //old_value->_double_valuep = nullptr;
 
                     old_value->_set_key ((*it).key, wcslen ((*it).key));
 
@@ -501,11 +499,8 @@ namespace format
                                     100.1,
                                     copy[1].get ());
 
-      CPPUNIT_ASSERT_MESSAGE ("src[1]._double_value",
-                              src[1]._double_valuep == nullptr);  // _parse () called but not _calculate ()
-
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("src[1]._double_value",
-                                    (double) 0,
+                                    (double) 100.1,
                                     src[1]._double_value);  // _parse () called but not _calculate ()
 
       CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",

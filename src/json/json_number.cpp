@@ -5,7 +5,6 @@
 format::json::number::number ()
   : leaf (),
     _double_value (0),
-    _double_valuep (& _double_value),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (false)
 {
@@ -15,7 +14,6 @@ format::json::number::number ()
 format::json::number::number (long long l)
   : leaf (),
     _double_value (l),  // FIXME: store integer type in long long
-    _double_valuep (& _double_value),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (false)
 {
@@ -25,7 +23,6 @@ format::json::number::number (long long l)
 format::json::number::number (double d)
   : leaf (),
     _double_value (d),
-    _double_valuep (& _double_value),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (true)
 {
@@ -35,7 +32,6 @@ format::json::number::number (double d)
 format::json::number::number (const wchar_t * const json)
   : leaf (json),
     _double_value (0),
-    _double_valuep (nullptr),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (false)
 {
@@ -48,7 +44,6 @@ format::json::number::number (const wchar_t * const json)
 format::json::number::number (json *parent)
   : leaf (parent),
     _double_value (0),
-    _double_valuep (nullptr),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
    _is_floating_point (false)
 {
@@ -58,7 +53,6 @@ format::json::number::number (json *parent)
 format::json::number::number (const number &other)
  : leaf (other),
    _double_value (0),
-   _double_valuep (nullptr),
    _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
    _is_floating_point (false)
 {
@@ -81,12 +75,12 @@ format::json::number::_parse (const wchar_t * const json)
   if (*_readp == 0)
     throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
 
-  if (_double_valuep)
+  if (_digitp[DOUBLE][START])
     _clear ();
 
   _digitp[DOUBLE][START] = _readp;
 
-  if (*_readp == '-')
+  if (*_readp == '-') // Negative value
     _readp++;
 
   if (*_readp == 48)    // Expect 0\0 | 0.digits
@@ -94,25 +88,26 @@ format::json::number::_parse (const wchar_t * const json)
       if (*(_readp + 1) == '.') // Possible float value
         {
           _readp++;
-          return _frag ();
+          return _frag (); // Look for decimals
         }
 
       return (_digitp[DOUBLE][END] = ++_readp);  // Found single zero: 0[\0NaN]
     }
 
   if ((peek = _digits ()) == '.')
-    return _frag ();
+    return _frag (); // Look for decimals
 
   if (peek == 'e' || peek == 'E')
     {
       _digitp[DOUBLE][END] = _readp;
-      return _exp ();
+      return _exp (); // Look for exponent
     }
 
   if (peek < 0)
     throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
 
   _digitp[DOUBLE][END] = _readp;
+  _double_value = _calculate (_digitp); // Integer value
 
   return _readp;
 }
@@ -142,7 +137,12 @@ format::json::number::_frag ()
 
   _is_floating_point = true;
 
-  return peek == 'e' || peek == 'E' ? _exp () : _readp;
+  if (peek == 'e' || peek == 'E') {
+      return _exp ();
+    }
+
+  _double_value = _calculate (_digitp);
+  return _readp;
 }
 
 const wchar_t *
@@ -158,38 +158,38 @@ format::json::number::_exp ()
 
   _digitp[EXP][END] = _readp;
 
+  _double_value = _calculate (_digitp);
   return _readp;
 }
 
 double
-format::json::number::_calculate (const wchar_t * const digitp[2][2]) const
+format::json::number::_calculate (const wchar_t * const digitp[2][2])
 {
-  _double_valuep = & _double_value;
-
+  // Value is zero
   if (digitp[DOUBLE][START] == nullptr || digitp[DOUBLE][END] == nullptr)
     return (_double_value = 0);
 
   _double_value = _atof (digitp[DOUBLE]);
 
+  // No exponent
   if (digitp[EXP][START] == nullptr || digitp[EXP][END] == nullptr)
     return _double_value;
 
   long long exp = _atoll (digitp[EXP]);
 
+  // No exponent
   if (exp == 0)
     return _double_value;
 
-  return _double_value = (exp < 0)
-        ? _double_value / pow (10, -1 * exp)
-        : _double_value * pow (10, exp);
+  return exp < 0
+          ? _double_value / pow (10, -1 * exp)
+          : _double_value * pow (10, exp);
 }
 
 void
 format::json::number::_clear ()
 {
   _double_value   = 0;
-  _double_valuep  = nullptr;
-  _primitive.double_value = 0;
   (void) __clear_strp ();
 }
 
@@ -199,12 +199,12 @@ format::json::number::_clone (const value &other)
   const number & nv = dynamic_cast<const number &> (other);
 
   _is_floating_point = nv._is_floating_point;
-  _primitive.double_value = nv._primitive.double_value;
+  // _primitive.double_value = nv._primitive.double_value;
 
-  if (nv._double_valuep)  // nv._calculate () is called or number is assigned with long|double
-    {
+  //if (nv._double_valuep)  // nv._calculate () is called or number is assigned with long|double
+    //{
       _double_value = nv._double_value;
-      _double_valuep = &_double_value;
+  /*    _double_valuep = &_double_value;
     }
   else  // nv._calculate () not yet called
     {
@@ -212,7 +212,7 @@ format::json::number::_clone (const value &other)
       _digitp[DOUBLE][END]    = nv._digitp[DOUBLE][END];
       _digitp[EXP][START]     = nv._digitp[EXP][START];
       _digitp[EXP][END]       = nv._digitp[EXP][END];
-    }
+    } */
 
   return this;
 }
