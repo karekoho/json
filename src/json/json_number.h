@@ -39,15 +39,27 @@ namespace format
 
       /**
        * @brief number
+       * @param i
+       */
+      number (int i);
+
+      /**
+       * @brief number
        * @param l
        */
-      number (long long l);
+      number (long long ll);
+
+      /**
+       * @brief number
+       * @param f
+       */
+      number (float f);
 
       /**
        * @brief number
        * @param d
        */
-      number (double d);
+      number (long double ld);
 
       /**
        * @brief Number
@@ -93,7 +105,7 @@ namespace format
        * @return
        */
       virtual inline value &
-      operator =(double d) noexcept override
+      operator =(long double d) noexcept override
       {
         _double_value = d;
         _primitive.double_value = d;
@@ -109,7 +121,7 @@ namespace format
       virtual inline value &
       operator =(long long l) noexcept override
       {
-        _double_value = l; // FIXME: store integer type in long long
+        _double_value = l;
         _primitive.double_value = l;
         _is_floating_point = false;
         return __clear_strp ();
@@ -119,7 +131,7 @@ namespace format
        * @brief value
        * @return
        */
-      inline double
+      inline long double
       get () const
       { return _double_value; }
 
@@ -127,7 +139,7 @@ namespace format
       /**
        * @brief _value
        */
-      double _double_value;
+      long double _double_value;
 
       /**
        * @brief _digitp
@@ -192,16 +204,16 @@ namespace format
        * @param digitp
        * @return
        */
-      double _calculate (const wchar_t * const digitp[2][2]);
+      long double _calculate (const wchar_t * const digitp[2][2]);
 
       /**
        * @brief _atof
        * @param digitp
        * @return
        */
-      inline static double
+      inline static long double
       _atof (const wchar_t * const digitp[2])
-      { return std::atof (std::string (digitp[0], digitp[1]).c_str ()); }
+      { return std::strtold (std::string (digitp[0], digitp[1]).c_str (), nullptr); }
 
       /**
        * @brief _atoll

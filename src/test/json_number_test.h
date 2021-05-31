@@ -20,43 +20,55 @@ namespace format
     {
       json parent;
 
-      number n[] = {
-        number (),
-        number ((long long) 10),
-        number (10.10),
-        number (L"10"),
-        number (& parent),
-      };
+      long double max_double = std::numeric_limits<long double>::max ();
+
+      // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
+      long double delta = std::numeric_limits<long double>::epsilon ();
 
       number src[] = {
-        number ((long long) 10),
-        number (L"100")
+        number (),
+        number (100),
+        number (max_double),
+        number (L"100"),
+        number (L"100.1"),
+        number (& parent),
       };
 
       number copy[] = {
           number (src[0]),
-          number (src[1])
+          number (src[1]),
+          number (src[2]),
+          number (src[3]),
+          number (src[4]),
+          number (src[5])
       };
 
-      // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
-      double delta = std::numeric_limits<double>::epsilon ();
-
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("number::type ()", json::number_t, src[0].type ());
-      CPPUNIT_ASSERT_MESSAGE ("number", & copy[0] != & src[0]);
-      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("src[1]._double_value", (double) 100, src[1]._double_value, delta);
-      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("copy[0].value ()", (double) 10, copy[0].get (), delta);
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[0].value ()", (long long) 10, (long long) copy[0].get ());
-      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("copy[1].value ()", (double) 100, copy[1].get (), delta);
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("number default value", (int) 0, (int) src[0].get ());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("number int value", (int) 100, (int) src[1].get ());
+      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("number double value", max_double, src[2].get (), delta);
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("parsed number int value", (int) 100, (int) src[3].get ());
+      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("parsed number float value", (float) 100.1, (float) src[4].get (), delta);
+
+      // Test copies
+      CPPUNIT_ASSERT_MESSAGE ("copy", & copy[0] != & src[0]);
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("number default value", (int) 0, (int) copy[0].get ());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("number int value", (int) 100, (int) copy[1].get ());
+      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("number double value", max_double, copy[2].get (), delta);
+      CPPUNIT_ASSERT_EQUAL_MESSAGE ("parsed number int value", (int) 100, (int) copy[3].get ());
+      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("parsed number float value", (float) 100.1, (float) copy[4].get (), delta);
 
       // TODO: what is the correct place for these?
-      json j = new object { { L"0", new number (10.101) },
-                            { L"1", new number ((long long) 10) } };
+      json j = new object { { L"0", new number ((float) 101.1) },
+                            { L"1", new number (10) } };
 
       CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("as double",
-                                            (double) 10.101, j[L"0"].as<double> (), delta);
+                                            (float) 101.1, j[L"0"].as<float> (), delta);
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("as int",
-                                    (int) 10, j[L"1"].as<int> ());
+                                    10, j[L"1"].as<int> ());
     }
 
     virtual void
@@ -68,7 +80,7 @@ namespace format
       {
         const wchar_t *starp;
         size_t move;
-        double dval;
+        long double dval;
         int assert_status;
       };
 
@@ -79,13 +91,13 @@ namespace format
           { L"00", 1, 0, PASS },
           { L"05", 1, 0, PASS },
           { L"-2]", 2, -2, PASS },
-          { L"3.3 }", 3, 3.3, PASS },
-          { L"0.4, ", 3, 0.4, PASS },
-          { L"-0.5 ,", 4, -0.5, PASS },
+          { L"3.3 }", 3, (long double) 3.3, PASS },
+          { L"0.4, ", 3, (long double) 0.4, PASS },
+          { L"-0.5 ,", 4, (long double) -0.5, PASS },
           { L"6e2", 3, 600, PASS },
           { L"7E2}", 3, 700, PASS },
           { L"8E+2 ] ", 4, 800, PASS },
-          { L"9E-2, ", 4, 0.09, PASS },
+          { L"9E-2, ", 4, (long double) 0.09, PASS },
 
           { L"x", 1, 0, FAIL },   // NaN
           //{ L"00", 1, 0, FAIL },
@@ -95,12 +107,17 @@ namespace format
           { L"2eX", 2, 0, FAIL }, // Multiplier of ten is NaN
       };
 
+      // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
+      long double delta = std::numeric_limits<long double>::epsilon ();
+
       TEST_IT_START
         const wchar_t *startp = (*it).starp;
         const wchar_t *readp = n._parse (startp);
 
         ASSERT_EQUAL_IDX ("n._readp", startp + (*it).move, readp);
-        ASSERT_EQUAL_IDX ("n.value ()", (*it).dval, n.get ());
+        // ASSERT_EQUAL_IDX ("n.value ()", (*it).dval, n.get ());
+
+        CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("number.value ()", (*it).dval, n.get (), delta);
 
       TEST_IT_END
     }
@@ -390,7 +407,7 @@ namespace format
                       }
                     else if ((*it).new_value->type () == value::number_t)
                       {
-                        ASSERT_EQUAL_IDX ("old_value->get ()", (double) 10, old_value->get ());
+                        ASSERT_EQUAL_IDX ("old_value->get ()", (long double) 10, old_value->get ());
                         delete old_value;
                       }
                   }
@@ -424,7 +441,7 @@ namespace format
 
         number n[4] = {
           number ((long long) (*it).d),
-          number ((double)(*it).d),
+          number ((long double)(*it).d),
           number ((*it).s[0]),
           number ((*it).s[1]),
         };
@@ -449,7 +466,7 @@ namespace format
 
       std::vector<struct assert > test = {
         { new number ((long long) 100), 3, PASS },
-        { new number ((double) 100.10), 10, PASS },
+        { new number ((long double) 100.10), 10, PASS },
         { new number (L"100"), 3, PASS },
         { new number (L"100.10"), 10, PASS } // TODO: should be 5
       };
@@ -478,7 +495,7 @@ namespace format
     test__clone_const_value_ref () override
     {
       number src[] = {
-        number (100.1),
+        number ((float) 100.1),
         number (L"100.1")
       };
 
@@ -488,20 +505,20 @@ namespace format
       };
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy[0].get ()",
-                                    100.1,
-                                    copy[0].get ()); // _double_value && _double_valuep are set
+                                    (float) 100.1,
+                                    (float) copy[0].get ()); // _double_value && _double_valuep are set
 
       CPPUNIT_ASSERT_MESSAGE ("copy[]._is_double",
                               copy[0]._is_floating_point == true
                               && copy[0]._is_floating_point == copy[1]._is_floating_point);
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("(long) copy[1].get ()",
-                                    100.1,
-                                    copy[1].get ());
+                                    (float) 100.1,
+                                    (float) copy[1].get ());
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("src[1]._double_value",
-                                    (double) 100.1,
-                                    src[1]._double_value);  // _parse () called but not _calculate ()
+                                    (float) 100.1,
+                                    (float) src[1]._double_value);  // _parse () called but not _calculate ()
 
       CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",
                               copy[1].stringify () == std::wstring (L"100.100000"));
@@ -511,13 +528,13 @@ namespace format
                             { L"1", new number (src[1]) } };
 
       // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
-      double delta = std::numeric_limits<double>::epsilon ();
+      float delta = std::numeric_limits<float>::epsilon ();
 
       CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("as double",
-                                            (double) 100.1, j[L"0"].as<double> (), delta);
+                                            (float) 100.1, j[L"0"].as<float> (), delta);
 
       CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("as double",
-                                            (double) 100.1, j[L"1"].as<double> (), delta);
+                                            (float) 100.1, j[L"1"].as<float> (), delta);
     }
 
     void
@@ -548,11 +565,8 @@ namespace format
 
       json j = new object { { L"0", m } };
 
-      // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
-      // double delta = std::numeric_limits<double>::epsilon ();
-
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("as int",
-                                            (int) 103, j[L"0"].as<int> ());
+                                    (int) 103, j[L"0"].as<int> ());
     }
 
     void
@@ -560,34 +574,36 @@ namespace format
     {
       json parent;
 
-      number *n = new number ((double) 100.1);
-      *n = (double) 101.1;
+      number *n = new number ((long double) 100.0);
+      *n = (long double) 101.1;
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("(double) number::get ()",
-                                    101.1,
-                                    n->get ());
+      // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
+      double delta = std::numeric_limits<double>::epsilon ();
 
-      (parent[L"0"] = n)[L"0"] = (double) 102.2;
+      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("(double) number::get ()",
+                                    (double) 101.1,
+                                     (double) n->get (), delta);
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("(double) number::get ()",
+      (parent[L"0"] = n)[L"0"] = (long double) 102.2;
+
+      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("(double) number::get ()",
                                     (double) 102.2,
                                     //static_cast<number &> (parent[L"0"]).get ()
-                                    n->get ());
+                                    (double) n->get (), delta);
 
       CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",
                               //parent[L"0"].get () == std::wstring (L"102.200000")
                               n->stringify () == std::wstring (L"102.200000"));
 
-      number *m = new number ((double) 100.0);
-      *m = (double) 103.1;
+      number *m = new number ((long double) 100.0);
+      *m = (long double) 100.3;
 
       json j = new object { { L"0", m } };
 
-      // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
-      double delta = std::numeric_limits<double>::epsilon ();
+
 
       CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("as double",
-                                            (double) 103.1, j[L"0"].as<double> (), delta);
+                                            (double) 100.3, j[L"0"].as<double> (), delta);
 
     }
 
@@ -601,8 +617,8 @@ namespace format
     {
       CppUnit::TestSuite *s = new CppUnit::TestSuite ("json number test");
 
-      /* 0. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_strValue", &json_number_test::test__to_string));
-      /* 1. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_ctor_dtor", &json_number_test::test_ctor_dtor));
+      /* 0. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_ctor_dtor", &json_number_test::test_ctor_dtor));
+      /* 1. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_strValue", &json_number_test::test__to_string));
       /* 2. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_parse_1", &json_number_test::test__parse));
       /* 3. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_digits", &json_number_test::test_digits));
       /* 4. */  s->addTest (new CppUnit::TestCaller<json_number_test> ("test_frag", &json_number_test::test_frag));

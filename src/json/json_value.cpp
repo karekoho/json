@@ -131,7 +131,7 @@ format::json::value::operator =(long long l)
 }
 
 format::json::value &
-format::json::value::operator =(double d)
+format::json::value::operator =(long double d)
 {
   return _assign (new number (d));
 }

@@ -16,11 +16,34 @@
 #include <clocale>
 
 #include "../json/json.h"
-// #include <format/json.h>
 
 #define PASS  0
 #define FAIL  1
 #define SKIP -1
+
+/* #ifndef JSON_MAX_DOUBLE
+  #define JSON_MAX_DOUBLE = std::numeric_limits<long double>::max ();
+#endif
+
+ #ifndef JSON_MIN_DOUBLE
+  #define JSON_MIN_DOUBLE = std::numeric_limits<long double>::min ();
+#endif
+
+#ifndef JSON_MAX_UDOUBLE
+  #define JSON_MAX_UDOUBLE = std::numeric_limits<unsigned long double>::max ();
+#endif
+
+#ifndef JSON_MAX_INT
+  #define JSON_MAX_INT = std::numeric_limits<long long>::max ();
+#endif
+
+#ifndef JSON_MIN_INT
+  #define JSON_MIN_INT = std::numeric_limits<long double>::min ();
+#endif
+
+#ifndef JSON_MAX_UINT
+  #define JSON_MAX_UINT = std::numeric_limits<unsigned long long>::max ();
+#endif */
 
 #define EXPECTED 0
 #define ACTUAL 1

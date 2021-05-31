@@ -192,7 +192,7 @@ namespace format
        * @return
        */
       virtual value &
-      operator =(double d);
+      operator =(long double d);
 
       /**
        * @brief operator =
@@ -562,8 +562,8 @@ namespace format
        */
       mutable union primitive_value
       {
-        double      double_value;
-        bool        boolean_value;
+        long double   double_value;
+        bool          boolean_value;
         const wchar_t *string_value;
       } _primitive;
 

@@ -11,16 +11,34 @@ format::json::number::number ()
   _primitive.double_value = 0;
 }
 
-format::json::number::number (long long l)
+format::json::number::number (int i)
   : leaf (),
-    _double_value (l),  // FIXME: store integer type in long long
+    _double_value (i),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (false)
 {
-  _primitive.double_value = l;
+   _primitive.double_value = i;
 }
 
-format::json::number::number (double d)
+format::json::number::number (long long ll)
+  : leaf (),
+    _double_value (ll),
+    _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
+    _is_floating_point (false)
+{
+  _primitive.double_value = ll;
+}
+
+format::json::number::number (float f)
+  : leaf (),
+    _double_value (static_cast<long double> (f)),
+    _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
+    _is_floating_point (true)
+{
+  _primitive.double_value = static_cast<long double> (f);
+}
+
+format::json::number::number (long double d)
   : leaf (),
     _double_value (d),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
@@ -56,6 +74,8 @@ format::json::number::number (const number &other)
    _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
    _is_floating_point (false)
 {
+  // set _double_value,
+  // set _is_floating_point
   (void) _clone (other);
 }
 
@@ -162,8 +182,8 @@ format::json::number::_exp ()
   return _readp;
 }
 
-double
-format::json::number::_calculate (const wchar_t * const digitp[2][2])
+long
+double format::json::number::_calculate (const wchar_t * const digitp[2][2])
 {
   // Value is zero
   if (digitp[DOUBLE][START] == nullptr || digitp[DOUBLE][END] == nullptr)
@@ -182,8 +202,8 @@ format::json::number::_calculate (const wchar_t * const digitp[2][2])
     return _double_value;
 
   return exp < 0
-          ? _double_value / pow (10, -1 * exp)
-          : _double_value * pow (10, exp);
+          ? _double_value / std::powl (10, -1 * exp)
+          : _double_value * std::powl (10, exp);
 }
 
 void
@@ -196,23 +216,10 @@ format::json::number::_clear ()
 format::json::value *
 format::json::number::_clone (const value &other)
 {
-  const number & nv = dynamic_cast<const number &> (other);
+  const number & nv = static_cast<const number &> (other);
 
   _is_floating_point = nv._is_floating_point;
-  // _primitive.double_value = nv._primitive.double_value;
-
-  //if (nv._double_valuep)  // nv._calculate () is called or number is assigned with long|double
-    //{
-      _double_value = nv._double_value;
-  /*    _double_valuep = &_double_value;
-    }
-  else  // nv._calculate () not yet called
-    {
-      _digitp[DOUBLE][START]  = nv._digitp[DOUBLE][START];
-      _digitp[DOUBLE][END]    = nv._digitp[DOUBLE][END];
-      _digitp[EXP][START]     = nv._digitp[EXP][START];
-      _digitp[EXP][END]       = nv._digitp[EXP][END];
-    } */
+  _double_value = nv._double_value;
 
   return this;
 }

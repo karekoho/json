@@ -393,7 +393,7 @@ namespace format
 
         CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[\"0\"].type ()",
                                       value::number_t,
-                                      (j[L"0"] = 100.0)[L"0"].type ());
+                                      (j[L"0"] = (long double) 100.0)[L"0"].type ());
       }
 
       void

@@ -45,7 +45,8 @@ namespace format
        * @brief Leaf
        * @param other
        */
-      leaf (const leaf &other) = default;
+      leaf (const leaf &other) : value (other)
+      {}
 
       /**
        * @brief ~Leaf
