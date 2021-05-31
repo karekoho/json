@@ -49,7 +49,7 @@ namespace format
        * @param other
        * @return
        */
-      virtual value *
+      virtual inline value *
       clone () const override
       { return new string (*this); }
 
@@ -60,23 +60,6 @@ namespace format
       virtual inline value_t
       type () const noexcept override
       { return value::value_t::string_t; }
-
-      /**
-       * @brief operator =
-       * @param s
-       * @return
-       */
-      inline value &
-      operator =(const string & s)
-      { return _assign (s); }
-
-      /**
-       * @brief operator =
-       * @param s
-       * @return
-       */
-      virtual value &
-      operator =(const wchar_t * const s) override;
 
       /**
        * @brief value
@@ -92,7 +75,26 @@ namespace format
        */
       inline size_t
       length () const noexcept
-      { return _str_length () - 2; }
+      { return _string_value.size (); }
+
+      /**
+       * @note Removed
+       * @brief operator =
+       * @param s
+       * @return
+       *
+      inline value &
+      operator =(const string & s)
+      { return _assign (s); } */
+
+      /**
+       * @note Removed
+       * @brief operator =
+       * @param s
+       * @return
+       *
+      virtual value &
+      operator =(const wchar_t * const s) override; */
 
     protected:
       /**
@@ -130,23 +132,25 @@ namespace format
        * @brief _clear
        */
       virtual void
-      _clear () override;
+      _clear () override
+      { /* nop */ }
 
       /**
        * @brief _clone
        * @return
        */
       virtual value *
-      _clone (const value &nv) override;
+      _clone (const value &) override
+      { return this; }
 
       /**
-       * @todo To be removed
+       * @note Removed
        * @brief assign
        * @param nv
        * @return
-       */
+       *
       value &
-      _assign (const string & nv);
+      _assign (const string & nv); */
 
       /**
        * @brief strValue

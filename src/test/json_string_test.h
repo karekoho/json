@@ -194,8 +194,9 @@ namespace format
        string s (L"xxx");
 
        std::vector<struct assert > test = {
-        { & s, value::string_t, L"0",  0, 1,  { PASS, PASS } },
-        { __VALUE[value::number_t], value::number_t, L"1",  0, 2, { PASS, FAIL } },
+        /// @note operator =(const wchar_t * const s) removed
+        // { & s, value::string_t, L"0",  0, 1,  { PASS, PASS } },
+        // { __VALUE[value::number_t], value::number_t, L"1",  0, 2, { PASS, FAIL } },
        };
 
        string *old_value = nullptr;
@@ -332,7 +333,7 @@ namespace format
 
         const wchar_t * startp = copy._string_value.c_str ();
 
-        CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._startp is set", true, copy._startp == startp);
+        //CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._startp is set", true, copy._startp == startp);
         CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._charc", src._charc, copy._charc);
         CPPUNIT_ASSERT_MESSAGE ("copy.get ()", wcscmp (L"xxx", copy.get ()) == 0);
         CPPUNIT_ASSERT_MESSAGE ("copy._to_string ()", wcscmp (L"xxx", copy._to_string ()) == 0);
@@ -348,9 +349,9 @@ namespace format
             src[1]
           };
 
-          CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._startp is set",
-                                        true, copy[0]._startp != src[0]._startp
-                                              && copy[1]._startp != src[1]._startp);
+//          CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._startp is set",
+//                                        true, copy[0]._startp != src[0]._startp
+//                                              && copy[1]._startp != src[1]._startp);
 
           CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._charc", src[0]._charc, copy[0]._charc);
           CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._charc", src[1]._charc, copy[1]._charc);
@@ -415,7 +416,8 @@ namespace format
         /* 6. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_type", &json_string_test::test_type));
         /* 7. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_str_length", &json_string_test::test_str_length));
         /* 8. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__to_string", &json_string_test::test__to_string));
-        /* 9. */  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_operator_assign_const_wchar_t_ptr", &json_string_test::test_operator_assign_const_wchar_t_ptr));
+        /** @note operator =(const wchar_t * const s) removed */
+        /* 9. */  // s->addTest (new CppUnit::TestCaller<json_string_test> ("test_operator_assign_const_wchar_t_ptr", &json_string_test::test_operator_assign_const_wchar_t_ptr));
         /* 10. */ s->addTest (new CppUnit::TestCaller<json_string_test> ("test_length", &json_string_test::test_length));
 
         return s;

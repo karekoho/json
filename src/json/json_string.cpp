@@ -29,22 +29,7 @@ format::json::string::string (const string &other)
     _startp (nullptr),
     _charc (other._charc)
 {
-  _clone (other);
-}
-
-format::json::value &
-format::json::string::operator =(const wchar_t * const s)
-{
-  json *p = _parent;
-  _parent = nullptr;
-
-  _clear ();
-
-  (void) _parse (s);
-
-  _parent = p;
-
-  return *this;
+  _string_value.assign (other._string_value.c_str (), other.length ()); // Always at least ""
 }
 
 const wchar_t *
@@ -55,57 +40,32 @@ format::json::string::_parse (const wchar_t * const json)
 
   _startp =_readp = json;
 
-  if (_parent == nullptr)   // 2. ctor
+  if (_parent == nullptr) // 2. constructor
     {
       if ((charc = __string (endc)) < 0 )
         throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
 
       _charc = static_cast<size_t> (charc);
+      _string_value.assign (_startp, _charc);
+    }
+  else if (_charc > 1)  // 3. constructor
+    {
+      // value::_make_value shuold always call string () with charc >= 2, e.g. L"\"x\"" == 3
+      _string_value.assign (_startp + 1, _charc - 2); // Strip quotes
     }
 
-  _readp += _charc;
-
-  // Make unquoted string
-  *_startp == _sc::double_quote
-    ? _string_value.assign (_startp + 1, _charc - 2)
-    : _string_value.assign (_startp, _charc);
-
-  return _readp;
-}
-
-void
-format::json::string::_clear ()
-{
-  _string_value.clear ();
-}
-
-format::json::value &
-format::json::string::_assign (const string &nv)
-{
-  return _parent ? __call__assign (_parent, this, new string (nv)) : *(_clone (nv));
+  return (_readp += _charc);
 }
 
 size_t
 format::json::string::_str_length () const noexcept
 {
-  if (_startp == nullptr) // default constructor
-   return 2;
+  if ((_parent == nullptr && _startp == nullptr ) || _charc == 0) // 1. default constructor, or 3.
+    return 2; // 0 + 2
 
-  // value::_make_value shuold always call string () with charc >= 2, e.g. L"\"x\"" == 3
-  return *_startp == _sc::double_quote
-            ? _charc
-            : _charc + 2;
-}
-
-format::json::value *
-format::json::string::_clone (const value &nv)
-{
-  const string & other = dynamic_cast<const string &> (nv);
-
-  _string_value.assign (other._startp, other._charc); // Always at least ""
-  _startp = _string_value.c_str (); // if other is null or "", _startp points to itself
-
-  return this;
+  return _parent  // 2. or 3.
+      ? _charc    // value::_make_value shuold always call string () with charc >= 2, e.g. L"\"x\"" == 3
+      : _charc + 2;
 }
 
 long
@@ -128,3 +88,20 @@ format::json::string::__string (wchar_t & endc) const noexcept
          ? charc
          : -1 * charc);
 }
+
+/** format::json::value &
+format::json::string::operator =(const wchar_t * const s)
+{
+  json *p = _parent;
+  _parent = nullptr;
+  _clear ();
+  (void) _parse (s);
+  _parent = p;
+  return *this;
+}
+
+format::json::value &
+format::json::string::_assign (const string &nv)
+{
+  return _parent ? __call__assign (_parent, this, new string (nv)) : *(_clone (nv));
+} */
