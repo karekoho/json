@@ -20,17 +20,18 @@ namespace format
     {      
       json parent;
 
-      string a[] = {
+      string src[] = {
         string (),
         string (L"x"),
         string (& parent, 1),
       };
 
+      // TODO: To be clearer, first test every constructor and copies, then one as<> () test is enough
       // TODO: what is the correct place for these?
       json j = new object { { L"0", new string () },
                             { L"1", new string (L"x") },
                             { L"2", new string (& parent, 1) }, // stringify () --> Segmentation fault: 11
-                            { L"3", new string (a[1]) } // copy
+                            { L"3", new string (src[1]) } // copy
                           };
 
       CPPUNIT_ASSERT_MESSAGE ("as string",
@@ -329,7 +330,7 @@ namespace format
         // string copy;
         // (void) copy._clone (src); // will not work for test as string
 
-        const wchar_t * startp = copy._string_value[0].c_str ();
+        const wchar_t * startp = copy._string_value.c_str ();
 
         CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._startp is set", true, copy._startp == startp);
         CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._charc", src._charc, copy._charc);

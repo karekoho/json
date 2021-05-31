@@ -84,7 +84,7 @@ namespace format
        */
       inline const wchar_t *
       get () const noexcept
-      { return _string_value[0].c_str (); }
+      { return _string_value.c_str (); }
 
       /**
        * @brief length
@@ -92,10 +92,7 @@ namespace format
        */
       inline size_t
       length () const noexcept
-      {
-        // return _string_value[0].size ();
-        return _str_length () - 2;
-      }
+      { return _str_length () - 2; }
 
     protected:
       /**
@@ -111,7 +108,7 @@ namespace format
       /**
        * @brief _value
        */
-      std::wstring _string_value[2];
+      std::wstring _string_value;
 
       /**
        * @brief string
@@ -157,7 +154,7 @@ namespace format
        */
       virtual inline const wchar_t *
       _to_string (wchar_t * = nullptr) const override
-      { return _string_value[0].c_str (); }
+      { return _string_value.c_str (); }
 
       /**
        * @brief str_length
@@ -170,8 +167,8 @@ namespace format
        * @todo To be removed
        * @brief _get
        */
-      virtual void
-      _get () const override
+      virtual inline void
+      _get () const noexcept override
       { _primitive.string_value = get (); }
 
     private:
@@ -181,22 +178,9 @@ namespace format
        * otherwise return string as negative value.
        * @return Number of characters read
        */
-      long /* TODO: long */
+      long /** TODO: long */
       __string (wchar_t & endc) const noexcept;
 
-      /**
-       * @note Temporary fix
-       * @brief __assign_unquoted_string
-       */
-      void
-      __assign_unquoted_string ();
-
-      /**
-       * @note Temporary fix
-       * @brief __assign_quoted_string
-       */
-      void
-      __assign_quoted_string ();
     }; // Class string
 
     /**

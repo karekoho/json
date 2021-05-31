@@ -67,8 +67,8 @@ format::json::string::_parse (const wchar_t * const json)
 
   // Make unquoted string
   *_startp == _sc::double_quote
-    ? _string_value[0].assign (_startp + 1, _charc - 2)
-    : _string_value[0].assign (_startp, _charc);
+    ? _string_value.assign (_startp + 1, _charc - 2)
+    : _string_value.assign (_startp, _charc);
 
   return _readp;
 }
@@ -76,7 +76,7 @@ format::json::string::_parse (const wchar_t * const json)
 void
 format::json::string::_clear ()
 {
-  _string_value[0].clear ();
+  _string_value.clear ();
 }
 
 format::json::value &
@@ -102,8 +102,8 @@ format::json::string::_clone (const value &nv)
 {
   const string & other = dynamic_cast<const string &> (nv);
 
-  _string_value[0].assign (other._startp, other._charc); // Always at least ""
-  _startp = _string_value[0].c_str (); // if other is null or "", _startp points to itself
+  _string_value.assign (other._startp, other._charc); // Always at least ""
+  _startp = _string_value.c_str (); // if other is null or "", _startp points to itself
 
   return this;
 }
@@ -128,36 +128,3 @@ format::json::string::__string (wchar_t & endc) const noexcept
          ? charc
          : -1 * charc);
 }
-
-/* void
-format::json::string::__assign_unquoted_string ()
-{
-  *_startp == _sc::double_quote
-    ? _string_value[0].assign (_startp + 1, _charc - 2)
-    : _string_value[0].assign (_startp, _charc);
-}
-
-void
-format::json::string::__assign_quoted_string ()
-{
-  if (*_startp == _sc::double_quote)
-    _string_value[1].assign (_startp, _charc);
-  else
-    {
-      try
-        {
-          size_t charc = _charc + 2;
-          wchar_t *s = new wchar_t[charc] ();
-
-          *s = L'"';
-          *(wcsncpy (s + 1, _startp, _charc) +_charc) = L'"';
-          _string_value[1].assign (s, _charc + 2);
-
-          delete[] s;
-        }
-      catch (std::bad_alloc & ba)
-        {
-          throw json_error (ba.what ());
-        }
-    }
-}*/
