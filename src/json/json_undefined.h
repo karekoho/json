@@ -21,7 +21,9 @@ namespace format
     #endif
 
       public:
-
+      /**
+       * @brief undefined
+       */
       undefined ()
         : leaf ()
       {}
@@ -50,7 +52,7 @@ namespace format
        * @param size
        * @return
        */
-      static void *
+      static inline void *
       operator new (std::size_t size)
       {
         if (__instance == nullptr)
@@ -64,7 +66,7 @@ namespace format
        * @param size
        * @return
        */
-      static void *
+      static inline void *
       operator new[] (std::size_t size)
       {
         if (__instance == nullptr)
@@ -94,7 +96,7 @@ namespace format
        * @param other
        * @return
        */
-      virtual value *
+      virtual inline value *
       clone () const override
       { return new undefined (*this); }
 
@@ -111,8 +113,8 @@ namespace format
        * @param json
        * @return
        */
-      virtual const wchar_t *
-      _parse (const wchar_t * const json) override
+      virtual inline const wchar_t *
+      _parse (const wchar_t * const json) noexcept override
       { return json; }
 
       /**
@@ -123,12 +125,11 @@ namespace format
       type () const noexcept override
       { return value::value_t::undefined_t; }
 
-
     protected:
       /**
        * @brief _clear
        */
-      virtual void
+      virtual inline void
       _clear () override
       {}
 
@@ -136,7 +137,7 @@ namespace format
        * @brief _clone
        * @return
        */
-      virtual value *
+      virtual inline value *
       _clone (const value &) override
       { return new undefined (*this); }
 
@@ -144,7 +145,7 @@ namespace format
        * @brief strValue
        * @return
        */
-      virtual const wchar_t *
+      virtual inline const wchar_t *
       _to_string (wchar_t * = nullptr) const override
       { return L""; }
 
@@ -152,7 +153,7 @@ namespace format
        * @brief str_length
        * @return
        */
-      virtual size_t
+      virtual inline size_t
       _str_length () const noexcept override
       { return 0; }
 
@@ -199,7 +200,7 @@ namespace format
        * @brief clone
        * @return
        */
-      virtual value *
+      virtual inline value *
       clone () const override
       { return new unique_undefined (*this); }
 
@@ -208,7 +209,7 @@ namespace format
        * @param size
        * @return
        */
-      static void *
+      static inline void *
       operator new (std::size_t size)
       { return ::operator new (size); }
 
@@ -217,21 +218,21 @@ namespace format
        * @param size
        * @return
        */
-      static void *
+      static inline void *
       operator new[] (std::size_t size)
       { return ::operator new[] (size); }
 
       /**
        * @brief operator delete
        */
-      void
+      inline void
       operator delete (void *ptr)
       { ::operator delete (ptr); }
 
       /**
        * @brief operator delete[]
        */
-      void
+      inline void
       operator delete[] (void *ptr)
       { ::operator delete (ptr); }
     };
@@ -242,9 +243,14 @@ namespace format
     class no_value : public unique_undefined
     {
     public:
-
+      /**
+       * @brief operator delete
+       */
       void operator delete (void *) {}
 
+      /**
+       * @brief operator delete[]
+       */
       void operator delete[](void *) {}
 
       /**
@@ -256,7 +262,7 @@ namespace format
        * @brief type
        * @return
        */
-      virtual value_t
+      virtual inline value_t
       type () const noexcept override
       { return value::value_t::no_value_t; }
 

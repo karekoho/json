@@ -219,6 +219,7 @@ namespace format
       { return type () == t; }
 
       /**
+       * @todo To be removed as confusing
        * @brief operator ==
        * @param v
        * @return

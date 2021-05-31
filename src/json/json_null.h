@@ -47,7 +47,7 @@ namespace format
        * @param other
        * @return
        */
-      virtual value *
+      virtual inline value *
       clone () const override
       { return new null (*this); }
 
@@ -57,7 +57,7 @@ namespace format
        * @return
        */
       virtual inline const wchar_t *
-      _parse (const wchar_t * const json) override
+      _parse (const wchar_t * const json) noexcept override
       { return json + 4; }
 
       /**
@@ -114,7 +114,7 @@ namespace format
       /**
        * @brief _clear
        */
-      virtual void
+      virtual inline void
       _clear () override
       {}
 
@@ -122,7 +122,7 @@ namespace format
        * @brief _clone
        * @return
        */
-      virtual value *
+      virtual inline value *
       _clone (const value &) override
       { return this; }
 
@@ -130,7 +130,7 @@ namespace format
        * @brief strValue
        * @return
        */
-      virtual const wchar_t *
+      virtual inline const wchar_t *
       _to_string (wchar_t *) const noexcept override
       { return L"null"; }
 
@@ -138,7 +138,7 @@ namespace format
        * @brief strLength
        * @return
        */
-      virtual size_t
+      virtual inline size_t
       _str_length () const noexcept override
       { return 4; }
     };  // Class null
@@ -146,7 +146,7 @@ namespace format
     inline
     null * __call_null (json *parent)
     { return new null (parent); }
-  } // Namespace
+  } // Namespace json
 } // Namespace format
 
 #endif // NULL_H
