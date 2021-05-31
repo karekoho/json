@@ -161,7 +161,7 @@ format::json::array::_clear ()
 format::json::value *
 format::json::array::_clone (const value &other)
 {
-  const array & nv = dynamic_cast<const array &> (other);
+  const array & nv = static_cast<const array &> (other);
 
   if (nv._element_list.empty ())
     return this;
@@ -202,12 +202,8 @@ format::json::array::_to_string (wchar_t *offset) const
 {
   wchar_t *str_value[2] = { nullptr, nullptr };
 
-  if (offset)
+  if (offset) // Parent calls, memory allocated
     str_value[OFFSET] = offset;
-
-  else if (_str_value[BEGIN])
-    return _str_value[BEGIN];
-
   else
     str_value[OFFSET] = new wchar_t[_str_length () + 1] ();
 
@@ -228,9 +224,6 @@ format::json::array::_to_string (wchar_t *offset) const
     }
 
   *(str_value[OFFSET]++) = _sc::end_array;
-
-  if (offset == nullptr)
-    _str_value[BEGIN] = str_value[BEGIN];
 
   return str_value[BEGIN];
 }

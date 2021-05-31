@@ -403,6 +403,8 @@ namespace format
         int assert_status;
       };
 
+      wchar_t * _str_value[2] = { nullptr, nullptr };
+
       std::vector<struct assert> test = {
         { L"[]",
           { L"[]",  // Without parent
@@ -429,13 +431,13 @@ namespace format
                   str_value = new wchar_t[len +1 ] ();
                   str_value = wcsncpy (str_value,  L"[\"x\",", 5);
 
-                  p._str_value[BEGIN]   = str_value;
-                  p._str_value[OFFSET]  = str_value + 5;
+                  _str_value[BEGIN]   = str_value;
+                  _str_value[OFFSET]  = str_value + 5;
                 }
 
               (void) a._parse ((*it).input);
 
-              const wchar_t *output = a._to_string (a._parent ? p._str_value[OFFSET] : nullptr);
+              const wchar_t *output = a._to_string (a._parent ? _str_value[OFFSET] : nullptr);
 
               if (a._parent == nullptr)
                 {
@@ -444,14 +446,14 @@ namespace format
                 }
               else
                 {
-                  ASSERT_EQUAL_IDX ("strlen (p._str_value[BEGIN])", len, wcslen (p._str_value[BEGIN]));
-                  CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[1])", wcscmp (p._str_value[BEGIN], (*it).output[1]) == 0);
+                  ASSERT_EQUAL_IDX ("strlen (p._str_value[BEGIN])", len, wcslen (_str_value[BEGIN]));
+                  CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[1])", wcscmp (_str_value[BEGIN], (*it).output[1]) == 0);
                 }
 
               if (a._parent)
                 {
                   delete[] str_value;
-                  p._str_value[BEGIN] = nullptr;
+                  _str_value[BEGIN] = nullptr;
                 }
             }
       TEST_IT_END

@@ -177,7 +177,7 @@ namespace format
          * @brief Get reference to the element pointer by iterator
          * @return
          */
-        reference
+        reference inline
         operator *() const noexcept
         { return *(*_it).second; }
       }; // Class iterator
@@ -186,7 +186,7 @@ namespace format
        * @brief Get iterator to begin
        * @return
        */
-      const_iterator
+      const_iterator inline
       begin () const noexcept
       { return const_iterator (_member_list.cbegin ()); }
 
@@ -194,7 +194,7 @@ namespace format
        * @brief Get iterator to end
        * @return
        */
-      const_iterator
+      const_iterator inline
       end () const  noexcept
       { return const_iterator (_member_list.cend ()); }
 
@@ -253,14 +253,14 @@ namespace format
        * @brief _at
        * @return
        */
-      virtual value & _at (size_t) override
+      virtual inline value & _at (size_t) override
       { return *(new format::json::undefined ()); }
 
       /**
        * @brief _at
        * @return
        */
-      virtual const value & _at (size_t) const override
+      virtual inline const value & _at (size_t) const override
       { throw json_out_of_range ("Key not found"); }
 
       /**

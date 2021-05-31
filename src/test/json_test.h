@@ -28,10 +28,6 @@ namespace format
 
         json (new object {}),
         json (new array {}),
-
-//        json (object {{}}),
-//        json (array {}),
-//        json (json ())
       };
 
       // Copy
@@ -73,7 +69,7 @@ namespace format
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.length ()",
                                     static_cast<size_t> (0),
-                                    copy.size());
+                                    copy.size ());
     }
 
     virtual void

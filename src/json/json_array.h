@@ -68,7 +68,7 @@ namespace format
       * @brief type
       * @return
       */
-      virtual value_t
+      virtual inline value_t
       type () const noexcept override
       { return value::value_t::array_t; }
 
@@ -76,7 +76,7 @@ namespace format
        * @brief count
        * @return
        */
-      virtual size_t
+      virtual inline size_t
       size () const noexcept override
       { return _element_list.size (); }
 
@@ -174,7 +174,7 @@ namespace format
         * @brief Get reference to the element pointer by iterator
         * @return
         */
-        reference
+        reference inline
         operator *() const noexcept
         { return **_it; }
       }; // Class iterator
@@ -183,7 +183,7 @@ namespace format
        * @brief Get iterator to begin
        * @return
        */
-      const_iterator
+      const_iterator inline
       begin () const noexcept
       { return const_iterator (_element_list.cbegin ()); }
 
@@ -191,7 +191,7 @@ namespace format
        * @brief Get iterator to end
        * @return
        */
-      const_iterator
+      const_iterator inline
       end () const noexcept
       { return const_iterator (_element_list.cend ()); }
 
@@ -220,7 +220,7 @@ namespace format
        * @param key
        * @return
        */
-      virtual value &
+      virtual inline value &
       _at (const wchar_t * const key) override
       { return _at (__to_index (key)); }
 
@@ -229,7 +229,7 @@ namespace format
        * @param key
        * @return
        */
-      virtual const value &
+      virtual inline  const value &
       _at (const wchar_t * const key) const override
       { return _at (__to_index (key)); }
 

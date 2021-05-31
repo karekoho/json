@@ -145,10 +145,6 @@ namespace format
       { return _assign (j); }
 
     protected:
-      /**
-       * @brief _str_value
-       */
-      mutable wchar_t *_str_value[2];
 
       /**
        * @brief json
