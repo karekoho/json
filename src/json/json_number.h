@@ -108,8 +108,10 @@ namespace format
       operator =(long double d) noexcept override
       {
         _double_value = d;
-        _primitive.double_value = d;
+        // _primitive.double_value = d;
         _is_floating_point = true;
+        __to_string ();
+
         return __clear_strp ();
       }
 
@@ -122,8 +124,10 @@ namespace format
       operator =(long long l) noexcept override
       {
         _double_value = l;
-        _primitive.double_value = l;
+        // _primitive.double_value = l;
         _is_floating_point = false;
+        __to_string ();
+
         return __clear_strp ();
       }
 
@@ -155,7 +159,7 @@ namespace format
        * @todo: Get rid of this --> v2.0.1
        * @brief _double_str
        */
-      mutable std::wstring _double_str;
+      std::wstring _double_str;
 
       /**
        * @brief number
@@ -244,8 +248,9 @@ namespace format
        * @brief _to_string
        * @return
        */
-      virtual const wchar_t *
-      _to_string (wchar_t * = nullptr) const override;
+      virtual inline const wchar_t *
+      _to_string (wchar_t * = nullptr) const noexcept override
+      { return _double_str.c_str (); }
 
       /**
        * @brief _clone
@@ -258,15 +263,16 @@ namespace format
        * @brief str_length
        * @return
        */
-      virtual size_t
-      _str_length () const noexcept override;
+      virtual inline size_t
+      _str_length () const noexcept override
+      { return _double_str.length (); }
 
       /**
        * @todo To be removed
        * @brief _get
        */
-      virtual void
-      _get () const override
+      virtual inline void
+      _get () const noexcept override
       { _primitive.double_value = get (); }
 
     private:
@@ -274,12 +280,11 @@ namespace format
        * @brief __to_string
        */
       inline void
-      __to_string () const noexcept
+      __to_string () noexcept
       {
-        if (_double_str.empty ())
-          _double_str = _is_floating_point
-              ? std::to_wstring (_double_value)
-              : std::to_wstring (static_cast<long long> (_double_value));
+        _double_str = _is_floating_point
+          ? std::to_wstring (_double_value)
+          : std::to_wstring (static_cast<long long> (_double_value));
       }
 
       /**
@@ -301,7 +306,7 @@ namespace format
       inline value &
       __clear_strp () noexcept
       {
-        _double_str.clear ();
+        // _double_str.clear ();
         __clear__digitp ();
         return *this;
       }

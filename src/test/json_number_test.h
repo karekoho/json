@@ -600,8 +600,6 @@ namespace format
 
       json j = new object { { L"0", m } };
 
-
-
       CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("as double",
                                             (double) 100.3, j[L"0"].as<double> (), delta);
 

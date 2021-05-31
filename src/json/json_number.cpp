@@ -8,7 +8,8 @@ format::json::number::number ()
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (false)
 {
-  _primitive.double_value = 0;
+  // _primitive.double_value = 0;
+  __to_string (); /// TODO: const wchar_t * __to_string (long long | long double)
 }
 
 format::json::number::number (int i)
@@ -17,7 +18,8 @@ format::json::number::number (int i)
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (false)
 {
-   _primitive.double_value = i;
+   // _primitive.double_value = i;
+   __to_string ();
 }
 
 format::json::number::number (long long ll)
@@ -26,7 +28,8 @@ format::json::number::number (long long ll)
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (false)
 {
-  _primitive.double_value = ll;
+  // _primitive.double_value = ll;
+  __to_string ();
 }
 
 format::json::number::number (float f)
@@ -35,7 +38,8 @@ format::json::number::number (float f)
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (true)
 {
-  _primitive.double_value = static_cast<long double> (f);
+  // _primitive.double_value = static_cast<long double> (f);
+  __to_string ();
 }
 
 format::json::number::number (long double d)
@@ -44,7 +48,8 @@ format::json::number::number (long double d)
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (true)
 {
-  _primitive.double_value = d;
+  // _primitive.double_value = d;
+  __to_string ();
 }
 
 format::json::number::number (const wchar_t * const json)
@@ -65,7 +70,8 @@ format::json::number::number (json *parent)
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
    _is_floating_point (false)
 {
-  _primitive.double_value = 0;
+  // _primitive.double_value = 0;
+  __to_string ();
 }
 
 format::json::number::number (const number &other)
@@ -74,8 +80,7 @@ format::json::number::number (const number &other)
    _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
    _is_floating_point (false)
 {
-  // set _double_value,
-  // set _is_floating_point
+  // Sets _double_value, _is_floating_point
   (void) _clone (other);
 }
 
@@ -128,6 +133,7 @@ format::json::number::_parse (const wchar_t * const json)
 
   _digitp[DOUBLE][END] = _readp;
   _double_value = _calculate (_digitp); // Integer value
+  __to_string ();
 
   return _readp;
 }
@@ -162,6 +168,8 @@ format::json::number::_frag ()
     }
 
   _double_value = _calculate (_digitp);
+  __to_string ();
+
   return _readp;
 }
 
@@ -179,6 +187,8 @@ format::json::number::_exp ()
   _digitp[EXP][END] = _readp;
 
   _double_value = _calculate (_digitp);
+  __to_string ();
+
   return _readp;
 }
 
@@ -209,7 +219,7 @@ double format::json::number::_calculate (const wchar_t * const digitp[2][2])
 void
 format::json::number::_clear ()
 {
-  _double_value   = 0;
+  _double_value = 0;
   (void) __clear_strp ();
 }
 
@@ -220,24 +230,7 @@ format::json::number::_clone (const value &other)
 
   _is_floating_point = nv._is_floating_point;
   _double_value = nv._double_value;
-
-  return this;
-}
-
-size_t
-format::json::number::_str_length () const noexcept
-{
- (void) get ();
- __to_string ();
-
-  return _double_str.length ();
-}
-
-const wchar_t *
-format::json::number::_to_string (wchar_t *) const
-{
-  (void) get ();
   __to_string ();
 
-  return _double_str.c_str ();
+  return this;
 }
