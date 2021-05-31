@@ -61,17 +61,23 @@ namespace format
       {
         const wchar_t *startp;
         const wchar_t *str_value;
-        size_t charc;
+        size_t charc[2];
         size_t length;
         wchar_t endc;
         int assert_status;
       };
 
       std::vector<struct assert > test = {
-          { L"\"\"", L"\"\"", 0 + 2, 0, (wchar_t) 0, PASS },
-          { L"\"xxx\"", L"\"xxx\"", 3 + 2, 3, (wchar_t) 0, PASS },
-          { L"\" xxx \"", L"\" xxx \"", 5 + 2, 5, (wchar_t) 0, PASS },
-          { L"\" xxx \" ", L"\" xxx \"", 5 + 2, 5, L' ', PASS },
+//          { L"\"\"", L"\"\"", 0 + 2, 0, (wchar_t) 0, PASS },
+//          { L"\"xxx\"", L"\"xxx\"", 3 + 2, 3, (wchar_t) 0, PASS },
+//          { L"\" xxx \"", L"\" xxx \"", 5 + 2, 5, (wchar_t) 0, PASS },
+//          { L"\" xxx \" ", L"\" xxx \"", 5 + 2, 5, L' ', PASS },
+
+            { L"", L"", { 0 + 0, 0 + 2 }, 0, (wchar_t) 0, PASS }, // Actually never possible
+            { L"\"\"", L"", { 0 + 2, 0 + 2 }, 0, (wchar_t) 0, PASS },
+            { L"\"xxx\"", L"xxx", { 3 + 2, 3 + 2  }, 3, (wchar_t) 0, PASS },
+            { L"\" xxx \"", L" xxx ", { 5 + 2, 5 + 2 }, 5, (wchar_t) 0, PASS },
+            { L"\" xxx \" ", L" xxx ", { 5 + 2, 5 + 2 }, 5, L' ', PASS },
       };
 
       TEST_IT_START
@@ -80,15 +86,23 @@ namespace format
 
         const wchar_t *startp = (*it).startp;
 
-        string *s = new string (& p, (*it).charc);
+        wchar_t endc = 0;
+        string r;
+        r._readp = startp;
+        long _make_value_charc = r._string (endc); // This is how _make_value gets string length
+
+        // Verify that assertions are correct
+        CPPUNIT_ASSERT_EQUAL_MESSAGE ("_make_value charc", (size_t) _make_value_charc, (*it).charc[0]);
+
+        string *s = new string (& p, (*it).charc[0]);
 
         CPPUNIT_ASSERT_EQUAL_MESSAGE ("s->get ()", (size_t) 0, wcslen (s->get ()));
 
         const wchar_t *readp = s->_parse (startp);
 
-        ASSERT_EQUAL_IDX ("string.readp", readp, (*it).startp + (*it).charc);
+        ASSERT_EQUAL_IDX ("string.readp", readp, (*it).startp + (*it).charc[0]);
         ASSERT_EQUAL_IDX ("*(string.readp)", (wchar_t) *readp, (*it).endc);
-        ASSERT_EQUAL_IDX ("s->_str_length ()", (*it).charc, s->_str_length ());
+        ASSERT_EQUAL_IDX ("s->_str_length ()", (*it).charc[1], s->_str_length ());
         ASSERT_EQUAL_IDX ("s->length ()", (*it).length, s->length ());
 
         CPPUNIT_ASSERT_MESSAGE ("s->_to_string ()", wcscmp ((*it).str_value, s->_to_string ()) == 0);
@@ -112,9 +126,11 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-          //{ L"", L"", 0, 0, (wchar_t) 0, PASS },
-          { L"", L"\"\"", 2, 0, (wchar_t) 0, PASS },
-          { L"xxx", L"\"xxx\"", 3 + 2, 3, (wchar_t) 0, PASS },
+          { L"", L"", 0  + 2, 0, (wchar_t) 0, PASS },
+          //{ L"", L"\"\"", 2, 0, (wchar_t) 0, PASS },
+          { L" ", L" ", 1 + 2, 1, (wchar_t) 0, PASS },
+          { L"x", L"x", 1 + 2, 1, (wchar_t) 0, PASS },
+          { L"xxx", L"xxx", 3 + 2, 3, (wchar_t) 0, PASS },
 
           { L"\"xxx", nullptr, 0, 0, (wchar_t) 0, FAIL },
           { L"xxx\"", nullptr, 0, 0, (wchar_t) 0, FAIL },
@@ -148,9 +164,9 @@ namespace format
 
       {
         string s;
-        CPPUNIT_ASSERT_EQUAL_MESSAGE ("string length", (size_t) 2, s._str_length ());
-        CPPUNIT_ASSERT_EQUAL_MESSAGE ("string _str_length", (size_t) 0, s.length ());
-        CPPUNIT_ASSERT_MESSAGE ("string equal", wcscmp (L"\"\"", s._to_string ()) == 0);
+        CPPUNIT_ASSERT_EQUAL_MESSAGE ("string _str_length", (size_t) 2, s._str_length ());
+        CPPUNIT_ASSERT_EQUAL_MESSAGE ("string length", (size_t) 0, s.length ());
+        CPPUNIT_ASSERT_MESSAGE ("string equal", wcscmp (L"", s._to_string ()) == 0);
       }
     }
 
@@ -318,7 +334,34 @@ namespace format
         CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._startp is set", true, copy._startp == startp);
         CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._charc", src._charc, copy._charc);
         CPPUNIT_ASSERT_MESSAGE ("copy.get ()", wcscmp (L"xxx", copy.get ()) == 0);
-        CPPUNIT_ASSERT_MESSAGE ("copy._to_string ()", wcscmp (L"\"xxx\"", copy._to_string ()) == 0);
+        CPPUNIT_ASSERT_MESSAGE ("copy._to_string ()", wcscmp (L"xxx", copy._to_string ()) == 0);
+
+        {
+          string src[] = {
+            string (),
+            string (L""),
+          };
+
+          string copy[] = {
+            src[0],
+            src[1]
+          };
+
+          CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._startp is set",
+                                        true, copy[0]._startp != src[0]._startp
+                                              && copy[1]._startp != src[1]._startp);
+
+          CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._charc", src[0]._charc, copy[0]._charc);
+          CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._charc", src[1]._charc, copy[1]._charc);
+
+          CPPUNIT_ASSERT_MESSAGE ("copy.get ()",
+                                  wcscmp (L"", copy[0].get ()) == 0
+                                  && wcscmp (L"", copy[1].get ()) == 0);
+
+          CPPUNIT_ASSERT_MESSAGE ("copy._to_string ()",
+                                  wcscmp (L"", copy[0]._to_string ()) == 0
+                                  && wcscmp (L"", copy[1]._to_string ()) == 0);
+        }
 
         // Test copy as<> ()
         json j = new object { { L"0", new string (copy) } }; // copy of copy

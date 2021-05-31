@@ -93,8 +93,8 @@ namespace format
       inline size_t
       length () const noexcept
       {
-        size_t length = _str_length ();
-        return length > 1 ? length - 2 : length;
+        // return _string_value[0].size ();
+        return _str_length () - 2;
       }
 
     protected:
@@ -129,6 +129,7 @@ namespace format
       _parse (const wchar_t * const json) override;
 
       /**
+       * @todo To be removed
        * @brief _clear
        */
       virtual void
@@ -142,6 +143,7 @@ namespace format
       _clone (const value &nv) override;
 
       /**
+       * @todo To be removed
        * @brief assign
        * @param nv
        * @return
@@ -153,8 +155,9 @@ namespace format
        * @brief strValue
        * @return
        */
-      virtual const wchar_t *
-      _to_string (wchar_t * = nullptr) const override;
+      virtual inline const wchar_t *
+      _to_string (wchar_t * = nullptr) const override
+      { return _string_value[0].c_str (); }
 
       /**
        * @brief str_length
@@ -164,6 +167,7 @@ namespace format
       _str_length () const noexcept override;
 
       /**
+       * @todo To be removed
        * @brief _get
        */
       virtual void

@@ -66,10 +66,9 @@ format::json::string::_parse (const wchar_t * const json)
   _readp += _charc;
 
   // Make unquoted string
-  __assign_unquoted_string ();
-
-  // Make quoted string
-  __assign_quoted_string ();
+  *_startp == _sc::double_quote
+    ? _string_value[0].assign (_startp + 1, _charc - 2)
+    : _string_value[0].assign (_startp, _charc);
 
   return _readp;
 }
@@ -78,7 +77,6 @@ void
 format::json::string::_clear ()
 {
   _string_value[0].clear ();
-  _string_value[1].clear ();
 }
 
 format::json::value &
@@ -87,20 +85,13 @@ format::json::string::_assign (const string &nv)
   return _parent ? __call__assign (_parent, this, new string (nv)) : *(_clone (nv));
 }
 
-const wchar_t *
-format::json::string::_to_string (wchar_t *) const
-{
-  return (_startp == nullptr || _charc == 0)
-      ? L"\"\""
-      : _string_value[1].c_str ();
-}
-
 size_t
 format::json::string::_str_length () const noexcept
 {
-  if (_startp == nullptr || _charc == 0)
-    return 2;
+  if (_startp == nullptr) // default constructor
+   return 2;
 
+  // value::_make_value shuold always call string () with charc >= 2, e.g. L"\"x\"" == 3
   return *_startp == _sc::double_quote
             ? _charc
             : _charc + 2;
@@ -111,12 +102,7 @@ format::json::string::_clone (const value &nv)
 {
   const string & other = dynamic_cast<const string &> (nv);
 
-  if (other._startp && other._charc > 0)
-    *other._startp == _sc::double_quote
-          ? _string_value[0].assign (other._startp + 1, other._charc - 2)
-          : _string_value[0].assign (other._startp, other._charc);
-
-  _string_value[1] = other._string_value[1]; // Always at least ""
+  _string_value[0].assign (other._startp, other._charc); // Always at least ""
   _startp = _string_value[0].c_str (); // if other is null or "", _startp points to itself
 
   return this;
@@ -143,7 +129,7 @@ format::json::string::__string (wchar_t & endc) const noexcept
          : -1 * charc);
 }
 
-void
+/* void
 format::json::string::__assign_unquoted_string ()
 {
   *_startp == _sc::double_quote
@@ -174,4 +160,4 @@ format::json::string::__assign_quoted_string ()
           throw json_error (ba.what ());
         }
     }
-}
+}*/

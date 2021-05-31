@@ -265,30 +265,31 @@ namespace format
           { L"{\"1\":{\"2\":{\"3\":\"three\"},\"4\":\"four\",\"5\":\"\"}}",
             L"{\"3\":\"three\"}"  }, PASS },
 
-        { L"[\"1\",[\"2\",[\"3\"],\"4\"]]",
-          { L"[\"1\",[\"2\",[\"3\"],\"4\"]]",
-            L"\"4\"" }, PASS },
+        { L"[\"1\",[\"2\",[3],\"4\"]]",
+          { L"[\"1\",[\"2\",[3],\"4\"]]",
+            L"4" }, PASS },
       };
 
       TEST_IT_START
 
         json j = (*it).input;
 
-        size_t len[2] = { wcslen ((*it).output[0]), wcslen ((*it).output[1]) };
+        size_t len[2] = {
+          wcslen ((*it).output[0]),
+          wcslen ((*it).output[1])
+        };
 
-        for (uint mdx = 0; mdx < 2; mdx++)
-          {
-            const wchar_t *value[2] = { j._to_string (),
-                                        j[L"1"][L"2"].stringify ()
-                                      };
+        const wchar_t *value[2] = { j._to_string (),
+                                    j[L"1"][L"2"].stringify ()
+                                  };
 
-            ASSERT_EQUAL_IDX ("wcslen (value[0])", len[0], wcslen (value[0]));
-            ASSERT_EQUAL_IDX ("wcslen (value[1])", len[1], wcslen (value[1]));
-          }
+        std::wcerr << value[0] << std::endl << value[1] << std::endl;
+
+        ASSERT_EQUAL_IDX ("_to_string ()", len[0], wcslen (value[0]));
+        ASSERT_EQUAL_IDX ("stringify ()", len[1], wcslen (value[1]));
+
       TEST_IT_END
     }
-
-
 
     void
     test_parse_revive ()

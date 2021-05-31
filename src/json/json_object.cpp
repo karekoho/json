@@ -256,11 +256,14 @@ format::json::object::_to_string (wchar_t *offset) const
 
   while (cur != end)
     {
-      std::pair<std::wstring, value *> p = *cur;
+      const std::pair<const std::wstring, value *> p = *cur;
 
-      str_value[OFFSET] = _str_append (_str_append (str_value[OFFSET], L"\"", 1), p.first.c_str (), p.first.size ());   // Key
-      str_value[OFFSET] = _str_append (str_value[OFFSET], L"\":", 2);      
-      str_value[OFFSET] = _str_append (str_value[OFFSET], __call_str_value (p.second, str_value[OFFSET]), __call__str_length (p.second)); // Value
+      str_value[OFFSET] = _str_append (str_value[OFFSET], L"\"", 1);  // Double quote
+      str_value[OFFSET] = _str_append (str_value[OFFSET], p.first.c_str (), p.first.size ());   // Key
+      // str_value[OFFSET] = _str_append (_str_append (str_value[OFFSET], L"\"", 1), p.first.c_str (), p.first.size ());   // Key
+      str_value[OFFSET] = _str_append (str_value[OFFSET], L"\":", 2);    // Double quote and name separator
+      // str_value[OFFSET] = _str_append (str_value[OFFSET], __call_str_value (p.second, str_value[OFFSET]), __call__str_length (p.second)); // Value
+      str_value[OFFSET] = _quote_value (str_value[OFFSET], p.second);
 
       if (++cur != end)
         *(str_value[OFFSET]++) = _sc::value_separator;

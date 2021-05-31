@@ -22,10 +22,6 @@ namespace format
     #define BAD_CAST_UNDEFINED_TO_NUMERIC   "Cannot cast undefined to numeric or boolean"
     #define BAD_CAST_UNDEFINED_TO_STRING    "Cannot cast undefined to string"
 
-    #ifdef UNIT_TEST
-      class json_value_test;
-    #endif
-
     /**
      * @brief The json_value class
      */
@@ -34,19 +30,6 @@ namespace format
     class undefined;
     class value
     {
-      friend const wchar_t * __call__parse (value *, const wchar_t * const);
-      friend void __call__set_key (value *, const wchar_t * const, size_t);
-      friend void __call__set_index (value *, const size_t &);
-      friend void __call__set_parent (value *, json *);
-      friend const wchar_t * __call_str_value (value *, wchar_t * const);
-      friend value & __call__erase (value *, const value &);
-      friend value & __call__assign (value *, value *, value *);
-      friend size_t __call__str_length (value *);
-
-      #ifdef UNIT_TEST
-        friend class json_value_test;
-      #endif
-
       public:
       /**
        * @brief The value_t enum
@@ -596,7 +579,7 @@ namespace format
        * @return
        */
       virtual const wchar_t *
-      _to_string (wchar_t *offset = nullptr) /* TODO: noexcept */ const = 0;
+      _to_string (wchar_t *offset = nullptr) const = 0;
 
       /**
        * @brief _clone  Called by copy constructor
@@ -641,6 +624,23 @@ namespace format
       }
 
       /**
+       * @brief _quote_value
+       * @param dst
+       * @param v
+       * @return
+       */
+      static inline wchar_t *
+      _quote_value (wchar_t *dst, value *v) noexcept
+      {
+        if (v->type () != value::string_t)
+          return _str_append (dst, __call_str_value (v, dst), __call__str_length (v));
+
+        dst = _str_append (dst, L"\"", 1);
+        dst = _str_append (dst, __call_str_value (v, dst), __call__str_length (v) - 2);
+        return _str_append (dst, L"\"", 1);
+      }
+
+      /**
        * @brief _string Read in string.
        * If no opening quote, return 0.
        * If no closing quote or unescaped unicode control character (0-31) met,
@@ -668,6 +668,11 @@ namespace format
       virtual value &
       _at (const wchar_t *const key)  = 0;
 
+      /**
+       * @brief _at
+       * @param key
+       * @return
+       */
       const virtual value &
       _at (const wchar_t *const key) const  = 0;
 
@@ -679,6 +684,11 @@ namespace format
       virtual value &
       _at (size_t index) = 0;
 
+      /**
+       * @brief _at
+       * @param index
+       * @return
+       */
       virtual const value &
       _at (size_t index) const = 0;
 
@@ -706,7 +716,24 @@ namespace format
         const value::_literal ltr_value;
 
       } __ltr_value[];
+
+      friend const wchar_t * __call__parse (value *, const wchar_t * const);
+      friend const wchar_t * __call_str_value (value *, wchar_t * const);
+      friend void __call__set_key (value *, const wchar_t * const, size_t);
+      friend void __call__set_index (value *, const size_t &);
+      friend void __call__set_parent (value *, json *);
+      friend value & __call__erase (value *, const value &);
+      friend value & __call__assign (value *, value *, value *);
+      friend size_t __call__str_length (value *);
+
+      #ifdef UNIT_TEST
+        friend class json_value_test;
+      #endif
     };  // Class value
+
+    #ifdef UNIT_TEST
+      class json_value_test;
+    #endif
 
      inline const wchar_t *
      __call__parse (value *v, const wchar_t *readp)

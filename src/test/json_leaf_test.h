@@ -18,67 +18,45 @@ namespace format
     virtual void
     test__to_string () override
     {
-      // stringify calls strValue which always returns string value
-      // TODO: move to test_strValue
-
-      object op;
-
-      json *parent[2] = {
-        nullptr, & op,
-      };
-
       struct assert
       {
         leaf *value;
-        size_t output_len[2];
-        const wchar_t *output[2];
+        size_t output_len;
+        const wchar_t *output;
         int assert_status;
       };
 
       std::vector<struct assert > test = {
-        { new string (L"x"), { 3, 4 }, { L"\"x\"", L"x\"x\"" }, PASS },
-        //{ new number ((long) 100), { 10, 11 }, { L"100.000000", L"x100.000000" }, PASS },
-        { new number (static_cast<long long> (100)), { 3, 4 }, { L"100", L"x100" }, PASS },
-        { new boolean (), { 5, 6 }, { L"false", L"xfalse" }, PASS },
-        { new null (), { 4, 5 }, { L"null", L"xnull" }, PASS },
+        { new string (),  0, L"", PASS },
+        { new string (L""), 0, L"", PASS },
+        { new string (L"x"), 1, L"x", PASS },
+        { new number (), 1, L"0", PASS },
+        { new number (100.0), 10, L"100.000000", PASS },
+        { new number (static_cast<long long> (100)), 3, L"100", PASS },
+        { new boolean (), 5, L"false", PASS },
+        { new boolean (true), 4, L"true", PASS },
+        { new null (), 4, L"null", PASS },
+        { new undefined (), 0, L"", PASS },
       };
 
-      for (size_t pidx = 0; pidx < 1; pidx++)
-        {
-          this->_idx[0] = 0;
-          TEST_IT_START
-            if (parent[pidx] == nullptr)   // No parent
-              {
-                const wchar_t *output = (*it).value->stringify ();
+      TEST_IT_START
 
-                ASSERT_EQUAL_IDX ("wcslen (output)",
-                                  (*it).output_len[0],
-                                  wcslen (output));
+        const wchar_t *output = (*it).value->stringify ();
 
-                CPPUNIT_ASSERT_MESSAGE ("output",
-                                        wcscmp ((*it).output[0],
-                                        output) == 0);
-              }
-              /* else
-                  {
-                    p->_str_value[0] = new wchar_t[20 + 1]();
-                    p->_str_value[1] = p->_str_value[0];
+        ASSERT_EQUAL_IDX ("wcslen (output)",
+                          (*it).output_len,
+                          wcslen (output));
 
-                    *(p->_str_value[0]++) =  L'x';
-                    (*it).value->_parent = p;
+        CPPUNIT_ASSERT_MESSAGE ("output",
+                                wcscmp ((*it).output,
+                                output) == 0);
 
-                    (void) (*it).value->stringify ();
-
-                    ASSERT_EQUAL_IDX ("output length", (*it).output_len[1], wcslen (p->_str_value[1]));
-                    CPPUNIT_ASSERT_MESSAGE ("output", wcscmp ((*it).output[1], p->_str_value[1]) == 0);
-
-                    delete[]  p->_str_value[1];
-              } */
-            TEST_IT_END
-        }
-
-      for (auto it = test.begin (); it != test.end (); it = test.erase (it))
         delete (*it).value;
+
+      TEST_IT_END
+
+      //for (auto it = test.begin (); it != test.end (); it = test.erase (it))
+        //delete (*it).value;
     }
 
     virtual void

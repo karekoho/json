@@ -221,7 +221,7 @@ format::json::array::_to_string (wchar_t *offset) const
   while (cur != end)
     {
       value *v = *cur;      
-      str_value[OFFSET] = _str_append (str_value[OFFSET], __call_str_value (v, str_value[OFFSET]), __call__str_length (v));
+      str_value[OFFSET] = _quote_value (str_value[OFFSET], v);
 
       if (++cur != end)
         *(str_value[OFFSET]++) = _sc::value_separator;
