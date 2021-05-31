@@ -99,7 +99,7 @@ namespace format
        * @return
        */
       const wchar_t *
-      stringify () noexcept
+      stringify () const noexcept
       { return _to_string (); }
 
       /**
