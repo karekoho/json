@@ -65,8 +65,9 @@ namespace format
       boolean b (true);
 
       std::vector<struct assert > test = {
-        { & b, value::boolean_t, L"0",  0, 1, { PASS, PASS } },
-        { __VALUE[value::null_t], value::null_t, L"1",  0, 2, { PASS, FAIL } }
+        /// Removed operator =(boolean & b), operator =(bool b)
+        //{ & b, value::boolean_t, L"0",  0, 1, { PASS, PASS } },
+        //{ __VALUE[value::null_t], value::null_t, L"1",  0, 2, { PASS, FAIL } }
       };
 
       boolean *old_value = nullptr;
@@ -240,13 +241,14 @@ namespace format
 
       /* 0.*/ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_ctor_dtor", &json_boolean_test::test_ctor_dtor));
       /* 1.*/ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_assign_all_values", &json_boolean_test::test_assign_all_values));
-      /* 2.*/ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test__clone_const_value_ref", &json_boolean_test::test__clone_const_value_ref));
-      /* 3. */ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test__parse", &json_boolean_test::test__parse));
-      /* 4. */ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_str_length", &json_boolean_test::test_str_length));
-      /* 5. */ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test__to_string", &json_boolean_test::test__to_string));
-      /* 6. */ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test__clear", &json_boolean_test::test__clear));
-      /* 7. */ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_type", &json_boolean_test::test_type));
-      /* 8. */ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_operator_assign_bool", &json_boolean_test::test_operator_assign_bool));
+      /* 2. */ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test__parse", &json_boolean_test::test__parse));
+      /* 3. */ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_str_length", &json_boolean_test::test_str_length));
+      /* 4. */ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test__to_string", &json_boolean_test::test__to_string));
+      /* 5. */ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test__clear", &json_boolean_test::test__clear));
+      /* 6. */ s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_type", &json_boolean_test::test_type));
+               /// Removed operator =(boolean & b), operator =(bool b)
+      /* 7.*/  // s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test__clone_const_value_ref", &json_boolean_test::test__clone_const_value_ref));
+      /* 8. */ // s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_operator_assign_bool", &json_boolean_test::test_operator_assign_bool));
 
       return s;
     }
