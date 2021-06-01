@@ -77,21 +77,23 @@ namespace format
       { return nullptr; }
 
       /**
+       * @note Removed
        * @brief operator =
        * @param n
        * @return
-       */
+       *
       inline value &
       operator =(const null & n)
-      { return _assign (n); }
+      { return _assign (n); } */
 
       /**
+       * @note Removed
        * @brief operator =
        * @return
-       */
+       *
       inline value &
       operator =(std::nullptr_t)
-      { return *this; }
+      { return *this; } */
 
     protected:
       /**
@@ -103,27 +105,28 @@ namespace format
       {}
 
       /**
+       * @note Removed
        * @brief assign
        * @param nv
        * @return
-       */
+       *
       value &
       _assign (const null &)
-      { return _parent ? __call__assign (_parent, this, new null (*this)) : *this; }
+      { return _parent ? __call__assign (_parent, this, new null (*this)) : *this; } */
 
       /**
        * @brief _clear
        */
       virtual inline void
-      _clear () override
-      {}
+      _clear () noexcept override
+      { /* nop */ }
 
       /**
        * @brief _clone
        * @return
        */
       virtual inline value *
-      _clone (const value &) override
+      _clone (const value &) noexcept override
       { return this; }
 
       /**

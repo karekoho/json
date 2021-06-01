@@ -50,8 +50,9 @@ namespace format
 
       null n;
       std::vector<struct assert > test = {
-        { __VALUE[value::boolean_t], value::boolean_t, L"0",  1, { PASS, FAIL } },
-        { & n, value::null_t, L"1", 2, { PASS, PASS } }
+        /// operator =(const null & n), operator =(std::nullptr_t) removed
+        //{ __VALUE[value::boolean_t], value::boolean_t, L"0",  1, { PASS, FAIL } },
+        //{ & n, value::null_t, L"1", 2, { PASS, PASS } }
       };
 
       null *old_value = nullptr;
