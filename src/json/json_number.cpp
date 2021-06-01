@@ -76,12 +76,12 @@ format::json::number::number (json *parent)
 
 format::json::number::number (const number &other)
  : leaf (other),
-   _double_value (0),
+   _double_value (other._double_value),
    _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
-   _is_floating_point (false)
+   _is_floating_point (other._is_floating_point)
 {
-  // Sets _double_value, _is_floating_point
-  (void) _clone (other);
+  // _primitive.double_value = other._primitive.double_value;
+  __to_string ();
 }
 
 const wchar_t *
@@ -99,9 +99,6 @@ format::json::number::_parse (const wchar_t * const json)
 
   if (*_readp == 0)
     throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
-
-  if (_digitp[DOUBLE][START])
-    _clear ();
 
   _digitp[DOUBLE][START] = _readp;
 
@@ -214,23 +211,4 @@ double format::json::number::_calculate (const wchar_t * const digitp[2][2])
   return exp < 0
           ? _double_value / std::powl (10, -1 * exp)
           : _double_value * std::powl (10, exp);
-}
-
-void
-format::json::number::_clear ()
-{
-  _double_value = 0;
-  (void) __clear_strp ();
-}
-
-format::json::value *
-format::json::number::_clone (const value &other)
-{
-  const number & nv = static_cast<const number &> (other);
-
-  _is_floating_point = nv._is_floating_point;
-  _double_value = nv._double_value;
-  __to_string ();
-
-  return this;
 }

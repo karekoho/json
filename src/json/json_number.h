@@ -78,7 +78,7 @@ namespace format
        * @param other
        * @return
        */
-      virtual value *
+      virtual inline value *
       clone () const override
       { return new number (*this); }
 
@@ -86,50 +86,49 @@ namespace format
        * @brief type
        * @return
        */
-      virtual value_t
+      virtual inline value_t
       type () const noexcept override
       { return value::value_t::number_t; }
 
       /**
+       * @note Removed
        * @brief operator =
        * @param n
        * @return
-       */
+       *
       inline value &
       operator =(const number & n)
-      { return _assign (n);  }
+      { return _assign (n);  } */
 
       /**
+       * @note Removed
        * @brief operator =
        * @param d
        * @return
-       */
+       *
       virtual inline value &
       operator =(long double d) noexcept override
       {
         _double_value = d;
-        // _primitive.double_value = d;
         _is_floating_point = true;
         __to_string ();
-
         return __clear_strp ();
-      }
+      }*/
 
       /**
+       * @note Removed
        * @brief operator =
        * @param l
        * @return
-       */
+       *
       virtual inline value &
       operator =(long long l) noexcept override
       {
         _double_value = l;
-        // _primitive.double_value = l;
         _is_floating_point = false;
         __to_string ();
-
         return __clear_strp ();
-      }
+      }*/
 
       /**
        * @brief value
@@ -156,7 +155,6 @@ namespace format
       bool _is_floating_point;
 
       /**
-       * @todo: Get rid of this --> v2.0.1
        * @brief _double_str
        */
       std::wstring _double_str;
@@ -229,20 +227,21 @@ namespace format
       { return std::atoll (std::string (digitp[0], digitp[1]).c_str ()); }
 
       /**
-       * @todo To be removed
+       * @note Removed
        * @brief _assign
        * @param nv
        * @return
-       */
+       *
       value &
       _assign (const number & nv)
-      { return _parent  ? __call__assign (_parent, this, new number (nv)) : *(_clone (nv)); }
+      { return _parent  ? __call__assign (_parent, this, new number (nv)) : *(_clone (nv)); } */
 
       /**
        * @brief _clear
        */
       virtual void
-      _clear () override;
+      _clear () override
+      { /* nop */ }
 
       /**
        * @brief _to_string
@@ -257,7 +256,8 @@ namespace format
        * @return
        */
       virtual value *
-      _clone (const value & other) override;
+      _clone (const value &) override
+      { /* nop */ }
 
       /**
        * @brief str_length
@@ -285,30 +285,6 @@ namespace format
         _double_str = _is_floating_point
           ? std::to_wstring (_double_value)
           : std::to_wstring (static_cast<long long> (_double_value));
-      }
-
-      /**
-       * @brief __clear__digitp
-       */
-      inline void
-      __clear__digitp () noexcept
-      {
-        _digitp[DOUBLE][START]  = nullptr;
-        _digitp[DOUBLE][END]    = nullptr;
-        _digitp[EXP][START]     = nullptr;
-        _digitp[EXP][END]       = nullptr;
-      }
-
-      /**
-       * @brief __clear__strp Clear all string related pointers
-       * @return
-       */
-      inline value &
-      __clear_strp () noexcept
-      {
-        // _double_str.clear ();
-        __clear__digitp ();
-        return *this;
       }
     }; // Class number
 

@@ -80,7 +80,7 @@ namespace format
       {
         const wchar_t *starp;
         size_t move;
-        long double dval;
+        double dval;
         int assert_status;
       };
 
@@ -91,13 +91,13 @@ namespace format
           { L"00", 1, 0, PASS },
           { L"05", 1, 0, PASS },
           { L"-2]", 2, -2, PASS },
-          { L"3.3 }", 3, (long double) 3.3, PASS },
-          { L"0.4, ", 3, (long double) 0.4, PASS },
-          { L"-0.5 ,", 4, (long double) -0.5, PASS },
+          { L"3.3 }", 3, (double) 3.3, PASS },
+          { L"0.4, ", 3, (double) 0.4, PASS },
+          { L"-0.5 ,", 4, (double) -0.5, PASS },
           { L"6e2", 3, 600, PASS },
           { L"7E2}", 3, 700, PASS },
           { L"8E+2 ] ", 4, 800, PASS },
-          { L"9E-2, ", 4, (long double) 0.09, PASS },
+          { L"9E-2, ", 4, (double) 0.09, PASS },
 
           { L"x", 1, 0, FAIL },   // NaN
           //{ L"00", 1, 0, FAIL },
@@ -108,16 +108,24 @@ namespace format
       };
 
       // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
-      long double delta = std::numeric_limits<long double>::epsilon ();
+      double delta = std::numeric_limits<double>::epsilon ();
 
       TEST_IT_START
+
         const wchar_t *startp = (*it).starp;
         const wchar_t *readp = n._parse (startp);
 
         ASSERT_EQUAL_IDX ("n._readp", startp + (*it).move, readp);
-        // ASSERT_EQUAL_IDX ("n.value ()", (*it).dval, n.get ());
+        // ASSERT_EQUAL_IDX ("number.value ()", (*it).dval, (double) n.get ());
 
-        CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("number.value ()", (*it).dval, n.get (), delta);
+        CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("number.value ()", (*it).dval, (double) n.get (), delta);
+
+        n._double_value = 0;
+
+        n._digitp[DOUBLE][START]  = nullptr;
+        n._digitp[DOUBLE][END]    = nullptr;
+        n._digitp[EXP][START]     = nullptr;
+        n._digitp[EXP][END]       = nullptr;
 
       TEST_IT_END
     }
@@ -279,10 +287,10 @@ namespace format
           { (*it).starp[1], (*it).starp[1] + (*it).move[1] }
         };
 
-        double d = n._calculate (digitp);
+        long double d = n._calculate (digitp);
         // std::cerr << d << " " << *(n._double_valuep) << std::endl;
 
-        ASSERT_EQUAL_IDX ("n._calculate ()", (*it).dval, d);
+        ASSERT_EQUAL_IDX ("n._calculate ()", (*it).dval, (double) d);
         //ASSERT_EQUAL_IDX ("n._double_valuep", d, *(n._double_valuep));
 
       TEST_IT_END
@@ -366,8 +374,9 @@ namespace format
       number n ((long long) 10);
 
       std::vector<struct assert > test = {
-        { & n, value::number_t, L"0",  0, 1, { PASS, PASS } },
-        { __VALUE[value::boolean_t], value::boolean_t, L"1",  0, 2, { PASS, FAIL } },
+        /// Removed operator =(const number & n)
+        //{ & n, value::number_t, L"0",  0, 1, { PASS, PASS } },
+        //{ __VALUE[value::boolean_t], value::boolean_t, L"1",  0, 2, { PASS, FAIL } },
       };
 
       number *old_value = nullptr;
@@ -629,8 +638,9 @@ namespace format
       /* 11. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test_str_length", &json_number_test::test_str_length));
       /* 12. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test__clear", &json_number_test::test__clear));
       /* 13. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test_type", &json_number_test::test_type));
-      /* 14. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_operator_long", &json_number_test::test_operator_assign_long));
-      /* 15. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_operator_double", &json_number_test::test_operator_assign_double));
+                /// Removed operator =(long double | long long)
+      /* 14. */ //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_operator_long", &json_number_test::test_operator_assign_long));
+      /* 15. */ //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_operator_double", &json_number_test::test_operator_assign_double));
 
       return s;
     }
