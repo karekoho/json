@@ -82,20 +82,6 @@ namespace format
 
       /**
        * @brief operator =
-       * @param json_text
-       * @return
-       */
-      inline value &
-      operator =(const wchar_t *json_text) override
-      {
-        if (! _element_list.empty ())
-          _clear ();
-        (void) _parse (json_text);
-        return *this;
-      }
-
-      /**
-       * @brief operator =
        * @param il
        * @return
        */
@@ -108,13 +94,28 @@ namespace format
         return *this;
       }
 
-     /**
-      * @brief operator =
-      * @param a
-      * @return
-      */
-      value &
-      operator =(const array & a);
+      /**
+       * @brief operator =
+       * @param a
+       * @return
+       */
+       value &
+       operator =(const array & a);
+
+      /**
+       * @note Removed
+       * @brief operator =
+       * @param json_text
+       * @return
+       *
+      inline value &
+      operator =(const wchar_t *json_text) override
+      {
+        if (! _element_list.empty ())
+          _clear ();
+        (void) _parse (json_text);
+        return *this;
+      } */
 
      /**
       * @brief Read-only, forward iterator. Can be incremented one step forward.

@@ -10,7 +10,7 @@ format::json::object::object (const wchar_t * const json_text)
   (void) _parse (json_text);
 }
 
-format::json::object::object (std::initializer_list<std::pair<std::wstring, value *>> il)
+format::json::object::object (std::initializer_list<std::pair<std::wstring, value *> > il)
   : json ()
 {
   _set_initializer_list (il);
@@ -204,7 +204,7 @@ format::json::object::_clone (const value &other)
 
   while (cur != end)
     {
-      std::pair<std::wstring, value *> p = *cur++;
+      std::pair<std::wstring, const value *> p = *cur++;
       value *v = p.second->clone ();
       __call__set_parent (v, this);
       _member_list.emplace (p.first, v);
@@ -226,8 +226,8 @@ format::json::object::_str_length () const noexcept
 
   while (cur != end)
     {
-      std::pair<std::wstring, value *> p = *cur++;      
-      len += p.first.size () + __call__str_length (dynamic_cast<value *>(p.second)) + 4;   // " + key + " + : +  value + , or }
+      std::pair<std::wstring, const value *> p = *cur++;
+      len += p.first.size () + __call__str_length (static_cast<const value *>(p.second)) + 4;   // " + key + " + : +  value + , or }
     }
 
   return len;
@@ -252,11 +252,11 @@ format::json::object::_to_string (wchar_t *offset) const
 
   while (cur != end)
     {
-      const std::pair<const std::wstring, value *> p = *cur;
+      const std::pair<std::wstring, const value *> p = *cur;
 
       str_value[OFFSET] = _str_append (str_value[OFFSET], L"\"", 1);  // Double quote
       str_value[OFFSET] = _str_append (str_value[OFFSET], p.first.c_str (), p.first.size ());   // Key
-      str_value[OFFSET] = _str_append (str_value[OFFSET], L"\":", 2);    // Double quote and name separator
+      str_value[OFFSET] = _str_append (str_value[OFFSET], L"\":", 2); // Double quote and name separator
       str_value[OFFSET] = _quote_value (str_value[OFFSET], p.second);
 
       if (++cur != end)

@@ -9,7 +9,6 @@
 #include <vector>
 #include <initializer_list>
 
-
 namespace format
 {
   namespace json
@@ -79,7 +78,6 @@ namespace format
       { return new json (*this); }
 
       /**
-       * TODO: return json * --> v2.0
        * @brief parse
        * @param json
        * @param reviver
@@ -111,13 +109,22 @@ namespace format
        * @param json
        * @return
        */
-      virtual value &
-      operator =(const wchar_t * const json_text) override
+      value &
+      operator =(const wchar_t * const json_text)
       {
         delete __root;
         (void) _parse (json_text);
         return *this;
       }
+
+      /**
+       * @brief operator =
+       * @param j
+       * @return
+       */
+      inline value &
+      operator =(const json & j)
+      { return _assign (j); }
 
       /**
        * @brief operator =
@@ -134,15 +141,6 @@ namespace format
        */
       value &
       operator =(array *a);
-
-      /**
-       * @brief operator =
-       * @param j
-       * @return
-       */
-      inline value &
-      operator =(const json & j)
-      { return _assign (j); }
 
     protected:
 

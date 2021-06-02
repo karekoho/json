@@ -65,6 +65,7 @@ namespace format
 
       /**
        * @brief clone Call object copy constructor when derived type in not known
+       * @see format::json::value * format::json::array::_clone (const value &other)
        * @param other
        * @return
        */
@@ -171,12 +172,13 @@ namespace format
       { return _assign (u);}
 
       /**
+       * @note Removed
        * @brief operator =
        * @param s
        * @return
-       */
+       *
       virtual value &
-      operator =(const wchar_t *json_text);
+      operator =(const wchar_t *json_text); */
 
       /**
        * @brief operator =
@@ -631,13 +633,14 @@ namespace format
        * @return
        */
       static inline wchar_t *
-      _quote_value (wchar_t *dst, value *v) noexcept
+      _quote_value (wchar_t *dst, const value *v) noexcept
       {
         if (v->type () != value::string_t)
           return _str_append (dst, __call_str_value (v, dst), __call__str_length (v));
 
         dst = _str_append (dst, L"\"", 1);
         dst = _str_append (dst, __call_str_value (v, dst), __call__str_length (v) - 2);
+
         return _str_append (dst, L"\"", 1);
       }
 
@@ -719,13 +722,16 @@ namespace format
       } __ltr_value[];
 
       friend const wchar_t * __call__parse (value *, const wchar_t * const);
-      friend const wchar_t * __call_str_value (value *, wchar_t * const);
+
       friend void __call__set_key (value *, const wchar_t * const, size_t);
       friend void __call__set_index (value *, const size_t &);
       friend void __call__set_parent (value *, json *);
+
       friend value & __call__erase (value *, const value &);
       friend value & __call__assign (value *, value *, value *);
-      friend size_t __call__str_length (value *);
+
+      friend size_t __call__str_length (const value *);
+      friend const wchar_t * __call_str_value (const value *, wchar_t * const);
 
       #ifdef UNIT_TEST
         friend class json_value_test;
@@ -753,7 +759,7 @@ namespace format
      { v->_set_parent (parent); }
 
      inline const wchar_t *
-     __call_str_value (value *v, wchar_t *offset)
+     __call_str_value (const value *v, wchar_t *offset)
      { return v->_to_string (offset); }
 
      inline value &
@@ -765,7 +771,7 @@ namespace format
       { return parent->_assign (ov, nv); }
 
       inline size_t
-      __call__str_length (value *parent)
+      __call__str_length (const value *parent)
       { return parent->_str_length (); }
   } // Namespace json
 } // Namespace format

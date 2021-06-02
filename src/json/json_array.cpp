@@ -168,9 +168,9 @@ format::json::array::_clone (const value &other)
 
   _element_list.reserve (nv._element_list.size ());
 
-  std::transform (nv._element_list.begin (),
-                  nv._element_list.end (),
-                  std::back_inserter (_element_list), [this] (value *v) -> value *
+  std::transform (nv._element_list.cbegin (),
+                  nv._element_list.cend (),
+                  std::back_inserter (_element_list), [this] (const value *v) -> value *
   {
     value *nv = v->clone ();
     __call__set_parent (nv, this);

@@ -368,12 +368,12 @@ namespace format
       test_operator_assign_wchar_t_ptr ()
       {
         json j = L"{}";
-
-        CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[\"0\"].type ()",
-                                      value::array_t,
-                                      (j[L"0"] = L"[]")[L"0"].type ()
-                                      // (json (L"{}")[L"0"] = L"[]")[L"0"].type () // Compiles and passes
-            );
+          /// Removed  operator =(const wchar_t *json_text);
+//        CPPUNIT_ASSERT_EQUAL_MESSAGE ("j[\"0\"].type ()",
+//                                      value::array_t,
+//                                      (j[L"0"] = L"[]")[L"0"].type ()
+//                                      // (json (L"{}")[L"0"] = L"[]")[L"0"].type () // Compiles and passes
+//            );
       }
 
       void
@@ -611,7 +611,8 @@ namespace format
         /* 6. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__quote_value", &json_value_test::test__quote_value));
         /* 6. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value_t", &json_value_test::test_operator_equal_value_t));
         /* 7. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value", &json_value_test::test_operator_equal_value));
-        /* 8. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_wchar_t_ptr", &json_value_test::test_operator_assign_wchar_t_ptr));
+                  /// Removed operator =(const wchar_t *json_text);
+        /* 8. */  // s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_wchar_t_ptr", &json_value_test::test_operator_assign_wchar_t_ptr));
         /* 9. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_double", &json_value_test::test_operator_assign_double));
         /* 10. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_bool", &json_value_test::test_operator_assign_bool));
         /* 11. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_nullptr", &json_value_test::test_operator_assign_nullptr));

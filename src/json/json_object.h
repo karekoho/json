@@ -43,7 +43,7 @@ namespace format
        * @brief object
        * @param il
        */
-      object (std::initializer_list<std::pair<std::wstring, value *>> il);
+      object (std::initializer_list<std::pair<std::wstring, value *> > il);
 
       /**
        * @brief object
@@ -91,21 +91,6 @@ namespace format
 
       /**
        * @brief operator =
-       * @param json_text
-       * @return
-       */
-      virtual inline value &
-      operator =(const wchar_t *json_text) override
-      {
-        if (! _member_list.empty ())
-          _clear ();
-
-        (void) _parse (json_text);
-        return *this;
-      }
-
-      /**
-       * @brief operator =
        * @param il
        * @return
        */
@@ -118,6 +103,21 @@ namespace format
         _set_initializer_list (il);
         return *this;
       }
+
+      /**
+       * @note Removed
+       * @brief operator =
+       * @param json_text
+       * @return
+       *
+      virtual inline value &
+      operator =(const wchar_t *json_text) override
+      {
+        if (! _member_list.empty ())
+          _clear ();
+        (void) _parse (json_text);
+        return *this;
+      } */
 
       /**
        * @brief Read-only, forward iterator. Can be incremented one step forward.
