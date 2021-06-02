@@ -118,12 +118,6 @@ format::json::value::operator =(bool b)
   return _assign (new boolean (b));
 }
 
-/* format::json::value &
-format::json::value::operator =(const wchar_t *json_text)
-{
-  return _assign (new json (json_text));
-} */
-
 format::json::value &
 format::json::value::operator =(long long l)
 {

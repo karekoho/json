@@ -172,15 +172,6 @@ namespace format
       { return _assign (u);}
 
       /**
-       * @note Removed
-       * @brief operator =
-       * @param s
-       * @return
-       *
-      virtual value &
-      operator =(const wchar_t *json_text); */
-
-      /**
        * @brief operator =
        * @param l
        * @return
@@ -219,16 +210,6 @@ namespace format
       inline bool
       operator ==(value_t t) const noexcept
       { return type () == t; }
-
-      /**
-       * @todo To be removed as confusing
-       * @brief operator ==
-       * @param v
-       * @return
-       */
-      inline bool
-      operator ==(const value & v) const noexcept
-      { return operator ==(v.type ()); }
 
       /**
        * @brief key
@@ -317,6 +298,12 @@ namespace format
         // Object
         throw json_conversion_error (BAD_CAST_OBJECT_TO_STRING);
       }
+
+      /** @note Removed
+      inline bool operator ==(const value & v) const noexcept { return operator ==(v.type ()); } */
+
+      /** @note Removed
+      virtual value & operator =(const wchar_t *json_text); */
 
       /**
        * @brief Base class for iterators
@@ -412,6 +399,7 @@ namespace format
        * @param json
        * @return
        * @see https://tools.ietf.org/html/rfc7159
+       * @see https://datatracker.ietf.org/doc/html/rfc8259
        * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse
        * @see http://www.ecma-international.org/ecma-262/5.1/#sec-15.12.2
        * @see https://en.wikipedia.org/wiki/List_of_Unicode_characters

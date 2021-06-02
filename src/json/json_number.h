@@ -257,7 +257,7 @@ namespace format
        */
       virtual value *
       _clone (const value &) override
-      { /* nop */ }
+      { return this; }
 
       /**
        * @brief str_length

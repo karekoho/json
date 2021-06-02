@@ -360,8 +360,9 @@ namespace format
       void
       test_operator_equal_value ()
       {
-        CPPUNIT_ASSERT_MESSAGE ("value == value",
-                                boolean () == boolean ());
+        /// Removed bool value::operator ==(const value & v) const
+//        CPPUNIT_ASSERT_MESSAGE ("value == value",
+//                                boolean () == boolean ());
       }
 
       void
@@ -610,9 +611,12 @@ namespace format
         /* 5. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__str_append", &json_value_test::test__str_append));
         /* 6. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__quote_value", &json_value_test::test__quote_value));
         /* 6. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value_t", &json_value_test::test_operator_equal_value_t));
-        /* 7. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value", &json_value_test::test_operator_equal_value));
+
+                  /// Removed bool operator ==(const value & v)
+        /* 7. */  // s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value", &json_value_test::test_operator_equal_value));
                   /// Removed operator =(const wchar_t *json_text);
         /* 8. */  // s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_wchar_t_ptr", &json_value_test::test_operator_assign_wchar_t_ptr));
+
         /* 9. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_double", &json_value_test::test_operator_assign_double));
         /* 10. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_bool", &json_value_test::test_operator_assign_bool));
         /* 11. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_nullptr", &json_value_test::test_operator_assign_nullptr));
