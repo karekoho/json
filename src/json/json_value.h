@@ -23,7 +23,7 @@ namespace format
     #define BAD_CAST_UNDEFINED_TO_STRING    "Cannot cast undefined to string"
 
     /**
-     * @brief The json_value class
+     * @brief The interface for all values that a JSON object can hold
      */
     class json;
     class json_iterator;
@@ -32,7 +32,7 @@ namespace format
     {
       public:
       /**
-       * @brief The value_t enum
+       * @brief JSON types and internal types
        */
       enum value_t
       {
@@ -47,48 +47,52 @@ namespace format
       };
 
       /**
-       * @brief Value
+       * @brief Default constructor
        */
       value ();
 
       /**
-       * @brief json_value
-       * @param json
+       * @brief Parseable constructor
+       * @param JSON text
        */
       value (const wchar_t * const);
 
       /**
-       * @brief Value
-       * @param other
+       * @brief Copy constructor
+       * @param The object to copy
        */
       value (const value &other);
 
       /**
-       * @brief clone Call object copy constructor when derived type in not known
+       * @brief Destructor
+       */
+      virtual ~value ();
+
+      /**
+       * @brief Call object copy constructor when derived type in not known
        * @see format::json::value * format::json::array::_clone (const value &other)
-       * @param other
        * @return
        */
       virtual value *
       clone () const = 0;
 
       /**
-       * @brief type
+       * @brief Return the JSON type of the object
        * @return
        */
       virtual value_t
       type () const noexcept = 0;
 
       /**
-       * @brief count
-       * @return
+       * @brief Return the count of members of the JSON object
+       * @return Count of object keys or array elements
        */
       virtual size_t
       size () const noexcept = 0;
 
       /**
-       * @obsolete Use stringify instead
-       * @brief value
+       * @deprecated Will be removed, use stringify instead
+       * @brief See stringify
        * @return
        */
       inline const wchar_t *
@@ -96,76 +100,71 @@ namespace format
       { return _to_string (); }
 
       /**
-       * @brief stringify
-       * @return
+       * @brief Generate parseable text representation from the JSON object
+       * @return Pointer to the allocated memory
        */
-      const wchar_t *
+      inline const wchar_t *
       stringify () const noexcept
       { return _to_string (); }
 
       /**
-       * @brief ~Value
-       */
-      virtual
-      ~value ();
-
-      /**
-       * @brief operator []
+       * @brief Get element at key
        * @param key
-       * @return
+       * @return JSON value
        */
       inline value &
       operator [](const wchar_t *const key)
       { return _at (key); }
 
       /**
-       * @brief operator []
+       * @brief Get element at key
        * @param key
-       * @return
+       * @return JSON value
        */
-      const inline value &
+      inline const value &
       operator [](const wchar_t *const key) const
       { return _at (key); }
 
       /**
-       * @brief operator []
+       * @brief Get element at index
        * @param index
-       * @return
+       * @return JSON value
        */
       inline value &
       operator [](size_t index)
       { return _at (index); }
 
       /**
-       * @brief operator []
+       * @brief Get element at index
        * @param index
-       * @return
+       * @return JSON value
        */
       inline const value &
       operator [](size_t index) const
       { return _at (index); }
 
       /**
-       * @brief operator =
-       * @param v
-       * @return
+       * @brief Assing new value to the object v, e.g. json j[L"foo"] = L"bar"
+       * @param The value to assign
+       * @return The object where new value was assigned to
        */
       inline value &
       operator =(value *v)
       { return _assign (v); }
 
       /**
-       * @brief operator =
-       * @param v
+       * @brief Assing new value to the object v, e.g. json j[L"foo"] = L"bar"
+       * @param The value to assign
+       * @return The object where new value was assigned to
        */
       inline value &
       operator =(const value & v)
       { return _assign (v);  }
 
       /**
-       * @brief operator =
-       * @param u
-       * @return
+       * @brief Remove value from object, e.g. json j[L"foo"] = undefined ()
+       * @param Assinged undefined
+       * @return The object where the value was removed from
        */
       inline value &
       operator =(const undefined & u)
@@ -174,7 +173,7 @@ namespace format
       /**
        * @brief operator =
        * @param l
-       * @return
+       * @return The object where new value was assigned to
        */
       virtual value &
       operator =(long long l);
@@ -182,7 +181,7 @@ namespace format
       /**
        * @brief operator =
        * @param d
-       * @return
+       * @return The object where new value was assigned to
        */
       virtual value &
       operator =(long double d);
@@ -190,54 +189,56 @@ namespace format
       /**
        * @brief operator =
        * @param b
-       * @return
+       * @return The object where new value was assigned to
        */
       virtual value &
       operator =(bool b);
 
       /**
-       * @brief operator =
-       * @return
+       * @brief Assign JSON null value to the object e.g json j[L"foo"] = nullptr_t
+       * @return The object where new value was assigned to
        */
       value &
       operator =(std::nullptr_t);
 
       /**
-       * @brief operator ==
-       * @param t
-       * @return
+       * @brief Check if object of the given JSON type
+       * @param The type to check
+       * @return True if of same type
        */
       inline bool
       operator ==(value_t t) const noexcept
       { return type () == t; }
 
       /**
-       * @brief key
-       * @return
+       * @brief Get the key with the element was assigned
+       * @return At least empty string if object is assigned to object,
+       *  or nullptr_t if object is assigned to array
        */
       inline const wchar_t *
       key () const noexcept
       { return _key; }
 
       /**
-       * @brief index
-       * @return
+       * @brief Get the index with the element was assigned
+       * @return Always at least 0
        */
       inline size_t
       index () const noexcept
       { return _index; }
 
       /**
-       * @brief parent
-       * @return
+       * @brief Get the parent object where object is assigned to
+       * @return The parent object or undefined if no parent exists
        */
       inline json *
       parent () const
       { return _parent; }
 
       /**
-       * @brief
+       * @brief Get the primitive value the object holds.
        * @return any numeric type or bool
+       * @throw Throws json_conversion_error if not possible to cast to primitive type.
        */
       template<typename T>
       auto as () const -> typename std::enable_if<(not std::is_pointer<T>::value), T>::type
@@ -271,8 +272,9 @@ namespace format
       }
 
       /**
-       * @brief
+       * @brief Get the primitive value the object holds.
        * @return const wchar_t *
+       * @throw Throws json_conversion_error if not possible to cast to primitive type.
        */
       template<typename T>
       auto as () const -> typename std::enable_if<(std::is_same<T, const wchar_t *>::value), T>::type
@@ -559,21 +561,22 @@ namespace format
       } _primitive;
 
       /**
-       * @brief value
-       * @param parent
+       * @brief Called by json::_make_value
+       * @param The parent object where the parsed object will be assigned
        */
       value (json *parent);
 
       /**
-       * @brief str_value
-       * @param offset
-       * @return
+       * @brief Generate parseable json text
+       * @param If present, json text will be written to the memory pointed by offset.
+       *  This is when called by parent object.
+       * @return Generated text
        */
       virtual const wchar_t *
       _to_string (wchar_t *offset = nullptr) const = 0;
 
       /**
-       * @brief _clone  Called by copy constructor
+       * @brief _clone Called by copy constructor
        * @param other
        * @return
        */
@@ -601,7 +604,7 @@ namespace format
        * @param dst Destination string
        * @param src Source string
        * @param charc Number of characters to copy
-       * @return
+       * @return Pointer to the location where the next write starts
        */
       static inline wchar_t *
       _str_append (wchar_t *dst, const wchar_t *src, size_t charc) noexcept
@@ -615,10 +618,10 @@ namespace format
       }
 
       /**
-       * @brief _quote_value
-       * @param dst
-       * @param v
-       * @return
+       * @brief Double quote value type of string_t
+       * @param Pointer to the allocated memory where the string is written
+       * @param The value to quote
+       * @return Pointer to the location where the next write starts
        */
       static inline wchar_t *
       _quote_value (wchar_t *dst, const value *v) noexcept
