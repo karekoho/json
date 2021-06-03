@@ -331,7 +331,8 @@ namespace format
         // string copy;
         // (void) copy._clone (src); // will not work for test as string
 
-        const wchar_t * startp = copy._string_value.c_str ();
+        // const wchar_t * startp = copy._string_value.c_str ();
+        const wchar_t * startp = copy._value.string;
 
         //CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._startp is set", true, copy._startp == startp);
         CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._charc", src._charc, copy._charc);

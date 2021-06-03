@@ -73,7 +73,7 @@ namespace format
        * @brief clone
        * @return
        */
-      virtual value *
+      virtual inline value *
       clone () const override
       { return new json (*this); }
 
@@ -110,12 +110,7 @@ namespace format
        * @return
        */
       value &
-      operator =(const wchar_t * const json_text)
-      {
-        delete __root;
-        (void) _parse (json_text);
-        return *this;
-      }
+      operator =(const wchar_t * const json_text);
 
       /**
        * @brief operator =
@@ -211,11 +206,12 @@ namespace format
        * @param nv New value
        * @return
        **/
-      virtual value &
+      virtual inline value &
       _assign (value *, value *) override
       { return *this; }
 
       /**
+       * @todo move to value::_make_value to get rid of friend wrappers
        * @brief _make_value
        * @return
        */
@@ -225,31 +221,31 @@ namespace format
       /**
        * @brief _clear
        */
-      virtual void
+      virtual inline void
       _clear () override
-      {}
+      { /* nop */ }
 
       /**
        * @brief _clone
        * @return
        */
-      virtual value *
+      virtual inline value *
       _clone (const value &) override
       { return this; }
 
       /**
-       * @brief strValue
+       * @brief _to_string
        * @return
        */
-      virtual const wchar_t *
+      virtual inline const wchar_t *
       _to_string (wchar_t *offset = nullptr) const override
       { return __hasRoot () ? __call_str_value (__root, offset) : L""; }
 
       /**
-       * @brief str_length
+       * @brief _str_length
        * @return
        */
-      virtual size_t
+      virtual inline size_t
       _str_length () const noexcept override
       { return __hasRoot () ? __call__str_length (__root) : 0; }
 
@@ -258,7 +254,7 @@ namespace format
        * @param v
        * @return
        */
-      virtual value &
+      virtual inline value &
       _erase (const value &v) noexcept override
       { return __hasRoot () ? __call__erase (__root, v) : *this; }
 

@@ -85,9 +85,9 @@ namespace format
       /**
        * @brief Called by json::_make_value before value::_parse (json_text)
        * @param The parent object where the parsed object will be assigned
-       * @param union member to activate
+       * @param union member to activate, actives string with nullptr
        */
-      value (json *parent, const wchar_t *);
+      value (json *parent, size_t);
 
       /**
        * @brief Called by json::_make_value before value::_parse (json_text)
@@ -328,10 +328,7 @@ namespace format
         value_t t = type ();
 
         if (t == value_t::string_t)
-          {
-            _get ();
-            return _value.string;
-          }
+          return _to_string ();
 
         // null to string
         if (t == value_t::null_t)

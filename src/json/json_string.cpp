@@ -4,68 +4,69 @@
 format::json::string::string ()
   : leaf (),
     _startp (nullptr),
-    _charc (0)
-{}
-
-format::json::string::string (const wchar_t *const json)
-  : leaf (json),
-    _startp (nullptr),
+    _string_value (nullptr),
     _charc (0)
 {
-  if (json == nullptr)
+  (void) __assign (L"", 0);
+}
+
+format::json::string::string (const wchar_t *const string_text)
+  : leaf (string_text),
+    _startp (nullptr),
+    _string_value (nullptr),
+    _charc (0)
+{
+  if (string_text == nullptr)
     throw json_syntax_error (UNEXPECTED_END_OF_INPUT);
 
-  (void) _parse (json);
+  (void) _parse (string_text);
 }
 
 format::json::string::string (json *parent, size_t charc)
-  : leaf (parent),
+  : leaf (parent, charc),
     _startp (nullptr),
+    _string_value (nullptr),
     _charc (charc)
-{}
+{ }
 
 format::json::string::string (const string &other)
   : leaf (other),
     _startp (nullptr),
+    _string_value (nullptr),
     _charc (other._charc)
 {
-  _string_value.assign (other._string_value.c_str (), other.length ()); // Always at least ""
+  (void) __assign (other._to_string (), other.length ());
+}
+
+format::json::string::~string ()
+{
+  delete [] _string_value;
+  _string_value = nullptr;
 }
 
 const wchar_t *
-format::json::string::_parse (const wchar_t * const json)
+format::json::string::_parse (const wchar_t * const json_text)
 {
   wchar_t endc  = 0;
-  long charc    = 0;
-
-  _startp =_readp = json;
+  size_t charc  = _charc;
+  _startp =_readp = json_text;
 
   if (_parent == nullptr) // 2. constructor
     {
-      if ((charc = __string (endc)) < 0 )
+      long valid_charc  = 0;
+
+      if ((valid_charc = __string (endc)) < 0 ) // validate
         throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
 
-      _charc = static_cast<size_t> (charc);
-      _string_value.assign (_startp, _charc);
+      (void) __assign (_startp, static_cast<size_t> (valid_charc));
     }
-  else if (_charc > 1)  // 3. constructor
+  else if (charc > 1)  // 3. constructor
     {
       // value::_make_value shuold always call string () with charc >= 2, e.g. L"\"x\"" == 3
-      _string_value.assign (_startp + 1, _charc - 2); // Strip quotes
+      (void) __assign (_startp + 1, charc - 2); // Strip quotes
     }
 
-  return (_readp += _charc);
-}
-
-size_t
-format::json::string::_str_length () const noexcept
-{
-  if ((_parent == nullptr && _startp == nullptr ) || _charc == 0) // 1. default constructor, or 3.
-    return 2; // 0 + 2
-
-  return _parent  // 2. or 3.
-      ? _charc    // value::_make_value shuold always call string () with charc >= 2, e.g. L"\"x\"" == 3
-      : _charc + 2;
+  return (_readp += charc);
 }
 
 long
@@ -87,6 +88,20 @@ format::json::string::__string (wchar_t & endc) const noexcept
       : (*readp > 31 && *readp != _sc::double_quote
          ? charc
          : -1 * charc);
+}
+
+const wchar_t *
+format::json::string::__assign (const wchar_t * const offset, size_t charc)
+{
+  // TODO: catch bad_alloc
+  wchar_t *new_string = new wchar_t[charc + 1] ();
+
+  *(new_string + charc) = 0;
+  _string_value = new_string;
+  _value.string = new_string;
+  _charc = charc;
+
+  return wcsncpy (new_string, offset, charc);
 }
 
 /** format::json::value &

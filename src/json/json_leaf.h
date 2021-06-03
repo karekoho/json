@@ -38,7 +38,7 @@ namespace format
        * @brief Leaf
        * @param json
        */
-      leaf (const wchar_t *json_text) : value (json_text)
+      leaf (const wchar_t * const json_text) : value (json_text, nullptr)
       {}
 
       /**
@@ -47,6 +47,20 @@ namespace format
        */
       leaf (json *parent) : value (parent)
       {}
+
+      /**
+       * @brief leaf
+       * @param parent
+       * @param charc
+       */
+      leaf (json *parent, size_t charc) : value (parent, charc)
+      {}
+
+      /**
+       * @brief leaf
+       * @param parent
+       */
+      leaf (json *parent, long double);
 
       /**
        * @brief leaf

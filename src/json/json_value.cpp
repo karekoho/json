@@ -29,6 +29,14 @@ format::json::value::value (const wchar_t * const)
       _value ()
 { }
 
+format::json::value::value (const wchar_t * const, const wchar_t * const)
+  : _readp (nullptr),
+    _parent (nullptr),
+    _key (nullptr),
+    _index (0),
+    _value (nullptr)
+{ }
+
 format::json::value::value (bool boolean)
   : _readp (nullptr),
     _parent (nullptr),
@@ -43,6 +51,14 @@ format::json::value::value (json *parent)
       _key (nullptr),
       _index (0),
       _value ()
+{ }
+
+format::json::value::value(format::json::json *parent, size_t)
+  : _readp (nullptr),
+    _parent (parent),
+    _key (nullptr),
+    _index (0),
+    _value (nullptr)
 { }
 
 format::json::value::value(format::json::json *parent, bool boolean)

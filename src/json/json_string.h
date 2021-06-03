@@ -31,7 +31,7 @@ namespace format
        * @brief string
        * @param json
        */
-      string (const wchar_t * const json);
+      string (const wchar_t * const string_text);
 
       /**
        * @brief String
@@ -42,7 +42,7 @@ namespace format
       /**
        * @brief ~string
        */
-      virtual ~string () override = default;
+      virtual ~string () override;
 
       /**
        * @brief clone
@@ -67,7 +67,7 @@ namespace format
        */
       inline const wchar_t *
       get () const noexcept
-      { return _string_value.c_str (); }
+      { return _to_string (); }
 
       /**
        * @brief length
@@ -75,7 +75,7 @@ namespace format
        */
       inline size_t
       length () const noexcept
-      { return _string_value.size (); }
+      { return _charc; }
 
       /**
        * @note Removed
@@ -98,19 +98,19 @@ namespace format
 
     protected:
       /**
-       * @brief _startp
+       * @brief Pointer to the beginning of the string in JSON text
        */
       const wchar_t *_startp;
 
       /**
-       * @brief _charc
+       * @brief String content
        */
-      size_t _charc;
+      const wchar_t * _string_value;
 
       /**
-       * @brief _value
+       * @brief Length of the unserialized string, i.e. without quotes
        */
-      std::wstring _string_value;
+      size_t _charc;
 
       /**
        * @brief string
@@ -125,7 +125,7 @@ namespace format
        * @return
        */
       virtual const wchar_t *
-      _parse (const wchar_t * const json) override;
+      _parse (const wchar_t * const json_text) override;
 
       /**
        * @todo To be removed
@@ -144,28 +144,20 @@ namespace format
       { return this; }
 
       /**
-       * @note Removed
-       * @brief assign
-       * @param nv
-       * @return
-       *
-      value &
-      _assign (const string & nv); */
-
-      /**
        * @brief strValue
        * @return
        */
       virtual inline const wchar_t *
       _to_string (wchar_t * = nullptr) const override
-      { return _string_value.c_str (); }
+      { return _string_value == nullptr ? L"" : _string_value; }
 
       /**
        * @brief str_length
        * @return
        */
-      virtual size_t
-      _str_length () const noexcept override;
+      virtual inline size_t
+      _str_length () const noexcept override
+      { return _charc + 2; }
 
       /**
        * @todo To be removed
@@ -173,7 +165,16 @@ namespace format
        */
       virtual inline void
       _get () const noexcept override
-      { _primitive.string_value = get (); }
+      { /* nop */ }
+
+      /**
+       * @note Removed
+       * @brief assign
+       * @param nv
+       * @return
+       *
+      value &
+      _assign (const string & nv); */
 
     private:
       /**
@@ -184,6 +185,14 @@ namespace format
        */
       long /** TODO: long */
       __string (wchar_t & endc) const noexcept;
+
+      /**
+       * @brief __assign
+       * @param offset
+       * @param charc
+       * @return
+       */
+      const wchar_t * __assign (const wchar_t * const offset, size_t charc);
 
     }; // Class string
 
