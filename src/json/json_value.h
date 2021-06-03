@@ -58,6 +58,52 @@ namespace format
       value (const wchar_t * const);
 
       /**
+       * @brief Activating constructor for union primitive_value { const wchar_t * }
+       * @param JSON text
+       * @param Union member
+       */
+      value (const wchar_t * const, const wchar_t * const);
+
+      /**
+       * @brief Activating constructor for union primitive_value { long double }
+       * @param Union member
+       */
+      value (long double);
+
+      /**
+       * @brief Activating constructor for union primitive_value { bool }
+       * @param Union member
+       */
+      value (bool);
+
+      /**
+       * @brief Called by json::_make_value before value::_parse (json_text)
+       * @param The parent object where the parsed object will be assigned
+       */
+      value (json *parent);
+
+      /**
+       * @brief Called by json::_make_value before value::_parse (json_text)
+       * @param The parent object where the parsed object will be assigned
+       * @param union member to activate
+       */
+      value (json *parent, const wchar_t *);
+
+      /**
+       * @brief Called by json::_make_value before value::_parse (json_text)
+       * @param The parent object where the parsed object will be assigned
+      * @param union member to activate
+       */
+      value (json *parent, long double);
+
+      /**
+       * @brief Called by json::_make_value before value::_parse (json_text)
+       * @param The parent object where the parsed object will be assigned
+       * @param union member to activate
+       */
+      value (json *parent, bool);
+
+      /**
        * @brief Copy constructor
        * @param The object to copy
        */
@@ -248,18 +294,18 @@ namespace format
         if (t == value_t::number_t)
           {
             _get ();
-            return _primitive.double_value;
+            return _value.long_double;
           }
 
         if (t == value_t::boolean_t)
-          {
-            _get ();
-            return _primitive.boolean_value;
-          }
+          return _value.boolean;
 
         // String to boolean
         if (t == value_t::string_t)
-          return static_cast<bool>(_primitive.string_value);
+          {
+            _get ();
+            return static_cast<bool>(_value.string);
+          }
 
         if (t == value_t::null_t)
           throw json_conversion_error (BAD_CAST_NULL_TO_NUMERIC);
@@ -284,7 +330,7 @@ namespace format
         if (t == value_t::string_t)
           {
             _get ();
-            return _primitive.string_value;
+            return _value.string;
           }
 
         // null to string
@@ -397,6 +443,90 @@ namespace format
     protected:
 
       /**
+       * @brief The _sc enum Structural characters.
+       */
+      enum _sc
+      {
+        begin_object    = 123,  // '{'
+        end_object      = 125,  // '}'
+        begin_array     = 91,   // '[',
+        end_array       = 93,   // ']',
+        name_separator  = 58,   // ':',
+        value_separator = 44,   // ',',
+        path_separator  = 47,   // /
+        double_quote    = 34    // "
+      };
+
+      /**
+       * @brief The _ws enum White space characters.
+       */
+      enum _ws
+      {
+        tab   = 9,    // \t Horizontal tab
+        lf    = 10,   // \n Line feed or New line
+        cr    = 13,   // \r Carriage return
+        space = 32    // Space
+      };
+
+      /**
+       * @brief The literal enum
+       */
+      enum _literal
+      {
+        no_literal  = 0,
+        true_value  = 1,
+        false_value = 2,
+        null_value  = 3
+      };
+
+      /**
+       * @brief _literal_value
+       */
+      static const struct literal_value
+      {
+        const wchar_t * const str_value;
+        const size_t len;
+        const value::_literal ltr_value;
+
+      } __ltr_value[];
+
+      /**
+       * @brief _readp
+       */
+      const wchar_t *_readp;
+
+      /**
+       * @brief _parent
+       */
+      json *_parent;
+
+      /**
+       * @brief _key
+       */
+      const wchar_t * _key;
+
+      /**
+       * @brief _index
+       */
+      size_t _index;
+
+      /**
+       * @brief Holds the pritive value for JSON object. null is constant.
+       */
+      mutable
+      union primitive_value
+      {
+        bool          boolean;
+        const wchar_t *string;
+        long double   long_double;
+
+        primitive_value (bool b) : boolean (b) {}
+        primitive_value (long double ld) : long_double (ld) {}
+        primitive_value (const wchar_t *s = nullptr) : string (s) {}
+
+      } _value;
+
+      /**
        * @brief _parse
        * @param json
        * @return
@@ -492,79 +622,6 @@ namespace format
       virtual void
       _get () const
       { /* nop */ }
-
-      /**
-       * @brief The _sc enum Structural characters.
-       */
-      enum _sc
-      {
-        begin_object    = 123,  // '{'
-        end_object      = 125,  // '}'
-        begin_array     = 91,   // '[',
-        end_array       = 93,   // ']',
-        name_separator  = 58,   // ':',
-        value_separator = 44,   // ',',
-        path_separator  = 47,   // /
-        double_quote    = 34    // "
-      };
-
-      /**
-       * @brief The _ws enum White space characters.
-       */
-      enum _ws
-      {
-        tab   = 9,    // \t Horizontal tab
-        lf    = 10,   // \n Line feed or New line
-        cr    = 13,   // \r Carriage return
-        space = 32    // Space
-      };
-
-      /**
-       * @brief The literal enum
-       */
-      enum _literal
-      {
-        no_literal  = 0,
-        true_value  = 1,
-        false_value = 2,
-        null_value  = 3
-      };
-
-      /**
-       * @brief _readp
-       */
-      const wchar_t *_readp;
-
-      /**
-       * @brief _parent
-       */
-      json *_parent;
-
-      /**
-       * @brief _key
-       */
-      const wchar_t * _key;
-
-      /**
-       * @brief _index
-       */
-      size_t _index;
-
-      /**
-       * @brief primitive_value
-       */
-      mutable union primitive_value
-      {
-        long double   double_value;
-        bool          boolean_value;
-        const wchar_t *string_value;
-      } _primitive;
-
-      /**
-       * @brief Called by json::_make_value
-       * @param The parent object where the parsed object will be assigned
-       */
-      value (json *parent);
 
       /**
        * @brief Generate parseable json text
@@ -700,17 +757,6 @@ namespace format
        */
       virtual value &
       _erase (const value &v) noexcept = 0;
-
-      /**
-       * @brief _literal_value
-       */
-      static const struct literal_value
-      {
-        const wchar_t * const str_value;
-        const size_t len;
-        const value::_literal ltr_value;
-
-      } __ltr_value[];
 
       friend const wchar_t * __call__parse (value *, const wchar_t * const);
 

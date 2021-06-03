@@ -17,29 +17,49 @@ format::json::value::value ()
     : _readp (nullptr),
       _parent (nullptr),
       _key (nullptr),
-      _index (0)
-{}
+      _index (0),
+      _value ()
+{ }
 
 format::json::value::value (const wchar_t * const)
     : _readp (nullptr),
       _parent (nullptr),
       _key (nullptr),
-      _index (0)
-{}
+      _index (0),
+      _value ()
+{ }
+
+format::json::value::value (bool boolean)
+  : _readp (nullptr),
+    _parent (nullptr),
+    _key (nullptr),
+    _index (0),
+    _value (boolean)
+{ }
 
 format::json::value::value (json *parent)
     : _readp (nullptr),
       _parent (parent),
       _key (nullptr),
-      _index (0)
-{}
+      _index (0),
+      _value ()
+{ }
+
+format::json::value::value(format::json::json *parent, bool boolean)
+  : _readp (nullptr),
+    _parent (parent),
+    _key (nullptr),
+    _index (0),
+    _value (boolean)
+{ }
 
 format::json::value::value (const value &other)
   : _readp (other._readp),
     _parent (nullptr),
     _key (other._key ? new wchar_t [wcslen (other._key) + 1] () : nullptr),
-    _index (other._index)    
-{}
+    _index (other._index),
+    _value (other._value)
+{ }
 
 format::json::value::
 ~value ()

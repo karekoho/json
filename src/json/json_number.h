@@ -273,7 +273,7 @@ namespace format
        */
       virtual inline void
       _get () const noexcept override
-      { _primitive.double_value = get (); }
+      { _value.long_double = get (); }
 
     private:
       /**

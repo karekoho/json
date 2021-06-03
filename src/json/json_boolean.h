@@ -27,16 +27,16 @@ namespace format
         * @brief Boolean
         */
         boolean ()
-          : leaf ()
-        { _primitive.boolean_value = false; }
+          : leaf (false)
+        { }
 
        /**
         * @brief Boolean
         * @param value
         */
         boolean (const bool value)
-          : leaf ()
-        { _primitive.boolean_value = value; }
+          : leaf (value)
+        { }
 
        /**
         * @brief Boolean
@@ -44,7 +44,7 @@ namespace format
         */
         boolean (const boolean & other)
           : leaf (other)
-        { _primitive.boolean_value = other._primitive.boolean_value; }
+        { }
 
        /**
         * @brief ~Boolean
@@ -74,7 +74,7 @@ namespace format
          */
          inline bool
          get () const noexcept
-         { return _primitive.boolean_value; }
+         { return _value.boolean; }
 
        /**
         * @note Removed
@@ -116,8 +116,8 @@ namespace format
          * @param value
          */
         boolean (json *parent, const bool value)
-          : leaf (parent)
-        { _primitive.boolean_value = value; }
+          : leaf (parent, value) // TODO: leaf (parent, boolean) --> value (boolean)
+        { /* _value.boolean = value; */ }
 
         /**
          * @brief parse
@@ -126,7 +126,7 @@ namespace format
          */
         virtual inline const wchar_t *
         _parse (const wchar_t * const json) noexcept override
-        { return json + (_primitive.boolean_value == true ? 4 : 5); }
+        { return json + (_value.boolean == true ? 4 : 5); }
 
        /**
         * @brief _clear
@@ -149,7 +149,7 @@ namespace format
          */
          virtual inline const wchar_t *
          _to_string (wchar_t * = nullptr) const noexcept override
-         { return _primitive.boolean_value == true ? L"true" : L"false"; }
+         { return _value.boolean == true ? L"true" : L"false"; }
 
         /**
          * @brief str_length
@@ -157,7 +157,7 @@ namespace format
          */
          virtual inline size_t
          _str_length () const noexcept override
-         { return _primitive.boolean_value == true ? 4 : 5; }
+         { return _value.boolean == true ? 4 : 5; }
       }; // Class boolean
 
       inline

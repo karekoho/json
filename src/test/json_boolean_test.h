@@ -31,13 +31,15 @@ namespace format
       json j = new object { { L"0", new boolean () },
                             { L"1", new boolean (true) },
                             { L"2", new boolean (parent, true) },
-                            { L"3", new boolean(b[2]) }, // copy
+                            { L"3", new boolean (b[1]) }, // copy
+                            { L"4", new boolean (b[2]) }, // copy
                           };
 
       CPPUNIT_ASSERT_MESSAGE ("as boolean", j[L"0"].as<bool> () == false);
       CPPUNIT_ASSERT_MESSAGE ("as boolean", j[L"1"].as<bool> () == true);
       CPPUNIT_ASSERT_MESSAGE ("as boolean", j[L"2"].as<bool> () == true);
       CPPUNIT_ASSERT_MESSAGE ("as boolean", j[L"3"].as<bool> () == true);
+      CPPUNIT_ASSERT_MESSAGE ("as boolean", j[L"4"].as<bool> () == true);
 
       delete parent;
     }
@@ -142,7 +144,7 @@ namespace format
           ASSERT_EQUAL_IDX ("readp",
                             (*it).input + (*it).charc,
                             b._parse ((*it).input));
-      TEST_IT_END;
+      TEST_IT_END
     }
 
     virtual void
