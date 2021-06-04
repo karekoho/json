@@ -73,8 +73,16 @@ namespace format
        * @return
        */
       inline std::nullptr_t
-      get () const noexcept
+      value () const noexcept
       { return nullptr; }
+
+      /**
+       * @deprecated Use value instead
+       * @return
+       */
+      inline std::nullptr_t
+      get () const noexcept
+      { return value (); }
 
       /**
        * @note Removed
@@ -125,8 +133,8 @@ namespace format
        * @brief _clone
        * @return
        */
-      virtual inline value *
-      _clone (const value &) noexcept override
+      virtual inline class value *
+      _clone (const class value &) noexcept override
       { return this; }
 
       /**

@@ -72,9 +72,18 @@ namespace format
          * @brief value
          * @return
          */
+        inline bool
+        value () const noexcept
+        { return _value.boolean; }
+
+        /**
+         * @deprecated Use value instead
+         * @brief value
+         * @return
+         */
          inline bool
          get () const noexcept
-         { return _value.boolean; }
+         { return value (); }
 
        /**
         * @note Removed
@@ -116,8 +125,8 @@ namespace format
          * @param value
          */
         boolean (json *parent, const bool value)
-          : leaf (parent, value) // TODO: leaf (parent, boolean) --> value (boolean)
-        { /* _value.boolean = value; */ }
+          : leaf (parent, value)
+        {  }
 
         /**
          * @brief parse
@@ -139,8 +148,8 @@ namespace format
         * @brief _clone
         * @return
         */
-        virtual inline value *
-        _clone (const value &) noexcept override
+        virtual inline class value *
+        _clone (const class value &) noexcept override
         { return this; }
 
         /**

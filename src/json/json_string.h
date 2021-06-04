@@ -66,8 +66,16 @@ namespace format
        * @return
        */
       inline const wchar_t *
-      get () const noexcept
+      value () const noexcept
       { return _to_string (); }
+
+      /**
+       * @deprecated Use value instead
+       * @return
+       */
+      inline const wchar_t *
+      get () const noexcept
+      { return value (); }
 
       /**
        * @brief length
@@ -139,8 +147,8 @@ namespace format
        * @brief _clone
        * @return
        */
-      virtual value *
-      _clone (const value &) override
+      virtual class value *
+      _clone (const class value &) override
       { return this; }
 
       /**

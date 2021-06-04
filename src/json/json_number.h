@@ -135,8 +135,16 @@ namespace format
        * @return
        */
       inline long double
-      get () const
+      value () const
       { return _value.long_double; }
+
+      /**
+       * @deprecated Use value instead
+       * @return
+       */
+      inline long double
+      get () const
+      { return value (); }
 
     protected:
       /**
@@ -250,8 +258,8 @@ namespace format
        * @brief _clone
        * @return
        */
-      virtual value *
-      _clone (const value &) override
+      virtual class value *
+      _clone (const class value &) override
       { return this; }
 
       /**

@@ -105,8 +105,17 @@ namespace format
        * @return
        */
       inline std::nullptr_t
-      get () const noexcept
+      value () const noexcept
       { return nullptr; }
+
+      /**
+       * @deprecated Use value instead
+       * @brief get
+       * @return
+       */
+      inline std::nullptr_t
+      get () const noexcept
+      { return value (); }
 
       /**
        * @brief parse
@@ -137,8 +146,8 @@ namespace format
        * @brief _clone
        * @return
        */
-      virtual inline value *
-      _clone (const value &) override
+      virtual inline class value *
+      _clone (const class value &) override
       { return new undefined (*this); }
 
       /**
@@ -200,7 +209,7 @@ namespace format
        * @brief clone
        * @return
        */
-      virtual inline value *
+      virtual inline class value *
       clone () const override
       { return new unique_undefined (*this); }
 
