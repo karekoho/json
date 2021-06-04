@@ -536,7 +536,10 @@ namespace format
           double d = v.as<double> ();
           long l = v.as<long> ();
           bool b = v.as<bool> ();
-          //const wchar_t * c = v.as<const wchar_t *> ();
+
+          // object o = v.as<object> (); //  ok, won't compile
+          // object & ro = v.as<object &> (); // ok, no matching call
+          // object & rro = v.as<object &&> (); // ok, no matching call
 
           //CPPUNIT_ASSERT_MESSAGE ("as double", d == (*it).dval);
 
@@ -544,7 +547,6 @@ namespace format
           CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("as double", (*it).dval, d, std::numeric_limits<double>::epsilon());
           CPPUNIT_ASSERT_MESSAGE ("as long", l == (*it).lval);
           CPPUNIT_ASSERT_MESSAGE ("as boolean", b == (*it).bval);
-          //CPPUNIT_ASSERT_MESSAGE ("as wchar_t", wcscmp (c, (*it).cval) == 0);
 
         TEST_IT_END
       }
@@ -580,14 +582,9 @@ namespace format
           json j ((*it).json_text);
           value & v = j[L"a"];
 
-          //double d = v.as<double> ();
-          //long l = v.as<long> ();
-          //bool b = v.as<bool> ();
           const wchar_t * c = v.as<const wchar_t *> ();
+          // object *op = v.as<object *> (); // ok, no matching call
 
-          //CPPUNIT_ASSERT_MESSAGE ("as double", d == (*it).dval);
-          //CPPUNIT_ASSERT_MESSAGE ("as long", l == (*it).lval);
-          //CPPUNIT_ASSERT_MESSAGE ("as boolean", b == (*it).bval);
           CPPUNIT_ASSERT_MESSAGE ("as wchar_t", wcscmp (c, (*it).cval) == 0);
 
         TEST_IT_END

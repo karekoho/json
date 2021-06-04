@@ -280,7 +280,7 @@ namespace format
        * @throw Throws json_conversion_error if not possible to cast to primitive type.
        */
       template<typename T>
-      auto as () const -> typename std::enable_if<(not std::is_pointer<T>::value), T>::type
+      auto as () const -> typename std::enable_if<(not std::is_pointer<T>::value && not std::is_reference<T>::value), T>::type
       {
         value_t t = type ();
 
