@@ -52,6 +52,7 @@ namespace format
                                 output) == 0);
 
         delete (*it).value;
+        delete output;
 
       TEST_IT_END
 
@@ -120,7 +121,7 @@ namespace format
     {
       CppUnit::TestSuite *s = new CppUnit::TestSuite ("json leaf test");
 
-      /* 0. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_assign_all_values", &json_leaf_test::test__to_string));
+      /* 0. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test__to_string", &json_leaf_test::test__to_string));
       /* 1. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_count", &json_leaf_test::test_count));
       /* 2. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_erase", &json_leaf_test::test__erase));
       /* 3. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test__assign_value_ptr_value_ptr", &json_leaf_test::test__assign_value_ptr_value_ptr));

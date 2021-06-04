@@ -94,7 +94,7 @@ format::json::string::__assign (const wchar_t * const offset, size_t charc)
   // TODO: catch bad_alloc
   wchar_t *new_string = new wchar_t[charc + 1] ();
 
-  *(new_string + charc) = 0;
+  // *(new_string + charc) = 0;
   _string_value = new_string;
   _value.string = new_string;
   _charc = charc;

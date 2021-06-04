@@ -238,7 +238,7 @@ format::json::object::_to_string (wchar_t *offset) const
 {
   wchar_t *str_value[2] = { nullptr, nullptr };
 
-  if (offset) // Parent calls, memory allocateds
+  if (offset) // Parent calls, memory allocated
     str_value[OFFSET] = offset;
   else
     str_value[OFFSET] = new wchar_t[_str_length () + 1] ();

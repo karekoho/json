@@ -142,8 +142,8 @@ namespace format
        * @brief Generate parseable text representation from the JSON object
        * @return Pointer to the allocated memory
        */
-      inline const wchar_t *
-      stringify () const noexcept
+      virtual inline const wchar_t *
+      stringify () const
       { return _to_string (); }
 
       /**

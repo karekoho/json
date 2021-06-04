@@ -108,9 +108,19 @@ namespace format
        * @brief size
        * @return
        */
-      virtual size_t
+      virtual inline size_t
       size () const noexcept final override
       { return 0; }
+
+      virtual inline const wchar_t *
+      stringify () const final override
+      {
+        // TODO: catch bad alloc
+        size_t length = _str_length ();
+        // wchar_t *new_string = new wchar_t[length + 1] ();
+        // *(new_string + length) = 0;
+        return wcsncpy (new wchar_t[length + 1] (), _to_string (), length);
+      }
 
       /**
        * @brief The iterator class
