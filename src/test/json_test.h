@@ -279,10 +279,11 @@ namespace format
                                     j[L"1"][L"2"].stringify ()
                                   };
 
-        std::wcerr << value[0] << std::endl << value[1] << std::endl;
-
         ASSERT_EQUAL_IDX ("_to_string ()", len[0], wcslen (value[0]));
         ASSERT_EQUAL_IDX ("stringify ()", len[1], wcslen (value[1]));
+
+        delete [] value[0];
+        delete [] value[1];
 
       TEST_IT_END
     }
