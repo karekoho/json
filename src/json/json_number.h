@@ -136,13 +136,13 @@ namespace format
        */
       inline long double
       get () const
-      { return _double_value; }
+      { return _value.long_double; }
 
     protected:
       /**
-       * @brief _value
+       * @brief _double_str
        */
-      long double _double_value;
+      std::wstring _double_str;
 
       /**
        * @brief _digitp
@@ -153,11 +153,6 @@ namespace format
        * @brief _is_double
        */
       bool _is_floating_point;
-
-      /**
-       * @brief _double_str
-       */
-      std::wstring _double_str;
 
       /**
        * @brief number
@@ -273,7 +268,7 @@ namespace format
        */
       virtual inline void
       _get () const noexcept override
-      { _value.long_double = get (); }
+      { /* nop */ }
 
     private:
       /**
@@ -283,8 +278,8 @@ namespace format
       __to_string () noexcept
       {
         _double_str = _is_floating_point
-          ? std::to_wstring (_double_value)
-          : std::to_wstring (static_cast<long long> (_double_value));
+          ? std::to_wstring (_value.long_double)
+          : std::to_wstring (static_cast<long long> (_value.long_double));
       }
     }; // Class number
 

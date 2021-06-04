@@ -35,6 +35,13 @@ namespace format
       {}
 
       /**
+       * @brief leaf
+       * @param ld
+       */
+      leaf (long double ld, long double) : value (ld)
+      {}
+
+      /**
        * @brief Leaf
        * @param json
        */
@@ -49,18 +56,19 @@ namespace format
       {}
 
       /**
+       * @brief Leaf
+       * @param parent
+       */
+      leaf (json *parent, long double ld) : value (parent, ld)
+      {}
+
+      /**
        * @brief leaf
        * @param parent
        * @param charc
        */
       leaf (json *parent, size_t charc) : value (parent, charc)
       {}
-
-      /**
-       * @brief leaf
-       * @param parent
-       */
-      leaf (json *parent, long double);
 
       /**
        * @brief leaf

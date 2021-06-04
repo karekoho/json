@@ -120,7 +120,7 @@ namespace format
 
         CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("number.value ()", (*it).dval, (double) n.get (), delta);
 
-        n._double_value = 0;
+        n._value.long_double = 0;
 
         n._digitp[DOUBLE][START]  = nullptr;
         n._digitp[DOUBLE][END]    = nullptr;
@@ -527,7 +527,7 @@ namespace format
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("src[1]._double_value",
                                     (float) 100.1,
-                                    (float) src[1]._double_value);  // _parse () called but not _calculate ()
+                                    (float) src[1]._value.long_double);  // _parse () called but not _calculate ()
 
       CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",
                               copy[1].stringify () == std::wstring (L"100.100000"));

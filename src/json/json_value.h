@@ -285,20 +285,14 @@ namespace format
         value_t t = type ();
 
         if (t == value_t::number_t)
-          {
-            _get ();
-            return _value.long_double;
-          }
+          return _value.long_double;
 
         if (t == value_t::boolean_t)
           return _value.boolean;
 
         // String to boolean
         if (t == value_t::string_t)
-          {
-            _get ();
-            return static_cast<bool>(_value.string);
-          }
+         return static_cast<bool>(_value.string);
 
         if (t == value_t::null_t)
           throw json_conversion_error (BAD_CAST_NULL_TO_NUMERIC);

@@ -3,58 +3,47 @@
 #include <iostream>
 
 format::json::number::number ()
-  : leaf (),
-    _double_value (0),
+  : leaf (static_cast<long double> (0), 0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (false)
 {
-  // _primitive.double_value = 0;
-  __to_string (); /// TODO: const wchar_t * __to_string (long long | long double)
+  __to_string ();
 }
 
 format::json::number::number (int i)
-  : leaf (),
-    _double_value (i),
+  : leaf (static_cast<long double> (i), 0), // do leaf ((int) long double) --> value (int) long double) to activate primitive value
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (false)
 {
-   // _primitive.double_value = i;
    __to_string ();
 }
 
 format::json::number::number (long long ll)
-  : leaf (),
-    _double_value (ll),
+  : leaf (static_cast<long double> (ll), 0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (false)
 {
-  // _primitive.double_value = ll;
   __to_string ();
 }
 
 format::json::number::number (float f)
-  : leaf (),
-    _double_value (static_cast<long double> (f)),
+  : leaf (static_cast<long double> (f), 0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (true)
 {
-  // _primitive.double_value = static_cast<long double> (f);
   __to_string ();
 }
 
-format::json::number::number (long double d)
-  : leaf (),
-    _double_value (d),
+format::json::number::number (long double ld)
+  : leaf (ld, 0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (true)
 {
-  // _primitive.double_value = d;
   __to_string ();
 }
 
 format::json::number::number (const wchar_t * const json)
   : leaf (json),
-    _double_value (0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (false)
 {
@@ -65,22 +54,18 @@ format::json::number::number (const wchar_t * const json)
 }
 
 format::json::number::number (json *parent)
-  : leaf (parent),
-    _double_value (0),
+  : leaf (parent, static_cast<long double> (0)),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
    _is_floating_point (false)
 {
-  // _primitive.double_value = 0;
   __to_string ();
 }
 
 format::json::number::number (const number &other)
  : leaf (other),
-   _double_value (other._double_value),
    _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
    _is_floating_point (other._is_floating_point)
 {
-  // _primitive.double_value = other._primitive.double_value;
   __to_string ();
 }
 
@@ -129,7 +114,7 @@ format::json::number::_parse (const wchar_t * const json)
     throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
 
   _digitp[DOUBLE][END] = _readp;
-  _double_value = _calculate (_digitp); // Integer value
+  _value.long_double = _calculate (_digitp); // Integer value
   __to_string ();
 
   return _readp;
@@ -160,11 +145,10 @@ format::json::number::_frag ()
 
   _is_floating_point = true;
 
-  if (peek == 'e' || peek == 'E') {
-      return _exp ();
-    }
+  if (peek == 'e' || peek == 'E')
+    return _exp ();
 
-  _double_value = _calculate (_digitp);
+  _value.long_double = _calculate (_digitp);
   __to_string ();
 
   return _readp;
@@ -183,7 +167,7 @@ format::json::number::_exp ()
 
   _digitp[EXP][END] = _readp;
 
-  _double_value = _calculate (_digitp);
+  _value.long_double = _calculate (_digitp);
   __to_string ();
 
   return _readp;
@@ -194,21 +178,21 @@ double format::json::number::_calculate (const wchar_t * const digitp[2][2])
 {
   // Value is zero
   if (digitp[DOUBLE][START] == nullptr || digitp[DOUBLE][END] == nullptr)
-    return (_double_value = 0);
+    return (_value.long_double = 0);
 
-  _double_value = _atof (digitp[DOUBLE]);
+  _value.long_double = _atof (digitp[DOUBLE]);
 
   // No exponent
   if (digitp[EXP][START] == nullptr || digitp[EXP][END] == nullptr)
-    return _double_value;
+    return _value.long_double;
 
   long long exp = _atoll (digitp[EXP]);
 
   // No exponent
   if (exp == 0)
-    return _double_value;
+    return _value.long_double;
 
   return exp < 0
-          ? _double_value / std::powl (10, -1 * exp)
-          : _double_value * std::powl (10, exp);
+          ? _value.long_double / std::powl (10, -1 * exp)
+          : _value.long_double * std::powl (10, exp);
 }
