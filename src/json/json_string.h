@@ -183,7 +183,7 @@ namespace format
        * otherwise return string as negative value.
        * @return Number of characters read
        */
-      long /** TODO: long */
+      long long
       __string (wchar_t & endc) const noexcept;
 
       /**

@@ -53,7 +53,7 @@ format::json::string::_parse (const wchar_t * const json_text)
 
   if (_parent == nullptr) // 2. constructor
     {
-      long valid_charc  = 0;
+      long long valid_charc  = 0;
 
       if ((valid_charc = __string (endc)) < 0 ) // validate
         throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
@@ -61,15 +61,13 @@ format::json::string::_parse (const wchar_t * const json_text)
       (void) __assign (_startp, static_cast<size_t> (valid_charc));
     }
   else if (charc > 1)  // 3. constructor
-    {
-      // value::_make_value shuold always call string () with charc >= 2, e.g. L"\"x\"" == 3
-      (void) __assign (_startp + 1, charc - 2); // Strip quotes
-    }
+    // value::_make_value shuold always call string () with charc >= 2, e.g. L"\"x\"" == 3
+    (void) __assign (_startp + 1, charc - 2); // Strip quotes
 
   return (_readp += charc);
 }
 
-long
+long long
 format::json::string::__string (wchar_t & endc) const noexcept
 {
   const wchar_t * readp = _readp;

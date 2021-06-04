@@ -58,13 +58,6 @@ namespace format
       value (const wchar_t * const);
 
       /**
-       * @brief Activating constructor for union primitive_value { const wchar_t * }
-       * @param JSON text
-       * @param Union member
-       */
-      value (const wchar_t * const, const wchar_t * const);
-
-      /**
        * @brief Activating constructor for union primitive_value { long double }
        * @param Union member
        */
@@ -698,8 +691,7 @@ namespace format
        * @param endc Last character read
        * @return Number of characters read, including quotes
        */
-      long int
-      _string (wchar_t &endc) const noexcept;
+      long long _string (wchar_t &endc) const noexcept;
 
       /**
        * @brief _is_literal Detect if _readp points to "true", "false" or "null".

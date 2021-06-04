@@ -38,7 +38,7 @@ namespace format
        * @brief Leaf
        * @param json
        */
-      leaf (const wchar_t * const json_text) : value (json_text, nullptr)
+      leaf (const wchar_t * const json_text) : value (json_text)
       {}
 
       /**

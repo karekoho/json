@@ -26,15 +26,7 @@ format::json::value::value (const wchar_t * const)
       _parent (nullptr),
       _key (nullptr),
       _index (0),
-      _value ()
-{ }
-
-format::json::value::value (const wchar_t * const, const wchar_t * const)
-  : _readp (nullptr),
-    _parent (nullptr),
-    _key (nullptr),
-    _index (0),
-    _value (nullptr)
+      _value (nullptr)
 { }
 
 format::json::value::value (bool boolean)
@@ -83,7 +75,7 @@ format::json::value::
   delete[] _key;
 }
 
-long int
+long long int
 format::json::value::_string (wchar_t &endc) const noexcept
 {
   const wchar_t * const startp = _readp;

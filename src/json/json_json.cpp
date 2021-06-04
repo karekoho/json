@@ -78,6 +78,14 @@ format::json::json::~json ()
   delete __root;
 }
 
+format::json::value &
+format::json::json::operator =(const wchar_t * const json_text)
+{
+  delete __root;
+  (void) _parse (json_text);
+  return *this;
+}
+
 const wchar_t *
 format::json::json::_parse (const wchar_t * const readp)
 {
@@ -107,7 +115,7 @@ format::json::json::_at (const wchar_t * const key) const
   if (__hasRoot ())
     return (*__root)[key];
 
-  throw json_out_of_range ("Key not found");
+  throw json_out_of_range ("Key not found"); // TODO: define constant
 }
 
 format::json::value &
@@ -125,7 +133,7 @@ format::json::json::_at (size_t index) const
   if (__hasRoot ())
     return (*__root)[index];
 
-  throw json_out_of_range ("Index not found");
+  throw json_out_of_range ("Index not found");  // TODO: define constant
 }
 
 format::json::value &
@@ -159,7 +167,7 @@ format::json::value *
 format::json::json::_make_value ()
 {
   value *value_  = nullptr;
-  long charc = 0;
+  long long charc = 0;
 
   wchar_t endc = 0;
   wchar_t readc = *(_look_ahead ());
