@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(json)
+project(format-json)
 set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(SOURCES
@@ -24,8 +24,8 @@ set(SOURCES
     src/json/json_leaf.h
     src/json/json_exception.h)
 
-add_library(json SHARED ${SOURCES})
-install(TARGETS json DESTINATION lib)
+add_library(format-json SHARED ${SOURCES})
+install(TARGETS format-json DESTINATION lib)
 install(DIRECTORY src/json/ DESTINATION include/format FILES_MATCHING PATTERN "*.h")
 
 # If “make install” is invoked or INSTALL is built, this directory is prepended onto all install directories. 

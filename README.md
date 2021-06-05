@@ -22,7 +22,7 @@ In the _root of the repository_ run the following commands:
 cmake . 
 make & make install
 ```
-A shared library called `libjson` will be created in `/usr/local/lib`. The development headers will be found in `/usr/local/include/format`.
+A shared library called `libformat-json` will be created in `/usr/local/lib`. The development headers will be found in `/usr/local/include/format`.
 #### Include 
 ```c++
 <format/json.h> 
@@ -79,7 +79,7 @@ const json::value & val = j[L"Image"];
 
   {
     // Get the primitive value of an object
-    bool value = animated.get ();
+    bool value = animated.value ();
     
     std::cout << value << ',' <<
               // This get the same value
@@ -89,7 +89,7 @@ const json::value & val = j[L"Image"];
   }
 
   // Object and array values are represented as a string
-  std::wcout << ids.get() << std::endl;
+  std::wcout << ids.value () << std::endl;
   // output: [116,943,234,38793,{}]
 
   // Array and object types are iterable.
@@ -127,14 +127,14 @@ const json::json j ( new json::object {
               { L"Height", new json::number (600.0) },
               { L"Title", new json::string (L"View from 15th Floor") },
               { L"Thumbnail", new json::object { { L"Url", new json::string (L"http://www.example.com/image/481989943") },
-                                                 { L"Height", new json::number (static_cast<long long>(125) ) },
-                                                 { L"Width", new json::number (static_cast<long long> (100)) } }
+                                                 { L"Height", new json::number (125) },
+                                                 { L"Width", new json::number (100) } }
               },
               { L"Animated", new json::boolean (false) },
-              { L"IDs", new json::array { new json::number (static_cast<long long> (116)),
-                                          new json::number (static_cast<long long> (943)),
-                                          new json::number (static_cast<long long> (234)),
-                                          new json::number (static_cast<long long> (38793)) }
+              { L"IDs", new json::array { new json::number (116),
+                                          new json::number (943),
+                                          new json::number (234),
+                                          new json::number (38793) }
               }
             }
           }
@@ -147,11 +147,11 @@ const json::array & ids = static_cast<const json::array &> (j[L"Image"][L"IDs"])
 json::array *copy_ids = new json::array (ids);
 
 // Modify existing value
-(*copy_ids)[1] = static_cast<long long> (100);
+(*copy_ids)[1] = 100;
 
 // Add a new value. If index is greater than array.size - 1,
 // new value goes at the end, i.e. array[array.size]
-(*copy_ids)[4] = static_cast<long long> (101);
+(*copy_ids)[4] = 101;
 
 // Remove value by assigning undefined to it
 (*copy_ids)[3] = json::undefined ();

@@ -63,10 +63,14 @@ SUBDIRS += \
     ../json/json.pro
 
 DISTFILES += \
+    ../../CMakeLists.txt \
+    ../../README.md \
     ../../build/linux/json/debug/CMakeLists.txt \
     ../../build/linux/test/debug/CMakeLists.txt \
     ../../build/macos/test/release/CMakeLists.txt \
-    ../../build/tests/CMakeLists.txt
+    ../../build/tests/CMakeLists.txt \
+    ../../doc/debugging-in-container.txt \
+    ../../doc/roadmap.txt
 
 
 

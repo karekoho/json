@@ -1,0 +1,15 @@
+Start container:
+cd to repository root
+run: docker run -tiv $PWD:/valgrind karek/valgrind:latest
+
+Build libjson:
+cd to build/linux/json/debug
+run: cmake .
+run: make && sudo make install
+
+Build tests:
+cd to to build/linux/test/debug
+run: cmake .
+run: make && sudo make install
+
+run: valgrind ./test_debug

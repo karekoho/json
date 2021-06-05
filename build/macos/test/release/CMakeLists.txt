@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(test_debug)
-set(CMAKE_BUILD_TYPE Debug)
+project(test_release)
+set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(PATH "../../../../src/test/")
 set(SOURCES
@@ -31,6 +31,6 @@ find_library (JSON_LIB format-json)
 message(${CPPUNIT_LIB})
 message(${JSON_LIB})
 
-add_executable (test_debug ${SOURCES})
-target_include_directories (test_debug PUBLIC "/usr/local/include")
-target_link_libraries (test_debug ${CPPUNIT_LIB} ${JSON_LIB})
+add_executable (test_release ${SOURCES})
+target_include_directories (test_release PUBLIC "/usr/local/include")
+target_link_libraries (test_release ${CPPUNIT_LIB} ${JSON_LIB})
