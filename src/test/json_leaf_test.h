@@ -52,7 +52,7 @@ namespace format
                                 output) == 0);
 
         delete (*it).value;
-        delete output;
+        delete [] output;
 
       TEST_IT_END
 

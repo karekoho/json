@@ -14,6 +14,7 @@
 #include <array>
 #include <wchar.h>
 #include <clocale>
+#include <algorithm>
 
 #include "../json/json.h"
 

@@ -529,8 +529,12 @@ namespace format
                                     (float) 100.1,
                                     (float) src[1]._value.long_double);  // _parse () called but not _calculate ()
 
+      const wchar_t *str_value = copy[1].stringify ();
+
       CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",
-                              copy[1].stringify () == std::wstring (L"100.100000"));
+                              str_value == std::wstring (L"100.100000"));
+
+      delete [] str_value;
 
       // Copies
       json j = new object { { L"0", new number (src[0]) },

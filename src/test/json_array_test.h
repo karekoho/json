@@ -455,6 +455,8 @@ namespace format
                   delete[] str_value;
                   _str_value[BEGIN] = nullptr;
                 }
+              else
+                delete [] output;
             }
       TEST_IT_END
     }

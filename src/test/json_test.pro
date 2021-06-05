@@ -63,6 +63,9 @@ SUBDIRS += \
     ../json/json.pro
 
 DISTFILES += \
+    ../../build/linux/json/debug/CMakeLists.txt \
+    ../../build/linux/test/debug/CMakeLists.txt \
+    ../../build/macos/test/release/CMakeLists.txt \
     ../../build/tests/CMakeLists.txt
 
 

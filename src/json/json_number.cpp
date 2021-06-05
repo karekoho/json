@@ -193,6 +193,6 @@ double format::json::number::_calculate (const wchar_t * const digitp[2][2])
     return _value.long_double;
 
   return exp < 0
-          ? _value.long_double / std::powl (10, -1 * exp)
-          : _value.long_double * std::powl (10, exp);
+          ? _value.long_double / powl (10, -1 * exp) // powl is not std in GNU
+          : _value.long_double * powl (10, exp);
 }

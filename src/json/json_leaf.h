@@ -115,11 +115,13 @@ namespace format
       virtual inline const wchar_t *
       stringify () const final override
       {
-        // TODO: catch bad alloc
-        size_t length = _str_length ();
-        // wchar_t *new_string = new wchar_t[length + 1] ();
-        // *(new_string + length) = 0;
-        return wcsncpy (new wchar_t[length + 1] (), _to_string (), length);
+        try
+          {
+            size_t length = _str_length ();
+            return wcsncpy (new wchar_t[length + 1] (), _to_string (), length);
+          } catch (const std::exception & e) {
+            throw json_error (e.what ());
+          }
       }
 
       /**

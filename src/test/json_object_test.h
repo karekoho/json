@@ -500,11 +500,14 @@ namespace format
                 ASSERT_EQUAL_IDX ("strlen (p._str_value[BEGIN])", len, wcslen (_str_value[BEGIN]));
                 CPPUNIT_ASSERT_MESSAGE ("strcmp (output, (*it).output[1])", wcscmp (_str_value[BEGIN], (*it).output[1]) == 0);
               }
+
             if (o._parent)
               {
                 delete[] str_value;
                 _str_value[BEGIN] = nullptr;
               }
+            else
+              delete [] output;
         }
 
       TEST_IT_END
