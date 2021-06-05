@@ -95,7 +95,7 @@ parse ()
 
     {
       // Get the primitive value of an object
-      bool value = animated.get ();
+      bool value = animated.value ();
 
       std::cout << value << ',' <<
                 // This get the same value

@@ -55,11 +55,15 @@ revive ()
     }",
     fn_reviver); // The reviver
 
-  std::wcout << j->stringify () << std::endl;
+  // stringify () returns pointer to new memory, that must be freed
+  const wchar_t *str_value = j->stringify ();
+
+  std::wcout << str_value << std::endl;
   // output: {"Image":{"IDs":[116,943,234,38793],"Description":"n/a",
   // "Height":600,"Animated":true,"Title":"View from 15th Floor","Width":800}}
 
   delete j;
+  delete [] str_value;
 }
 
 #endif // REVIVE_H

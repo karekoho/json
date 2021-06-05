@@ -215,7 +215,23 @@ namespace format
        * @return The object where new value was assigned to
        */
       virtual value &
+      operator =(int i);
+
+      /**
+       * @brief operator =
+       * @param l
+       * @return The object where new value was assigned to
+       */
+      virtual value &
       operator =(long long l);
+
+      /**
+       * @brief operator =
+       * @param l
+       * @return The object where new value was assigned to
+       */
+      virtual value &
+      operator =(float f);
 
       /**
        * @brief operator =
@@ -223,7 +239,7 @@ namespace format
        * @return The object where new value was assigned to
        */
       virtual value &
-      operator =(long double d);
+      operator =(long double ld);
 
       /**
        * @brief operator =

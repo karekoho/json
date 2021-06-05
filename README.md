@@ -123,8 +123,8 @@ using namespace format;
 const json::json j ( new json::object {
           { L"Image",
             new json::object {
-              { L"Width", new json::number (800.0) },
-              { L"Height", new json::number (600.0) },
+              { L"Width", new json::number ((float) 800.0) },
+              { L"Height", new json::number ((float) 600.0) },
               { L"Title", new json::string (L"View from 15th Floor") },
               { L"Thumbnail", new json::object { { L"Url", new json::string (L"http://www.example.com/image/481989943") },
                                                  { L"Height", new json::number (125) },
@@ -156,9 +156,13 @@ json::array *copy_ids = new json::array (ids);
 // Remove value by assigning undefined to it
 (*copy_ids)[3] = json::undefined ();
 
-std::wcout << copy_ids->stringify () << std::endl;
+// stringify () returns pointer to new memory, that must be freed
+const wchar_t *str_value = copy_ids->stringify ();
+
+std::wcout << str_value << std::endl;
 // output: [116,100,234,101]
 
+delete [] str_value;
 delete copy_ids;
 
 // Iterate the original values
@@ -226,7 +230,13 @@ json::json *j = json::json::parse ( L"{\
   }",
   fn_reviver); // The reviver
 
-std::wcout << j->stringify () << std::endl;
+// stringify () returns pointer to new memory, that must be freed
+const wchar_t *str_value = j->stringify ();
+
+std::wcout << str_value << std::endl;
 // output: {"Image":{"IDs":[116,943,234,38793],"Description":"n/a",
 // "Height":600,"Animated":true,"Title":"View from 15th Floor","Width":800}}
+
+delete j;
+delete [] str_value;
 ```

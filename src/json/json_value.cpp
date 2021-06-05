@@ -163,9 +163,20 @@ format::json::value::operator =(bool b)
 }
 
 format::json::value &
+format::json::value::operator =(int i)
+{
+  return _assign (new number (i));
+}
+
+format::json::value &
 format::json::value::operator =(long long l)
 {
   return _assign (new number (static_cast<long long>(l)));
+}
+
+format::json::value &format::json::value::operator =(float f)
+{
+  return _assign (new number (static_cast<float>(f)));
 }
 
 format::json::value &
