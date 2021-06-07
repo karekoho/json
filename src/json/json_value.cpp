@@ -154,6 +154,11 @@ format::json::value::_assign (value *nv)
     throw json_error (BAD_ASSIGNMENT);
 
   return __call__assign (_parent, this, nv);
+
+  // return _parent->_assign (this, nv);
+  // json_value.cpp:157:19: error: '_assign' is a protected member of 'format::json::json'
+  // json_json.h:210:7: note: declared protected here
+  // value::_parent --> to value ?
 }
 
 format::json::value &

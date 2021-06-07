@@ -138,13 +138,6 @@ namespace format
         { return json + (_value.boolean == true ? 4 : 5); }
 
        /**
-        * @brief _clear
-        */
-        virtual inline void
-        _clear () override
-        { /* nop */ }
-
-       /**
         * @brief _clone
         * @return
         */

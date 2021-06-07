@@ -198,7 +198,7 @@ namespace format
        */
       inline value &
       operator =(const value & v)
-      { return _assign (v);  }
+      { return _assign (v); }
 
       /**
        * @brief Remove value from object, e.g. json j[L"foo"] = undefined ()
@@ -207,7 +207,7 @@ namespace format
        */
       inline value &
       operator =(const undefined & u)
-      { return _assign (u);}
+      { return _assign (u); }
 
       /**
        * @brief operator =
@@ -617,13 +617,6 @@ namespace format
       _str_length () const noexcept = 0;
 
       /**
-       * @brief _get
-       */
-      virtual void
-      _get () const
-      { /* nop */ }
-
-      /**
        * @brief Generate parseable json text
        * @param If present, json text will be written to the memory pointed by offset.
        *  This is when called by parent object.
@@ -746,8 +739,7 @@ namespace format
       /**
        * @brief _clear
        */
-      virtual void
-      _clear () = 0;
+      virtual void _clear () = 0;
 
       /**
        * @brief _erase

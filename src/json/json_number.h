@@ -230,23 +230,6 @@ namespace format
       { return std::atoll (std::string (digitp[0], digitp[1]).c_str ()); }
 
       /**
-       * @note Removed
-       * @brief _assign
-       * @param nv
-       * @return
-       *
-      value &
-      _assign (const number & nv)
-      { return _parent  ? __call__assign (_parent, this, new number (nv)) : *(_clone (nv)); } */
-
-      /**
-       * @brief _clear
-       */
-      virtual void
-      _clear () override
-      { /* nop */ }
-
-      /**
        * @brief _to_string
        * @return
        */
@@ -271,12 +254,14 @@ namespace format
       { return _double_str.length (); }
 
       /**
-       * @todo To be removed
-       * @brief _get
-       */
-      virtual inline void
-      _get () const noexcept override
-      { /* nop */ }
+       * @note Removed
+       * @brief _assign
+       * @param nv
+       * @return
+       *
+      value &
+      _assign (const number & nv)
+      { return _parent  ? __call__assign (_parent, this, new number (nv)) : *(_clone (nv)); } */
 
     private:
       /**
@@ -285,6 +270,14 @@ namespace format
       inline void
       __to_string () noexcept
       {
+        // sz = std::swprintf (buf, sz = 0, L"%Lf", value) // long double
+        // sz = std::swprintf(buf, sz, L"%lld", value)  // long long
+        // can be used to calculate buffer size
+        // std::swprintf (buf, sz, L"%Lf", value) to write the string
+        // g, G should remove trailing zeros from fractional part
+        // LLONG_MAX  = 9223372036854775807   = 20
+        // ULLONG_MAX = 18446744073709551615  = 21
+        // LDBL_MANT_DIG = 64 digits in mantissa
         _double_str = _is_floating_point
           ? std::to_wstring (_value.long_double)
           : std::to_wstring (static_cast<long long> (_value.long_double));

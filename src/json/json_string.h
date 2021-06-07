@@ -136,14 +136,6 @@ namespace format
       _parse (const wchar_t * const json_text) override;
 
       /**
-       * @todo To be removed
-       * @brief _clear
-       */
-      virtual void
-      _clear () override
-      { /* nop */ }
-
-      /**
        * @brief _clone
        * @return
        */
@@ -166,14 +158,6 @@ namespace format
       virtual inline size_t
       _str_length () const noexcept override
       { return _charc + 2; }
-
-      /**
-       * @todo To be removed
-       * @brief _get
-       */
-      virtual inline void
-      _get () const noexcept override
-      { /* nop */ }
 
       /**
        * @note Removed

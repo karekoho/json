@@ -244,7 +244,8 @@ namespace format
        * @brief _clear
        */
       virtual void
-      _clear () override = 0;
+      _clear () final override
+      { /* nop */ }
 
       /**
        * @brief _erase
