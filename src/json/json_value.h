@@ -396,7 +396,7 @@ namespace format
          * @brief Pre increment
          * @return iterator
          */
-        const iterator &
+        inline const iterator &
         operator ++()
         {
           ++_it;
@@ -453,19 +453,21 @@ namespace format
         end_array       = 93,   // ']',
         name_separator  = 58,   // ':',
         value_separator = 44,   // ',',
-        path_separator  = 47,   // /
+        // path_separator  = 47,   // /
         double_quote    = 34    // "
       };
 
       /**
-       * @brief The _ws enum White space characters.
+       * @brief The _ws enum Control, white space and other characters.
        */
       enum _ws
       {
         tab   = 9,    // \t Horizontal tab
         lf    = 10,   // \n Line feed or New line
         cr    = 13,   // \r Carriage return
-        space = 32    // Space
+        us    = 31,   // Unit separator
+        space = 32,   // ' ' Space
+        rs    = 92    // \ Reverse solidus
       };
 
       /**
@@ -496,6 +498,7 @@ namespace format
       const wchar_t *_readp;
 
       /**
+       * @todo json* --> value*
        * @brief _parent
        */
       json *_parent;
@@ -538,7 +541,7 @@ namespace format
        * @see http://en.cppreference.com/w/cpp/language/types
        */
       virtual const wchar_t *
-      _parse (const wchar_t *json) = 0;
+      _parse (const wchar_t *json_text) = 0;
 
       /**
        * @brief _assign
@@ -639,13 +642,19 @@ namespace format
       inline const wchar_t *
       _look_ahead () noexcept
       {
-        while (*_readp != 0 && (*_readp == _ws::tab
-                || *_readp == _ws::lf
-                || *_readp == _ws::cr
-                || *_readp == _ws::space))
+        while (*_readp != 0 && _is_whitespace (*_readp))
           _readp++;
 
         return _readp;
+      }
+
+      static inline bool
+      _is_whitespace (int c) noexcept
+      {
+        return c == _ws::tab
+            || c == _ws::lf
+            || c == _ws::cr
+            || c == _ws::space;
       }
 
       /**
@@ -655,6 +664,7 @@ namespace format
        * @param src Source string
        * @param charc Number of characters to copy
        * @return Pointer to the location where the next write starts
+       * @todo Move definition to json_value.cpp
        */
       static inline wchar_t *
       _str_append (wchar_t *dst, const wchar_t *src, size_t charc) noexcept
@@ -672,6 +682,7 @@ namespace format
        * @param Pointer to the allocated memory where the string is written
        * @param The value to quote
        * @return Pointer to the location where the next write starts
+       * @todo Move definition to json_value.cpp
        */
       static inline wchar_t *
       _quote_value (wchar_t *dst, const value *v) noexcept

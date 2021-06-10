@@ -103,15 +103,39 @@ format::json::value::_string (wchar_t &endc) const noexcept
     }
 
   const wchar_t * readp = _readp + 1;
+  const wchar_t * quotep = nullptr;
 
-  while (*readp > 31 && *readp != _sc::double_quote)
-    readp++;
+  // Possible end of string
+  bool possible_eos = false;
+
+  while (*readp > 31)
+    {
+      int cur = *readp;
+
+      if ((possible_eos || *(readp - 1) == _sc::double_quote) // \" : or \":
+               && (cur == _sc::name_separator
+                || cur == _sc::value_separator
+                || cur == _sc::end_array
+                || cur == _sc::end_object))
+        break;
+
+      if (cur == _sc::double_quote)
+        {
+          quotep = readp;
+          possible_eos = true;
+        }
+
+      else if (quotep && !_is_whitespace (cur)) // \"' '
+        possible_eos = false;
+
+      readp++;
+    }
 
   endc = *readp;
 
-  return *readp == _sc::double_quote
-    ? (readp - startp) + 1
-    : -1 * (readp - startp);
+  return quotep
+      ? (quotep - startp) + 1
+      : -1 * (readp - startp);
 }
 
 format::json::value::_literal
