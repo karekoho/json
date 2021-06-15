@@ -53,10 +53,10 @@ format::json::string::_parse (const wchar_t * const json_text)
 
   if (_parent == nullptr) // 2. constructor
     {
-      long long valid_charc  = 0;
+      long long valid_charc = _unquoted_string (_startp, _readp, endc); // validate
 
-      if ((valid_charc = __string (endc)) < 0 ) // validate
-        throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
+      if (endc > 0 && endc < _ws::space)
+        throw json_syntax_error (UNEXPECTED_TOKEN, _readp + valid_charc, 1);
 
       (void) __assign (_startp, static_cast<size_t> (valid_charc));
     }
@@ -67,34 +67,12 @@ format::json::string::_parse (const wchar_t * const json_text)
   return (_readp += charc);
 }
 
-long long
-format::json::string::__string (wchar_t & endc) const noexcept
-{
-  const wchar_t * readp = _readp;
-
-  if ((*readp > 0 && *readp < 32) || *readp == _sc::double_quote)
-    return -1;
-
-  while (*readp > 31 && *readp != _sc::double_quote)
-    readp++;
-
-  endc = *readp;
-  long charc = readp - _readp;
-
-  return *readp == 0
-      ? charc
-      : (*readp > 31 && *readp != _sc::double_quote
-         ? charc
-         : -1 * charc);
-}
-
 const wchar_t *
 format::json::string::__assign (const wchar_t * const offset, size_t charc)
 {
   // TODO: catch bad_alloc
   wchar_t *new_string = new wchar_t[charc + 1] ();
 
-  // *(new_string + charc) = 0;
   _string_value = new_string;
   _value.string = new_string;
   _charc = charc;

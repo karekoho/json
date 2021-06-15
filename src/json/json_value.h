@@ -708,6 +708,13 @@ namespace format
       long long _string (wchar_t &endc) const noexcept;
 
       /**
+       * @brief _unquoted_string
+       * @param endc
+       * @return
+       */
+      static long long _unquoted_string (const wchar_t * const startp, const wchar_t *readp, wchar_t &endc) noexcept;
+
+      /**
        * @brief _is_literal Detect if _readp points to "true", "false" or "null".
        * @param try_
        * @return

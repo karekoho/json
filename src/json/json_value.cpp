@@ -102,7 +102,13 @@ format::json::value::_string (wchar_t &endc) const noexcept
       return 0;
     }
 
-  const wchar_t * readp = _readp + 1;
+  return _unquoted_string (startp, startp + 1, endc);
+}
+
+long long
+format::json::value::_unquoted_string (const wchar_t * const startp, const wchar_t *readp, wchar_t &endc) noexcept
+{
+  const wchar_t * const unquoted_start = readp;
   const wchar_t * quotep = nullptr;
 
   // Possible end of string
@@ -132,6 +138,9 @@ format::json::value::_string (wchar_t &endc) const noexcept
     }
 
   endc = *readp;
+
+  if (startp == unquoted_start)
+    return readp - startp;
 
   return quotep
       ? (quotep - startp) + 1
