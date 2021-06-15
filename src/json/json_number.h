@@ -91,6 +91,22 @@ namespace format
       { return value::value_t::number_t; }
 
       /**
+       * @brief value
+       * @return
+       */
+      inline long double
+      value () const
+      { return _value.long_double; }
+
+      /**
+       * @deprecated Use value instead
+       * @return
+       */
+      inline long double
+      get () const
+      { return value (); }
+
+      /**
        * @note Removed
        * @brief operator =
        * @param n
@@ -130,22 +146,6 @@ namespace format
         return __clear_strp ();
       }*/
 
-      /**
-       * @brief value
-       * @return
-       */
-      inline long double
-      value () const
-      { return _value.long_double; }
-
-      /**
-       * @deprecated Use value instead
-       * @return
-       */
-      inline long double
-      get () const
-      { return value (); }
-
     protected:
       /**
        * @brief _double_str
@@ -166,7 +166,7 @@ namespace format
        * @brief number
        * @param json
        */
-      number (const wchar_t * const json);
+      number (const wchar_t * const json_text);
 
       /**
        * @brief number
@@ -180,7 +180,7 @@ namespace format
        * @return
        */
       virtual const wchar_t *
-      _parse (const wchar_t * const json) override;
+      _parse (const wchar_t * const json_text) override;
 
       /**
        * @brief _digits If >= 1 digits found, return first non-digit character.
@@ -271,10 +271,10 @@ namespace format
       __to_string () noexcept
       {
         // sz = std::swprintf (buf, sz = 0, L"%Lf", value) // long double
-        // sz = std::swprintf(buf, sz, L"%lld", value)  // long long
+        // sz = std::swprintf (buf, sz, L"%lld", value)  // long long
         // can be used to calculate buffer size
         // std::swprintf (buf, sz, L"%Lf", value) to write the string
-        // g, G should remove trailing zeros from fractional part
+        // g or G should remove trailing zeros from fractional part
         // LLONG_MAX  = 9223372036854775807   = 20
         // ULLONG_MAX = 18446744073709551615  = 21
         // LDBL_MANT_DIG = 64 digits in mantissa
