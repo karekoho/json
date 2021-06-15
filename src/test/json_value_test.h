@@ -74,28 +74,31 @@ namespace format
 
             // Inner quotes
             { L"\"x\"\"", 1 + 3, 0, PASS },
+            { L"\"x\"\"     ", 1 + 3, 0, PASS },
             { L"\"x\"\"\"", 1 + 4, 0, PASS },
             { L"\"x\"\"y\"", 2 + 4, 0, PASS },
 
             // Read until structural character
+            // String is read until :,}] right after \" or after \"whitespace
+            // Length of string is the last \" before the structural character
             { L"\"x\"\"     , ", 1 + 3, ',', PASS },
             { L"\"x\"\"\"     : ", 1 + 4, ':', PASS },
             { L"\"x\"\"y\"     } ", 2 + 4, '}', PASS },
             { L"\"x\"\"y\"     ] ", 2 + 4, ']', PASS },
 
-            { L"\"x:\",\"     : ", 2 + 2, ',', PASS },
-            { L"\"x,\"\":\"     , ", 2 + 3, ':', PASS },
-            { L"\"x]\"\" } \"     ] ", 2 + 3, '}', PASS },
-            { L"\"x}\"\"] \"     } ", 2 + 3, ']', PASS },
-            { L"\"x}\"\"x] \"     } ", 6 + 3, '}', PASS },
+            { L"\"x:\",\"     : ", 2 + 2, ',', PASS },      // , right after \"
+            { L"\"x,\"\":\"     , ", 2 + 3, ':', PASS },    // : right after \"
+            { L"\"x]\"\" } \"     ] ", 2 + 3, '}', PASS },  // } after \"1 x whitespace
+            { L"\"x}\"\"] \"     } ", 2 + 3, ']', PASS },   // ] rigth after \"
+            { L"\"x}\"\"x] \"     } ", 6 + 3, '}', PASS },  // } after \"5 x whitespace
 
+            // No clean whitespace between \" and structural character
             { L"\"x\"\"x  :\"     , ", 5 + 4, ',', PASS },
             { L"\"x\"\" x :\"     , ", 5 + 4, ',', PASS },
             { L"\"x\"\"  x:\"     , ", 5 + 4, ',', PASS },
 
-            // Read until null terminator
-            { L"\"x\"\"     ", 1 + 3, 0, PASS },
-            { L"\"k\"l\": 6", 2 + 3, ':', PASS }, // json_pointer test failure
+            // json_pointer test failure
+            { L"\"k\"l\": 6", 2 + 3, ':', PASS },
 
             // Unescaped control characters --> error
             { L"\"\u0000\"", -1, '\u0000', PASS },
