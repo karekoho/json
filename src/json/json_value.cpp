@@ -114,7 +114,7 @@ format::json::value::_unquoted_string (const wchar_t * const startp, const wchar
   // Possible end of string
   bool possible_eos = false;
 
-  while (*readp > 31)
+  while (*readp > _ws::us)
     {
       int cur = *readp;
 
@@ -169,6 +169,29 @@ format::json::value &
 format::json::value::_assign (const undefined &) noexcept
 {  
   return _parent ? __call__erase (_parent, *this) : *this;
+}
+
+wchar_t *
+format::json::value::_str_append (wchar_t *dst, const wchar_t *src, size_t charc) noexcept
+{
+  const wchar_t * const endp = dst + charc;
+
+  while (dst < endp)
+    *(dst++) = *(src++);
+
+  return dst;
+}
+
+wchar_t *
+format::json::value::_quote_value(wchar_t *dst, const format::json::value *v) noexcept
+{
+  if (v->type () != value::string_t)
+    return _str_append (dst, __call_str_value (v, dst), __call__str_length (v));
+
+  dst = _str_append (dst, L"\"", 1);
+  dst = _str_append (dst, __call_str_value (v, dst), __call__str_length (v) - 2);
+
+  return _str_append (dst, L"\"", 1);
 }
 
 format::json::value &

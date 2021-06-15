@@ -453,7 +453,6 @@ namespace format
         end_array       = 93,   // ']',
         name_separator  = 58,   // ':',
         value_separator = 44,   // ',',
-        // path_separator  = 47,   // /
         double_quote    = 34    // "
       };
 
@@ -648,6 +647,11 @@ namespace format
         return _readp;
       }
 
+      /**
+       * @brief _is_whitespace
+       * @param c
+       * @return
+       */
       static inline bool
       _is_whitespace (int c) noexcept
       {
@@ -666,16 +670,8 @@ namespace format
        * @return Pointer to the location where the next write starts
        * @todo Move definition to json_value.cpp
        */
-      static inline wchar_t *
-      _str_append (wchar_t *dst, const wchar_t *src, size_t charc) noexcept
-      {
-        const wchar_t * const endp = dst + charc;
-
-        while (dst < endp)
-          *(dst++) = *(src++);
-
-        return dst;
-      }
+      static wchar_t *
+      _str_append (wchar_t *dst, const wchar_t *src, size_t charc) noexcept;
 
       /**
        * @brief Double quote value type of string_t
@@ -684,17 +680,8 @@ namespace format
        * @return Pointer to the location where the next write starts
        * @todo Move definition to json_value.cpp
        */
-      static inline wchar_t *
-      _quote_value (wchar_t *dst, const value *v) noexcept
-      {
-        if (v->type () != value::string_t)
-          return _str_append (dst, __call_str_value (v, dst), __call__str_length (v));
-
-        dst = _str_append (dst, L"\"", 1);
-        dst = _str_append (dst, __call_str_value (v, dst), __call__str_length (v) - 2);
-
-        return _str_append (dst, L"\"", 1);
-      }
+      static wchar_t *
+      _quote_value (wchar_t *dst, const value *v) noexcept;
 
       /**
        * @brief _string Read in string.
