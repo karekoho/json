@@ -128,17 +128,20 @@ namespace format
 
       std::vector<struct assert > test = {
           { L"", L"", 0  + 2, 0, (wchar_t) 0, PASS },
-          //{ L"", L"\"\"", 2, 0, (wchar_t) 0, PASS },
+
           { L" ", L" ", 1 + 2, 1, (wchar_t) 0, PASS },
           { L"x", L"x", 1 + 2, 1, (wchar_t) 0, PASS },
           { L"xxx", L"xxx", 3 + 2, 3, (wchar_t) 0, PASS },
 
-          //{ L"\"xxx", L"\"xxx", 4 + 2, 4, (wchar_t) 0, PASS },
-          //{ L"xxx\"", L"xxx\"", 4 + 2, 4, (wchar_t) 0, PASS },
+          { L"\u005C", L"\\", 1 + 2, 1, (wchar_t) 0, PASS }, // https://datatracker.ietf.org/doc/html/rfc8259#section-7
+          //{ L"a\u005Cb", L"a\\b", 3 + 2, 3, (wchar_t) 0, PASS }, // https://datatracker.ietf.org/doc/html/rfc8259#section-8.3
+
+          // Inner quotes
           { L"\"xxx\"", L"\"xxx\"", 5 + 2, 5, (wchar_t) 0, PASS },
+
+          // Control characters
           { L"\u0000", L"", 2, 0, (wchar_t) 0, PASS },
           { L"\u001F", nullptr, 0, 0, (wchar_t) 0, FAIL },
-          //{ L"x\u001F", nullptr, 0, 0, (wchar_t) 0, FAIL }
       };
 
       string *s = nullptr;
