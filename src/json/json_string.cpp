@@ -70,14 +70,20 @@ format::json::string::_parse (const wchar_t * const json_text)
 const wchar_t *
 format::json::string::__assign (const wchar_t * const offset, size_t charc)
 {
-  // TODO: catch bad_alloc
-  wchar_t *new_string = new wchar_t[charc + 1] ();
+  try
+    {
+      wchar_t *new_string = new wchar_t[charc + 1] ();
 
-  _string_value = new_string;
-  _value.string = new_string;
-  _charc = charc;
+      _string_value = new_string;
+      _value.string = new_string;
+      _charc = charc;
 
-  return wcsncpy (new_string, offset, charc);
+      return wcsncpy (new_string, offset, charc);
+    }
+  catch (const std::bad_alloc &e)
+    {
+      throw json_error(e.what ());
+    }
 }
 
 /** format::json::value &
