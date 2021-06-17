@@ -136,14 +136,6 @@ namespace format
       _parse (const wchar_t * const json_text) override;
 
       /**
-       * @todo To be removed
-       * @brief _clear
-       */
-      virtual void
-      _clear () override
-      { /* nop */ }
-
-      /**
        * @brief _clone
        * @return
        */
@@ -168,14 +160,6 @@ namespace format
       { return _charc + 2; }
 
       /**
-       * @todo To be removed
-       * @brief _get
-       */
-      virtual inline void
-      _get () const noexcept override
-      { /* nop */ }
-
-      /**
        * @note Removed
        * @brief assign
        * @param nv
@@ -185,15 +169,6 @@ namespace format
       _assign (const string & nv); */
 
     private:
-      /**
-       * @brief __string Read characters until character is < 32 or \".
-       * If last charater is \0, return string length,
-       * otherwise return string as negative value.
-       * @return Number of characters read
-       */
-      long long
-      __string (wchar_t & endc) const noexcept;
-
       /**
        * @brief __assign
        * @param offset

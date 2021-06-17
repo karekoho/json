@@ -52,15 +52,6 @@ namespace format
       { return new null (*this); }
 
       /**
-       * @brief _parse
-       * @param json
-       * @return
-       */
-      virtual inline const wchar_t *
-      _parse (const wchar_t * const json) noexcept override
-      { return json + 4; }
-
-      /**
        * @brief type
        * @return
        */
@@ -110,24 +101,16 @@ namespace format
        */
       null (json *parent)
         : leaf (parent)
-      {}
+      { }
 
       /**
-       * @note Removed
-       * @brief assign
-       * @param nv
+       * @brief _parse
+       * @param json
        * @return
-       *
-      value &
-      _assign (const null &)
-      { return _parent ? __call__assign (_parent, this, new null (*this)) : *this; } */
-
-      /**
-       * @brief _clear
        */
-      virtual inline void
-      _clear () noexcept override
-      { /* nop */ }
+      virtual inline const wchar_t *
+      _parse (const wchar_t * const json) noexcept override
+      { return json + 4; }
 
       /**
        * @brief _clone
@@ -152,6 +135,16 @@ namespace format
       virtual inline size_t
       _str_length () const noexcept override
       { return 4; }
+
+      /**
+       * @note Removed
+       * @brief assign
+       * @param nv
+       * @return
+       *
+      value &
+      _assign (const null &)
+      { return _parent ? __call__assign (_parent, this, new null (*this)) : *this; } */
     };  // Class null
 
     inline

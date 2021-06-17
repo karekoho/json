@@ -136,13 +136,6 @@ namespace format
 
     protected:
       /**
-       * @brief _clear
-       */
-      virtual inline void
-      _clear () override
-      {}
-
-      /**
        * @brief _clone
        * @return
        */

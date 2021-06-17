@@ -61,18 +61,54 @@ namespace format
         struct assert {
             const wchar_t *startp;
             long charc;
+            wchar_t endc;
             int assert_status;
         };
 
         std::vector<struct assert > test = {
-            { L" ", 0, PASS},
-            { L"\"", -1, PASS },
-            { L"\"x\"", 3, PASS },
-            { L"\" x\"", 4, PASS },
-            { L"\" xx", -4, PASS },
+            { L" ", 0, 0, PASS },
+            { L"\"x\"", 1 + 2, 0, PASS },
+            { L"\" x\"", 2 + 2, 0, PASS },
+            { L"\"", -1, 0, PASS },
+            { L"\" xx", -4, 0, PASS },
 
-            { L"\"\u001F\"", -1, PASS },
-            { L"\"xx\u001F\"", -3, PASS }
+            // Inner quotes
+            { L"\"x\"\"", 1 + 3, 0, PASS },
+            { L"\"x\"\"     ", 1 + 3, 0, PASS },
+            { L"\"x\"\"\"", 1 + 4, 0, PASS },
+            { L"\"x\"\"y\"", 2 + 4, 0, PASS },
+
+            // Read until structural character
+            // String is read until :,}] right after \" or after \"whitespace
+            // Length of string is the last \" before the structural character
+            { L"\"x\"\"     , ", 1 + 3, ',', PASS },
+            { L"\"x\"\"\"     : ", 1 + 4, ':', PASS },
+            { L"\"x\"\"y\"     } ", 2 + 4, '}', PASS },
+            { L"\"x\"\"y\"     ] ", 2 + 4, ']', PASS },
+
+            { L"\"x:\",\"     : ", 2 + 2, ',', PASS },      // , right after \"
+            { L"\"x,\"\":\"     , ", 2 + 3, ':', PASS },    // : right after \"
+            { L"\"x]\"\" } \"     ] ", 2 + 3, '}', PASS },  // } after \"1 x whitespace
+            { L"\"x}\"\"] \"     } ", 2 + 3, ']', PASS },   // ] rigth after \"
+            { L"\"x}\"\"x] \"     } ", 6 + 3, '}', PASS },  // } after \"5 x whitespace
+
+            // No clean whitespace between \" and structural character
+            { L"\"x\"\"x  :\"     , ", 5 + 4, ',', PASS },
+            { L"\"x\"\" x :\"     , ", 5 + 4, ',', PASS },
+            { L"\"x\"\"  x:\"     , ", 5 + 4, ',', PASS },
+
+            // json_pointer test failure
+            { L"\"k\"l\": 6", 2 + 3, ':', PASS },
+
+            // Unescaped control characters --> error
+            { L"\"\u0000\"", -1, '\u0000', PASS },
+            { L"\"\u001F\"", -1, '\u001F', PASS },
+            { L"\"xx\u001F\"", -3, '\u001F', PASS },
+
+            // Escaped control characters
+            { L"\"\\u0000\"", 8, 0, PASS },
+            { L"\"\\u001F\"", 8, 0, PASS },
+            { L"\"xx\\u001F\"", 10, 0, PASS },
         };
 
         TEST_IT_START
@@ -89,6 +125,7 @@ namespace format
             charc = m->_string (endc);
 
             ASSERT_EQUAL_IDX ("charc", (*it).charc , charc);
+            ASSERT_EQUAL_IDX ("endc", (*it).endc , endc);
 
             delete m;
 
@@ -604,7 +641,7 @@ namespace format
         /* 1. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_undefined", &json_value_test::test_operator_assign_undefined));
         /* 2. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lookahead", &json_value_test::test__lookahead));
         /* 3. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_literal", &json_value_test::test__is_literal));
-        /* 4. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_quoted", &json_value_test::test__string));
+        /* 4. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__string", &json_value_test::test__string));
         /* 5. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__str_append", &json_value_test::test__str_append));
         /* 6. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test__quote_value", &json_value_test::test__quote_value));
         /* 7. */  s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value_t", &json_value_test::test_operator_equal_value_t));

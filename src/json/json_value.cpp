@@ -102,16 +102,49 @@ format::json::value::_string (wchar_t &endc) const noexcept
       return 0;
     }
 
-  const wchar_t * readp = _readp + 1;
+  return _unquoted_string (startp, startp + 1, endc);
+}
 
-  while (*readp > 31 && *readp != _sc::double_quote)
-    readp++;
+long long
+format::json::value::_unquoted_string (const wchar_t * const startp, const wchar_t *readp, wchar_t &endc) noexcept
+{
+  const wchar_t * const unquoted_start = readp;
+  const wchar_t * quotep = nullptr;
+
+  // Possible end of string
+  bool possible_eos = false;
+
+  while (*readp > _ws::us)
+    {
+      int cur = *readp;
+
+      if ((possible_eos || *(readp - 1) == _sc::double_quote) // \" : or \":
+               && (cur == _sc::name_separator
+                || cur == _sc::value_separator
+                || cur == _sc::end_array
+                || cur == _sc::end_object))
+        break;
+
+      if (cur == _sc::double_quote)
+        {
+          quotep = readp;
+          possible_eos = true;
+        }
+
+      else if (quotep && !_is_whitespace (cur)) // \"' '
+        possible_eos = false;
+
+      readp++;
+    }
 
   endc = *readp;
 
-  return *readp == _sc::double_quote
-    ? (readp - startp) + 1
-    : -1 * (readp - startp);
+  if (startp == unquoted_start)
+    return readp - startp;
+
+  return quotep
+      ? (quotep - startp) + 1
+      : -1 * (readp - startp);
 }
 
 format::json::value::_literal
@@ -138,6 +171,29 @@ format::json::value::_assign (const undefined &) noexcept
   return _parent ? __call__erase (_parent, *this) : *this;
 }
 
+wchar_t *
+format::json::value::_str_append (wchar_t *dst, const wchar_t *src, size_t charc) noexcept
+{
+  const wchar_t * const endp = dst + charc;
+
+  while (dst < endp)
+    *(dst++) = *(src++);
+
+  return dst;
+}
+
+wchar_t *
+format::json::value::_quote_value(wchar_t *dst, const format::json::value *v) noexcept
+{
+  if (v->type () != value::string_t)
+    return _str_append (dst, __call_str_value (v, dst), __call__str_length (v));
+
+  dst = _str_append (dst, L"\"", 1);
+  dst = _str_append (dst, __call_str_value (v, dst), __call__str_length (v) - 2);
+
+  return _str_append (dst, L"\"", 1);
+}
+
 format::json::value &
 format::json::value::_assign (const value &nv)
 {
@@ -154,6 +210,11 @@ format::json::value::_assign (value *nv)
     throw json_error (BAD_ASSIGNMENT);
 
   return __call__assign (_parent, this, nv);
+
+  // return _parent->_assign (this, nv);
+  // json_value.cpp:157:19: error: '_assign' is a protected member of 'format::json::json'
+  // json_json.h:210:7: note: declared protected here
+  // value::_parent --> to value ?
 }
 
 format::json::value &

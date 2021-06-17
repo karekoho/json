@@ -198,7 +198,7 @@ namespace format
        */
       inline value &
       operator =(const value & v)
-      { return _assign (v);  }
+      { return _assign (v); }
 
       /**
        * @brief Remove value from object, e.g. json j[L"foo"] = undefined ()
@@ -207,7 +207,7 @@ namespace format
        */
       inline value &
       operator =(const undefined & u)
-      { return _assign (u);}
+      { return _assign (u); }
 
       /**
        * @brief operator =
@@ -396,7 +396,7 @@ namespace format
          * @brief Pre increment
          * @return iterator
          */
-        const iterator &
+        inline const iterator &
         operator ++()
         {
           ++_it;
@@ -453,19 +453,20 @@ namespace format
         end_array       = 93,   // ']',
         name_separator  = 58,   // ':',
         value_separator = 44,   // ',',
-        path_separator  = 47,   // /
         double_quote    = 34    // "
       };
 
       /**
-       * @brief The _ws enum White space characters.
+       * @brief The _ws enum Control, white space and other characters.
        */
       enum _ws
       {
         tab   = 9,    // \t Horizontal tab
         lf    = 10,   // \n Line feed or New line
         cr    = 13,   // \r Carriage return
-        space = 32    // Space
+        us    = 31,   // Unit separator
+        space = 32,   // ' ' Space
+        rs    = 92    // \ Reverse solidus
       };
 
       /**
@@ -496,6 +497,7 @@ namespace format
       const wchar_t *_readp;
 
       /**
+       * @todo json* --> value*
        * @brief _parent
        */
       json *_parent;
@@ -538,7 +540,7 @@ namespace format
        * @see http://en.cppreference.com/w/cpp/language/types
        */
       virtual const wchar_t *
-      _parse (const wchar_t *json) = 0;
+      _parse (const wchar_t *json_text) = 0;
 
       /**
        * @brief _assign
@@ -617,13 +619,6 @@ namespace format
       _str_length () const noexcept = 0;
 
       /**
-       * @brief _get
-       */
-      virtual void
-      _get () const
-      { /* nop */ }
-
-      /**
        * @brief Generate parseable json text
        * @param If present, json text will be written to the memory pointed by offset.
        *  This is when called by parent object.
@@ -646,13 +641,24 @@ namespace format
       inline const wchar_t *
       _look_ahead () noexcept
       {
-        while (*_readp != 0 && (*_readp == _ws::tab
-                || *_readp == _ws::lf
-                || *_readp == _ws::cr
-                || *_readp == _ws::space))
+        while (*_readp != 0 && _is_whitespace (*_readp))
           _readp++;
 
         return _readp;
+      }
+
+      /**
+       * @brief _is_whitespace
+       * @param c
+       * @return
+       */
+      static inline bool
+      _is_whitespace (int c) noexcept
+      {
+        return c == _ws::tab
+            || c == _ws::lf
+            || c == _ws::cr
+            || c == _ws::space;
       }
 
       /**
@@ -662,35 +668,20 @@ namespace format
        * @param src Source string
        * @param charc Number of characters to copy
        * @return Pointer to the location where the next write starts
+       * @todo Move definition to json_value.cpp
        */
-      static inline wchar_t *
-      _str_append (wchar_t *dst, const wchar_t *src, size_t charc) noexcept
-      {
-        const wchar_t * const endp = dst + charc;
-
-        while (dst < endp)
-          *(dst++) = *(src++);
-
-        return dst;
-      }
+      static wchar_t *
+      _str_append (wchar_t *dst, const wchar_t *src, size_t charc) noexcept;
 
       /**
        * @brief Double quote value type of string_t
        * @param Pointer to the allocated memory where the string is written
        * @param The value to quote
        * @return Pointer to the location where the next write starts
+       * @todo Move definition to json_value.cpp
        */
-      static inline wchar_t *
-      _quote_value (wchar_t *dst, const value *v) noexcept
-      {
-        if (v->type () != value::string_t)
-          return _str_append (dst, __call_str_value (v, dst), __call__str_length (v));
-
-        dst = _str_append (dst, L"\"", 1);
-        dst = _str_append (dst, __call_str_value (v, dst), __call__str_length (v) - 2);
-
-        return _str_append (dst, L"\"", 1);
-      }
+      static wchar_t *
+      _quote_value (wchar_t *dst, const value *v) noexcept;
 
       /**
        * @brief _string Read in string.
@@ -702,6 +693,13 @@ namespace format
        * @return Number of characters read, including quotes
        */
       long long _string (wchar_t &endc) const noexcept;
+
+      /**
+       * @brief _unquoted_string
+       * @param endc
+       * @return
+       */
+      static long long _unquoted_string (const wchar_t * const startp, const wchar_t *readp, wchar_t &endc) noexcept;
 
       /**
        * @brief _is_literal Detect if _readp points to "true", "false" or "null".
@@ -746,8 +744,7 @@ namespace format
       /**
        * @brief _clear
        */
-      virtual void
-      _clear () = 0;
+      virtual void _clear () = 0;
 
       /**
        * @brief _erase

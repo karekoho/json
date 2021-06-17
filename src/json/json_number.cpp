@@ -42,15 +42,15 @@ format::json::number::number (long double ld)
   __to_string ();
 }
 
-format::json::number::number (const wchar_t * const json)
-  : leaf (json),
+format::json::number::number (const wchar_t * const json_text)
+  : leaf (json_text),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _is_floating_point (false)
 {
-  if (json == nullptr)
+  if (json_text == nullptr)
     throw json_error (UNEXPECTED_END_OF_INPUT);
 
-  (void) _parse (json);
+  (void) _parse (json_text);
 }
 
 format::json::number::number (json *parent)
@@ -70,14 +70,14 @@ format::json::number::number (const number &other)
 }
 
 const wchar_t *
-format::json::number::_parse (const wchar_t * const json)
+format::json::number::_parse (const wchar_t * const json_text)
 {
   wchar_t peek = 0;
 
-  if (json == nullptr)
+  if (json_text == nullptr)
     throw json_error (UNEXPECTED_END_OF_INPUT);
 
-  _readp = json;
+  _readp = json_text;
 
   if (_parent == nullptr)
     _look_ahead ();
