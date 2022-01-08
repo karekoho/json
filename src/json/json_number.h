@@ -71,7 +71,7 @@ namespace format
        * @brief ~number
        * @return
        */
-      virtual ~number () override = default;
+      virtual ~number () override;
 
       /**
        * @brief clone
@@ -158,6 +158,16 @@ namespace format
       const wchar_t *_digitp[2][2];
 
       /**
+       * @brief _double_string
+       */
+      const wchar_t *_long_double_str;
+
+      /**
+       * @brief _double_string_length
+       */
+      size_t _long_double_str_length;
+
+      /**
        * @brief _is_double
        */
       bool _is_floating_point;
@@ -235,7 +245,7 @@ namespace format
        */
       virtual inline const wchar_t *
       _to_string (wchar_t * = nullptr) const noexcept override
-      { return _double_str.c_str (); }
+      { return _long_double_str == nullptr ? L"" : _long_double_str; }
 
       /**
        * @brief _clone
@@ -251,7 +261,7 @@ namespace format
        */
       virtual inline size_t
       _str_length () const noexcept override
-      { return _double_str.length (); }
+      { return _long_double_str_length; }
 
       /**
        * @note Removed
@@ -264,6 +274,24 @@ namespace format
       { return _parent  ? __call__assign (_parent, this, new number (nv)) : *(_clone (nv)); } */
 
     private:
+
+      size_t __to_string (long long ll);
+
+      size_t __to_string (long double ld, size_t frag_digits);
+
+      /**
+       * @brief __integral_length
+       * @param ll
+       * @return
+       */
+      static size_t __integral_length (long double ld);
+
+      /**
+       * @brief __floating_point_length
+       * @param ld
+       * @return
+       */
+      static size_t __floating_point_length (long double ld);
       /**
        * @brief __to_string
        */

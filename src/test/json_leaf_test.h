@@ -31,7 +31,7 @@ namespace format
         { new string (L""), 0, L"", PASS },
         { new string (L"x"), 1, L"x", PASS },
         { new number (), 1, L"0", PASS },
-        { new number ((float) 100.0), 10, L"100.000000", PASS },
+        { new number ((float) 100.0), 3, L"100", PASS },
         { new number (static_cast<long long> (100)), 3, L"100", PASS },
         { new boolean (), 5, L"false", PASS },
         { new boolean (true), 4, L"true", PASS },

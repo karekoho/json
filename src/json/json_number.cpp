@@ -5,68 +5,76 @@
 format::json::number::number ()
   : leaf (static_cast<long double> (0), 0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
+    _long_double_str (nullptr),
+    _long_double_str_length (__to_string (static_cast<long double>(0), 0)),
     _is_floating_point (false)
-{
-  __to_string ();
-}
+{ }
 
 format::json::number::number (int i)
-  : leaf (static_cast<long double> (i), 0), // do leaf ((int) long double) --> value (int) long double) to activate primitive value
+  : leaf (static_cast<long double> (i), 0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
+    _long_double_str (nullptr),
+    _long_double_str_length (__to_string (static_cast<long double>(i), 0)),
     _is_floating_point (false)
-{
-   __to_string ();
-}
+{ }
 
 format::json::number::number (long long ll)
   : leaf (static_cast<long double> (ll), 0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
+    _long_double_str (nullptr),
+    _long_double_str_length (__to_string (static_cast<long double>(ll), 0)),
     _is_floating_point (false)
-{
-  __to_string ();
-}
+{ }
 
 format::json::number::number (float f)
   : leaf (static_cast<long double> (f), 0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
+    _long_double_str (nullptr),
+    _long_double_str_length (__to_string (static_cast<long double>(f), 0)),
     _is_floating_point (true)
-{
-  __to_string ();
-}
+{ }
 
 format::json::number::number (long double ld)
   : leaf (ld, 0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
+    _long_double_str (nullptr),
+    _long_double_str_length (__to_string (static_cast<long double>(ld), 0)),
     _is_floating_point (true)
-{
-  __to_string ();
-}
+{ }
 
 format::json::number::number (const wchar_t * const json_text)
   : leaf (json_text),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
+    _long_double_str (nullptr),
+    _long_double_str_length (0),
     _is_floating_point (false)
 {
   if (json_text == nullptr)
     throw json_error (UNEXPECTED_END_OF_INPUT);
 
   (void) _parse (json_text);
+  _long_double_str_length = __to_string (static_cast<long double>(_value.long_double), 0);
 }
 
 format::json::number::number (json *parent)
   : leaf (parent, static_cast<long double> (0)),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
-   _is_floating_point (false)
-{
-  __to_string ();
-}
+    _long_double_str (nullptr),
+    _long_double_str_length (0),
+    _is_floating_point (false)
+{ }
 
 format::json::number::number (const number &other)
  : leaf (other),
    _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
+   _long_double_str (other.stringify ()),
+   _long_double_str_length (other._str_length ()),
    _is_floating_point (other._is_floating_point)
+{ }
+
+format::json::number::~number ()
 {
-  __to_string ();
+  delete [] _long_double_str;
 }
 
 const wchar_t *
@@ -98,7 +106,15 @@ format::json::number::_parse (const wchar_t * const json_text)
           return _frag (); // Look for decimals
         }
 
-      return (_digitp[DOUBLE][END] = ++_readp);  // Found single zero: 0[\0NaN]
+      //return (_digitp[DOUBLE][END] = ++_readp);  // Found single zero: 0[\0NaN]
+
+      _digitp[DOUBLE][END] = ++_readp; // Found single zero: 0[\0NaN]
+
+      long long ll = static_cast<long long> (_calculate (_digitp));
+      _long_double_str_length = __to_string (ll);
+      _value.long_double = ll;
+
+      return _readp;
     }
 
   if ((peek = _digits ()) == '.')
@@ -114,8 +130,12 @@ format::json::number::_parse (const wchar_t * const json_text)
     throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
 
   _digitp[DOUBLE][END] = _readp;
-  _value.long_double = _calculate (_digitp); // Integer value
-  __to_string ();
+  // _value.long_double = _calculate (_digitp); // Integer value
+  //__to_string ();
+
+  long long ll = static_cast<long long> (_calculate (_digitp)); // Integer value
+  _long_double_str_length = __to_string (ll);
+  _value.long_double = ll;
 
   return _readp;
 }
@@ -148,8 +168,12 @@ format::json::number::_frag ()
   if (peek == 'e' || peek == 'E')
     return _exp ();
 
-  _value.long_double = _calculate (_digitp);
-  __to_string ();
+  //_value.long_double = _calculate (_digitp);
+  //__to_string ();
+
+  long double ld = _calculate (_digitp);
+  _long_double_str_length = __to_string (ld, 0);
+  _value.long_double = ld;
 
   return _readp;
 }
@@ -167,8 +191,12 @@ format::json::number::_exp ()
 
   _digitp[EXP][END] = _readp;
 
-  _value.long_double = _calculate (_digitp);
-  __to_string ();
+  //_value.long_double = _calculate (_digitp);
+  //__to_string ();
+
+  long double ld = _calculate (_digitp);
+  _long_double_str_length = __to_string (ld);
+  _value.long_double = ld;
 
   return _readp;
 }
@@ -195,4 +223,76 @@ double format::json::number::_calculate (const wchar_t * const digitp[2][2])
   return exp < 0
           ? _value.long_double / powl (10, -1 * exp) // powl is not std in GNU
           : _value.long_double * powl (10, exp);
+}
+
+size_t
+format::json::number::__to_string (long long ll)
+{
+  try
+    {
+      long long buf_len = __integral_length (ll) + 1;
+      long long charc = 0;
+
+      wchar_t *buf = new wchar_t[buf_len] ();
+      _long_double_str = buf;
+
+      if ((charc = std::swprintf (buf, static_cast<size_t> (buf_len), L"%lld", ll)) < 0)
+        throw json_error (std::strerror (errno));
+
+      return static_cast<size_t> (charc);
+    }
+  catch (const std::bad_alloc &e)
+    {
+      throw new json_error (e.what ());
+    }
+}
+
+size_t
+format::json::number::__to_string (long double ld, size_t frag_digits = 0)
+{
+  try
+    {
+      long long buf_len = __floating_point_length (ld) + frag_digits + 1;
+      long long charc = 0;
+
+      wchar_t *buf = new wchar_t[buf_len] ();
+      _long_double_str = buf;
+
+      if ((charc = std::swprintf (buf, static_cast<size_t> (buf_len), L"%Lg", ld)) < 0)
+        // TODO if errno
+        throw json_error (std::strerror (errno));
+        // else return __to_string (ld, frag_digits + 6)
+
+      return static_cast<size_t> (charc);
+    }
+  catch (const std::bad_alloc &e)
+    {
+      throw new json_error (e.what ());
+    }
+}
+
+size_t
+format::json::number::__integral_length (long double ld)
+{
+  if (ld < 0)
+    return static_cast<size_t> (log10 (ld * -1)) + 2;
+
+  else if (ld > 0)
+    return static_cast<size_t> (log10 (ld)) + 1;
+
+  // zero
+  return 1;
+}
+
+size_t
+format::json::number::__floating_point_length (long double ld)
+{
+  if (ld < 0)
+    return __integral_length (ld * -1) + 6 + 2; // fragment digits + (sign + dot)
+
+  else if (ld > 0)
+    return __integral_length (ld) + 6 + 1; // fragment digits + dot
+
+  // zero
+  return 1;
 }
