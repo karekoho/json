@@ -651,15 +651,17 @@ namespace format
         { 1, 1, PASS },
         { 10, 2, PASS },
         { 123, 3, PASS },
+        { 1000, 4, PASS },
         { -1, 2, PASS },
-        { -10, 3, PASS }
+        { -10, 3, PASS },
+        //{ -1000, 5, PASS },
       };
 
       TEST_IT_START
 
           size_t len = number::__integral_length ((*it).num);
 
-          ASSERT_EQUAL_IDX ("integral length", len, (*it).len);
+          ASSERT_EQUAL_IDX ("integral length", (*it).len, len);
 
       TEST_IT_END
     }
@@ -669,22 +671,22 @@ namespace format
     {
       struct assert
       {
-        double num;
+        long double num;
         size_t len;
         int assert_status;
       };
 
       std::vector<struct assert > test = {
-        { 0.0, 1, PASS },
-        { 1.0, 8, PASS },
-        { -1.0, 9, PASS }
+        { (long double) 0.0, 8, PASS },
+        { (long double) 1.0, 8, PASS },
+        { (long double) -1.0, 9, PASS }
       };
 
       TEST_IT_START
 
           size_t len = number::__floating_point_length ((*it).num);
 
-          ASSERT_EQUAL_IDX ("floating point length", (*it).len,len);
+          ASSERT_EQUAL_IDX ("floating point length", (*it).len, len);
 
       TEST_IT_END
     }
@@ -692,13 +694,56 @@ namespace format
     void
     test___to_string_ll ()
     {
-      CPPUNIT_ASSERT_MESSAGE ("TODO: test___to_string_ll", false);
+      struct assert
+      {
+        int num;
+        size_t len;
+        const wchar_t * str;
+        int assert_status;
+      };
+
+      std::vector<struct assert > test = {
+        { 0, 1, L"0", PASS },
+        { 1, 1, L"1", PASS },
+        { 10, 2, L"10", PASS },
+        { 123, 3, L"123", PASS },
+        { 1000, 4, L"1000", PASS },
+        { -1, 2, L"-1", PASS },
+        { -10, 3, L"-10", PASS }
+        // TODO: test with std::numeric_limits<long long>::max ();
+      };
+
+      TEST_IT_START
+
+          number n;
+          size_t len = n.__to_string ((*it).num);
+          const wchar_t *str = n._to_string ();
+
+          ASSERT_EQUAL_IDX ("string length", (*it).len, len);
+          CPPUNIT_ASSERT_MESSAGE ("string equal", wcscmp ((*it).str, str) == 0);
+
+      TEST_IT_END
     }
 
     void
     test___to_string_ld ()
     {
-       CPPUNIT_ASSERT_MESSAGE ("TODO: test___to_string_ld", false);
+      struct assert
+      {
+        long long num;
+        size_t len;
+        int assert_status;
+      };
+
+      std::vector<struct assert > test = {
+        { 0, 1, PASS },
+      };
+
+      TEST_IT_START
+
+      TEST_IT_END
+
+      CPPUNIT_ASSERT_MESSAGE ("TODO: test___to_string_ld", false);
     }
 
     /**

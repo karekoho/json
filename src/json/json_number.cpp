@@ -230,7 +230,7 @@ format::json::number::__to_string (long long ll)
 {
   try
     {
-      long long buf_len = __integral_length (ll) + 1;
+      unsigned long buf_len = __integral_length (ll) + 1;
       long long charc = 0;
 
       wchar_t *buf = new wchar_t[buf_len] ();
@@ -252,7 +252,7 @@ format::json::number::__to_string (long double ld, size_t frag_digits = 0)
 {
   try
     {
-      long long buf_len = __floating_point_length (ld) + frag_digits + 1;
+      unsigned long buf_len = __floating_point_length (ld) + frag_digits + 1;
       long long charc = 0;
 
       wchar_t *buf = new wchar_t[buf_len] ();
@@ -287,12 +287,7 @@ format::json::number::__integral_length (long double ld)
 size_t
 format::json::number::__floating_point_length (long double ld)
 {
-  if (ld < 0)
-    return __integral_length (ld * -1) + 6 + 2; // fragment digits + (sign + dot)
-
-  else if (ld > 0)
-    return __integral_length (ld) + 6 + 1; // fragment digits + dot
-
-  // zero
-  return 1;
+  return (ld > 0 || ld < 0)
+      ? __integral_length (ld) + 7  // sign + integral length +  dot + fragment digits
+      : 8;  // zero + dot + fragment digits
 }

@@ -275,8 +275,19 @@ namespace format
 
     private:
 
+      /**
+       * @brief __to_string
+       * @param ll
+       * @return
+       */
       size_t __to_string (long long ll);
 
+      /**
+       * @brief __to_string
+       * @param ld
+       * @param frag_digits
+       * @return
+       */
       size_t __to_string (long double ld, size_t frag_digits);
 
       /**
@@ -287,9 +298,11 @@ namespace format
       static size_t __integral_length (long double ld);
 
       /**
+       * If ld is positive, return integral length + 1 (sign) + 6 (fragment)
+       * Else return 1 (sign) + integral length + 1 (dot) + 6 (fragment)
        * @brief __floating_point_length
        * @param ld
-       * @return
+       * @return Length of the string
        */
       static size_t __floating_point_length (long double ld);
       /**
