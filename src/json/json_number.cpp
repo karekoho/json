@@ -1,12 +1,12 @@
 #include "json_number.h"
 #include "json_json.h"
 #include <iostream>
-
+#include <cfloat>
 format::json::number::number ()
   : leaf (static_cast<long double> (0), 0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _long_double_str (nullptr),
-    _long_double_str_length (__to_string (static_cast<long double>(0), 0)),
+    _long_double_str_length (__to_string_ld (static_cast<long double>(0))),
     _is_floating_point (false)
 { }
 
@@ -14,7 +14,7 @@ format::json::number::number (int i)
   : leaf (static_cast<long double> (i), 0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _long_double_str (nullptr),
-    _long_double_str_length (__to_string (static_cast<long double>(i), 0)),
+    _long_double_str_length (__to_string_ld (static_cast<long double>(i))),
     _is_floating_point (false)
 { }
 
@@ -22,7 +22,7 @@ format::json::number::number (long long ll)
   : leaf (static_cast<long double> (ll), 0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _long_double_str (nullptr),
-    _long_double_str_length (__to_string (static_cast<long double>(ll), 0)),
+    _long_double_str_length (__to_string_ld (static_cast<long double>(ll))),
     _is_floating_point (false)
 { }
 
@@ -30,7 +30,7 @@ format::json::number::number (float f)
   : leaf (static_cast<long double> (f), 0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _long_double_str (nullptr),
-    _long_double_str_length (__to_string (static_cast<long double>(f), 0)),
+    _long_double_str_length (__to_string_ld (static_cast<long double>(f))),
     _is_floating_point (true)
 { }
 
@@ -38,7 +38,7 @@ format::json::number::number (long double ld)
   : leaf (ld, 0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _long_double_str (nullptr),
-    _long_double_str_length (__to_string (static_cast<long double>(ld), 0)),
+    _long_double_str_length (__to_string_ld (static_cast<long double>(ld))),
     _is_floating_point (true)
 { }
 
@@ -53,7 +53,7 @@ format::json::number::number (const wchar_t * const json_text)
     throw json_error (UNEXPECTED_END_OF_INPUT);
 
   (void) _parse (json_text);
-  _long_double_str_length = __to_string (static_cast<long double>(_value.long_double), 0);
+  _long_double_str_length = __to_string_ld (static_cast<long double>(_value.long_double));
 }
 
 format::json::number::number (json *parent)
@@ -111,7 +111,7 @@ format::json::number::_parse (const wchar_t * const json_text)
       _digitp[DOUBLE][END] = ++_readp; // Found single zero: 0[\0NaN]
 
       long long ll = static_cast<long long> (_calculate (_digitp));
-      _long_double_str_length = __to_string (ll);
+      _long_double_str_length = __to_string_ld (ll);
       _value.long_double = ll;
 
       return _readp;
@@ -134,7 +134,7 @@ format::json::number::_parse (const wchar_t * const json_text)
   //__to_string ();
 
   long long ll = static_cast<long long> (_calculate (_digitp)); // Integer value
-  _long_double_str_length = __to_string (ll);
+  _long_double_str_length = __to_string_ld (ll);
   _value.long_double = ll;
 
   return _readp;
@@ -172,7 +172,7 @@ format::json::number::_frag ()
   //__to_string ();
 
   long double ld = _calculate (_digitp);
-  _long_double_str_length = __to_string (ld, 0);
+  _long_double_str_length = __to_string_ld (ld);
   _value.long_double = ld;
 
   return _readp;
@@ -195,7 +195,7 @@ format::json::number::_exp ()
   //__to_string ();
 
   long double ld = _calculate (_digitp);
-  _long_double_str_length = __to_string (ld);
+  _long_double_str_length = __to_string_ld (ld);
   _value.long_double = ld;
 
   return _readp;
@@ -226,7 +226,7 @@ double format::json::number::_calculate (const wchar_t * const digitp[2][2])
 }
 
 size_t
-format::json::number::__to_string (long long ll)
+format::json::number::__to_string_ll (long long ll)
 {
   try
     {
@@ -248,20 +248,25 @@ format::json::number::__to_string (long long ll)
 }
 
 size_t
-format::json::number::__to_string (long double ld, size_t frag_digits = 0)
+format::json::number::__to_string_ld (long double ld)
 {
   try
     {
-      unsigned long buf_len = __floating_point_length (ld) + frag_digits + 1;
+      const size_t dec_exp_len = LDBL_DIG + LDBL_MAX_EXP + 2;
+
+      unsigned long buf_len = dec_exp_len + 1;
       long long charc = 0;
 
       wchar_t *buf = new wchar_t[buf_len] ();
       _long_double_str = buf;
 
-      if ((charc = std::swprintf (buf, static_cast<size_t> (buf_len), L"%Lg", ld)) < 0)
-        // TODO if errno
+      const size_t format_len = 4 + dec_exp_len + 1;
+      wchar_t s[format_len];
+      wchar_t *format = static_cast<wchar_t *> (memset (s, 0, format_len));
+
+      if ((charc = std::swprintf (format, static_cast<size_t> (format_len), L"%%.%uLg", LDBL_DIG)) < 0
+          || (charc = std::swprintf (buf, static_cast<size_t> (buf_len), format, ld)) < 0)
         throw json_error (std::strerror (errno));
-        // else return __to_string (ld, frag_digits + 6)
 
       return static_cast<size_t> (charc);
     }
@@ -282,12 +287,4 @@ format::json::number::__integral_length (long double ld)
 
   // zero
   return 1;
-}
-
-size_t
-format::json::number::__floating_point_length (long double ld)
-{
-  return (ld > 0 || ld < 0)
-      ? __integral_length (ld) + 7  // sign + integral length +  dot + fragment digits
-      : 8;  // zero + dot + fragment digits
 }

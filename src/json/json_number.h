@@ -280,7 +280,7 @@ namespace format
        * @param ll
        * @return
        */
-      size_t __to_string (long long ll);
+      size_t __to_string_ll (long long ll);
 
       /**
        * @brief __to_string
@@ -288,7 +288,7 @@ namespace format
        * @param frag_digits
        * @return
        */
-      size_t __to_string (long double ld, size_t frag_digits);
+      size_t __to_string_ld (long double ld);
 
       /**
        * @brief __integral_length
@@ -296,33 +296,6 @@ namespace format
        * @return
        */
       static size_t __integral_length (long double ld);
-
-      /**
-       * If ld is positive, return integral length + 1 (sign) + 6 (fragment)
-       * Else return 1 (sign) + integral length + 1 (dot) + 6 (fragment)
-       * @brief __floating_point_length
-       * @param ld
-       * @return Length of the string
-       */
-      static size_t __floating_point_length (long double ld);
-      /**
-       * @brief __to_string
-       */
-      inline void
-      __to_string () noexcept
-      {
-        // sz = std::swprintf (buf, sz = 0, L"%Lf", value) // long double
-        // sz = std::swprintf (buf, sz, L"%lld", value)  // long long
-        // can be used to calculate buffer size
-        // std::swprintf (buf, sz, L"%Lf", value) to write the string
-        // g or G should remove trailing zeros from fractional part
-        // LLONG_MAX  = 9223372036854775807   = 20
-        // ULLONG_MAX = 18446744073709551615  = 21
-        // LDBL_MANT_DIG = 64 digits in mantissa
-        _double_str = _is_floating_point
-          ? std::to_wstring (_value.long_double)
-          : std::to_wstring (static_cast<long long> (_value.long_double));
-      }
     }; // Class number
 
     inline number *

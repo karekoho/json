@@ -2,7 +2,7 @@
 #define JSON_NUMBER_TEST
 
 #include "json_leaf_test.h"
-
+#include <cstring>
 namespace format
 {
   namespace json
@@ -99,6 +99,7 @@ namespace format
           { L"6e2", 3, 600, PASS },
           { L"7E2}", 3, 700, PASS },
           { L"8E+2 ] ", 4, 800, PASS },
+          // TODO: 1.79769e+308
           { L"9E-2, ", 4, (double) 0.09, PASS },
 
           { L"x", 1, 0, FAIL },   // NaN
@@ -488,13 +489,14 @@ namespace format
 
       std::vector<struct assert > test = {
         { new number (static_cast<long double>(100)), 3, PASS },
-        { new number (static_cast<long double>(100.1)), 5, PASS },
-        { new number (static_cast<long double>(100.10)), 5, PASS },
-        { new number (static_cast<long double>(-10.01)), 6, PASS },
-        // TODO: test with decimals > 6
+        { new number (static_cast<long double>(100.1)), 5 + 14, PASS },     // 100.099999999999994
+        { new number (static_cast<long double>(100.099999999999994)), 5 + 14, PASS },
+        { new number (static_cast<long double>(-10.01)), 6 + 14, PASS },    // -10.0099999999999998
+
         { new number (L"100"), 3, PASS },
         { new number (L"100.1"), 5, PASS },
         { new number (L"100.10"), 5, PASS },
+        { new number (L"100.099999999999994"), 19, PASS },
         { new number (L"-10.01"), 6, PASS }
       };
 
@@ -502,6 +504,7 @@ namespace format
           ASSERT_EQUAL_IDX ("number::str_length ()",
                             (*it).len,
                             (*it).n->_str_length ());
+          // std::wcout << (*it).n->stringify () << std::endl;
           delete (*it).n;
       TEST_IT_END
     }
@@ -667,31 +670,6 @@ namespace format
     }
 
     void
-    test___floating_point_length ()
-    {
-      struct assert
-      {
-        long double num;
-        size_t len;
-        int assert_status;
-      };
-
-      std::vector<struct assert > test = {
-        { (long double) 0.0, 8, PASS },
-        { (long double) 1.0, 8, PASS },
-        { (long double) -1.0, 9, PASS }
-      };
-
-      TEST_IT_START
-
-          size_t len = number::__floating_point_length ((*it).num);
-
-          ASSERT_EQUAL_IDX ("floating point length", (*it).len, len);
-
-      TEST_IT_END
-    }
-
-    void
     test___to_string_ll ()
     {
       struct assert
@@ -716,7 +694,7 @@ namespace format
       TEST_IT_START
 
           number n;
-          size_t len = n.__to_string ((*it).num);
+          size_t len = n.__to_string_ll ((*it).num);
           const wchar_t *str = n._to_string ();
 
           ASSERT_EQUAL_IDX ("string length", (*it).len, len);
@@ -730,20 +708,43 @@ namespace format
     {
       struct assert
       {
-        long long num;
-        size_t len;
+        long double num;
+        //size_t len;
+        //const wchar_t * str;
         int assert_status;
       };
 
       std::vector<struct assert > test = {
-        { 0, 1, PASS },
+        { (long double) 0.0, /* 1, L"0" */ PASS },
+        { (long double) 1.0, PASS },
+        { (long double) 1.01, PASS },
+        { (long double) -1.0, PASS },
+        { (long double) 1.0000001, PASS },
+        { (long double) DBL_MAX, PASS },
+        { (long double) LDBL_MAX, PASS },       // stold: out of range
+        { (long double) LDBL_MAX * -1, PASS },  // stold: out of range
+        { (long double) ULLONG_MAX, PASS }
       };
+
+      long double delta = std::numeric_limits<long double>::epsilon ();
 
       TEST_IT_START
 
-      TEST_IT_END
+          number n;
 
-      CPPUNIT_ASSERT_MESSAGE ("TODO: test___to_string_ld", false);
+          size_t len = n.__to_string_ld ((*it).num);
+          const wchar_t *str = n._to_string ();
+
+          if (abs((*it).num) < LDBL_MAX)
+            {
+              long double ld = std::stold (str);
+              //std::wcout << str << " == " << ld << std::endl;
+              CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("long double value", (*it).num, ld, delta);
+            }
+          else
+            std::wcerr << "skipped test for " << str << " because of stold: out of range" << std::endl;
+
+      TEST_IT_END
     }
 
     /**
@@ -771,10 +772,8 @@ namespace format
       /* 12. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test__clear", &json_number_test::test__clear));
       /* 13. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test_type", &json_number_test::test_type));
       /* 14. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test___integral_length", &json_number_test::test___integral_length));
-      /* 15. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test___floating_point_length", &json_number_test::test___floating_point_length));
-
-      /* 16. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test___to_string_ll", &json_number_test::test___to_string_ll));
-      /* 17. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test___to_string_ld", &json_number_test::test___to_string_ld));
+      /* 15. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test___to_string_ll", &json_number_test::test___to_string_ll));
+      /* 16. */ s->addTest (new CppUnit::TestCaller<json_number_test> ("test___to_string_ld", &json_number_test::test___to_string_ld));
 
       /// Removed operator =(long double | long long)
       //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_operator_long", &json_number_test::test_operator_assign_long));
