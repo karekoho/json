@@ -245,7 +245,7 @@ namespace format
        */
       virtual inline const wchar_t *
       _to_string (wchar_t * = nullptr) const noexcept override
-      { return _long_double_str == nullptr ? L"" : _long_double_str; }
+      { return _long_double_str == nullptr ? L"0" : _long_double_str; }
 
       /**
        * @brief _clone

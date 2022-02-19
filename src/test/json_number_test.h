@@ -3,6 +3,8 @@
 
 #include "json_leaf_test.h"
 #include <cstring>
+#include <climits>
+
 namespace format
 {
   namespace json
@@ -74,8 +76,6 @@ namespace format
     virtual void
     test__parse () override
     {
-      number n;
-
       struct assert
       {
         const wchar_t *starp;
@@ -113,31 +113,40 @@ namespace format
       // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
       double delta = std::numeric_limits<double>::epsilon ();
 
-      TEST_IT_START
+      for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
+        {
+          number n;
+          try
+            {
+              if ((*it).assert_status == SKIP) { continue; }
+              if ((*it).assert_status > PASS) { this->_errorc[EXPECTED]++; }
+              const wchar_t *startp = (*it).starp;
+              const wchar_t *readp = n._parse (startp);
 
-        const wchar_t *startp = (*it).starp;
-        const wchar_t *readp = n._parse (startp);
+              ASSERT_EQUAL_IDX ("n._readp", startp + (*it).move, readp);
+              // ASSERT_EQUAL_IDX ("number.value ()", (*it).dval, (double) n.get ());
 
-        ASSERT_EQUAL_IDX ("n._readp", startp + (*it).move, readp);
-        // ASSERT_EQUAL_IDX ("number.value ()", (*it).dval, (double) n.get ());
+              CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("number.value ()", (*it).dval, (double) n.get (), delta);
 
-        CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("number.value ()", (*it).dval, (double) n.get (), delta);
+              n._value.long_double = 0;
 
-        n._value.long_double = 0;
+              n._digitp[DOUBLE][START]  = nullptr;
+              n._digitp[DOUBLE][END]    = nullptr;
+              n._digitp[EXP][START]     = nullptr;
+              n._digitp[EXP][END]       = nullptr;
 
-        n._digitp[DOUBLE][START]  = nullptr;
-        n._digitp[DOUBLE][END]    = nullptr;
-        n._digitp[EXP][START]     = nullptr;
-        n._digitp[EXP][END]       = nullptr;
-
-      TEST_IT_END
+            } catch (json_syntax_error &e) {
+              this->_errorc[ACTUAL]++;
+              std::cerr << e.what () << std::endl;
+            }
+         }
+      (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);\
+      CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
     }
 
     void
     test_digits ()
     {
-      number n;
-
       struct assert
       {
         const wchar_t *starp;
@@ -158,6 +167,7 @@ namespace format
 
       TEST_IT_START
 
+          number n;
           const wchar_t *startp = (*it).starp;
 
           n._readp = startp;
@@ -174,8 +184,6 @@ namespace format
     void
     test_frag ()
     {
-      number n;
-
       struct assert
       {
         const wchar_t *starp;
@@ -195,28 +203,38 @@ namespace format
           { L"5.E", 2, L'E', FAIL },
       };
 
-      TEST_IT_START
 
-          const wchar_t *startp = (*it).starp;
-          const wchar_t *endp = startp + (*it).move;
+      for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
+        {
+          number n;
+          try
+            {
+              if ((*it).assert_status == SKIP) { continue; }
+              if ((*it).assert_status > PASS) { this->_errorc[EXPECTED]++; }
+              const wchar_t *startp = (*it).starp;
+              const wchar_t *endp = startp + (*it).move;
 
-          n._readp = startp + 1;
-          // n._endp = startp + strlen (startp);
+              n._readp = startp + 1;
 
-          n._frag ();
+              n._frag ();
 
-          ASSERT_EQUAL_IDX ("readp", endp, n._readp);
-          ASSERT_EQUAL_IDX ("peek", (*it).peek, (int)*(n._readp));
-          ASSERT_EQUAL_IDX ("digitp[0][1]", endp, n._digitp[0][1]);
-
-      TEST_IT_END
+              ASSERT_EQUAL_IDX ("readp", endp, n._readp);
+              ASSERT_EQUAL_IDX ("peek", (*it).peek, (int)*(n._readp));
+              ASSERT_EQUAL_IDX ("digitp[0][1]", endp, n._digitp[0][1]);
+            }
+          catch (json_syntax_error &e)
+            {
+              this->_errorc[ACTUAL]++;
+              std::cerr << e.what () << std::endl;
+            }
+          }
+      (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);\
+      CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
     }
 
     void
     test_exp ()
     {
-      number n;
-
       struct assert {
           const wchar_t *starp;
           size_t move[2];
@@ -239,26 +257,37 @@ namespace format
           { L"2e+", { 0, 0 }, 0, 0, FAIL },
       };
 
-      TEST_IT_START
+      for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
+        {
+          number n;
+          try
+            {
+              if ((*it).assert_status == SKIP) { continue; }
+              if ((*it).assert_status > PASS) { this->_errorc[EXPECTED]++; }
+              const wchar_t *startp = (*it).starp;
+              const wchar_t *endp = startp + (*it).move[1];
 
-          const wchar_t *startp = (*it).starp;
-          const wchar_t *endp = startp + (*it).move[1];
+              n._readp = startp + 1;
 
-          n._readp = startp + 1;
-          // n._endp = startp + strlen (startp);
+              n._exp ();
 
-          n._exp ();
+              ASSERT_EQUAL_IDX ("n._readp", endp, n._readp);
+              ASSERT_EQUAL_IDX ("*(n._readp)", (int) *endp, (*it).peek);
+              ASSERT_EQUAL_IDX ("n._digitp[1][0]", startp + (*it).move[0], n._digitp[1][0]);
+              ASSERT_EQUAL_IDX ("n._digitp[1][1]", startp + (*it).move[1], n._digitp[1][1]);
 
-          ASSERT_EQUAL_IDX ("n._readp", endp, n._readp);
-          ASSERT_EQUAL_IDX ("*(n._readp)", (int) *endp, (*it).peek);
-          ASSERT_EQUAL_IDX ("n._digitp[1][0]", startp + (*it).move[0], n._digitp[1][0]);
-          ASSERT_EQUAL_IDX ("n._digitp[1][1]", startp + (*it).move[1], n._digitp[1][1]);
+              std::string s (n._digitp[1][0], n._digitp[1][1]);
 
-          std::string s (n._digitp[1][0], n._digitp[1][1]);
-
-          ASSERT_EQUAL_IDX ("n._llexp", (*it).atoll, atoll (s.c_str ()));
-
-      TEST_IT_END
+              ASSERT_EQUAL_IDX ("n._llexp", (*it).atoll, atoll (s.c_str ()));
+            }
+          catch (json_syntax_error &e)
+            {
+               this->_errorc[ACTUAL]++;
+               std::cerr << e.what () << std::endl;
+            }
+        }
+      (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);\
+      CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
     }
 
     void
@@ -294,7 +323,6 @@ namespace format
         // std::cerr << d << " " << *(n._double_valuep) << std::endl;
 
         ASSERT_EQUAL_IDX ("n._calculate ()", (*it).dval, (double) d);
-        //ASSERT_EQUAL_IDX ("n._double_valuep", d, *(n._double_valuep));
 
       TEST_IT_END
     }
@@ -315,11 +343,9 @@ namespace format
           { L"55.55", (long double) 55.55, PASS },
       };
 
-
       TEST_IT_START
 
         const wchar_t *digitp[] = { (*it).starp, (*it).starp + wcslen ((*it).starp) };
-
         double d = n._atof (digitp);
 
         ASSERT_EQUAL_IDX ("n._atof ()", (*it).dval, d);
@@ -462,17 +488,22 @@ namespace format
 
         number n[5] = {
           number ((long long) (*it).d),
-          number ((long double)(*it).d),
+          number ((long double) (*it).d),
           number ((*it).s[0]),
           number ((*it).s[1]),
           number ((*it).s[2]),
         };
 
-        CPPUNIT_ASSERT_MESSAGE ("n[0]._to_string ()", wcscmp((*it).output[0], n[0]._to_string ()) == 0);
-        CPPUNIT_ASSERT_MESSAGE ("n[1]._to_string ()", wcscmp((*it).output[1], n[1]._to_string ()) == 0);
-        CPPUNIT_ASSERT_MESSAGE ("n[2]._to_string ()", wcscmp((*it).output[2], n[2]._to_string ()) == 0);
-        CPPUNIT_ASSERT_MESSAGE ("n[3]._to_string ()", wcscmp((*it).output[3], n[3]._to_string ()) == 0);
-        CPPUNIT_ASSERT_MESSAGE ("n[4]._to_string ()", wcscmp((*it).output[4], n[4]._to_string ()) == 0); // FIXME
+      if (! MEM_DEBUG)
+        {
+          CPPUNIT_ASSERT_MESSAGE ("n[0]._to_string ()", wcscmp ((*it).output[0], n[0]._to_string ()) == 0);
+          CPPUNIT_ASSERT_MESSAGE ("n[1]._to_string ()", wcscmp ((*it).output[1], n[1]._to_string ()) == 0);
+          CPPUNIT_ASSERT_MESSAGE ("n[2]._to_string ()", wcscmp ((*it).output[2], n[2]._to_string ()) == 0);
+          CPPUNIT_ASSERT_MESSAGE ("n[3]._to_string ()", wcscmp ((*it).output[3], n[3]._to_string ()) == 0);
+          CPPUNIT_ASSERT_MESSAGE ("n[4]._to_string ()", wcscmp ((*it).output[4], n[4]._to_string ()) == 0); // FIXME
+        }
+      else
+        std::cerr << "\n\nWARNING: "<< __FILE__ << ": " << __LINE__ << ": *** MEM_DEBUG IS ON!!! ***\n" << std::endl;
 
       TEST_IT_END
     }
@@ -501,11 +532,18 @@ namespace format
       };
 
       TEST_IT_START
-          ASSERT_EQUAL_IDX ("number::str_length ()",
-                            (*it).len,
-                            (*it).n->_str_length ());
-          // std::wcout << (*it).n->stringify () << std::endl;
+
+          if (! MEM_DEBUG)
+            {
+              ASSERT_EQUAL_IDX ("number::str_length ()",
+                                (*it).len,
+                                (*it).n->_str_length ());
+            }
+          else
+            std::cerr << "\n\nWARNING: "<< __FILE__ << ": " << __LINE__ << ": *** MEM_DEBUG IS ON!!! ***\n" << std::endl;
+
           delete (*it).n;
+
       TEST_IT_END
     }
 
@@ -552,8 +590,13 @@ namespace format
 
       const wchar_t *str_value = copy[1].stringify ();
 
-      CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",
-                              str_value == std::wstring (L"100.1"));
+      if (! MEM_DEBUG)
+        {
+          CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",
+                                  str_value == std::wstring (L"100.1"));
+        }
+      else
+        std::cerr << "\n\nWARNING: "<< __FILE__ << ": " << __LINE__ << ": *** MEM_DEBUG IS ON!!! ***\n" << std::endl;
 
       delete [] str_value;
 
@@ -601,6 +644,9 @@ namespace format
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE ("as int",
                                     (int) 103, j[L"0"].as<int> ());
+
+      delete n;
+      delete m;
     }
 
     void
@@ -637,6 +683,8 @@ namespace format
       CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("as double",
                                             (double) 100.3, j[L"0"].as<double> (), delta);
 
+      delete n;
+      delete m;
     }
 
     void
@@ -721,8 +769,8 @@ namespace format
         { (long double) -1.0, PASS },
         { (long double) 1.0000001, PASS },
         { (long double) DBL_MAX, PASS },
-        { (long double) LDBL_MAX, PASS },       // stold: out of range
-        { (long double) LDBL_MAX * -1, PASS },  // stold: out of range
+//        { (long double) LDBL_MAX, PASS },       // stold: out of range
+//        { (long double) LDBL_MAX * -1, PASS },  // stold: out of range
         { (long double) ULLONG_MAX, PASS }
       };
 

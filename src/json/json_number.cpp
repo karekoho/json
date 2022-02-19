@@ -2,19 +2,24 @@
 #include "json_json.h"
 #include <iostream>
 #include <cfloat>
+
 format::json::number::number ()
   : leaf (static_cast<long double> (0), 0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _long_double_str (nullptr),
-    _long_double_str_length (__to_string_ld (static_cast<long double>(0))),
+    _long_double_str_length (1), // _to_string returns "0"
     _is_floating_point (false)
-{ }
+{
+//  wchar_t *str = new wchar_t[2] ();
+//  *str = L'0';
+//  _long_double_str = str;
+}
 
 format::json::number::number (int i)
   : leaf (static_cast<long double> (i), 0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _long_double_str (nullptr),
-    _long_double_str_length (__to_string_ld (static_cast<long double>(i))),
+    _long_double_str_length (__to_string_ld (static_cast<long double> (i))),
     _is_floating_point (false)
 { }
 
@@ -22,7 +27,7 @@ format::json::number::number (long long ll)
   : leaf (static_cast<long double> (ll), 0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _long_double_str (nullptr),
-    _long_double_str_length (__to_string_ld (static_cast<long double>(ll))),
+    _long_double_str_length (__to_string_ld (static_cast<long double> (ll))),
     _is_floating_point (false)
 { }
 
@@ -30,7 +35,7 @@ format::json::number::number (float f)
   : leaf (static_cast<long double> (f), 0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _long_double_str (nullptr),
-    _long_double_str_length (__to_string_ld (static_cast<long double>(f))),
+    _long_double_str_length (__to_string_ld (static_cast<long double> (f))),
     _is_floating_point (true)
 { }
 
@@ -38,7 +43,7 @@ format::json::number::number (long double ld)
   : leaf (ld, 0),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _long_double_str (nullptr),
-    _long_double_str_length (__to_string_ld (static_cast<long double>(ld))),
+    _long_double_str_length (__to_string_ld (static_cast<long double> (ld))),
     _is_floating_point (true)
 { }
 
@@ -53,7 +58,6 @@ format::json::number::number (const wchar_t * const json_text)
     throw json_error (UNEXPECTED_END_OF_INPUT);
 
   (void) _parse (json_text);
-  _long_double_str_length = __to_string_ld (static_cast<long double>(_value.long_double));
 }
 
 format::json::number::number (json *parent)

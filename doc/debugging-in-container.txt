@@ -10,6 +10,8 @@ run: make && sudo make install
 Build tests:
 cd to to build/linux/test/debug
 run: cmake .
-run: make && sudo make install
+run: make
 
 run: valgrind ./test_debug
+
+REMEMBER TO SET unit_test.h/MEM_DEBUG = 1 when in container

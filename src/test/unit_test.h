@@ -110,12 +110,12 @@
   \
 } catch (format::json::json_syntax_error & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
   catch (format::json::json_out_of_range & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
-  catch (format::json::json_error & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\  
+  catch (format::json::json_error & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
   catch (std::exception & e) { this->_errorc[ACTUAL]++; std::cerr << e.what () << std::endl; }\
   catch (const char *error) { this->_errorc[ACTUAL]++; std::cerr << error << std::endl; }\
   catch (const wchar_t *error) { this->_errorc[ACTUAL]++; std::cerr << error << std::endl; }\
   catch (...) { this->_errorc[ACTUAL]++; std::cerr << "unknown exception" << std::endl; } }\
-(void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]); \
+(void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);\
 CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
 #endif
 
