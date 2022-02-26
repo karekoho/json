@@ -21,6 +21,7 @@
 #define PASS  0
 #define FAIL  1
 #define SKIP -1
+#define MEM_DEBUG 0
 
 /* #ifndef JSON_MAX_DOUBLE
   #define JSON_MAX_DOUBLE = std::numeric_limits<long double>::max ();

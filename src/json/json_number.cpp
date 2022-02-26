@@ -10,9 +10,6 @@ format::json::number::number ()
     _long_double_str_length (1), // _to_string returns "0"
     _is_floating_point (false)
 {
-//  wchar_t *str = new wchar_t[2] ();
-//  *str = L'0';
-//  _long_double_str = str;
 }
 
 format::json::number::number (int i)

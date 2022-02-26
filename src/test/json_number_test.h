@@ -99,7 +99,7 @@ namespace format
           { L"6e2", 3, 600, PASS },
           { L"7E2}", 3, 700, PASS },
           { L"8E+2 ] ", 4, 800, PASS },
-          // TODO: 1.79769e+308
+          { L"1.79769e+308", 12, 1.79769e+308, PASS },
           { L"9E-2, ", 4, (double) 0.09, PASS },
 
           { L"x", 1, 0, FAIL },   // NaN
@@ -127,6 +127,7 @@ namespace format
               // ASSERT_EQUAL_IDX ("number.value ()", (*it).dval, (double) n.get ());
 
               CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("number.value ()", (*it).dval, (double) n.get (), delta);
+              // std::cerr << n.get () << std::endl;
 
               n._value.long_double = 0;
 
@@ -722,7 +723,7 @@ namespace format
     {
       struct assert
       {
-        int num;
+        long long num;
         size_t len;
         const wchar_t * str;
         int assert_status;
@@ -735,8 +736,8 @@ namespace format
         { 123, 3, L"123", PASS },
         { 1000, 4, L"1000", PASS },
         { -1, 2, L"-1", PASS },
-        { -10, 3, L"-10", PASS }
-        // TODO: test with std::numeric_limits<long long>::max ();
+        { -10, 3, L"-10", PASS },
+        { LLONG_MAX, 19, L"9223372036854775807", PASS } // NOTE: LLONG_MAX depends on platform
       };
 
       TEST_IT_START
@@ -744,9 +745,15 @@ namespace format
           number n;
           size_t len = n.__to_string_ll ((*it).num);
           const wchar_t *str = n._to_string ();
+          long long ll = std::stoll (str);
 
-          ASSERT_EQUAL_IDX ("string length", (*it).len, len);
-          CPPUNIT_ASSERT_MESSAGE ("string equal", wcscmp ((*it).str, str) == 0);
+          if ((*it).num < LLONG_MAX)
+            {
+              ASSERT_EQUAL_IDX ("string length", (*it).len, len);
+              CPPUNIT_ASSERT_MESSAGE ("string equal", wcscmp ((*it).str, str) == 0);
+            }
+
+          CPPUNIT_ASSERT_EQUAL_MESSAGE ("long long value", (*it).num, ll);
 
       TEST_IT_END
     }
@@ -757,8 +764,6 @@ namespace format
       struct assert
       {
         long double num;
-        //size_t len;
-        //const wchar_t * str;
         int assert_status;
       };
 
