@@ -107,8 +107,6 @@ format::json::number::_parse (const wchar_t * const json_text)
           return _frag (); // Look for decimals
         }
 
-      //return (_digitp[DOUBLE][END] = ++_readp);  // Found single zero: 0[\0NaN]
-
       _digitp[DOUBLE][END] = ++_readp; // Found single zero: 0[\0NaN]
 
       long long ll = static_cast<long long> (_calculate (_digitp));
@@ -131,8 +129,6 @@ format::json::number::_parse (const wchar_t * const json_text)
     throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
 
   _digitp[DOUBLE][END] = _readp;
-  // _value.long_double = _calculate (_digitp); // Integer value
-  //__to_string ();
 
   long long ll = static_cast<long long> (_calculate (_digitp)); // Integer value
   _long_double_str_length = __to_string_ld (ll);
@@ -169,9 +165,6 @@ format::json::number::_frag ()
   if (peek == 'e' || peek == 'E')
     return _exp ();
 
-  //_value.long_double = _calculate (_digitp);
-  //__to_string ();
-
   long double ld = _calculate (_digitp);
   _long_double_str_length = __to_string_ld (ld);
   _value.long_double = ld;
@@ -191,9 +184,6 @@ format::json::number::_exp ()
     throw json_syntax_error (UNEXPECTED_TOKEN, _readp, 1);
 
   _digitp[EXP][END] = _readp;
-
-  //_value.long_double = _calculate (_digitp);
-  //__to_string ();
 
   long double ld = _calculate (_digitp);
   _long_double_str_length = __to_string_ld (ld);
