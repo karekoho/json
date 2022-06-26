@@ -81,27 +81,27 @@ namespace format
       json *p[] = { nullptr, new json () };
 
       std::vector<struct assert > test = {
-        { L"{}", 0, value::undefined_t, 0, PASS },
-        { L"{ } ", 0, value::undefined_t, 1, PASS },
-        { L"{\"k\":\"v\"} ", 1, value::string_t, 1, PASS },
-        { L"{ \"k\" : \"v\" } ", 1, value::string_t, 1, PASS },
-        { L"{\"k\":\"v\",\"q\":\"p\"} ", 2, value::string_t, 1, PASS },
-        { L"{ \"k\": \"v\", \"q\" : \"p\",\"K\":\"v\" } ", 3, value::string_t, 1, PASS },
-        { L"{ \"k\": \"p\" ,\"q\" : \"p\", \"K\" :\"v\",\"Q\":\"p\" } ", 4, value::string_t, 1, PASS },
+        { L"{}", 0, value::undefined_t, 0, PASS_T },
+        { L"{ } ", 0, value::undefined_t, 1, PASS_T },
+        { L"{\"k\":\"v\"} ", 1, value::string_t, 1, PASS_T },
+        { L"{ \"k\" : \"v\" } ", 1, value::string_t, 1, PASS_T },
+        { L"{\"k\":\"v\",\"q\":\"p\"} ", 2, value::string_t, 1, PASS_T },
+        { L"{ \"k\": \"v\", \"q\" : \"p\",\"K\":\"v\" } ", 3, value::string_t, 1, PASS_T },
+        { L"{ \"k\": \"p\" ,\"q\" : \"p\", \"K\" :\"v\",\"Q\":\"p\" } ", 4, value::string_t, 1, PASS_T },
 
-        { L"{ \"k\" : { } }", 1, value::object_t, 0, PASS },
-        { L"{ \"k\" : {\"kk\" : \"v\"}}", 1, value::object_t, 0, PASS },
-        { L"{ \"k\" : {\"kk\" : {\"kkk\" : \"v\"}}", 1, value::object_t, 0, PASS },
-        { L"{ \"k\" : null } ", 1, value::null_t, 1, PASS },
+        { L"{ \"k\" : { } }", 1, value::object_t, 0, PASS_T },
+        { L"{ \"k\" : {\"kk\" : \"v\"}}", 1, value::object_t, 0, PASS_T },
+        { L"{ \"k\" : {\"kk\" : {\"kkk\" : \"v\"}}", 1, value::object_t, 0, PASS_T },
+        { L"{ \"k\" : null } ", 1, value::null_t, 1, PASS_T },
 
         // errors
-        { L"", 0, value::undefined_t, 0, FAIL },   // json::syntax_error
-        { L" ", 0, value::undefined_t, 0, FAIL },   // json::syntax_error
-        { L"x", 0, value::undefined_t, 0, FAIL },   // json::syntax_error
-        { L"{", 0, value::undefined_t, 0, FAIL },   // json::syntax_error
-        { L"}", 0, value::undefined_t, 0, FAIL },   // json::syntax_error
-        { L"{ , }", 0, value::undefined_t, 0, FAIL },   // json::syntax_error
-        { L"{ : }", 0, value::undefined_t, 0, FAIL },   // json::syntax_error
+        { L"", 0, value::undefined_t, 0, FAIL_T },   // json::syntax_error
+        { L" ", 0, value::undefined_t, 0, FAIL_T },   // json::syntax_error
+        { L"x", 0, value::undefined_t, 0, FAIL_T },   // json::syntax_error
+        { L"{", 0, value::undefined_t, 0, FAIL_T },   // json::syntax_error
+        { L"}", 0, value::undefined_t, 0, FAIL_T },   // json::syntax_error
+        { L"{ , }", 0, value::undefined_t, 0, FAIL_T },   // json::syntax_error
+        { L"{ : }", 0, value::undefined_t, 0, FAIL_T },   // json::syntax_error
       };
 
       object *o = nullptr;
@@ -154,9 +154,9 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-        { L"{}", PASS },
-        { L"{ } ", PASS },
-        { L"{\"key1\":\"v\",\"key2\":\"v\",\"key3\":\"v\"} ", PASS },
+        { L"{}", PASS_T },
+        { L"{ } ", PASS_T },
+        { L"{\"key1\":\"v\",\"key2\":\"v\",\"key3\":\"v\"} ", PASS_T },
       };
 
       TEST_IT_START
@@ -199,8 +199,8 @@ namespace format
       };
 
       std::vector<struct assert> test = {
-        { L"0", value::value_t::boolean_t, PASS },
-        { L"1", value::value_t::undefined_t, PASS }
+        { L"0", value::value_t::boolean_t, PASS_T },
+        { L"1", value::value_t::undefined_t, PASS_T }
       };
 
       TEST_IT_START
@@ -226,8 +226,8 @@ namespace format
       };
 
       std::vector<struct assert> test = {
-        { L"0", value::value_t::boolean_t, PASS },
-        { L"1", value::value_t::undefined_t, FAIL }
+        { L"0", value::value_t::boolean_t, PASS_T },
+        { L"1", value::value_t::undefined_t, FAIL_T }
       };
 
       TEST_IT_START
@@ -279,14 +279,14 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-        { L" \"foo\" : \"bar\" ", true, PASS },
-        { L" }" , false , PASS },
+        { L" \"foo\" : \"bar\" ", true, PASS_T },
+        { L" }" , false , PASS_T },
 
         // errors
-        { L" ", false, FAIL},            // json::syntax_error
-        { L" \"foo  ", false, FAIL },    // json::syntax_error
-        { L" \"foo\" ", false, FAIL },   // json::syntax_error
-        { L" \"foo\" : ", false, SKIP }, // FAIL: json::syntax_error
+        { L" ", false, FAIL_T},            // json::syntax_error
+        { L" \"foo  ", false, FAIL_T },    // json::syntax_error
+        { L" \"foo\" ", false, FAIL_T },   // json::syntax_error
+        { L" \"foo\" : ", false, SKIP_T }, // FAIL: json::syntax_error
       };
 
       object *o = nullptr;
@@ -338,8 +338,8 @@ namespace format
       object o (L"{\"0\":true,\"1\":false}");
 
       std::vector<struct assert > test = {
-        { & o,  value::object_t, L"0",  0, 1,  { PASS, PASS } },
-        { __VALUE[value::array_t], value::array_t, L"1",  0, 2,  { PASS, FAIL } },
+        { & o,  value::object_t, L"0",  0, 1,  { PASS_T, PASS_T } },
+        { __VALUE[value::array_t], value::array_t, L"1",  0, 2,  { PASS_T, FAIL_T } },
 //        { __VALUE[value::string_t], value::string_t, L"2",  0, 3,  { PASS, FAIL } },
 //        { __VALUE[value::number_t], value::number_t, L"3",  0, 4, { PASS, FAIL } },
 //        { __VALUE[value::boolean_t], value::boolean_t, L"4",  0, 5, { PASS, FAIL } },
@@ -356,8 +356,8 @@ namespace format
             {
               try
                 {
-                  if ((*it).assert_status[pidx] == SKIP) { continue; }
-                  if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
+                  if ((*it).assert_status[pidx] == SKIP_T) { continue; }
+                  if ((*it).assert_status[pidx] > PASS_T) { this->_errorc[EXPECTED]++; }
 
                   /** old_value: value from value[key] */
                   old_value = new object (parents[pidx]);
@@ -421,10 +421,10 @@ namespace format
       };
 
       std::vector<struct assert> test = {
-        { L"{}", 2, PASS },
-        { L"{\"a\":null}", 10, PASS },
-        { L"{\"a\":null,\"b\":null}", 19, PASS },
-        { L"{\"a\":null,\"b\":{}}", 17, PASS }
+        { L"{}", 2, PASS_T },
+        { L"{\"a\":null}", 10, PASS_T },
+        { L"{\"a\":null,\"b\":null}", 19, PASS_T },
+        { L"{\"a\":null,\"b\":{}}", 17, PASS_T }
       };
 
       TEST_IT_START
@@ -458,13 +458,13 @@ namespace format
       std::vector<struct assert> test = {
         { L"{}",
           { L"{}",  // Without parent
-            L"{\"a\":null,\"b\":{}" }, PASS },  // <-- last closing } intentionally missing
+            L"{\"a\":null,\"b\":{}" }, PASS_T },  // <-- last closing } intentionally missing
 
         /// !!! UNORDERED MAP HAS KEYS ARE IN DIFFERENT ORDER !!!:
         /// {"c":null,"d":{}} --> {"d":{},"c":null}
         { L"{\"c\":null,\"d\":{}}",
           { L"{\"d\":{},\"c\":null}", // Without parent
-            L"{\"a\":null,\"b\":{\"d\":{},\"c\":null}" }, PASS },  // <-- last closing ] intentionally missing
+            L"{\"a\":null,\"b\":{\"d\":{},\"c\":null}" }, PASS_T },  // <-- last closing ] intentionally missing
       };
 
       TEST_IT_START
@@ -538,9 +538,9 @@ namespace format
       };
 
       std::vector<struct assert> test = {
-        { v[2], 2, PASS },
-        { v[1], 1, PASS },
-        { v[0], 0, PASS },
+        { v[2], 2, PASS_T },
+        { v[1], 1, PASS_T },
+        { v[0], 0, PASS_T },
       };
 
       TEST_IT_START

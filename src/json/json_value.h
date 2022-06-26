@@ -11,6 +11,16 @@ namespace format
 {
   namespace json
   {
+    #ifdef UNIT_TEST
+      namespace test
+      {
+        class json_value_test__lookahead_Test;
+        class json_value_test__string_Test;
+        class json_value_test__is_literal_Test;
+        class json_value_test__str_append_Test;
+        class json_value_test__quote_value_Test;
+      }
+    #endif
     #define UNEXPECTED_END_OF_INPUT         "Unexpected end of JSON input"
     #define UNEXPECTED_START_OF_INPUT       "Unexpected start of JSON input"
     #define UNEXPECTED_TOKEN                "Unexpected token "
@@ -30,6 +40,13 @@ namespace format
     class undefined;
     class value
     {
+      #ifdef UNIT_TEST
+        friend class test::json_value_test__lookahead_Test;
+        friend class test::json_value_test__string_Test;
+        friend class test::json_value_test__is_literal_Test;
+        friend class test::json_value_test__str_append_Test;
+        friend class test::json_value_test__quote_value_Test;
+      #endif
       public:
       /**
        * @brief JSON types and internal types
@@ -766,14 +783,10 @@ namespace format
       friend size_t __call__str_length (const value *);
       friend const wchar_t * __call_str_value (const value *, wchar_t * const);
 
-      #ifdef UNIT_TEST
-        friend class json_value_test;
-      #endif
+
     };  // Class value
 
-    #ifdef UNIT_TEST
-      class json_value_test;
-    #endif
+
 
      inline const wchar_t *
      __call__parse (value *v, const wchar_t *readp)

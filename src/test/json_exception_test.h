@@ -26,8 +26,8 @@ namespace format
         };
 
         std::vector<struct assert > test = {
-          { L"\u0061b\u0063d", "a:'\u0061b\u0063d'", 0, PASS },   // abcd, 97-100
-          { L"\u0061b\u0063d", "a:'\u0061'", 1, PASS },           // a:'a'
+          { L"\u0061b\u0063d", "a:'\u0061b\u0063d'", 0, PASS_T },   // abcd, 97-100
+          { L"\u0061b\u0063d", "a:'\u0061'", 1, PASS_T },           // a:'a'
         };
 
         TEST_IT_START

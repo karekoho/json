@@ -23,9 +23,9 @@ public:
     };
 
     std::vector<struct assert> test = {
-        { "", 0,  PASS },
-        { "1", 1,  PASS },
-        { "1,1,2,3", 4, PASS }
+        { "", 0,  PASS_T },
+        { "1", 1,  PASS_T },
+        { "1,1,2,3", 4, PASS_T }
     };
 
     TEST_IT_START
@@ -56,7 +56,7 @@ public:
     };
 
     std::vector<struct assert> test = {
-      { { 0 } , 3,  PASS },
+      { { 0 } , 3,  PASS_T },
       // { { 0 , 0, 2 }, 2,  PASS } // FIXME: LEAK, by 0x43A2DE: test_selector::tests(CppUnit::Test*, std::vector<int, std::allocator<int> >&) (test_selector.h:47)
     };
 

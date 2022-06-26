@@ -5,6 +5,7 @@ QT -= gui
 
 INCLUDEPATH += /usr/local/include
 LIBS += -L/usr/local/lib -lcppunit
+LIBS += -L/usr/local/lib -lgtest -lpthread
 # LIBS += /usr/local/lib/libjson.a
 
 QMAKE_CXXFLAGS+= -std=c++11

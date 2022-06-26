@@ -7,6 +7,7 @@
 #include <cppunit/ui/text/TextTestRunner.h>
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/Exception.h>
+
 #include <cstdio>
 #include <ctype.h>
 #include <vector>
@@ -16,11 +17,14 @@
 #include <clocale>
 #include <algorithm>
 
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
+
 #include "../json/json.h"
 
-#define PASS  0
-#define FAIL  1
-#define SKIP -1
+#define PASS_T  0
+#define FAIL_T  1
+#define SKIP_T -1
 #define MEM_DEBUG 0
 
 /* #ifndef JSON_MAX_DOUBLE
@@ -97,13 +101,17 @@
   CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, expected, actual)
 #endif
 
+#ifndef ERR_IDX_MSG
+  #define  ERR_IDX_MSG "Error at index: "
+#endif
+
 #ifndef TEST_IT_START
   #define TEST_IT_START\
   \
   for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++) {\
     try {\
-        if ((*it).assert_status == SKIP) { continue; }\
-        if ((*it).assert_status > PASS) { this->_errorc[EXPECTED]++; }
+        if ((*it).assert_status == SKIP_T) { continue; }\
+        if ((*it).assert_status > PASS_T) { this->_errorc[EXPECTED]++; }
 #endif
 
 #ifndef TEST_IT_END
@@ -117,27 +125,27 @@
   catch (const wchar_t *error) { this->_errorc[ACTUAL]++; std::cerr << error << std::endl; }\
   catch (...) { this->_errorc[ACTUAL]++; std::cerr << "unknown exception" << std::endl; } }\
 (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);\
-CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
+EXPECT_EQ (this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
 #endif
 
-struct test_selector;
+//struct test_selector;
 /**
  * @brief The unit_test class
  */
-class unit_test : public CppUnit::TestFixture
+class unit_test : public ::testing::Test //: public CppUnit::TestFixture
 {
-  friend struct test_selector;
+  // friend struct test_selector;
 
 public:
   unit_test ()
-    : CppUnit::TestFixture(),
+    : // CppUnit::TestFixture(),
       _errorc { 0, 0 },
       _idx { 0, 0, 0, 0, 0 }
   {}
 
   // virtual ~unit_test (){ std::cerr << "delete" << std::endl; }
 
-  void
+  virtual void
   setUp ()
   {
     // std::setlocale(LC_ALL, "en_US.UTF-8");
@@ -145,7 +153,7 @@ public:
     _errorc[0] = _errorc[1] = _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0;
   }
 
-  void
+  virtual void
   tearDown ()
   { _errorc[0] =_errorc[1] = _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0; }
 

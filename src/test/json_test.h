@@ -83,25 +83,25 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-          { L" {} ", value::value_t::object_t, PASS },
-          { L" [] ", value::value_t::array_t, PASS },
-          { L" \"x\" ", value::value_t::string_t, PASS },
-          { L" 100 ", value::value_t::number_t, PASS },
-          { L" null ", value::value_t::null_t, PASS },
-          { L" true ", value::value_t::boolean_t, PASS },
-          { L" false ", value::value_t::boolean_t, PASS },
+          { L" {} ", value::value_t::object_t, PASS_T },
+          { L" [] ", value::value_t::array_t, PASS_T },
+          { L" \"x\" ", value::value_t::string_t, PASS_T },
+          { L" 100 ", value::value_t::number_t, PASS_T },
+          { L" null ", value::value_t::null_t, PASS_T },
+          { L" true ", value::value_t::boolean_t, PASS_T },
+          { L" false ", value::value_t::boolean_t, PASS_T },
 
-          { L"{\"k\":\"v\"} ", value::value_t::object_t, PASS },
-          { L" { \"k\" : \"v\" } ", value::value_t::object_t, PASS },
-          { L"[\"v\"] ", value::value_t::array_t, PASS },
-          { L" [ \"v\", [\"vv\"] ] ", value::value_t::array_t, PASS },
+          { L"{\"k\":\"v\"} ", value::value_t::object_t, PASS_T },
+          { L" { \"k\" : \"v\" } ", value::value_t::object_t, PASS_T },
+          { L"[\"v\"] ", value::value_t::array_t, PASS_T },
+          { L" [ \"v\", [\"vv\"] ] ", value::value_t::array_t, PASS_T },
           //{ L" [1,[2,3],4] ", value::value_t::array_t, PASS },
 
           /// errors
-          { L" x ", value::value_t::undefined_t, FAIL },
-          { L" {} , ", value::value_t::undefined_t, FAIL },
-          { L", {} ", value::value_t::undefined_t, FAIL },
-          { L" truee ", value::value_t::undefined_t, FAIL },
+          { L" x ", value::value_t::undefined_t, FAIL_T },
+          { L" {} , ", value::value_t::undefined_t, FAIL_T },
+          { L", {} ", value::value_t::undefined_t, FAIL_T },
+          { L" truee ", value::value_t::undefined_t, FAIL_T },
       };
 
       json *j = nullptr;
@@ -145,16 +145,16 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-          { L"{} ", value::value_t::object_t, 2, PASS },
-          { L"[] ", value::value_t::array_t, 2, PASS },
-          { L"\"x\" ", value::value_t::string_t, 3, PASS },
-          { L"10 ", value::value_t::number_t, 2, PASS },
-          { L"-10 ", value::value_t::number_t, 3, PASS },
-          { L"true ", value::value_t::boolean_t, 4, PASS },
-          { L"false ", value::value_t::boolean_t, 5, PASS },
-          { L"null ", value::value_t::null_t, 4, PASS },
-          { L"x ", value::value_t::no_value_t, 0, PASS },
-          { L"", value::value_t::no_value_t, 0, PASS },
+          { L"{} ", value::value_t::object_t, 2, PASS_T },
+          { L"[] ", value::value_t::array_t, 2, PASS_T },
+          { L"\"x\" ", value::value_t::string_t, 3, PASS_T },
+          { L"10 ", value::value_t::number_t, 2, PASS_T },
+          { L"-10 ", value::value_t::number_t, 3, PASS_T },
+          { L"true ", value::value_t::boolean_t, 4, PASS_T },
+          { L"false ", value::value_t::boolean_t, 5, PASS_T },
+          { L"null ", value::value_t::null_t, 4, PASS_T },
+          { L"x ", value::value_t::no_value_t, 0, PASS_T },
+          { L"", value::value_t::no_value_t, 0, PASS_T },
       };
 
       TEST_IT_START
@@ -190,12 +190,12 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-        { L"ok", 0, { new object_accessor (& object_parent), new object_accessor (& array_parent) }, value::object_t, PASS },
-        { L"ak", 1, { new array_accessor (& object_parent), new array_accessor (& array_parent) }, value::array_t, PASS },
-        { L"sk", 2, { new string_accessor (& object_parent, 3), new string_accessor (& array_parent, 3) }, value::string_t, PASS },
-        { L"dk", 3, { new number_accessor (& object_parent), new number_accessor (& array_parent) }, value::number_t, PASS },
-        { L"bk", 4, { new boolean_accessor (& object_parent, true), new boolean_accessor (& array_parent, true) }, value::boolean_t, PASS },
-        { L"nk", 5, { new null_accessor (& object_parent), new null_accessor (& array_parent) }, value::null_t, PASS },
+        { L"ok", 0, { new object_accessor (& object_parent), new object_accessor (& array_parent) }, value::object_t, PASS_T },
+        { L"ak", 1, { new array_accessor (& object_parent), new array_accessor (& array_parent) }, value::array_t, PASS_T },
+        { L"sk", 2, { new string_accessor (& object_parent, 3), new string_accessor (& array_parent, 3) }, value::string_t, PASS_T },
+        { L"dk", 3, { new number_accessor (& object_parent), new number_accessor (& array_parent) }, value::number_t, PASS_T },
+        { L"bk", 4, { new boolean_accessor (& object_parent, true), new boolean_accessor (& array_parent, true) }, value::boolean_t, PASS_T },
+        { L"nk", 5, { new null_accessor (& object_parent), new null_accessor (& array_parent) }, value::null_t, PASS_T },
       };
 
       size_t x = 0;
@@ -259,11 +259,11 @@ namespace format
       std::vector<struct assert> test = {
         { L"{\"1\":{\"2\":{\"3\":\"three\"},\"4\":\"four\",\"5\":\"\"}}",
           { L"{\"1\":{\"2\":{\"3\":\"three\"},\"4\":\"four\",\"5\":\"\"}}",
-            L"{\"3\":\"three\"}"  }, PASS },
+            L"{\"3\":\"three\"}"  }, PASS_T },
 
         { L"[\"1\",[\"2\",[3],\"4\"]]",
           { L"[\"1\",[\"2\",[3],\"4\"]]",
-            L"4" }, PASS },
+            L"4" }, PASS_T },
       };
 
       TEST_IT_START
@@ -306,12 +306,12 @@ namespace format
         { L"{\"0\":{},\"1\":[],\"2\":\"2\",\"3\":3,\"4\":false,\"5\":null}", {
             { __VALUE[value::object_t], __VALUE[value::array_t], __VALUE[value::string_t], __VALUE[value::number_t], __VALUE[value::boolean_t] , __VALUE[value::null_t] },
             { __VALUE[value::null_t], __VALUE[value::null_t], __VALUE[value::string_t], __VALUE[value::number_t], __VALUE[value::boolean_t] }
-          }, PASS },
+          }, PASS_T },
 
         { L"[{},\[],\"2\",3,false,null]", {
             { __VALUE[value::object_t], __VALUE[value::array_t], __VALUE[value::string_t], __VALUE[value::number_t], __VALUE[value::boolean_t] , __VALUE[value::null_t] },
             { __VALUE[value::null_t], __VALUE[value::null_t], __VALUE[value::string_t], __VALUE[value::number_t], __VALUE[value::boolean_t] }
-          }, PASS },
+          }, PASS_T },
         };
 
        reviver reviver[2] = { nullptr, fn_reviver };

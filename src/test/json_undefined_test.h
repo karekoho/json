@@ -63,7 +63,7 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-        { __VALUE[value::null_t], value::null_t, L"key_7", 1, { PASS, FAIL } }
+        { __VALUE[value::null_t], value::null_t, L"key_7", 1, { PASS_T, FAIL_T } }
       };
 
       unique_undefined *old_value = nullptr;
@@ -75,8 +75,8 @@ namespace format
             {\
               try
                 {\
-                  if ((*it).assert_status[pidx] == SKIP) { continue; }\
-                  if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
+                  if ((*it).assert_status[pidx] == SKIP_T) { continue; }\
+                  if ((*it).assert_status[pidx] > PASS_T) { this->_errorc[EXPECTED]++; }
 
                   /** old_value: value from value[key] */
                   old_value = new unique_undefined (parents[pidx]);

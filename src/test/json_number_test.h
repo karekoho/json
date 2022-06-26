@@ -85,29 +85,29 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-          { L"0", 1, 0, PASS },
-          { L"0 ", 1, 0, PASS },
-          { L"1 ", 1, 1, PASS },
-          { L"10 ", 2, 10, PASS },
-          { L"00", 1, 0, PASS },
-          { L"05", 1, 0, PASS },
-          { L"-2]", 2, -2, PASS },
-          { L"-10]", 3, -10, PASS },
-          { L"3.3 }", 3, (double) 3.3, PASS },
-          { L"0.4, ", 3, (double) 0.4, PASS },
-          { L"-0.5 ,", 4, (double) -0.5, PASS },
-          { L"6e2", 3, 600, PASS },
-          { L"7E2}", 3, 700, PASS },
-          { L"8E+2 ] ", 4, 800, PASS },
-          { L"1.79769e+308", 12, 1.79769e+308, PASS },
-          { L"9E-2, ", 4, (double) 0.09, PASS },
+          { L"0", 1, 0, PASS_T },
+          { L"0 ", 1, 0, PASS_T },
+          { L"1 ", 1, 1, PASS_T },
+          { L"10 ", 2, 10, PASS_T },
+          { L"00", 1, 0, PASS_T },
+          { L"05", 1, 0, PASS_T },
+          { L"-2]", 2, -2, PASS_T },
+          { L"-10]", 3, -10, PASS_T },
+          { L"3.3 }", 3, (double) 3.3, PASS_T },
+          { L"0.4, ", 3, (double) 0.4, PASS_T },
+          { L"-0.5 ,", 4, (double) -0.5, PASS_T },
+          { L"6e2", 3, 600, PASS_T },
+          { L"7E2}", 3, 700, PASS_T },
+          { L"8E+2 ] ", 4, 800, PASS_T },
+          { L"1.79769e+308", 12, 1.79769e+308, PASS_T },
+          { L"9E-2, ", 4, (double) 0.09, PASS_T },
 
-          { L"x", 1, 0, FAIL },   // NaN
+          { L"x", 1, 0, FAIL_T },   // NaN
           //{ L"00", 1, 0, FAIL },
           //{ L"05", 2, 0, FAIL },
-          { L"+5", 2, 0, FAIL },  // Positive sign is not allowed
-          { L"2e", 2, 0, FAIL },  // Multiplier of ten is not specified
-          { L"2eX", 2, 0, FAIL }, // Multiplier of ten is NaN
+          { L"+5", 2, 0, FAIL_T },  // Positive sign is not allowed
+          { L"2e", 2, 0, FAIL_T },  // Multiplier of ten is not specified
+          { L"2eX", 2, 0, FAIL_T }, // Multiplier of ten is NaN
       };
 
       // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
@@ -118,8 +118,8 @@ namespace format
           number n;
           try
             {
-              if ((*it).assert_status == SKIP) { continue; }
-              if ((*it).assert_status > PASS) { this->_errorc[EXPECTED]++; }
+              if ((*it).assert_status == SKIP_T) { continue; }
+              if ((*it).assert_status > PASS_T) { this->_errorc[EXPECTED]++; }
               const wchar_t *startp = (*it).starp;
               const wchar_t *readp = n._parse (startp);
 
@@ -157,13 +157,13 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-          { L"123", 3, 0, PASS },
-          { L"123x", 3, L'x', PASS },
-          { L"0.", 1, L'.', PASS },
-          { L"123 ", 3, L' ', PASS },
+          { L"123", 3, 0, PASS_T },
+          { L"123x", 3, L'x', PASS_T },
+          { L"0.", 1, L'.', PASS_T },
+          { L"123 ", 3, L' ', PASS_T },
 
-          { L"", 0, -1, PASS },
-          { L"x", 0, -1, PASS },
+          { L"", 0, -1, PASS_T },
+          { L"x", 0, -1, PASS_T },
       };
 
       TEST_IT_START
@@ -195,13 +195,13 @@ namespace format
 
       std::vector<struct assert > test = {
 
-          { L"5.123 ", 5, L' ', PASS },
-          { L"5.123}", 5, L'}', PASS },
+          { L"5.123 ", 5, L' ', PASS_T },
+          { L"5.123}", 5, L'}', PASS_T },
           // { "5.123e", 5, 'e', PASS },
           // { "5.123E", 5, 'E', PASS },
 
-          { L"5.", 2, 0, FAIL },
-          { L"5.E", 2, L'E', FAIL },
+          { L"5.", 2, 0, FAIL_T },
+          { L"5.E", 2, L'E', FAIL_T },
       };
 
 
@@ -210,8 +210,8 @@ namespace format
           number n;
           try
             {
-              if ((*it).assert_status == SKIP) { continue; }
-              if ((*it).assert_status > PASS) { this->_errorc[EXPECTED]++; }
+              if ((*it).assert_status == SKIP_T) { continue; }
+              if ((*it).assert_status > PASS_T) { this->_errorc[EXPECTED]++; }
               const wchar_t *startp = (*it).starp;
               const wchar_t *endp = startp + (*it).move;
 
@@ -246,16 +246,16 @@ namespace format
 
       std::vector<struct assert > test = {
 
-          { L"2e2 ", { 2, 3 }, L' ', 2, PASS },
-          { L"2E3}", { 2, 3 }, L'}', 3, PASS },
-          { L"2e+4]", { 2, 4 }, L']', 4, PASS },
-          { L"2e-5", { 2, 4 }, 0, -5, PASS },
-          { L"2e-00005", { 2, 8 }, 0, -5, PASS },
+          { L"2e2 ", { 2, 3 }, L' ', 2, PASS_T },
+          { L"2E3}", { 2, 3 }, L'}', 3, PASS_T },
+          { L"2e+4]", { 2, 4 }, L']', 4, PASS_T },
+          { L"2e-5", { 2, 4 }, 0, -5, PASS_T },
+          { L"2e-00005", { 2, 8 }, 0, -5, PASS_T },
 
-          { L"2e", { 0, 0 }, 0, 0, FAIL },
-          { L"2e ", { 0, 0 }, 0, 0, FAIL },
-          { L"2e.", { 0, 0 }, 0, 0, FAIL },
-          { L"2e+", { 0, 0 }, 0, 0, FAIL },
+          { L"2e", { 0, 0 }, 0, 0, FAIL_T },
+          { L"2e ", { 0, 0 }, 0, 0, FAIL_T },
+          { L"2e.", { 0, 0 }, 0, 0, FAIL_T },
+          { L"2e+", { 0, 0 }, 0, 0, FAIL_T },
       };
 
       for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
@@ -263,8 +263,8 @@ namespace format
           number n;
           try
             {
-              if ((*it).assert_status == SKIP) { continue; }
-              if ((*it).assert_status > PASS) { this->_errorc[EXPECTED]++; }
+              if ((*it).assert_status == SKIP_T) { continue; }
+              if ((*it).assert_status > PASS_T) { this->_errorc[EXPECTED]++; }
               const wchar_t *startp = (*it).starp;
               const wchar_t *endp = startp + (*it).move[1];
 
@@ -304,13 +304,13 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-        { { nullptr, nullptr }, { 0, 0 }, 0, PASS },
-        { { L"", L"" }, { 0, 0 }, 0, PASS },
-        { { L"5", L"" }, { 1, 1 }, 5, PASS },
-        { { L"5", L"0" }, { 1, 1 }, 5, PASS },
-        { { L"2", L"1" }, { 1, 1 }, 20, PASS },
-        { { L"2", L"2" }, { 1, 1 }, 200, PASS },
-        { { L"2", L"-2" }, { 1, 2 }, (long double) 0.02, PASS },
+        { { nullptr, nullptr }, { 0, 0 }, 0, PASS_T },
+        { { L"", L"" }, { 0, 0 }, 0, PASS_T },
+        { { L"5", L"" }, { 1, 1 }, 5, PASS_T },
+        { { L"5", L"0" }, { 1, 1 }, 5, PASS_T },
+        { { L"2", L"1" }, { 1, 1 }, 20, PASS_T },
+        { { L"2", L"2" }, { 1, 1 }, 200, PASS_T },
+        { { L"2", L"-2" }, { 1, 2 }, (long double) 0.02, PASS_T },
       };
 
       TEST_IT_START
@@ -340,8 +340,8 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-          { L"5.5", (long double) 5.5, PASS },
-          { L"55.55", (long double) 55.55, PASS },
+          { L"5.5", (long double) 5.5, PASS_T },
+          { L"55.55", (long double) 55.55, PASS_T },
       };
 
       TEST_IT_START
@@ -366,8 +366,8 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-          { L"55", 55, PASS },
-          { L"5555", 5555, PASS },
+          { L"55", 55, PASS_T },
+          { L"5555", 5555, PASS_T },
       };
 
       TEST_IT_START
@@ -418,8 +418,8 @@ namespace format
             {
               try
                 {
-                    if ((*it).assert_status[pidx] == SKIP) { continue; }\
-                    if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
+                    if ((*it).assert_status[pidx] == SKIP_T) { continue; }\
+                    if ((*it).assert_status[pidx] > PASS_T) { this->_errorc[EXPECTED]++; }
 
                     /** old_value: value from value[key] */
                     old_value = new number (parents[pidx]);
@@ -477,11 +477,11 @@ namespace format
 
         { 100.0, { L"200", L"200.0", L"200.500000" },
         { L"100", L"100", L"200", L"200", L"200.5" },
-        PASS },
+        PASS_T },
 
         { 0.0, { L"0", L"0", L"0.500001" },
         { L"0", L"0", L"0", L"0", L"0.500001" },
-        PASS }
+        PASS_T }
 
       };
 
@@ -520,16 +520,16 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-        { new number (static_cast<long double>(100)), 3, PASS },
-        { new number (static_cast<long double>(100.1)), 5 + 14, PASS },     // 100.099999999999994
-        { new number (static_cast<long double>(100.099999999999994)), 5 + 14, PASS },
-        { new number (static_cast<long double>(-10.01)), 6 + 14, PASS },    // -10.0099999999999998
+        { new number (static_cast<long double>(100)), 3, PASS_T },
+        { new number (static_cast<long double>(100.1)), 5 + 14, PASS_T },     // 100.099999999999994
+        { new number (static_cast<long double>(100.099999999999994)), 5 + 14, PASS_T },
+        { new number (static_cast<long double>(-10.01)), 6 + 14, PASS_T },    // -10.0099999999999998
 
-        { new number (L"100"), 3, PASS },
-        { new number (L"100.1"), 5, PASS },
-        { new number (L"100.10"), 5, PASS },
-        { new number (L"100.099999999999994"), 19, PASS },
-        { new number (L"-10.01"), 6, PASS }
+        { new number (L"100"), 3, PASS_T },
+        { new number (L"100.1"), 5, PASS_T },
+        { new number (L"100.10"), 5, PASS_T },
+        { new number (L"100.099999999999994"), 19, PASS_T },
+        { new number (L"-10.01"), 6, PASS_T }
       };
 
       TEST_IT_START
@@ -699,13 +699,13 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-        { 0, 1, PASS },
-        { 1, 1, PASS },
-        { 10, 2, PASS },
-        { 123, 3, PASS },
-        { 1000, 4, PASS },
-        { -1, 2, PASS },
-        { -10, 3, PASS },
+        { 0, 1, PASS_T },
+        { 1, 1, PASS_T },
+        { 10, 2, PASS_T },
+        { 123, 3, PASS_T },
+        { 1000, 4, PASS_T },
+        { -1, 2, PASS_T },
+        { -10, 3, PASS_T },
         //{ -1000, 5, PASS },
       };
 
@@ -730,14 +730,14 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-        { 0, 1, L"0", PASS },
-        { 1, 1, L"1", PASS },
-        { 10, 2, L"10", PASS },
-        { 123, 3, L"123", PASS },
-        { 1000, 4, L"1000", PASS },
-        { -1, 2, L"-1", PASS },
-        { -10, 3, L"-10", PASS },
-        { LLONG_MAX, 19, L"9223372036854775807", PASS } // NOTE: LLONG_MAX depends on platform
+        { 0, 1, L"0", PASS_T },
+        { 1, 1, L"1", PASS_T },
+        { 10, 2, L"10", PASS_T },
+        { 123, 3, L"123", PASS_T },
+        { 1000, 4, L"1000", PASS_T },
+        { -1, 2, L"-1", PASS_T },
+        { -10, 3, L"-10", PASS_T },
+        { LLONG_MAX, 19, L"9223372036854775807", PASS_T } // NOTE: LLONG_MAX depends on platform
       };
 
       TEST_IT_START
@@ -768,15 +768,15 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-        { (long double) 0.0, /* 1, L"0" */ PASS },
-        { (long double) 1.0, PASS },
-        { (long double) 1.01, PASS },
-        { (long double) -1.0, PASS },
-        { (long double) 1.0000001, PASS },
-        { (long double) DBL_MAX, PASS },
+        { (long double) 0.0, /* 1, L"0" */ PASS_T },
+        { (long double) 1.0, PASS_T },
+        { (long double) 1.01, PASS_T },
+        { (long double) -1.0, PASS_T },
+        { (long double) 1.0000001, PASS_T },
+        { (long double) DBL_MAX, PASS_T },
 //        { (long double) LDBL_MAX, PASS },       // stold: out of range
 //        { (long double) LDBL_MAX * -1, PASS },  // stold: out of range
-        { (long double) ULLONG_MAX, PASS }
+        { (long double) ULLONG_MAX, PASS_T }
       };
 
       long double delta = std::numeric_limits<long double>::epsilon ();

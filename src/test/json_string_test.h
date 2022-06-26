@@ -74,11 +74,11 @@ namespace format
 //          { L"\" xxx \"", L"\" xxx \"", 5 + 2, 5, (wchar_t) 0, PASS },
 //          { L"\" xxx \" ", L"\" xxx \"", 5 + 2, 5, L' ', PASS },
 
-            { L"", L"", { 0 + 0, 0 + 2 }, 0, (wchar_t) 0, PASS }, // Actually never possible
-            { L"\"\"", L"", { 0 + 2, 0 + 2 }, 0, (wchar_t) 0, PASS },
-            { L"\"xxx\"", L"xxx", { 3 + 2, 3 + 2  }, 3, (wchar_t) 0, PASS },
-            { L"\" xxx \"", L" xxx ", { 5 + 2, 5 + 2 }, 5, (wchar_t) 0, PASS },
-            { L"\" xxx \" ", L" xxx ", { 5 + 2, 5 + 2 }, 5, L' ', PASS },
+            { L"", L"", { 0 + 0, 0 + 2 }, 0, (wchar_t) 0, PASS_T }, // Actually never possible
+            { L"\"\"", L"", { 0 + 2, 0 + 2 }, 0, (wchar_t) 0, PASS_T },
+            { L"\"xxx\"", L"xxx", { 3 + 2, 3 + 2  }, 3, (wchar_t) 0, PASS_T },
+            { L"\" xxx \"", L" xxx ", { 5 + 2, 5 + 2 }, 5, (wchar_t) 0, PASS_T },
+            { L"\" xxx \" ", L" xxx ", { 5 + 2, 5 + 2 }, 5, L' ', PASS_T },
       };
 
       TEST_IT_START
@@ -127,21 +127,21 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-          { L"", L"", 0  + 2, 0, (wchar_t) 0, PASS },
+          { L"", L"", 0  + 2, 0, (wchar_t) 0, PASS_T },
 
-          { L" ", L" ", 1 + 2, 1, (wchar_t) 0, PASS },
-          { L"x", L"x", 1 + 2, 1, (wchar_t) 0, PASS },
-          { L"xxx", L"xxx", 3 + 2, 3, (wchar_t) 0, PASS },
+          { L" ", L" ", 1 + 2, 1, (wchar_t) 0, PASS_T },
+          { L"x", L"x", 1 + 2, 1, (wchar_t) 0, PASS_T },
+          { L"xxx", L"xxx", 3 + 2, 3, (wchar_t) 0, PASS_T },
 
-          { L"\u005C", L"\\", 1 + 2, 1, (wchar_t) 0, PASS }, // https://datatracker.ietf.org/doc/html/rfc8259#section-7
+          { L"\u005C", L"\\", 1 + 2, 1, (wchar_t) 0, PASS_T }, // https://datatracker.ietf.org/doc/html/rfc8259#section-7
           //{ L"a\u005Cb", L"a\\b", 3 + 2, 3, (wchar_t) 0, PASS }, // https://datatracker.ietf.org/doc/html/rfc8259#section-8.3
 
           // Inner quotes
-          { L"\"xxx\"", L"\"xxx\"", 5 + 2, 5, (wchar_t) 0, PASS },
+          { L"\"xxx\"", L"\"xxx\"", 5 + 2, 5, (wchar_t) 0, PASS_T },
 
           // Control characters
-          { L"\u0000", L"", 2, 0, (wchar_t) 0, PASS },
-          { L"\u001F", nullptr, 0, 0, (wchar_t) 0, FAIL },
+          { L"\u0000", L"", 2, 0, (wchar_t) 0, PASS_T },
+          { L"\u001F", nullptr, 0, 0, (wchar_t) 0, FAIL_T },
       };
 
       string *s = nullptr;
@@ -213,8 +213,8 @@ namespace format
               {
                 try
                   {
-                    if ((*it).assert_status[pidx] == SKIP) { continue; }\
-                    if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
+                    if ((*it).assert_status[pidx] == SKIP_T) { continue; }\
+                    if ((*it).assert_status[pidx] > PASS_T) { this->_errorc[EXPECTED]++; }
 
                     /** old_value: value from Value[key] */
                     old_value = new string (parents[pidx], 0);
@@ -270,11 +270,11 @@ namespace format
         };
 
         std::vector<struct assert > test = {
-            { L"", 0, PASS },
-            { L"x", 1, PASS },
+            { L"", 0, PASS_T },
+            { L"x", 1, PASS_T },
 
-            { L"x\"", -1, PASS },
-            { L"x\u001F\"", -1, PASS }
+            { L"x\"", -1, PASS_T },
+            { L"x\u001F\"", -1, PASS_T }
         };
 
         TEST_IT_START

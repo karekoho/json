@@ -81,8 +81,8 @@ namespace format
             {
               try
                 {
-                  if ((*it).assert_status[pidx] == SKIP) { continue; }\
-                  if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
+                  if ((*it).assert_status[pidx] == SKIP_T) { continue; }\
+                  if ((*it).assert_status[pidx] > PASS_T) { this->_errorc[EXPECTED]++; }
 
                   /** old_value: value from value[key] */
                   old_value = new boolean (parents[pidx], false);
@@ -135,8 +135,8 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-        { L"false ", false, 5, PASS },
-        { L"true ", true, 4, PASS }
+        { L"false ", false, 5, PASS_T },
+        { L"true ", true, 4, PASS_T }
       };
 
       TEST_IT_START

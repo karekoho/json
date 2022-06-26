@@ -91,8 +91,8 @@ namespace format
       };
 
       std::vector<struct assert> test = {
-        { & it, value::boolean_t, PASS },
-        { & copy, value::boolean_t, PASS }
+        { & it, value::boolean_t, PASS_T },
+        { & copy, value::boolean_t, PASS_T }
       };
 
       TEST_IT_START

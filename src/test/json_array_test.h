@@ -75,25 +75,25 @@ namespace format
       };
 
       std::vector<struct assert> test = {
-        { L"[]", 0, value::value_t::array_t, 0, PASS },
-        { L"[ ] ", 0, value::value_t::array_t, 1, PASS },
-        { L"[\t] ", 0, value::value_t::array_t, 1, PASS },
-        { L"[\r] ", 0, value::value_t::array_t, 1, PASS },
-        { L"[\n] ", 0, value::value_t::array_t, 1, PASS },
-        { L"[\"x\"]", 1, value::value_t::array_t, 0, PASS },
-        { L"[\"x\",\"x\"] ", 2, value::value_t::array_t, 1, PASS },
-        { L"[\"x\",\"x\",[\"x\"]] ", 3,  value::value_t::array_t, 1, PASS },
+        { L"[]", 0, value::value_t::array_t, 0, PASS_T },
+        { L"[ ] ", 0, value::value_t::array_t, 1, PASS_T },
+        { L"[\t] ", 0, value::value_t::array_t, 1, PASS_T },
+        { L"[\r] ", 0, value::value_t::array_t, 1, PASS_T },
+        { L"[\n] ", 0, value::value_t::array_t, 1, PASS_T },
+        { L"[\"x\"]", 1, value::value_t::array_t, 0, PASS_T },
+        { L"[\"x\",\"x\"] ", 2, value::value_t::array_t, 1, PASS_T },
+        { L"[\"x\",\"x\",[\"x\"]] ", 3,  value::value_t::array_t, 1, PASS_T },
         //{ L"[\"x\",\"x\",[\"x\"],\"x\"]", 4,  value::value_t::array_t, 0, PASS },
 
         // errors
-        { L"[", 0, value::value_t::undefined_t, 0, FAIL },
-        { L"[ ", 0, value::value_t::undefined_t, 0, FAIL },
-        { L"]", 0, value::value_t::undefined_t, 0, FAIL },
-        { L"[, ", 0, value::value_t::undefined_t, 0, FAIL },
-        { L"[ x ", 0, value::value_t::undefined_t, 0, FAIL },
-        { L"", 0, value::value_t::undefined_t, 0, FAIL },
-        { L" ", 0, value::value_t::undefined_t, 0, FAIL },
-        { L"x", 0, value::value_t::undefined_t, 0, FAIL },
+        { L"[", 0, value::value_t::undefined_t, 0, FAIL_T },
+        { L"[ ", 0, value::value_t::undefined_t, 0, FAIL_T },
+        { L"]", 0, value::value_t::undefined_t, 0, FAIL_T },
+        { L"[, ", 0, value::value_t::undefined_t, 0, FAIL_T },
+        { L"[ x ", 0, value::value_t::undefined_t, 0, FAIL_T },
+        { L"", 0, value::value_t::undefined_t, 0, FAIL_T },
+        { L" ", 0, value::value_t::undefined_t, 0, FAIL_T },
+        { L"x", 0, value::value_t::undefined_t, 0, FAIL_T },
       };
 
       json *p[] = { nullptr, new json () };
@@ -137,9 +137,9 @@ namespace format
       };
 
       std::vector<struct assert > test = {
-        { L"[]", PASS },
-        { L"[ ] ", PASS },
-        { L"[\"a\",\"b\",\"c\"]", PASS },
+        { L"[]", PASS_T },
+        { L"[ ] ", PASS_T },
+        { L"[\"a\",\"b\",\"c\"]", PASS_T },
       };
 
       TEST_IT_START
@@ -183,8 +183,8 @@ namespace format
       array a (L"[true,false]");
 
       std::vector<struct assert > test = {
-        { & a, value::array_t, L"key_2",  0, 1,  { PASS, PASS } },
-        { __VALUE[value::object_t], value::object_t, L"key_1",  0, 2,  { PASS, FAIL } },
+        { & a, value::array_t, L"key_2",  0, 1,  { PASS_T, PASS_T } },
+        { __VALUE[value::object_t], value::object_t, L"key_1",  0, 2,  { PASS_T, FAIL_T } },
 //        { __VALUE[value::string_t], value::string_t, L"key_3",  0, 3,  { PASS, PASS, FAIL } },
 //        { __VALUE[value::number_t], value::number_t, L"key_4",  0, 4, { PASS, PASS, FAIL } },
 //        { __VALUE[value::boolean_t], value::boolean_t, L"key_5",  0, 5, { PASS, PASS, FAIL } },
@@ -201,8 +201,8 @@ namespace format
               {
                 try
                   {
-                    if ((*it).assert_status[pidx] == SKIP) { continue; }\
-                    if ((*it).assert_status[pidx] > PASS) { this->_errorc[EXPECTED]++; }
+                    if ((*it).assert_status[pidx] == SKIP_T) { continue; }\
+                    if ((*it).assert_status[pidx] > PASS_T) { this->_errorc[EXPECTED]++; }
 
                     /** old_value: value from value[key] */
                     old_value = new array (parents[pidx]);
@@ -253,9 +253,9 @@ namespace format
       };
 
       std::vector<struct assert> test = {
-        { L"0", value::value_t::boolean_t, PASS },
-        { L"1", value::value_t::undefined_t, PASS },
-        { L"x", value::value_t::boolean_t, PASS }   // Converted to 0
+        { L"0", value::value_t::boolean_t, PASS_T },
+        { L"1", value::value_t::undefined_t, PASS_T },
+        { L"x", value::value_t::boolean_t, PASS_T }   // Converted to 0
       };
 
       TEST_IT_START
@@ -280,8 +280,8 @@ namespace format
       };
 
       std::vector<struct assert> test = {
-        { L"0", value::value_t::boolean_t, PASS },
-        { L"1", value::value_t::undefined_t, FAIL },
+        { L"0", value::value_t::boolean_t, PASS_T },
+        { L"1", value::value_t::undefined_t, FAIL_T },
       };
 
       TEST_IT_START
@@ -307,8 +307,8 @@ namespace format
       };
 
       std::vector<struct assert> test = {
-        { 0, value::value_t::boolean_t, PASS },
-        { 1, value::value_t::undefined_t, PASS }
+        { 0, value::value_t::boolean_t, PASS_T },
+        { 1, value::value_t::undefined_t, PASS_T }
       };
 
       TEST_IT_START
@@ -333,8 +333,8 @@ namespace format
       };
 
       std::vector<struct assert> test = {
-        { 0, value::value_t::boolean_t, PASS },
-        { 1, value::value_t::undefined_t, FAIL }
+        { 0, value::value_t::boolean_t, PASS_T },
+        { 1, value::value_t::undefined_t, FAIL_T }
       };
 
       TEST_IT_START
@@ -372,10 +372,10 @@ namespace format
       };
 
       std::vector<struct assert> test = {
-        { L"[]", 2, PASS },
-        { L"[null]", 6, PASS },
-        { L"[null,null]", 11, PASS },
-        { L"[null,[]]", 9, PASS },
+        { L"[]", 2, PASS_T },
+        { L"[null]", 6, PASS_T },
+        { L"[null,null]", 11, PASS_T },
+        { L"[null,[]]", 9, PASS_T },
       };
 
       TEST_IT_START
@@ -408,10 +408,10 @@ namespace format
       std::vector<struct assert> test = {
         { L"[]",
           { L"[]",  // Without parent
-            L"[\"x\",[]" }, PASS },  // <-- last closing ] intentionally missing
+            L"[\"x\",[]" }, PASS_T },  // <-- last closing ] intentionally missing
         { L"[false,[true]]",
           { L"[false,[true]]",  // Without parent
-            L"[\"x\",[false,[true]]" }, PASS },  // <-- last closing ] intentionally missing
+            L"[\"x\",[false,[true]]" }, PASS_T },  // <-- last closing ] intentionally missing
       };
 
       TEST_IT_START
@@ -486,9 +486,9 @@ namespace format
       };
 
        std::vector<struct assert> test = {
-          { v[2], 2, PASS },
-          { v[1], 1, PASS },
-          { v[0], 0, PASS },
+          { v[2], 2, PASS_T },
+          { v[1], 1, PASS_T },
+          { v[0], 0, PASS_T },
        };
 
        TEST_IT_START
