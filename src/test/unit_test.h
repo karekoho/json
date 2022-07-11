@@ -20,6 +20,13 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+using ::testing::Eq;
+using ::testing::Lt;
+using ::testing::Gt;
+using ::testing::StrEq;
+using ::testing::FloatEq;
+using ::testing::DoubleEq;
+
 #include "../json/json.h"
 
 #define PASS_T  0

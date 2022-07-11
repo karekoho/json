@@ -14,7 +14,15 @@ namespace format
   namespace json
   {
     #ifdef UNIT_TEST
-      class json_test;
+      namespace test
+      {
+        class json_test__parse_Test;
+        class json_test__to_string_Test;
+        class json_test_make_value_Test;
+        class json_test_operator_assign_object_ptr_Test;
+        class json_test_operator_assign_array_ptr_Test;
+      }
+
     #endif
 
     #define OFFSET  0
@@ -30,7 +38,11 @@ namespace format
     class json : public value
     {
       #ifdef UNIT_TEST
-        friend class json_test;
+        friend class test::json_test__parse_Test;
+        friend class test::json_test__to_string_Test;
+        friend class test::json_test_make_value_Test;
+        friend class test::json_test_operator_assign_object_ptr_Test;
+        friend class test::json_test_operator_assign_array_ptr_Test;
       #endif
 
     public:

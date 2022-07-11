@@ -6,10 +6,6 @@
 
 #include "unit_test.h"
 
-using ::testing::Eq;
-using ::testing::StrEq;
-using ::testing::DoubleEq;
-
 namespace format
 {
   namespace json

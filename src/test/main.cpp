@@ -1,6 +1,6 @@
 //#include "unit_test.h"
 #include "json_value_test.h"
-//#include "json_test.h"
+#include "json_test.h"
 //#include "json_object_test.h"
 //#include "json_string_test.h"
 //#include "json_array_test.h"
