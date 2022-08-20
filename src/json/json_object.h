@@ -10,6 +10,21 @@ namespace format
   {
     #ifdef UNIT_TEST
       class json_object_test;
+      namespace test {
+        class object_test__erase_Test;
+        class object_test_ctor_dtor_Test;
+        class object_test_assign_all_values_Test;
+        class object_test__parse_Test;
+        class object_test_key_Test;
+        class object_test_operator_at_key_Test;
+        class object_test__pair_Test;
+        class object_test__clear_Test;
+        class object_test__str_length_Test;
+        class object_test__to_string_Test;
+        class object_test__assign_value_ptr_value_ptr_Test;
+        class object_test__clone_const_value_ref_Test;
+      }
+
     #endif
     /**
      * @brief The object class
@@ -20,6 +35,18 @@ namespace format
 
       #ifdef UNIT_TEST
         friend class json_object_test;
+        friend class test::object_test__erase_Test;
+        friend class test::object_test_ctor_dtor_Test;
+        friend class test::object_test_assign_all_values_Test;
+        friend class test::object_test__parse_Test;
+        friend class test::object_test_key_Test;
+        friend class test::object_test_operator_at_key_Test;
+        friend class test::object_test__pair_Test;
+        friend class test::object_test__clear_Test;
+        friend class test::object_test__str_length_Test;
+        friend class test::object_test__to_string_Test;
+        friend class test::object_test__assign_value_ptr_value_ptr_Test;
+        friend class test::object_test__clone_const_value_ref_Test;
       #endif
 
     public:

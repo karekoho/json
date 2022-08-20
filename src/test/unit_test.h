@@ -26,6 +26,7 @@ using ::testing::Gt;
 using ::testing::StrEq;
 using ::testing::FloatEq;
 using ::testing::DoubleEq;
+using ::testing::Address;
 
 #include "../json/json.h"
 
