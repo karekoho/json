@@ -9,6 +9,21 @@ namespace format
   {
     #ifdef UNIT_TEST
       class json_array_test;
+      namespace test {
+        class array_test_ctor_dtor_Test;
+        class array_test__parse_Test;
+        class array_test_index_Test;
+        class array_test_assign_all_values_Test;
+        class array_test__to_string_Test;
+        class array_test_operator_at_key_Test;
+        class array_test_operator_at_index_Test;
+        class array_test__clear_Test;
+        class array_test_str_length_Test;
+        class array_test__erase_Test;
+        class array_test__assign_value_ptr_value_ptr_Test;
+        class array_test_operator_assign_wchar_t_ptr_Test;
+      }
+
     #endif
    /**
     * @brief The array class
@@ -19,6 +34,18 @@ namespace format
 
     #ifdef UNIT_TEST
       friend class json_array_test;
+      friend class test::array_test_ctor_dtor_Test;
+      friend class test::array_test__parse_Test;
+      friend class test::array_test_index_Test;
+      friend class test::array_test_assign_all_values_Test;
+      friend class test::array_test__to_string_Test;
+      friend class test::array_test_operator_at_key_Test;
+      friend class test::array_test_operator_at_index_Test;
+      friend class test::array_test__clear_Test;
+      friend class test::array_test_str_length_Test;
+      friend class test::array_test__erase_Test;
+      friend class test::array_test__assign_value_ptr_value_ptr_Test;
+      friend class test::array_test_operator_assign_wchar_t_ptr_Test;
     #endif
 
     public:
