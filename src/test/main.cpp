@@ -5,7 +5,7 @@
 #include "json_array_test.h"
 #include "json_string_test.h"
 #include "json_number_test.h"
-//#include "json_boolean_test.h"
+#include "json_boolean_test.h"
 //#include "json_null_test.h"
 //#include "json_undefined_test.h"
 //#include "json_leaf_test.h"
