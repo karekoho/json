@@ -19,6 +19,9 @@ namespace format
         class json_value_test__is_literal_Test;
         class json_value_test__str_append_Test;
         class json_value_test__quote_value_Test;
+        class number_test__digits_Test;
+        class number_test__frag_Test;
+        class number_test__exp_Test;
       }
     #endif
     #define UNEXPECTED_END_OF_INPUT         "Unexpected end of JSON input"
@@ -46,6 +49,9 @@ namespace format
         friend class test::json_value_test__is_literal_Test;
         friend class test::json_value_test__str_append_Test;
         friend class test::json_value_test__quote_value_Test;
+        friend class test::number_test__digits_Test;
+        friend class test::number_test__frag_Test;
+        friend class test::number_test__exp_Test;
       #endif
       public:
       /**

@@ -21,9 +21,12 @@
 #include <gmock/gmock.h>
 
 using ::testing::Eq;
+using ::testing::Ne;
 using ::testing::Lt;
 using ::testing::Gt;
 using ::testing::StrEq;
+using ::testing::IsTrue;
+using ::testing::IsFalse;
 using ::testing::FloatEq;
 using ::testing::DoubleEq;
 using ::testing::Address;

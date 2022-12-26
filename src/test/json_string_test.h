@@ -1,7 +1,8 @@
 #ifndef JSON_STRING_TEST_H
 #define JSON_STRING_TEST_H
 
-#include "json_leaf_test.h"
+//#include "json_leaf_test.h"
+#include "unit_test.h"
 
 namespace format
 {
@@ -514,12 +515,12 @@ namespace format
    * 4.
    * @brief The json_string_test class
    */
-  class json_string_test :  public json_leaf_test
+  class json_string_test //:  public json_leaf_test
   {
   public:
 
     virtual void
-    test_ctor_dtor () override
+    test_ctor_dtor ()
     {      
 //      json parent;
 
@@ -552,7 +553,7 @@ namespace format
     }
 
     virtual void
-    test__parse () override
+    test__parse ()
     {
       test_parse_parent ();
       test_parse_no_parent ();
@@ -679,7 +680,7 @@ namespace format
     }
 
     virtual void
-    test_assign_all_values () override
+    test_assign_all_values ()
     {
 //      object_accessor object_parent;
 
@@ -828,7 +829,7 @@ namespace format
       }
 
       virtual void
-      test__clone_const_value_ref () override
+      test__clone_const_value_ref ()
       {
 //        string src = L"xxx";
 //        string copy (src);
@@ -878,7 +879,7 @@ namespace format
       }
 
       virtual void
-      test_type () override
+      test_type ()
       {
 //        CPPUNIT_ASSERT_EQUAL_MESSAGE ("value::type ()",
 //                                      value::string_t,
@@ -886,15 +887,15 @@ namespace format
       }
 
       virtual void
-      test__clear () override
+      test__clear ()
       { /*CPPUNIT_ASSERT_ASSERTION_PASS ("Calls std::string.clear ()");*/ }
 
       virtual void
-      test_str_length () override
+      test_str_length ()
       { /*CPPUNIT_ASSERT_ASSERTION_PASS ("Asserted in test_parse_parent (), test_parse_no_parent ()");*/ }
 
       virtual void
-      test__to_string () override
+      test__to_string ()
       { /*CPPUNIT_ASSERT_ASSERTION_PASS ("Asserted in test_parse_parent (), test_parse_no_parent ()");*/ }
 
       // TODO: rename value_test_interface::test_lenght --> test_count

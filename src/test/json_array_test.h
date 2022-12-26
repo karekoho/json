@@ -1,7 +1,7 @@
 ﻿#ifndef JSON_ARRAY_TEST
 #define JSON_ARRAY_TEST
 
-#include "json_test.h"
+#include "unit_test.h"
 
 namespace format
 {
@@ -662,12 +662,12 @@ namespace format
    * 3.
    * @brief The json_array_test class
    */
-  class json_array_test : public json_test
+  class json_array_test //: public json_test
   {
   public:
 
     virtual void
-    test_ctor_dtor () override
+    test_ctor_dtor ()
     {
 //      const wchar_t * json_text = L"[ 1, [ 2, 3 ] ]";
 //      array src = json_text;
@@ -715,7 +715,7 @@ namespace format
     }
 
     virtual void
-    test__parse () override
+    test__parse ()
     {
 //      struct assert {
 //        const wchar_t *startp;
@@ -812,7 +812,7 @@ namespace format
     }
 
     virtual void
-    test_assign_all_values () override
+    test_assign_all_values ()
     {
 //      object_accessor object_parent;
 
@@ -891,7 +891,7 @@ namespace format
     }
 
     virtual void
-    test_operator_at_key () override
+    test_operator_at_key ()
     {
 //      array a;
 //      a._element_list.push_back (new boolean (true));
@@ -919,7 +919,7 @@ namespace format
     }
 
     virtual void
-    test_const_operator_at_key () override
+    test_const_operator_at_key ()
     {
 //      const array a = L"[ true ]";
 
@@ -945,7 +945,7 @@ namespace format
     }
 
     virtual void
-    test_operator_at_index () override
+    test_operator_at_index ()
     {
 //      array a;
 //      a._element_list.push_back (new boolean (true));
@@ -972,7 +972,7 @@ namespace format
     }
 
     virtual void
-    test_const_operator_at_index () override
+    test_const_operator_at_index ()
     {
 //      const array a = L"[ true ]";
 
@@ -998,7 +998,7 @@ namespace format
     }
 
     virtual void
-    test__clear () override
+    test__clear ()
     {
 //      array a = L"[true, false]";
 //      a._clear ();
@@ -1008,7 +1008,7 @@ namespace format
 
 
     virtual void
-    test_str_length () override
+    test_str_length ()
     {
 //      // assert: [] = 2,
 //      // assert: [null] = 2 + 4 = 6,
@@ -1039,7 +1039,7 @@ namespace format
     }
 
     virtual void
-    test__to_string () override
+    test__to_string ()
     {
 //      array p;
 
@@ -1113,7 +1113,7 @@ namespace format
     }
 
     virtual void
-    test__erase () override
+    test__erase ()
     {
 //      array a;
 
@@ -1157,7 +1157,7 @@ namespace format
     }
 
     virtual void
-    test_count () override
+    test_count ()
     {
 //      array a (L"[1]");
 //      CPPUNIT_ASSERT_EQUAL_MESSAGE ("array::count ()",
@@ -1166,7 +1166,7 @@ namespace format
     }
 
     virtual void
-    test_type () override
+    test_type ()
     {
 //      CPPUNIT_ASSERT_EQUAL_MESSAGE ("value::type ()",
 //                                    value::array_t,
@@ -1174,7 +1174,7 @@ namespace format
     }
 
     virtual void
-    test__assign_value_ptr_value_ptr () override
+    test__assign_value_ptr_value_ptr ()
     {
 //      array a = L"[false]";
 
@@ -1193,7 +1193,7 @@ namespace format
     }
 
     virtual void
-    test__clone_const_value_ref () override
+    test__clone_const_value_ref ()
     {
 //      array src = L"[1,[2,3]]";
 //      array copy = L"[0,1,2]";

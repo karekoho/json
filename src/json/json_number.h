@@ -12,6 +12,24 @@ namespace format
   {
     #ifdef UNIT_TEST
       class json_number_test;
+      namespace test {
+        class number_test_ctor_dtor_Test;
+        class number_test__to_string_Test;
+        class number_test__parse_Test;
+        class number_test__digits_Test;
+        class number_test__frag_Test;
+        class number_test__exp_Test;
+        class number_test__atoll_Test;
+        class number_test__atof_Test;
+        class number_test__calculate_Test;
+        class number_test_assign_all_values_Test;
+        class number_test__str_length_Test;
+        class number_test__clear_Test;
+        class number_test__integral_length_Test;
+        class number_test__to_string_ll_Test;
+        class number_test__to_string_ld_Test;
+        class number_test__clone_const_value_ref_Test;
+      }
     #endif
 
     #define DOUBLE 0
@@ -29,6 +47,22 @@ namespace format
 
     #ifdef UNIT_TEST
       friend class json_number_test;
+      friend class test::number_test_ctor_dtor_Test;
+      friend class test::number_test__to_string_Test;
+      friend class test::number_test__parse_Test;
+      friend class test::number_test__digits_Test;
+      friend class test::number_test__frag_Test;
+      friend class test::number_test__exp_Test;
+      friend class test::number_test__atoll_Test;
+      friend class test::number_test__atof_Test;
+      friend class test::number_test__calculate_Test;
+      friend class test::number_test_assign_all_values_Test;
+      friend class test::number_test__str_length_Test;
+      friend class test::number_test__clear_Test;
+      friend class test::number_test__integral_length_Test;
+      friend class test::number_test__to_string_ll_Test;
+      friend class test::number_test__to_string_ld_Test;
+      friend class test::number_test__clone_const_value_ref_Test;
     #endif
 
     public:

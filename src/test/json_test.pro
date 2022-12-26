@@ -28,24 +28,24 @@ SOURCES += main.cpp \
     ../json/json_array.cpp \
 
 HEADERS += \
-    json_value_test_interface.h \
+    #json_value_test_interface.h \
     json_test.h \
     unit_test.h \
     json_object_test.h \
     json_value_test.h \
-    json_undefined_test.h \
+    #json_undefined_test.h \
     json_string_test.h \
     json_number_test.h \
-    json_null_test.h \
-    json_boolean_test.h \
+    #json_null_test.h \
+    #json_boolean_test.h \
     json_array_test.h \
-    json_object_iterator_test.h \
-    json_array_iterator_test.h \
-    json_leaf_iterator_test.h \
-    json_leaf_test.h \
-    test_selector.h \
-    test_selector_test.h \
-    json_exception_test.h \
+    #json_object_iterator_test.h \
+    #json_array_iterator_test.h \
+    #json_leaf_iterator_test.h \
+    #json_leaf_test.h \
+    #test_selector.h \
+    #test_selector_test.h \
+    #json_exception_test.h \
     json_mock_value.h \
     ../json/json.h \
     ../json/json_value.h \

@@ -115,24 +115,24 @@ namespace format
      * 12.
      * @brief suite
      * @return
-     */
+     *
     static CppUnit::Test *
     suite ()
     {
       CppUnit::TestSuite *s = new CppUnit::TestSuite ("json leaf test");
 
-      /* 0. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test__to_string", &json_leaf_test::test__to_string));
-      /* 1. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_count", &json_leaf_test::test_count));
-      /* 2. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_erase", &json_leaf_test::test__erase));
-      /* 3. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test__assign_value_ptr_value_ptr", &json_leaf_test::test__assign_value_ptr_value_ptr));
-      /* 4. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test__clone_const_value_ref", &json_leaf_test::test__clone_const_value_ref));
-      /* 5. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_operator_at_key", &json_leaf_test::test_operator_at_key));
-      /* 6. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_const_operator_at_key", &json_leaf_test::test_const_operator_at_key));
-      /* 7. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_operator_at_index", &json_leaf_test::test_operator_at_index));
-      /* 8. */  s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_const_operator_at_index", &json_leaf_test::test_const_operator_at_index));
+      // 0. s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test__to_string", &json_leaf_test::test__to_string));
+      // 1. s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_count", &json_leaf_test::test_count));
+      // 2. s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_erase", &json_leaf_test::test__erase));
+      // 3. s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test__assign_value_ptr_value_ptr", &json_leaf_test::test__assign_value_ptr_value_ptr));
+      // 4. s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test__clone_const_value_ref", &json_leaf_test::test__clone_const_value_ref));
+      // 5. s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_operator_at_key", &json_leaf_test::test_operator_at_key));
+      // 6. s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_const_operator_at_key", &json_leaf_test::test_const_operator_at_key));
+      // 7. s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_operator_at_index", &json_leaf_test::test_operator_at_index));
+      // 8. s->addTest (new CppUnit::TestCaller<json_leaf_test> ("test_const_operator_at_index", &json_leaf_test::test_const_operator_at_index));
 
       return s;
-    }
+    }*/
   };
 }
 }
