@@ -33,7 +33,7 @@ HEADERS += \
     unit_test.h \
     json_object_test.h \
     json_value_test.h \
-    #json_undefined_test.h \
+    json_undefined_test.h \
     json_string_test.h \
     json_number_test.h \
     json_null_test.h \

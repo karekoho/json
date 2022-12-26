@@ -9,6 +9,13 @@ namespace format
   {
     #ifdef UNIT_TEST
       class json_undefined_test;
+      namespace test {
+        class undefined_test_ctor_dtor_Test;
+        class undefined_test_assign_all_values_Test;
+        class undefined_test__parse_Test;
+        class undefined_test_str_length_Test;
+        class undefined_test__to_string_Test;
+      }
     #endif
 
     /**
@@ -18,6 +25,12 @@ namespace format
     {
     #ifdef UNIT_TEST
       friend class json_undefined_test;
+      friend class json_undefined_test;
+      friend class test::undefined_test_ctor_dtor_Test;
+      friend class test::undefined_test_assign_all_values_Test;
+      friend class test::undefined_test__parse_Test;
+      friend class test::undefined_test_str_length_Test;
+      friend class test::undefined_test__to_string_Test;
     #endif
 
       public:
