@@ -36,7 +36,7 @@ HEADERS += \
     #json_undefined_test.h \
     json_string_test.h \
     json_number_test.h \
-    #json_null_test.h \
+    json_null_test.h \
     json_boolean_test.h \
     json_array_test.h \
     #json_object_iterator_test.h \

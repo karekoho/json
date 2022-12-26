@@ -10,6 +10,11 @@ namespace format
   {
     #ifdef UNIT_TEST
      class json_null_test;
+     namespace test {
+       class null_test_ctor_dtor_Test;
+       class null_test__clone_const_value_ref_Test;
+       class null_test__parse_Test;
+     }
     #endif
 
     /**
@@ -21,6 +26,9 @@ namespace format
 
       #ifdef UNIT_TEST
         friend class json_null_test;
+        friend class test::null_test_ctor_dtor_Test;
+        friend class test::null_test__clone_const_value_ref_Test;
+        friend class test::null_test__parse_Test;
       #endif
 
       public:
