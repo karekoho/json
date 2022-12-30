@@ -76,13 +76,13 @@ namespace format
             // Original assertion:
             ///ASSERT_EQUAL_IDX ("v.type ()", (*it).type, v.type ());
             ///
-            ASSERT_THAT ((*it).type, Eq (v.type ()))
+            ASSERT_THAT (v.type (), Eq ((*it).type))
                 << ERR_IDX_MSG << _idx[0];
 
             // Original assertion:
             ///ASSERT_EQUAL_IDX ("v.type ()", (*it).type, vp->type ());
             ///
-            ASSERT_THAT (vp->type (), Eq ((*it).type))
+            ASSERT_THAT ((*it).type, Eq (vp->type ()))
                 << ERR_IDX_MSG << _idx[0];
 
             // Original assertion:

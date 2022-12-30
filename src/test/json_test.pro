@@ -39,7 +39,7 @@ HEADERS += \
     json_null_test.h \
     json_boolean_test.h \
     json_array_test.h \
-    #json_object_iterator_test.h \
+    json_object_iterator_test.h \
     #json_array_iterator_test.h \
     json_leaf_iterator_test.h \
     #json_leaf_test.h \
