@@ -41,7 +41,7 @@ HEADERS += \
     json_array_test.h \
     #json_object_iterator_test.h \
     #json_array_iterator_test.h \
-    #json_leaf_iterator_test.h \
+    json_leaf_iterator_test.h \
     #json_leaf_test.h \
     #test_selector.h \
     #test_selector_test.h \

@@ -11,7 +11,7 @@
 //#include "json_leaf_test.h"
 //#include "json_object_iterator_test.h"
 //#include "json_array_iterator_test.h"
-//#include "json_leaf_iterator_test.h"
+#include "json_leaf_iterator_test.h"
 //#include "test_selector_test.h"
 //#include "json_exception_test.h"
 
