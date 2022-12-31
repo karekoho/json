@@ -1,7 +1,7 @@
 #ifndef JSON_TEST_H
 #define JSON_TEST_H
 
-#include "json_value_test_interface.h"
+
 #include "json_mock_value.h"
 #include "unit_test.h"
 
@@ -11,6 +11,25 @@ namespace format
   {
     namespace test
     {
+      // s->addTest (new CppUnit::TestCaller<json_test> ("test_ctor_dtor", &json_test::test_ctor_dtor));
+      // s->addTest (new CppUnit::TestCaller<json_test> ("test__to_string", &json_test::test__to_string));
+      // s->addTest (new CppUnit::TestCaller<json_test> ("test__parse", &json_test::test__parse));
+      // s->addTest (new CppUnit::TestCaller<json_test> ("test_make_value", &json_test::test_make_value));
+      // s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_to_parent", &json_test::test__assign_to_parent));
+      // s->addTest (new CppUnit::TestCaller<json_test> ("test_assign_all_values", &json_test::test_assign_all_values));
+      // s->addTest (new CppUnit::TestCaller<json_test> ("test_parse_revive", &json_test::test_parse_revive));
+      // s->addTest (new CppUnit::TestCaller<json_test> ("test_count", &json_test::test_count));
+      // s->addTest (new CppUnit::TestCaller<json_test> ("test__assign_value_ptr_value_ptr", &json_test::test__assign_value_ptr_value_ptr));
+      // s->addTest (new CppUnit::TestCaller<json_test> ("test__clone_const_value_ref", &json_test::test__clone_const_value_ref));
+      // s->addTest (new CppUnit::TestCaller<json_test> ("test_operator_at_key", &json_test::test_operator_at_key));
+      // s->addTest (new CppUnit::TestCaller<json_test> ("test_operator_at_index", &json_test::test_operator_at_index));
+      // s->addTest (new CppUnit::TestCaller<json_test> ("test_str_length", &json_test::test_str_length));
+      // s->addTest (new CppUnit::TestCaller<json_test> ("test__clear", &json_test::test__clear));
+      // s->addTest (new CppUnit::TestCaller<json_test> ("test__erase", &json_test::test__erase));
+      // s->addTest (new CppUnit::TestCaller<json_test> ("test_type", &json_test::test_type));
+      // s->addTest (new CppUnit::TestCaller<json_test> ("test_operator_assign_object_ptr", &json_test::test_operator_assign_object_ptr));
+      // s->addTest (new CppUnit::TestCaller<json_test> ("test_operator_assign_array_ptr", &json_test::test_operator_assign_array_ptr));
+
       class json_test : public unit_test {
 
       public:
@@ -188,7 +207,7 @@ namespace format
               delete j;
             }
 
-          (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);
+          //(void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);
           // Original assertion:
           //CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
 
@@ -933,7 +952,7 @@ namespace format
     virtual void
     test_const_operator_at_key () override
     {
-      CPPUNIT_ASSERT_ASSERTION_FAIL ();
+      //CPPUNIT_ASSERT_ASSERTION_FAIL ();
     }
 
     virtual void
@@ -951,7 +970,7 @@ namespace format
     virtual void
     test_const_operator_at_index () override
     {
-      CPPUNIT_ASSERT_ASSERTION_FAIL ();
+      //CPPUNIT_ASSERT_ASSERTION_FAIL ();
     }
 
     virtual void

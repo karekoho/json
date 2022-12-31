@@ -10,21 +10,21 @@ namespace format
   {
     namespace test
     {
+      //  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_ctor_dtor", &json_string_test::test_ctor_dtor));
+      //  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__parse", &json_string_test::test__parse));
+      //  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_assign_all_values", &json_string_test::test_assign_all_values));
+      //  // s->addTest (new CppUnit::TestCaller<json_string_test> ("test__string", &json_string_test::test__string));
+      //  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__clone_const_value_ref", &json_string_test::test__clone_const_value_ref));
+      //  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__clear", &json_string_test::test__clear));
+      //  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_type", &json_string_test::test_type));
+      //  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_str_length", &json_string_test::test_str_length));
+      //  s->addTest (new CppUnit::TestCaller<json_string_test> ("test__to_string", &json_string_test::test__to_string));
+      //  @note operator =(const wchar_t * const s) removed */
+      //  // s->addTest (new CppUnit::TestCaller<json_string_test> ("test_operator_assign_const_wchar_t_ptr", &json_string_test::test_operator_assign_const_wchar_t_ptr));
+      //  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_length", &json_string_test::test_length));
+
       class string_test: public unit_test
       {
-        //  0.   s->addTest (new CppUnit::TestCaller<json_string_test> ("test_ctor_dtor", &json_string_test::test_ctor_dtor));
-        //  1.   s->addTest (new CppUnit::TestCaller<json_string_test> ("test__parse", &json_string_test::test__parse));
-        //  2.   s->addTest (new CppUnit::TestCaller<json_string_test> ("test_assign_all_values", &json_string_test::test_assign_all_values));
-        //  3.   // s->addTest (new CppUnit::TestCaller<json_string_test> ("test__string", &json_string_test::test__string));
-        //  4.   s->addTest (new CppUnit::TestCaller<json_string_test> ("test__clone_const_value_ref", &json_string_test::test__clone_const_value_ref));
-        //  5.   s->addTest (new CppUnit::TestCaller<json_string_test> ("test__clear", &json_string_test::test__clear));
-        //  6.   s->addTest (new CppUnit::TestCaller<json_string_test> ("test_type", &json_string_test::test_type));
-        //  7.   s->addTest (new CppUnit::TestCaller<json_string_test> ("test_str_length", &json_string_test::test_str_length));
-        //  8.   s->addTest (new CppUnit::TestCaller<json_string_test> ("test__to_string", &json_string_test::test__to_string));
-        //  @note operator =(const wchar_t * const s) removed */
-        //  9.   // s->addTest (new CppUnit::TestCaller<json_string_test> ("test_operator_assign_const_wchar_t_ptr", &json_string_test::test_operator_assign_const_wchar_t_ptr));
-        //  10.  s->addTest (new CppUnit::TestCaller<json_string_test> ("test_length", &json_string_test::test_length));
-
       public:
         void
         test_parse_parent ()
@@ -171,7 +171,6 @@ namespace format
                  }
                }
 
-             //(void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);
              // Original assertion:
              ///CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
              ///
@@ -325,7 +324,6 @@ namespace format
                       delete old_value;
                     }
                 }
-              //(void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);
               // Original assertion:
               ///CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
               ///
@@ -417,6 +415,7 @@ namespace format
         const wchar_t * startp = copy._value.string;
 
         //CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._startp is set", true, copy._startp == startp);
+
         // Original assertion:
         ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy._charc", src._charc, copy._charc);
         ///CPPUNIT_ASSERT_MESSAGE ("copy.get ()", wcscmp (L"xxx", copy.get ()) == 0);

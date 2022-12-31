@@ -12,9 +12,33 @@ namespace format
   {
     namespace test
     {
-      class json_value_test : public unit_test {};
+      // s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_copy", &json_value_test::test_assign_copy));
+      // s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_undefined", &json_value_test::test_operator_assign_undefined));
+      // s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lookahead", &json_value_test::test__lookahead));
+      // s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_literal", &json_value_test::test__is_literal));
+      // s->addTest (new CppUnit::TestCaller<json_value_test> ("test__string", &json_value_test::test__string));
+      // s->addTest (new CppUnit::TestCaller<json_value_test> ("test__str_append", &json_value_test::test__str_append));
+      // s->addTest (new CppUnit::TestCaller<json_value_test> ("test__quote_value", &json_value_test::test__quote_value));
+      // s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value_t", &json_value_test::test_operator_equal_value_t));
 
-      TEST_F (json_value_test, assign_copy)
+                /// Removed bool operator ==(const value & v)
+      // .   // s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value", &json_value_test::test_operator_equal_value));
+                /// Removed operator =(const wchar_t *json_text);
+      // .   // s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_wchar_t_ptr", &json_value_test::test_operator_assign_wchar_t_ptr));
+
+      // s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_double", &json_value_test::test_operator_assign_double));
+      // s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_bool", &json_value_test::test_operator_assign_bool));
+      // s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_nullptr", &json_value_test::test_operator_assign_nullptr));
+      // s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_ptr", &json_value_test::test_assign_value_ptr));
+      // s->addTest (new CppUnit::TestCaller<json_value_test> ("test__assign_value_ptr_value_ptr", &json_value_test::test__assign_value_ptr_value_ptr));
+      // s->addTest (new CppUnit::TestCaller<json_value_test> ("test__clone_const_value_ref", &json_value_test::test__clone_const_value_ref));
+      // s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_long", &json_value_test::test_operator_assign_long));
+      // s->addTest (new CppUnit::TestCaller<json_value_test> ("test_as_is_not_pointer", &json_value_test::test_as_is_not_pointer));
+      // s->addTest (new CppUnit::TestCaller<json_value_test> ("test_as_is_pointer", &json_value_test::test_as_is_pointer));
+
+      class value_test : public unit_test {};
+
+      TEST_F (value_test, assign_copy)
       {
         json j[] = {
           L"{}",
@@ -49,18 +73,17 @@ namespace format
                     j[hdx][L"0"] = *(*it).val;   // Undefined <-- Object, Object <-- Array, ...
 
                     // Original assertion:
-                    //ASSERT_EQUAL_IDX ("value::type ()",
-                      //                (*it).type,
-                      //                j[hdx][L"0"].type ());
-
+                    ///ASSERT_EQUAL_IDX ("value::type ()", (*it).type, j[hdx][L"0"].type ());
+                    ///
                     ASSERT_THAT (j[hdx][L"0"].type (), Eq ((*it).type))
                         << ERR_IDX_MSG << _idx[0];
-                  }
+                  }  
+
             TEST_IT_END
           }
       }
 
-      TEST_F (json_value_test, operator_assign_undefined)
+      TEST_F (value_test, operator_assign_undefined)
       {
         boolean b;
 
@@ -79,13 +102,12 @@ namespace format
         };
 
         TEST_IT_START
+
             *(*it).val = format::json::undefined ();
 
             // Original assertion:
-            //ASSERT_EQUAL_IDX ("array::count ()",
-              //                (*it).size,
-              //                a.size ());
-
+            ///ASSERT_EQUAL_IDX ("array::count ()", (*it).size, a.size ());
+            ///
             ASSERT_THAT ((*it).size, Eq (a.size ()))
                 << ERR_IDX_MSG << _idx[0];
 
@@ -127,7 +149,7 @@ namespace format
 //                                      j[L"Image"].count ());
       }
 
-      TEST_F (json_value_test, _lookahead)
+      TEST_F (value_test, _lookahead)
       {
         struct assert {
             const wchar_t *startp;
@@ -150,22 +172,22 @@ namespace format
 
           const wchar_t *startp = (*it).startp;
 
-          format::json::json_mock_value m;
+          mock_value m;
 
           m._readp = startp;
 
           m._look_ahead ();
 
           // Original assertion:
-          // ASSERT_EQUAL_IDX ("value.readp", (*it).readp , *(m->_readp));
-
+          /// ASSERT_EQUAL_IDX ("value.readp", (*it).readp , *(m->_readp));
+          ///
           ASSERT_THAT (*(m._readp), Eq ((*it).readp))
               << ERR_IDX_MSG << _idx[0];
 
         TEST_IT_END
       }
 
-      TEST_F (json_value_test, _string)
+      TEST_F (value_test, _string)
       {
         wchar_t endc;
 
@@ -227,7 +249,7 @@ namespace format
             const wchar_t *startp = (*it).startp;
             long charc = static_cast<long> (wcslen (startp));
 
-            json_mock_value m;
+            mock_value m;
 
             m._readp = startp;
 
@@ -236,8 +258,8 @@ namespace format
             charc = m._string (endc);
 
             // Original assertion:
-            //ASSERT_EQUAL_IDX ("charc", (*it).charc , charc);
-            //ASSERT_EQUAL_IDX ("endc", (*it).endc , endc);
+            ///ASSERT_EQUAL_IDX ("charc", (*it).charc , charc);
+            ///ASSERT_EQUAL_IDX ("endc", (*it).endc , endc);
 
             ASSERT_THAT (charc, Eq ((*it).charc))
                 << ERR_IDX_MSG << _idx[0];
@@ -248,7 +270,7 @@ namespace format
         TEST_IT_END
       }
 
-      TEST_F (json_value_test, _is_literal)
+      TEST_F (value_test, _is_literal)
       {
         struct assert {
             const wchar_t *startp;
@@ -270,22 +292,22 @@ namespace format
 
             const wchar_t *startp = (*it).startp;
 
-            json_mock_value m;
+            mock_value m;
 
             m._readp = startp;
 
             value::_literal ltr = m._is_literal ();
 
             // Original assertion:
-            //ASSERT_EQUAL_IDX ("literal value", (*it).value_type , ltr);
-
+            ///ASSERT_EQUAL_IDX ("literal value", (*it).value_type , ltr);
+            ///
             ASSERT_THAT (ltr, Eq ((*it).value_type))
                 << ERR_IDX_MSG << _idx[0];
 
         TEST_IT_END
       }
 
-      TEST_F (json_value_test, _str_append)
+      TEST_F (value_test, _str_append)
       {
         wchar_t *dst = new wchar_t[8 + 1]();
         wchar_t *startp = dst;
@@ -308,8 +330,8 @@ namespace format
             dst = value::_str_append (dst, (*it).src, (*it).charc[0]);
 
             // Original assertion:
-            //ASSERT_EQUAL_IDX ("dst", startp + (*it).charc[1], dst);
-
+            ///ASSERT_EQUAL_IDX ("dst", startp + (*it).charc[1], dst);
+            ///
             ASSERT_THAT (dst, Eq (startp + (*it).charc[1]))
                 << ERR_IDX_MSG << _idx[0];
 
@@ -320,7 +342,7 @@ namespace format
         delete[] startp;
       }
 
-      TEST_F (json_value_test, _quote_value)
+      TEST_F (value_test, _quote_value)
       {
         struct assert {
             value *v;
@@ -354,8 +376,8 @@ namespace format
             value::_quote_value (dst, v);
 
             // Original assertion:
-            //ASSERT_EQUAL_IDX ("startp", 0, wcscmp ((*it).quoted_string, startp));
-
+            ///ASSERT_EQUAL_IDX ("startp", 0, wcscmp ((*it).quoted_string, startp));
+            ///
             ASSERT_THAT (startp, StrEq ((*it).quoted_string))
                 << ERR_IDX_MSG << _idx[0];
 
@@ -365,19 +387,7 @@ namespace format
         TEST_IT_END
       }
 
-      TEST_F (json_value_test, operator_equal_value_t)
-      { }
-
-      TEST_F (json_value_test, operator_assign_double)
-      { }
-
-      TEST_F (json_value_test, operator_assign_bool)
-      { }
-
-      TEST_F (json_value_test, operator_assign_nullptr)
-      { }
-
-      TEST_F (json_value_test, assign_value_ptr)
+      TEST_F (value_test, assign_value_ptr)
       {
         json j[] = {
           L"{}",
@@ -406,13 +416,12 @@ namespace format
             _idx[0] = 0;
 
             TEST_IT_START
+
                 j[hdx][L"0"] = (*it).val;   // Undefined <-- Object, Object <-- Array, ...
 
                 // Original assertion:
-                //ASSERT_EQUAL_IDX ("value::type ()",
-                  //                (*it).type,
-                  //                j[hdx][L"0"].type ());
-
+                ///ASSERT_EQUAL_IDX ("value::type ()", (*it).type, j[hdx][L"0"].type ());
+                ///
                 ASSERT_THAT (j[hdx][L"0"].type (), Eq ((*it).type))
                     << ERR_IDX_MSG << _idx[0];
 
@@ -420,16 +429,7 @@ namespace format
           }
       }
 
-      TEST_F (json_value_test, _assign_value_ptr_value_ptr)
-      { }
-
-      TEST_F (json_value_test, _clone_const_value_ref)
-      { }
-
-      TEST_F (json_value_test, operator_assign_long)
-      { }
-
-      TEST_F (json_value_test, as_is_not_pointer)
+      TEST_F (value_test, as_is_not_pointer)
       {
         struct assert
         {
@@ -467,11 +467,11 @@ namespace format
           // object & ro = v.as<object &> (); // ok, no matching call
           // object & rro = v.as<object &&> (); // ok, no matching call
 
-          // Original assertion:
           // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
-          //CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("as double", (*it).dval, d, std::numeric_limits<double>::epsilon());
-          //CPPUNIT_ASSERT_MESSAGE ("as long", l == (*it).lval);
-          //CPPUNIT_ASSERT_MESSAGE ("as boolean", b == (*it).bval);
+          // Original assertion:
+          ///CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("as double", (*it).dval, d, std::numeric_limits<double>::epsilon());
+          ///CPPUNIT_ASSERT_MESSAGE ("as long", l == (*it).lval);
+          ///CPPUNIT_ASSERT_MESSAGE ("as boolean", b == (*it).bval);
 
           ASSERT_THAT (d, DoubleEq ((*it).dval))
               << ERR_IDX_MSG << _idx[0];
@@ -485,7 +485,7 @@ namespace format
         TEST_IT_END
       }
 
-      TEST_F (json_value_test, test_as_is_pointer)
+      TEST_F (value_test, test_as_is_pointer)
       {
         struct assert
         {
@@ -519,52 +519,35 @@ namespace format
           // object *op = v.as<object *> (); // ok, no matching call
 
           // Original assertion:
-          //CPPUNIT_ASSERT_MESSAGE ("as wchar_t", wcscmp (c, (*it).cval) == 0);
-
+          ///CPPUNIT_ASSERT_MESSAGE ("as wchar_t", wcscmp (c, (*it).cval) == 0);
+          ///
           ASSERT_THAT (c, StrEq ((*it).cval))
               << ERR_IDX_MSG << _idx[0];
 
         TEST_IT_END
       }
 
+      TEST_F (value_test, operator_equal_value_t)
+      { }
+
+      TEST_F (value_test, operator_assign_double)
+      { }
+
+      TEST_F (value_test, operator_assign_bool)
+      { }
+
+      TEST_F (value_test, operator_assign_nullptr)
+      { }
+
+      TEST_F (value_test, _assign_value_ptr_value_ptr)
+      { }
+
+      TEST_F (value_test, _clone_const_value_ref)
+      { }
+
+      TEST_F (value_test, operator_assign_long)
+      { }
     }
-
-      /**
-       * 0.
-       * @brief suite
-       * @return
-       *
-      static CppUnit::Test *
-      suite ()
-      {
-        CppUnit::TestSuite *s = new CppUnit::TestSuite ("json value test");
-
-        // 0.   s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_copy", &json_value_test::test_assign_copy));
-        // 1.   s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_undefined", &json_value_test::test_operator_assign_undefined));
-        // 2.   s->addTest (new CppUnit::TestCaller<json_value_test> ("test_lookahead", &json_value_test::test__lookahead));
-        // 3.   s->addTest (new CppUnit::TestCaller<json_value_test> ("test_is_literal", &json_value_test::test__is_literal));
-        // 4.   s->addTest (new CppUnit::TestCaller<json_value_test> ("test__string", &json_value_test::test__string));
-        // 5.   s->addTest (new CppUnit::TestCaller<json_value_test> ("test__str_append", &json_value_test::test__str_append));
-        // 6.   s->addTest (new CppUnit::TestCaller<json_value_test> ("test__quote_value", &json_value_test::test__quote_value));
-        // 7.   s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value_t", &json_value_test::test_operator_equal_value_t));
-
-                  /// Removed bool operator ==(const value & v)
-        // .   // s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_equal_value", &json_value_test::test_operator_equal_value));
-                  /// Removed operator =(const wchar_t *json_text);
-        // .   // s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_wchar_t_ptr", &json_value_test::test_operator_assign_wchar_t_ptr));
-
-        // 8.   s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_double", &json_value_test::test_operator_assign_double));
-        // 9.   s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_bool", &json_value_test::test_operator_assign_bool));
-        // 10.   s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_nullptr", &json_value_test::test_operator_assign_nullptr));
-        // 11.   s->addTest (new CppUnit::TestCaller<json_value_test> ("test_assign_ptr", &json_value_test::test_assign_value_ptr));
-        // 12.   s->addTest (new CppUnit::TestCaller<json_value_test> ("test__assign_value_ptr_value_ptr", &json_value_test::test__assign_value_ptr_value_ptr));
-        // 13.   s->addTest (new CppUnit::TestCaller<json_value_test> ("test__clone_const_value_ref", &json_value_test::test__clone_const_value_ref));
-        // 14.   s->addTest (new CppUnit::TestCaller<json_value_test> ("test_operator_assign_long", &json_value_test::test_operator_assign_long));
-        // 15.   s->addTest (new CppUnit::TestCaller<json_value_test> ("test_as_is_not_pointer", &json_value_test::test_as_is_not_pointer));
-        // 16.   s->addTest (new CppUnit::TestCaller<json_value_test> ("test_as_is_pointer", &json_value_test::test_as_is_pointer));
-
-        return s;
-      }*/
   }
 }
 #endif // JSON_INTERFACE_TEST_H

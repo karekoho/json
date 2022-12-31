@@ -7,10 +7,6 @@ namespace format
 {
   namespace json
   {
-    /**
-     * 11.
-     * @brief The json_leaf_iterator_test class
-     */
     namespace test
     {
       //s->addTest (new CppUnit::TestCaller<json_leaf_iterator_test> ("test_construct_assign_destruct", &json_leaf_iterator_test::test_construct_assign_destruct));
@@ -19,9 +15,7 @@ namespace format
       //s->addTest (new CppUnit::TestCaller<json_leaf_iterator_test> ("test_post_increment", &json_leaf_iterator_test::test_post_increment));
       //s->addTest (new CppUnit::TestCaller<json_leaf_iterator_test> ("test_begin_end", &json_leaf_iterator_test::test_begin_end));
 
-      class leaf_iterator_test : public unit_test {
-
-      };
+      class leaf_iterator_test : public unit_test {};
 
       TEST_F (leaf_iterator_test, construct_assign_destruct)
       {

@@ -46,7 +46,6 @@ namespace format
       friend number * __call_number (json *parent);
 
     #ifdef UNIT_TEST
-      friend class json_number_test;
       friend class test::number_test_ctor_dtor_Test;
       friend class test::number_test__to_string_Test;
       friend class test::number_test__parse_Test;

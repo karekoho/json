@@ -9,27 +9,26 @@ namespace format
   {
     namespace test
     {
-      class array_test: public unit_test
-      {
-        // 0.   s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test__to_string));
-        // 1.   s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test_str_length));
-        // 2.   s->addTest (new CppUnit::TestCaller<json_array_test> ("test_ctor_dtor", &json_array_test::test_ctor_dtor));
-        // 3.   s->addTest (new CppUnit::TestCaller<json_array_test> ("test_parse", &json_array_test::test__parse));
-        // 4.   s->addTest (new CppUnit::TestCaller<json_array_test> ("test_index", &json_array_test::test_index));
-        // 5.   s->addTest (new CppUnit::TestCaller<json_array_test> ("test_operator_at_key", &json_array_test::test_operator_at_key));
-        // 6.   s->addTest (new CppUnit::TestCaller<json_array_test> ("test_const_operator_at_key", &json_array_test::test_const_operator_at_key));
-        // 7.   s->addTest (new CppUnit::TestCaller<json_array_test> ("test_operator_at_index", &json_array_test::test_operator_at_index));
-        // 8.   s->addTest (new CppUnit::TestCaller<json_array_test> ("test_const_operator_at_index", &json_array_test::test_const_operator_at_index));
-        // 9.   s->addTest (new CppUnit::TestCaller<json_array_test> ("test_assign_all_values", &json_array_test::test_assign_all_values));
-        // 10.   s->addTest (new CppUnit::TestCaller<json_array_test> ("test__clear", &json_array_test::test__clear));
-        // 11.   s->addTest (new CppUnit::TestCaller<json_array_test> ("test_erase", &json_array_test::test__erase));
-        // 12.   s->addTest (new CppUnit::TestCaller<json_array_test> ("test_count", &json_array_test::test_count));
-        // 13.   s->addTest (new CppUnit::TestCaller<json_array_test> ("test__assign_value_ptr_value_ptr", &json_array_test::test__assign_value_ptr_value_ptr));
-        // 14.   s->addTest (new CppUnit::TestCaller<json_array_test> ("test__clone_const_value_ref", &json_array_test::test__clone_const_value_ref));
-        // 15.   s->addTest (new CppUnit::TestCaller<json_array_test> ("test_type", &json_array_test::test_type));
-        // 16.   s->addTest (new CppUnit::TestCaller<json_array_test> ("test_operator_assign_wchar_t_ptr", &json_array_test::test_operator_assign_wchar_t_ptr));
-        // 17.   s->addTest (new CppUnit::TestCaller<json_array_test> ("test_operator_assign_initializer_list", &json_array_test::test_operator_assign_initializer_list));
-      };
+      // s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test__to_string));
+      // s->addTest (new CppUnit::TestCaller<json_array_test> ("test_strValue", &json_array_test::test_str_length));
+      // s->addTest (new CppUnit::TestCaller<json_array_test> ("test_ctor_dtor", &json_array_test::test_ctor_dtor));
+      // s->addTest (new CppUnit::TestCaller<json_array_test> ("test_parse", &json_array_test::test__parse));
+      // s->addTest (new CppUnit::TestCaller<json_array_test> ("test_index", &json_array_test::test_index));
+      // s->addTest (new CppUnit::TestCaller<json_array_test> ("test_operator_at_key", &json_array_test::test_operator_at_key));
+      // s->addTest (new CppUnit::TestCaller<json_array_test> ("test_const_operator_at_key", &json_array_test::test_const_operator_at_key));
+      // s->addTest (new CppUnit::TestCaller<json_array_test> ("test_operator_at_index", &json_array_test::test_operator_at_index));
+      // s->addTest (new CppUnit::TestCaller<json_array_test> ("test_const_operator_at_index", &json_array_test::test_const_operator_at_index));
+      // s->addTest (new CppUnit::TestCaller<json_array_test> ("test_assign_all_values", &json_array_test::test_assign_all_values));
+      // s->addTest (new CppUnit::TestCaller<json_array_test> ("test__clear", &json_array_test::test__clear));
+      // s->addTest (new CppUnit::TestCaller<json_array_test> ("test_erase", &json_array_test::test__erase));
+      // s->addTest (new CppUnit::TestCaller<json_array_test> ("test_count", &json_array_test::test_count));
+      // s->addTest (new CppUnit::TestCaller<json_array_test> ("test__assign_value_ptr_value_ptr", &json_array_test::test__assign_value_ptr_value_ptr));
+      // s->addTest (new CppUnit::TestCaller<json_array_test> ("test__clone_const_value_ref", &json_array_test::test__clone_const_value_ref));
+      // s->addTest (new CppUnit::TestCaller<json_array_test> ("test_type", &json_array_test::test_type));
+      // s->addTest (new CppUnit::TestCaller<json_array_test> ("test_operator_assign_wchar_t_ptr", &json_array_test::test_operator_assign_wchar_t_ptr));
+      // s->addTest (new CppUnit::TestCaller<json_array_test> ("test_operator_assign_initializer_list", &json_array_test::test_operator_assign_initializer_list));
+
+      class array_test: public unit_test {};
 
       TEST_F (array_test, ctor_dtor)
       {

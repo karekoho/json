@@ -9,8 +9,8 @@ namespace format
   namespace json
   {
     #ifdef UNIT_TEST
-      class json_object_test;
-      namespace test {
+      namespace test
+      {
         class object_test__erase_Test;
         class object_test_ctor_dtor_Test;
         class object_test_assign_all_values_Test;
@@ -24,7 +24,6 @@ namespace format
         class object_test__assign_value_ptr_value_ptr_Test;
         class object_test__clone_const_value_ref_Test;
       }
-
     #endif
     /**
      * @brief The object class
@@ -34,7 +33,6 @@ namespace format
       friend object * __call_object (json *parent);
 
       #ifdef UNIT_TEST
-        friend class json_object_test;
         friend class test::object_test__erase_Test;
         friend class test::object_test_ctor_dtor_Test;
         friend class test::object_test_assign_all_values_Test;

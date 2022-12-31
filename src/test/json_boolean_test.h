@@ -17,12 +17,10 @@ namespace format
       //s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test__clear", &json_boolean_test::test__clear));
       //s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_type", &json_boolean_test::test_type));
                /// Removed operator =(boolean & b), operator =(bool b)
-      //s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test__clone_const_value_ref", &json_boolean_test::test__clone_const_value_ref));
-      //s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_operator_assign_bool", &json_boolean_test::test_operator_assign_bool));
+      // //s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test__clone_const_value_ref", &json_boolean_test::test__clone_const_value_ref));
+      // //s->addTest (new CppUnit::TestCaller<json_boolean_test> ("test_operator_assign_bool", &json_boolean_test::test_operator_assign_bool));
 
-      class boolean_test : public unit_test
-      {
-      };
+      class boolean_test : public unit_test {};
 
       TEST_F (boolean_test, ctor_dtor)
       {
@@ -406,51 +404,51 @@ namespace format
     virtual void
     test__clone_const_value_ref ()
     {
-      boolean src = true;
-      boolean copy (src);
-      // boolean copy;
-      // (void) copy._clone (src); // why?
+//      boolean src = true;
+//      boolean copy (src);
+//      // boolean copy;
+//      // (void) copy._clone (src); // why?
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.get ()",
-                                    true,
-                                    copy.get ());
+//      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.get ()",
+//                                    true,
+//                                    copy.get ());
 
-      json j = new object { { L"0", new boolean (copy) } }; // copy of copy
+//      json j = new object { { L"0", new boolean (copy) } }; // copy of copy
 
-      CPPUNIT_ASSERT_MESSAGE ("as boolean", j[L"0"].as<bool> () == true);
+//      CPPUNIT_ASSERT_MESSAGE ("as boolean", j[L"0"].as<bool> () == true);
     }
 
     void
     test_operator_assign_bool ()
     {
-      json parent;
+//      json parent;
 
-      boolean *b = new boolean (false);
-      *b = true;
+//      boolean *b = new boolean (false);
+//      *b = true;
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("boolean::get ()",
-                                    true,
-                                    b->get ());
+//      CPPUNIT_ASSERT_EQUAL_MESSAGE ("boolean::get ()",
+//                                    true,
+//                                    b->get ());
 
-      {
-        // Testing assignment via copy, find out a direct way
-        json j = new object { { L"0", new boolean (*b) } };
+//      {
+//        // Testing assignment via copy, find out a direct way
+//        json j = new object { { L"0", new boolean (*b) } };
 
-        CPPUNIT_ASSERT_MESSAGE ("as boolean", j[L"0"].as<bool> () == true);
-      }
+//        CPPUNIT_ASSERT_MESSAGE ("as boolean", j[L"0"].as<bool> () == true);
+//      }
 
-      parent[L"0"] = b; // b._parent == parent
-      parent[L"0"] = false;
+//      parent[L"0"] = b; // b._parent == parent
+//      parent[L"0"] = false;
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("boolean::get ()",
-                                    false,
-                                    b->get ());
-      {
-        // Testing assignment via copy, find out a direct way
-        json j = new object { { L"0", new boolean (*b) } };
+//      CPPUNIT_ASSERT_EQUAL_MESSAGE ("boolean::get ()",
+//                                    false,
+//                                    b->get ());
+//      {
+//        // Testing assignment via copy, find out a direct way
+//        json j = new object { { L"0", new boolean (*b) } };
 
-        CPPUNIT_ASSERT_MESSAGE ("as boolean", j[L"0"].as<bool> () == false);
-      }
+//        CPPUNIT_ASSERT_MESSAGE ("as boolean", j[L"0"].as<bool> () == false);
+//      }
     } // Namespace test
 
     /**

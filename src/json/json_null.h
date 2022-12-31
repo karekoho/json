@@ -25,7 +25,6 @@ namespace format
       friend null * __call_null (json *);
 
       #ifdef UNIT_TEST
-        friend class json_null_test;
         friend class test::null_test_ctor_dtor_Test;
         friend class test::null_test__clone_const_value_ref_Test;
         friend class test::null_test__parse_Test;

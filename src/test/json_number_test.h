@@ -1,7 +1,6 @@
 #ifndef JSON_NUMBER_TEST
 #define JSON_NUMBER_TEST
 
-//#include "json_leaf_test.h"
 #include "unit_test.h"
 #include <cstring>
 #include <climits>
@@ -12,30 +11,29 @@ namespace format
   {
     namespace test
     {
-      class number_test : public unit_test
-      {
-        //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_ctor_dtor", &json_number_test::test_ctor_dtor));
-        //s->addTest (new CppUnit::TestCaller<json_number_test> ("test__to_string", &json_number_test::test__to_string));
-        //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_parse", &json_number_test::test__parse));
-        //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_digits", &json_number_test::test_digits));
-        //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_frag", &json_number_test::test_frag));
-        //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_exp", &json_number_test::test_exp));
-        //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_atof", &json_number_test::test_atof));
-        //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_atoll", &json_number_test::test_atoll));
-        //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_calculate", &json_number_test::test_calculate));
-        //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_all_values", &json_number_test::test_assign_all_values));
-        //s->addTest (new CppUnit::TestCaller<json_number_test> ("test__clone_const_value_ref", &json_number_test::test__clone_const_value_ref));
-        //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_str_length", &json_number_test::test_str_length));
-        //s->addTest (new CppUnit::TestCaller<json_number_test> ("test__clear", &json_number_test::test__clear));
-        //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_type", &json_number_test::test_type));
-        //s->addTest (new CppUnit::TestCaller<json_number_test> ("test___integral_length", &json_number_test::test___integral_length));
-        //s->addTest (new CppUnit::TestCaller<json_number_test> ("test___to_string_ll", &json_number_test::test___to_string_ll));
-        //s->addTest (new CppUnit::TestCaller<json_number_test> ("test___to_string_ld", &json_number_test::test___to_string_ld));
+      //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_ctor_dtor", &json_number_test::test_ctor_dtor));
+      //s->addTest (new CppUnit::TestCaller<json_number_test> ("test__to_string", &json_number_test::test__to_string));
+      //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_parse", &json_number_test::test__parse));
+      //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_digits", &json_number_test::test_digits));
+      //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_frag", &json_number_test::test_frag));
+      //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_exp", &json_number_test::test_exp));
+      //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_atof", &json_number_test::test_atof));
+      //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_atoll", &json_number_test::test_atoll));
+      //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_calculate", &json_number_test::test_calculate));
+      //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_all_values", &json_number_test::test_assign_all_values));
+      //s->addTest (new CppUnit::TestCaller<json_number_test> ("test__clone_const_value_ref", &json_number_test::test__clone_const_value_ref));
+      //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_str_length", &json_number_test::test_str_length));
+      //s->addTest (new CppUnit::TestCaller<json_number_test> ("test__clear", &json_number_test::test__clear));
+      //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_type", &json_number_test::test_type));
+      //s->addTest (new CppUnit::TestCaller<json_number_test> ("test___integral_length", &json_number_test::test___integral_length));
+      //s->addTest (new CppUnit::TestCaller<json_number_test> ("test___to_string_ll", &json_number_test::test___to_string_ll));
+      //s->addTest (new CppUnit::TestCaller<json_number_test> ("test___to_string_ld", &json_number_test::test___to_string_ld));
 
-        /// Removed operator =(long double | long long)
-        //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_operator_long", &json_number_test::test_operator_assign_long));
-        //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_operator_double", &json_number_test::test_operator_assign_double));
-      };
+      /// Removed operator =(long double | long long)
+      // //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_operator_long", &json_number_test::test_operator_assign_long));
+      // //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_operator_double", &json_number_test::test_operator_assign_double));
+
+      class number_test : public unit_test {};
 
       TEST_F (number_test, ctor_dtor)
       {
@@ -286,7 +284,6 @@ namespace format
                 std::cerr << e.what () << std::endl;
               }
            }
-        //(void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);\
         // Original assertion:
         ///CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
         ///
@@ -398,7 +395,6 @@ namespace format
                 std::cerr << e.what () << std::endl;
               }
             }
-        //(void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);\
         // Original assertion:
         ///CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
         ///
@@ -481,7 +477,6 @@ namespace format
                  std::cerr << e.what () << std::endl;
               }
           }
-        //(void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);\
         // Original assertion:
         ///CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
         ///
@@ -669,7 +664,6 @@ namespace format
                       delete old_value;
                     }
               }
-            //(void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]); \
             // Original assertion:
             ///CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
             ///
@@ -932,7 +926,7 @@ namespace format
    * 5.
    * @brief The json_number_test class
    */
-  class json_number_test //: public json_leaf_test
+  class json_number_test
   {
   public:
 
@@ -1474,9 +1468,9 @@ namespace format
     virtual void
     test_type ()
     {
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("value::type ()",
-                                    value::number_t,
-                                    number ().type ());
+//      CPPUNIT_ASSERT_EQUAL_MESSAGE ("value::type ()",
+//                                    value::number_t,
+//                                    number ().type ());
     }
 
     virtual void
@@ -1537,74 +1531,74 @@ namespace format
     void
     test_operator_assign_long ()
     {
-      json parent;
+//      json parent;
 
-      number *n = new number ((long long) 100);
-      *n = (long long) 101;
+//      number *n = new number ((long long) 100);
+//      *n = (long long) 101;
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("(long) number::get ()",
-                                    (long long) 101,
-                                    (long long) n->get ());
+//      CPPUNIT_ASSERT_EQUAL_MESSAGE ("(long) number::get ()",
+//                                    (long long) 101,
+//                                    (long long) n->get ());
 
-      (parent[L"0"] = n)[L"0"] = (long long) 102;
+//      (parent[L"0"] = n)[L"0"] = (long long) 102;
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("(long) number::get ()",
-                                    (long long) 102,
-                                    //(long) static_cast<number &> (parent[L"0"]).get ()
-                                    (long long) n->get ());  // TODO: test n
+//      CPPUNIT_ASSERT_EQUAL_MESSAGE ("(long) number::get ()",
+//                                    (long long) 102,
+//                                    //(long) static_cast<number &> (parent[L"0"]).get ()
+//                                    (long long) n->get ());  // TODO: test n
 
-      CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",
-                              //parent[L"0"].get ()
-                              n->stringify () == std::wstring (L"102"));
+//      CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",
+//                              //parent[L"0"].get ()
+//                              n->stringify () == std::wstring (L"102"));
 
-      number *m = new number ((long long) 100);
-      *m = (long long) 103;
+//      number *m = new number ((long long) 100);
+//      *m = (long long) 103;
 
-      json j = new object { { L"0", m } };
+//      json j = new object { { L"0", m } };
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE ("as int",
-                                    (int) 103, j[L"0"].as<int> ());
+//      CPPUNIT_ASSERT_EQUAL_MESSAGE ("as int",
+//                                    (int) 103, j[L"0"].as<int> ());
 
-      delete n;
-      delete m;
+//      delete n;
+//      delete m;
     }
 
     void
     test_operator_assign_double ()  // TODO: rename test_operator_assign_double
     {
-      json parent;
+//      json parent;
 
-      number *n = new number ((long double) 100.0);
-      *n = (long double) 101.1;
+//      number *n = new number ((long double) 100.0);
+//      *n = (long double) 101.1;
 
-      // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
-      double delta = std::numeric_limits<double>::epsilon ();
+//      // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
+//      double delta = std::numeric_limits<double>::epsilon ();
 
-      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("(double) number::get ()",
-                                    (double) 101.1,
-                                     (double) n->get (), delta);
+//      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("(double) number::get ()",
+//                                    (double) 101.1,
+//                                     (double) n->get (), delta);
 
-      (parent[L"0"] = n)[L"0"] = (long double) 102.2;
+//      (parent[L"0"] = n)[L"0"] = (long double) 102.2;
 
-      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("(double) number::get ()",
-                                    (double) 102.2,
-                                    //static_cast<number &> (parent[L"0"]).get ()
-                                    (double) n->get (), delta);
+//      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("(double) number::get ()",
+//                                    (double) 102.2,
+//                                    //static_cast<number &> (parent[L"0"]).get ()
+//                                    (double) n->get (), delta);
 
-      CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",
-                              //parent[L"0"].get () == std::wstring (L"102.200000")
-                              n->stringify () == std::wstring (L"102.200000"));
+//      CPPUNIT_ASSERT_MESSAGE ("value[key]::get ()",
+//                              //parent[L"0"].get () == std::wstring (L"102.200000")
+//                              n->stringify () == std::wstring (L"102.200000"));
 
-      number *m = new number ((long double) 100.0);
-      *m = (long double) 100.3;
+//      number *m = new number ((long double) 100.0);
+//      *m = (long double) 100.3;
 
-      json j = new object { { L"0", m } };
+//      json j = new object { { L"0", m } };
 
-      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("as double",
-                                            (double) 100.3, j[L"0"].as<double> (), delta);
+//      CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE ("as double",
+//                                            (double) 100.3, j[L"0"].as<double> (), delta);
 
-      delete n;
-      delete m;
+//      delete n;
+//      delete m;
     }
 
     void

@@ -14,11 +14,11 @@ namespace format
     #ifdef UNIT_TEST
       namespace test
       {
-        class json_value_test__lookahead_Test;
-        class json_value_test__string_Test;
-        class json_value_test__is_literal_Test;
-        class json_value_test__str_append_Test;
-        class json_value_test__quote_value_Test;
+        class value_test__lookahead_Test;
+        class value_test__string_Test;
+        class value_test__is_literal_Test;
+        class value_test__str_append_Test;
+        class value_test__quote_value_Test;
         class number_test__digits_Test;
         class number_test__frag_Test;
         class number_test__exp_Test;
@@ -44,11 +44,11 @@ namespace format
     class value
     {
       #ifdef UNIT_TEST
-        friend class test::json_value_test__lookahead_Test;
-        friend class test::json_value_test__string_Test;
-        friend class test::json_value_test__is_literal_Test;
-        friend class test::json_value_test__str_append_Test;
-        friend class test::json_value_test__quote_value_Test;
+        friend class test::value_test__lookahead_Test;
+        friend class test::value_test__string_Test;
+        friend class test::value_test__is_literal_Test;
+        friend class test::value_test__str_append_Test;
+        friend class test::value_test__quote_value_Test;
         friend class test::number_test__digits_Test;
         friend class test::number_test__frag_Test;
         friend class test::number_test__exp_Test;

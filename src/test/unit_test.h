@@ -1,13 +1,6 @@
 #ifndef UNIT_TEST
 #define UNIT_TEST
 
-#include <cppunit/TestCase.h>
-#include <cppunit/TestResult.h>
-#include <cppunit/ui/text/TestRunner.h>
-#include <cppunit/ui/text/TextTestRunner.h>
-#include <cppunit/extensions/HelperMacros.h>
-#include <cppunit/Exception.h>
-
 #include <cstdio>
 #include <ctype.h>
 #include <vector>
@@ -20,6 +13,8 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+#include "../json/json.h"
+
 using ::testing::Eq;
 using ::testing::Ne;
 using ::testing::Lt;
@@ -30,86 +25,18 @@ using ::testing::IsFalse;
 using ::testing::FloatEq;
 using ::testing::DoubleEq;
 using ::testing::Address;
-
-#include "../json/json.h"
+using ::testing::FieldsAre;
 
 #define PASS_T  0
 #define FAIL_T  1
 #define SKIP_T -1
 #define MEM_DEBUG 0
 
-/* #ifndef JSON_MAX_DOUBLE
-  #define JSON_MAX_DOUBLE = std::numeric_limits<long double>::max ();
-#endif
-
- #ifndef JSON_MIN_DOUBLE
-  #define JSON_MIN_DOUBLE = std::numeric_limits<long double>::min ();
-#endif
-
-#ifndef JSON_MAX_UDOUBLE
-  #define JSON_MAX_UDOUBLE = std::numeric_limits<unsigned long double>::max ();
-#endif
-
-#ifndef JSON_MAX_INT
-  #define JSON_MAX_INT = std::numeric_limits<long long>::max ();
-#endif
-
-#ifndef JSON_MIN_INT
-  #define JSON_MIN_INT = std::numeric_limits<long double>::min ();
-#endif
-
-#ifndef JSON_MAX_UINT
-  #define JSON_MAX_UINT = std::numeric_limits<unsigned long long>::max ();
-#endif */
-
 #define EXPECTED 0
 #define ACTUAL 1
 
 #ifndef FN
   #define FN __FUNCTION__
-#endif
-
-#ifndef CATCH_ERROR_PCHAR
-#define CATCH_ERROR_PCHAR\
-  catch (const char *error) { errorc++; std::cerr << error << std::endl; }
-#endif
-
-#ifndef PRT_IDX
-  #define PRT_IDX (void) sprintf (_sz_idx, "%s: index: %u", FN, idx)
-#endif
-
-#ifndef PRT_2IDX
-  #define PRT_2IDX (void) sprintf (_sz_idx, "%s: 1. index: %u, 2. index: %u", FN, idx, jdx)
-#endif
-
-#ifndef ASSERT_IDX
-  #define ASSERT_IDX(cond)\
-    PRT_IDX;\
-    CPPUNIT_ASSERT_MESSAGE (_sz_idx, (cond))
-#endif
-
-#ifndef ASSERT_2IDX
-  #define ASSERT_2IDX(cond)\
-    PRT_2IDX;\
-    CPPUNIT_ASSERT_MESSAGE (_sz_idx, (cond))
-#endif
-
-#ifndef ASSERT_NO_ERROR
-  #define ASSERT_NO_ERROR\
-    (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, errorc);\
-    CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, 0, errorc)
-#endif
-
-#ifndef ASSERT_ERRORC
-  #define ASSERT_ERRORC(__errorc)\
-  (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, errorc);\
-  CPPUNIT_ASSERT_MESSAGE (_sz_idx, errorc == __errorc)
-#endif
-
-#ifndef ASSERT_EQUAL_IDX
-  #define ASSERT_EQUAL_IDX(message, expected, actual)\
-  (void) sprintf (_sz_idx, "%s: idx[0] = %lu: %s", FN, this->_idx[0], message);\
-  CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, expected, actual)
 #endif
 
 #ifndef ERR_IDX_MSG
@@ -135,38 +62,36 @@ using ::testing::Address;
   catch (const char *error) { this->_errorc[ACTUAL]++; std::cerr << error << std::endl; }\
   catch (const wchar_t *error) { this->_errorc[ACTUAL]++; std::cerr << error << std::endl; }\
   catch (...) { this->_errorc[ACTUAL]++; std::cerr << "unknown exception" << std::endl; } }\
-(void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);\
 EXPECT_EQ (this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
 #endif
 
-//struct test_selector;
+
 /**
  * @brief The unit_test class
  */
-class unit_test : public ::testing::Test //: public CppUnit::TestFixture
+class unit_test : public ::testing::Test
 {
-  // friend struct test_selector;
 
 public:
   unit_test ()
-    : // CppUnit::TestFixture(),
-      _errorc { 0, 0 },
+    : _errorc { 0, 0 },
       _idx { 0, 0, 0, 0, 0 }
   {}
-
-  // virtual ~unit_test (){ std::cerr << "delete" << std::endl; }
 
   virtual void
   setUp ()
   {
     // std::setlocale(LC_ALL, "en_US.UTF-8");
     std::setlocale (LC_CTYPE, "");
-    _errorc[0] = _errorc[1] = _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0;
+    _errorc[0] = _errorc[1] = 0;
+    _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0;
   }
 
   virtual void
   tearDown ()
-  { _errorc[0] =_errorc[1] = _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0; }
+  { _errorc[0] =_errorc[1] = 0;
+    _idx[0] = _idx[1] = _idx[2] = _idx[3] = _idx[4] =  0;
+  }
 
   std::unordered_map<std::wstring, format::json::value *> &
   member_list_clear (std::unordered_map<std::wstring, format::json::value *> & m)
@@ -190,8 +115,6 @@ protected:
 
   size_t _errorc[2];
   size_t _idx[5];
-
-  char _sz_idx[300];
 
   static format::json::json   *__JSON;
   static format::json::value  *__VALUE[];

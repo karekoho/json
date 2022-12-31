@@ -7,11 +7,8 @@ namespace format
 {
   namespace json
   {
-  /**
-   * 7.
-   * @brief The json_null_test class
-   */
-    namespace test {
+    namespace test
+    {
       //s->addTest (new CppUnit::TestCaller<json_null_test> ("test_ctor_dtor", &json_null_test::test_ctor_dtor));
       //s->addTest (new CppUnit::TestCaller<json_null_test> ("test_assign_all_values", &json_null_test::test_assign_all_values));
       //s->addTest (new CppUnit::TestCaller<json_null_test> ("test__clone_const_value_ref", &json_null_test::test__clone_const_value_ref));
@@ -21,9 +18,7 @@ namespace format
       //s->addTest (new CppUnit::TestCaller<json_null_test> ("test__clear", &json_null_test::test__clear));
       //s->addTest (new CppUnit::TestCaller<json_null_test> ("test_type", &json_null_test::test_type));
 
-      class null_test : public unit_test {
-
-      };
+      class null_test : public unit_test {};
 
       TEST_F (null_test, ctor_dtor)
       {
@@ -279,7 +274,7 @@ namespace format
 
     virtual void
     test__clone_const_value_ref ()
-    { CPPUNIT_ASSERT_ASSERTION_PASS ("null::_clone (const value &) return value is fixed (this)"); }
+    { /*CPPUNIT_ASSERT_ASSERTION_PASS ("null::_clone (const value &) return value is fixed (this)");*/ }
 
     /**
      * 7.

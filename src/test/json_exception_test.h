@@ -11,9 +11,7 @@ namespace format
     {
       //s->addTest (new CppUnit::TestCaller<json_syntax_error_test> ("test_ctor_1", &json_syntax_error_test::test_ctor_1));
 
-      class syntax_error_test : public unit_test
-      {
-      };
+      class syntax_error_test : public unit_test {};
 
       TEST_F (syntax_error_test, ctor)
       {

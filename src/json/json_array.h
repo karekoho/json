@@ -33,7 +33,6 @@ namespace format
       friend array * __call_array (json *parent);
 
     #ifdef UNIT_TEST
-      friend class json_array_test;
       friend class test::array_test_ctor_dtor_Test;
       friend class test::array_test__parse_Test;
       friend class test::array_test_index_Test;

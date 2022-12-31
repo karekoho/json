@@ -8,7 +8,7 @@
 #include "json_boolean_test.h"
 #include "json_null_test.h"
 #include "json_undefined_test.h"
-//#include "json_leaf_test.h"
+#include "json_leaf_test.h"
 #include "json_object_iterator_test.h"
 #include "json_array_iterator_test.h"
 #include "json_leaf_iterator_test.h"

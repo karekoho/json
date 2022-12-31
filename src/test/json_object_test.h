@@ -29,8 +29,7 @@ namespace format
       // 18.  s->addTest (new CppUnit::TestCaller<json_object_test> ("test_operator_assign_wchar_t_ptr", &json_object_test::test_operator_assign_wchar_t_ptr));
       // 19.  s->addTest (new CppUnit::TestCaller<json_object_test> ("test_operator_assign_initializer_list", &json_object_test::test_operator_assign_initializer_list));
 
-      class object_test : public unit_test
-      { };
+      class object_test : public unit_test {};
 
       TEST_F (object_test, _erase)
       {
@@ -227,8 +226,6 @@ namespace format
                     delete old_value;
                   }
               }
-            (void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]); \
-
             // Original assertion:
             ///CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
             ///

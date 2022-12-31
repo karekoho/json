@@ -4,7 +4,6 @@ QT += core
 QT -= gui
 
 INCLUDEPATH += /usr/local/include
-LIBS += -L/usr/local/lib -lcppunit
 LIBS += -L/usr/local/lib -lgtest -lpthread
 # LIBS += /usr/local/lib/libjson.a
 
@@ -41,7 +40,7 @@ HEADERS += \
     json_object_iterator_test.h \
     json_array_iterator_test.h \
     json_leaf_iterator_test.h \
-    #json_leaf_test.h \
+    json_leaf_test.h \
     json_exception_test.h \
     json_mock_value.h \
     ../json/json.h \

@@ -14,9 +14,7 @@ namespace format
       //s->addTest (new CppUnit::TestCaller<json_object_iterator_test> ("test_post_increment", &json_object_iterator_test::test_post_increment));
       //s->addTest (new CppUnit::TestCaller<json_object_iterator_test> ("test_begin_end", &json_object_iterator_test::test_begin_end));
 
-      class object_iterator_test : public unit_test
-      {
-      };
+      class object_iterator_test : public unit_test {};
 
       TEST_F (object_iterator_test, construct_assign_destruct)
       {
