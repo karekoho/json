@@ -100,23 +100,23 @@ namespace format
         json copy (j[1]);
 
         // Original assertion:
-        //CPPUNIT_ASSERT_EQUAL_MESSAGE ("value::type ()", value::boolean_t, (j[(size_t) 0][L"0"] = boolean ())[L"0"].type ());
-
+        ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("value::type ()", value::boolean_t, (j[(size_t) 0][L"0"] = boolean ())[L"0"].type ());
+        ///
         ASSERT_THAT ((j[(size_t) 0][L"0"] = boolean ())[L"0"].type (), Eq (value::boolean_t));
 
         // Original assertion:
-        //CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.count ()", static_cast<size_t> (1), copy.size ());
-
+        ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.count ()", static_cast<size_t> (1), copy.size ());
+        ///
         ASSERT_THAT (copy.size (), Eq (static_cast<size_t> (1)));
 
         // Original assertion:
-        //CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::type () (1)", value::object_t, j[3].type ());
-
+        ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::type () (1)", value::object_t, j[3].type ());
+        ///
         ASSERT_THAT (j[3].type (), Eq (value::object_t));
 
         // Original assertion:
-        //CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::type () (2)", value::array_t, j[4].type ());
-
+        ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::type () (2)", value::array_t, j[4].type ());
+        ///
         ASSERT_THAT (j[4].type (), Eq (value::array_t));
 
   //      CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::type () (3)",
@@ -134,13 +134,13 @@ namespace format
         copy = L"[]";
 
         // Original assertion:
-        //CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.type ()", value::array_t, copy.type ());
-
+        ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.type ()", value::array_t, copy.type ());
+        ///
         ASSERT_THAT (copy.type (), Eq (value::array_t));
 
         // Original assertion:
-        //CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.length ()", static_cast<size_t> (0), copy.size ());
-
+        ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.length ()", static_cast<size_t> (0), copy.size ());
+        ///
         ASSERT_THAT (copy.size (), Eq (static_cast<size_t> (0)));
       }
 
@@ -186,16 +186,20 @@ namespace format
               const wchar_t * readp = j->_parse (startp);
 
               // Original assertion:
-              //ASSERT_EQUAL_IDX ("json.readp", (*it).starp + (charc), readp);
-              //ASSERT_EQUAL_IDX ("*(json.readp)", static_cast<wchar_t> (0), *readp);
-              //ASSERT_EQUAL_IDX ("json.type ()", (*it).type, j->type ());
-
+              ///ASSERT_EQUAL_IDX ("json.readp", (*it).starp + (charc), readp);
+              ///
               ASSERT_THAT (readp, Eq ((*it).starp + (charc)))
                   << ERR_IDX_MSG << _idx[0];
 
+               // Original assertion:
+              ///ASSERT_EQUAL_IDX ("*(json.readp)", static_cast<wchar_t> (0), *readp);
+              ///
               ASSERT_THAT (*readp, Eq (static_cast<wchar_t> (0)))
                   << ERR_IDX_MSG << _idx[0];
 
+               // Original assertion:
+              ///ASSERT_EQUAL_IDX ("json.type ()", (*it).type, j->type ());
+              ///
               ASSERT_THAT (j->type (), Eq ((*it).type))
                   << ERR_IDX_MSG << _idx[0];
 
@@ -205,12 +209,10 @@ namespace format
             {
               this->_errorc[ACTUAL]++; std::cerr << se.what () << std::endl;
               delete j;
-            }
-
-          //(void) sprintf (_sz_idx, "%s: errorc: %lu", FN, this->_errorc[ACTUAL]);
+            } 
           // Original assertion:
-          //CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
-
+          ///CPPUNIT_ASSERT_EQUAL_MESSAGE (_sz_idx, this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
+          ///
           ASSERT_THAT (this->_errorc[ACTUAL], Eq(this->_errorc[EXPECTED]));
         }
       }
@@ -248,12 +250,14 @@ namespace format
                                     };
 
           // Original assertion:
-          //ASSERT_EQUAL_IDX ("_to_string ()", len[0], wcslen (value[0]));
-          //ASSERT_EQUAL_IDX ("stringify ()", len[1], wcslen (value[1]));
-
+          ///ASSERT_EQUAL_IDX ("_to_string ()", len[0], wcslen (value[0]));
+          ///
           ASSERT_THAT (wcslen (value[0]), Eq (len[0]))
               << ERR_IDX_MSG << _idx[0];
 
+          // Original assertion:
+          ///ASSERT_EQUAL_IDX ("stringify ()", len[1], wcslen (value[1]));
+          ///
           ASSERT_THAT (wcslen (value[1]), Eq (len[1]))
               << ERR_IDX_MSG << _idx[0];
 
@@ -297,12 +301,14 @@ namespace format
             value *v = j._make_value ();
 
             // Original assertion:
-            //ASSERT_EQUAL_IDX ("json._readp", startp + (*it).move , j._readp);
-            //ASSERT_EQUAL_IDX ("value.type ()", (*it).type , v->type ());
-
+            ///ASSERT_EQUAL_IDX ("json._readp", startp + (*it).move , j._readp);
+            ///
             ASSERT_THAT (j._readp, Eq (startp + (*it).move))
                 << ERR_IDX_MSG << _idx[0];
 
+            // Original assertion:
+            ///ASSERT_EQUAL_IDX ("value.type ()", (*it).type , v->type ());
+            ///
             ASSERT_THAT (v->type (), Eq ((*it).type))
                 << ERR_IDX_MSG << _idx[0];
 
@@ -343,12 +349,14 @@ namespace format
             value & aov = array_parent[(*it).index];
 
             // Original assertion:
-            //ASSERT_EQUAL_IDX ("value.type ()", value::undefined_t, oov.type ());
-            //ASSERT_EQUAL_IDX ("value.type ()", value::undefined_t, aov.type ());
-
+            ///ASSERT_EQUAL_IDX ("value.type ()", value::undefined_t, oov.type ());
+            ///
             ASSERT_THAT (oov.type (), Eq (value::undefined_t))
-                << ERR_IDX_MSG << _idx[0] ;
+                << ERR_IDX_MSG << _idx[0];
 
+            // Original assertion:
+            ///ASSERT_EQUAL_IDX ("value.type ()", value::undefined_t, aov.type ());
+            ///
             ASSERT_THAT (aov.type (), Eq (value::undefined_t))
                 << ERR_IDX_MSG << _idx[0];
 
@@ -356,12 +364,14 @@ namespace format
             array_parent.assign (& aov, (*it).val[1]);
 
             // Original assertion:
-            //ASSERT_EQUAL_IDX ("parent._at (key)", (*it).type, object_parent[(*it).key].type ());
-            //ASSERT_EQUAL_IDX ("parent._at (index)", (*it).type, array_parent[(*it).index].type ());
-
+            ///ASSERT_EQUAL_IDX ("parent._at (key)", (*it).type, object_parent[(*it).key].type ());
+            ///
             ASSERT_THAT (object_parent[(*it).key].type (), Eq ((*it).type))
                 << ERR_IDX_MSG << _idx[0];
 
+            // Original assertion:
+            ///ASSERT_EQUAL_IDX ("parent._at (index)", (*it).type, array_parent[(*it).index].type ());
+            ///
             ASSERT_THAT (array_parent[(*it).index].type (), Eq ((*it).type))
                 << ERR_IDX_MSG << _idx[0];
 
@@ -436,13 +446,15 @@ namespace format
                   value *ov = (*it).output[rev_idx].at (val_idx);
                   value & jvv = *jv;
 
-                  // Orinal assertion:
-                  //CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->count ()", output_size, jv->size ());
-                  //CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->at ().type ()", ov->type (), jvv[ std::to_wstring (val_idx).c_str () ].type ());
-
+                  // Original assertion:
+                  ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->count ()", output_size, jv->size ());
+                  ///
                   ASSERT_THAT (jv->size (), Eq (output_size))
                       << ERR_IDX_MSG << _idx[0];
 
+                  // Original assertion:
+                  ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("jv->at ().type ()", ov->type (), jvv[ std::to_wstring (val_idx).c_str () ].type ());
+                  ///
                   ASSERT_THAT (ov->type (), Eq (jvv[ std::to_wstring (val_idx).c_str () ].type ()))
                       << ERR_IDX_MSG << _idx[0];
                 }
@@ -459,9 +471,10 @@ namespace format
         };
 
         for (size_t idx = 0; idx < 2; idx++)
-          //CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::count ()", static_cast<size_t> (0), j[idx].size ());
-
-          ASSERT_THAT ( j[idx].size (), Eq (static_cast<size_t> (0)))
+           // Original assertion:
+          ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("json::count ()", static_cast<size_t> (0), j[idx].size ());
+          ///
+          ASSERT_THAT (j[idx].size (), Eq (0))
               << ERR_IDX_MSG << idx;
       }
 
@@ -474,28 +487,34 @@ namespace format
       TEST_F (json_test, operator_at_key)
       {
         // Original assertion:
-        //CPPUNIT_ASSERT_EQUAL_MESSAGE (  "json[key]::type ()", value::undefined_t, json ()[L"0"].type ());
-        //CPPUNIT_ASSERT_EQUAL_MESSAGE (  "json[key]::type ()", value::boolean_t, json (L"{\"0\":true}")[L"0"].type ());
-
+        ///CPPUNIT_ASSERT_EQUAL_MESSAGE (  "json[key]::type ()", value::undefined_t, json ()[L"0"].type ());
+        ///
         ASSERT_THAT (json ()[L"0"].type (), Eq (value::undefined_t));
+
+        // Original assertion:
+        ///CPPUNIT_ASSERT_EQUAL_MESSAGE (  "json[key]::type ()", value::boolean_t, json (L"{\"0\":true}")[L"0"].type ());
+        ///
         ASSERT_THAT (json (L"{\"0\":true}")[L"0"].type (), Eq (value::boolean_t));
       }
 
       TEST_F (json_test, operator_at_index)
       {
         // Original assertion:
-        //CPPUNIT_ASSERT_EQUAL_MESSAGE (  "json[index]::type ()", value::undefined_t, json ()[static_cast<size_t> (0)].type ());
-        //CPPUNIT_ASSERT_EQUAL_MESSAGE (  "json[index]::type ()", value::boolean_t, json (L"[true]")[static_cast<size_t> (0)].type ());
-
+        ///CPPUNIT_ASSERT_EQUAL_MESSAGE (  "json[index]::type ()", value::undefined_t, json ()[static_cast<size_t> (0)].type ());
+        ///
         ASSERT_THAT (json ()[static_cast<size_t> (0)].type (), Eq (value::undefined_t));
+
+        // Original assertion:
+        ///CPPUNIT_ASSERT_EQUAL_MESSAGE (  "json[index]::type ()", value::boolean_t, json (L"[true]")[static_cast<size_t> (0)].type ());
+        ///
         ASSERT_THAT (json (L"[true]")[static_cast<size_t> (0)].type (), value::boolean_t);
       }
 
       TEST_F (json_test, str_length)
       {
         // Original assertion:
-        //CPPUNIT_ASSERT_EQUAL_MESSAGE ("json[index]::str_length ()", static_cast<size_t> (3), /* json (L"{\"0\":\"x\"}")[L"0"].str_length () */ __call__str_length (& (json(L"{\"0\":\"x\"}")[L"0"])));
-
+        ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("json[index]::str_length ()", static_cast<size_t> (3), /* json (L"{\"0\":\"x\"}")[L"0"].str_length () */ __call__str_length (& (json(L"{\"0\":\"x\"}")[L"0"])));
+        ///
         ASSERT_THAT (__call__str_length (& (json(L"{\"0\":\"x\"}")[L"0"])), Eq (static_cast<size_t> (3)));
       }
 
@@ -508,10 +527,13 @@ namespace format
       TEST_F (json_test, type)
       {
         // Original assertion:
-        //CPPUNIT_ASSERT_EQUAL_MESSAGE ("value::type ()", value::undefined_t, json ().type ());
-        //CPPUNIT_ASSERT_EQUAL_MESSAGE ("value::type ()", value::object_t, json (L"{}").type ());
-
+        ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("value::type ()", value::undefined_t, json ().type ());
+        ///
         ASSERT_THAT (json ().type (), Eq (value::undefined_t));
+
+        // Original assertion:
+        ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("value::type ()", value::object_t, json (L"{}").type ());
+        ///
         ASSERT_THAT (json (L"{}").type (), Eq (value::object_t));
       }
 
@@ -523,8 +545,8 @@ namespace format
         j = o[1];
 
         // Original assertion:
-        //CPPUNIT_ASSERT_MESSAGE ("o[1] == j.__root", o[1] == j.__root);
-
+        ///CPPUNIT_ASSERT_MESSAGE ("o[1] == j.__root", o[1] == j.__root);
+        ///
         ASSERT_THAT (j.__root, Eq (o[1]));
       }
 
@@ -536,8 +558,8 @@ namespace format
         j = a[1];
 
         // Original assertion:
-        //CPPUNIT_ASSERT_MESSAGE ("a[1] == j.__root", a[1] == j.__root);
-
+        ///CPPUNIT_ASSERT_MESSAGE ("a[1] == j.__root", a[1] == j.__root);
+        ///
         ASSERT_THAT (j.__root, Eq (a[1]));
       }
     }
@@ -545,12 +567,12 @@ namespace format
    * 1.
    * @brief The json_test class
    */
-  class json_test : public json_value_test_interface
+  class json_test
   {
   public:
 
     virtual void
-    test_ctor_dtor () override
+    test_ctor_dtor ()
     {
 //      json parent;
 
@@ -606,7 +628,7 @@ namespace format
     }
 
     virtual void
-    test__parse () override
+    test__parse ()
     {
 //      struct assert
 //      {
@@ -753,7 +775,7 @@ namespace format
     }
 
     virtual void
-    test_assign_all_values () override
+    test_assign_all_values ()
     {
       /* json j;
       struct assert
@@ -780,7 +802,7 @@ namespace format
     }
 
     virtual void
-    test__to_string () override
+    test__to_string ()
     {
 //      struct assert
 //      {
@@ -924,7 +946,7 @@ namespace format
 //    }
 
     virtual void
-    test_count () override
+    test_count ()
     {
 //      json j[2] = {
 //        json (),
@@ -938,7 +960,7 @@ namespace format
     }
 
     virtual void
-    test_operator_at_key () override
+    test_operator_at_key ()
     {
 //      CPPUNIT_ASSERT_EQUAL_MESSAGE (  "json[key]::type ()",
 //                                      value::undefined_t,
@@ -950,13 +972,13 @@ namespace format
     }
 
     virtual void
-    test_const_operator_at_key () override
+    test_const_operator_at_key ()
     {
       //CPPUNIT_ASSERT_ASSERTION_FAIL ();
     }
 
     virtual void
-    test_operator_at_index () override
+    test_operator_at_index ()
     {
 //      CPPUNIT_ASSERT_EQUAL_MESSAGE (  "json[index]::type ()",
 //                                      value::undefined_t,
@@ -968,13 +990,13 @@ namespace format
     }
 
     virtual void
-    test_const_operator_at_index () override
+    test_const_operator_at_index ()
     {
       //CPPUNIT_ASSERT_ASSERTION_FAIL ();
     }
 
     virtual void
-    test_str_length () override
+    test_str_length ()
     {        
 //      CPPUNIT_ASSERT_EQUAL_MESSAGE ("json[index]::str_length ()",
 //                                    static_cast<size_t> (3),
@@ -984,15 +1006,15 @@ namespace format
     }
 
     virtual void
-    test__clear () override
+    test__clear ()
     { /*CPPUNIT_ASSERT_ASSERTION_PASS ("json::_clear is nop");*/ }
 
     virtual void
-    test__erase () override
+    test__erase ()
     { /*CPPUNIT_ASSERT_ASSERTION_PASS ("json::_erase is nop");*/ }
 
     virtual void
-    test_type () override
+    test_type ()
     {
 //        CPPUNIT_ASSERT_EQUAL_MESSAGE ("value::type ()",
 //                                      value::undefined_t,
@@ -1004,11 +1026,11 @@ namespace format
     }
 
     virtual void
-    test__assign_value_ptr_value_ptr () override
+    test__assign_value_ptr_value_ptr ()
     { /*CPPUNIT_ASSERT_ASSERTION_PASS ();*/ }
 
     virtual void
-    test__clone_const_value_ref () override
+    test__clone_const_value_ref ()
     { /*CPPUNIT_ASSERT_ASSERTION_PASS ();*/ }
 
     void
