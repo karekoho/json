@@ -2,6 +2,7 @@
 #define JSON_OBJECT_TEST_H
 
 #include "unit_test.h"
+#include "json_mock_value.h"
 
 namespace format
 {
@@ -33,7 +34,7 @@ namespace format
 
       TEST_F (object_test, _erase)
       {
-        object o;
+        mock_object o;
 
         value *v[3]= {
           new boolean (),
@@ -85,17 +86,17 @@ namespace format
       TEST_F (object_test, ctor_dtor)
       {
         const wchar_t * json_text = L"{ \"1\": { \"2\": 2 } }";
-        object src = json_text;
+        mock_object src = json_text;
 
         json parent;
 
-        object o[] = {
-          object (),
-          object (L"{}"),
-          object (& parent),
-          object {{ L"0", new object {{ L"1", new number () }} }}, // { "0": { "1": 0 } }
-          object (json_text),
-          object (src) // 5.
+        mock_object o[] = {
+          mock_object (),
+          mock_object (L"{}"),
+          mock_object (& parent),
+          mock_object {{ L"0", new object {{ L"1", new number () }} }}, // { "0": { "1": 0 } }
+          mock_object (json_text),
+          mock_object (src) // 5.
         };
 
   //      object src  = L"{\"key\":true}";
@@ -144,7 +145,7 @@ namespace format
 
       TEST_F (object_test, assign_all_values)
       {
-        object_accessor object_parent;
+        mock_object object_parent;
 
         json *parents[] = {
           & object_parent,
@@ -161,7 +162,7 @@ namespace format
           int assert_status[2];
         };
 
-        object o (L"{\"0\":true,\"1\":false}");
+        mock_object o (L"{\"0\":true,\"1\":false}");
 
         std::vector<struct assert > test = {
           { & o,  value::object_t, L"0",  0, 1,  { PASS_T, PASS_T } },
@@ -172,7 +173,7 @@ namespace format
   //        { __VALUE[value::null_t], value::null_t, L"5",  0, 6, { PASS, FAIL } }
         };
 
-        object *old_value = nullptr;
+        mock_object *old_value = nullptr;
 
         for (size_t pidx = 0; pidx < 2; pidx++)
           {
@@ -186,12 +187,12 @@ namespace format
                     if ((*it).assert_status[pidx] > PASS_T) { this->_errorc[EXPECTED]++; }
 
                     /** old_value: value from value[key] */
-                    old_value = new object (parents[pidx]);
+                    old_value = new mock_object (parents[pidx]);
 
                     old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                     if ((*it).new_value->type () == value::object_t)
-                      *old_value = *(dynamic_cast<object *>((*it).new_value));
+                      *old_value = *(dynamic_cast<mock_object *>((*it).new_value));
                     else
                       *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
 
@@ -269,7 +270,7 @@ namespace format
           { L"{ : }", 0, value::undefined_t, 0, FAIL_T },   // json::syntax_error
         };
 
-        object *o = nullptr;
+        mock_object *o = nullptr;
 
         TEST_IT_START
           for (int pidx = 0; pidx < 2; pidx++)
@@ -278,7 +279,7 @@ namespace format
 
               size_t charc = wcslen (startp);
 
-              o = new object (p[pidx]);
+              o = new mock_object (p[pidx]);
 
               const wchar_t *readp = o->_parse (startp);
 
@@ -346,7 +347,7 @@ namespace format
         TEST_IT_START
           const wchar_t *startp = (*it).startp;
 
-          object *o = new object ();
+          mock_object *o = new mock_object ();
 
           (void) o->_parse (startp);
 
@@ -373,7 +374,7 @@ namespace format
 
       TEST_F (object_test, operator_at_key)
       {
-        object o;
+        mock_object o;
 
         o._member_list.emplace (L"0", new boolean (true));
 
@@ -481,12 +482,12 @@ namespace format
           { L" \"foo\" : ", false, SKIP_T }, // FAIL: json::syntax_error
         };
 
-        object *o = nullptr;
+        mock_object *o = nullptr;
 
         TEST_IT_START
             const wchar_t *startp = (*it).startp;
 
-            o = new object (& p);
+            o = new mock_object (& p);
             o->_readp = startp;
 
             bool status = o->_pair ();
@@ -515,7 +516,7 @@ namespace format
 
       TEST_F (object_test, _clear)
       {
-        object o = L"{\"a\":true,\"b\":false}";
+        mock_object o = L"{\"a\":true,\"b\":false}";
         o._clear ();
 
         // Original assertion:
@@ -547,7 +548,7 @@ namespace format
 
         TEST_IT_START
 
-            object o = (*it).input;
+            mock_object o = (*it).input;
 
             // Original assertion:
             ///ASSERT_EQUAL_IDX ("object::str_length ()", (*it).length, o._str_length ());
@@ -594,7 +595,7 @@ namespace format
 
               size_t len = wcslen ((*it).output[pidx]);
 
-              object o (parent[pidx]);
+              mock_object o (parent[pidx]);
 
               if (o.parent ())
                 {
@@ -656,7 +657,7 @@ namespace format
 
       TEST_F (object_test, _assign_value_ptr_value_ptr)
       {
-        object o = L"{\"0\":false}";
+        mock_object o = L"{\"0\":false}";
 
         boolean *nv = new boolean (true);
 
@@ -679,8 +680,8 @@ namespace format
       TEST_F (object_test, _clone_const_value_ref)
       {
         //object src = L"{\"2\":2}";
-        object src = L"{\"2\":{\"3\":3}}";
-        object copy = L"{\"0\":0,\"1\":1}";
+        mock_object src = L"{\"2\":{\"3\":3}}";
+        mock_object copy = L"{\"0\":0,\"1\":1}";
 
         copy._clear ();
         (void) copy._clone (src);

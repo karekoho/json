@@ -242,7 +242,7 @@ namespace format
 
       TEST_F (string_test, assign_all_values)
       {
-        object_accessor object_parent;
+        mock_object object_parent;
 
         std::array<json *, 2> parents = {
           & object_parent,

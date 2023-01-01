@@ -198,7 +198,7 @@ namespace format
 
       TEST_F (array_test, assign_all_values)
       {
-        object_accessor object_parent;
+        mock_object object_parent;
 
         json *parents[] = {
           & object_parent,

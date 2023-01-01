@@ -320,7 +320,7 @@ namespace format
 
       TEST_F (json_test, _assign_to_parent)
       {
-        object_accessor object_parent;
+        mock_object object_parent;
         array_accessor array_parent;
 
         struct assert
@@ -333,7 +333,7 @@ namespace format
         };
 
         std::vector<struct assert > test = {
-          { L"ok", 0, { new object_accessor (& object_parent), new object_accessor (& array_parent) }, value::object_t, PASS_T },
+          { L"ok", 0, { new mock_object (& object_parent), new mock_object (& array_parent) }, value::object_t, PASS_T },
           { L"ak", 1, { new array_accessor (& object_parent), new array_accessor (& array_parent) }, value::array_t, PASS_T },
           { L"sk", 2, { new string_accessor (& object_parent, 3), new string_accessor (& array_parent, 3) }, value::string_t, PASS_T },
           { L"dk", 3, { new number_accessor (& object_parent), new number_accessor (& array_parent) }, value::number_t, PASS_T },

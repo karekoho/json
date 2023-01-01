@@ -56,7 +56,7 @@ namespace format
 
       TEST_F (undefined_test, assign_all_values)
       {
-        object_accessor object_parent;
+        mock_object object_parent;
 
         json *parents[] = {
           & object_parent,

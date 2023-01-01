@@ -65,7 +65,6 @@ using ::testing::FieldsAre;
 EXPECT_EQ (this->_errorc[EXPECTED], this->_errorc[ACTUAL]);
 #endif
 
-
 /**
  * @brief The unit_test class
  */
@@ -134,68 +133,7 @@ public:
   { _set_parent (parent); }
 };
 
-/**
- * @brief The object_accessor class
- */
-class object_accessor : public format::json::object
-{
-public:
-  /**
-   * @brief object_accessor
-   */
-  object_accessor () : object () {}
 
-  /**
-   * @brief object_accessor
-   * @param input
-   */
-  object_accessor (const wchar_t *input) : object (input) {}
-
-  /**
-   * @brief object_accessor
-   * @param parent
-   */
-  object_accessor (json *parent) : object (parent){}
-
-  /**
-   * @brief begin
-   * @return
-   */
-  std::unordered_map<std::wstring, value *>::iterator
-  begin ()
-  { return _member_list.begin (); }
-
-  /**
-   * @brief end
-   * @return
-   */
-  std::unordered_map<std::wstring, value *>::iterator
-  end ()
-  { return _member_list.end (); }
-
-  /**
-   * @brief clear
-   */
-  void
-  clear ()
-  { _clear (); }
-
-  /**
-   * @brief _clear
-   */
-  void
-  _clear ()
-  { _member_list.clear (); }
-
-  /**
-   * @brief assign
-   * @param ov
-   * @param nv
-   * @return
-   */
-  value & assign (value *ov, value *nv)
-  { return _assign (ov, nv); }
-};  // Class object_accessor
 
 /**
  * @brief The array_accessor class

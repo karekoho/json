@@ -102,7 +102,6 @@ namespace format
       class json_test__parse_Test;
       class json_test__to_string_Test;
       class json_test_make_value_Test;
-
       /**
        * @brief The mock_json class
        */
@@ -118,6 +117,84 @@ namespace format
         mock_json (array *a): json (a) {}
         mock_json (const json &other) : json (other) {}
       };// Class mock_json
+
+      class object_test__erase_Test;
+      class object_test_ctor_dtor_Test;
+      class object_test_assign_all_values_Test;
+      class object_test__parse_Test;
+      class object_test_key_Test;
+      class object_test_operator_at_key_Test;
+      class object_test__pair_Test;
+      class object_test__clear_Test;
+      class object_test__str_length_Test;
+      class object_test__to_string_Test;
+      class object_test__assign_value_ptr_value_ptr_Test;
+      class object_test__clone_const_value_ref_Test;
+      /**
+       * @brief The mock_object class
+       */
+      class mock_object : public format::json::object
+      {
+        friend class object_test__erase_Test;
+        friend class object_test_ctor_dtor_Test;
+        friend class object_test_assign_all_values_Test;
+        friend class object_test__parse_Test;
+        friend class object_test_key_Test;
+        friend class object_test_operator_at_key_Test;
+        friend class object_test__pair_Test;
+        friend class object_test__clear_Test;
+        friend class object_test__str_length_Test;
+        friend class object_test__to_string_Test;
+        friend class object_test__assign_value_ptr_value_ptr_Test;
+        friend class object_test__clone_const_value_ref_Test;
+
+      public:
+        mock_object () : object () {}
+
+        mock_object (const wchar_t *input) : object (input) {}
+
+        mock_object (json *parent) : object (parent) {}
+
+        mock_object (std::initializer_list<std::pair<std::wstring, value *> > il) : object (il) {}
+        /**
+         * @brief begin
+         * @return
+         */
+        std::unordered_map<std::wstring, value *>::iterator
+        begin ()
+        { return _member_list.begin (); }
+
+        /**
+         * @brief end
+         * @return
+         */
+        std::unordered_map<std::wstring, value *>::iterator
+        end ()
+        { return _member_list.end (); }
+
+        /**
+         * @brief clear
+         */
+        void
+        clear ()
+        { _clear (); }
+
+        /**
+         * @brief _clear
+         */
+        void
+        _clear ()
+        { _member_list.clear (); }
+
+        /**
+         * @brief assign
+         * @param ov
+         * @param nv
+         * @return
+         */
+        value & assign (value *ov, value *nv)
+        { return _assign (ov, nv); }
+      };  // Class mock_object
     } // Namespace test
   } // Namespace json
 } // Namespace format

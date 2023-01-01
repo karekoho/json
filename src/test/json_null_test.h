@@ -35,7 +35,7 @@ namespace format
         /// TODO: IF ov.parent: success
         /// TODO: ELSE: fail
 
-        object_accessor object_parent;
+        mock_object object_parent;
 
         json *parents[] = {
           & object_parent,
