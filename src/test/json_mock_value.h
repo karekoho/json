@@ -195,6 +195,95 @@ namespace format
         value & assign (value *ov, value *nv)
         { return _assign (ov, nv); }
       };  // Class mock_object
+
+      class array_test_ctor_dtor_Test;
+      class array_test__parse_Test;
+      class array_test_index_Test;
+      class array_test_assign_all_values_Test;
+      class array_test__to_string_Test;
+      class array_test_operator_at_key_Test;
+      class array_test_operator_at_index_Test;
+      class array_test__clear_Test;
+      class array_test_str_length_Test;
+      class array_test__erase_Test;
+      class array_test__assign_value_ptr_value_ptr_Test;
+      class array_test_operator_assign_wchar_t_ptr_Test;
+      /**
+       * @brief The mock_array class
+       */
+      class mock_array : public format::json::array
+      {
+              friend class test::array_test_ctor_dtor_Test;
+              friend class test::array_test__parse_Test;
+              friend class test::array_test_index_Test;
+              friend class test::array_test_assign_all_values_Test;
+              friend class test::array_test__to_string_Test;
+              friend class test::array_test_operator_at_key_Test;
+              friend class test::array_test_operator_at_index_Test;
+              friend class test::array_test__clear_Test;
+              friend class test::array_test_str_length_Test;
+              friend class test::array_test__erase_Test;
+              friend class test::array_test__assign_value_ptr_value_ptr_Test;
+              friend class test::array_test_operator_assign_wchar_t_ptr_Test;
+        public:
+
+        mock_array () : array () {}
+
+        mock_array (json *parent) : array (parent) {}
+
+        mock_array (const wchar_t *input) : array (input) {}
+
+        mock_array (std::initializer_list<value *> il) : array (il) {}
+
+        /**
+         * @brief push
+         * @param v
+         */
+        size_t push (format::json::value *v)
+        {
+          _element_list.push_back (v);
+          return _element_list.size () - 1;
+        }
+
+        /**
+         * @brief assign
+         * @param ov
+         * @param nv
+         * @return
+         */
+        value & assign (value *ov, value *nv)
+        { return _assign (ov, nv); }
+
+        /**
+         * @brief clear
+         */
+        void
+        clear ()
+        { _clear (); }
+
+        /**
+         * @brief _clear
+         */
+        void
+        _clear ()
+        { _element_list.clear (); }
+
+        /**
+         * @brief begin
+         * @return
+         */
+        std::vector<value *>::const_iterator
+        begin () const
+        { return _element_list.begin (); }
+
+        /**
+         * @brief end
+         * @return
+         */
+        std::vector<value *>::const_iterator
+        end () const
+        { return _element_list.end (); }
+      };  // Class mock_array
     } // Namespace test
   } // Namespace json
 } // Namespace format

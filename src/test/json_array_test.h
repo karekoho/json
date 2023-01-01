@@ -2,6 +2,7 @@
 #define JSON_ARRAY_TEST
 
 #include "unit_test.h"
+#include "json_mock_value.h"
 
 namespace format
 {
@@ -33,17 +34,17 @@ namespace format
       TEST_F (array_test, ctor_dtor)
       {
         const wchar_t * json_text = L"[ 1, [ 2, 3 ] ]";
-        array src = json_text;
+        mock_array src = json_text;
 
         json parent;
 
-        array a[] = {
-          array (),
-          array (L"[]"),
-          array (& parent),
-          array { new array { new number () } }, // [[0]]
-          array (json_text),
-          array (src) // 5.
+        mock_array a[] = {
+          mock_array (),
+          mock_array (L"[]"),
+          mock_array (& parent),
+          mock_array { new mock_array { new number () } }, // [[0]]
+          mock_array (json_text),
+          mock_array (src) // 5.
         };
   //      array src = L"[true]";
   //      array copy = src;
@@ -117,14 +118,14 @@ namespace format
         };
 
         json *p[] = { nullptr, new json () };
-        array *a = nullptr;
+        mock_array *a = nullptr;
 
         TEST_IT_START
             for (size_t pidx = 0; pidx < 2; pidx++)
               {
                 const wchar_t *startp = (*it).startp;
                 size_t charc = wcslen (startp);
-                a = new array (p[pidx]);
+                a = new mock_array (p[pidx]);
 
                 const wchar_t *readp = a->_parse (startp);
 
@@ -176,7 +177,7 @@ namespace format
 
         TEST_IT_START
           const wchar_t *startp = (*it).startp;
-          array *a = new array ();
+          mock_array *a = new mock_array ();
 
           (void) a->_parse (startp);
 
@@ -215,7 +216,7 @@ namespace format
           int assert_status[2];
         };
 
-        array a (L"[true,false]");
+        mock_array a (L"[true,false]");
 
         std::vector<struct assert > test = {
           { & a, value::array_t, L"key_2",  0, 1,  { PASS_T, PASS_T } },
@@ -226,7 +227,7 @@ namespace format
   //        { __VALUE[value::null_t], value::null_t, L"key_6",  0, 6, { PASS, PASS, FAIL } }
         };
 
-          array *old_value = nullptr;
+          mock_array *old_value = nullptr;
 
           for (size_t pidx = 0; pidx < 2; pidx++)
             {
@@ -240,11 +241,11 @@ namespace format
                       if ((*it).assert_status[pidx] > PASS_T) { this->_errorc[EXPECTED]++; }
 
                       /** old_value: value from value[key] */
-                      old_value = new array (parents[pidx]);
+                      old_value = new mock_array (parents[pidx]);
                       old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                       if ((*it).new_value->type () == value::array_t)
-                        *old_value = *(dynamic_cast<array *>((*it).new_value));
+                        *old_value = *(dynamic_cast<mock_array *>((*it).new_value));
                       else
                         *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
 
@@ -294,7 +295,7 @@ namespace format
 
       TEST_F (array_test, operator_at_key)
       {
-        array a;
+        mock_array a;
         a._element_list.push_back (new boolean (true));
 
         struct assert
@@ -354,7 +355,7 @@ namespace format
 
       TEST_F (array_test, operator_at_index)
       {
-        array a;
+        mock_array a;
         a._element_list.push_back (new boolean (true));
 
         struct assert
@@ -413,7 +414,7 @@ namespace format
 
       TEST_F (array_test, _clear)
       {
-        array a = L"[true, false]";
+        mock_array a = L"[true, false]";
         a._clear ();
 
         // Original assertion:
@@ -445,7 +446,7 @@ namespace format
 
         TEST_IT_START
 
-            array a = (*it).input;
+            mock_array a = (*it).input;
 
             // Original assertion:
             ///ASSERT_EQUAL_IDX ("a.strLength ()", (*it).length, a._str_length ());
@@ -458,7 +459,7 @@ namespace format
 
       TEST_F (array_test, _to_string)
       {
-        array p;
+        mock_array p;
 
         json *parent[] = {
           nullptr, & p
@@ -490,7 +491,7 @@ namespace format
 
                 size_t len = wcslen ((*it).output[pidx]);
 
-                array a;
+                mock_array a;
 
                 a._parent = parent[pidx];
 
@@ -545,7 +546,7 @@ namespace format
 
       TEST_F (array_test, _erase)
       {
-        array a;
+        mock_array a;
 
         value *v[3]= {
           new boolean (),
@@ -612,7 +613,7 @@ namespace format
 
       TEST_F (array_test, _assign_value_ptr_value_ptr)
       {
-        array a = L"[false]";
+        mock_array a = L"[false]";
 
         boolean *nv = new boolean (true);
 
@@ -630,8 +631,8 @@ namespace format
 
       TEST_F (array_test, operator_assign_wchar_t_ptr)
       {
-        array src = L"[1,[2,3]]";
-        array copy = L"[0,1,2]";
+        mock_array src = L"[1,[2,3]]";
+        mock_array copy = L"[0,1,2]";
 
         copy._clear ();
         (void) copy._clone (src);

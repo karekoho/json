@@ -135,79 +135,7 @@ public:
 
 
 
-/**
- * @brief The array_accessor class
- */
-class array_accessor : public format::json::array
-{
-  public:
 
-  /**
-   * @brief array_accessor
-   */
-  array_accessor () : array () {}
-
-  /**
-   * @brief array_accessor
-   * @param parent
-   */
-  array_accessor (json *parent) : array (parent) {}
-
-  /**
-   * @brief array_accessor
-   * @param input
-   */
-  array_accessor (const wchar_t *input) : array (input) {}
-
-  /**
-   * @brief push
-   * @param v
-   */
-  size_t push (format::json::value *v)
-  {
-    _element_list.push_back (v);
-    return _element_list.size () - 1;
-  }
-
-  /**
-   * @brief assign
-   * @param ov
-   * @param nv
-   * @return
-   */
-  value & assign (value *ov, value *nv)
-  { return _assign (ov, nv); }
-
-  /**
-   * @brief clear
-   */
-  void
-  clear ()
-  { _clear (); }
-
-  /**
-   * @brief _clear
-   */
-  void
-  _clear ()
-  { _element_list.clear (); }
-
-  /**
-   * @brief begin
-   * @return
-   */
-  std::vector<value *>::const_iterator
-  begin () const
-  { return _element_list.begin (); }
-
-  /**
-   * @brief end
-   * @return
-   */
-  std::vector<value *>::const_iterator
-  end () const
-  { return _element_list.end (); }
-};  // Class array_accessor
 
 /**
  * @brief The string_accessor class

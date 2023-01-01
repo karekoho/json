@@ -138,7 +138,7 @@ namespace format
       }
 
       TEST_F (array_iterator_test, begin_end) {
-        array_accessor a = L"[0,1]";
+        mock_array a = L"[0,1]";
 
         array::const_iterator begin (a.begin ());
         array::const_iterator end (a.end ());
