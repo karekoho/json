@@ -7,31 +7,13 @@ namespace format
 {
   namespace json
   {
-    #ifdef UNIT_TEST
-      namespace test
-      {
-        class string_test;
-        class string_test__string_Test;
-        class string_test_ctor_dtor_Test;
-        class string_test_assign_all_values_Test;
-        class string_test__clone_const_value_ref_Test;
-      }
-    #endif
+
     /**
      * @brief The string class
      */
     class string : public leaf
     {
       friend string * __call_string (json *parent, size_t charc);
-
-    #ifdef UNIT_TEST
-      friend class test::string_test;
-      friend class test::string_test__string_Test;
-      friend class test::string_test_ctor_dtor_Test;
-      friend class test::string_test_assign_all_values_Test;
-      friend class test::string_test__clone_const_value_ref_Test;
-    #endif
-
       public:
       /**
        * @brief String

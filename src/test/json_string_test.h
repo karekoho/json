@@ -2,6 +2,7 @@
 #define JSON_STRING_TEST_H
 
 #include "unit_test.h"
+#include "json_mock_value.h"
 
 namespace format
 {
@@ -58,7 +59,7 @@ namespace format
             const wchar_t *startp = (*it).startp;
 
             wchar_t endc = 0;
-            string r;
+            mock_string r;
             r._readp = startp;
             long _make_value_charc = r._string (endc); // This is how _make_value gets string length
 
@@ -69,7 +70,7 @@ namespace format
             ASSERT_THAT (_make_value_charc, Eq ((*it).charc[0]))
               << ERR_IDX_MSG << _idx[0];
 
-            string *s = new string (& p, (*it).charc[0]);
+            mock_string *s = new mock_string (& p, (*it).charc[0]);
 
             // Original assertion:
             ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("s->get ()", (size_t) 0, wcslen (s->get ()));
@@ -139,11 +140,11 @@ namespace format
                  { L"\u001F", nullptr, 0, 0, (wchar_t) 0, FAIL_T },
              };
 
-             string *s = nullptr;
+             mock_string *s = nullptr;
 
              TEST_IT_START
 
-                   s = new string ((*it).startp);
+                   s = new mock_string ((*it).startp);
 
                    // Original assertion:
                    ///ASSERT_EQUAL_IDX ("s->_str_length ()", (*it).charc, s->_str_length ());
@@ -177,7 +178,7 @@ namespace format
               << ERR_IDX_MSG << _idx[0];
 
              {
-               string s;
+               mock_string s;
                // Original assertion:
                ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("string _str_length", (size_t) 2, s._str_length ());
                ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("string length", (size_t) 0, s.length ());
@@ -199,18 +200,18 @@ namespace format
       {
         json parent;
 
-        string src[] = {
-          string (),
-          string (L"x"),
-          string (& parent, 1),
+        mock_string src[] = {
+          mock_string (),
+          mock_string (L"x"),
+          mock_string (& parent, 1),
         };
 
         // TODO: To be clearer, first test every constructor and copies, then one as<> () test is enough
         // TODO: what is the correct place for these?
-        json j = new object { { L"0", new string () },
-                              { L"1", new string (L"x") },
-                              { L"2", new string (& parent, 1) }, // stringify () --> Segmentation fault: 11
-                              { L"3", new string (src[1]) } // copy
+        json j = new object { { L"0", new mock_string () },
+                              { L"1", new mock_string (L"x") },
+                              { L"2", new mock_string (& parent, 1) }, // stringify () --> Segmentation fault: 11
+                              { L"3", new mock_string (src[1]) } // copy
                             };
 
         // Original assertion:
@@ -259,7 +260,7 @@ namespace format
           int assert_status[3];
          };
 
-         string s (L"xxx");
+         mock_string s (L"xxx");
 
          std::vector<struct assert > test = {
           /// @note operator =(const wchar_t * const s) removed
@@ -267,7 +268,7 @@ namespace format
           // { __VALUE[value::number_t], value::number_t, L"1",  0, 2, { PASS, FAIL } },
          };
 
-         string *old_value = nullptr;
+         mock_string *old_value = nullptr;
 
          for (size_t pidx = 0; pidx < parents.size () ; pidx++)
             {
@@ -281,12 +282,12 @@ namespace format
                       if ((*it).assert_status[pidx] > PASS_T) { this->_errorc[EXPECTED]++; }
 
                       /** old_value: value from Value[key] */
-                      old_value = new string (parents[pidx], 0);
+                      old_value = new mock_string (parents[pidx], 0);
 
                       old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                       if ((*it).new_value->type () == value::string_t)
-                        *old_value = *(dynamic_cast<string *>((*it).new_value));
+                        *old_value = *(dynamic_cast<mock_string *>((*it).new_value));
                       else
                         *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
 
@@ -352,7 +353,7 @@ namespace format
 
         TEST_IT_START
 
-          string s;
+          mock_string s;
           s._readp = (*it).input;
           //long charc = s.__string (endc);
           //ASSERT_EQUAL_IDX ("charc", (*it).charc, charc);
@@ -360,53 +361,10 @@ namespace format
         TEST_IT_END
       }
 
-      /** @note removed */
-      TEST_F (string_test, operator_assign_const_wchar_t_ptr)
-      {
-        /**
-        json parent;
-
-        string *s = new string (L"xx");
-        *s = L"x";
-
-        // Original assertion:
-        ///CPPUNIT_ASSERT_MESSAGE ("s.get () == \"x\"", s->get () == std::wstring (L"x"));
-        ///
-        ASSERT_THAT (s->get (), StrEq (L"x"));
-
-        {
-          // Testing assignment via copy, find out a direct way... propably ok
-          json j = new object { { L"0", new string (*s) } };
-
-          // Original assertion:
-          ///CPPUNIT_ASSERT_MESSAGE ("s.get () == \"x\"", j[L"0"].as<const wchar_t *> () == std::wstring (L"x"));
-          ///
-          ASSERT_THAT (j[L"0"].as<const wchar_t *> (), StrEq (L"x"));
-        }
-
-        parent[L"0"] = s;   // s->_parent == parent
-        parent[L"0"] = L"xxx";
-
-        // Original assertion:
-        ///CPPUNIT_ASSERT_MESSAGE ("(parent[L\"0\"] == \"xxx\"", s->get () == std::wstring (L"xxx"));
-        ///
-        ASSERT_THAT (s->get (), StrEq (L"xxx"));
-
-        {
-          // Testing assignment via copy, find out a direct way... propably ok
-          json j = new object { { L"0", new string (*s) } };
-
-          // Original assertion:
-          ///CPPUNIT_ASSERT_MESSAGE ("s.get () == \"xxx\"",j[L"0"].as<const wchar_t *> () == std::wstring (L"xxx"));
-          ///
-          ASSERT_THAT (j[L"0"].as<const wchar_t *> (), StrEq (L"xxx"));
-        } */
-      }
-
       TEST_F (string_test, _clone_const_value_ref)
       {
-        string src = L"xxx";
-        string copy (src);
+        mock_string src = L"xxx";
+        mock_string copy (src);
         // string copy;
         // (void) copy._clone (src); // will not work for test as string
 
@@ -425,12 +383,12 @@ namespace format
         ASSERT_THAT (copy._to_string (), StrEq (L"xxx"));
 
         {
-          string src[] = {
-            string (),
-            string (L""),
+          mock_string src[] = {
+            mock_string (),
+            mock_string (L""),
           };
 
-          string copy[] = {
+          mock_string copy[] = {
             src[0],
             src[1]
           };
@@ -460,7 +418,7 @@ namespace format
         }
 
         // Test copy as<> ()
-        json j = new object { { L"0", new string (copy) } }; // copy of copy
+        json j = new object { { L"0", new mock_string (copy) } }; // copy of copy
 
         // Original assertion:
         ///CPPUNIT_ASSERT_MESSAGE ("copy copy as string == \"xxx\"", j[L"0"].as<const wchar_t *> () == std::wstring (L"xxx"));

@@ -284,6 +284,33 @@ namespace format
         end () const
         { return _element_list.end (); }
       };  // Class mock_array
+
+      class string_test;
+      class string_test__string_Test;
+      class string_test_ctor_dtor_Test;
+      class string_test_assign_all_values_Test;
+      class string_test__clone_const_value_ref_Test;
+      /**
+       * @brief The string_accessor class
+       */
+      class mock_string : public format::json::string
+      {
+        friend class test::string_test;
+        friend class test::string_test__string_Test;
+        friend class test::string_test_ctor_dtor_Test;
+        friend class test::string_test_assign_all_values_Test;
+        friend class test::string_test__clone_const_value_ref_Test;
+
+      public:
+        mock_string () : string () {}
+
+        mock_string (const wchar_t * const string_text) : string (string_text) {}
+
+        mock_string (const mock_string & other) : string (other) {}
+
+        mock_string (format::json::json *parent, size_t charc) : string (parent,charc) {}
+      };
+
     } // Namespace test
   } // Namespace json
 } // Namespace format

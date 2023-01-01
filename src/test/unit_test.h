@@ -121,36 +121,16 @@ protected:
 
 /**
  * @brief The value_accessor class
- */
+ *
 class value_accessor : public format::json::value
 {
 public:
-  /**
-   * @brief set_parent
-   * @param parent
-   */
+
   void set_parent (format::json::json *parent)
   { _set_parent (parent); }
-};
+};*/
 
 
-
-
-
-/**
- * @brief The string_accessor class
- */
-class string_accessor : public format::json::string
-{
-public:
-  /**
-   * @brief string_accessor
-   * @param parent
-   * @param charc
-   */
-  string_accessor (format::json::json *parent, size_t charc)
-    : string (parent,charc){}
-};
 
 /**
  * @brief The number_accessor class
