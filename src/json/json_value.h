@@ -11,19 +11,6 @@ namespace format
 {
   namespace json
   {
-    #ifdef UNIT_TEST
-      namespace test
-      {
-        class value_test__lookahead_Test;
-        class value_test__string_Test;
-        class value_test__is_literal_Test;
-        class value_test__str_append_Test;
-        class value_test__quote_value_Test;
-        class number_test__digits_Test;
-        class number_test__frag_Test;
-        class number_test__exp_Test;
-      }
-    #endif
     #define UNEXPECTED_END_OF_INPUT         "Unexpected end of JSON input"
     #define UNEXPECTED_START_OF_INPUT       "Unexpected start of JSON input"
     #define UNEXPECTED_TOKEN                "Unexpected token "
@@ -43,16 +30,6 @@ namespace format
     class undefined;
     class value
     {
-      #ifdef UNIT_TEST
-        friend class test::value_test__lookahead_Test;
-        friend class test::value_test__string_Test;
-        friend class test::value_test__is_literal_Test;
-        friend class test::value_test__str_append_Test;
-        friend class test::value_test__quote_value_Test;
-        friend class test::number_test__digits_Test;
-        friend class test::number_test__frag_Test;
-        friend class test::number_test__exp_Test;
-      #endif
       public:
       /**
        * @brief JSON types and internal types

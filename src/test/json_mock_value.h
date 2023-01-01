@@ -7,85 +7,95 @@ namespace format
 {
   namespace json
   {
-    class mock_value : public value
+    namespace test
     {
-      public:
+      class value_test__lookahead_Test;
+      class value_test__string_Test;
+      class value_test__is_literal_Test;
+      class value_test__str_append_Test;
+      class value_test__quote_value_Test;
 
-          mock_value (json *parent = nullptr)
-            : value (parent)
-          {
-          }
+      class mock_value : public value
+      {
+        friend class value_test__lookahead_Test;
+        friend class value_test__string_Test;
+        friend class value_test__is_literal_Test;
+        friend class value_test__str_append_Test;
+        friend class value_test__quote_value_Test;
 
-          virtual ~
-          mock_value () override
-          {
-          }
+        public:
+        mock_value (json *parent = nullptr) : value (parent)
+        {}
 
-          virtual const wchar_t *
-          _parse (const wchar_t *readp) override
-          { return readp; }
+        virtual ~
+        mock_value () override
+        {}
 
-          virtual value &
-          at (const wchar_t *) const
-          { return *(new format::json::undefined ()); }
+        virtual const wchar_t *
+        _parse (const wchar_t *readp) override
+        { return readp; }
 
-          virtual value &
-          at (size_t) const
-          { return *(new format::json::undefined ()); }
+        virtual value &
+        at (const wchar_t *) const
+        { return *(new format::json::undefined ()); }
 
-          virtual value::value_t
-          type () const noexcept override
-          { return value::value_t::undefined_t; }
+        virtual value &
+        at (size_t) const
+        { return *(new format::json::undefined ()); }
 
-          virtual size_t
-          size () const noexcept override
-          { return 0; }
+        virtual value::value_t
+        type () const noexcept override
+        { return value::value_t::undefined_t; }
 
-          virtual value *
-          clone () const override
-          { return nullptr; }
+        virtual size_t
+        size () const noexcept override
+        { return 0; }
 
-          virtual value &
-          _assign (value *, value *) override
-          { return *this; }
+        virtual value *
+        clone () const override
+        { return nullptr; }
 
-          virtual size_t
-          _str_length () const noexcept override
-          { return 0; }
+        virtual value &
+        _assign (value *, value *) override
+        { return *this; }
 
-          virtual const wchar_t *
-          _to_string (wchar_t *) const override
-          { return L""; }
+        virtual size_t
+        _str_length () const noexcept override
+        { return 0; }
 
-          virtual value &
-          _erase (const value &) noexcept override
-          { return *this; }
+        virtual const wchar_t *
+        _to_string (wchar_t *) const override
+        { return L""; }
 
-      protected:
+        virtual value &
+        _erase (const value &) noexcept override
+        { return *this; }
 
-          virtual  value &
-          _at (const wchar_t *) override
-          { return *(new format::json::undefined ()); }
+        protected:
+        virtual  value &
+        _at (const wchar_t *) override
+        { return *(new format::json::undefined ()); }
 
-          virtual  value &
-          _at (size_t) override
-          { return *(new format::json::undefined ()); }
+        virtual  value &
+        _at (size_t) override
+        { return *(new format::json::undefined ()); }
 
-          virtual  const value &
-          _at (const wchar_t *) const override
-          { return *(new format::json::undefined ()); }
+        virtual  const value &
+        _at (const wchar_t *) const override
+        { return *(new format::json::undefined ()); }
 
-          virtual  const value &
-          _at (size_t) const override
-          { return *(new format::json::undefined ()); }
+        virtual  const value &
+        _at (size_t) const override
+        { return *(new format::json::undefined ()); }
 
-          virtual void _clear () override
-          {}
+        virtual void _clear () override
+        {}
 
-          virtual value *
-          _clone (const value &) override
-          { return this; }
+        virtual value *
+        _clone (const value &) override
+        { return this; }
       };
+    }
   }
 }
 

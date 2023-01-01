@@ -1,10 +1,8 @@
-#ifndef JSON_INTERFACE_TEST_H
-#define JSON_INTERFACE_TEST_H
-
-#include "json_value_test_interface.h"
-#include "json_mock_value.h"
+#ifndef JSON_VALUE_TEST_H
+#define JSON_VALUE_TEST_H
 
 #include "unit_test.h"
+#include "json_mock_value.h"
 
 namespace format
 {
@@ -274,18 +272,18 @@ namespace format
       {
         struct assert {
             const wchar_t *startp;
-            value::_literal value_type;
+            mock_value::_literal value_type;
             int assert_status;
         };
 
         std::vector<struct assert> test = {
-          { L"", value::_literal::no_literal, PASS_T },
-          { L"   ", value::_literal::no_literal, PASS_T },
-          { L"xxx   ", value::_literal::no_literal, PASS_T },
-          { L"xxxxxx   ", value::_literal::no_literal, PASS_T },
-          { L"true    ", value::_literal::true_value, PASS_T },
-          { L"false    ", value::_literal::false_value, PASS_T },
-          { L"null   ", value::_literal::null_value, PASS_T }
+          { L"", mock_value::_literal::no_literal, PASS_T },
+          { L"   ", mock_value::_literal::no_literal, PASS_T },
+          { L"xxx   ", mock_value::_literal::no_literal, PASS_T },
+          { L"xxxxxx   ", mock_value::_literal::no_literal, PASS_T },
+          { L"true    ", mock_value::_literal::true_value, PASS_T },
+          { L"false    ", mock_value::_literal::false_value, PASS_T },
+          { L"null   ", mock_value::_literal::null_value, PASS_T }
         };
 
         TEST_IT_START
@@ -296,7 +294,7 @@ namespace format
 
             m._readp = startp;
 
-            value::_literal ltr = m._is_literal ();
+            mock_value::_literal ltr = m._is_literal ();
 
             // Original assertion:
             ///ASSERT_EQUAL_IDX ("literal value", (*it).value_type , ltr);
@@ -327,7 +325,7 @@ namespace format
 
         TEST_IT_START
 
-            dst = value::_str_append (dst, (*it).src, (*it).charc[0]);
+            dst = mock_value::_str_append (dst, (*it).src, (*it).charc[0]);
 
             // Original assertion:
             ///ASSERT_EQUAL_IDX ("dst", startp + (*it).charc[1], dst);
@@ -373,7 +371,7 @@ namespace format
             //const wchar_t *str = v->_to_string ();
             //size_t len = v->_str_length ();
 
-            value::_quote_value (dst, v);
+            mock_value::_quote_value (dst, v);
 
             // Original assertion:
             ///ASSERT_EQUAL_IDX ("startp", 0, wcscmp ((*it).quoted_string, startp));
@@ -550,4 +548,4 @@ namespace format
     }
   }
 }
-#endif // JSON_INTERFACE_TEST_H
+#endif // JSON_VALUE_TEST_H

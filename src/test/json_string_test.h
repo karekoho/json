@@ -1,7 +1,6 @@
 #ifndef JSON_STRING_TEST_H
 #define JSON_STRING_TEST_H
 
-//#include "json_leaf_test.h"
 #include "unit_test.h"
 
 namespace format
