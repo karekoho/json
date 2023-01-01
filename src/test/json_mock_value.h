@@ -14,7 +14,9 @@ namespace format
       class value_test__is_literal_Test;
       class value_test__str_append_Test;
       class value_test__quote_value_Test;
-
+      /**
+       * @brief The mock_value class
+       */
       class mock_value : public value
       {
         friend class value_test__lookahead_Test;
@@ -94,9 +96,30 @@ namespace format
         virtual value *
         _clone (const value &) override
         { return this; }
-      };
-    }
-  }
-}
+
+      }; // Class mock_value
+
+      class json_test__parse_Test;
+      class json_test__to_string_Test;
+      class json_test_make_value_Test;
+
+      /**
+       * @brief The mock_json class
+       */
+      class mock_json : public json
+      {
+        friend class json_test__parse_Test;
+        friend class json_test__to_string_Test;
+        friend class json_test_make_value_Test;
+        public:
+        mock_json () : json () {}
+        mock_json (const wchar_t * const json_text) : json (json_text){}
+        mock_json (object *o) : json (o) {}
+        mock_json (array *a): json (a) {}
+        mock_json (const json &other) : json (other) {}
+      };// Class mock_json
+    } // Namespace test
+  } // Namespace json
+} // Namespace format
 
 #endif // MOCK_VALUE_H

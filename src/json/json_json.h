@@ -13,18 +13,6 @@ namespace format
 {
   namespace json
   {
-    #ifdef UNIT_TEST
-      namespace test
-      {
-        class json_test__parse_Test;
-        class json_test__to_string_Test;
-        class json_test_make_value_Test;
-        class json_test_operator_assign_object_ptr_Test;
-        class json_test_operator_assign_array_ptr_Test;
-      }
-
-    #endif
-
     #define OFFSET  0
     #define BEGIN  1
 
@@ -37,14 +25,6 @@ namespace format
      */
     class json : public value
     {
-      #ifdef UNIT_TEST
-        friend class test::json_test__parse_Test;
-        friend class test::json_test__to_string_Test;
-        friend class test::json_test_make_value_Test;
-        friend class test::json_test_operator_assign_object_ptr_Test;
-        friend class test::json_test_operator_assign_array_ptr_Test;
-      #endif
-
     public:
       /**
        * @brief json
@@ -148,6 +128,12 @@ namespace format
        */
       value &
       operator =(array *a);
+
+#ifdef UNIT_TEST
+      inline value *
+      root ()
+      { return __root; }
+#endif
 
     protected:
 

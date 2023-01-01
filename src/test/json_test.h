@@ -175,13 +175,13 @@ namespace format
             { L" truee ", value::value_t::undefined_t, FAIL_T },
         };
 
-        json *j = nullptr;
+        mock_json *j = nullptr;
 
         TEST_IT_START
               const wchar_t *startp = (*it).starp;
               size_t charc = wcslen (startp);
 
-              j = new json ();
+              j = new mock_json ();
 
               const wchar_t * readp = j->_parse (startp);
 
@@ -238,7 +238,7 @@ namespace format
 
         TEST_IT_START
 
-          json j = (*it).input;
+          mock_json j = (*it).input;
 
           size_t len[2] = {
             wcslen ((*it).output[0]),
@@ -269,7 +269,7 @@ namespace format
 
       TEST_F (json_test, make_value)
       {
-        json j;
+        mock_json j;
 
         struct assert
         {
@@ -547,7 +547,7 @@ namespace format
         // Original assertion:
         ///CPPUNIT_ASSERT_MESSAGE ("o[1] == j.__root", o[1] == j.__root);
         ///
-        ASSERT_THAT (j.__root, Eq (o[1]));
+        ASSERT_THAT (j.root (), Eq (o[1]));
       }
 
       TEST_F (json_test, operator_assign_array_ptr)
@@ -560,7 +560,7 @@ namespace format
         // Original assertion:
         ///CPPUNIT_ASSERT_MESSAGE ("a[1] == j.__root", a[1] == j.__root);
         ///
-        ASSERT_THAT (j.__root, Eq (a[1]));
+        ASSERT_THAT (j.root (), Eq (a[1]));
       }
     }
   /**
