@@ -2,6 +2,7 @@
 #define JSON_UNDEFINED_TEST
 
 #include "unit_test.h"
+#include "json_mock_value.h"
 
 namespace format
 {
@@ -76,7 +77,7 @@ namespace format
           { __VALUE[value::null_t], value::null_t, L"key_7", 1, { PASS_T, FAIL_T } }
         };
 
-        unique_undefined *old_value = nullptr;
+        mock_unique_undefined *old_value = nullptr;
 
         for (size_t pidx = 0; pidx < 2; pidx++)
           {
@@ -89,7 +90,7 @@ namespace format
                     if ((*it).assert_status[pidx] > PASS_T) { this->_errorc[EXPECTED]++; }
 
                     /** old_value: value from value[key] */
-                    old_value = new unique_undefined (parents[pidx]);
+                    old_value = new mock_unique_undefined (parents[pidx]);
                     old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                     *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
@@ -139,7 +140,7 @@ namespace format
 
       TEST_F (undefined_test, str_length)
       {
-        undefined u;
+        mock_undefined u;
 
         // Original assertion:
         ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("undefined::str_length ()", static_cast<size_t> (0), u._str_length ());
@@ -149,7 +150,7 @@ namespace format
 
       TEST_F (undefined_test, _to_string)
       {
-        undefined u;
+        mock_undefined u;
 
         // Original assertion:
         ///CPPUNIT_ASSERT_MESSAGE ("undefined::str_value ()", wcslen (u._to_string ()) == 0);

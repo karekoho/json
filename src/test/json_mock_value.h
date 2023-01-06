@@ -26,12 +26,9 @@ namespace format
         friend class value_test__quote_value_Test;
 
         public:
-        mock_value (json *parent = nullptr) : value (parent)
-        {}
 
-        virtual ~
-        mock_value () override
-        {}
+        mock_value (json *parent = nullptr) : value (parent) {}
+        virtual ~ mock_value () override {}
 
         virtual const wchar_t *
         _parse (const wchar_t *readp) override
@@ -110,7 +107,9 @@ namespace format
         friend class json_test__parse_Test;
         friend class json_test__to_string_Test;
         friend class json_test_make_value_Test;
+
         public:
+
         mock_json () : json () {}
         mock_json (const wchar_t * const json_text) : json (json_text){}
         mock_json (object *o) : json (o) {}
@@ -149,12 +148,10 @@ namespace format
         friend class object_test__clone_const_value_ref_Test;
 
       public:
+
         mock_object () : object () {}
-
         mock_object (const wchar_t *input) : object (input) {}
-
         mock_object (json *parent) : object (parent) {}
-
         mock_object (std::initializer_list<std::pair<std::wstring, value *> > il) : object (il) {}
         /**
          * @brief begin
@@ -213,26 +210,24 @@ namespace format
        */
       class mock_array : public format::json::array
       {
-              friend class test::array_test_ctor_dtor_Test;
-              friend class test::array_test__parse_Test;
-              friend class test::array_test_index_Test;
-              friend class test::array_test_assign_all_values_Test;
-              friend class test::array_test__to_string_Test;
-              friend class test::array_test_operator_at_key_Test;
-              friend class test::array_test_operator_at_index_Test;
-              friend class test::array_test__clear_Test;
-              friend class test::array_test_str_length_Test;
-              friend class test::array_test__erase_Test;
-              friend class test::array_test__assign_value_ptr_value_ptr_Test;
-              friend class test::array_test_operator_assign_wchar_t_ptr_Test;
+        friend class test::array_test_ctor_dtor_Test;
+        friend class test::array_test__parse_Test;
+        friend class test::array_test_index_Test;
+        friend class test::array_test_assign_all_values_Test;
+        friend class test::array_test__to_string_Test;
+        friend class test::array_test_operator_at_key_Test;
+        friend class test::array_test_operator_at_index_Test;
+        friend class test::array_test__clear_Test;
+        friend class test::array_test_str_length_Test;
+        friend class test::array_test__erase_Test;
+        friend class test::array_test__assign_value_ptr_value_ptr_Test;
+        friend class test::array_test_operator_assign_wchar_t_ptr_Test;
+
         public:
 
         mock_array () : array () {}
-
         mock_array (json *parent) : array (parent) {}
-
         mock_array (const wchar_t *input) : array (input) {}
-
         mock_array (std::initializer_list<value *> il) : array (il) {}
 
         /**
@@ -302,12 +297,10 @@ namespace format
         friend class test::string_test__clone_const_value_ref_Test;
 
       public:
+
         mock_string () : string () {}
-
         mock_string (const wchar_t * const string_text) : string (string_text) {}
-
         mock_string (const mock_string & other) : string (other) {}
-
         mock_string (format::json::json *parent, size_t charc) : string (parent,charc) {}
       };
 
@@ -350,20 +343,14 @@ namespace format
         friend class number_test__clone_const_value_ref_Test;
 
       public:
+
         mock_number () : number () {}
-
         mock_number (int i): number (i) {}
-
         mock_number (long long ll): number (ll) {}
-
         mock_number (float f): number (f) {}
-
         mock_number (long double ld): number (ld) {}
-
         mock_number (const number &other): number (other) {}
-
         mock_number (const wchar_t * const json_text) : number (json_text) {}
-
         mock_number (format::json::json *parent) : number (parent){}
       };
 
@@ -373,13 +360,14 @@ namespace format
       /**
        * @brief The mock_null class
        */
-      class mock_null: public format::json::null
+      class mock_null : public format::json::null
       {
         friend class null_test_ctor_dtor_Test;
         friend class null_test__clone_const_value_ref_Test;
         friend class null_test__parse_Test;
 
       public:
+
         mock_null () : null () {}
         mock_null (const mock_null &other) = default;
         mock_null (format::json::json *parent): null (parent){}
@@ -393,7 +381,7 @@ namespace format
       /**
        * @brief The mock_boolean class
        */
-      class mock_boolean: public format::json::boolean
+      class mock_boolean : public format::json::boolean
       {
         friend class boolean_test_ctor_dtor_Test;
         friend class boolean_test_assign_all_values_Test;
@@ -402,10 +390,41 @@ namespace format
         friend class boolean_test__to_string_Test;
 
       public:
+
         mock_boolean (format::json::json *parent, bool b): boolean (parent, b) {}
         mock_boolean () : boolean (false) { }
         mock_boolean (const bool value) : boolean (value) { }
         mock_boolean (const boolean & other) : boolean (other) { }
+      };
+
+      class undefined_test_ctor_dtor_Test;
+      class undefined_test_assign_all_values_Test;
+      class undefined_test__parse_Test;
+      class undefined_test_str_length_Test;
+      class undefined_test__to_string_Test;
+      /**
+       * @brief The mock_undefined class
+       */
+      class mock_undefined : public format::json::undefined
+      {
+        friend class undefined_test_str_length_Test;
+        friend class undefined_test__to_string_Test;
+
+      public:
+
+        mock_undefined () : undefined () {}
+        mock_undefined (json *parent) : undefined (parent) {}
+        mock_undefined (const mock_undefined &other) = default;
+      };
+
+      class mock_unique_undefined : public mock_undefined
+      {
+        friend class undefined_test_assign_all_values_Test;
+
+      public:
+
+        mock_unique_undefined () : mock_undefined () {}
+        mock_unique_undefined (json *parent) : mock_undefined (parent) {}
       };
 
     } // Namespace test
