@@ -8,18 +8,11 @@ namespace format
 {
   namespace json
   {
-    #ifdef UNIT_TEST
-      class json_leaf_test;
-    #endif
-
     /**
      * @brief The leaf class
      */
     class leaf : public value
     {
-    #ifdef UNIT_TEST
-      friend class json_leaf_test;
-    #endif
     public:
       /**
        * @brief Leaf
