@@ -311,6 +311,62 @@ namespace format
         mock_string (format::json::json *parent, size_t charc) : string (parent,charc) {}
       };
 
+      class number_test_ctor_dtor_Test;
+      class number_test__to_string_Test;
+      class number_test__parse_Test;
+      class number_test__digits_Test;
+      class number_test__frag_Test;
+      class number_test__exp_Test;
+      class number_test__atoll_Test;
+      class number_test__atof_Test;
+      class number_test__calculate_Test;
+      class number_test_assign_all_values_Test;
+      class number_test__str_length_Test;
+      class number_test__clear_Test;
+      class number_test__integral_length_Test;
+      class number_test__to_string_ll_Test;
+      class number_test__to_string_ld_Test;
+      class number_test__clone_const_value_ref_Test;
+      /**
+       * @brief The number_accessor class
+       */
+      class mock_number : public format::json::number
+      {
+        friend class number_test_ctor_dtor_Test;
+        friend class number_test__to_string_Test;
+        friend class number_test__parse_Test;
+        friend class number_test__digits_Test;
+        friend class number_test__frag_Test;
+        friend class number_test__exp_Test;
+        friend class number_test__atoll_Test;
+        friend class number_test__atof_Test;
+        friend class number_test__calculate_Test;
+        friend class number_test_assign_all_values_Test;
+        friend class number_test__str_length_Test;
+        friend class number_test__clear_Test;
+        friend class number_test__integral_length_Test;
+        friend class number_test__to_string_ll_Test;
+        friend class number_test__to_string_ld_Test;
+        friend class number_test__clone_const_value_ref_Test;
+
+      public:
+        mock_number () : number () {}
+
+        mock_number (int i): number (i) {}
+
+        mock_number (long long ll): number (ll) {}
+
+        mock_number (float f): number (f) {}
+
+        mock_number (long double ld): number (ld) {}
+
+        mock_number (const number &other): number (other) {}
+
+        mock_number (const wchar_t * const json_text) : number (json_text) {}
+
+        mock_number (format::json::json *parent) : number (parent){}
+      };
+
     } // Namespace test
   } // Namespace json
 } // Namespace format

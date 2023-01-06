@@ -2,6 +2,7 @@
 #define JSON_NUMBER_TEST
 
 #include "unit_test.h"
+#include "json_mock_value.h"
 #include <cstring>
 #include <climits>
 
@@ -33,6 +34,7 @@ namespace format
       // //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_operator_long", &json_number_test::test_operator_assign_long));
       // //s->addTest (new CppUnit::TestCaller<json_number_test> ("test_assign_operator_double", &json_number_test::test_operator_assign_double));
 
+
       class number_test : public unit_test {};
 
       TEST_F (number_test, ctor_dtor)
@@ -44,22 +46,22 @@ namespace format
         // SEE: https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
         //long double delta = std::numeric_limits<long double>::epsilon ();
 
-        number src[] = {
-          number (),
-          number (100),
-          number (max_double),
-          number (L"100"),
-          number (L"100.1"),
-          number (& parent),
+        mock_number src[] = {
+          mock_number (),
+          mock_number (100),
+          mock_number (max_double),
+          mock_number (L"100"),
+          mock_number (L"100.1"),
+          mock_number (& parent),
         };
 
-        number copy[] = {
-            number (src[0]),
-            number (src[1]),
-            number (src[2]),
-            number (src[3]),
-            number (src[4]),
-            number (src[5])
+        mock_number copy[] = {
+            mock_number (src[0]),
+            mock_number (src[1]),
+            mock_number (src[2]),
+            mock_number (src[3]),
+            mock_number (src[4]),
+            mock_number (src[5])
         };
 
         // Original assertion:
@@ -164,12 +166,12 @@ namespace format
 
         TEST_IT_START
 
-          number n[5] = {
-            number ((long long) (*it).d),
-            number ((long double) (*it).d),
-            number ((*it).s[0]),
-            number ((*it).s[1]),
-            number ((*it).s[2]),
+          mock_number n[5] = {
+            mock_number ((long long) (*it).d),
+            mock_number ((long double) (*it).d),
+            mock_number ((*it).s[0]),
+            mock_number ((*it).s[1]),
+            mock_number ((*it).s[2]),
           };
 
         if (! MEM_DEBUG)
@@ -250,7 +252,7 @@ namespace format
 
         for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
           {
-            number n;
+            mock_number n;
             try
               {
                 if ((*it).assert_status == SKIP_T) { continue; }
@@ -312,7 +314,7 @@ namespace format
 
         TEST_IT_START
 
-            number n;
+            mock_number n;
             const wchar_t *startp = (*it).starp;
 
             n._readp = startp;
@@ -359,7 +361,7 @@ namespace format
 
         for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
           {
-            number n;
+            mock_number n;
             try
               {
                 if ((*it).assert_status == SKIP_T) { continue; }
@@ -427,7 +429,7 @@ namespace format
 
         for (auto it = test.begin (); it != test.end (); it++, this->_idx[0]++)
           {
-            number n;
+            mock_number n;
             try
               {
                 if ((*it).assert_status == SKIP_T) { continue; }
@@ -485,7 +487,7 @@ namespace format
 
       TEST_F (number_test, _atof)
       {
-        number n;
+        mock_number n;
 
         struct assert {
             const wchar_t *starp;
@@ -514,7 +516,7 @@ namespace format
 
       TEST_F (number_test, _atoll)
       {
-        number n;
+        mock_number n;
 
         struct assert {
             const wchar_t *starp;
@@ -544,7 +546,7 @@ namespace format
 
       TEST_F (number_test, _calculate)
       {
-        number n;
+        mock_number n;
 
         struct assert {
             const wchar_t *starp[2];
@@ -601,7 +603,7 @@ namespace format
           int assert_status[3];
         };
 
-        number n ((long long) 10);
+        mock_number n ((long long) 10);
 
         std::vector<struct assert > test = {
           /// Removed operator =(const number & n)
@@ -609,7 +611,7 @@ namespace format
           //{ __VALUE[value::boolean_t], value::boolean_t, L"1",  0, 2, { PASS, FAIL } },
         };
 
-        number *old_value = nullptr;
+        mock_number *old_value = nullptr;
 
         for (size_t pidx = 0; pidx < 2; pidx++)
           {
@@ -622,13 +624,13 @@ namespace format
                       if ((*it).assert_status[pidx] > PASS_T) { this->_errorc[EXPECTED]++; }
 
                       /** old_value: value from value[key] */
-                      old_value = new number (parents[pidx]);
+                      old_value = new mock_number (parents[pidx]);
                       //old_value->_double_valuep = nullptr;
 
                       old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                       if ((*it).new_value->type () == value::number_t)
-                        *old_value = *(dynamic_cast<number *>((*it).new_value));
+                        *old_value = *(dynamic_cast<mock_number *>((*it).new_value));
                       else
                         *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
 
@@ -673,14 +675,14 @@ namespace format
 
       TEST_F (number_test, _clone_const_value_ref)
       {
-        number src[] = {
-          number ((float) 100.1),
-          number (L"100.1")
+        mock_number src[] = {
+          mock_number ((float) 100.1),
+          mock_number (L"100.1")
         };
 
-        number copy[] = {
-            number (src[0]),  // calls _clone (const value &)
-            number (src[1])   // calls _clone (const value &)
+        mock_number copy[] = {
+            mock_number (src[0]),  // calls _clone (const value &)
+            mock_number (src[1])   // calls _clone (const value &)
         };
 
         // Original assertion:
@@ -741,22 +743,22 @@ namespace format
       {
         struct assert
         {
-          number *n;
+          mock_number *n;
           size_t len;
           int assert_status;
         };
 
         std::vector<struct assert > test = {
-          { new number (static_cast<long double>(100)), 3, PASS_T },
-          { new number (static_cast<long double>(100.1)), 5 + 14, PASS_T },     // 100.099999999999994
-          { new number (static_cast<long double>(100.099999999999994)), 5 + 14, PASS_T },
-          { new number (static_cast<long double>(-10.01)), 6 + 14, PASS_T },    // -10.0099999999999998
+          { new mock_number (static_cast<long double>(100)), 3, PASS_T },
+          { new mock_number (static_cast<long double>(100.1)), 5 + 14, PASS_T },     // 100.099999999999994
+          { new mock_number (static_cast<long double>(100.099999999999994)), 5 + 14, PASS_T },
+          { new mock_number (static_cast<long double>(-10.01)), 6 + 14, PASS_T },    // -10.0099999999999998
 
-          { new number (L"100"), 3, PASS_T },
-          { new number (L"100.1"), 5, PASS_T },
-          { new number (L"100.10"), 5, PASS_T },
-          { new number (L"100.099999999999994"), 19, PASS_T },
-          { new number (L"-10.01"), 6, PASS_T }
+          { new mock_number (L"100"), 3, PASS_T },
+          { new mock_number (L"100.1"), 5, PASS_T },
+          { new mock_number (L"100.10"), 5, PASS_T },
+          { new mock_number (L"100.099999999999994"), 19, PASS_T },
+          { new mock_number (L"-10.01"), 6, PASS_T }
         };
 
         TEST_IT_START
@@ -779,7 +781,7 @@ namespace format
 
       TEST_F (number_test, _clear)
       {
-        number ((long long) 100)._clear ();
+        mock_number ((long long) 100)._clear ();
       }
 
       TEST_F (number_test, type)
@@ -790,7 +792,7 @@ namespace format
         ASSERT_THAT (number ().type (), Eq (value::number_t));
       }
 
-      TEST_F (number_test, _integral_length)
+      TEST_F (number_test, __integral_length)
       {
         struct assert
         {
@@ -812,7 +814,7 @@ namespace format
 
         TEST_IT_START
 
-            size_t len = number::__integral_length ((*it).num);
+            size_t len = mock_number::__integral_length ((*it).num);
 
             // Original assertion:
             ///ASSERT_EQUAL_IDX ("integral length", (*it).len, len);
@@ -823,7 +825,7 @@ namespace format
         TEST_IT_END
       }
 
-      TEST_F (number_test, _to_string_ll)
+      TEST_F (number_test, __to_string_ll)
       {
         struct assert
         {
@@ -846,7 +848,7 @@ namespace format
 
         TEST_IT_START
 
-            number n;
+            mock_number n;
             size_t len = n.__to_string_ll ((*it).num);
             const wchar_t *str = n._to_string ();
             long long ll = std::stoll (str);
@@ -875,7 +877,7 @@ namespace format
         TEST_IT_END
       }
 
-      TEST_F (number_test, _to_string_ld)
+      TEST_F (number_test, __to_string_ld)
       {
         struct assert
         {

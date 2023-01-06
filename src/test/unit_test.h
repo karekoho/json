@@ -132,18 +132,7 @@ public:
 
 
 
-/**
- * @brief The number_accessor class
- */
-class number_accessor : public format::json::number
-{
-public:
-  /**
-   * @brief number_accessor
-   * @param parent
-   */
-  number_accessor (format::json::json *parent) : number (parent){}
-};
+
 
 /**
  * @brief The null_accessor class
