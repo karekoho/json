@@ -8,30 +8,12 @@ namespace format
 {
   namespace json
   {
-      #ifdef UNIT_TEST
-        namespace test
-        {
-          class boolean_test_ctor_dtor_Test;
-          class boolean_test_assign_all_values_Test;
-          class boolean_test__parse_Test;
-          class boolean_test_str_length_Test;
-          class boolean_test__to_string_Test;
-        }
-      #endif
      /**
       * @brief The boolean class
       */
       class boolean : public leaf
       {
         friend boolean * __call_boolean (json *parent, bool b);
-
-      #ifdef UNIT_TEST
-//        friend class test::boolean_test_ctor_dtor_Test;
-//        friend class test::boolean_test_assign_all_values_Test;
-//        friend class test::boolean_test__parse_Test;
-//        friend class test::boolean_test_str_length_Test;
-//        friend class test::boolean_test__to_string_Test;
-      #endif
 
       public:
        /**
