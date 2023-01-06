@@ -120,34 +120,6 @@ protected:
 }; // Class unit_test
 
 /**
- * @brief The value_accessor class
- *
-class value_accessor : public format::json::value
-{
-public:
-
-  void set_parent (format::json::json *parent)
-  { _set_parent (parent); }
-};*/
-
-
-
-
-
-/**
- * @brief The null_accessor class
- */
-class null_accessor: public format::json::null
-{
-public:
-  /**
-   * @brief null_accessor
-   * @param parent
-   */
-  null_accessor (format::json::json *parent): null (parent){}
-};
-
-/**
  * @brief The boolean_accessor class
  */
 class boolean_accessor: public format::json::boolean

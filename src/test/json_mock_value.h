@@ -291,7 +291,7 @@ namespace format
       class string_test_assign_all_values_Test;
       class string_test__clone_const_value_ref_Test;
       /**
-       * @brief The string_accessor class
+       * @brief The mock_string class
        */
       class mock_string : public format::json::string
       {
@@ -328,7 +328,7 @@ namespace format
       class number_test__to_string_ld_Test;
       class number_test__clone_const_value_ref_Test;
       /**
-       * @brief The number_accessor class
+       * @brief The mock_number class
        */
       class mock_number : public format::json::number
       {
@@ -365,6 +365,24 @@ namespace format
         mock_number (const wchar_t * const json_text) : number (json_text) {}
 
         mock_number (format::json::json *parent) : number (parent){}
+      };
+
+      class null_test_ctor_dtor_Test;
+      class null_test__clone_const_value_ref_Test;
+      class null_test__parse_Test;
+      /**
+       * @brief The mock_null class
+       */
+      class mock_null: public format::json::null
+      {
+        friend class null_test_ctor_dtor_Test;
+        friend class null_test__clone_const_value_ref_Test;
+        friend class null_test__parse_Test;
+
+      public:
+        mock_null () : null () {}
+        mock_null (const mock_null &other) = default;
+        mock_null (format::json::json *parent): null (parent){}
       };
 
     } // Namespace test

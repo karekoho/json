@@ -2,6 +2,7 @@
 #define JSON_NULL_TEST
 
 #include "unit_test.h"
+#include "json_mock_value.h"
 
 namespace format
 {
@@ -24,9 +25,9 @@ namespace format
       {
         json parent;
 
-        null n[] = {
-          null (),
-          null (& parent)
+        mock_null n[] = {
+          mock_null (),
+          mock_null (& parent)
         };
       }
 
@@ -51,14 +52,15 @@ namespace format
           int assert_status[3];
         };
 
-        null n;
+        mock_null n;
+
         std::vector<struct assert > test = {
           /// operator =(const null & n), operator =(std::nullptr_t) removed
           //{ __VALUE[value::boolean_t], value::boolean_t, L"0",  1, { PASS, FAIL } },
           //{ & n, value::null_t, L"1", 2, { PASS, PASS } }
         };
 
-        null *old_value = nullptr;
+        mock_null *old_value = nullptr;
 
         for (size_t pidx = 0; pidx < 2; pidx++)
           {
@@ -71,12 +73,12 @@ namespace format
                     if ((*it).assert_status[pidx] > PASS_T) { this->_errorc[EXPECTED]++; }
 
                     /** old_value: value from value[key] */
-                    old_value = new null (parents[pidx]);
+                    old_value = new mock_null (parents[pidx]);
 
                     old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                     if ((*it).new_value->type () == value::null_t)
-                      *old_value = *(dynamic_cast<null *>((*it).new_value));
+                      *old_value = *(dynamic_cast<mock_null *>((*it).new_value));
                     else
                       *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
 
@@ -116,7 +118,7 @@ namespace format
 
       TEST_F (null_test, _parse)
       {
-        null n;
+        mock_null n;
         const wchar_t *input = L"null ";
 
         // Original assertion:
