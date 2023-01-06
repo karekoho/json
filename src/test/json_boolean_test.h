@@ -2,6 +2,7 @@
 #define JSON_BOOLEAN_TEST
 
 #include "unit_test.h"
+#include "json_mock_value.h"
 
 namespace format
 {
@@ -26,18 +27,18 @@ namespace format
       {
         json *parent = new json ();
 
-        boolean b[] = {
-          boolean (),
-          boolean (true),
-          boolean (parent, true)
+        mock_boolean b[] = {
+          mock_boolean (),
+          mock_boolean (true),
+          mock_boolean (parent, true)
         };
 
         // TODO: what is the correct place for these?
-        json j = new object { { L"0", new boolean () },
-                              { L"1", new boolean (true) },
-                              { L"2", new boolean (parent, true) },
-                              { L"3", new boolean (b[1]) }, // copy
-                              { L"4", new boolean (b[2]) }, // copy
+        json j = new object { { L"0", new mock_boolean () },
+                              { L"1", new mock_boolean (true) },
+                              { L"2", new mock_boolean (parent, true) },
+                              { L"3", new mock_boolean (b[1]) }, // copy
+                              { L"4", new mock_boolean (b[2]) }, // copy
                             };
 
         // Original assertion:
@@ -95,7 +96,7 @@ namespace format
           //{ __VALUE[value::null_t], value::null_t, L"1",  0, 2, { PASS, FAIL } }
         };
 
-        boolean *old_value = nullptr;
+        mock_boolean *old_value = nullptr;
 
         for (size_t pidx = 0; pidx < 2; pidx++)
           {
@@ -108,12 +109,12 @@ namespace format
                     if ((*it).assert_status[pidx] > PASS_T) { this->_errorc[EXPECTED]++; }
 
                     /** old_value: value from value[key] */
-                    old_value = new boolean (parents[pidx], false);
+                    old_value = new mock_boolean (parents[pidx], false);
 
                     old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                     if ((*it).new_value->type () == value::boolean_t)
-                      *old_value = *(static_cast<boolean *>((*it).new_value));
+                      *old_value = *(static_cast<mock_boolean *>((*it).new_value));
                     else
                       *(static_cast<value *>(old_value)) = *(*it).new_value;
 
@@ -175,7 +176,7 @@ namespace format
         };
 
         TEST_IT_START
-            boolean b ((*it).value);
+            mock_boolean b ((*it).value);
 
             // Original assertion:
             ///ASSERT_EQUAL_IDX ("readp", (*it).input + (*it).charc, b._parse ((*it).input));
@@ -191,12 +192,12 @@ namespace format
         // Original assertion:
         ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("boolean::str_length ()", (size_t) 5, boolean (false)._str_length ());
         ///
-        ASSERT_THAT (boolean (false)._str_length (), Eq (5));
+        ASSERT_THAT (mock_boolean (false)._str_length (), Eq (5));
 
         // Original assertion:
         ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("boolean::str_length ()", (size_t) 4, boolean (true)._str_length ());
         ///
-        ASSERT_THAT (boolean (true)._str_length (), Eq (4));
+        ASSERT_THAT (mock_boolean (true)._str_length (), Eq (4));
       }
 
       TEST_F (boolean_test, _to_string)
@@ -204,12 +205,12 @@ namespace format
         // Original assertion:
         ///CPPUNIT_ASSERT_MESSAGE ("boolean::_to_string ()", boolean (false)._to_string () == std::wstring (L"false"));
         ///
-        ASSERT_THAT (boolean (false)._to_string (), StrEq (L"false"));
+        ASSERT_THAT (mock_boolean (false)._to_string (), StrEq (L"false"));
 
         // Original assertion:
         ///CPPUNIT_ASSERT_MESSAGE ("boolean::_to_string ()", boolean (true)._to_string () == std::wstring (L"true"));
         ///
-        ASSERT_THAT (boolean (true)._to_string (), StrEq (L"true"));
+        ASSERT_THAT (mock_boolean (true)._to_string (), StrEq (L"true"));
       }
 
       TEST_F (boolean_test, _clear)

@@ -385,6 +385,29 @@ namespace format
         mock_null (format::json::json *parent): null (parent){}
       };
 
+      class boolean_test_ctor_dtor_Test;
+      class boolean_test_assign_all_values_Test;
+      class boolean_test__parse_Test;
+      class boolean_test_str_length_Test;
+      class boolean_test__to_string_Test;
+      /**
+       * @brief The mock_boolean class
+       */
+      class mock_boolean: public format::json::boolean
+      {
+        friend class boolean_test_ctor_dtor_Test;
+        friend class boolean_test_assign_all_values_Test;
+        friend class boolean_test__parse_Test;
+        friend class boolean_test_str_length_Test;
+        friend class boolean_test__to_string_Test;
+
+      public:
+        mock_boolean (format::json::json *parent, bool b): boolean (parent, b) {}
+        mock_boolean () : boolean (false) { }
+        mock_boolean (const bool value) : boolean (value) { }
+        mock_boolean (const boolean & other) : boolean (other) { }
+      };
+
     } // Namespace test
   } // Namespace json
 } // Namespace format

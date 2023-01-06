@@ -337,7 +337,7 @@ namespace format
           { L"ak", 1, { new mock_array (& object_parent), new mock_array (& array_parent) }, value::array_t, PASS_T },
           { L"sk", 2, { new mock_string (& object_parent, 3), new mock_string (& array_parent, 3) }, value::string_t, PASS_T },
           { L"dk", 3, { new mock_number (& object_parent), new mock_number (& array_parent) }, value::number_t, PASS_T },
-          { L"bk", 4, { new boolean_accessor (& object_parent, true), new boolean_accessor (& array_parent, true) }, value::boolean_t, PASS_T },
+          { L"bk", 4, { new mock_boolean (& object_parent, true), new mock_boolean (& array_parent, true) }, value::boolean_t, PASS_T },
           { L"nk", 5, { new mock_null (& object_parent), new mock_null (& array_parent) }, value::null_t, PASS_T },
         };
 

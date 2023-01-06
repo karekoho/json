@@ -119,21 +119,6 @@ protected:
   static format::json::value  *__VALUE[];
 }; // Class unit_test
 
-/**
- * @brief The boolean_accessor class
- */
-class boolean_accessor: public format::json::boolean
-{
-public:
-  /**
-   * @brief boolean_accessor
-   * @param parent
-   * @param b
-   */
-  boolean_accessor (format::json::json *parent, bool b): boolean (parent, b)
-  {}
-};
-
 format::json::json * unit_test::__JSON = new format::json::json ();
 
 format::json::value * unit_test::__VALUE[] = {
