@@ -7,30 +7,11 @@ namespace format
 {
   namespace json
   {
-    #ifdef UNIT_TEST
-      namespace test
-      {
-        class undefined_test_ctor_dtor_Test;
-        class undefined_test_assign_all_values_Test;
-        class undefined_test__parse_Test;
-        class undefined_test_str_length_Test;
-        class undefined_test__to_string_Test;
-      }
-    #endif
-
     /**
      * @brief The undefined class
      */
     class undefined : public leaf
     {
-    #ifdef UNIT_TEST
-//      friend class test::undefined_test_ctor_dtor_Test;
-//      friend class test::undefined_test_assign_all_values_Test;
-//      friend class test::undefined_test__parse_Test;
-//      friend class test::undefined_test_str_length_Test;
-//      friend class test::undefined_test__to_string_Test;
-    #endif
-
       public:
       /**
        * @brief undefined

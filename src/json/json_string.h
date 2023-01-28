@@ -7,7 +7,6 @@ namespace format
 {
   namespace json
   {
-
     /**
      * @brief The string class
      */
