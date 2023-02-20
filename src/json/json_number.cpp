@@ -1,4 +1,4 @@
-#include "json_number.h"
+﻿#include "json_number.h"
 #include "json_json.h"
 #include <iostream>
 #include <cfloat>

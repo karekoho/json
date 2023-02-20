@@ -19,6 +19,8 @@ using ::testing::Eq;
 using ::testing::Ne;
 using ::testing::Lt;
 using ::testing::Gt;
+using ::testing::Ge;
+using ::testing::DoubleNear;
 using ::testing::StrEq;
 using ::testing::IsTrue;
 using ::testing::IsFalse;
