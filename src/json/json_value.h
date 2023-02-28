@@ -604,12 +604,13 @@ namespace format
       { _index = index; }
 
       /**
-       * @brief setParent
-       * @param parent
+       * @brief Set the owner object
+       * @param The child object
+       * @param The parent object
        */
-      inline void
-      _set_parent (value *parent) noexcept
-      { _parent = parent; }
+      static inline void
+      _set_parent (value *child, value *parent)
+      { child->_parent = parent; }
 
       /**
        * @brief str_length
@@ -758,7 +759,6 @@ namespace format
 
       friend void __call__set_key (value *, const wchar_t * const, size_t);
       friend void __call__set_index (value *, const size_t &);
-      friend void __call__set_parent (value *, value *);
 
       friend value & __call__erase (value *, const value &);
       friend value & __call__assign (value *, value *, value *);
@@ -782,10 +782,6 @@ namespace format
      inline void
      __call__set_index (value *v, const size_t & index)
      { v->_set_index (index); }
-
-     inline void
-     __call__set_parent (value *v, value *parent)
-     { v->_set_parent (parent); }
 
      inline const wchar_t *
      __call_str_value (const value *v, wchar_t *offset)

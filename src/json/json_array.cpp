@@ -144,7 +144,7 @@ format::json::array::_assign (value *ov, value *nv)
   _element_list.at (index) = nv;
 
   __call__set_index (nv, index);
-  __call__set_parent (nv, this);
+  _set_parent (nv, this);
 
   delete ov;
 
@@ -173,7 +173,7 @@ format::json::array::_clone (const value &other)
                   std::back_inserter (_element_list), [this] (const value *v) -> value *
   {
     value *nv = v->clone ();
-    __call__set_parent (nv, this);
+    _set_parent (nv, this);
     return nv;
   });
 
@@ -260,6 +260,6 @@ format::json::array::_set_initializer_list (const std::initializer_list<value *>
       value *v = *(cur++);
       (void) _element_list.push_back (v);
       __call__set_index (v, next_idx++);
-      __call__set_parent (v, this);
+      _set_parent (v, this);
     }
 }

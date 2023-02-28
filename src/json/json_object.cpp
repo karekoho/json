@@ -168,7 +168,7 @@ format::json::object::_assign (value *ov, value *nv)
   _member_list[key] = nv;
 
   __call__set_key (nv, key, wcslen (key));
-  __call__set_parent (nv, this);
+  _set_parent (nv, this);
 
   delete ov;
   ov = nullptr;
@@ -206,7 +206,7 @@ format::json::object::_clone (const value &other)
     {
       std::pair<std::wstring, const value *> p = *cur++;
       value *v = p.second->clone ();
-      __call__set_parent (v, this);
+      _set_parent (v, this);
       _member_list.emplace (p.first, v);
     }
 
@@ -298,6 +298,6 @@ format::json::object::_set_initializer_list (const std::initializer_list<std::pa
       std::pair<std::wstring, value *> p = *(cur++);
       (void) _member_list.emplace (p);
       __call__set_key (p.second, p.first.c_str (), p.first.length ());
-      __call__set_parent (p.second, this);
+      _set_parent (p.second, this);
     }
 }
