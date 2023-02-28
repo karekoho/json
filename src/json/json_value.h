@@ -286,7 +286,7 @@ namespace format
        * @brief Get the parent object where object is assigned to
        * @return The parent object or undefined if no parent exists
        */
-      inline json *
+      inline value *
       parent () const
       { return _parent; }
 
@@ -500,7 +500,7 @@ namespace format
        * @todo json* --> value*
        * @brief _parent
        */
-      json *_parent;
+      value *_parent;
 
       /**
        * @brief _key
@@ -608,7 +608,7 @@ namespace format
        * @param parent
        */
       inline void
-      _set_parent (json *parent) noexcept
+      _set_parent (value *parent) noexcept
       { _parent = parent; }
 
       /**
@@ -758,7 +758,7 @@ namespace format
 
       friend void __call__set_key (value *, const wchar_t * const, size_t);
       friend void __call__set_index (value *, const size_t &);
-      friend void __call__set_parent (value *, json *);
+      friend void __call__set_parent (value *, value *);
 
       friend value & __call__erase (value *, const value &);
       friend value & __call__assign (value *, value *, value *);
@@ -784,7 +784,7 @@ namespace format
      { v->_set_index (index); }
 
      inline void
-     __call__set_parent (value *v, json *parent)
+     __call__set_parent (value *v, value *parent)
      { v->_set_parent (parent); }
 
      inline const wchar_t *

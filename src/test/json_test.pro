@@ -66,7 +66,10 @@ DISTFILES += \
     ../../build/linux/test/debug/CMakeLists.txt \
     ../../build/macos/test/release/CMakeLists.txt \
     ../../build/tests/CMakeLists.txt \
+    ../../doc/ECMA-404.pdf \
     ../../doc/debugging-in-container.txt \
+    ../../doc/json.vpp \
+    ../../doc/roadmap.txt \
     ../../doc/roadmap.txt
 
 
