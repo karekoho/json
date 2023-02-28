@@ -42,9 +42,9 @@ namespace format
           new boolean ()
         };
 
-        __call__set_key (v[0], L"key_1", 5);
-        __call__set_key (v[1], L"key_2", 5);
-        __call__set_key (v[2], L"key_3", 5);
+        mock_value::_set_key (v[0], L"key_1", 5);
+        mock_value::_set_key (v[1], L"key_2", 5);
+        mock_value::_set_key (v[2], L"key_3", 5);
 
         o._member_list = { { v[0]->key (), v[0] }, { v[1]->key (), v[1] } };
 

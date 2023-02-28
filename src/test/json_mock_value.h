@@ -70,6 +70,10 @@ namespace format
         _erase (const value &) noexcept override
         { return *this; }
 
+        static void
+        _set_key (value *target, const wchar_t *keyp, size_t charc)
+        { return value::_set_key (target, keyp, charc); }
+
         protected:
         virtual  value &
         _at (const wchar_t *) override

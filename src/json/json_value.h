@@ -587,13 +587,23 @@ namespace format
        * @brief _set_key
        * @param key
        * @param charc
-       */
+       **/
       inline void
       _set_key (const wchar_t *const key, size_t charc) noexcept
       {
          delete[] _key;
          _key = wcsncpy (new wchar_t[charc + 1] (), key, charc);
       }
+
+      /**
+       * @brief _set_key
+       * @param target
+       * @param keyp
+       * @param charc
+       */
+      inline static void
+      _set_key (value *target, const wchar_t *keyp, size_t charc)
+      { target->_set_key (keyp, charc); }
 
       /**
        * @brief _set_index
@@ -608,7 +618,7 @@ namespace format
        * @param The child object
        * @param The parent object
        */
-      static inline void
+      inline static void
       _set_parent (value *child, value *parent)
       { child->_parent = parent; }
 
@@ -757,7 +767,6 @@ namespace format
 
       friend const wchar_t * __call__parse (value *, const wchar_t * const);
 
-      friend void __call__set_key (value *, const wchar_t * const, size_t);
       friend void __call__set_index (value *, const size_t &);
 
       friend value & __call__erase (value *, const value &);
@@ -766,18 +775,11 @@ namespace format
       friend size_t __call__str_length (const value *);
       friend const wchar_t * __call_str_value (const value *, wchar_t * const);
 
-
     };  // Class value
-
-
 
      inline const wchar_t *
      __call__parse (value *v, const wchar_t *readp)
      { return v->_parse (readp); }
-
-     inline void
-     __call__set_key (value *v, const wchar_t *keyp, size_t charc)
-     { v->_set_key (keyp, charc); }
 
      inline void
      __call__set_index (value *v, const size_t & index)

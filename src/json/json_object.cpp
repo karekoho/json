@@ -111,8 +111,7 @@ format::json::object::_pair ()
     return true;
 
   (void) _member_list.emplace (key, v);
-
-  __call__set_key (v, keyp, static_cast<size_t> (charc - 2));
+  _set_key (v, keyp, static_cast<size_t> (charc - 2));
 
   return true;
 }
@@ -128,7 +127,7 @@ format::json::object::_at (const wchar_t * const key)
     {
       value *v = new unique_undefined (this);
 
-      __call__set_key (v, key, wcslen (key));
+      _set_key (v, key, wcslen (key));
       _member_list.emplace (key, v);
 
       return *v;
@@ -167,7 +166,7 @@ format::json::object::_assign (value *ov, value *nv)
 
   _member_list[key] = nv;
 
-  __call__set_key (nv, key, wcslen (key));
+  _set_key (nv, key, wcslen (key));
   _set_parent (nv, this);
 
   delete ov;
@@ -297,7 +296,7 @@ format::json::object::_set_initializer_list (const std::initializer_list<std::pa
     {
       std::pair<std::wstring, value *> p = *(cur++);
       (void) _member_list.emplace (p);
-      __call__set_key (p.second, p.first.c_str (), p.first.length ());
+      _set_key (p.second, p.first.c_str (), p.first.length ());
       _set_parent (p.second, this);
     }
 }
