@@ -207,7 +207,7 @@ format::json::json::_make_value ()
         }
     }
 
-  _readp = __call__parse (value_, _readp);
+  _readp = value::_parse (value_, _readp);
 
   return value_;
 }

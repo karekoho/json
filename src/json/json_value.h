@@ -664,6 +664,16 @@ namespace format
       { return parent->_str_length (); }
 
       /**
+       * @brief _parse
+       * @param v
+       * @param readp
+       * @return
+       */
+      inline static const wchar_t *
+      _parse (value *v, const wchar_t *readp)
+      { return v->_parse (readp); }
+
+      /**
        * @brief str_length
        * @return
        */
@@ -807,13 +817,7 @@ namespace format
        */
       virtual value &
       _erase (const value &v) noexcept = 0;
-
-      friend const wchar_t * __call__parse (value *, const wchar_t * const);
-      //friend size_t __call__str_length (const value *);
     };  // Class value
-
-    inline const wchar_t * __call__parse (value *v, const wchar_t *readp) { return v->_parse (readp); }
-    //inline size_t __call__str_length (const value *parent) { return parent->_str_length (); }
   } // Namespace json
 } // Namespace format
 #endif // JSON_VALUE_H
