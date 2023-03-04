@@ -515,7 +515,7 @@ namespace format
         // Original assertion:
         ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("json[index]::str_length ()", static_cast<size_t> (3), /* json (L"{\"0\":\"x\"}")[L"0"].str_length () */ __call__str_length (& (json(L"{\"0\":\"x\"}")[L"0"])));
         ///
-        ASSERT_THAT (__call__str_length (& (json(L"{\"0\":\"x\"}")[L"0"])), Eq (static_cast<size_t> (3)));
+        ASSERT_THAT (mock_value::_str_length (& (json (L"{\"0\":\"x\"}")[L"0"])), Eq (3));
       }
 
       TEST_F (json_test, _clear)

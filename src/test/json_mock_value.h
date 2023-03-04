@@ -74,6 +74,10 @@ namespace format
         _set_key (value *target, const wchar_t *keyp, size_t charc)
         { return value::_set_key (target, keyp, charc); }
 
+        static size_t
+        _str_length (const value *parent)
+        { return value::_str_length (parent); }
+
         protected:
         virtual  value &
         _at (const wchar_t *) override
@@ -97,7 +101,6 @@ namespace format
         virtual value *
         _clone (const value &) override
         { return this; }
-
       }; // Class mock_value
 
       class json_test__parse_Test;

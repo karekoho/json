@@ -245,7 +245,7 @@ namespace format
        */
       virtual inline size_t
       _str_length () const noexcept override
-      { return __hasRoot () ? __call__str_length (__root) : 0; }
+      { return __hasRoot () ? value::_str_length (__root) : 0; }
 
       /**
        * @brief erase

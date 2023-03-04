@@ -655,6 +655,15 @@ namespace format
       { return parent->_assign (ov, nv); }
 
       /**
+       * @brief _str_length
+       * @param parent
+       * @return
+       */
+      inline static size_t
+      _str_length (const value *parent)
+      { return parent->_str_length (); }
+
+      /**
        * @brief str_length
        * @return
        */
@@ -735,14 +744,16 @@ namespace format
        * @param endc Last character read
        * @return Number of characters read, including quotes
        */
-      long long _string (wchar_t &endc) const noexcept;
+      long long
+      _string (wchar_t &endc) const noexcept;
 
       /**
        * @brief _unquoted_string
        * @param endc
        * @return
        */
-      static long long _unquoted_string (const wchar_t * const startp, const wchar_t *readp, wchar_t &endc) noexcept;
+      static long long
+      _unquoted_string (const wchar_t * const startp, const wchar_t *readp, wchar_t &endc) noexcept;
 
       /**
        * @brief _is_literal Detect if _readp points to "true", "false" or "null".
@@ -798,11 +809,11 @@ namespace format
       _erase (const value &v) noexcept = 0;
 
       friend const wchar_t * __call__parse (value *, const wchar_t * const);
-      friend size_t __call__str_length (const value *);
+      //friend size_t __call__str_length (const value *);
     };  // Class value
 
     inline const wchar_t * __call__parse (value *v, const wchar_t *readp) { return v->_parse (readp); }
-    inline size_t __call__str_length (const value *parent) { return parent->_str_length (); }
+    //inline size_t __call__str_length (const value *parent) { return parent->_str_length (); }
   } // Namespace json
 } // Namespace format
 #endif // JSON_VALUE_H

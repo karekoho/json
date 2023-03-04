@@ -226,7 +226,7 @@ format::json::object::_str_length () const noexcept
   while (cur != end)
     {
       std::pair<std::wstring, const value *> p = *cur++;
-      len += p.first.size () + __call__str_length (static_cast<const value *>(p.second)) + 4;   // " + key + " + : +  value + , or }
+      len += p.first.size () + value::_str_length (static_cast<const value *>(p.second)) + 4;   // " + key + " + : +  value + , or }
     }
 
   return len;
