@@ -151,7 +151,7 @@ format::json::value &
 format::json::object::operator =(const format::json::object &o)
 {
   if (_parent)
-    return __call__assign (_parent, this, new object (o));
+    return value::_assign (_parent, this, new object (o));
 
   if (! _member_list.empty ())
     _clear ();

@@ -644,6 +644,17 @@ namespace format
       { return v->_to_string (offset); }
 
       /**
+       * @brief _assign
+       * @param parent
+       * @param ov
+       * @param nv
+       * @return
+       */
+      inline static value &
+      _assign (value *parent, value *ov, value *nv)
+      { return parent->_assign (ov, nv); }
+
+      /**
        * @brief str_length
        * @return
        */
@@ -787,12 +798,10 @@ namespace format
       _erase (const value &v) noexcept = 0;
 
       friend const wchar_t * __call__parse (value *, const wchar_t * const);
-      friend value & __call__assign (value *, value *, value *);
       friend size_t __call__str_length (const value *);
     };  // Class value
 
     inline const wchar_t * __call__parse (value *v, const wchar_t *readp) { return v->_parse (readp); }
-    inline value & __call__assign (value *parent, value *ov, value *nv) { return parent->_assign (ov, nv); }
     inline size_t __call__str_length (const value *parent) { return parent->_str_length (); }
   } // Namespace json
 } // Namespace format

@@ -128,7 +128,7 @@ format::json::value &
 format::json::array::operator =(const format::json::array &a)
 {
   if (_parent)
-    return __call__assign (_parent, this, new array (a));
+    return value::_assign (_parent, this, new array (a));
 
   if (! _element_list.empty ())
     _clear ();

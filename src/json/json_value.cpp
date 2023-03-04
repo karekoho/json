@@ -200,7 +200,7 @@ format::json::value::_assign (const value &nv)
   if (_parent == nullptr)
     throw json_error (BAD_ASSIGNMENT);
 
-  return __call__assign (_parent, this, nv.clone ());
+  return value::_assign (_parent, this, nv.clone ());
 }
 
 format::json::value &
@@ -209,7 +209,7 @@ format::json::value::_assign (value *nv)
   if (_parent == nullptr)
     throw json_error (BAD_ASSIGNMENT);
 
-  return __call__assign (_parent, this, nv);
+  return value::_assign (_parent, this, nv);
 
   // return _parent->_assign (this, nv);
   // json_value.cpp:157:19: error: '_assign' is a protected member of 'format::json::json'
