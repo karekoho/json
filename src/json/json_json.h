@@ -237,7 +237,7 @@ namespace format
        */
       virtual inline const wchar_t *
       _to_string (wchar_t *offset = nullptr) const override
-      { return __hasRoot () ? __call_str_value (__root, offset) : L""; }
+      { return __hasRoot () ? value::_to_string (__root, offset) : L""; }
 
       /**
        * @brief _str_length

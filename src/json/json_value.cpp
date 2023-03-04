@@ -186,10 +186,10 @@ wchar_t *
 format::json::value::_quote_value(wchar_t *dst, const format::json::value *v) noexcept
 {
   if (v->type () != value::string_t)
-    return _str_append (dst, __call_str_value (v, dst), __call__str_length (v));
+    return _str_append (dst, value::_to_string (v, dst), __call__str_length (v));
 
   dst = _str_append (dst, L"\"", 1);
-  dst = _str_append (dst, __call_str_value (v, dst), __call__str_length (v) - 2);
+  dst = _str_append (dst, value::_to_string (v, dst), __call__str_length (v) - 2);
 
   return _str_append (dst, L"\"", 1);
 }
