@@ -68,7 +68,7 @@ format::json::array::_parse (const wchar_t *const json_text)
           if ((v = _call_reviver (v, nullptr, next_idx))->type () != value::undefined_t)
             {
               _element_list.push_back (v);
-              __call__set_index (v, next_idx);
+              _set_index (v, next_idx );
             }
         }
       else if (*_readp == _sc::end_array)         // ']'
@@ -86,7 +86,7 @@ format::json::array::_parse (const wchar_t *const json_text)
       else if ((v = _call_reviver (v, nullptr, next_idx))->type () != value::undefined_t)  // Value found
         {
           _element_list.push_back (v);
-          __call__set_index (v, next_idx);
+          _set_index (v, next_idx);
         }
     }
 
@@ -105,7 +105,7 @@ format::json::array::_at (size_t index)
       value *v = new unique_undefined (this);
 
       _element_list.push_back (v);      
-      __call__set_index (v, _element_list.size () - 1);
+      _set_index (v, _element_list.size () - 1);
 
       return *v;
   }
@@ -143,7 +143,7 @@ format::json::array::_assign (value *ov, value *nv)
 
   _element_list.at (index) = nv;
 
-  __call__set_index (nv, index);
+  _set_index (nv, index);
   _set_parent (nv, this);
 
   delete ov;
@@ -259,7 +259,7 @@ format::json::array::_set_initializer_list (const std::initializer_list<value *>
     {
       value *v = *(cur++);
       (void) _element_list.push_back (v);
-      __call__set_index (v, next_idx++);
+      _set_index (v, next_idx++);
       _set_parent (v, this);
     }
 }

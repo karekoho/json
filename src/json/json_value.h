@@ -607,11 +607,12 @@ namespace format
 
       /**
        * @brief _set_index
+       * @param v
        * @param index
        */
-      inline void
-      _set_index (const size_t & index) noexcept
-      { _index = index; }
+      inline static void
+      _set_index (value *v, const size_t & index)
+      { v->_index = index; }
 
       /**
        * @brief Set the owner object
@@ -767,8 +768,6 @@ namespace format
 
       friend const wchar_t * __call__parse (value *, const wchar_t * const);
 
-      friend void __call__set_index (value *, const size_t &);
-
       friend value & __call__erase (value *, const value &);
       friend value & __call__assign (value *, value *, value *);
 
@@ -780,10 +779,6 @@ namespace format
      inline const wchar_t *
      __call__parse (value *v, const wchar_t *readp)
      { return v->_parse (readp); }
-
-     inline void
-     __call__set_index (value *v, const size_t & index)
-     { v->_set_index (index); }
 
      inline const wchar_t *
      __call_str_value (const value *v, wchar_t *offset)

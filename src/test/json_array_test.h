@@ -554,9 +554,9 @@ namespace format
           new boolean ()
         };
 
-        __call__set_index (v[0], 0);
-        __call__set_index (v[1], 1);
-        __call__set_index (v[2], 2);
+        mock_array::_set_index (v[0], 0);
+        mock_array::_set_index (v[1], 1);
+        mock_array::_set_index (v[2], 2);
 
         a._element_list = { v[0], v[1] };
 
