@@ -624,6 +624,16 @@ namespace format
       { child->_parent = parent; }
 
       /**
+       * @brief _erase
+       * @param parent
+       * @param v
+       * @return
+       */
+      inline static value &
+      _erase (value *parent,  const value & v)
+      { return parent->_erase (v); }
+
+      /**
        * @brief str_length
        * @return
        */
@@ -767,34 +777,16 @@ namespace format
       _erase (const value &v) noexcept = 0;
 
       friend const wchar_t * __call__parse (value *, const wchar_t * const);
-
-      friend value & __call__erase (value *, const value &);
       friend value & __call__assign (value *, value *, value *);
-
       friend size_t __call__str_length (const value *);
       friend const wchar_t * __call_str_value (const value *, wchar_t * const);
 
     };  // Class value
 
-     inline const wchar_t *
-     __call__parse (value *v, const wchar_t *readp)
-     { return v->_parse (readp); }
-
-     inline const wchar_t *
-     __call_str_value (const value *v, wchar_t *offset)
-     { return v->_to_string (offset); }
-
-     inline value &
-     __call__erase (value *parent, const value & v)
-     {  return parent->_erase (v); }
-
-      inline value &
-      __call__assign (value *parent, value *ov, value*nv)
-      { return parent->_assign (ov, nv); }
-
-      inline size_t
-      __call__str_length (const value *parent)
-      { return parent->_str_length (); }
+    inline const wchar_t * __call__parse (value *v, const wchar_t *readp) { return v->_parse (readp); }
+    inline const wchar_t * __call_str_value (const value *v, wchar_t *offset) { return v->_to_string (offset); }
+    inline value & __call__assign (value *parent, value *ov, value*nv) { return parent->_assign (ov, nv); }
+    inline size_t __call__str_length (const value *parent) { return parent->_str_length (); }
   } // Namespace json
 } // Namespace format
 #endif // JSON_VALUE_H

@@ -254,7 +254,7 @@ namespace format
        */
       virtual inline value &
       _erase (const value &v) noexcept override
-      { return __hasRoot () ? __call__erase (__root, v) : *this; }
+      { return __hasRoot () ? value::_erase (__root, v) : *this; }
 
       /**
        * @brief _call_reviver

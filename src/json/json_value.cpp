@@ -168,7 +168,7 @@ format::json::value::_is_literal (const int _try) const noexcept
 format::json::value &
 format::json::value::_assign (const undefined &) noexcept
 {  
-  return _parent ? __call__erase (_parent, *this) : *this;
+  return _parent ? _parent->_erase (*this) : *this;
 }
 
 wchar_t *
