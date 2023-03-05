@@ -16,7 +16,6 @@ set(SOURCES
     ${PATH}json_null_test.h
     ${PATH}json_object_test.h
     ${PATH}json_undefined_test.h
-    ${PATH}test_selector.h
     ${PATH}json_boolean_test.h
     ${PATH}json_leaf_test.h
     ${PATH}json_number_test.h
