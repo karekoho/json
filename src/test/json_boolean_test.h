@@ -114,7 +114,8 @@ namespace format
                     old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                     if ((*it).new_value->type () == value::boolean_t)
-                      *old_value = *(static_cast<mock_boolean *>((*it).new_value));
+                      //*old_value = *(static_cast<mock_boolean *>((*it).new_value));
+                      old_value = static_cast<mock_boolean *>((*it).new_value);
                     else
                       *(static_cast<value *>(old_value)) = *(*it).new_value;
 

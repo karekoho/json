@@ -103,6 +103,12 @@ namespace format
       value (const value &other);
 
       /**
+       * @brief Move constructor
+       * @param The object to move
+       */
+      value (value&& other) noexcept;
+
+      /**
        * @brief Destructor
        */
       virtual ~value ();

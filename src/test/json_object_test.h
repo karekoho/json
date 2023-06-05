@@ -90,13 +90,21 @@ namespace format
 
         json parent;
 
+        /*object t {
+          { L"number", number (100) },
+          { L"string", string (L"string") },
+          { L"false", boolean (false) },
+          { L"object", object {{ L"number", number (100) }} }
+        };*/
+
         mock_object o[] = {
           mock_object (),
           mock_object (L"{}"),
           mock_object (& parent),
           mock_object {{ L"0", new object {{ L"1", new number () }} }}, // { "0": { "1": 0 } }
           mock_object (json_text),
-          mock_object (src) // 5.
+          mock_object (src), // Copy
+          mock_object {{ L"0", object {{ L"100", number (100) }} }}, // 6. Move
         };
 
   //      object src  = L"{\"key\":true}";

@@ -18,7 +18,8 @@ format::json::number::number (int i)
     _long_double_str (nullptr),
     _long_double_str_length (__to_string_ld (static_cast<long double> (i))),
     _is_floating_point (false)
-{ }
+{
+}
 
 format::json::number::number (long long ll)
   : leaf (static_cast<long double> (ll), 0),
@@ -26,7 +27,8 @@ format::json::number::number (long long ll)
     _long_double_str (nullptr),
     _long_double_str_length (__to_string_ld (static_cast<long double> (ll))),
     _is_floating_point (false)
-{ }
+{
+}
 
 format::json::number::number (float f)
   : leaf (static_cast<long double> (f), 0),
@@ -34,7 +36,8 @@ format::json::number::number (float f)
     _long_double_str (nullptr),
     _long_double_str_length (__to_string_ld (static_cast<long double> (f))),
     _is_floating_point (true)
-{ }
+{
+}
 
 format::json::number::number (long double ld)
   : leaf (ld, 0),
@@ -42,9 +45,10 @@ format::json::number::number (long double ld)
     _long_double_str (nullptr),
     _long_double_str_length (__to_string_ld (static_cast<long double> (ld))),
     _is_floating_point (true)
-{ }
+{
+}
 
-format::json::number::number (const wchar_t * const json_text)
+format::json::number::number (const wchar_t* const json_text)
   : leaf (json_text),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _long_double_str (nullptr),
@@ -57,29 +61,43 @@ format::json::number::number (const wchar_t * const json_text)
   (void) _parse (json_text);
 }
 
-format::json::number::number (json *parent)
+format::json::number::number (json* parent)
   : leaf (parent, static_cast<long double> (0)),
     _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
     _long_double_str (nullptr),
     _long_double_str_length (0),
     _is_floating_point (false)
-{ }
+{
+}
 
-format::json::number::number (const number &other)
- : leaf (other),
+format::json::number::number (const number& other)
+  : leaf (other),
    _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
    _long_double_str (other.stringify ()),
    _long_double_str_length (other._str_length ()),
-   _is_floating_point (other._is_floating_point)
-{ }
+    _is_floating_point (other._is_floating_point)
+{
+}
+
+format::json::number::number (number&& other) noexcept
+    : leaf (other),
+    _digitp {{ nullptr, nullptr }, { nullptr, nullptr }},
+    _long_double_str (other._long_double_str),
+    _long_double_str_length (other._str_length ()),
+    _is_floating_point (other._is_floating_point)
+{
+  other._long_double_str = nullptr;
+  other._long_double_str_length = 0;
+  other._is_floating_point = false;
+}
 
 format::json::number::~number ()
 {
   delete [] _long_double_str;
 }
 
-const wchar_t *
-format::json::number::_parse (const wchar_t * const json_text)
+const wchar_t*
+format::json::number::_parse (const wchar_t* const json_text)
 {
   wchar_t peek = 0;
 

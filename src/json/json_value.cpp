@@ -85,6 +85,18 @@ format::json::value::value (const value &other)
     _value (other._value)
 { }
 
+format::json::value::value (value&& other) noexcept
+  : _readp (other._readp),
+    _parent (nullptr),
+    _key (other._key),
+    _index (other._index),
+    _value (other._value)
+{
+    other._readp = nullptr;
+    other._key = nullptr;
+    other._value = nullptr;
+}
+
 format::json::value::
 ~value ()
 {

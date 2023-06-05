@@ -70,7 +70,8 @@ namespace format
             mock_number (src[2]),
             mock_number (src[3]),
             mock_number (src[4]),
-            mock_number (src[5])
+            mock_number (src[5]),
+            mock_number (number (100))
         };
 
         // Original assertion:
@@ -148,6 +149,8 @@ namespace format
         ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("as int", 10, j[L"1"].as<int> ());
         ///
         ASSERT_THAT (j[L"1"].as<int> (), Eq (10));
+
+        ASSERT_THAT (copy[6].get (), Eq (100));
       }
 
       TEST_F (number_test, _to_string)
@@ -639,7 +642,8 @@ namespace format
                       old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                       if ((*it).new_value->type () == value::number_t)
-                        *old_value = *(dynamic_cast<mock_number *>((*it).new_value));
+                        //*old_value = *(dynamic_cast<mock_number *>((*it).new_value));
+                          old_value = dynamic_cast<mock_number *>((*it).new_value);
                       else
                         *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
 

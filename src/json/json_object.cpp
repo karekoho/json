@@ -10,8 +10,13 @@ format::json::object::object (const wchar_t * const json_text)
   (void) _parse (json_text);
 }
 
-format::json::object::object (std::initializer_list<std::pair<std::wstring, value *> > il)
+format::json::object::object (std::initializer_list<std::pair<std::wstring, value *>> il)
   : json ()
+{
+  _set_initializer_list (il);
+}
+
+format::json::object::object (std::initializer_list<std::pair<std::wstring, value &&>> il)
 {
   _set_initializer_list (il);
 }
@@ -183,7 +188,7 @@ format::json::object::_clear ()
 
   while (begin != end)
     {
-      delete static_cast <std::pair<std::wstring, value *>>(*begin).second;
+      //delete static_cast <std::pair<std::wstring, value *>>(*begin).second;
       begin = _member_list.erase (begin);
     }
 }
@@ -282,7 +287,7 @@ format::json::object::_erase (const value & v) noexcept
 }
 
 void
-format::json::object::_set_initializer_list (const std::initializer_list<std::pair<std::wstring, value *> > & il)
+format::json::object::_set_initializer_list (const std::initializer_list<std::pair<std::wstring, value *>> &il)
 {
   if (il.size () == 0)
     return;
@@ -298,5 +303,25 @@ format::json::object::_set_initializer_list (const std::initializer_list<std::pa
       (void) _member_list.emplace (p);
       _set_key (p.second, p.first.c_str (), p.first.length ());
       _set_parent (p.second, this);
-    }
+  }
+}
+
+void
+format::json::object::_set_initializer_list (const std::initializer_list<std::pair<std::wstring, value &&>> &il)
+{
+  if (il.size () == 0)
+    return;
+
+  _member_list.reserve (il.size ());
+
+  auto cur = il.begin ();
+  auto end = il.end ();
+
+  while (cur != end)
+  {
+      std::pair<std::wstring, value &> p = *(cur++);
+      _member_list.emplace (p.first, & p.second);
+      _set_key (& p.second, p.first.c_str (), p.first.length ());
+      _set_parent (& p.second, this);
+  }
 }

@@ -287,7 +287,8 @@ namespace format
                       old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                       if ((*it).new_value->type () == value::string_t)
-                        *old_value = *(dynamic_cast<mock_string *>((*it).new_value));
+                        //*old_value = *(dynamic_cast<mock_string *>((*it).new_value));
+                        old_value = dynamic_cast<mock_string *>((*it).new_value);
                       else
                         *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
 

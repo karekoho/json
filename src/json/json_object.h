@@ -35,7 +35,13 @@ namespace format
        * @brief object
        * @param il
        */
-      object (std::initializer_list<std::pair<std::wstring, value *> > il);
+      object (std::initializer_list<std::pair<std::wstring, value *>> il);
+
+      /**
+       * @brief object
+       * @param il
+       */
+      object (std::initializer_list<std::pair<std::wstring, value &&>> il);
 
       /**
        * @brief object
@@ -298,6 +304,13 @@ namespace format
        */
       void
       _set_initializer_list (const std::initializer_list<std::pair<std::wstring, value *>> & il);
+
+      /**
+       * @brief _set_initializer_list
+       * @param il
+       */
+      void
+      _set_initializer_list (const std::initializer_list<std::pair<std::wstring, value &&>> & il);
     }; // Class object
 
     inline

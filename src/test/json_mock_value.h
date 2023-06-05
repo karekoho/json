@@ -160,6 +160,7 @@ namespace format
         mock_object (const wchar_t *input) : object (input) {}
         mock_object (json *parent) : object (parent) {}
         mock_object (std::initializer_list<std::pair<std::wstring, value *> > il) : object (il) {}
+        mock_object (std::initializer_list<std::pair<std::wstring, value &&> > il) : object (il) {}
         /**
          * @brief begin
          * @return
@@ -357,6 +358,7 @@ namespace format
         mock_number (float f): number (f) {}
         mock_number (long double ld): number (ld) {}
         mock_number (const number &other): number (other) {}
+        mock_number (number&& other): number (other) {}
         mock_number (const wchar_t * const json_text) : number (json_text) {}
         mock_number (format::json::json *parent) : number (parent){}
       };

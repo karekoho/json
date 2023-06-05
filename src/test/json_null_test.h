@@ -78,7 +78,8 @@ namespace format
                     old_value->_set_key ((*it).key, wcslen ((*it).key));
 
                     if ((*it).new_value->type () == value::null_t)
-                      *old_value = *(dynamic_cast<mock_null *>((*it).new_value));
+                      //*old_value = *(dynamic_cast<mock_null *>((*it).new_value));
+                      old_value = dynamic_cast<mock_null *>((*it).new_value);
                     else
                       *(dynamic_cast<value *>(old_value)) = *(*it).new_value;
 

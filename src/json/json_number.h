@@ -72,7 +72,13 @@ namespace format
        * @brief Number
        * @param other
        */
-      number (const number &other);
+      number (const number& other);
+
+      /**
+       * @brief number
+       * @param other
+       */
+      number (number&& other) noexcept;
 
       /**
        * @brief ~number

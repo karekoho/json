@@ -78,6 +78,9 @@ namespace format
       leaf (const leaf &other) : value (other)
       {}
 
+      leaf (leaf&& other) : value (other)
+      {}
+
       /**
        * @brief ~Leaf
        */
