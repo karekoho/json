@@ -17,8 +17,9 @@ format::json::object::object (std::initializer_list<std::pair<std::wstring, valu
 }
 
 format::json::object::object (std::initializer_list<std::pair<std::wstring, value &&>> il)
+    : json (true)
 {
-  _set_initializer_list (il);
+  _set_initializer_list(il);
 }
 
 format::json::object::object (json *parent)
@@ -188,7 +189,9 @@ format::json::object::_clear ()
 
   while (begin != end)
     {
-      //delete static_cast <std::pair<std::wstring, value *>>(*begin).second;
+      if (_is_moved == false)
+        delete static_cast <std::pair<std::wstring, value *>>(*begin).second;
+
       begin = _member_list.erase (begin);
     }
 }

@@ -90,35 +90,24 @@ namespace format
 
         json parent;
 
-        /*object t {
+        /* object t {
           { L"number", number (100) },
           { L"string", string (L"string") },
-          { L"false", boolean (false) },
+          { L"false", boolean (true) },
+          { L"null", null () },
+          { L"undefined", undefined () },
           { L"object", object {{ L"number", number (100) }} }
-        };*/
+        }; */
 
         mock_object o[] = {
           mock_object (),
           mock_object (L"{}"),
           mock_object (& parent),
-          mock_object {{ L"0", new object {{ L"1", new number () }} }}, // { "0": { "1": 0 } }
+          mock_object {{ L"0", new object {{ L"1", new number () }} }},
           mock_object (json_text),
           mock_object (src), // Copy
-          mock_object {{ L"0", object {{ L"100", number (100) }} }}, // 6. Move
+          mock_object {{ L"0", object {{ L"1", number () }} }} // 6. Move
         };
-
-  //      object src  = L"{\"key\":true}";
-  //      object copy = src;
-
-  //      CPPUNIT_ASSERT_EQUAL_MESSAGE ("object::type ()",
-  //                                    json::object_t, src.type ());
-
-  //      CPPUNIT_ASSERT_MESSAGE ("object",
-  //                              & copy != & src);
-
-  //      CPPUNIT_ASSERT_EQUAL_MESSAGE ("copy.count ()",
-  //                                    (size_t) 1,
-  //                                    copy.length ());
 
         // Original assertion:
         ///CPPUNIT_ASSERT_EQUAL_MESSAGE ("object::count ()", static_cast<size_t> (1), o[3].size ());

@@ -56,6 +56,12 @@ namespace format
       json (const json &other);
 
       /**
+       * @brief json
+       * @param other
+       */
+      //json (json &&other);
+
+      /**
        * @brief ~json
        */
       virtual
@@ -138,6 +144,11 @@ namespace format
     protected:
 
       /**
+       * @brief _is_moved
+       */
+      bool _is_moved;
+
+      /**
        * @brief json
        * @param parent
        */
@@ -149,6 +160,12 @@ namespace format
        * @param _call_parse
        */
       json (const wchar_t * const json, const bool _call_parse);
+
+      /**
+       * @brief json
+       * @param is_moved
+       */
+      json (const bool is_moved);
 
       /**
        * @brief parse

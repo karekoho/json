@@ -9,12 +9,15 @@
 
 format::json::json::json ()
   : value (),
+    _is_moved (false),
     __root (nullptr),
     __reviver (nullptr)
+
 {}
 
 format::json::json::json (const wchar_t *const json)
   : value (json),
+    _is_moved (false),
     __root (nullptr),
     __reviver (nullptr)
 {
@@ -26,6 +29,7 @@ format::json::json::json (const wchar_t *const json)
 
 format::json::json::json (const wchar_t * const json, const bool _call_parse)
   : value (json),
+    _is_moved (false),
     __root (nullptr),
     __reviver (nullptr)
 {
@@ -38,6 +42,7 @@ format::json::json::json (const wchar_t * const json, const bool _call_parse)
 
 format::json::json::json (const wchar_t * const json, reviver r)
   : value (json),
+    _is_moved (false),
     __root (nullptr),
     __reviver (r)
 {
@@ -51,27 +56,50 @@ format::json::json::json (const wchar_t * const json, reviver r)
 
 format::json::json::json (json *parent)
   : value (parent),
+    _is_moved (false),
     __root (nullptr),
     __reviver (parent ? parent->__reviver : nullptr)
 {}
 
 format::json::json::json (object *o)
   : value (),
+  _is_moved (false),
   __root (o),
   __reviver (nullptr)
-{}
+{
+}
 
 format::json::json::json (array *a)
   : value (),
+  _is_moved (false),
   __root (a),
   __reviver (nullptr)
-{}
+{
+}
+
+format::json::json::json (const bool is_moved)
+    : value (),
+    _is_moved (is_moved),
+    __root (nullptr),
+    __reviver (nullptr)
+{
+}
 
 format::json::json::json (const json &other)
   : value (other),
+    _is_moved (other._is_moved),
     __root (other.__root ? other.__root->clone () : nullptr),
     __reviver (nullptr)
-{}
+{
+}
+
+//format::json::json::json (json &&other)
+//    : value (other),
+//    _is_moved (other._is_moved),
+//    __root (other.__root),
+//    __reviver (nullptr)
+//{
+//}
 
 format::json::json::~json ()
 {
