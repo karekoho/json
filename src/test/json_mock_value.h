@@ -405,6 +405,7 @@ namespace format
         mock_boolean () : boolean (false) { }
         mock_boolean (const bool value) : boolean (value) { }
         mock_boolean (const boolean & other) : boolean (other) { }
+        mock_boolean (boolean && other) : boolean (other) { }
       };
 
       class undefined_test_ctor_dtor_Test;

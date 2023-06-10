@@ -30,7 +30,8 @@ namespace format
         mock_boolean b[] = {
           mock_boolean (),
           mock_boolean (true),
-          mock_boolean (parent, true)
+          mock_boolean (parent, true),
+          mock_boolean (mock_boolean (true))
         };
 
         // TODO: what is the correct place for these?
@@ -38,7 +39,8 @@ namespace format
                               { L"1", new mock_boolean (true) },
                               { L"2", new mock_boolean (parent, true) },
                               { L"3", new mock_boolean (b[1]) }, // copy
-                              { L"4", new mock_boolean (b[2]) }, // copy
+                              { L"4", new mock_boolean (b[2]) } // copy
+                              // TODO: { L"5", mock_boolean (b[3]) }, // move
                             };
 
         // Original assertion:
@@ -65,6 +67,8 @@ namespace format
         ///CPPUNIT_ASSERT_MESSAGE ("as boolean", j[L"4"].as<bool> () == true);
         ///
         EXPECT_TRUE (j[L"4"].as<bool> ());
+
+        EXPECT_TRUE (b[3].as<bool> ());
 
         delete parent;
       }

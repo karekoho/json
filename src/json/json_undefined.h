@@ -35,6 +35,12 @@ namespace format
       undefined (const undefined &other) = default;
 
       /**
+       * @brief undefined
+       * @param other
+       */
+      undefined (undefined &&other) = default;
+
+      /**
        * @brief ~undefined
        */
       virtual ~undefined () override = default;

@@ -29,6 +29,12 @@ namespace format
       null (const null &other) = default;
 
       /**
+       * @brief null
+       * @param other
+       */
+      null (null &&other) = default;
+
+      /**
        * @brief ~null
        */
       virtual ~null () override = default;

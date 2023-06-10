@@ -39,6 +39,14 @@ namespace format
           : leaf (other)
         { }
 
+        /**
+         * @brief boolean
+         * @param other
+         */
+        boolean (boolean && other)
+            : leaf (other)
+        { }
+
        /**
         * @brief ~Boolean
         */
