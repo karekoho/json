@@ -204,6 +204,7 @@ namespace format
           mock_string (),
           mock_string (L"x"),
           mock_string (& parent, 1),
+          mock_string (mock_string (L"move")),
         };
 
         // TODO: To be clearer, first test every constructor and copies, then one as<> () test is enough
@@ -212,6 +213,7 @@ namespace format
                               { L"1", new mock_string (L"x") },
                               { L"2", new mock_string (& parent, 1) }, // stringify () --> Segmentation fault: 11
                               { L"3", new mock_string (src[1]) } // copy
+                              // TODO: { L"4", mock_string (src[3]) } // move
                             };
 
         // Original assertion:
@@ -233,6 +235,8 @@ namespace format
         ///CPPUNIT_ASSERT_MESSAGE ("copy as string", wcscmp ( L"x", j[L"3"].as<const wchar_t *> () ) == 0);
         ///
         ASSERT_THAT (j[L"3"].as<const wchar_t *> (), StrEq (L"x"));
+
+        ASSERT_THAT (src[3].as<const wchar_t *> (), StrEq (L"move"));
       }
 
       TEST_F (string_test, _parse)

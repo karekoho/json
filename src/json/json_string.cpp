@@ -38,6 +38,16 @@ format::json::string::string (const string &other)
   (void) __assign (other._to_string (), other.length ());
 }
 
+format::json::string::string (string &&other)
+  : leaf (other),
+    _startp (nullptr),
+    _string_value (other._string_value),
+    _charc (other._charc)
+{
+  other._charc = 0;
+  other._string_value = nullptr;
+}
+
 format::json::string::~string ()
 {
   delete [] _string_value;

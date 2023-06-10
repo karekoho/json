@@ -309,6 +309,7 @@ namespace format
         mock_string () : string () {}
         mock_string (const wchar_t * const string_text) : string (string_text) {}
         mock_string (const mock_string & other) : string (other) {}
+        mock_string (mock_string && other) : string (other) {}
         mock_string (format::json::json *parent, size_t charc) : string (parent,charc) {}
       };
 

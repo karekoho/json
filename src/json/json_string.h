@@ -32,6 +32,12 @@ namespace format
       string (const string & other);
 
       /**
+       * @brief string
+       * @param other
+       */
+      string (string &&other);
+
+      /**
        * @brief ~string
        */
       virtual ~string () override;
