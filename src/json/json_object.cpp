@@ -16,10 +16,10 @@ format::json::object::object (std::initializer_list<std::pair<std::wstring, valu
   _set_initializer_list (il);
 }
 
-format::json::object::object (std::initializer_list<std::pair<std::wstring, value &&>> il)
-    : json (true)
+format::json::object::object (std::initializer_list<std::pair<std::wstring, value &&> > il)
+  : json (true)
 {
-  _set_initializer_list(il);
+  _set_initializer_list (il);
 }
 
 format::json::object::object (json *parent)
@@ -29,7 +29,13 @@ format::json::object::object (json *parent)
 format::json::object::object (const object &other)
   : json (other)
 {
-  (void) _clone (other);
+    (void) _clone (other);
+}
+
+format::json::object::object (object&& other)
+: json (other)
+{
+
 }
 
 format::json::object::~object ()
@@ -323,8 +329,10 @@ format::json::object::_set_initializer_list (const std::initializer_list<std::pa
   while (cur != end)
   {
       std::pair<std::wstring, value &> p = *(cur++);
+      //const value & v = std::move (p.second);
       _member_list.emplace (p.first, & p.second);
-      _set_key (& p.second, p.first.c_str (), p.first.length ());
+      //_member_list.emplace (p.first, std::move (& p.second));
+      _set_key (p.second, p.first.c_str (), p.first.length ());
       _set_parent (& p.second, this);
   }
 }

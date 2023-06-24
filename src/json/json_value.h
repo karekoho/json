@@ -611,6 +611,10 @@ namespace format
       _set_key (value *target, const wchar_t *keyp, size_t charc)
       { target->_set_key (keyp, charc); }
 
+      inline static void
+      _set_key (value &target, const wchar_t *keyp, size_t charc)
+      { target._set_key (keyp, charc); }
+
       /**
        * @brief _set_index
        * @param v

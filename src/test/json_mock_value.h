@@ -159,6 +159,7 @@ namespace format
         mock_object () : object () {}
         mock_object (const wchar_t *input) : object (input) {}
         mock_object (json *parent) : object (parent) {}
+        mock_object (object&& other) : object (other) {}
         mock_object (std::initializer_list<std::pair<std::wstring, value *> > il) : object (il) {}
         mock_object (std::initializer_list<std::pair<std::wstring, value &&> > il) : object (il) {}
         /**

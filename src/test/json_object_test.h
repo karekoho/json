@@ -90,14 +90,7 @@ namespace format
 
         json parent;
 
-        /* object t {
-          { L"number", number (100) },
-          { L"string", string (L"string") },
-          { L"false", boolean (true) },
-          { L"null", null () },
-          { L"undefined", undefined () },
-          { L"object", object {{ L"number", number (100) }} }
-        }; */
+
 
         mock_object o[] = {
           mock_object (),
@@ -138,6 +131,27 @@ namespace format
         /// CPPUNIT_ASSERT_EQUAL_MESSAGE ("object copy at size", (size_t) 1, o[5][L"1"].size ());
         ///
         ASSERT_THAT (o[5][L"1"].size (), Eq (1));
+
+        //TODO: ASSERT_THAT (o[6][L"0"].key (), StrEq (L"0"));
+      }
+
+      TEST_F (object_test, move_construct)
+      {
+        object o {
+            { L"number", number (100) },
+//          { L"string", string (L"string") },
+//          { L"false", boolean (true) },
+//          { L"null", null () },
+//          { L"undefined", undefined () },
+//          { L"object", object {} },
+//          { L"object", object {{ L"number", number (100) }} }
+	};
+
+	number & p = static_cast<number &> (o[L"number"]);
+
+        ASSERT_THAT (p.type (), Eq (value::number_t));
+        //ASSERT_THAT (o[L"number"].type (), Eq (value::number_t));
+        //ASSERT_THAT (o[L"number"].as<int> (), Eq (100));
       }
 
       TEST_F (object_test, assign_all_values)
